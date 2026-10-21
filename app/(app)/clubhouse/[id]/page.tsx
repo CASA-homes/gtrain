@@ -81,6 +81,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
           <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
         </div>
+        {isMine && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark">Set keepers</Link>}
       </header>
 
       <ClubhouseSplit blocks={blocks}>
