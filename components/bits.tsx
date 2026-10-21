@@ -77,6 +77,20 @@ export function Bar20({ value, height = 10, label }: { value: number; height?: n
   );
 }
 
+/** League rank as a 10-segment bar: 1st fills all 10, 6th shows 4, last shows 1. */
+export const RANK_BARS = [10, 9, 8, 7, 5, 4, 3, 2, 1, 1];
+export function RankBar({ rank, height = 10, label }: { rank: number; height?: number; label: string }) {
+  const n = RANK_BARS[Math.min(Math.max(rank, 1), 10) - 1];
+  const colour = n >= 8 ? C.green5 : n >= 6 ? C.green4 : n >= 4 ? C.green3 : n >= 2 ? C.green2 : C.yellow;
+  return (
+    <div className="bars" role="img" aria-label={`${label}: ranked ${rank} of 10`}>
+      {Array.from({ length: 10 }, (_, i) => (
+        <span key={i} style={{ height, background: i < n ? colour : C.empty }} />
+      ))}
+    </div>
+  );
+}
+
 export function Cup({ size = 26, year }: { size?: number; year?: number }) {
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center' }} title={year ? `Premiers ${year}` : 'Premiership'}>
