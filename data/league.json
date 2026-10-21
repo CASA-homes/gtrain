@@ -1,0 +1,60 @@
+{
+  "league": {
+    "name": "G-Train",
+    "platform": "keeperfantasy.com/afl/288126",
+    "seasons": 5,
+    "founded": 2022,
+    "scoring": "Standard AFL Fantasy scoring",
+    "next_draft": { "season": 2027, "date": "TBC (drafts open Dec 15)", "status": "Offseason '26" }
+  },
+  "teams": [
+    { "keeper_id": 3,  "name": "Bodega Boys",            "coach": "Christian L", "seasons": "2022-2026", "record": "69-39-0", "premierships": [2022, 2026], "runner_up": [], "third": 2, "spoons": [] },
+    { "keeper_id": 4,  "name": "Serong So’Right",         "coach": "Zac A",       "seasons": "2022-2026", "record": "66-42-0", "premierships": [], "runner_up": [2023, 2024, 2025, 2026], "third": 0, "spoons": [] },
+    { "keeper_id": 6,  "name": "Muzza's Murabito's",      "coach": "Michael M",   "seasons": "2022-2026", "record": "65-41-0", "premierships": [], "runner_up": [], "third": 1, "spoons": [] },
+    { "keeper_id": 5,  "name": "Such Is Fyfe",            "coach": "Michael F",   "seasons": "2022-2026", "record": "76-33-0", "premierships": [2023, 2024, 2025], "runner_up": [], "third": 0, "spoons": [] },
+    { "keeper_id": 2,  "name": "Pato's Fantasy Team",     "coach": "Mitchell P",  "seasons": "2022-2026", "record": "54-52-0", "premierships": [], "runner_up": [], "third": 1, "spoons": [2025] },
+    { "keeper_id": 9,  "name": "NSW-ACT Academy",         "coach": "Stan H",      "seasons": "2022-2026", "record": "49-54-0", "premierships": [], "runner_up": [], "third": 1, "spoons": [] },
+    { "keeper_id": 7,  "name": "A Brayshaw Thing",        "coach": "Seann H",     "seasons": "2022-2026", "record": "46-58-0", "premierships": [], "runner_up": [], "third": 0, "spoons": [2022] },
+    { "keeper_id": 8,  "name": "Fo’ Sheezel my Neezel",   "coach": "Alexander P", "seasons": "2022-2026", "record": "38-66-0", "premierships": [], "runner_up": [2022], "third": 0, "spoons": [2024] },
+    { "keeper_id": 10, "name": "Bito’s Boys",             "coach": "Mathew M",    "seasons": "2022-2026", "record": "33-69-0", "premierships": [], "runner_up": [], "third": 0, "spoons": [2023] },
+    { "keeper_id": 1,  "name": "Ram Dawgs",               "coach": "Jake O",      "seasons": "2022-2026", "record": "29-72-0", "premierships": [], "runner_up": [], "third": 0, "spoons": [2026] }
+  ],
+  "honour_roll": [
+    { "year": 2026, "premier": "Bodega Boys",   "runner_up": "Serong So’Right",       "spoon": "Ram Dawgs",              "medal": "N. Daicos" },
+    { "year": 2025, "premier": "Such Is Fyfe",  "runner_up": "Serong So’Right",       "spoon": "Pato's Fantasy Team",    "medal": null },
+    { "year": 2024, "premier": "Such Is Fyfe",  "runner_up": "Serong So’Right",       "spoon": "Fo’ Sheezel my Neezel",  "medal": null },
+    { "year": 2023, "premier": "Such Is Fyfe",  "runner_up": "Serong So’Right",       "spoon": "Bito’s Boys",            "medal": null },
+    { "year": 2022, "premier": "Bodega Boys",   "runner_up": "Fo’ Sheezel my Neezel", "spoon": "A Brayshaw Thing",       "medal": null }
+  ],
+  "grand_final_2026": { "round": 24, "winner": "Bodega Boys", "winner_score": 1879, "loser": "Serong So’Right", "loser_score": 1818 },
+  "ladder_2026_final": [
+    { "rank": 1,  "team": "Bodega Boys",           "wl": "14-7-0", "pts": 56, "for": 35175, "against": 33136 },
+    { "rank": 2,  "team": "Serong So’Right",        "wl": "14-7-0", "pts": 56, "for": 33376, "against": 31325 },
+    { "rank": 3,  "team": "Muzza's Murabito's",     "wl": "17-4-0", "pts": 68, "for": 34014, "against": 31744 },
+    { "rank": 4,  "team": "Such Is Fyfe",           "wl": "17-4-0", "pts": 68, "for": 33866, "against": 30841 },
+    { "rank": 5,  "team": "Pato's Fantasy Team",    "wl": "11-10-0", "pts": 44, "for": 32443, "against": 32104 },
+    { "rank": 6,  "team": "NSW-ACT Academy",        "wl": "9-12-0", "pts": 36, "for": 31499, "against": 32897 },
+    { "rank": 7,  "team": "A Brayshaw Thing",       "wl": "9-12-0", "pts": 36, "for": 31311, "against": 32419 },
+    { "rank": 8,  "team": "Fo’ Sheezel my Neezel",  "wl": "7-14-0", "pts": 28, "for": 30800, "against": 32547 },
+    { "rank": 9,  "team": "Bito’s Boys",            "wl": "5-16-0", "pts": 20, "for": 31522, "against": 33348 },
+    { "rank": 10, "team": "Ram Dawgs",              "wl": "2-19-0", "pts": 8,  "for": 29634, "against": 33279 }
+  ],
+  "charter": {
+    "teams": 10,
+    "format": "Head-to-head points, weekly matchups",
+    "positions": "Set by AFL Fantasy / Champion Data at season start; in-season changes follow the AFL site; up to 3 positions per player",
+    "squad_size": 33,
+    "keepers": { "max": 17, "rookie_slot": 1, "rookie_rule": "10 games or fewer, no age limit" },
+    "trading": { "live_draft_trades": true, "draft_trade_window": "Agreed with a 2-minute countdown, not shopped around", "deadline": "None, fully open", "approval": "Commissioner", "lopsided_veto": "6-vote majority, $10 penalty per offence" },
+    "ladder": { "tiebreak": "Points scored", "mid_season_draft_order": "Ladder after Round 9", "end_of_season_draft_order": "Ladder after the grand final" },
+    "byes": { "early": "Round 0 scores substituted", "mid_season": "No adjustments" },
+    "lockout": "Rolling",
+    "emergency_tog_threshold": "25%",
+    "fines": { "captain_loop": 50, "zero_on_field_loop": 5, "lopsided_trade": 10 },
+    "side_games": ["Predicted ladder ($5 entry in fines, closest wins $25 fines credit)", "Side bets (single pint unless stated)"]
+  },
+  "bodega_boys_picks": {
+    "2027": ["R2 #14 (via A Brayshaw Thing)", "R2 #15 (via NSW-ACT Academy)", "R2 #20", "R4 #31 (via Ram Dawgs)", "R4 #33 (via Fo’ Sheezel my Neezel)", "R4 #38 (via Muzza's Murabito's)", "R6 #51 (via Ram Dawgs)", "R8 #80", "R10 #100", "R13 #130", "R15 #150", "R16 #155 (via NSW-ACT Academy)", "R16 #160 (optional)"],
+    "2028": ["R1", "R2 (via Ram Dawgs)", "R3", "R4 (via Ram Dawgs)", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15", "R16 (optional)"]
+  }
+}
