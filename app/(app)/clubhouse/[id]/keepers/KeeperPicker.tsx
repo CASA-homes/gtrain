@@ -5,12 +5,11 @@ import { AvgChip, ClubDot, PosDots } from '@/components/bits';
 import { C, type Line } from '@/lib/ratings';
 import { saveKeepers } from './actions';
 
-interface P { id: number; name: string; positions: Line[]; afl_club: string | null; average: number | null; games: number | null; value: number; is_keeper: boolean; is_rookie_keeper: boolean }
+interface P { id: number; name: string; positions: Line[]; afl_club: string | null; average: number | null; games: number | null; career_games: number | null; value: number; is_keeper: boolean; is_rookie_keeper: boolean }
 
 /**
  * 17 keepers plus an 18th "rookie" slot for a player with 10 or fewer career games.
- * Keeper only shows 2026 games, so career eligibility is on the honour system (the commish can check),
- * with a warning when the 2026 count alone is already over 10.
+ * Career games come from DFS Australia; players over 10 are flagged rather than blocked so the commish can rule on edge cases.
  */
 export function KeeperPicker({ teamId, players }: { teamId: number; players: P[] }) {
   const router = useRouter();
@@ -20,6 +19,7 @@ export function KeeperPicker({ teamId, players }: { teamId: number; players: P[]
   const [pending, start] = useTransition();
   const full = keepers.size >= 17;
   const rookiePlayer = players.find((p) => p.id === rookie);
+  const careerOf = (p: P) => p.career_games ?? p.games ?? 0;
 
   function toggle(id: number) {
     const next = new Set(keepers);
@@ -66,14 +66,17 @@ export function KeeperPicker({ teamId, players }: { teamId: number; players: P[]
           <label htmlFor="rookie" className="sr-only">Rookie keeper</label>
           <select id="rookie" className="input" style={{ minWidth: 260 }} value={rookie ?? ''} onChange={(e) => pickRookie(e.target.value ? Number(e.target.value) : null)}>
             <option value="">No rookie keeper</option>
-            {[...players].sort((a, b) => (a.games ?? 0) - (b.games ?? 0)).map((p) => (
-              <option key={p.id} value={p.id}>{p.name} · {p.games ?? 0} games in 2026</option>
+            {[...players].sort((a, b) => careerOf(a) - careerOf(b)).map((p) => (
+              <option key={p.id} value={p.id}>{p.name} · {careerOf(p)} career games{careerOf(p) <= 10 ? ' · eligible' : ''}</option>
             ))}
           </select>
-          {rookiePlayer && (rookiePlayer.games ?? 0) > 10 && (
+          {rookiePlayer && careerOf(rookiePlayer) > 10 && (
             <span className="pill" style={{ background: C.yellow, color: C.ink, padding: '4px 10px' }}>
-              {rookiePlayer.games} games in 2026 alone. Check he’s 10 or under for his career.
+              {careerOf(rookiePlayer)} career AFL games. The rookie slot is for 10 or fewer.
             </span>
+          )}
+          {rookiePlayer && careerOf(rookiePlayer) <= 10 && (
+            <span className="pill" style={{ background: '#e3efdc', color: C.green5, padding: '4px 10px' }}>Eligible: {careerOf(rookiePlayer)} career games</span>
           )}
         </div>
       </section>
@@ -81,7 +84,7 @@ export function KeeperPicker({ teamId, players }: { teamId: number; players: P[]
       <div className="table-box">
         <table className="squad">
           <thead>
-            <tr><th style={{ width: 70 }}>Keep</th><th>Player</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 60, textAlign: 'center' }}>Avg</th><th style={{ width: 70, textAlign: 'center' }}>2026 games</th><th style={{ width: 60, textAlign: 'center' }}>Value</th></tr>
+            <tr><th style={{ width: 70 }}>Keep</th><th>Player</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 60, textAlign: 'center' }}>Avg</th><th style={{ width: 70, textAlign: 'center' }}>Career games</th><th style={{ width: 60, textAlign: 'center' }}>Value</th></tr>
           </thead>
           <tbody>
             {players.map((p) => {
@@ -99,7 +102,7 @@ export function KeeperPicker({ teamId, players }: { teamId: number; players: P[]
                   <td style={{ whiteSpace: 'nowrap' }}><span style={{ display: 'inline-flex', gap: 8, alignItems: 'center', fontWeight: 600 }}><ClubDot code={p.afl_club} size={16} />{p.name}</span></td>
                   <td><PosDots positions={p.positions} /></td>
                   <td style={{ textAlign: 'center' }}><AvgChip value={p.average} /></td>
-                  <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
+                  <td style={{ textAlign: 'center' }}>{p.career_games ?? '–'}</td>
                   <td style={{ textAlign: 'center' }} className="mono">{p.value}</td>
                 </tr>
               );

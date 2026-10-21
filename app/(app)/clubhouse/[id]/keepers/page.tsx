@@ -12,7 +12,7 @@ export default async function KeepersPage({ params }: { params: Promise<{ id: st
   const players = [...a.players]
     .sort((x, y) => (league.ratings.get(y.id)!.value - league.ratings.get(x.id)!.value))
     .map((p) => ({
-      id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, games: p.games,
+      id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, games: p.games, career_games: p.career_games,
       value: league.ratings.get(p.id)!.value, is_keeper: p.is_keeper, is_rookie_keeper: p.is_rookie_keeper,
     }));
 
