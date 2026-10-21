@@ -1,0 +1,28 @@
+.hero { position: relative; overflow: hidden; min-height: 100dvh; background: radial-gradient(120% 90% at 30% 40%, #2b5a3b 0%, #1d3a28 38%, #141a16 78%); color: var(--cream); display: flex; }
+.streaks { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(rgb(244 241 230 / .05) 1px, transparent 1px); background-size: 6px 6px; }
+.streaks i { position: absolute; transform: rotate(-32deg); }
+.streaks i:nth-child(1) { left: -8%; top: 58%; width: 70%; height: 90px; background: linear-gradient(90deg, rgb(244 241 230 / 0), rgb(244 241 230 / .22) 55%, rgb(244 241 230 / 0)); }
+.streaks i:nth-child(2) { left: -12%; top: 72%; width: 60%; height: 34px; background: linear-gradient(90deg, rgb(156 203 132 / 0), rgb(156 203 132 / .35) 60%, rgb(156 203 132 / 0)); }
+.streaks i:nth-child(3) { right: -10%; top: -6%; width: 55%; height: 120px; background: linear-gradient(90deg, rgb(244 241 230 / 0), rgb(244 241 230 / .16) 50%, rgb(244 241 230 / 0)); }
+.streaks i:nth-child(4) { right: -6%; top: 6%; width: 40%; height: 26px; background: linear-gradient(90deg, rgb(156 203 132 / 0), rgb(156 203 132 / .3) 50%, rgb(156 203 132 / 0)); }
+
+.inner { position: relative; width: 100%; max-width: 1440px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; padding: 40px max(16px, 4vw); }
+.collage { flex: 1 1 520px; min-width: 0; position: relative; height: min(700px, 80vw); max-width: 760px; }
+.collage img { position: absolute; max-width: none; filter: drop-shadow(0 18px 28px rgb(0 0 0 / .45)); }
+.glow { position: absolute; left: 10%; top: 12%; width: 80%; height: 76%; border-radius: 50%; background: radial-gradient(closest-side, rgb(156 203 132 / .28), rgb(156 203 132 / 0)); }
+.p1 { z-index: 2; left: -8%; top: 4%; width: 82%; height: auto; -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent), linear-gradient(to right, #000 82%, transparent); -webkit-mask-composite: source-in; mask-image: linear-gradient(to bottom, #000 62%, transparent), linear-gradient(to right, #000 82%, transparent); mask-composite: intersect; }
+.p2 { z-index: 1; left: 50%; top: 0; height: 74%; width: auto; filter: brightness(.82) saturate(.9) drop-shadow(0 20px 30px rgb(0 0 0 / .45)) !important; -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent); mask-image: linear-gradient(to bottom, #000 80%, transparent); }
+.p3 { z-index: 2; left: 64%; top: 40%; height: 52%; width: auto; -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent); mask-image: linear-gradient(to bottom, #000 72%, transparent); }
+.p4 { z-index: 3; left: 4%; top: 60%; width: 50%; height: auto; -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent); mask-image: linear-gradient(to bottom, #000 60%, transparent); }
+
+.copy { flex: 1 1 400px; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; }
+.mark { display: flex; align-items: center; gap: 18px; }
+.mark span { width: 64px; height: 64px; border-radius: 18px; border: 2px solid var(--cream); display: flex; align-items: center; justify-content: center; font: 900 30px/1 var(--display); }
+.mark i { width: 2px; height: 46px; background: rgb(244 241 230 / .5); }
+.mark small { font: 500 12px var(--mono); letter-spacing: .18em; text-transform: uppercase; color: rgb(244 241 230 / .8); text-align: left; line-height: 1.6; }
+.lockup { display: flex; flex-direction: column; align-items: center; }
+.lockup span:nth-child(1) { font: 800 34px/1 var(--display); letter-spacing: .32em; padding-left: .32em; text-transform: uppercase; color: #9ccb84; }
+.lockup span:nth-child(2) { font: 900 clamp(84px, 11vw, 150px)/.86 var(--display); text-transform: uppercase; text-shadow: 0 6px 30px rgb(0 0 0 / .35); }
+.lockup span:nth-child(3) { font: 800 clamp(30px, 3.6vw, 46px)/1.1 var(--display); letter-spacing: .42em; padding-left: .42em; text-transform: uppercase; }
+.enter { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font: 600 15px var(--font); background: var(--cream); color: var(--ink); border-radius: 99px; padding: 0 26px; min-height: 48px; }
+.enter:hover { color: var(--ink); background: #fff; }
