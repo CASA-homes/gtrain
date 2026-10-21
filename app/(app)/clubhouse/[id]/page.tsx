@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
-import { Bar20, ClubDot, Cup, StepBar, TeamBadge } from '@/components/bits';
+import { Bar20, ClubDot, Cup, RankBar, StepBar, TeamBadge } from '@/components/bits';
 import type { SquadPlayer } from '@/components/SquadTable';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import {
@@ -121,7 +121,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           {LINES.map((l) => (
             <div key={l} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 72px', gap: 10, alignItems: 'center' }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
-              <Bar20 value={a.lineStrength[l].score} label={`${l} line strength`} />
+              <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
               <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
             </div>
           ))}
