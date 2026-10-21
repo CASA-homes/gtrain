@@ -4,6 +4,19 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const league = JSON.parse(readFileSync(new URL('../data/league.json', import.meta.url)));
 const squadsTxt = readFileSync(new URL('../data/squads-2026.txt', import.meta.url), 'utf8');
+const clubsTxt = readFileSync(new URL('../data/clubs-2026.txt', import.meta.url), 'utf8');
+
+// team -> name -> AFL club code
+const CLUB_OF = {};
+{
+  let t = null;
+  for (const l of clubsTxt.split('\n').map((x) => x.trim())) {
+    if (!l || l.startsWith('# ')) continue;
+    if (l.startsWith('## ')) { t = l.slice(3); CLUB_OF[t] = {}; continue; }
+    const [n, c] = l.split('|');
+    CLUB_OF[t][n] = c;
+  }
+}
 
 const SEASON = 2026;
 const SHORT = {
@@ -53,7 +66,7 @@ for (const raw of squadsTxt.split('\n')) {
     ? posRaw.split('/').map((p) => POS_LONG[p])
     : posRaw.split('/').filter(Boolean);
   const pid = `(select id from public.players where name = ${q(name)} and positions = ${arr(positions)})`;
-  out.push(`insert into public.players (name, positions) values (${q(name)}, ${arr(positions)});`);
+  out.push(`insert into public.players (name, positions, afl_club) values (${q(name)}, ${arr(positions)}, ${q(CLUB_OF[team]?.[name] ?? null)});`);
   out.push(`insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values (${pid}, ${SEASON}, ${num(games)}, ${num(avg)}, ${intArr(last5)}, null, ${q(status || null)});`);
   out.push(`insert into public.squad (player_id, team_id) values (${pid}, ${teamIdSql(team)});`);
   count++;
