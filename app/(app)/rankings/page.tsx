@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Bar20, Cup } from '@/components/bits';
+import { Cup, RankBar } from '@/components/bits';
 import { getLeague } from '@/lib/data';
 import { C, LINES } from '@/lib/ratings';
 
@@ -34,7 +34,7 @@ export default async function RankingsPage() {
                 <td style={{ textAlign: 'right', fontWeight: 600 }}>{Math.round(a.best18).toLocaleString()}</td>
                 {LINES.map((l) => (
                   <td key={l}>
-                    <Bar20 value={a.lineStrength[l].score} height={8} label={`${l} strength`} />
+                    <RankBar rank={a.lineStrength[l].rank} height={8} label={`${l} strength`} />
                     <span className="mono muted" style={{ fontSize: 10 }}>{a.lineStrength[l].rank} of 10</span>
                   </td>
                 ))}
