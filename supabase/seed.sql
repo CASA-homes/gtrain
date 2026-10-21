@@ -76,7 +76,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('N. Bryan', array['RUC']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. Bryan' and positions = array['RUC']::text[]), 2026, 13, 62.2, array[58,79,null,45,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. Bryan' and positions = array['RUC']::text[]), (select id from public.teams where name = 'Ram Dawgs'));
-insert into public.players (name, positions, afl_club) values ('N. O''Driscoll', array['MID']::text[], 'FRE');
+insert into public.players (name, positions, afl_club) values ('N. O''Driscoll', array['MID']::text[], 'RIC');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. O''Driscoll' and positions = array['MID']::text[]), 2026, 16, 64.1, array[42,38,49,78,91]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. O''Driscoll' and positions = array['MID']::text[]), (select id from public.teams where name = 'Ram Dawgs'));
 insert into public.players (name, positions, afl_club) values ('A. Cadman', array['FWD']::text[], 'GWS');
@@ -118,7 +118,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('M. Holmes', array['DEF','MID']::text[], 'GEE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'M. Holmes' and positions = array['DEF','MID']::text[]), 2026, 18, 102.4, array[null,null,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'M. Holmes' and positions = array['DEF','MID']::text[]), (select id from public.teams where name = 'Ram Dawgs'));
-insert into public.players (name, positions, afl_club) values ('Z. Butters', array['MID']::text[], 'PTA');
+insert into public.players (name, positions, afl_club) values ('Z. Butters', array['MID']::text[], 'WBD');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'Z. Butters' and positions = array['MID']::text[]), 2026, 17, 104.5, array[null,null,null,null,null]::int[], null, 'SHORT');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'Z. Butters' and positions = array['MID']::text[]), (select id from public.teams where name = 'Ram Dawgs'));
 insert into public.players (name, positions, afl_club) values ('E. Gulden', array['MID']::text[], 'SYD');
@@ -196,7 +196,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('Z. Uwland', array['DEF','MID']::text[], 'GCS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'Z. Uwland' and positions = array['DEF','MID']::text[]), 2026, 17, 57.6, array[null,null,24,null,32]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'Z. Uwland' and positions = array['DEF','MID']::text[]), (select id from public.teams where name = 'Pato''s Fantasy Team'));
-insert into public.players (name, positions, afl_club) values ('L. Pedlar', array['FWD']::text[], 'ADE');
+insert into public.players (name, positions, afl_club) values ('L. Pedlar', array['FWD']::text[], 'PTA');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'L. Pedlar' and positions = array['FWD']::text[]), 2026, 10, 47.3, array[null,null,null,null,null]::int[], null, 'SHORT');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'L. Pedlar' and positions = array['FWD']::text[]), (select id from public.teams where name = 'Pato''s Fantasy Team'));
 insert into public.players (name, positions, afl_club) values ('P. Gothard', array['FWD']::text[], 'GWS');
@@ -226,7 +226,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('N. Anderson', array['MID']::text[], 'GCS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. Anderson' and positions = array['MID']::text[]), 2026, 22, 101.5, array[127,86,107,88,110]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. Anderson' and positions = array['MID']::text[]), (select id from public.teams where name = 'Bodega Boys'));
-insert into public.players (name, positions, afl_club) values ('L. Whitfield', array['DEF']::text[], 'GWS');
+insert into public.players (name, positions, afl_club) values ('L. Whitfield', array['DEF']::text[], 'CAR');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'L. Whitfield' and positions = array['DEF']::text[]), 2026, 21, 99.8, array[69,112,105,127,104]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'L. Whitfield' and positions = array['DEF']::text[]), (select id from public.teams where name = 'Bodega Boys'));
 insert into public.players (name, positions, afl_club) values ('J. Dunkley', array['MID']::text[], 'BRL');
@@ -301,7 +301,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('K. Amon', array['DEF']::text[], 'HAW');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'K. Amon' and positions = array['DEF']::text[]), 2026, 18, 80.3, array[53,70,56,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'K. Amon' and positions = array['DEF']::text[]), (select id from public.teams where name = 'Bodega Boys'));
-insert into public.players (name, positions, afl_club) values ('K. Coleman', array['DEF']::text[], 'BRL');
+insert into public.players (name, positions, afl_club) values ('K. Coleman', array['DEF']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'K. Coleman' and positions = array['DEF']::text[]), 2026, 13, 66, array[null,null,null,22,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'K. Coleman' and positions = array['DEF']::text[]), (select id from public.teams where name = 'Bodega Boys'));
 insert into public.players (name, positions, afl_club) values ('Z. Williams', array['DEF','FWD']::text[], 'CAR');
@@ -337,7 +337,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('T. Miller', array['MID','FWD']::text[], 'GCS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'T. Miller' and positions = array['MID','FWD']::text[]), 2026, 23, 90, array[142,55,131,65,74]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'T. Miller' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'Serong So’Right'));
-insert into public.players (name, positions, afl_club) values ('T. Greene', array['MID','FWD']::text[], 'GWS');
+insert into public.players (name, positions, afl_club) values ('T. Greene', array['MID','FWD']::text[], 'GEE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'T. Greene' and positions = array['MID','FWD']::text[]), 2026, 21, 85.8, array[78,106,85,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'T. Greene' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'Serong So’Right'));
 insert into public.players (name, positions, afl_club) values ('J. Bowey', array['DEF']::text[], 'MEL');
@@ -442,7 +442,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('J. Worpel', array['MID']::text[], 'GEE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'J. Worpel' and positions = array['MID']::text[]), 2026, 11, 79.1, array[null,67,91,90,80]::int[], null, 'SHORT');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'J. Worpel' and positions = array['MID']::text[]), (select id from public.teams where name = 'Such Is Fyfe'));
-insert into public.players (name, positions, afl_club) values ('R. Marshall', array['RUC','FWD']::text[], 'STK');
+insert into public.players (name, positions, afl_club) values ('R. Marshall', array['RUC','FWD']::text[], 'GEE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'R. Marshall' and positions = array['RUC','FWD']::text[]), 2026, 21, 83.3, array[67,92,86,81,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'R. Marshall' and positions = array['RUC','FWD']::text[]), (select id from public.teams where name = 'Such Is Fyfe'));
 insert into public.players (name, positions, afl_club) values ('S. Coniglio', array['MID','FWD']::text[], 'GWS');
@@ -454,7 +454,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('D. Moore', array['FWD']::text[], 'HAW');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'D. Moore' and positions = array['FWD']::text[]), 2026, 22, 75.7, array[98,92,81,40,83]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'D. Moore' and positions = array['FWD']::text[]), (select id from public.teams where name = 'Such Is Fyfe'));
-insert into public.players (name, positions, afl_club) values ('T. Rivers', array['DEF']::text[], 'MEL');
+insert into public.players (name, positions, afl_club) values ('T. Rivers', array['DEF']::text[], 'WCE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'T. Rivers' and positions = array['DEF']::text[]), 2026, 16, 77.4, array[58,63,81,112,74]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'T. Rivers' and positions = array['DEF']::text[]), (select id from public.teams where name = 'Such Is Fyfe'));
 insert into public.players (name, positions, afl_club) values ('K. Worner', array['DEF']::text[], 'FRE');
@@ -517,7 +517,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('Z. Bailey', array['MID','FWD']::text[], 'BRL');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'Z. Bailey' and positions = array['MID','FWD']::text[]), 2026, 22, 92.2, array[97,104,87,57,133]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'Z. Bailey' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'Muzza''s Murabito''s'));
-insert into public.players (name, positions, afl_club) values ('Z. Merrett', array['MID']::text[], 'ESS');
+insert into public.players (name, positions, afl_club) values ('Z. Merrett', array['MID']::text[], 'HAW');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'Z. Merrett' and positions = array['MID']::text[]), 2026, 23, 104.1, array[123,71,95,87,97]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'Z. Merrett' and positions = array['MID']::text[]), (select id from public.teams where name = 'Muzza''s Murabito''s'));
 insert into public.players (name, positions, afl_club) values ('J. Newcombe', array['MID']::text[], 'HAW');
@@ -634,7 +634,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('J. Rowbottom', array['MID','FWD']::text[], 'SYD');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'J. Rowbottom' and positions = array['MID','FWD']::text[]), 2026, 21, 72, array[100,null,null,3,120]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'J. Rowbottom' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'A Brayshaw Thing'));
-insert into public.players (name, positions, afl_club) values ('S. Pendlebury', array['MID']::text[], 'COL');
+insert into public.players (name, positions, afl_club) values ('S. Pendlebury', array['MID']::text[], 'GCS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'S. Pendlebury' and positions = array['MID']::text[]), 2026, 17, 79.2, array[26,78,null,78,114]::int[], null, 'SHORT');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'S. Pendlebury' and positions = array['MID']::text[]), (select id from public.teams where name = 'A Brayshaw Thing'));
 insert into public.players (name, positions, afl_club) values ('L. Ryan', array['DEF']::text[], 'FRE');
@@ -751,7 +751,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('N. Madden', array['RUC']::text[], 'GWS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. Madden' and positions = array['RUC']::text[]), 2026, 9, 68.2, array[58,81,36,60,71]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. Madden' and positions = array['RUC']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
-insert into public.players (name, positions, afl_club) values ('K. Briggs', array['RUC']::text[], 'GWS');
+insert into public.players (name, positions, afl_club) values ('K. Briggs', array['RUC']::text[], 'RIC');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'K. Briggs' and positions = array['RUC']::text[]), 2026, 18, 71.9, array[72,46,72,49,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'K. Briggs' and positions = array['RUC']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
 insert into public.players (name, positions, afl_club) values ('H. Himmelberg', array['DEF']::text[], 'GWS');
@@ -778,10 +778,10 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('L. Carmichael', array['DEF','MID']::text[], 'WBD');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'L. Carmichael' and positions = array['DEF','MID']::text[]), 2026, 2, 29.5, array[33,26,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'L. Carmichael' and positions = array['DEF','MID']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
-insert into public.players (name, positions, afl_club) values ('J. Ridley', array['DEF']::text[], 'ESS');
+insert into public.players (name, positions, afl_club) values ('J. Ridley', array['DEF']::text[], 'GEE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'J. Ridley' and positions = array['DEF']::text[]), 2026, 7, 57, array[null,null,null,null,3]::int[], null, 'SEASON');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'J. Ridley' and positions = array['DEF']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
-insert into public.players (name, positions, afl_club) values ('J. Bowes', array['MID']::text[], 'GEE');
+insert into public.players (name, positions, afl_club) values ('J. Bowes', array['MID']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'J. Bowes' and positions = array['MID']::text[]), 2026, 9, 69.9, array[null,null,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'J. Bowes' and positions = array['MID']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
 insert into public.players (name, positions, afl_club) values ('J. Leake', array['DEF','FWD']::text[], 'GWS');
@@ -793,7 +793,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('N. Martin', array['MID','FWD']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. Martin' and positions = array['MID','FWD']::text[]), 2026, null, null, array[null,null,null,null,null]::int[], null, 'SEASON');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. Martin' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
-insert into public.players (name, positions, afl_club) values ('S. Marshall', array['MID']::text[], 'BRL');
+insert into public.players (name, positions, afl_club) values ('S. Marshall', array['MID']::text[], 'STK');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'S. Marshall' and positions = array['MID']::text[]), 2026, 2, 56, array[null,null,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'S. Marshall' and positions = array['MID']::text[]), (select id from public.teams where name = 'Fo’ Sheezel my Neezel'));
 insert into public.players (name, positions, afl_club) values ('W. Ashcroft', array['MID']::text[], 'BRL');
@@ -808,7 +808,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('W. Setterfield', array['MID']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'W. Setterfield' and positions = array['MID']::text[]), 2026, 11, 89.9, array[141,123,63,104,52]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'W. Setterfield' and positions = array['MID']::text[]), (select id from public.teams where name = 'NSW-ACT Academy'));
-insert into public.players (name, positions, afl_club) values ('N. Blakey', array['DEF']::text[], 'SYD');
+insert into public.players (name, positions, afl_club) values ('N. Blakey', array['DEF']::text[], 'NTH');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'N. Blakey' and positions = array['DEF']::text[]), 2026, 22, 86, array[null,89,92,116,87]::int[], null, 'SUSP');
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'N. Blakey' and positions = array['DEF']::text[]), (select id from public.teams where name = 'NSW-ACT Academy'));
 insert into public.players (name, positions, afl_club) values ('J. Smith', array['MID','FWD']::text[], 'CAR');
@@ -892,7 +892,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('D. Sharp', array['MID','FWD']::text[], 'ESS');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'D. Sharp' and positions = array['MID','FWD']::text[]), 2026, 15, 70.9, array[76,95,102,91,102]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'D. Sharp' and positions = array['MID','FWD']::text[]), (select id from public.teams where name = 'Bito’s Boys'));
-insert into public.players (name, positions, afl_club) values ('L. Neale', array['MID']::text[], 'BRL');
+insert into public.players (name, positions, afl_club) values ('L. Neale', array['MID']::text[], 'COL');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'L. Neale' and positions = array['MID']::text[]), 2026, 23, 102.2, array[104,51,147,83,78]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'L. Neale' and positions = array['MID']::text[]), (select id from public.teams where name = 'Bito’s Boys'));
 insert into public.players (name, positions, afl_club) values ('P. Cripps', array['MID']::text[], 'CAR');
@@ -967,7 +967,7 @@ insert into public.squad (player_id, team_id) values ((select id from public.pla
 insert into public.players (name, positions, afl_club) values ('B. Camporeale', array['MID']::text[], 'CAR');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'B. Camporeale' and positions = array['MID']::text[]), 2026, null, null, array[null,null,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'B. Camporeale' and positions = array['MID']::text[]), (select id from public.teams where name = 'Bito’s Boys'));
-insert into public.players (name, positions, afl_club) values ('J. Viney', array['MID']::text[], 'MEL');
+insert into public.players (name, positions, afl_club) values ('J. Viney', array['MID']::text[], 'WCE');
 insert into public.player_seasons (player_id, season, games, average, last5, tons, status) values ((select id from public.players where name = 'J. Viney' and positions = array['MID']::text[]), 2026, null, null, array[null,null,null,null,null]::int[], null, null);
 insert into public.squad (player_id, team_id) values ((select id from public.players where name = 'J. Viney' and positions = array['MID']::text[]), (select id from public.teams where name = 'Bito’s Boys'));
 insert into public.players (name, positions, afl_club) values ('K. Smith', array['DEF']::text[], 'RIC');
