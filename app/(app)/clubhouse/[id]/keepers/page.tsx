@@ -22,7 +22,7 @@ export default async function KeepersPage({ params }: { params: Promise<{ id: st
         <span className="eyebrow">{a.team.name}</span>
         <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>Set your 2027 keepers</h1>
         <p className="muted" style={{ margin: 0, maxWidth: '65ch' }}>
-          Keep up to 17 players, plus one rookie keeper who has played 10 games or fewer. Players are sorted by league value.
+          Keep up to 17 players, plus an 18th rookie slot for a player with 10 or fewer career AFL games. Players are sorted by league value.
         </p>
       </div>
       <KeeperPicker teamId={a.team.id} players={players} />
