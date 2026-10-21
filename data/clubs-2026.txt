@@ -1,4 +1,4 @@
-# AFL club per rostered player, from the guernsey icons on keeperfantasy.com squad pages (21 Oct 2026)
+# AFL club per rostered player, from keeperfantasy.com guernseys (21 Oct 2026), updated for the 2026 trade period
 # Format: name|club   (grouped by G-Train team, same order as squads-2026.txt)
 ## Ram Dawgs
 H. Reid|WCE
@@ -18,7 +18,7 @@ B. Maynard|COL
 R. Maric|WCE
 J. Worrell|ADE
 N. Bryan|ESS
-N. O'Driscoll|FRE
+N. O'Driscoll|RIC
 A. Cadman|GWS
 H. Dean|CAR
 J. Weddle|HAW
@@ -32,7 +32,7 @@ D. Robertson|WCE
 E. Tsatas|ESS
 J. Hopper|RIC
 M. Holmes|GEE
-Z. Butters|PTA
+Z. Butters|WBD
 ## Pato's Fantasy Team
 E. Gulden|SYD
 D. Cameron|COL
@@ -59,7 +59,7 @@ W. Duursma|WCE
 H. Kyle|SYD
 C. Budarick|WBD
 Z. Uwland|GCS
-L. Pedlar|ADE
+L. Pedlar|PTA
 P. Gothard|GWS
 S. Flanders|STK
 S. Draper|ADE
@@ -70,7 +70,7 @@ B. Smith|GEE
 G. Hewett|CAR
 D. Zorko|BRL
 N. Anderson|GCS
-L. Whitfield|GWS
+L. Whitfield|CAR
 J. Dunkley|BRL
 T. Sparrow|MEL
 H. Garcia|STK
@@ -95,7 +95,7 @@ D. Wilmot|BRL
 J. Fonti|GWS
 J. Waterman|WCE
 K. Amon|HAW
-K. Coleman|BRL
+K. Coleman|ESS
 Z. Williams|CAR
 ## Serong So’Right
 B. Hill|STK
@@ -108,7 +108,7 @@ C. Serong|FRE
 J. Impey|HAW
 S. Mannagh|GEE
 T. Miller|GCS
-T. Greene|GWS
+T. Greene|GEE
 J. Bowey|MEL
 L. Davies-Uniacke|NTH
 T. Liberatore|WBD
@@ -144,11 +144,11 @@ J. Caldwell|ESS
 S. Berry|ADE
 L. Meek|HAW
 J. Worpel|GEE
-R. Marshall|STK
+R. Marshall|GEE
 S. Coniglio|GWS
 C. Macdonald|HAW
 D. Moore|HAW
-T. Rivers|MEL
+T. Rivers|WCE
 K. Worner|FRE
 J. Treacy|FRE
 J. Serong|SYD
@@ -170,7 +170,7 @@ N. Daicos|COL
 I. Heeney|SYD
 B. Grundy|SYD
 Z. Bailey|BRL
-Z. Merrett|ESS
+Z. Merrett|HAW
 J. Newcombe|HAW
 K. Pickett|MEL
 J. Fletcher|BRL
@@ -210,7 +210,7 @@ C. Idun|GWS
 J. Clark|FRE
 C. Mills|SYD
 J. Rowbottom|SYD
-S. Pendlebury|COL
+S. Pendlebury|GCS
 L. Ryan|FRE
 D. Houston|COL
 D. Stephens|NTH
@@ -250,7 +250,7 @@ T. Atkins|GEE
 M. Phillipou|STK
 D. Rioli|GCS
 N. Madden|GWS
-K. Briggs|GWS
+K. Briggs|RIC
 H. Himmelberg|GWS
 S. De Koning|GEE
 C. Windsor|MEL
@@ -259,18 +259,18 @@ J. Rachele|ADE
 O. Greeves|HAW
 C. Salem|MEL
 L. Carmichael|WBD
-J. Ridley|ESS
-J. Bowes|GEE
+J. Ridley|GEE
+J. Bowes|ESS
 J. Leake|GWS
 J. Smillie|RIC
 N. Martin|ESS
-S. Marshall|BRL
+S. Marshall|STK
 ## NSW-ACT Academy
 W. Ashcroft|BRL
 J. Burgoyne|PTA
 J. Richards|PTA
 W. Setterfield|ESS
-N. Blakey|SYD
+N. Blakey|NTH
 J. Smith|CAR
 D. McStay|COL
 B. Williams|WCE
@@ -299,7 +299,7 @@ T. Green|GWS
 J. Noble|GCS
 H. McCluggage|BRL
 D. Sharp|ESS
-L. Neale|BRL
+L. Neale|COL
 P. Cripps|CAR
 T. Xerri|NTH
 W. Milera|ADE
@@ -324,7 +324,7 @@ A. Clarke|ESS
 S. Grlj|RIC
 L. Trainor|RIC
 B. Camporeale|CAR
-J. Viney|MEL
+J. Viney|WCE
 K. Smith|RIC
 T. Powell|NTH
 T. Prindable|COL
