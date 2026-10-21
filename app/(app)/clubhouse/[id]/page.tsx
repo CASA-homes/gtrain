@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
 import { Bar20, ClubDot, Cup, StepBar, TeamBadge } from '@/components/bits';
-import type { SquadBlock, SquadPlayer } from '@/components/SquadTable';
+import type { SquadPlayer } from '@/components/SquadTable';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import {
-  AGE_PHASES, agePhase, age, C, form, LINES, played, STATUSES, type Line, type PlayerRow,
+  AGE_PHASES, agePhase, age, C, form, LINES, played, STATUSES, type Line, type PlayerRow, type Slot,
 } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 
@@ -24,24 +24,19 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
     .from('listings').select('id, kind, asking, status, ends_at, players(name, positions), offers(count)')
     .eq('team_id', a.team.id).in('status', ['open', 'pending']).order('created_at', { ascending: false });
 
-  const toRow = (p: PlayerRow): SquadPlayer => {
+  // Which slot each player is in: the coach's saved lineup, or the auto-picked Best 22.
+  const slotOf = new Map<number, Slot | null>();
+  for (const l of LINES) for (const p of a.lineup.lines[l]) slotOf.set(p.id, l);
+  for (const p of a.lineup.bench) slotOf.set(p.id, 'BENCH');
+  const rows: SquadPlayer[] = a.players.map((p: PlayerRow) => {
     const r = league.ratings.get(p.id)!;
     return {
       id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, last5: p.last5,
       games: p.games, tons: played(p.last5).filter((s) => s >= 100).length, form: form(p),
       valueStars: r.valueStars, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
+      slot: slotOf.get(p.id) ?? null,
     };
-  };
-  const blocks: SquadBlock[] = [
-    {
-      title: 'Best 22', sub: '5 DEF · 7 MID · 1 RUC · 5 FWD · 4 bench, picked on 2026 average',
-      groups: [
-        ...LINES.map((l) => ({ name: LINE_NAMES[l], colour: C[l], players: a.best.lines[l].map(toRow) })),
-        { name: 'Bench', colour: C.muted, players: a.best.bench.map(toRow) },
-      ],
-    },
-    { title: 'Extended squad', sub: `${a.best.extended.length} not in the Best 22`, groups: [{ name: 'Not selected', colour: C.muted, players: a.best.extended.map(toRow) }] },
-  ];
+  });
 
   // Last season from the real ladder
   const lad = league.ladder.find((l) => l.season === CURRENT_SEASON && l.team_id === a.team.id);
@@ -60,7 +55,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   }));
 
   // Cut candidates: the lowest-value players outside the Best 22
-  const cuts = [...a.best.extended].sort((x, y) => league.ratings.get(x.id)!.value - league.ratings.get(y.id)!.value).slice(0, 4);
+  const cuts = [...a.lineup.extended].sort((x, y) => league.ratings.get(x.id)!.value - league.ratings.get(y.id)!.value).slice(0, 4);
 
   return (
     <div className="wrap">
@@ -84,7 +79,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         {isMine && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark">Set keepers</Link>}
       </header>
 
-      <ClubhouseSplit blocks={blocks}>
+      <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine || !!me?.is_commish} saved={a.lineupSaved}>
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div className="row-between"><h2 className="h2">Last season</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON}</span></div>
           <div className="tiles" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
@@ -164,7 +159,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         </section>
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div className="row-between"><h2 className="h2">Cut candidates</h2><span className="muted" style={{ fontSize: 12 }}>Lowest value outside the Best 22</span></div>
+          <div className="row-between"><h2 className="h2">Cut candidates</h2><span className="muted" style={{ fontSize: 12 }}>Lowest value outside the starting 22</span></div>
           <div className="card" style={{ overflow: 'hidden' }}>
             {cuts.map((p, i) => {
               const v = league.ratings.get(p.id)!.value;
