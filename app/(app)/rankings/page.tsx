@@ -53,7 +53,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
             <tbody>
               {rows.map((a) => {
                 const top = a.players
-                  .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0) }))
+                  .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0, league.ratings.get(p.id)?.lineEdge ?? 0) }))
                   .sort((x, y) => y.f - x.f).slice(0, 3);
                 return (
                   <tr key={a.team.id}>
