@@ -106,7 +106,7 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
  *   Win-now asset: 30 or older and 95+ (or gun-level for his line).
  *   Fantasy star 110+, Fantasy gun 99+ (any age under 30).
  *   24 and under, it's about potential:
- *     Potential fantasy star: 23 or younger at 90+, 21 or younger at 76+, or a top-10 pick aged 20 or under with top potential.
+ *     Potential fantasy star: 23 or younger at 90+, 21 or younger at 80+, 20 or younger at 76+, or a top-10 pick aged 20 or under with top potential.
  *     Potential great fantasy player: 78+, strong potential, 22 or younger at 72+, a hot finish (80+ over his last five),
  *       or 65+ in an injury-shortened season.
  *     Potential good fantasy player: 60+. Below that: Role dependent.
@@ -138,7 +138,7 @@ function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean)
 
   if (age <= 24) {
     let tier: Verdict =
-      age <= 23 && (avg >= 90 || (age <= 21 && avg >= 76) || (age <= 20 && pickN <= 10 && pot >= 4.5)) ? 'Potential fantasy star'
+      age <= 23 && (avg >= 90 || (age <= 21 && avg >= 80) || (age <= 20 && avg >= 76) || (age <= 20 && pickN <= 10 && pot >= 4.5)) ? 'Potential fantasy star'
       : avg >= 78 || pot >= 4 || (age <= 22 && avg >= 72) || hot || (g <= 16 && avg >= 65) ? 'Potential great fantasy player'
       : avg >= 60 ? 'Potential good fantasy player' : 'Role dependent';
     // Key-position players (193cm+ defenders and forwards) are a slower, lower-scoring build: one rung down.
