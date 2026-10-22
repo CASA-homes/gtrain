@@ -43,6 +43,6 @@ export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
 
   'Ram Dawgs': {
     headline: 'Spoon now, scary later',
-    body: 'Won two games all year (2–19) and took the 2026 wooden spoon. The keeper list averages 23, and the best part of it is already scoring. Butters (105) and Max Holmes (102) are prime-age premiums, and Holmes came from A Brayshaw Thing in the Mills deal. Bodhi Uwland (87 at 23) is a top defender in the making. Behind them is the deepest crop of young talent in the league: Harley Reid, Finn O’Sullivan, Francou, Freijah, Wardlaw, Nick Watson, Weddle and Sam Cumming. Add pick 1 and pick 16 in 2027. They won’t win much in 2027, but they rank near the top on the Future build. Give it two years.',
+    body: 'Won two games all year (2–19) and took the 2026 wooden spoon. The keeper list averages 23, and the best part of it is already scoring. Butters (105) and Max Holmes (102) are prime-age premiums, and Holmes came from A Brayshaw Thing in the Mills deal. Bodhi Uwland (87 at 23) is a top defender in the making. Behind them is the deepest crop of young talent in the league: Harley Reid, Finn O’Sullivan, Francou, Freijah, Wardlaw, Nick Watson, Weddle and Sam Cumming. Add pick 1 and pick 16 in 2027. They won’t win much in 2027, and most of the kids are still a year or two from scoring, but the volume of young talent is unmatched. Give it two years.',
   },
 };

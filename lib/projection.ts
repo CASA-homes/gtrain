@@ -29,13 +29,15 @@ export function projected2027(p: PlayerRow): number {
   return Math.max(0, Math.round((base * curve(a) + delta) * 10) / 10);
 }
 
-/** Future build only counts players this age or younger (current age). */
+/** Future build only counts players this age or younger (current age)... */
 export const FUTURE_MAX_AGE = 24;
+/** ...and ranks each team on its best this-many of them, so quality beats quantity. */
+export const FUTURE_CORE = 6;
 
 /**
  * Future-build score for one player: his projected peak, weighted by how many prime years he has left.
- *   peak = projected 2027 average, grown along the age curve to 26. Potential sets how much of that growth he gets
- *          (5★ gets all of it, 2.5★ half).
+ *   peak = projected 2027 average, grown part of the way along the age curve to 26. Potential sets how much of
+ *          that growth he gets, and only 60% of it counts, so kids already scoring rate ahead of raw ones.
  *   years left = prime seasons until 31; a 19-year-old has twelve, a 28-year-old three.
  * The scarce-line bonus (forwards, defenders) only counts in full for players good enough to start there.
  */
@@ -46,7 +48,7 @@ export function futureScore(p: PlayerRow, potentialStars: number | null, lineBon
   const base = projected2027(p) + bonus;
   let cum = 1;
   for (let y = a + 1; y <= 26; y++) cum *= curve(y);
-  const peak = base * (1 + (cum - 1) * ((potentialStars ?? 2.5) / 5));
+  const peak = base * (1 + (cum - 1) * ((potentialStars ?? 2.5) / 5) * 0.6);
   const years = Math.max(0, 31 - a);
   return Math.round(peak * Math.max(0.45, Math.min(1.12, 0.6 + years * 0.045)));
 }
