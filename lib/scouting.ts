@@ -110,7 +110,7 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
  *     Potential great fantasy player: 78+, strong potential, 22 or younger at 72+, a hot finish (80+ over his last five),
  *       or 65+ in an injury-shortened season.
  *     Potential good fantasy player: 60+. Below that: Role dependent.
- *     Fewer than 10 AFL games: Too early to tell (with Potential great for a top-20 pick). Top-20 picks with 20 or
+ *     Fewer than 10 AFL games: Too early to tell for a top-20 pick (with his potential tier), otherwise Unknown quantity. Top-20 picks with 20 or
  *     fewer games are at least Potential great, tagged Too early to tell. Under 70 with a real sample: Role dependent tag.
  *   Over 24: Great fantasy player 90–99, Reliable starter 80–90, Depth piece 70–80, Role dependent under 70.
  *   Under 30 with an injury-hit season: Bounce-back candidate. 30 or older and not a win-now asset: Sell now tag.
@@ -137,7 +137,12 @@ function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean)
       : avg >= 78 || pot >= 4 || (age <= 22 && avg >= 72) || hot || (g <= 16 && avg >= 65) ? 'Potential great fantasy player'
       : avg >= 60 ? 'Potential good fantasy player' : 'Role dependent';
     if (cg <= 20 && pickN <= 20 && (tier === 'Potential good fantasy player' || tier === 'Role dependent')) tier = 'Potential great fantasy player';
-    if (cg < 10) { if (pickN <= 20 || tier !== 'Role dependent') extra.push(tier); return out('Too early to tell'); }
+    if (cg < 10) {
+      // A high pick who hasn't played much: too early. Anyone else with a handful of games (mid-season and rookie
+      // picks, or players who got hurt early) is an unknown quantity.
+      if (pickN <= 20) { extra.push(tier); return out('Too early to tell'); }
+      return out('Unknown quantity');
+    }
     if (cg <= 20) extra.push('Too early to tell');
     if (avg < 70 && tier !== 'Role dependent' && cg > 20 && !(g <= 16 && avg >= 65)) extra.push('Role dependent');
     return out(tier);
@@ -324,7 +329,7 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   const VERDICT_LINE: Partial<Record<Verdict, string>> = {
     'Fantasy star': 'Verdict: already a fantasy star.', 'Fantasy gun': 'Verdict: already a fantasy gun.',
     'Potential fantasy star': 'Verdict: a potential fantasy star.', 'Potential great fantasy player': 'Verdict: a potential great fantasy player.',
-    'Potential good fantasy player': 'Verdict: a potential good fantasy player.', 'Too early to tell': 'Verdict: too early to tell.',
+    'Potential good fantasy player': 'Verdict: a potential good fantasy player.', 'Too early to tell': 'Verdict: too early to tell.', 'Unknown quantity': 'Verdict: an unknown quantity.',
     'Role dependent': 'Verdict: role dependent for now.', 'Bounce-back candidate': 'Verdict: a bounce-back candidate.',
   };
   potential = potential.replace('{{VERDICT}}', VERDICT_LINE[verdict] ?? 'Verdict: a long-range bet that needs a bigger role.');
@@ -341,6 +346,7 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
       'Win-now asset': `${first} is a win-now piece. He’s worth plenty this season and less every season after. Keep him if you’re chasing the flag and sell him if you’re not.`,
       'Sell now': `${first}’s value only goes one way from here. If anyone still pays for his name, now is the time to move him.`,
       'Bounce-back candidate': `${first} is a bounce-back candidate. His ${CURRENT_YEAR} average undersells him because of time out of the side. Bet on a clean preseason and he’s worth well more than his current price.`,
+      'Unknown quantity': `${first} is an unknown quantity. He’s only had a handful of AFL games, so there’s not enough to judge either way. Cheap to hold while you find out.`,
       'Too early to tell': `${first} hasn’t played enough AFL footy to judge yet. Hold him while you find out, especially if he came in high in the draft.`,
       'Potential fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
       'Potential great fantasy player': `${first} has the profile to become a 90-plus scorer. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,

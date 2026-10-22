@@ -4,7 +4,7 @@
 
 export type Verdict =
   | 'Fantasy star' | 'Fantasy gun' | 'Great fantasy player' | 'Reliable starter' | 'Depth piece' | 'Role dependent'
-  | 'Win-now asset' | 'Sell now' | 'Bounce-back candidate' | 'Too early to tell'
+  | 'Win-now asset' | 'Sell now' | 'Bounce-back candidate' | 'Too early to tell' | 'Unknown quantity'
   | 'Potential fantasy star' | 'Potential great fantasy player' | 'Potential good fantasy player';
 
 /**
