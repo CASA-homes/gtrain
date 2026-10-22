@@ -12,7 +12,9 @@ export function ClubDot({ code, size = 18 }: { code: string | null; size?: numbe
       title={label}
       style={{
         display: 'inline-block', verticalAlign: 'middle', width: size, height: size, borderRadius: '50%', flex: 'none',
-        background: c ? `linear-gradient(135deg, ${c.a} 50%, ${c.b} 50%)` : '#d9ddd6',
+        background: !c ? '#d9ddd6' : c.m
+          ? `linear-gradient(135deg, ${c.a} 0 40%, ${c.m} 40% 60%, ${c.b} 60% 100%)`
+          : `linear-gradient(135deg, ${c.a} 50%, ${c.b} 50%)`,
         boxShadow: 'inset 0 0 0 1px rgb(21 26 22 / .18)',
       }}
     />
