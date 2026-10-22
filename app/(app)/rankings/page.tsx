@@ -46,7 +46,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           {tabs}
         </div>
         <div className="table-box">
-          <table className="squad" style={{ minWidth: 960 }}>
+          <table className="squad" style={{ minWidth: 1120 }}>
             <thead>
               <tr><th style={{ width: 40 }}>#</th><th>Team</th><th>Best young assets</th><th style={{ textAlign: 'right', width: 80 }}>Avg age</th><th style={{ width: 120 }}>Avg potential</th>{lineHead}</tr>
             </thead>
@@ -54,7 +54,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
               {rows.map((a) => {
                 const top = a.players.filter((p) => (age(p.birth_date) ?? 99) <= FUTURE_MAX_AGE)
                   .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0, league.ratings.get(p.id)?.lineEdge ?? 0) }))
-                  .sort((x, y) => y.f - x.f).slice(0, 3);
+                  .sort((x, y) => y.f - x.f).slice(0, 6);
                 return (
                   <tr key={a.team.id}>
                     <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{a.future.rank}</td>
@@ -67,12 +67,14 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
                             <span className="muted">2027</span>
                           </span>
                         )}
-                        {top.map(({ p }) => (
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, max-content)', gridAutoFlow: 'column', gridTemplateRows: 'repeat(3, auto)', gap: '2px 18px' }}>
+                          {top.map(({ p }) => (
                           <Link key={p.id} href={`/players/${p.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'inherit', textDecoration: 'none', fontSize: 12, whiteSpace: 'nowrap' }}>
                             <ClubDot code={p.afl_club} size={12} /><span style={{ fontWeight: 600 }}>{p.name}</span>
                             <span className="muted">{age(p.birth_date) ?? '–'}y · {p.average?.toFixed(0) ?? '–'}</span>
                           </Link>
                         ))}
+                        </div>
                       </div>
                     </td>
                     <td style={{ textAlign: 'right', fontWeight: 600 }}>{a.future.avgAge?.toFixed(1) ?? '–'}</td>
