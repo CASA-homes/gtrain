@@ -104,6 +104,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <h2 className="h2">Scouting report</h2>
             <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 12px' }}>{report.verdict}</span>
+            {report.extra.map((v) => <span key={v} className="pill" style={{ background: v === 'Sell now' ? '#b4532a' : 'transparent', color: v === 'Sell now' ? '#fff' : C.ink, border: v === 'Sell now' ? 'none' : `1px solid ${C.ink}`, padding: '3px 11px' }}>{v}</span>)}
           </div>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {report.tags.map((t) => <span key={t} className="pill" style={{ background: '#eef3ea', color: C.green5, padding: '3px 10px' }}>{t}</span>)}
