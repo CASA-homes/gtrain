@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { buildAttrs, type Attr } from '@/lib/scouting';
-import { FUTURE_CORE, FUTURE_MAX_AGE, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
+import { FUTURE_CORE, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
 const isFutureAge = (p: PlayerRow) => { const a = age(p.birth_date); return a != null && a <= FUTURE_MAX_AGE; };
 import {
   age, best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
@@ -37,7 +37,7 @@ export interface TeamAnalysis {
   premierships: number[];
   projection: Projection;          // 2027: keepers + simulated redraft
   projectedStatus: Status;         // what the model says
-  future: { score: number; rank: number; avgAge: number | null; avgPotential: number | null; lines: Record<Line, number> };  // lines = league rank per line
+  future: { score: number; rank: number; avgAge: number | null; avgPotential: number | null; lines: Record<Line, number>; picks: number[] };  // lines = league rank per line
 }
 
 export interface League {
@@ -108,12 +108,18 @@ export const getLeague = cache(async (): Promise<League> => {
     const mine = players.filter((p) => p.team_id === t.id && isFutureAge(p))
       .map((p) => ({ p, f: futureScore(p, ratings.get(p.id)?.potential ?? null, ratings.get(p.id)?.lineBonus ?? 0, ratings.get(p.id)?.lineEdge ?? 0) }))
       .sort((x, y) => y.f - x.f);
+    // Best two 2027 picks join the pool as prospects before taking the best six.
+    const prospects = picks.filter((pk) => pk.year === CURRENT_SEASON + 1 && pk.owner_team_id === t.id && pk.overall)
+      .map((pk) => ({ overall: pk.overall!, f: prospectScore(pk.overall!) })).sort((x, y) => y.f - x.f).slice(0, FUTURE_PICKS);
     const core = mine.slice(0, FUTURE_CORE);
+    const pool = [...mine.map((x) => x.f), ...prospects.map((x) => x.f)].sort((x, y) => y - x).slice(0, FUTURE_CORE);
+    const countedPicks = prospects.filter((x) => pool.includes(x.f)).map((x) => x.overall);
     const ages = core.map((x) => age(x.p.birth_date)).filter((x): x is number => x != null);
     const pots = core.map((x) => ratings.get(x.p.id)?.potential).filter((x): x is number => x != null);
     return {
       id: t.id,
-      score: core.reduce((s2, x) => s2 + x.f, 0),
+      score: pool.reduce((s2, x) => s2 + x, 0),
+      picks: countedPicks,
       avgAge: ages.length ? ages.reduce((a, b) => a + b, 0) / ages.length : null,
       avgPotential: pots.length ? pots.reduce((a, b) => a + b, 0) / pots.length : null,
       lineTotals: lineTotals(mine.map((x) => ({ id: x.p.id, positions: x.p.positions, score: x.f }))),
@@ -141,7 +147,7 @@ export const getLeague = cache(async (): Promise<League> => {
       future: (() => {
         const f = futureByTeam.find((x) => x.id === a.team.id)!;
         return {
-          score: Math.round(f.score), rank: futureByTeam.indexOf(f) + 1, avgAge: f.avgAge, avgPotential: f.avgPotential,
+          score: Math.round(f.score), rank: futureByTeam.indexOf(f) + 1, avgAge: f.avgAge, avgPotential: f.avgPotential, picks: f.picks,
           lines: Object.fromEntries(LINES.map((l) => [l, futureLineRank(a.team.id, l)])) as Record<Line, number>,
         };
       })(),
