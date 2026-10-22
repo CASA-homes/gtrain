@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
+import { StatusOverride } from './StatusOverride';
 import { Bar20, ClubDot, Cup, RankBar, StepBar, TeamBadge } from '@/components/bits';
 import type { SquadPlayer } from '@/components/SquadTable';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
@@ -92,9 +93,16 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           </div>
 
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div className="row-between"><span className="eyebrow">Current status</span><span className="muted" style={{ fontSize: 12 }}>#{a.rank} of 10 on Best 18</span></div>
-            <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em', color: a.rank <= 2 ? C.green5 : C.ink }}>{a.status}</span>
+            <div className="row-between">
+              <span className="eyebrow">2027 outlook</span>
+              <span className="muted" style={{ fontSize: 12 }}>Projected #{a.projection.rank} of 10 after keepers and the redraft</span>
+            </div>
+            <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em', color: STATUSES.indexOf(a.status) === 0 ? C.green5 : C.ink }}>{a.status}</span>
             <StepBar steps={STATUSES.map((s) => ({ name: s }))} active={STATUSES.indexOf(a.status)} colours={[C.green5, C.green4, C.green2, C.yellow]} />
+            {a.team.status_override && a.team.status_override !== a.projectedStatus && (
+              <span className="muted" style={{ fontSize: 12 }}>Commissioner’s call. The model has them as {a.projectedStatus.toLowerCase()}.</span>
+            )}
+            {me?.is_commish && <StatusOverride teamId={a.team.id} value={a.team.status_override} />}
           </div>
 
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>

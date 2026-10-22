@@ -44,3 +44,14 @@ export async function resetLineup(teamId: number) {
   revalidatePath(`/clubhouse/${teamId}`);
   return { ok: true };
 }
+
+export async function setStatusOverride(teamId: number, status: string | null) {
+  const me = await getMe();
+  if (!me?.is_commish) return { error: 'Only the commissioner can set a team’s status.' };
+  const supabase = await createClient();
+  const r = await supabase.from('teams').update({ status_override: status }).eq('id', teamId);
+  if (r.error) return { error: r.error.message };
+  revalidatePath(`/clubhouse/${teamId}`);
+  revalidatePath('/rankings');
+  return { ok: true };
+}
