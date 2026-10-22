@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { buildAttrs, type Attr } from '@/lib/scouting';
-import { FUTURE_CORE, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
+import { FUTURE_CORE, FUTURE_PIN, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
 const isFutureAge = (p: PlayerRow) => { const a = age(p.birth_date); return a != null && a <= FUTURE_MAX_AGE; };
 import {
   age, best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
@@ -118,6 +118,7 @@ export const getLeague = cache(async (): Promise<League> => {
     const pots = core.map((x) => ratings.get(x.p.id)?.potential).filter((x): x is number => x != null);
     return {
       id: t.id,
+      name: t.name,
       score: pool.reduce((s2, x) => s2 + x, 0),
       picks: countedPicks,
       avgAge: ages.length ? ages.reduce((a, b) => a + b, 0) / ages.length : null,
@@ -125,6 +126,11 @@ export const getLeague = cache(async (): Promise<League> => {
       lineTotals: lineTotals(mine.map((x) => ({ id: x.p.id, positions: x.p.positions, score: x.f }))),
     };
   }).sort((x, y) => y.score - x.score);
+  // Commish calls: pin a team to a set spot in the future build.
+  for (const [team, spot] of Object.entries(FUTURE_PIN)) {
+    const i = futureByTeam.findIndex((f) => f.name === team);
+    if (i >= 0) futureByTeam.splice(spot - 1, 0, ...futureByTeam.splice(i, 1));
+  }
   const futureLineRank = (id: number, l: Line) => {
     const all = futureByTeam.map((f) => f.lineTotals[l]).sort((x, y) => y - x);
     return all.indexOf(futureByTeam.find((f) => f.id === id)!.lineTotals[l]) + 1;
