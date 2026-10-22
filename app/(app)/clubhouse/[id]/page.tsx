@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
 import { StatusOverride } from './StatusOverride';
+import { TEAM_NOTES } from '@/lib/team-notes';
 import { Bar20, ClubDot, Cup, RankBar, StepBar, TeamBadge } from '@/components/bits';
 import type { SquadPlayer } from '@/components/SquadTable';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
@@ -82,15 +83,13 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine || !!me?.is_commish} saved={a.lineupSaved}>
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="row-between"><h2 className="h2">Last season</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON}</span></div>
-          <div className="tiles" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
-            <div className="tile"><span className="eyebrow">Finish</span><b>{finish}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${ordinal(lad.rank)} on the ladder` : ''}</span></div>
-            <div className="tile"><span className="eyebrow">Record</span><b>{lad ? `${lad.wins}–${lad.losses}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad?.draws ? `${lad.draws} draws` : 'no draws'}</span></div>
-            <div className="tile"><span className="eyebrow">Points for</span><b>{lad?.pts_for.toLocaleString() ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${Math.round(lad.pts_for / 21).toLocaleString()} a round` : ''}</span></div>
-            <div className="tile"><span className="eyebrow">Points against</span><b>{lad?.pts_against.toLocaleString() ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${Math.round(lad.pts_against / 21).toLocaleString()} a round` : ''}</span></div>
-            <div className="tile"><span className="eyebrow">Best player</span><b>{topPlayer?.name ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{topPlayer?.average?.toFixed(1)} avg</span></div>
-            <div className="tile"><span className="eyebrow">Grand final</span><b>{season?.premier_id === a.team.id ? `${season.gf_winner_score}–${season.gf_loser_score}` : season?.runner_up_id === a.team.id ? `${season.gf_loser_score}–${season.gf_winner_score}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{season?.premier_id === a.team.id ? 'won the flag' : season?.runner_up_id === a.team.id ? 'lost the decider' : 'missed it'}</span></div>
-          </div>
+          {TEAM_NOTES[a.team.name] && (
+            <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8, background: C.ink, color: '#f4f2ea', border: 0 }}>
+              <span className="eyebrow" style={{ color: '#b9c4b6' }}>The verdict</span>
+              <span style={{ font: '600 22px/1.15 var(--font)', letterSpacing: '-.02em' }}>{TEAM_NOTES[a.team.name].headline}</span>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: '#dfe5dc' }}>{TEAM_NOTES[a.team.name].body}</p>
+            </div>
+          )}
 
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div className="row-between">
@@ -99,10 +98,17 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             </div>
             <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em', color: STATUSES.indexOf(a.status) === 0 ? C.green5 : C.ink }}>{a.status}</span>
             <StepBar steps={STATUSES.map((s) => ({ name: s }))} active={STATUSES.indexOf(a.status)} colours={[C.green5, C.green4, C.green2, C.yellow]} />
-            {a.team.status_override && a.team.status_override !== a.projectedStatus && (
-              <span className="muted" style={{ fontSize: 12 }}>Commissioner’s call. The model has them as {a.projectedStatus.toLowerCase()}.</span>
-            )}
             {me?.is_commish && <StatusOverride teamId={a.team.id} value={a.team.status_override} />}
+          </div>
+
+          <div className="row-between"><h2 className="h2">Last season</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON}</span></div>
+          <div className="tiles" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
+            <div className="tile"><span className="eyebrow">Finish</span><b>{finish}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${ordinal(lad.rank)} on the ladder` : ''}</span></div>
+            <div className="tile"><span className="eyebrow">Record</span><b>{lad ? `${lad.wins}–${lad.losses}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad?.draws ? `${lad.draws} draws` : 'no draws'}</span></div>
+            <div className="tile"><span className="eyebrow">Points for</span><b>{lad?.pts_for.toLocaleString() ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${Math.round(lad.pts_for / 21).toLocaleString()} a round` : ''}</span></div>
+            <div className="tile"><span className="eyebrow">Points against</span><b>{lad?.pts_against.toLocaleString() ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${Math.round(lad.pts_against / 21).toLocaleString()} a round` : ''}</span></div>
+            <div className="tile"><span className="eyebrow">Best player</span><b>{topPlayer?.name ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{topPlayer?.average?.toFixed(1)} avg</span></div>
+            <div className="tile"><span className="eyebrow">Grand final</span><b>{season?.premier_id === a.team.id ? `${season.gf_winner_score}–${season.gf_loser_score}` : season?.runner_up_id === a.team.id ? `${season.gf_loser_score}–${season.gf_winner_score}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{season?.premier_id === a.team.id ? 'won the flag' : season?.runner_up_id === a.team.id ? 'lost the decider' : 'missed it'}</span></div>
           </div>
 
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
