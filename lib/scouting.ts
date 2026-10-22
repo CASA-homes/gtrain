@@ -2,7 +2,7 @@
 // Attributes are percentiles against every rostered player with 5+ AFL games in 2026.
 import { age, played, primaryLine, type Box, type PlayerRow, type Ratings } from '@/lib/ratings';
 import { noteFor, type Verdict } from '@/lib/notes';
-import { bounceBack, CURRENT_YEAR, INJURY_2026 } from '@/lib/injury';
+import { bounceBack, CURRENT_YEAR, FORCED_BOUNCE, INJURY_2026 } from '@/lib/injury';
 
 
 export interface Attr { key: string; label: string; value: number; raw: string }
@@ -274,8 +274,9 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     const s26 = hist.find((h) => h[0] === CURRENT_YEAR);
     const g26 = s26?.[1] ?? 0, a26 = s26?.[2] ?? 0;
     const prior = hist.filter((h) => h[0] >= CURRENT_YEAR - 2 && h[0] < CURRENT_YEAR && h[1] >= 8);
-    const peak = prior.length ? prior.reduce((x, y) => (y[2] > x[2] ? y : x)) : null;
-    const known = INJURY_2026[p.name];
+    let peak = prior.length ? prior.reduce((x, y) => (y[2] > x[2] ? y : x)) : null;
+    const forced = FORCED_BOUNCE[p.name];
+    const known = INJURY_2026[p.name] ?? forced;
     const yy = (y: number) => `’${String(y).slice(2)}`;
     const stillYoung = (a ?? 30) <= 31;
     const interrupted = !!known || g26 <= 18;
@@ -283,7 +284,10 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     const gms = (g: number) => `${g} game${g === 1 ? '' : 's'}`;
     if (p.list_status) {
       health = null;
-    } else if (peak && peak[2] >= 88 && interrupted && (a26 <= peak[2] - 10 || g26 <= 12)) {
+    } else if (forced || (peak && peak[2] >= 88 && interrupted && (a26 <= peak[2] - 10 || g26 <= 12))) {
+      const fb = forced ? bounceBack(p) : null;
+      if (fb) peak = fb.peak;
+      if (!peak) throw new Error('unreachable');
       const pk = Math.round(peak[2]), cur = Math.round(a26);
       const what = g26 === 0 ? (known ? '' : `, but he didn’t play a game in ${CURRENT_YEAR}`)
         : g26 <= 12 ? `, but only managed ${gms(g26)} in ${CURRENT_YEAR} for ${an(cur)} ${cur} average`
