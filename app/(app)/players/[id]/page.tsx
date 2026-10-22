@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { AvgChip, Bar20, ClubDot, ScoreChip, Stars } from '@/components/bits';
 import { CLUBS } from '@/lib/clubs';
 import { getLeague, CURRENT_SEASON } from '@/lib/data';
-import { age, C, form, played, primaryLine } from '@/lib/ratings';
+import { age, C, form, played } from '@/lib/ratings';
 import { scoutingReport } from '@/lib/scouting';
 
 /** Commish-supplied photo first, then the AFL headshot DFS points to. */
@@ -21,7 +21,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const r = league.ratings.get(p.id)!;
   const attrs = league.attrs.get(p.id);
   const owner = league.teams.find((t) => t.id === p.team_id)!;
-  const line = primaryLine(p);
+  const line = r.line;
   const xs = played(p.last5);
   const valueRank = [...league.ratings.values()].filter((x) => x.value > r.value).length + 1;
   const f = form(p);
@@ -94,6 +94,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             <span className="eyebrow">Value</span>
             <span style={{ font: '600 48px/1 var(--font)', letterSpacing: '-.03em', color: C.green5 }}>{r.value}</span>
             <span className="muted" style={{ fontSize: 12 }}>{valueRank} of {league.players.length} in the league</span>
+            <span className="muted" style={{ fontSize: 12 }}>Valued as {r.line} · No.{r.lineRank} {r.line}{r.statusRisk ? ' · status at risk' : ''}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             <span className="eyebrow">Value stars</span>
@@ -115,7 +116,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
-          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ['Outlook', report.outlook]] as const).map(([h, t]) => (
+          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ...(report.position ? [['Positional value', report.position] as const] : []), ['Outlook', report.outlook]] as const).map(([h, t]) => (
             <div key={h} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span className="eyebrow">{h}</span>
               <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '62ch' }}>{t}</p>
