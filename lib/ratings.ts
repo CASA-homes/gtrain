@@ -163,7 +163,8 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
     const f = form(p);
     const avgP = pct(avgs, avg);
     const lineRank = avgs.filter((x) => x > avg).length + 1;
-    const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(xs, avg), injuredBlend: p !== rows.find((r) => r.id === p.id) }) : 0;
+    const orig = rows.find((r) => r.id === p.id);
+    const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(xs, avg), injuredBlend: p !== orig, missedSeason: !orig?.games }) : 0;
     // A forward or defender who also holds MID and is living in the centre square may lose the scarcer status.
     const statusRisk = line !== 'MID' && p.positions.includes('MID') && (p.box?.cba ?? 0) >= 50;
     // A forward's 92 is worth a midfielder's 102: lift scarce-line scoring onto the midfield scale for potential.
@@ -191,12 +192,13 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
  * the league (10 teams × 5 DEF / 7 MID / 1 RUC / 5 FWD). Being 10th of 50 forwards is worth the same as
  * 14th of 70 midfielders, so a 90 forward can match a 100+ midfielder.
  *   top 10% of starters → 5 stars, top 25% → 4.5, top 45% → 4, top 70% → 3.5, a starter → 3, then depth.
- * Anyone averaging 105+ is 5 stars. Injured players are ranked on their blended average but top out at 4.5.
+ * Anyone averaging 105+ is 5 stars, and so are the top two rucks. Injured players are ranked on their blended
+ * average but top out at 4.5 (4 if they missed the whole season).
  * Durability and consistency can only take off up to half a star, never for the top 10%, and big scores never
  * count against a player (only scores well below his average do).
  */
 const VALUE_CURVE: [number, number][] = [[0, 100], [0.1, 95], [0.25, 85], [0.45, 75], [0.7, 65], [1, 55], [1.4, 45], [2, 35], [3, 25], [5, 10], [99, 0]];
-export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: number; downside: number; injuredBlend: boolean }): number {
+export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: number; downside: number; injuredBlend: boolean; missedSeason?: boolean }): number {
   const rel = (rank - 0.5) / STARTERS[line];
   let v = 0;
   for (let i = 1; i < VALUE_CURVE.length; i++) {
@@ -210,7 +212,8 @@ export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: n
     v -= Math.min(5, pen);
   }
   if (o.avg >= 104.5 && !o.injuredBlend) v = Math.max(v, 95); // 105+ is elite on any line
-  if (o.injuredBlend) v = Math.min(v, 94);                    // a blended (injury-hit) player tops out at 4.5 stars
+  if (line === 'RUC' && rank <= 2 && !o.injuredBlend) v = Math.max(v, 95);   // only one ruck slot: the top two are elite
+  if (o.injuredBlend) v = Math.min(v, o.missedSeason ? 84 : 94);   // injury-hit players top out at 4.5, or 4 if they missed the whole season
   return Math.max(0, Math.round(v));
 }
 /** Share of recent scores more than 20% below his average. High scores never count against him. */
