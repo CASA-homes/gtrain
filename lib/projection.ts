@@ -45,7 +45,14 @@ export const prospectScore = (overall: number) => Math.round(115 * Math.exp(-0.0
  *   years left = prime seasons until 31; a 19-year-old has twelve, a 28-year-old three.
  * The scarce-line bonus (forwards, defenders) only counts in full for players good enough to start there.
  */
+/** Commish calls on the future build, as a multiplier on a player's future score. */
+const FUTURE_ADJUST: Record<string, number> = { 'L. Humphries': 1.4, 'H. Thomas': 0.6 };
+
 export function futureScore(p: PlayerRow, potentialStars: number | null, lineBonus = 0, lineEdge = 0): number {
+  return Math.round(rawFutureScore(p, potentialStars, lineBonus, lineEdge) * (FUTURE_ADJUST[p.name] ?? 1));
+}
+
+function rawFutureScore(p: PlayerRow, potentialStars: number | null, lineBonus = 0, lineEdge = 0): number {
   if (p.list_status) return 0;
   const a = age(p.birth_date, SEASON_START_2027) ?? 27;
   const bonus = lineBonus * Math.max(0, Math.min(1, (lineEdge + 5) / 10));
