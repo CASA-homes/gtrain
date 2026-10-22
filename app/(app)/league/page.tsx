@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { Chat } from '@/components/Chat';
 import { Cup } from '@/components/bits';
+import { AllTeamField } from '@/components/AllTeamField';
+import { best22, LINES } from '@/lib/ratings';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 import { postNews, rsvp } from './actions';
@@ -20,6 +22,12 @@ export default async function LeaguePage() {
     .filter((x) => x.years.length)
     .sort((a, b) => b.years.length - a.years.length);
   const ladder = league.ladder.filter((l) => l.season === CURRENT_SEASON);
+
+  // All-G-Train team: best 2026 averages per line (min. 10 games), 5/7/1/5 + 4 bench.
+  const allTeam = best22(league.players.filter((p) => (p.games ?? 0) >= 10 && p.average != null));
+  const allTeamByCoach = Object.entries(
+    [...LINES.flatMap((l) => allTeam.lines[l]), ...allTeam.bench].reduce<Record<string, number>>((acc, p) => { const n = name(p.team_id); acc[n] = (acc[n] ?? 0) + 1; return acc; }, {}),
+  ).sort((x, y) => y[1] - x[1]);
 
   return (
     <div className="wrap">
@@ -91,23 +99,25 @@ export default async function LeaguePage() {
       </section>
 
       <div className="split">
-        <div className="col-main">
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div className="row-between"><h2 className="h2" style={{ fontSize: 20 }}>{CURRENT_SEASON} final ladder</h2><span className="muted" style={{ fontSize: 13 }}>Tiebreak on points scored</span></div>
+        {/* Left: condensed ladder, honour roll, flags */}
+        <div style={{ flex: '1 1 300px', minWidth: 0, maxWidth: 420, display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <h2 className="h2" style={{ fontSize: 18 }}>{CURRENT_SEASON} final ladder</h2>
             <div className="table-box">
-              <table className="squad">
-                <thead><tr><th style={{ width: 40 }}>#</th><th>Team</th><th>Coach</th><th style={{ textAlign: 'center' }}>W–L</th><th style={{ textAlign: 'right' }}>For</th><th style={{ textAlign: 'right' }}>Against</th></tr></thead>
+              <table className="squad" style={{ fontSize: 13 }}>
+                <thead><tr><th style={{ width: 26 }}>#</th><th>Team</th><th style={{ textAlign: 'center', width: 48 }}>W–L</th><th style={{ textAlign: 'right', width: 56 }}>For</th></tr></thead>
                 <tbody>
                   {ladder.map((l) => {
                     const t = league.teams.find((x) => x.id === l.team_id)!;
                     return (
                       <tr key={l.team_id}>
-                        <td className="mono">{l.rank}</td>
-                        <td style={{ whiteSpace: 'nowrap' }}><Link href={`/clubhouse/${t.id}`}>{t.name}</Link>{latest?.premier_id === t.id && <span style={{ marginLeft: 6, verticalAlign: -4 }}><Cup size={16} /></span>}</td>
-                        <td className="muted">{t.coach_name}</td>
-                        <td style={{ textAlign: 'center' }}>{l.wins}–{l.losses}</td>
-                        <td style={{ textAlign: 'right' }}>{l.pts_for.toLocaleString()}</td>
-                        <td style={{ textAlign: 'right' }} className="muted">{l.pts_against.toLocaleString()}</td>
+                        <td className="mono" style={{ padding: '6px 8px' }}>{l.rank}</td>
+                        <td style={{ whiteSpace: 'nowrap', padding: '6px 8px' }}>
+                          <Link href={`/clubhouse/${t.id}`}>{t.name}</Link>
+                          {latest?.premier_id === t.id && <span style={{ marginLeft: 4, verticalAlign: -3 }}><Cup size={13} /></span>}
+                        </td>
+                        <td style={{ textAlign: 'center', padding: '6px 8px' }}>{l.wins}–{l.losses}</td>
+                        <td style={{ textAlign: 'right', padding: '6px 8px' }} className="mono">{(l.pts_for / 1000).toFixed(1)}k</td>
                       </tr>
                     );
                   })}
@@ -115,25 +125,18 @@ export default async function LeaguePage() {
               </table>
             </div>
           </section>
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <h2 className="h2" style={{ fontSize: 20 }}>Chat</h2>
-            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} />}
-          </section>
-        </div>
-
-        <aside className="col-side">
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <h2 className="h2" style={{ fontSize: 20 }}>Honour roll</h2>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <h2 className="h2" style={{ fontSize: 18 }}>Honour roll</h2>
             <div className="table-box">
-              <table className="squad">
+              <table className="squad" style={{ fontSize: 13 }}>
                 <thead><tr><th>Year</th><th>Premier</th><th>Runner-up</th><th>Spoon</th></tr></thead>
                 <tbody>
                   {league.seasons.map((s) => (
                     <tr key={s.year}>
-                      <td className="mono">{s.year}</td>
-                      <td style={{ fontWeight: 600 }}>{name(s.premier_id)}</td>
-                      <td className="muted">{name(s.runner_up_id)}</td>
-                      <td className="muted">{name(s.spoon_id)}</td>
+                      <td className="mono" style={{ padding: '6px 8px' }}>{s.year}</td>
+                      <td style={{ fontWeight: 600, padding: '6px 8px' }}>{name(s.premier_id)}</td>
+                      <td className="muted" style={{ padding: '6px 8px' }}>{name(s.runner_up_id)}</td>
+                      <td className="muted" style={{ padding: '6px 8px' }}>{name(s.spoon_id)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -141,15 +144,38 @@ export default async function LeaguePage() {
             </div>
           </section>
           <section style={{ display: 'flex', flexDirection: 'column' }}>
-            <h2 className="h2" style={{ fontSize: 20, marginBottom: 6 }}>Flags</h2>
+            <h2 className="h2" style={{ fontSize: 18, marginBottom: 6 }}>Flags</h2>
             {flags.map(({ t, years }) => (
-              <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderTop: '1px solid var(--line)' }}>
+              <div key={t.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '7px 0', borderTop: '1px solid var(--line)', fontSize: 14 }}>
                 <Link href={`/clubhouse/${t.id}`} style={{ color: 'inherit', fontWeight: 500, textDecoration: 'none' }}>{t.name}</Link>
-                <span style={{ display: 'inline-flex', gap: 4 }}>{years.map((y) => <Cup key={y} size={18} year={y} />)}</span>
+                <span style={{ display: 'inline-flex', gap: 4 }}>{years.map((y) => <Cup key={y} size={16} year={y} />)}</span>
               </div>
             ))}
           </section>
-        </aside>
+        </div>
+
+        {/* Right: the All-G-Train team, then chat */}
+        <div style={{ flex: '999 1 520px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 6 }}>
+              <div>
+                <span className="eyebrow">Best average on each line · min. 10 games</span>
+                <h2 className="h2" style={{ fontSize: 22 }}>All-G-Train team {CURRENT_SEASON}</h2>
+              </div>
+              <span className="muted" style={{ fontSize: 13 }}>
+                18 on the ground total <b style={{ color: 'var(--ink)' }}>{Math.round(LINES.flatMap((l) => allTeam.lines[l]).reduce((s2, p) => s2 + (p.average ?? 0), 0)).toLocaleString()}</b>
+              </span>
+            </div>
+            <AllTeamField lines={allTeam.lines} bench={allTeam.bench} ownerOf={(p) => name(p.team_id)} />
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="muted">
+              {allTeamByCoach.map(([t, n]) => <span key={t}><b style={{ color: 'var(--ink)' }}>{n}</b> {t}</span>)}
+            </div>
+          </section>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <h2 className="h2" style={{ fontSize: 20 }}>Chat</h2>
+            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} />}
+          </section>
+        </div>
       </div>
     </div>
   );
