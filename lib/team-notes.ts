@@ -9,9 +9,10 @@ export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
   },
 
   'Serong So’Right': {
-    headline: 'Four straight runner-ups and a keeper list that’s ageing out',
-    body: 'Runners-up in 2023, 2024, 2025 and 2026, which is the most painful run in this league. They went all-in at the 2026 deadline, knocked minor premiers Muzza’s out in the prelim, then lost the grand final by 61. Judge them on keepers and it gets worse. Gawn is 34, Impey, Steele, Short and Miller are all 30 or older, and Hill’s career year is unlikely to repeat. Dawson (113) and Caleb Serong are the only genuine prime-age premiums. The youth behind them (Retschko, Lindsay, Hall-Kahan, Dempsey) is a long way from scoring. With no pick before 39 in 2027 and much of their future draft capital traded away, there’s no quick fix. One more window at most, then a hard reset.',
+    headline: 'Four straight runner-ups, and a list due for a reboot',
+    body: 'Runners-up in 2023, 2024, 2025 and 2026, the most painful run in this league. They went all-in at the 2026 deadline, knocked minor premiers Muzza’s out in the prelim, then lost the grand final by 61. There’s still quality here. Dawson (113) and Caleb Serong are prime-age premiums. Jake Bowey (90 at 24) is a genuine young talent off half-back, and Ollie Dempsey (80, finishing the year strongly) could be one too. Connor Rozee, a 104-average player in 2025, is back from the injury that wiped out his 2026, which is like adding a premium for free. The concern is everything around them. Gawn is 34, Impey, Steele, Short and Miller are all 30 or older, Liberatore has retired and Greene has gone to Geelong. With no pick before 39 in 2027, there’s no draft help coming. One more tilt is realistic, but this list needs a reboot sooner rather than later.',
   },
+
   'Such Is Fyfe': {
     headline: 'The dynasty retools rather than rebuilds',
     body: 'Three straight flags from 2023 to 2025 and the best all-time record in the league (76–33). They went 17–4 again in 2026, then ran into Bodega’s 2006 in the prelim. The keeper list is the most complete in the comp: Rowell, Walsh, Josh Daicos, Warner and Sam Berry are all in their mid-twenties and scoring 92 to 100, with Bontempelli and Sinclair still premium for another year. They sold Hill, Kelly and Drew to Serong at peak value, and that leaves them with picks 7, 9 and 17 in 2027, the best early picks of any contender. Rowan Marshall at Geelong could be a bonus if he wins the No.1 ruck job. Strong contender again.',
