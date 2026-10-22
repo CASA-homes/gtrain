@@ -3,6 +3,8 @@
 import { age, played, primaryLine, type Box, type PlayerRow, type Ratings } from '@/lib/ratings';
 import { noteFor, type Verdict } from '@/lib/notes';
 
+const CURRENT_YEAR = 2026;
+
 export interface Attr { key: string; label: string; value: number; raw: string }
 
 type Def = { key: string; label: string; f: (b: Box) => number | null; raw: (b: Box) => string };
@@ -48,7 +50,17 @@ export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
 
 // ---------------------------------------------------------------- written report
 
-export interface Report { style: string; potential: string; fantasy: string; outlook: string; position: string | null; verdict: Verdict; tags: string[] }
+export interface Report { style: string; potential: string; fantasy: string; health: string | null; outlook: string; position: string | null; verdict: Verdict; tags: string[] }
+
+/** Known 2026 injury stories, keyed by players.name. Data alone can't tell injury from form, so these add the why. */
+const INJURY_2026: Record<string, string> = {
+  'T. English': 'Injuries cost him a big chunk of 2026',
+  'Z. Butters': 'Injuries cost him games in 2026',
+  'T. Green': 'He missed 2026 through injury',
+  'I. Heeney': 'A groin injury hampered him through 2026, before the Pullman ban ended his season',
+  'J. Caldwell': 'Injuries interrupted his 2026',
+  'C. Rozee': 'Injury wiped out almost all of his 2026',
+};
 
 const pick = <T,>(xs: T[], seed: number) => xs[Math.abs(seed) % xs.length];
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
@@ -58,7 +70,7 @@ const EXPECTED_BY_SEASON = [55, 55, 65, 75, 82, 88];
 /** What he actually does on the ground, from height, ruck share, centre bounces and where he gets the ball. */
 function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
   const ht = p.height_cm ?? 0;
-  const rc = n(b.rc), ho = n(b.ho), cba = n(b.cba), goals = n(b.g);
+  const rc = n(b.rc), ho = n(b.ho), cba = n(b.cba), goals = n(b.g), disp = n(b.k) + n(b.h);
   const line = primaryLine(p);
   if (rc >= 60 || ho >= 22) {
     return cba >= 60 && n(b.cl) >= 4 ? 'a No.1 ruck who follows up at ground level and wins his own clearances'
@@ -68,19 +80,32 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
     return goals >= 1 ? 'a ruck-forward who splits his time between the centre circle and the goal square'
       : 'a ruck who shares the load in a two-man rotation';
   }
-  if (cba >= 60) return v('cp') >= 15 ? 'an inside midfielder who lives at the stoppages' : v('mg') >= 15 ? 'a run-and-carry midfielder who breaks lines from the centre' : 'a centre-bounce midfielder';
-  if (line === 'DEF' || v('def') >= 15) {
+  const mid = (c: number) => c >= 60 || (line === 'MID' && c >= 45);
+  if (mid(cba)) return v('cp') >= 15 ? 'an inside midfielder who lives at the stoppages' : v('mg') >= 15 ? 'a run-and-carry midfielder who breaks lines from the centre' : 'a centre-bounce midfielder';
+  // Defender branch: DEF-listed, or a non-forward who clearly plays off half-back (no centre bounces, defensive numbers).
+  if (line === 'DEF' || (line !== 'FWD' && cba < 25 && v('def') >= 15)) {
     if (ht >= 193 && v('m') >= 12) return 'a key defender who takes the big intercept marks';
     if (ht >= 193) return 'a key defender whose job is to beat his man, not rack up the ball';
-    return v('k') >= 15 && v('mg') >= 13 ? 'a rebounding half-back who takes the kick-ins and sets up the chain' : v('m') >= 15 ? 'an intercept defender who reads the ball in flight' : 'a lockdown small defender';
+    // ki is kick-ins taken across the season.
+    if (n(b.ki) >= 30) return 'a rebounding half-back who takes the kick-ins and sets up the chain';
+    if (v('k') >= 15 && v('mg') >= 13) return 'a rebounding half-back whose kicking sets up the chain';
+    if (v('m') >= 15 || n(b.m) >= 6) return 'an intercept defender who reads the ball in flight';
+    if (disp >= 17) return 'a half-back flanker who gets plenty of the ball and uses it going forward';
+    return ht && ht < 186 ? 'a small defender who plays on the opposition’s danger forwards' : 'a medium defender who plays a lockdown role';
   }
-  if (line === 'FWD' || v('fwd') >= 15) {
+  if (line === 'FWD' || (cba < 25 && v('fwd') >= 15)) {
     if (ht >= 192) return goals >= 2 ? 'a key forward who kicks a bag when the ball goes long' : 'a tall forward who presents up the ground and competes in the air';
     if (cba >= 20) return 'a forward who rotates through the midfield';
-    return v('t') >= 15 ? 'a pressure forward who earns his points with tackles' : v('disp') >= 13 ? 'a high half-forward who pushes up the ground to find it' : 'a small forward who lives off crumbs and pressure';
+    // Judge on what he actually does: volume and marking first, so a winger listed as a forward isn't called a crumber.
+    if (disp >= 17) return n(b.m) >= 4.5 ? 'a winger and half-forward who runs hard both ways and takes marks up the ground' : goals >= 1.5 ? 'a high-volume forward who finds plenty of the ball and still hits the scoreboard' : 'a wing and half-forward who pushes up the ground to find the ball';
+    if (disp >= 14) return n(b.m) >= 4.5 ? 'a medium forward who leads up the ground and marks well' : 'a high half-forward who pushes up the ground to find it';
+    if (n(b.t) >= 4 || v('t') >= 15) return 'a pressure forward who earns his points with tackles';
+    if (ht && ht < 184) return 'a small forward who lives off crumbs and pressure';
+    return n(b.m) >= 4 ? 'a medium forward who leads and marks inside 50' : 'a forward who plays a lower-possession role inside 50';
   }
   if (cba >= 25) return 'a rotating midfielder who splits time between the centre and a wing';
-  return n(b.k) + n(b.h) >= 14 ? 'an outside runner who finds space on the wing' : 'a role player still looking for a fixed spot in the side';
+  if (disp >= 14) return n(b.m) >= 4.5 ? 'a winger who covers the ground and takes marks' : 'an outside runner who finds space on the wing';
+  return 'a role player still looking for a fixed spot in the side';
 }
 
 /** One-line label for where he's heading. */
@@ -205,6 +230,49 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     if (p.average >= 110) tags.unshift('Premium');
   }
 
+  // ---- body & ceiling: injured or down on a recent big season
+  let health: string | null = null;
+  let bounce = false;
+  {
+    const s26 = hist.find((h) => h[0] === CURRENT_YEAR);
+    const g26 = s26?.[1] ?? 0, a26 = s26?.[2] ?? 0;
+    const prior = hist.filter((h) => h[0] >= CURRENT_YEAR - 2 && h[0] < CURRENT_YEAR && h[1] >= 8);
+    const peak = prior.length ? prior.reduce((x, y) => (y[2] > x[2] ? y : x)) : null;
+    const known = INJURY_2026[p.name];
+    const yy = (y: number) => `’${String(y).slice(2)}`;
+    const stillYoung = (a ?? 30) <= 31;
+    const interrupted = !!known || g26 <= 18;
+    const an = (x: number) => (/^(8|11|18)/.test(String(x)) ? 'an' : 'a');
+    const gms = (g: number) => `${g} game${g === 1 ? '' : 's'}`;
+    if (p.list_status) {
+      health = null;
+    } else if (peak && peak[2] >= 88 && interrupted && (a26 <= peak[2] - 10 || g26 <= 12)) {
+      const pk = Math.round(peak[2]), cur = Math.round(a26);
+      const what = g26 === 0 ? (known ? '' : `, but he didn’t play a game in ${CURRENT_YEAR}`)
+        : g26 <= 12 ? `, but only managed ${gms(g26)} in ${CURRENT_YEAR} for ${an(cur)} ${cur} average`
+        : known ? `, then dropped to ${cur} from ${gms(g26)} in ${CURRENT_YEAR}` : `, but an interrupted ${CURRENT_YEAR} dragged him down to ${cur} from ${gms(g26)}`;
+      const level = peak[2] >= 100 ? 'a premium' : peak[2] >= 92 ? 'a 90-plus scorer' : 'a strong scorer';
+      health = `${known ? `${known}. ` : ''}${first} averaged ${pk} in ${yy(peak[0])}${what}. `
+        + (stillYoung
+          ? (g26 === 0 ? `Missing a season doesn’t change what he is. He has proven he can score big, and if the body gets right he’s ${level} again.` : pick([
+            `Don’t read the ${CURRENT_YEAR} number as his true level. He has proven he can score big, and if the body gets right he’s ${level} again.`,
+            `The ceiling hasn’t gone anywhere. Get the body right and he can score big again, back to ${level}.`,
+            `Judge him on the ${pk}, not the ${CURRENT_YEAR} number. If he gets a clean preseason he can score big again, and he’s ${level} when fit.`,
+          ], seed)) + ' That makes him a buy-low target, as long as you price in the injury risk.'
+          : `At ${a}, getting all the way back there is a big ask, but a clean run could still see him well above his ${CURRENT_YEAR} output.`);
+      bounce = stillYoung;
+      tags.unshift(stillYoung ? 'Bounce-back' : 'Injury-hit');
+    } else if (a26 >= 95 && g26 > 0 && (g26 <= 16 || known)) {
+      health = `${known ? `${known}. ` : ''}${first} played only ${gms(g26)} in ${CURRENT_YEAR} but averaged ${Math.round(a26)} when he was out there. The scoring is premium. The only question is the body: a full season out of him and he’s among the top scorers in the comp.`;
+      tags.push('Injury-hit');
+    } else if (known) {
+      health = `${known}. ${g26 ? `He still got through ${gms(g26)} for ${an(Math.round(a26))} ${Math.round(a26)} average` : 'There’s no 2026 form to go on'}, so judge him on a clean run in 2027 before writing anything off.`;
+      tags.push('Injury-hit');
+    } else if (peak && peak[2] >= 95 && g26 >= 19 && a26 <= peak[2] - 12 && stillYoung) {
+      health = `Form dip: ${first} played ${gms(g26)} but fell from ${Math.round(peak[2])} in ${yy(peak[0])} to ${Math.round(a26)}. The ceiling is proven. If his role swings back his way, the scoring should follow.`;
+    }
+  }
+
   // ---- positional value
   const LNAME: Record<string, [string, string]> = { FWD: ['forward', 'forwards'], DEF: ['defender', 'defenders'], RUC: ['ruck', 'rucks'], MID: ['midfielder', 'midfielders'] };
   const [one, many] = LNAME[r.line];
@@ -226,7 +294,7 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   }
 
   // ---- outlook
-  const verdict = note?.verdict ?? autoVerdict(p, r, a);
+  const verdict = note?.verdict ?? (bounce && (p.average ?? 0) < 95 ? 'Bounce-back candidate' : autoVerdict(p, r, a));
   let outlook: string;
   if (note) outlook = note.outlook;
   else {
@@ -241,9 +309,10 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
       'Sell window': `${first}’s value has peaked. If anyone in the league still pays for his 2026 numbers, now is the time to move him.`,
       'Depth only': `${first} is list depth: fine as an emergency, but not someone to build around.`,
       'Bench stash': `${first} is a bench stash: useful cover in the byes, but not a long-term piece.`,
+      'Bounce-back candidate': `${first} is a bounce-back candidate. His ${CURRENT_YEAR} average undersells him because of time out of the side. Bet on a clean preseason and he’s worth well more than his current price.`,
     };
     outlook = map[verdict];
   }
 
-  return { style, potential, fantasy, outlook, position, verdict, tags: [...new Set(tags)].slice(0, 5) };
+  return { style, potential, fantasy, health, outlook, position, verdict, tags: [...new Set(tags)].slice(0, 5) };
 }

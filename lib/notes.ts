@@ -4,7 +4,7 @@
 
 export type Verdict =
   | 'Possible fantasy star' | 'Possible great fantasy player' | 'Locked-in premium' | 'Reliable starter'
-  | 'Unknown quantity' | 'Role-dependent' | 'Win-now asset' | 'Sell window' | 'Depth only' | 'Bench stash';
+  | 'Unknown quantity' | 'Role-dependent' | 'Win-now asset' | 'Sell window' | 'Depth only' | 'Bench stash' | 'Bounce-back candidate';
 
 /**
  * outlook: shown in the player's report. verdict: overrides the auto label.
