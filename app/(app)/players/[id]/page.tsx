@@ -110,7 +110,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
-          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ...(report.position ? [['Positional value', report.position] as const] : []), ['Outlook', report.outlook]] as const).map(([h, t]) => (
+          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ...(report.health ? [['Body & ceiling', report.health] as const] : []), ...(report.position ? [['Positional value', report.position] as const] : []), ['Outlook', report.outlook]] as const).map(([h, t]) => (
             <div key={h} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span className="eyebrow">{h}</span>
               <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '62ch' }}>{t}</p>
