@@ -26,8 +26,8 @@ function Marker({ p, owner, size = 'var(--chip)' }: { p: PlayerRow; owner: strin
           )}
         </span>
       </span>
-      <span style={{ font: '600 10.5px/1.1 var(--font)', textAlign: 'center', textShadow: '0 1px 2px rgb(0 0 0 / .6)', whiteSpace: 'nowrap' }}>{p.name}</span>
-      <span style={{ font: '600 10px/1 var(--mono)', background: 'rgb(0 0 0 / .45)', borderRadius: 99, padding: '2px 6px' }}>{p.average?.toFixed(1)}</span>
+      <span style={{ font: '600 9px/1.1 var(--font)', textAlign: 'center', textShadow: '0 1px 2px rgb(0 0 0 / .6)', whiteSpace: 'nowrap' }}>{p.name}</span>
+      <span style={{ font: '600 8.5px/1 var(--mono)', background: 'rgb(0 0 0 / .45)', borderRadius: 99, padding: '1px 5px' }}>{p.average?.toFixed(1)}</span>
     </Link>
   );
 }
@@ -37,7 +37,7 @@ export function AllTeamField({ lines, bench, ownerOf }: {
   lines: Record<Line, PlayerRow[]>; bench: PlayerRow[]; ownerOf: (p: PlayerRow) => string;
 }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 0, borderRadius: 18, overflow: 'hidden', background: '#1d4a2b', ['--chip' as string]: 'clamp(34px, 8.5vw, 52px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0, borderRadius: 16, overflow: 'hidden', background: '#1d4a2b', width: '100%', maxWidth: 420, margin: '0 auto', ['--chip' as string]: 'clamp(26px, 6vw, 36px)' }}>
       <div style={{ position: 'relative', width: '100%', aspectRatio: '100 / 118' }}>
         <svg viewBox="0 0 100 118" preserveAspectRatio="none" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
           <defs>
