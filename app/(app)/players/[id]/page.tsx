@@ -57,7 +57,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         <div style={{ width: 168, height: 168, borderRadius: 24, background: '#e8eee5', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', flex: 'none' }}>
           {photo ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={photo} alt={p.full_name ?? p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
+            <img src={photo} alt={p.full_name ?? p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: p.photo_path?.startsWith('http') ? '45% 25%' : 'top center' }} />
           ) : (
             <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
           )}
@@ -105,13 +105,16 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
 
       <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
-          <h2 className="h2">Scouting report</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <h2 className="h2">Scouting report</h2>
+            <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 12px' }}>{report.verdict}</span>
+          </div>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {report.tags.map((t) => <span key={t} className="pill" style={{ background: '#eef3ea', color: C.green5, padding: '3px 10px' }}>{t}</span>)}
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 22 }}>
-          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy]] as const).map(([h, t]) => (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
+          {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ['Outlook', report.outlook]] as const).map(([h, t]) => (
             <div key={h} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span className="eyebrow">{h}</span>
               <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '62ch' }}>{t}</p>
