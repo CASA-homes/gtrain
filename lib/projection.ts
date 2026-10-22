@@ -30,11 +30,12 @@ export function projected2027(p: PlayerRow): number {
 }
 
 /** Future-build score for one player (roughly on the scale of a fantasy average). */
-export function futureScore(p: PlayerRow, potentialStars: number | null): number {
+export function futureScore(p: PlayerRow, potentialStars: number | null, lineBonus = 0): number {
   if (p.list_status) return 0;
   const a = age(p.birth_date, SEASON_START_2027) ?? 27;
   const runway = Math.max(0.3, Math.min(1.15, 0.6 + (30 - a) * 0.06));
-  return Math.round((0.7 * projected2027(p) + 0.3 * (potentialStars ?? 2.5) * 22) * runway);
+  // lineBonus puts forwards and defenders on the midfield scale, so a top forward rates like the premium he is.
+  return Math.round((0.7 * (projected2027(p) + lineBonus) + 0.3 * (potentialStars ?? 2.5) * 22) * runway);
 }
 
 /** The ruck counts for half: one player shouldn't swing a team as much as a whole line. */

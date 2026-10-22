@@ -48,7 +48,7 @@ export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
 
 // ---------------------------------------------------------------- written report
 
-export interface Report { style: string; potential: string; fantasy: string; outlook: string; verdict: Verdict; tags: string[] }
+export interface Report { style: string; potential: string; fantasy: string; outlook: string; position: string | null; verdict: Verdict; tags: string[] }
 
 const pick = <T,>(xs: T[], seed: number) => xs[Math.abs(seed) % xs.length];
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
@@ -91,6 +91,7 @@ function autoVerdict(p: PlayerRow, r: Ratings, a: number | null): Verdict {
   if (a <= 23 && pot >= 4.5) return 'Possible fantasy star';
   if (a <= 24 && pot >= 4) return 'Possible great fantasy player';
   if (avg >= 105 && a <= 28) return 'Locked-in premium';
+  if (r.line !== 'MID' && r.lineRank <= 10 && a <= 29) return 'Locked-in premium';
   if (a >= 30 && avg >= 85) return 'Win-now asset';
   if (a >= 29 && pot <= 2.5) return 'Sell window';
   if (avg >= 78) return 'Reliable starter';
@@ -204,6 +205,26 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     if (p.average >= 110) tags.unshift('Premium');
   }
 
+  // ---- positional value
+  const LNAME: Record<string, [string, string]> = { FWD: ['forward', 'forwards'], DEF: ['defender', 'defenders'], RUC: ['ruck', 'rucks'], MID: ['midfielder', 'midfielders'] };
+  const [one, many] = LNAME[r.line];
+  let position: string | null = null;
+  if (p.average && (r.line !== 'MID' || p.positions.length > 1) && (r.lineRank <= 15 || r.statusRisk)) {
+    const parts: string[] = [];
+    parts.push(`Valued as a ${one}: he’s the No.${r.lineRank} ${one} in the league by average, ${r.lineEdge >= 0 ? `${r.lineEdge.toFixed(1)} points better than` : `${Math.abs(r.lineEdge).toFixed(1)} points short of`} a typical starting ${one}.`);
+    if (r.line === 'FWD') parts.push('Forwards are the hardest line to fill in this format, because the scoring drops away fast after the top ten. That scarcity is why his value stars sit higher than his raw average would suggest.');
+    else if (r.line === 'DEF') parts.push('Premium defenders are rarer than premium midfielders, so his average goes further on the back line.');
+    else if (r.line === 'RUC') parts.push('There’s only one ruck slot, so the gap between a top ruck and the rest is worth a lot each week.');
+    if (r.statusRisk) {
+      parts.push(`Status watch: he attended ${b?.cba ?? 0}% of centre bounces in 2026, which is midfielder territory. There’s a real chance he loses ${one} status at the next position update. Until it changes, he’s valued as a ${one}, and a premium one, but price the risk into any trade.`);
+      tags.unshift('Status risk');
+    } else if (r.line !== 'MID' && p.positions.includes('MID')) {
+      parts.push(`His role (${b?.cba ?? 0}% of centre bounces) means the ${one} status looks safe.`);
+    }
+    if (r.line !== 'MID' && r.lineRank <= 10) tags.splice(r.statusRisk ? 1 : 0, 0, `Top-10 ${r.line}`);
+    position = parts.join(' ');
+  }
+
   // ---- outlook
   const verdict = note?.verdict ?? autoVerdict(p, r, a);
   let outlook: string;
@@ -224,5 +245,5 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     outlook = map[verdict];
   }
 
-  return { style, potential, fantasy, outlook, verdict, tags: [...new Set(tags)].slice(0, 5) };
+  return { style, potential, fantasy, outlook, position, verdict, tags: [...new Set(tags)].slice(0, 5) };
 }

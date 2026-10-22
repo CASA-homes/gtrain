@@ -120,45 +120,75 @@ export interface Ratings {
   value: number;          // 0–100
   valueStars: number;     // 0–5 in halves
   potential: number | null;  // 0–5 stars, null until age/draft data arrives
+  line: Line;             // the position he's valued at: whichever eligible line he ranks highest in
+  lineRank: number;       // his rank by average among everyone eligible for that line
+  lineEdge: number;       // points above a typical starter on that line
+  statusRisk: boolean;    // dual-position player whose role suggests he'll lose the scarcer position
+  lineBonus: number;      // points added to put him on the midfield scale (scarce lines score lower)
 }
 
+/** Starters league-wide per line (10 teams). The average of these is the "typical starter" benchmark. */
+const STARTERS: Record<Line, number> = { DEF: 50, MID: 70, RUC: 10, FWD: 50 };
+/** When a player ranks equally on two lines, value him at the scarcer one. */
+const SCARCITY_ORDER: Line[] = ['FWD', 'RUC', 'DEF', 'MID'];
+
 /**
- * Ratings are graded against every rostered player who shares the same primary line,
- * so a ruck's numbers are judged against rucks.
+ * Ratings are graded against everyone eligible for the same line. A dual-position player is valued at whichever
+ * of his lines he ranks highest in, because that's where a coach will play him: a 92-average MID/FWD is ordinary
+ * as a midfielder but elite as a forward, and his value reflects the forward ranking.
  */
 export function buildRatings(all: PlayerRow[]): Map<number, Ratings> {
-  const byLine = new Map<Line, PlayerRow[]>();
-  for (const p of all) {
-    const l = primaryLine(p);
-    byLine.set(l, [...(byLine.get(l) ?? []), p]);
-  }
+  const pool = new Map<Line, PlayerRow[]>(LINES.map((l) => [l, all.filter((p) => p.positions.includes(l))]));
+  const sortedAvg = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => p.average ?? 0).sort((a, b) => a - b)]));
+  const sortedCeil = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => Math.max(0, ...played(p.last5))).sort((a, b) => a - b)]));
+  const sortedFloor = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => (played(p.last5).length ? Math.min(...played(p.last5)) : 0)).sort((a, b) => a - b)]));
+  const benchmark = new Map(LINES.map((l) => {
+    const top = [...sortedAvg.get(l)!].reverse().slice(0, STARTERS[l]);
+    return [l, top.length ? top.reduce((s2, x) => s2 + x, 0) / top.length : 0];
+  }));
+
   const out = new Map<number, Ratings>();
-  for (const [, group] of byLine) {
-    const avgs = group.map((p) => p.average ?? 0).sort((a, b) => a - b);
-    const ceils = group.map((p) => Math.max(0, ...played(p.last5))).sort((a, b) => a - b);
-    const floors = group.map((p) => (played(p.last5).length ? Math.min(...played(p.last5)) : 0)).sort((a, b) => a - b);
-    for (const p of group) {
-      const xs = played(p.last5);
-      const avg = p.average ?? 0;
-      const within = avg && xs.length ? xs.filter((s) => Math.abs(s - avg) / avg <= 0.15).length / xs.length : 0;
-      const dur = Math.min(1, (p.games ?? 0) / 23);
-      const f = form(p);
-      const avgP = pct(avgs, avg);
-      const value = Math.round(avgP * 0.7 + dur * 100 * 0.15 + within * 100 * 0.15);
-      out.set(p.id, {
-        average: to20(avgP),
-        ceiling: to20(pct(ceils, Math.max(0, ...xs))),
-        floor: to20(pct(floors, xs.length ? Math.min(...xs) : 0)),
-        consistency: to20(within * 100),
-        durability: to20(dur * 100),
-        form: f === 'up' ? 16 : f === 'down' ? 6 : f === 'flat' ? 11 : 1,
-        value,
-        valueStars: Math.round((value / 20) * 2) / 2,
-        potential: potential(p),
-      });
-    }
+  for (const p of all) {
+    const xs = played(p.last5);
+    const avg = p.average ?? 0;
+    const eligible = (p.positions.length ? p.positions : [primaryLine(p)]).filter((l) => pool.has(l));
+    // Best line: highest percentile, scarcer line on ties.
+    const line = [...eligible].sort((x, y) => (pct(sortedAvg.get(y)!, avg) - pct(sortedAvg.get(x)!, avg)) || (SCARCITY_ORDER.indexOf(x) - SCARCITY_ORDER.indexOf(y)))[0];
+    const avgs = sortedAvg.get(line)!;
+    const within = avg && xs.length ? xs.filter((s2) => Math.abs(s2 - avg) / avg <= 0.15).length / xs.length : 0;
+    const dur = Math.min(1, (p.games ?? 0) / 23);
+    const f = form(p);
+    const avgP = pct(avgs, avg);
+    const value = Math.round(avgP * 0.7 + dur * 100 * 0.15 + within * 100 * 0.15);
+    const lineRank = avgs.filter((x) => x > avg).length + 1;
+    // A forward or defender who also holds MID and is living in the centre square may lose the scarcer status.
+    const statusRisk = line !== 'MID' && p.positions.includes('MID') && (p.box?.cba ?? 0) >= 50;
+    // A forward's 92 is worth a midfielder's 102: lift scarce-line scoring onto the midfield scale for potential.
+    const lineBonus = Math.max(0, Math.round(benchmark.get('MID')! - benchmark.get(line)!));
+    out.set(p.id, {
+      average: to20(avgP),
+      ceiling: to20(pct(sortedCeil.get(line)!, Math.max(0, ...xs))),
+      floor: to20(pct(sortedFloor.get(line)!, xs.length ? Math.min(...xs) : 0)),
+      consistency: to20(within * 100),
+      durability: to20(dur * 100),
+      form: f === 'up' ? 16 : f === 'down' ? 6 : f === 'flat' ? 11 : 1,
+      value,
+      valueStars: Math.round((value / 20) * 2) / 2,
+      potential: potential(p, lineBonus),
+      line, lineRank, lineBonus,
+      lineEdge: Math.round((avg - benchmark.get(line)!) * 10) / 10,
+      statusRisk,
+    });
   }
   return out;
+}
+
+/** The typical-starter average for each line, for copy like "worth 14 points over a typical forward". */
+export function lineBenchmarks(all: PlayerRow[]): Record<Line, number> {
+  return Object.fromEntries(LINES.map((l) => {
+    const top = all.filter((p) => p.positions.includes(l)).map((p) => p.average ?? 0).sort((a, b) => b - a).slice(0, STARTERS[l]);
+    return [l, Math.round(top.reduce((s2, x) => s2 + x, 0) / Math.max(1, top.length))];
+  })) as Record<Line, number>;
 }
 
 /** Current ability in stars from a recent average (100 ≈ 4.5 stars). */
@@ -184,7 +214,7 @@ const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x
  * Prime (24–27): current ability, with a little extra if he's still climbing.
  * 28+: current ability less an age drop (29 −0.5, 30–32 −1, 33+ −1.5).
  */
-export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average'>): number | null {
+export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average'>, lineBonus = 0): number | null {
   const a = age(p.birth_date);
   if (a == null) return null;
   const hist = (p.hist ?? []).filter((h) => h[1] > 0);
@@ -195,7 +225,8 @@ export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draf
   const w: Record<number, number> = { [SEASON_NOW]: 0.6, [SEASON_NOW - 1]: 0.3, [SEASON_NOW - 2]: 0.1 };
   let num = 0, den = 0;
   for (const [y, g, f] of hist) if (w[y] && g >= 3) { num += w[y] * f; den += w[y]; }
-  const C = abilityStars(den ? num / den : p.average ?? 0);
+  // Scarce-line players' current ability is judged on the midfield scale (see buildRatings).
+  const C = abilityStars((den ? num / den : p.average ?? 0) + lineBonus);
 
   if (a <= 23 || (hist.length <= 3 && a <= 25)) {
     let S: number;
