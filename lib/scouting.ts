@@ -192,15 +192,15 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     potential = parts.join(' ');
     if (cg <= 10) tags.push('Rookie-keeper eligible');
   } else if (a <= 27) {
-    potential = `At ${a}, ${first} is in his prime. ` + (r.value >= 75
+    potential = `At ${a}, ${first} is in his prime. ` + (r.value >= 85
       ? pick(['He’s already producing like a premium. Expect more of the same for four or five seasons.', 'This is peak-years output. Bank it and don’t overthink it.'], seed)
-      : r.value >= 50 ? `${jump && jump > 5 ? `The ${jump}-point jump this year says there may be one more step in him. ` : ''}A solid contributor who isn’t likely to jump a tier from here.`
+      : r.value >= 60 ? `${jump && jump > 5 ? `The ${jump}-point jump this year says there may be one more step in him. ` : ''}A solid contributor who isn’t likely to jump a tier from here.`
       : 'He hasn’t locked in a scoring role. At this age that tends to be who he is.');
   } else if (a <= 30) {
-    potential = `${first} is ${a} and on the back end of his prime. ${r.value >= 70 ? 'Still elite, but his trade value is at its peak now and only goes down from here.' : 'Expect a gradual slide. Keep him for this season’s points, not the future.'}`;
+    potential = `${first} is ${a} and on the back end of his prime. ${r.value >= 80 ? 'Still elite, but his trade value is at its peak now and only goes down from here.' : 'Expect a gradual slide. Keep him for this season’s points, not the future.'}`;
     if (a >= 29) tags.push('Sell window');
   } else {
-    potential = `At ${a}, ${first} is a short-term asset. ${r.value >= 70 ? 'He can still help win you a flag this year, but plan the succession now.' : 'He’s squad depth with a year or two left.'}`;
+    potential = `At ${a}, ${first} is a short-term asset. ${r.value >= 80 ? 'He can still help win you a flag this year, but plan the succession now.' : 'He’s squad depth with a year or two left.'}`;
     tags.push('Ageing');
   }
 
