@@ -213,7 +213,8 @@ export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: n
   }
   if (o.avg >= 104.5 && !o.injuredBlend) v = Math.max(v, 95); // 105+ is elite on any line
   if (line === 'RUC' && rank <= 2 && !o.injuredBlend) v = Math.max(v, 95);   // only one ruck slot: the top two are elite
-  if (o.injuredBlend) v = Math.min(v, o.missedSeason ? 84 : 94);   // injury-hit players top out at 4.5, or 4 if they missed the whole season
+  if (o.injuredBlend) v = Math.min(v, o.missedSeason ? 84 : 94);
+  if (o.injuredBlend && o.missedSeason && o.avg >= 85) v = Math.max(v, 75);   // a proven 95+ player who missed the year is still 4 stars   // injury-hit players top out at 4.5, or 4 if they missed the whole season
   return Math.max(0, Math.round(v));
 }
 /** Share of recent scores more than 20% below his average. High scores never count against him. */
