@@ -50,7 +50,7 @@ export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
 
 // ---------------------------------------------------------------- written report
 
-export interface Report { style: string; potential: string; fantasy: string; health: string | null; outlook: string; position: string | null; verdict: Verdict; tags: string[] }
+export interface Report { style: string; potential: string; fantasy: string; health: string | null; outlook: string; position: string | null; verdict: Verdict; extra: Verdict[]; tags: string[] }
 
 
 
@@ -101,33 +101,52 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
 }
 
 /**
- * One-line label. Established scoring first, then age:
- *   Line-adjusted average (forwards +10, defenders +5, so a 90 forward reads like a 100 midfielder):
- *   30+ and 95+ → Win-now asset. 110+ → Fantasy star. 99+ → Fantasy gun.
- *   24 and under: 23 or younger scoring 90+ (or 21 or younger scoring 76+, or a top-10 pick aged 20 or under with
- *   4.5-star potential) → Potential fantasy star;
- *   78+ or 4-star potential → Potential great fantasy player.
- *   Over 24, there's no "potential" any more: 80+ (76+ for forwards) → Reliable starter.
+ * The verdict label, plus any secondary labels. Line-adjusted average first (forwards +10, defenders +5, so a 90
+ * forward reads like a 100 midfielder; half that lift for the tiers below gun):
+ *   Win-now asset: 30 or older and 95+ (or gun-level for his line).
+ *   Fantasy star 110+, Fantasy gun 99+ (any age under 30).
+ *   24 and under, it's about potential:
+ *     Potential fantasy star: 23 or younger at 90+, 21 or younger at 76+, or a top-10 pick aged 20 or under with top potential.
+ *     Potential great fantasy player: 78+, strong potential, 22 or younger at 72+, a hot finish (80+ over his last five),
+ *       or 65+ in an injury-shortened season.
+ *     Potential good fantasy player: 60+. Below that: Role dependent.
+ *     Fewer than 10 AFL games: Too early to tell (with Potential great for a top-20 pick). Top-20 picks with 20 or
+ *     fewer games are at least Potential great, tagged Too early to tell. Under 70 with a real sample: Role dependent tag.
+ *   Over 24: Great fantasy player 90–99, Reliable starter 80–90, Depth piece 70–80, Role dependent under 70.
+ *   Under 30 with an injury-hit season: Bounce-back candidate. 30 or older and not a win-now asset: Sell now tag.
  */
-function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean): Verdict {
-  const pot = r.potential ?? 0, cg = p.career_games ?? 0, avg = p.average ?? 0;
-  const adj = avg + r.lineBonus;
-  if (a == null) return 'Unknown quantity';
-  if (a >= 30) return avg >= 95 ? 'Win-now asset' : avg >= (r.line === 'FWD' ? 76 : 80) ? 'Reliable starter' : avg >= 70 ? 'Sell window' : 'Depth only';
-  if (adj >= 110 && (p.games ?? 0) >= 8) return 'Fantasy star';
-  if (adj >= 99 && (p.games ?? 0) >= 8) return 'Fantasy gun';
-  if (bounce) return 'Bounce-back candidate';
-  if (a <= 24) {
-    const topPick = !!p.draft_pick && p.draft_pick <= 10;
-    if (a <= 23 && (avg >= 90 || (a <= 21 && avg >= 76) || (a <= 20 && topPick && pot >= 4.5))) return 'Potential fantasy star';
-    if (avg >= 78 || pot >= 4) return 'Potential great fantasy player';
-    if (cg < 12) return 'Unknown quantity';
-    return avg >= 62 ? 'Role-dependent' : 'Depth only';
+function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean): { verdict: Verdict; extra: Verdict[] } {
+  const pot = r.potential ?? 0, cg = p.career_games ?? 0, avg = p.average ?? 0, g = p.games ?? 0;
+  const adj = avg + r.lineBonus;            // full scarcity lift for the elite tiers
+  const adjMid = avg + r.lineBonus / 2;     // half lift lower down, where depth on every line is easy to find
+  const extra: Verdict[] = [];
+  const out = (v: Verdict) => ({ verdict: v, extra: extra.filter((x) => x !== v) });
+  const age = a ?? 27;
+  const recent = played(p.last5);
+  const hot = recent.length >= 3 && recent.reduce((s2, x) => s2 + x, 0) / recent.length >= 80;
+  const pickN = p.draft_pick ?? 99;
+
+  if (age >= 30 && (avg >= 95 || adj >= 99)) return out('Win-now asset');
+  if (age >= 30) extra.push('Sell now');
+  if (adj >= 110 && g >= 8) return out('Fantasy star');
+  if (adj >= 99 && g >= 8) return out('Fantasy gun');
+
+  if (age <= 24) {
+    let tier: Verdict =
+      age <= 23 && (avg >= 90 || (age <= 21 && avg >= 76) || (age <= 20 && pickN <= 10 && pot >= 4.5)) ? 'Potential fantasy star'
+      : avg >= 78 || pot >= 4 || (age <= 22 && avg >= 72) || hot || (g <= 16 && avg >= 65) ? 'Potential great fantasy player'
+      : avg >= 60 ? 'Potential good fantasy player' : 'Role dependent';
+    if (cg <= 20 && pickN <= 20 && (tier === 'Potential good fantasy player' || tier === 'Role dependent')) tier = 'Potential great fantasy player';
+    if (cg < 10) { if (pickN <= 20 || tier !== 'Role dependent') extra.push(tier); return out('Too early to tell'); }
+    if (cg <= 20) extra.push('Too early to tell');
+    if (avg < 70 && tier !== 'Role dependent' && cg > 20 && !(g <= 16 && avg >= 65)) extra.push('Role dependent');
+    return out(tier);
   }
-  if (avg >= (r.line === 'FWD' ? 76 : 80)) return 'Reliable starter';
-  if (cg < 12) return 'Unknown quantity';
-  if (a >= 29) return 'Sell window';
-  return avg >= 62 ? 'Bench stash' : 'Depth only';
+  if (bounce && age < 30) return out('Bounce-back candidate');
+  if (adjMid >= 90) return out('Great fantasy player');
+  if (adjMid >= 80) return out('Reliable starter');
+  if (adjMid >= 70) return out('Depth piece');
+  return out('Role dependent');
 }
 
 /**
@@ -212,7 +231,6 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
       : 'He hasn’t locked in a scoring role. At this age that tends to be who he is.');
   } else if (a <= 30) {
     potential = `${first} is ${a} and on the back end of his prime. ${r.value >= 80 ? 'Still elite, but his trade value is at its peak now and only goes down from here.' : 'Expect a gradual slide. Keep him for this season’s points, not the future.'}`;
-    if (a >= 29) tags.push('Sell window');
   } else {
     potential = `At ${a}, ${first} is a short-term asset. ${r.value >= 80 ? 'He can still help win you a flag this year, but plan the succession now.' : 'He’s squad depth with a year or two left.'}`;
     tags.push('Ageing');
@@ -302,11 +320,12 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   }
 
   // ---- outlook
-  const verdict = verdictFor(p, r, a, bounce);
+  const { verdict, extra } = verdictFor(p, r, a, bounce);
   const VERDICT_LINE: Partial<Record<Verdict, string>> = {
     'Fantasy star': 'Verdict: already a fantasy star.', 'Fantasy gun': 'Verdict: already a fantasy gun.',
     'Potential fantasy star': 'Verdict: a potential fantasy star.', 'Potential great fantasy player': 'Verdict: a potential great fantasy player.',
-    'Unknown quantity': 'Verdict: an unknown quantity who could score well in the right role.', 'Bounce-back candidate': 'Verdict: a bounce-back candidate.',
+    'Potential good fantasy player': 'Verdict: a potential good fantasy player.', 'Too early to tell': 'Verdict: too early to tell.',
+    'Role dependent': 'Verdict: role dependent for now.', 'Bounce-back candidate': 'Verdict: a bounce-back candidate.',
   };
   potential = potential.replace('{{VERDICT}}', VERDICT_LINE[verdict] ?? 'Verdict: a long-range bet that needs a bigger role.');
   let outlook: string;
@@ -315,19 +334,20 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     const map: Record<Verdict, string> = {
       'Fantasy star': `${first} is a fantasy star, one of the handful of players who can win you a week on his own. Build around him.`,
       'Fantasy gun': `${first} is a fantasy gun: a 100-plus scorer (or the positional equivalent) you lock in every week. He’s not quite in the top handful, but he’s close.`,
-      'Potential fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
-      'Potential great fantasy player': `${first} has the profile to become a genuine starter. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,
-      'Reliable starter': `${first} is a dependable starter. He’s unlikely to win you a week on his own, but he rarely costs you one either.`,
-      'Unknown quantity': `${first} is an unknown quantity who could score well in the right role. The sample is too small to judge, so he’s cheap to hold while you find out.`,
-      'Role-dependent': `${first}’s scoring depends on his role. In his current spot he’s capped. A move on-ball, or a teammate leaving, could change everything.`,
+      'Great fantasy player': `${first} is a great fantasy player: a 90-plus scorer who carries a starting spot every week. Not a gun, but the kind of player good teams are built on.`,
+      'Reliable starter': `${first} is a reliable starter. He’s unlikely to win you a week on his own, but he rarely costs you one either.`,
+      'Depth piece': `${first} is a depth piece: fine cover through the byes and injuries, but not someone to build around.`,
+      'Role dependent': `${first}’s scoring depends on his role, and right now it isn’t a scoring one. A move on-ball, or a teammate leaving, could change that.`,
       'Win-now asset': `${first} is a win-now piece. He’s worth plenty this season and less every season after. Keep him if you’re chasing the flag and sell him if you’re not.`,
-      'Sell window': `${first}’s value has peaked. If anyone in the league still pays for his 2026 numbers, now is the time to move him.`,
-      'Depth only': `${first} is list depth: fine as an emergency, but not someone to build around.`,
-      'Bench stash': `${first} is a bench stash: useful cover in the byes, but not a long-term piece.`,
+      'Sell now': `${first}’s value only goes one way from here. If anyone still pays for his name, now is the time to move him.`,
       'Bounce-back candidate': `${first} is a bounce-back candidate. His ${CURRENT_YEAR} average undersells him because of time out of the side. Bet on a clean preseason and he’s worth well more than his current price.`,
+      'Too early to tell': `${first} hasn’t played enough AFL footy to judge yet. Hold him while you find out, especially if he came in high in the draft.`,
+      'Potential fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
+      'Potential great fantasy player': `${first} has the profile to become a 90-plus scorer. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,
+      'Potential good fantasy player': `${first} looks like he can become a solid scorer. He may not reach premium, but there’s a useful player in there if the role grows.`,
     };
     outlook = map[verdict];
   }
 
-  return { style, potential, fantasy, health, outlook, position, verdict, tags: [...new Set(tags)].slice(0, 5) };
+  return { style, potential, fantasy, health, outlook, position, verdict, extra, tags: [...new Set(tags)].slice(0, 5) };
 }

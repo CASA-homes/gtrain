@@ -3,8 +3,9 @@
 // The verdict label is rule-based (see verdictFor in scouting.ts); outlook is shown in the Outlook section of the report.
 
 export type Verdict =
-  | 'Fantasy star' | 'Fantasy gun' | 'Potential fantasy star' | 'Potential great fantasy player' | 'Reliable starter'
-  | 'Unknown quantity' | 'Role-dependent' | 'Win-now asset' | 'Sell window' | 'Depth only' | 'Bench stash' | 'Bounce-back candidate';
+  | 'Fantasy star' | 'Fantasy gun' | 'Great fantasy player' | 'Reliable starter' | 'Depth piece' | 'Role dependent'
+  | 'Win-now asset' | 'Sell now' | 'Bounce-back candidate' | 'Too early to tell'
+  | 'Potential fantasy star' | 'Potential great fantasy player' | 'Potential good fantasy player';
 
 /**
  * outlook: shown in the player's report.
