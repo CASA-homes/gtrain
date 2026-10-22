@@ -2,6 +2,9 @@ import Link from 'next/link';
 import { Chat } from '@/components/Chat';
 import { Cup } from '@/components/bits';
 import { AllTeamField } from '@/components/AllTeamField';
+import { Face, TradeHighlights } from '@/components/TradeHighlights';
+import { TRADES_2026 } from '@/lib/trades-2026';
+import { PLAYER_NEWS } from '@/lib/player-news';
 import { best22, LINES } from '@/lib/ratings';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
@@ -82,6 +85,27 @@ export default async function LeaguePage() {
           })}
           {!news?.length && <div className="card muted" style={{ padding: 18 }}>Nothing posted yet. The commish posts draft day, deadlines and catch-ups here.</div>}
         </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <span className="eyebrow">Player news</span>
+          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', paddingBottom: 6, scrollSnapType: 'x mandatory' }}>
+            {PLAYER_NEWS.map((n) => {
+              const p = league.players.find((x) => x.name === n.player) ?? null;
+              return (
+                <article key={n.player} className="card" style={{ flex: '0 0 260px', scrollSnapAlign: 'start', padding: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <Face p={p} label={n.player} size={44} />
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                      <span style={{ font: '500 10px var(--mono)', letterSpacing: '.08em', textTransform: 'uppercase', color: n.tag === 'Off-field' || n.tag === 'Injury' ? '#b4532a' : 'var(--g5)' }}>{n.tag}</span>
+                      <span style={{ font: '600 14px/1.2 var(--font)' }}>{p ? <Link href={`/players/${p.id}`} style={{ color: 'inherit', textDecoration: 'none' }}>{n.title}</Link> : n.title}</span>
+                      {p && <span className="muted" style={{ fontSize: 11 }}>{name(p.team_id)}</span>}
+                    </div>
+                  </div>
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45, color: 'var(--muted)' }}>{n.body}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
         {me?.is_commish && (
           <details className="card" style={{ padding: 14 }}>
             <summary style={{ cursor: 'pointer', fontWeight: 600 }}>Post news</summary>
@@ -98,9 +122,9 @@ export default async function LeaguePage() {
         )}
       </section>
 
-      <div className="split">
+      <div className="split" style={{ gap: 22 }}>
         {/* Left: condensed ladder, honour roll, flags */}
-        <div style={{ flex: '1 1 300px', minWidth: 0, maxWidth: 420, display: 'flex', flexDirection: 'column', gap: 24 }}>
+        <div style={{ flex: '1 1 280px', minWidth: 0, maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 24 }}>
           <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <h2 className="h2" style={{ fontSize: 18 }}>{CURRENT_SEASON} final ladder</h2>
             <div className="table-box">
@@ -154,8 +178,23 @@ export default async function LeaguePage() {
           </section>
         </div>
 
-        {/* Right: the All-G-Train team, then chat */}
-        <div style={{ flex: '999 1 520px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 24 }}>
+        {/* Middle: trade highlights, then chat */}
+        <div style={{ flex: '999 1 380px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 24 }}>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div>
+              <span className="eyebrow">{TRADES_2026.length} trades this season · newest first</span>
+              <h2 className="h2" style={{ fontSize: 22 }}>Trade highlights {CURRENT_SEASON}</h2>
+            </div>
+            <TradeHighlights trades={TRADES_2026} players={league.players} teams={league.teams} />
+          </section>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <h2 className="h2" style={{ fontSize: 20 }}>Chat</h2>
+            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} />}
+          </section>
+        </div>
+
+        {/* Right: the All-G-Train team */}
+        <div style={{ flex: '1 1 340px', minWidth: 0, maxWidth: 440, display: 'flex', flexDirection: 'column', gap: 24 }}>
           <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 6 }}>
               <div>
@@ -170,10 +209,6 @@ export default async function LeaguePage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="muted">
               {allTeamByCoach.map(([t, n]) => <span key={t}><b style={{ color: 'var(--ink)' }}>{n}</b> {t}</span>)}
             </div>
-          </section>
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <h2 className="h2" style={{ fontSize: 20 }}>Chat</h2>
-            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} />}
           </section>
         </div>
       </div>
