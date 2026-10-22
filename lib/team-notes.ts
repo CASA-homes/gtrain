@@ -38,7 +38,7 @@ export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
   },
   'Bito’s Boys': {
     headline: 'Elite kids, and veterans he won’t let go',
-    body: 'They finished 5–16 and ninth in 2026, but the young end of this list is as good as anyone’s. Ryley Sanders (81 at 21) is a genuine midfield talent. Sam Lalor was a No.1 pick, and Sullivan Robey and Dyson Sharp were first-rounders, and Logan Morris, Lachie Evans and Sam Swadling add depth. Pick 2 in 2027 adds another blue-chipper, with 12 and 22 behind it. The problem is the other end. Neale is 33 and now at Collingwood, Cripps is 31, de Goey 30, and Noble and Milera 29. They’re still scoring, and that’s exactly why they should have been moved for picks by now. Holding them only keeps Bito’s stuck in the middle. Rankine left for McCluggage, who started awfully but has since recovered (115 in his last game). Cash in the veterans and this is a top-four side by the time the kids peak.',
+    body: 'They finished 5–16 and ninth in 2026, but the young end of this list is as good as anyone’s. Ryley Sanders (81 at 21) is a genuine midfield talent. Sam Lalor was a No.1 pick, and Sullivan Robey and Dyson Sharp were first-rounders, and Logan Morris, Lachie Evans and Sam Swadling add depth. Pick 2 in 2027 adds another blue-chipper, with 12 and 22 behind it. The problem is the other end. Neale is 33 and now at Collingwood, Cripps is 31, de Goey 30, and Noble and Milera 29. They’re still scoring, and that’s exactly why they should have been moved for picks by now. Holding them only keeps Bito’s stuck in the middle. Cash in the veterans and this is a top-four side by the time the kids peak.',
   },
 
   'Ram Dawgs': {
