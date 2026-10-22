@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ClubDot, Cup, RankBar, Stars } from '@/components/bits';
 import { getLeague } from '@/lib/data';
-import { futureScore } from '@/lib/projection';
+import { FUTURE_MAX_AGE, futureScore } from '@/lib/projection';
 import { age, C, LINES } from '@/lib/ratings';
 
 const STATUS_COLOUR = { 'Strong contender': C.green5, 'Top 4 contender': C.green4, 'Mid-table': C.green2, Rebuilding: C.yellow } as const;
@@ -40,7 +40,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
       <div className="wrap">
         <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <span className="eyebrow">Best 18 on future score: scoring and potential, weighted for age</span>
+            <span className="eyebrow">Players aged 24 or under only · best 18 on future score</span>
             <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Future build</h1>
           </div>
           {tabs}
@@ -52,7 +52,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
             </thead>
             <tbody>
               {rows.map((a) => {
-                const top = a.players
+                const top = a.players.filter((p) => (age(p.birth_date) ?? 99) <= FUTURE_MAX_AGE)
                   .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0, league.ratings.get(p.id)?.lineEdge ?? 0) }))
                   .sort((x, y) => y.f - x.f).slice(0, 3);
                 return (
@@ -89,7 +89,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           </table>
         </div>
         <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-          Ranked on each team’s best 18 future scores. A player’s future score is 70% his projected 2027 average and 30% his potential stars, multiplied by how many prime years he has left.
+          Only players aged 24 or under count. Ranked on each team’s best 18 of them, so a team with fewer young players scores lower. A player’s future score is 70% his projected 2027 average and 30% his potential stars, multiplied by how many prime years he has left.
           Avg age and avg potential are across that best 18. The line bars rank each line’s future strength against the league, with the ruck at half weight.
         </p>
       </div>
