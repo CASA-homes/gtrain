@@ -6,7 +6,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { pickLabel, playerPoints } from '@/lib/picks';
 import { C } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
-import { acceptOffer, comment, makeOffer } from '../actions';
+import { acceptOffer, comment, makeOffer, withdrawListing } from '../actions';
 
 const ago = (iso: string) => {
   const m = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
@@ -54,6 +54,11 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
           <span>Value <Stars value={r.valueStars} label="Value" /></span>
           <span>Worth about <b style={{ color: C.ink }}>{worth.toLocaleString()} pts</b></span>
           {!open && <span className="pill" style={{ background: C.yellow, color: C.ink }}>Deal pending commish approval</span>}
+          {(isSeller || me?.is_commish) && l.status !== 'withdrawn' && l.status !== 'done' && (
+            <form action={withdrawListing.bind(null, l.id)} style={{ marginLeft: 'auto' }}>
+              <button className="btn">{l.kind === 'auction' ? 'Cancel auction' : 'Remove listing'}</button>
+            </form>
+          )}
         </div>
 
         <div style={{ padding: '18px 22px', display: 'flex', flexDirection: 'column', gap: 10 }}>
