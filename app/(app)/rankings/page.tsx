@@ -23,50 +23,65 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
     </div>
   );
 
+  const lineHead = LINES.map((l) => (
+    <th key={l} style={{ width: 110 }}><span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span></th>
+  ));
+  const teamCell = (a: (typeof teams)[number]) => (
+    <td style={{ whiteSpace: 'nowrap' }}>
+      <Link href={`/clubhouse/${a.team.id}`}>{a.team.name}</Link>
+      <span style={{ marginLeft: 6, display: 'inline-flex', gap: 2, verticalAlign: -4 }}>{a.premierships.map((y) => <Cup key={y} size={14} />)}</span>
+      <div className="muted" style={{ fontSize: 12 }}>{a.team.coach_name}</div>
+    </td>
+  );
+
   if (future) {
     const rows = teams.sort((a, b) => a.future.rank - b.future.rank);
     return (
       <div className="wrap">
         <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <span className="eyebrow">Best 18 future scores · scoring and potential, weighted for age</span>
+            <span className="eyebrow">Best 18 on future score: scoring and potential, weighted for age</span>
             <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Future build</h1>
           </div>
           {tabs}
         </div>
         <div className="table-box">
-          <table className="squad" style={{ minWidth: 900 }}>
+          <table className="squad" style={{ minWidth: 960 }}>
             <thead>
-              <tr><th style={{ width: 40 }}>#</th><th>Team</th><th style={{ textAlign: 'right', width: 90 }}>Future score</th><th style={{ width: 70, textAlign: 'center' }}>Core age</th><th>Best young assets</th></tr>
+              <tr><th style={{ width: 40 }}>#</th><th>Team</th><th>Best young assets</th><th style={{ textAlign: 'right', width: 80 }}>Avg age</th><th style={{ width: 120 }}>Avg potential</th>{lineHead}</tr>
             </thead>
             <tbody>
               {rows.map((a) => {
-                const scored = a.players
-                  .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null), age: age(p.birth_date) }))
-                  .sort((x, y) => y.f - x.f);
-                const core = scored.slice(0, 18).filter((x) => x.age != null);
-                const coreAge = core.length ? core.reduce((s, x) => s + x.age!, 0) / core.length : null;
+                const top = a.players
+                  .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null) }))
+                  .sort((x, y) => y.f - x.f).slice(0, 3);
                 return (
                   <tr key={a.team.id}>
                     <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{a.future.rank}</td>
-                    <td style={{ whiteSpace: 'nowrap' }}>
-                      <Link href={`/clubhouse/${a.team.id}`}>{a.team.name}</Link>
-                      <div className="muted" style={{ fontSize: 12 }}>{a.team.coach_name}</div>
-                    </td>
-                    <td style={{ textAlign: 'right', fontWeight: 600 }}>{a.future.score.toLocaleString()}</td>
-                    <td style={{ textAlign: 'center' }}>{coreAge?.toFixed(1) ?? '–'}</td>
+                    {teamCell(a)}
                     <td>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 14px' }}>
-                        {scored.slice(0, 4).map(({ p, age: ag }) => (
-                          <Link key={p.id} href={`/players/${p.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'inherit', textDecoration: 'none', fontSize: 13 }}>
-                            <ClubDot code={p.afl_club} size={14} />
-                            <span style={{ fontWeight: 600 }}>{p.name}</span>
-                            <span className="muted">{ag ?? '–'} · {p.average?.toFixed(0) ?? '–'}</span>
-                            <Stars value={league.ratings.get(p.id)?.potential ?? null} colour={C.green5} label="Potential" />
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {top.map(({ p }) => (
+                          <Link key={p.id} href={`/players/${p.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'inherit', textDecoration: 'none', fontSize: 12, whiteSpace: 'nowrap' }}>
+                            <ClubDot code={p.afl_club} size={12} /><span style={{ fontWeight: 600 }}>{p.name}</span>
+                            <span className="muted">{age(p.birth_date) ?? '–'}y · {p.average?.toFixed(0) ?? '–'}</span>
                           </Link>
                         ))}
                       </div>
                     </td>
+                    <td style={{ textAlign: 'right', fontWeight: 600 }}>{a.future.avgAge?.toFixed(1) ?? '–'}</td>
+                    <td>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Stars value={a.future.avgPotential != null ? Math.round(a.future.avgPotential * 2) / 2 : null} colour={C.green5} label="Average potential" />
+                        <span className="mono muted" style={{ fontSize: 10 }}>{a.future.avgPotential?.toFixed(2) ?? '–'} / 5</span>
+                      </div>
+                    </td>
+                    {LINES.map((l) => (
+                      <td key={l}>
+                        <RankBar rank={a.future.lines[l]} height={8} label={`${l} future strength`} />
+                        <span className="mono muted" style={{ fontSize: 10 }}>{a.future.lines[l]} of 10</span>
+                      </td>
+                    ))}
                   </tr>
                 );
               })}
@@ -74,46 +89,45 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           </table>
         </div>
         <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-          Each player’s future score is 70% his projected 2027 average and 30% his potential stars, multiplied by how many prime years he has left.
-          A 21-year-old averaging 90 beats a 26-year-old averaging 115. The younger player has five more years at that level.
-          Retired, delisted and long-term injured players score zero.
+          Ranked on each team’s best 18 future scores. A player’s future score is 70% his projected 2027 average and 30% his potential stars, multiplied by how many prime years he has left.
+          Avg age and avg potential are across that best 18. The line bars rank each line’s future strength against the league, with the ruck at half weight.
         </p>
       </div>
     );
   }
 
-  const rows = teams.sort((a, b) => a.projection.rank - b.projection.rank);
+  // Ordered by where each team finished in 2026: premiers, runners-up, then the ladder.
+  const season = league.seasons.find((x) => x.year === 2026);
+  const ladderRank = (id: number) => league.ladder.find((l) => l.season === 2026 && l.team_id === id)?.rank ?? 99;
+  const finishOrder = (id: number) => (id === season?.premier_id ? 0 : id === season?.runner_up_id ? 1 : 1 + ladderRank(id));
+  const rows = teams.sort((a, b) => finishOrder(a.team.id) - finishOrder(b.team.id));
+  const ord = (n: number) => n + (n === 1 ? 'st' : n === 2 ? 'nd' : n === 3 ? 'rd' : 'th');
+  const finishLabel = (id: number) => (id === season?.premier_id ? 'Premiers' : id === season?.runner_up_id ? 'Runners-up' : `${ord(ladderRank(id))} on ladder`);
   return (
     <div className="wrap">
       <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow">Projected 2027 starting 18 after keepers and the redraft</span>
+          <span className="eyebrow">In 2026 finishing order, with each team’s 2027 outlook</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Power rankings</h1>
         </div>
         {tabs}
       </div>
       <div className="table-box">
-        <table className="squad" style={{ minWidth: 960 }}>
+        <table className="squad" style={{ minWidth: 980 }}>
           <thead>
-            <tr><th style={{ width: 40 }}>#</th><th>Team</th><th>2027 outlook</th><th style={{ textAlign: 'right' }}>2027 proj.</th><th style={{ textAlign: 'right' }}>2026 Best 18</th>
-              {LINES.map((l) => <th key={l} style={{ width: 110 }}><span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span></th>)}
-            </tr>
+            <tr><th style={{ width: 40 }}>#</th><th>Team</th><th>2026 finish</th><th>2027 outlook</th><th style={{ textAlign: 'right' }}>2027 proj.</th><th style={{ textAlign: 'right' }}>2026 Best 18</th>{lineHead}</tr>
           </thead>
           <tbody>
-            {rows.map((a) => (
+            {rows.map((a, i) => (
               <tr key={a.team.id}>
-                <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{a.projection.rank}</td>
-                <td style={{ whiteSpace: 'nowrap' }}>
-                  <Link href={`/clubhouse/${a.team.id}`}>{a.team.name}</Link>
-                  <span style={{ marginLeft: 6, display: 'inline-flex', gap: 2, verticalAlign: -4 }}>{a.premierships.map((y) => <Cup key={y} size={14} />)}</span>
-                  <div className="muted" style={{ fontSize: 12 }}>{a.team.coach_name}</div>
-                </td>
+                <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{i + 1}</td>
+                {teamCell(a)}
+                <td style={{ whiteSpace: 'nowrap' }}>{finishLabel(a.team.id)}</td>
                 <td>
                   <span className="pill" style={{ background: STATUS_COLOUR[a.status], color: a.status === 'Strong contender' || a.status === 'Top 4 contender' ? '#fff' : C.ink, padding: '3px 10px' }}>{a.status}</span>
-                  {a.team.status_override && a.team.status_override !== a.projectedStatus && <div className="muted" style={{ fontSize: 11, marginTop: 3 }}>Commish call · model: {a.projectedStatus}</div>}
                 </td>
-                <td style={{ textAlign: 'right', fontWeight: 600 }}>{a.projection.score.toLocaleString()}</td>
-                <td style={{ textAlign: 'right' }} className="muted">{Math.round(a.best18).toLocaleString()} <span style={{ fontSize: 11 }}>(#{a.rank})</span></td>
+                <td style={{ textAlign: 'right', fontWeight: 600 }}>{a.projection.score.toLocaleString()} <span className="muted" style={{ fontSize: 11, fontWeight: 400 }}>#{a.projection.rank}</span></td>
+                <td style={{ textAlign: 'right' }} className="muted">{Math.round(a.best18).toLocaleString()} <span style={{ fontSize: 11 }}>#{a.rank}</span></td>
                 {LINES.map((l) => (
                   <td key={l}>
                     <RankBar rank={a.lineStrength[l].rank} height={8} label={`${l} strength`} />
@@ -128,7 +142,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
       <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
         The 2027 projection ages every player a year, adds known trades and role changes, and zeroes anyone retired, delisted or out injured.
         Each team then keeps 17 plus a rookie (real keepers where they’ve been set), and the 2027 draft is simulated in the actual pick order.
-        The line bars still show 2026 strength.
+        The ruck counts at half weight. The line bars show 2026 strength.
       </p>
     </div>
   );
