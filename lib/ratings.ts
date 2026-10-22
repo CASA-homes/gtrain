@@ -1,3 +1,4 @@
+import { bounceBack } from '@/lib/injury';
 // League maths: colour bands, Best 22, 1–20 ratings, value scores and team status.
 // Every number on the site comes from these functions so the rules live in one place.
 
@@ -137,7 +138,9 @@ const SCARCITY_ORDER: Line[] = ['FWD', 'RUC', 'DEF', 'MID'];
  * of his lines he ranks highest in, because that's where a coach will play him: a 92-average MID/FWD is ordinary
  * as a midfielder but elite as a forward, and his value reflects the forward ranking.
  */
-export function buildRatings(all: PlayerRow[]): Map<number, Ratings> {
+export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
+  // Injured players are valued on their blended average (recent peak + interrupted 2026), not the injury-hit number.
+  const all = rows.map((p) => { const bb = bounceBack(p); return bb && bb.blended > (p.average ?? 0) ? { ...p, average: bb.blended } : p; });
   const pool = new Map<Line, PlayerRow[]>(LINES.map((l) => [l, all.filter((p) => p.positions.includes(l))]));
   const sortedAvg = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => p.average ?? 0).sort((a, b) => a - b)]));
   const sortedCeil = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => Math.max(0, ...played(p.last5))).sort((a, b) => a - b)]));
