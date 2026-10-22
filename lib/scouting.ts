@@ -1,6 +1,7 @@
 // Box-score attributes (1–20, FM style) and the written scouting report on each player profile.
 // Attributes are percentiles against every rostered player with 5+ AFL games in 2026.
 import { age, played, primaryLine, type Box, type PlayerRow, type Ratings } from '@/lib/ratings';
+import { noteFor, type Verdict } from '@/lib/notes';
 
 export interface Attr { key: string; label: string; value: number; raw: string }
 
@@ -47,86 +48,141 @@ export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
 
 // ---------------------------------------------------------------- written report
 
-export interface Report { style: string; potential: string; fantasy: string; tags: string[] }
+export interface Report { style: string; potential: string; fantasy: string; outlook: string; verdict: Verdict; tags: string[] }
 
 const pick = <T,>(xs: T[], seed: number) => xs[Math.abs(seed) % xs.length];
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+const ord = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
+const EXPECTED_BY_SEASON = [55, 55, 65, 75, 82, 88];
+
+/** What he actually does on the ground, from height, ruck share, centre bounces and where he gets the ball. */
+function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
+  const ht = p.height_cm ?? 0;
+  const rc = n(b.rc), ho = n(b.ho), cba = n(b.cba), goals = n(b.g);
+  const line = primaryLine(p);
+  if (rc >= 60 || ho >= 22) {
+    return cba >= 60 && n(b.cl) >= 4 ? 'a No.1 ruck who follows up at ground level and wins his own clearances'
+      : goals >= 1 ? 'a No.1 ruck who rests forward and hits the scoreboard' : 'a tap-first No.1 ruck';
+  }
+  if (rc >= 20 || ho >= 8 || (ht >= 199 && p.positions.includes('RUC'))) {
+    return goals >= 1 ? 'a ruck-forward who splits his time between the centre circle and the goal square'
+      : 'a ruck who shares the load in a two-man rotation';
+  }
+  if (cba >= 60) return v('cp') >= 15 ? 'an inside midfielder who lives at the stoppages' : v('mg') >= 15 ? 'a run-and-carry midfielder who breaks lines from the centre' : 'a centre-bounce midfielder';
+  if (line === 'DEF' || v('def') >= 15) {
+    if (ht >= 193 && v('m') >= 12) return 'a key defender who takes the big intercept marks';
+    if (ht >= 193) return 'a key defender whose job is to beat his man, not rack up the ball';
+    return v('k') >= 15 && v('mg') >= 13 ? 'a rebounding half-back who takes the kick-ins and sets up the chain' : v('m') >= 15 ? 'an intercept defender who reads the ball in flight' : 'a lockdown small defender';
+  }
+  if (line === 'FWD' || v('fwd') >= 15) {
+    if (ht >= 192) return goals >= 2 ? 'a key forward who kicks a bag when the ball goes long' : 'a tall forward who presents up the ground and competes in the air';
+    if (cba >= 20) return 'a forward who rotates through the midfield';
+    return v('t') >= 15 ? 'a pressure forward who earns his points with tackles' : v('disp') >= 13 ? 'a high half-forward who pushes up the ground to find it' : 'a small forward who lives off crumbs and pressure';
+  }
+  if (cba >= 25) return 'a rotating midfielder who splits time between the centre and a wing';
+  return n(b.k) + n(b.h) >= 14 ? 'an outside runner who finds space on the wing' : 'a role player still looking for a fixed spot in the side';
+}
+
+/** One-line label for where he's heading. */
+function autoVerdict(p: PlayerRow, r: Ratings, a: number | null): Verdict {
+  const pot = r.potential ?? 0, cg = p.career_games ?? 0, avg = p.average ?? 0;
+  if (a == null) return 'Unknown quantity';
+  if (cg < 12 && a >= 21) return 'Unknown quantity';
+  if (a <= 23 && pot >= 4.5) return 'Possible fantasy star';
+  if (a <= 24 && pot >= 4) return 'Possible great fantasy player';
+  if (avg >= 105 && a <= 28) return 'Locked-in premium';
+  if (a >= 30 && avg >= 85) return 'Win-now asset';
+  if (a >= 29 && pot <= 2.5) return 'Sell window';
+  if (avg >= 78) return 'Reliable starter';
+  if (a <= 23) return 'Role-dependent';
+  return avg >= 62 ? 'Bench stash' : 'Depth only';
+}
 
 /**
- * A three-part scouting note built from his numbers: how he plays, where he's heading, what he scores.
- * Deterministic: the same stats always produce the same words.
+ * Four-part scouting note: how he plays, where he's heading, what he scores, and the real-world outlook.
+ * Hand-written notes (lib/notes.ts) take over the outlook for players with off-field, trade or role news.
  */
 export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefined): Report {
   const b = p.box;
   const a = age(p.birth_date);
-  const line = primaryLine(p);
   const first = (p.full_name ?? p.name).split(' ')[0];
-  const seed = p.id * 7 + (p.name.length * 13);
+  const seed = p.id * 7 + p.name.length * 13;
   const by = new Map((attrs ?? []).map((x) => [x.key, x.value]));
   const v = (k: string) => by.get(k) ?? 0;
   const tags: string[] = [];
+  const note = noteFor(p.name, p.afl_club);
+  const hist = (p.hist ?? []).filter((h) => h[1] > 0);
+  const full = hist.filter((h) => h[1] >= 5);
+  const cg = p.career_games ?? 0;
+  const pk = p.draft_pick && p.draft_pick <= 40 ? p.draft_pick : null;
 
   // ---- play style
   let style: string;
   if (!b || n(b.gm) === 0) {
-    style = p.career_games
-      ? `${first} didn’t play an AFL game in 2026, so there’s no current box score to read. He has ${p.career_games} career games to fall back on.`
+    style = cg
+      ? `${first} didn’t play an AFL game in 2026, so there’s no current box score to read. He has ${cg} career games to go on.`
       : `${first} is yet to debut at AFL level, so his game is still a projection rather than a record.`;
   } else {
     const disp = n(b.k) + n(b.h);
-    const role =
-      n(b.ho) >= 15 ? (v('fwd') >= 12 ? 'a ruck who drifts forward and hurts on the scoreboard' : v('cl') >= 14 ? 'a ruck who follows up at ground level and wins his own clearances' : 'a tap-first ruck')
-      : n(b.cba) >= 60 ? (v('cp') >= 15 ? 'an inside midfielder who lives at the stoppages' : v('mg') >= 15 ? 'a run-and-carry midfielder who breaks lines from the centre' : 'a centre-bounce midfielder')
-      : line === 'DEF' || v('def') >= 15 ? (v('k') >= 15 && v('mg') >= 13 ? 'a rebounding half-back who takes the kick-ins and sets up the chain' : v('m') >= 15 ? 'an intercept defender who reads the ball in flight' : 'a lockdown-first defender')
-      : line === 'FWD' || v('fwd') >= 15 ? (n(b.g) >= 2 ? 'a key target who kicks a bag when the ball goes long' : v('t') >= 15 ? 'a pressure forward who earns his points with tackles' : v('disp') >= 13 ? 'a high half-forward who pushes up the ground to find it' : 'a small forward who lives off crumbs and pressure')
-      : n(b.cba) >= 25 ? 'a rotating midfielder who splits time between the centre and a wing'
-      : 'an outside runner who finds space on the wing';
-
+    const role = roleOf(p, b, v);
     const strengths = (attrs ?? []).filter((x) => x.value >= 16 && x.key !== 'tog' && x.key !== 'cba').sort((x, y) => y.value - x.value).slice(0, 3).map((x) => x.label.toLowerCase());
     const weak = (attrs ?? []).filter((x) => x.value <= 5 && ['disp', 'cp', 't', 'm', 'k'].includes(x.key)).map((x) => x.label.toLowerCase());
     const ratio = n(b.h) ? n(b.k) / n(b.h) : 0;
     const foot = ratio >= 1.7 ? 'He’s a kick-first player' : ratio && ratio <= 1 ? 'He’s handball-heavy and plays in close' : null;
-
-    style = `${first} is ${role}. He averaged ${disp.toFixed(1)} disposals (${f1(b.k)} kicks, ${f1(b.h)} handballs), ${f1(b.m)} marks and ${f1(b.t)} tackles`
-      + (b.cl != null && n(b.cl) >= 2 ? `, with ${f1(b.cl)} clearances a game` : '')
-      + (n(b.ho) >= 5 ? ` and ${f1(b.ho)} hitouts` : '')
+    const isRuck = /ruck/.test(role);
+    style = `${first} is ${role}${p.height_cm ? ` (${p.height_cm}cm)` : ''}. `
+      + (isRuck
+        ? `He averaged ${f1(b.ho)} hitouts${b.rc ? ` and contested ${b.rc}% of the ruck contests` : ''}, with ${disp.toFixed(1)} disposals and ${f1(b.m)} marks around the ground`
+        : `He averaged ${disp.toFixed(1)} disposals (${f1(b.k)} kicks, ${f1(b.h)} handballs), ${f1(b.m)} marks and ${f1(b.t)} tackles`)
+      + (b.cl != null && n(b.cl) >= 2 ? `, plus ${f1(b.cl)} clearances a game` : '')
       + (n(b.g) >= 1 ? `, kicking ${f1(b.g)} goals a game` : '') + '. '
       + (strengths.length ? `${pick(['His standout tools are', 'He grades elite for', 'Where he separates himself:'], seed)} ${list(strengths)}. ` : '')
-      + (foot ? `${foot}${b.de ? ` and hits ${b.de}% of his targets` : ''}. ` : '')
-      + (weak.length ? `The gap in his game is ${list(weak)}.` : '');
-    if (n(b.cba) >= 60) tags.push('Centre bounce');
+      + (foot && !isRuck ? `${foot}${b.de ? ` and hits ${b.de}% of his targets` : ''}. ` : '')
+      + (weak.length && !isRuck ? `The gap in his game is ${list(weak)}.` : '');
+    if (n(b.cba) >= 60 && !isRuck) tags.push('Centre bounce');
     if (v('cp') >= 16) tags.push('Contested beast');
     if (v('mg') >= 16) tags.push('Line breaker');
     if (v('def') >= 16) tags.push('Interceptor');
     if (v('fwd') >= 16) tags.push('Scoreboard');
     if (v('t') >= 17) tags.push('Pressure');
     if (n(b.ki) >= 15) tags.push('Kick-ins');
-    if (n(b.ho) >= 15) tags.push('Ruck');
+    if (isRuck) tags.push('Ruck');
   }
 
   // ---- potential
-  const cg = p.career_games ?? 0;
   const pot = r.potential;
   let potential: string;
+  const draftLine = pk ? (pk === 1 ? `the No.1 pick in ${p.draft_year}` : `pick ${pk} in ${p.draft_year}`) : null;
+  const last = full[full.length - 1], prev = full[full.length - 2];
+  const jump = last && prev ? Math.round(last[2] - prev[2]) : null;
+  const seasonNo = last ? hist.filter((h) => h[0] <= last[0]).length : 0;
+  const vsNorm = last ? Math.round(last[2] - EXPECTED_BY_SEASON[Math.min(seasonNo, 5)]) : null;
+
   if (a == null) potential = 'Age data is missing, so potential can’t be graded yet.';
-  else if (a <= 21) {
-    potential = `At ${a}${cg ? ` with ${cg} games` : ' and yet to debut'}, ${first} is at the very start of the curve. `
-      + (pot != null && pot >= 4 ? 'The output he’s already shown for his age points to a genuine future premium. Hold.'
-        : pot != null && pot >= 3 ? 'There are enough signs to keep him on the list while the role grows.'
-        : 'It’s a long-range bet: he needs a bigger role before the fantasy numbers follow.');
+  else if (a <= 23 || seasonNo <= 2) {
+    const parts: string[] = [];
+    parts.push(`${first} is ${a}${draftLine ? `, ${draftLine}` : ''}${cg ? `, with ${cg} games` : ' and yet to debut'}.`);
+    if (last && vsNorm != null) {
+      parts.push(vsNorm >= 12 ? `Averaging ${Math.round(last[2])} in his ${ord(seasonNo)} season puts him ${vsNorm} points ahead of where players usually are at that stage${a >= 23 ? '. He came in as a mature-age player, though, so some of that is physical readiness rather than upside' : ', which is the clearest sign of a future premium'}.`
+        : vsNorm >= 3 ? `His ${Math.round(last[2])} in his ${ord(seasonNo)} season is ahead of the usual curve for that stage.`
+        : vsNorm >= -6 ? `His ${Math.round(last[2])} in his ${ord(seasonNo)} season is about where you’d expect for that stage.`
+        : `His ${Math.round(last[2])} in his ${ord(seasonNo)} season is behind the usual curve for that stage.`);
+    }
+    if (jump != null && Math.abs(jump) >= 6) parts.push(jump > 0 ? `He went up ${jump} points on the year before, and that trajectory matters more than the raw number.` : `He went backwards by ${-jump} points, which needs explaining.`);
+    if (!full.length && pk && pk <= 10) parts.push('The draft pedigree is doing the heavy lifting for now. It fades quickly if the games don’t come.');
+    parts.push(pot != null && pot >= 4.5 ? 'Verdict: a possible fantasy star.' : pot != null && pot >= 4 ? 'Verdict: a possible great fantasy player.' : pot != null && pot >= 3 ? 'Verdict: a solid keeper if the role grows.' : cg < 10 ? 'Verdict: an unknown quantity who could score well in the right role.' : 'Verdict: a long-range bet that needs a bigger role.');
+    potential = parts.join(' ');
     if (cg <= 10) tags.push('Rookie-keeper eligible');
-  } else if (a <= 24) {
-    potential = `${first} is ${a} and moving into his best years. `
-      + (r.value >= 75 ? 'He’s already producing like a premium, so the ceiling is a top-10 line player for the next five seasons.'
-        : r.value >= 50 ? 'He’s a solid contributor with room to add 10–15 points a game if his midfield minutes grow.'
-        : 'He hasn’t locked in a role yet. This is the age where it either clicks or he becomes depth.');
-  } else if (a <= 28) {
-    potential = `At ${a}, ${first} is in his prime. What you see now is close to what you get: ${r.value >= 70 ? 'a premium you can bank on for another three or four seasons.' : 'a reliable squad player, unlikely to jump a tier.'}`;
+  } else if (a <= 27) {
+    potential = `At ${a}, ${first} is in his prime. ` + (r.value >= 75
+      ? pick(['He’s already producing like a premium. Expect more of the same for four or five seasons.', 'This is peak-years output. Bank it and don’t overthink it.'], seed)
+      : r.value >= 50 ? `${jump && jump > 5 ? `The ${jump}-point jump this year says there may be one more step in him. ` : ''}A solid contributor who isn’t likely to jump a tier from here.`
+      : 'He hasn’t locked in a scoring role. At this age that tends to be who he is.');
   } else if (a <= 30) {
-    potential = `${first} is ${a} and on the back end of his prime. ${r.value >= 70 ? 'Still elite, but his trade value is at its peak now and only drops from here.' : 'Expect a gradual slide. Keep him for this season’s points, not for the future.'}`;
-    tags.push('Sell window');
+    potential = `${first} is ${a} and on the back end of his prime. ${r.value >= 70 ? 'Still elite, but his trade value is at its peak now and only goes down from here.' : 'Expect a gradual slide. Keep him for this season’s points, not the future.'}`;
+    if (a >= 29) tags.push('Sell window');
   } else {
-    potential = `At ${a}, ${first} is a short-term asset. ${r.value >= 70 ? 'He can still win you a flag this year, but plan the succession now.' : 'Squad depth with a year or two left.'}`;
+    potential = `At ${a}, ${first} is a short-term asset. ${r.value >= 70 ? 'He can still help win you a flag this year, but plan the succession now.' : 'He’s squad depth with a year or two left.'}`;
     tags.push('Ageing');
   }
 
@@ -135,17 +191,38 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   const xs = played(p.last5);
   if (!p.average) fantasy = 'No fantasy scores in 2026.';
   else {
-    const tier = p.average >= 110 ? 'a top-tier premium' : p.average >= 100 ? 'a premium' : p.average >= 90 ? 'a reliable scorer just below premium' : p.average >= 80 ? 'a solid starter' : p.average >= 70 ? 'a bench-level scorer' : 'a non-scorer at this stage';
+    const tier = p.average >= 110 ? 'a top-tier premium' : p.average >= 100 ? 'a premium' : p.average >= 90 ? 'a reliable scorer just below premium' : p.average >= 80 ? 'a solid starter' : p.average >= 70 ? 'a bench-level scorer' : (a ?? 30) <= 23 ? 'a developing scorer rather than a fantasy option yet' : 'not a fantasy option on these numbers';
     const ceiling = b?.mx ? ` His best was ${b.mx}.` : '';
     const ppm = b?.ppm ? (b.ppm >= 1.1 ? ` At ${b.ppm.toFixed(2)} points a minute he’s one of the most efficient scorers in the comp.` : b.ppm <= 0.75 ? ` His ${b.ppm.toFixed(2)} points a minute means he needs big time on ground to score.` : '') : '';
-    const cons = r.consistency >= 15 ? 'He rarely has a bad day.' : r.consistency <= 6 ? 'Scores swing a lot week to week, so he’s a better captain-loophole than a lock.' : '';
+    const cons = r.consistency >= 15 ? 'He rarely has a bad day.' : r.consistency <= 6 ? 'His scores swing a lot week to week.' : '';
     const formNote = xs.length >= 3 ? (() => {
-      const m = xs.reduce((s, x) => s + x, 0) / xs.length;
-      return m > p.average * 1.06 ? ` Finished the year hot (${Math.round(m)} over his last ${xs.length}).` : m < p.average * 0.94 ? ` Tailed off late (${Math.round(m)} over his last ${xs.length}).` : '';
+      const m = xs.reduce((s2, x) => s2 + x, 0) / xs.length;
+      return m > p.average * 1.06 ? ` He finished the year hot (${Math.round(m)} over his last ${xs.length}).` : m < p.average * 0.94 ? ` He tailed off late (${Math.round(m)} over his last ${xs.length}).` : '';
     })() : '';
-    fantasy = `${p.average.toFixed(1)} average from ${p.games ?? 0} games makes him ${tier}.${ceiling}${ppm} ${cons}${formNote}`.replace(/\s+/g, ' ').trim();
+    const history = full.length >= 3 ? ` His last three seasons: ${full.slice(-3).map((h) => `${Math.round(h[2])} (’${String(h[0]).slice(2)})`).join(', ')}.` : '';
+    fantasy = `${p.average.toFixed(1)} average from ${p.games ?? 0} games makes him ${tier}.${ceiling}${ppm} ${cons}${formNote}${history}`.replace(/\s+/g, ' ').trim();
     if (p.average >= 110) tags.unshift('Premium');
   }
 
-  return { style, potential, fantasy, tags: [...new Set(tags)].slice(0, 5) };
+  // ---- outlook
+  const verdict = note?.verdict ?? autoVerdict(p, r, a);
+  let outlook: string;
+  if (note) outlook = note.outlook;
+  else {
+    const map: Record<Verdict, string> = {
+      'Possible fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
+      'Possible great fantasy player': `${first} has the profile to become a genuine starter. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,
+      'Locked-in premium': `${first} is a set-and-forget premium. Barring injury, he’s one of the first names on any team sheet for the next few years.`,
+      'Reliable starter': `${first} is a dependable starter. He’s unlikely to win you a week on his own, but he rarely costs you one either.`,
+      'Unknown quantity': `${first} is an unknown quantity who could score well in the right role. The sample is too small to judge, so he’s cheap to hold while you find out.`,
+      'Role-dependent': `${first}’s scoring depends on his role. In his current spot he’s capped. A move on-ball, or a teammate leaving, could change everything.`,
+      'Win-now asset': `${first} is a win-now piece. He’s worth plenty this season and less every season after. Keep him if you’re chasing the flag and sell him if you’re not.`,
+      'Sell window': `${first}’s value has peaked. If anyone in the league still pays for his 2026 numbers, now is the time to move him.`,
+      'Depth only': `${first} is list depth: fine as an emergency, but not someone to build around.`,
+      'Bench stash': `${first} is a bench stash: useful cover in the byes, but not a long-term piece.`,
+    };
+    outlook = map[verdict];
+  }
+
+  return { style, potential, fantasy, outlook, verdict, tags: [...new Set(tags)].slice(0, 5) };
 }
