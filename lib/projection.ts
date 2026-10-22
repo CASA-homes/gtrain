@@ -11,6 +11,7 @@
 // years he has left. A team's score is its best 18 future scores.
 import { age, LINE_SLOTS, type Line, type PlayerRow } from '@/lib/ratings';
 import { noteFor } from '@/lib/notes';
+import { bounceBack } from '@/lib/injury';
 
 const SEASON_START_2027 = new Date(2027, 2, 1);
 const AGE_CURVE: Record<number, number> = {
@@ -23,7 +24,9 @@ export function projected2027(p: PlayerRow): number {
   if (p.list_status) return 0;
   const g = p.games ?? 0;
   const avg = p.average ?? 0;
-  const base = g < 10 ? (avg * g + 55 * 4) / (g + 4) : avg;
+  // Injured players project off a blend of their recent peak and 2026, not the injury-hit 2026 number alone.
+  const bb = bounceBack(p);
+  const base = bb ? Math.max(avg, bb.blended) : g < 10 ? (avg * g + 55 * 4) / (g + 4) : avg;
   const a = age(p.birth_date, SEASON_START_2027) ?? 26;
   const delta = noteFor(p.name, p.afl_club)?.delta ?? 0;
   return Math.max(0, Math.round((base * curve(a) + delta) * 10) / 10);

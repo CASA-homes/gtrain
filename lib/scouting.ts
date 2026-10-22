@@ -2,8 +2,8 @@
 // Attributes are percentiles against every rostered player with 5+ AFL games in 2026.
 import { age, played, primaryLine, type Box, type PlayerRow, type Ratings } from '@/lib/ratings';
 import { noteFor, type Verdict } from '@/lib/notes';
+import { bounceBack, CURRENT_YEAR, INJURY_2026 } from '@/lib/injury';
 
-const CURRENT_YEAR = 2026;
 
 export interface Attr { key: string; label: string; value: number; raw: string }
 
@@ -52,15 +52,7 @@ export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
 
 export interface Report { style: string; potential: string; fantasy: string; health: string | null; outlook: string; position: string | null; verdict: Verdict; tags: string[] }
 
-/** Known 2026 injury stories, keyed by players.name. Data alone can't tell injury from form, so these add the why. */
-const INJURY_2026: Record<string, string> = {
-  'T. English': 'Injuries cost him a big chunk of 2026',
-  'Z. Butters': 'Injuries cost him games in 2026',
-  'T. Green': 'He missed 2026 through injury',
-  'I. Heeney': 'A groin injury hampered him through 2026, before the Pullman ban ended his season',
-  'J. Caldwell': 'Injuries interrupted his 2026',
-  'C. Rozee': 'Injury wiped out almost all of his 2026',
-};
+
 
 const pick = <T,>(xs: T[], seed: number) => xs[Math.abs(seed) % xs.length];
 const list = (xs: string[]) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
@@ -261,6 +253,8 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
           ], seed)) + ' That makes him a buy-low target, as long as you price in the injury risk.'
           : `At ${a}, getting all the way back there is a big ask, but a clean run could still see him well above his ${CURRENT_YEAR} output.`);
       bounce = stillYoung;
+      const bb = bounceBack(p);
+      if (bb) health += ` The 2027 projection uses a blended ${Math.round(bb.blended)} rather than his ${CURRENT_YEAR} average.`;
       tags.unshift(stillYoung ? 'Bounce-back' : 'Injury-hit');
     } else if (a26 >= 95 && g26 > 0 && (g26 <= 16 || known)) {
       health = `${known ? `${known}. ` : ''}${first} played only ${gms(g26)} in ${CURRENT_YEAR} but averaged ${Math.round(a26)} when he was out there. The scoring is premium. The only question is the body: a full season out of him and he’s among the top scorers in the comp.`;
