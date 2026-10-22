@@ -112,6 +112,8 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
  *     Potential good fantasy player: 60+. Below that: Role dependent.
  *     Fewer than 10 AFL games: Too early to tell for a top-20 pick (with his potential tier), otherwise Unknown quantity. Top-20 picks with 20 or
  *     fewer games are at least Potential great, tagged Too early to tell. Under 70 with a real sample: Role dependent tag.
+ *   Key-position players (193cm+ defenders and forwards) drop one potential rung.
+ *   Missed a lot of football (under 9 games a year on a list, 8 or fewer in 2026): Unknown quantity tag.
  *   Over 24: Great fantasy player 90–99, Reliable starter 80–90, Depth piece 70–80, Role dependent under 70.
  *   Under 30 with an injury-hit season: Bounce-back candidate. 30 or older and not a win-now asset: Sell now tag.
  */
@@ -126,6 +128,9 @@ function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean)
   const hot = recent.length >= 3 && recent.reduce((s2, x) => s2 + x, 0) / recent.length >= 80;
   const pickN = p.draft_pick ?? 99;
 
+  // Missed a lot of footy: few games for his years on a list, and barely played in 2026.
+  const yrs = p.draft_year ? CURRENT_YEAR - p.draft_year : 0;
+  if (yrs >= 3 && cg / yrs < 9 && g <= 8 && cg >= 10) extra.push('Unknown quantity');
   if (age >= 30 && (avg >= 95 || adj >= 99)) return out('Win-now asset');
   if (age >= 30) extra.push('Sell now');
   if (adj >= 110 && g >= 8) return out('Fantasy star');
@@ -136,6 +141,9 @@ function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean)
       age <= 23 && (avg >= 90 || (age <= 21 && avg >= 76) || (age <= 20 && pickN <= 10 && pot >= 4.5)) ? 'Potential fantasy star'
       : avg >= 78 || pot >= 4 || (age <= 22 && avg >= 72) || hot || (g <= 16 && avg >= 65) ? 'Potential great fantasy player'
       : avg >= 60 ? 'Potential good fantasy player' : 'Role dependent';
+    // Key-position players (193cm+ defenders and forwards) are a slower, lower-scoring build: one rung down.
+    const keyPos = (r.line === 'DEF' || r.line === 'FWD') && (p.height_cm ?? 0) >= 193;
+    if (keyPos) tier = tier === 'Potential fantasy star' ? 'Potential great fantasy player' : tier === 'Potential great fantasy player' ? 'Potential good fantasy player' : tier;
     if (cg <= 20 && pickN <= 20 && (tier === 'Potential good fantasy player' || tier === 'Role dependent')) tier = 'Potential great fantasy player';
     if (cg < 10) {
       // A high pick who hasn't played much: too early. Anyone else with a handful of games (mid-season and rookie
