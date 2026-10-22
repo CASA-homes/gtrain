@@ -71,6 +71,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             ))}
             {(p.is_keeper || p.is_rookie_keeper) && <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 10px' }}>{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
             {p.status && <span className="pill" style={{ background: C.redBg, color: C.redFg, padding: '4px 10px' }}>{p.status}</span>}
+            {p.list_status && <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 10px' }}>{p.list_status}</span>}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
             <h1 style={{ font: '600 52px/1 var(--font)', letterSpacing: '-.04em' }}>{p.full_name ?? p.name}</h1>
