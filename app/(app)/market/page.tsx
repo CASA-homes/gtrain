@@ -5,17 +5,18 @@ import { getLeague, getMe } from '@/lib/data';
 import { pickPoints } from '@/lib/picks';
 import { C, LINES, type Line } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
-import { decideTrade, postWish, voteVeto } from './actions';
+import { closeWish, decideTrade, postWish, voteVeto } from './actions';
 
 export default async function MarketPage({ searchParams }: { searchParams: Promise<{ line?: string }> }) {
   const sp = await searchParams;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const supabase = await createClient();
-  const [{ data: listings }, { data: wishes }, { data: trades }, { data: votes }] = await Promise.all([
+  const [{ data: listings }, { data: wishes }, { data: trades }, { data: votes }, { count: openDesks }] = await Promise.all([
     supabase.from('listings').select('id, kind, asking, minimum, open_to, ends_at, status, team_id, player_id, created_at, offers(id, offer, points, team_id, created_at)').in('status', ['open', 'pending']).order('created_at', { ascending: false }),
     supabase.from('wishes').select('*, wish_replies(count)').eq('status', 'open').order('created_at', { ascending: false }).limit(12),
     supabase.from('trades').select('*').order('created_at', { ascending: false }).limit(10),
     supabase.from('trade_votes').select('trade_id, team_id'),
+    supabase.from('desks').select('id', { count: 'exact', head: true }).in('status', ['open', 'agreed']),
   ]);
   const team = (id: number) => league.teams.find((t) => t.id === id);
   const player = (id: number) => league.players.find((p) => p.id === id);
@@ -36,11 +37,14 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
             <span style={{ color: '#a9b5aa' }}>No trade deadline. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
           </div>
           <div className="kpis">
-            {[['Listings', regular.length], ['Live auctions', auctions.length], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
+            {[['Listings', regular.length], ['Live auctions', auctions.length], ['Trade desks', openDesks ?? 0], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
               <div key={l} className="kpi" style={{ borderColor: '#33443a' }}><span className="eyebrow" style={{ color: '#a9b5aa' }}>{l}</span><b>{v}</b></div>
             ))}
           </div>
-          <Link href="/market/new" className="btn" style={{ background: 'var(--cream)', color: 'var(--forest)', border: 0 }}>List a player</Link>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <Link href="/market/desk" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade desk</Link>
+            <Link href="/market/new" className="btn" style={{ background: 'var(--cream)', color: 'var(--forest)', border: 0 }}>List a player</Link>
+          </div>
         </div>
       </div>
 
@@ -142,6 +146,11 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
                   </div>
                   <span style={{ font: '600 16px var(--font)' }}>{w.want}</span>
                   {w.offering && <span className="muted" style={{ fontSize: 13 }}>Offering: <span style={{ color: C.ink }}>{w.offering}</span></span>}
+                  {(me?.team_id === w.team_id || me?.is_commish) && (
+                    <form action={closeWish.bind(null, w.id)} style={{ alignSelf: 'flex-end' }}>
+                      <button className="btn" style={{ minHeight: 28, padding: '0 10px', fontSize: 12 }}>Remove wish</button>
+                    </form>
+                  )}
                 </article>
               ))}
               <details className="card" style={{ padding: 14 }}>

@@ -94,3 +94,23 @@ export async function postWish(form: FormData) {
   await supabase.from('wishes').insert({ team_id: me.team_id, want, offering: String(form.get('offering') || '') || null, tag: String(form.get('tag') || 'Player') });
   revalidatePath('/market');
 }
+
+/** Seller or commish takes a listing or live auction down. */
+export async function withdrawListing(listingId: string) {
+  const me = await getMe();
+  if (!me) return;
+  const supabase = await createClient();
+  await supabase.from('listings').update({ status: 'withdrawn' }).eq('id', listingId).in('status', ['open', 'pending']);
+  revalidatePath('/market');
+  revalidatePath(`/market/${listingId}`);
+  redirect('/market');
+}
+
+/** Owner or commish takes a wish down. */
+export async function closeWish(wishId: string) {
+  const me = await getMe();
+  if (!me) return;
+  const supabase = await createClient();
+  await supabase.from('wishes').update({ status: 'closed' }).eq('id', wishId);
+  revalidatePath('/market');
+}
