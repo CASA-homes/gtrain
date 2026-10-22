@@ -29,13 +29,23 @@ export function projected2027(p: PlayerRow): number {
   return Math.max(0, Math.round((base * curve(a) + delta) * 10) / 10);
 }
 
-/** Future-build score for one player (roughly on the scale of a fantasy average). */
-export function futureScore(p: PlayerRow, potentialStars: number | null, lineBonus = 0): number {
+/**
+ * Future-build score for one player: his projected peak, weighted by how many prime years he has left.
+ *   peak = projected 2027 average, grown along the age curve to 26. Potential sets how much of that growth he gets
+ *          (5★ gets all of it, 2.5★ half).
+ *   years left = prime seasons until 31; a 19-year-old has twelve, a 28-year-old three.
+ * The scarce-line bonus (forwards, defenders) only counts in full for players good enough to start there.
+ */
+export function futureScore(p: PlayerRow, potentialStars: number | null, lineBonus = 0, lineEdge = 0): number {
   if (p.list_status) return 0;
   const a = age(p.birth_date, SEASON_START_2027) ?? 27;
-  const runway = Math.max(0.3, Math.min(1.15, 0.6 + (30 - a) * 0.06));
-  // lineBonus puts forwards and defenders on the midfield scale, so a top forward rates like the premium he is.
-  return Math.round((0.7 * (projected2027(p) + lineBonus) + 0.3 * (potentialStars ?? 2.5) * 22) * runway);
+  const bonus = lineBonus * Math.max(0, Math.min(1, (lineEdge + 5) / 10));
+  const base = projected2027(p) + bonus;
+  let cum = 1;
+  for (let y = a + 1; y <= 26; y++) cum *= curve(y);
+  const peak = base * (1 + (cum - 1) * ((potentialStars ?? 2.5) / 5));
+  const years = Math.max(0, 31 - a);
+  return Math.round(peak * Math.max(0.45, Math.min(1.12, 0.6 + years * 0.045)));
 }
 
 /** The ruck counts for half: one player shouldn't swing a team as much as a whole line. */

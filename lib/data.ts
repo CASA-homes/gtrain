@@ -105,7 +105,7 @@ export const getLeague = cache(async (): Promise<League> => {
   // Future build: each team's best 18 future scores, plus line-by-line strength on future scores.
   const futureByTeam = teams.map((t) => {
     const mine = players.filter((p) => p.team_id === t.id)
-      .map((p) => ({ p, f: futureScore(p, ratings.get(p.id)?.potential ?? null, ratings.get(p.id)?.lineBonus ?? 0) }))
+      .map((p) => ({ p, f: futureScore(p, ratings.get(p.id)?.potential ?? null, ratings.get(p.id)?.lineBonus ?? 0, ratings.get(p.id)?.lineEdge ?? 0) }))
       .sort((x, y) => y.f - x.f);
     const core = mine.slice(0, 18);
     const ages = core.map((x) => age(x.p.birth_date)).filter((x): x is number => x != null);
