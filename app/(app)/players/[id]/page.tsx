@@ -5,13 +5,7 @@ import { CLUBS } from '@/lib/clubs';
 import { getLeague, CURRENT_SEASON } from '@/lib/data';
 import { age, C, form, played } from '@/lib/ratings';
 import { scoutingReport } from '@/lib/scouting';
-
-/** Commish-supplied photo first, then the AFL headshot DFS points to. */
-function photoUrl(p: { photo_path: string | null; dfs_id: string | null }) {
-  if (p.photo_path) return p.photo_path;
-  if (p.dfs_id) return `https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/${p.dfs_id.replace('CD_I', '')}.png`;
-  return null;
-}
+import { photoUrl } from '@/lib/photos';
 
 export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
