@@ -8,7 +8,7 @@ export const CLUBS: Record<string, { name: string; a: string; b: string; m?: str
   ESS: { name: 'Essendon', a: '#111111', b: '#cc2031' },
   FRE: { name: 'Fremantle', a: '#2a0d54', b: '#ffffff' },
   GEE: { name: 'Geelong', a: '#1c3c63', b: '#ffffff' },
-  GCS: { name: 'Gold Coast', a: '#d93e39', m: '#f6bd00', b: '#00285e' },
+  GCS: { name: 'Gold Coast', a: '#d93e39', m: '#ffffff', b: '#f6bd00' },
   GWS: { name: 'GWS', a: '#f15c22', b: '#333a3f' },
   HAW: { name: 'Hawthorn', a: '#4d2004', b: '#fbbf15' },
   MEL: { name: 'Melbourne', a: '#0f1131', b: '#cc2031' },

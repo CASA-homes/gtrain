@@ -37,20 +37,29 @@ export function futureScore(p: PlayerRow, potentialStars: number | null): number
   return Math.round((0.7 * projected2027(p) + 0.3 * (potentialStars ?? 2.5) * 22) * runway);
 }
 
-/** Position-valid starting 18: 1 RUC, 5 DEF, 5 FWD, 7 MID, scarce lines first. */
-export function starting18(players: { id: number; positions: Line[]; score: number }[]) {
+/** The ruck counts for half: one player shouldn't swing a team as much as a whole line. */
+export const LINE_WEIGHT: Record<Line, number> = { DEF: 1, MID: 1, RUC: 0.5, FWD: 1 };
+
+/** Position-valid starting 18 (1 RUC, 5 DEF, 5 FWD, 7 MID, scarce lines first). Returns per-line totals. */
+export function lineTotals(players: { id: number; positions: Line[]; score: number }[]): Record<Line, number> {
   const sorted = [...players].sort((x, y) => y.score - x.score);
   const used = new Set<number>();
-  let total = 0;
+  const out = { DEF: 0, MID: 0, RUC: 0, FWD: 0 } as Record<Line, number>;
   for (const line of ['RUC', 'DEF', 'FWD', 'MID'] as Line[]) {
     let n = 0;
     for (const p of sorted) {
       if (n >= LINE_SLOTS[line]) break;
       if (used.has(p.id) || !p.positions.includes(line)) continue;
-      used.add(p.id); total += p.score; n++;
+      used.add(p.id); out[line] += p.score; n++;
     }
   }
-  return total;
+  return out;
+}
+
+/** Weighted starting-18 score (ruck at half weight). */
+export function starting18(players: { id: number; positions: Line[]; score: number }[]) {
+  const t = lineTotals(players);
+  return (Object.keys(t) as Line[]).reduce((s, l) => s + t[l] * LINE_WEIGHT[l], 0);
 }
 
 export interface Projection { score: number; rank: number; keepers: number[]; drafted: { pick: number; playerId: number }[] }

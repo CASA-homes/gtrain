@@ -1,9 +1,9 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { buildAttrs, type Attr } from '@/lib/scouting';
-import { futureScore, simulate2027, type Projection } from '@/lib/projection';
+import { futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
 import {
-  best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
+  age, best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
   type Best22, type Box, type Hist, type Line, type PlayerRow, type Slot, type Ratings, type Status,
 } from '@/lib/ratings';
 
@@ -36,7 +36,7 @@ export interface TeamAnalysis {
   premierships: number[];
   projection: Projection;          // 2027: keepers + simulated redraft
   projectedStatus: Status;         // what the model says
-  future: { score: number; rank: number };
+  future: { score: number; rank: number; avgAge: number | null; avgPotential: number | null; lines: Record<Line, number> };  // lines = league rank per line
 }
 
 export interface League {
@@ -102,10 +102,26 @@ export const getLeague = cache(async (): Promise<League> => {
   }
   const projection = simulate2027(players, teams.map((t) => t.id),
     picks.filter((p) => p.year === CURRENT_SEASON + 1 && p.overall != null) as { overall: number; owner_team_id: number }[]);
-  const futureByTeam = teams.map((t) => ({
-    id: t.id,
-    score: players.filter((p) => p.team_id === t.id).map((p) => futureScore(p, ratings.get(p.id)?.potential ?? null)).sort((x, y) => y - x).slice(0, 18).reduce((s2, x) => s2 + x, 0),
-  })).sort((x, y) => y.score - x.score);
+  // Future build: each team's best 18 future scores, plus line-by-line strength on future scores.
+  const futureByTeam = teams.map((t) => {
+    const mine = players.filter((p) => p.team_id === t.id)
+      .map((p) => ({ p, f: futureScore(p, ratings.get(p.id)?.potential ?? null) }))
+      .sort((x, y) => y.f - x.f);
+    const core = mine.slice(0, 18);
+    const ages = core.map((x) => age(x.p.birth_date)).filter((x): x is number => x != null);
+    const pots = core.map((x) => ratings.get(x.p.id)?.potential).filter((x): x is number => x != null);
+    return {
+      id: t.id,
+      score: core.reduce((s2, x) => s2 + x.f, 0),
+      avgAge: ages.length ? ages.reduce((a, b) => a + b, 0) / ages.length : null,
+      avgPotential: pots.length ? pots.reduce((a, b) => a + b, 0) / pots.length : null,
+      lineTotals: lineTotals(mine.map((x) => ({ id: x.p.id, positions: x.p.positions, score: x.f }))),
+    };
+  }).sort((x, y) => y.score - x.score);
+  const futureLineRank = (id: number, l: Line) => {
+    const all = futureByTeam.map((f) => f.lineTotals[l]).sort((x, y) => y - x);
+    return all.indexOf(futureByTeam.find((f) => f.id === id)!.lineTotals[l]) + 1;
+  };
 
   const byTeam = new Map<number, TeamAnalysis>();
   for (const a of analyses) {
@@ -121,7 +137,13 @@ export const getLeague = cache(async (): Promise<League> => {
     const projectedStatus = statusFromRank(proj.rank);
     byTeam.set(a.team.id, {
       ...a, rank, status: a.team.status_override ?? projectedStatus, projectedStatus, projection: proj,
-      future: { score: Math.round(futureByTeam.find((f) => f.id === a.team.id)!.score), rank: futureByTeam.findIndex((f) => f.id === a.team.id) + 1 },
+      future: (() => {
+        const f = futureByTeam.find((x) => x.id === a.team.id)!;
+        return {
+          score: Math.round(f.score), rank: futureByTeam.indexOf(f) + 1, avgAge: f.avgAge, avgPotential: f.avgPotential,
+          lines: Object.fromEntries(LINES.map((l) => [l, futureLineRank(a.team.id, l)])) as Record<Line, number>,
+        };
+      })(),
       lineStrength: ls,
       premierships: seasons.filter((s) => s.premier_id === a.team.id).map((s) => s.year).sort(),
     });
