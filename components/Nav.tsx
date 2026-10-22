@@ -8,6 +8,7 @@ const LINKS = [
   { href: '/market', label: 'Market' },
   { href: '/league', label: 'League' },
   { href: '/rankings', label: 'Rankings' },
+  { href: '/draft', label: 'Draft' },
 ];
 
 export function Nav({ myTeamId, shortCode }: { myTeamId: number; shortCode: string }) {
