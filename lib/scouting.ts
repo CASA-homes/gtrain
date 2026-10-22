@@ -100,19 +100,33 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
   return 'a role player still looking for a fixed spot in the side';
 }
 
-/** One-line label for where he's heading. */
-function autoVerdict(p: PlayerRow, r: Ratings, a: number | null): Verdict {
+/**
+ * One-line label. Established scoring first, then age:
+ *   Line-adjusted average (forwards +10, defenders +5, so a 90 forward reads like a 100 midfielder):
+ *   30+ and 95+ → Win-now asset. 110+ → Fantasy star. 99+ → Fantasy gun.
+ *   24 and under: 23 or younger scoring 90+ (or 21 or younger scoring 76+, or a top-10 pick aged 20 or under with
+ *   4.5-star potential) → Potential fantasy star;
+ *   78+ or 4-star potential → Potential great fantasy player.
+ *   Over 24, there's no "potential" any more: 80+ (76+ for forwards) → Reliable starter.
+ */
+function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean): Verdict {
   const pot = r.potential ?? 0, cg = p.career_games ?? 0, avg = p.average ?? 0;
+  const adj = avg + r.lineBonus;
   if (a == null) return 'Unknown quantity';
-  if (cg < 12 && a >= 21) return 'Unknown quantity';
-  if (a <= 23 && pot >= 4.5) return 'Possible fantasy star';
-  if (a <= 24 && pot >= 4) return 'Possible great fantasy player';
-  if (avg >= 105 && a <= 28) return 'Locked-in premium';
-  if (r.line !== 'MID' && r.lineRank <= 10 && a <= 29) return 'Locked-in premium';
-  if (a >= 30 && avg >= 85) return 'Win-now asset';
-  if (a >= 29 && pot <= 2.5) return 'Sell window';
-  if (avg >= 78) return 'Reliable starter';
-  if (a <= 23) return 'Role-dependent';
+  if (a >= 30) return avg >= 95 ? 'Win-now asset' : avg >= (r.line === 'FWD' ? 76 : 80) ? 'Reliable starter' : avg >= 70 ? 'Sell window' : 'Depth only';
+  if (adj >= 110 && (p.games ?? 0) >= 8) return 'Fantasy star';
+  if (adj >= 99 && (p.games ?? 0) >= 8) return 'Fantasy gun';
+  if (bounce) return 'Bounce-back candidate';
+  if (a <= 24) {
+    const topPick = !!p.draft_pick && p.draft_pick <= 10;
+    if (a <= 23 && (avg >= 90 || (a <= 21 && avg >= 76) || (a <= 20 && topPick && pot >= 4.5))) return 'Potential fantasy star';
+    if (avg >= 78 || pot >= 4) return 'Potential great fantasy player';
+    if (cg < 12) return 'Unknown quantity';
+    return avg >= 62 ? 'Role-dependent' : 'Depth only';
+  }
+  if (avg >= (r.line === 'FWD' ? 76 : 80)) return 'Reliable starter';
+  if (cg < 12) return 'Unknown quantity';
+  if (a >= 29) return 'Sell window';
   return avg >= 62 ? 'Bench stash' : 'Depth only';
 }
 
@@ -188,7 +202,7 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
     }
     if (jump != null && Math.abs(jump) >= 6) parts.push(jump > 0 ? `He went up ${jump} points on the year before, and that trajectory matters more than the raw number.` : `He went backwards by ${-jump} points, which needs explaining.`);
     if (!full.length && pk && pk <= 10) parts.push('The draft pedigree is doing the heavy lifting for now. It fades quickly if the games don’t come.');
-    parts.push(pot != null && pot >= 4.5 ? 'Verdict: a possible fantasy star.' : pot != null && pot >= 4 ? 'Verdict: a possible great fantasy player.' : pot != null && pot >= 3 ? 'Verdict: a solid keeper if the role grows.' : cg < 10 ? 'Verdict: an unknown quantity who could score well in the right role.' : 'Verdict: a long-range bet that needs a bigger role.');
+    parts.push('{{VERDICT}}');
     potential = parts.join(' ');
     if (cg <= 10) tags.push('Rookie-keeper eligible');
   } else if (a <= 27) {
@@ -288,14 +302,21 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   }
 
   // ---- outlook
-  const verdict = note?.verdict ?? (bounce && (p.average ?? 0) < 95 ? 'Bounce-back candidate' : autoVerdict(p, r, a));
+  const verdict = verdictFor(p, r, a, bounce);
+  const VERDICT_LINE: Partial<Record<Verdict, string>> = {
+    'Fantasy star': 'Verdict: already a fantasy star.', 'Fantasy gun': 'Verdict: already a fantasy gun.',
+    'Potential fantasy star': 'Verdict: a potential fantasy star.', 'Potential great fantasy player': 'Verdict: a potential great fantasy player.',
+    'Unknown quantity': 'Verdict: an unknown quantity who could score well in the right role.', 'Bounce-back candidate': 'Verdict: a bounce-back candidate.',
+  };
+  potential = potential.replace('{{VERDICT}}', VERDICT_LINE[verdict] ?? 'Verdict: a long-range bet that needs a bigger role.');
   let outlook: string;
   if (note) outlook = note.outlook;
   else {
     const map: Record<Verdict, string> = {
-      'Possible fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
-      'Possible great fantasy player': `${first} has the profile to become a genuine starter. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,
-      'Locked-in premium': `${first} is a set-and-forget premium. Barring injury, he’s one of the first names on any team sheet for the next few years.`,
+      'Fantasy star': `${first} is a fantasy star, one of the handful of players who can win you a week on his own. Build around him.`,
+      'Fantasy gun': `${first} is a fantasy gun: a 100-plus scorer (or the positional equivalent) you lock in every week. He’s not quite in the top handful, but he’s close.`,
+      'Potential fantasy star': `${first} is tracking like a future premium. The numbers for his age and stage are rare, and the role to go with them is already there. Hold him.`,
+      'Potential great fantasy player': `${first} has the profile to become a genuine starter. The scoring curve is going the right way. What decides it is whether his club gives him more midfield minutes.`,
       'Reliable starter': `${first} is a dependable starter. He’s unlikely to win you a week on his own, but he rarely costs you one either.`,
       'Unknown quantity': `${first} is an unknown quantity who could score well in the right role. The sample is too small to judge, so he’s cheap to hold while you find out.`,
       'Role-dependent': `${first}’s scoring depends on his role. In his current spot he’s capped. A move on-ball, or a teammate leaving, could change everything.`,
