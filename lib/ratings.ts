@@ -27,6 +27,7 @@ export interface PlayerRow {
   box: Box | null;
   hist: Hist[] | null;
   photo_path: string | null;
+  list_status: string | null;   // Retired / Delisted / long-term injury: out of 2027 projections
   lineup: Slot | null;
 }
 

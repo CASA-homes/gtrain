@@ -6,23 +6,31 @@ export type Verdict =
   | 'Possible fantasy star' | 'Possible great fantasy player' | 'Locked-in premium' | 'Reliable starter'
   | 'Unknown quantity' | 'Role-dependent' | 'Win-now asset' | 'Sell window' | 'Depth only' | 'Bench stash';
 
-export interface Note { outlook: string; verdict?: Verdict }
+/**
+ * outlook: shown in the player's report. verdict: overrides the auto label.
+ * delta: points added to his projected 2027 average for things the numbers can't see (role change, trade, ruck share).
+ */
+export interface Note { outlook: string; verdict?: Verdict; delta?: number }
 
 export const NOTES: Record<string, Note> = {
   // ---------------------------------------------------------------- the ones you asked about
   'D. Wilson|STK': {
+    delta: 6,
     verdict: 'Possible fantasy star',
     outlook: 'The jump from 64 to 83 came from St Kilda trusting him with midfield minutes in patches (16% of centre bounces, up from almost none). That’s the whole story with Wilson: he’s a half-back-flanker scorer who turns into a ball magnet when he goes on-ball. If the Saints make the move permanent, this is a 95–100 player within two years. If they don’t, he’s a high-80s keeper. Either way the arrow is pointing up.',
   },
   'K. Coleman|ESS': {
+    delta: 8,
     verdict: 'Role-dependent',
     outlook: 'Keidean Coleman swaps Brisbane for Essendon, and that should mean more of the ball. The Bombers’ back half needs a kicker, and he’ll likely take the kick-ins and run the rebound chain rather than share it with a stacked Lions defence. That’s a 10–15 point bump on paper. The catch is the body: he managed one game in each of 2024 and 2025. Buy the upside, but keep a backup.',
   },
   'L. Ash|GWS': {
+    delta: 3,
     verdict: 'Locked-in premium',
     outlook: 'Ash went from 76 to 100 to 103 over the last three years, and the main man he shared the GWS back half with, Lachie Whitfield, has just been traded to Carlton. That leaves Ash as the undisputed kick-in taker and the first look out of defence. He should keep dominating, and there’s a case he goes up again in 2027.',
   },
   'B. Hill|STK': {
+    delta: -14,
     verdict: 'Sell window',
     outlook: 'A career year. Hill averaged 100 after three straight seasons around 74–76, and a lot of that was the ball finding the outside runner while Flanders and Wanganeen-Milera were in and out. With both back and fit, the Saints’ outside ball gets shared three ways again. Expect him back in the 80s. If anyone in the league is paying for the 100, take the money.',
   },
@@ -41,6 +49,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Starts 2027 serving a two-match AFL ban (a strike under the illicit drugs policy), so pencil him in from Round 3. On the field he’s a steady low-60s half-back with 24 games last year, which makes him a bench option rather than a starter. Off the field, maybe don’t make him the designated driver for the end-of-season trip.',
   },
   'N. Blakey|NTH': {
+    delta: 4,
     verdict: 'Possible great fantasy player',
     outlook: 'He was one of five Swans stood down by the club for the rest of 2026 after a team-hotel standards breach, and the fallout ended with a trade to North Melbourne. Footy-wise it could be the best thing for his scoring: at Sydney he was one of several rebounders, but at North he’ll be the main man off half-back. He’s been mid-80s for two years already. A fresh start and more of the ball make 90+ realistic.',
   },
@@ -59,18 +68,21 @@ export const NOTES: Record<string, Note> = {
 
   // ---------------------------------------------------------------- 2026 trades
   'Z. Butters|WBD': {
+    delta: -3,
     verdict: 'Locked-in premium',
-    outlook: 'Four straight seasons at 100+, now in red, white and blue. The one worry is crowding: the Dogs already have Bontempelli, Sanders and Liberatore fighting for centre bounces, and Butters lived on 81% at Port. He’s too good to drop below 95, but his ceiling might be tighter in 2027 than it was at Alberton.',
+    outlook: 'Four straight seasons at 100+, now in red, white and blue. The one worry is crowding: the Dogs already have Bontempelli and Sanders at the centre bounces (Liberatore has retired, which helps), and Butters lived on 81% at Port. He’s too good to drop below 95, but his ceiling might be tighter in 2027 than it was at Alberton.',
   },
   'L. Whitfield|CAR': {
     verdict: 'Win-now asset',
     outlook: 'He’s 32, and he’s just moved from GWS to Carlton for one more crack. He’s been 96–110 for four years as the kick-in king, and Carlton will use him the same way. Expect another 95-ish year, but the drop is coming, so treat him as a 2027 asset rather than a long-term keeper.',
   },
   'Z. Merrett|HAW': {
+    delta: -4,
     verdict: 'Win-now asset',
     outlook: 'Ten years an Essendon ball magnet (100+ for four straight seasons), now traded to Hawthorn. He’ll be a big part of the Hawks’ midfield, though he’ll share it more than he did at Essendon, where he was often a one-man band. Expect a small dip to the mid-90s and hold for the next two seasons.',
   },
   'S. Pendlebury|GCS': {
+    delta: -6,
     verdict: 'Depth only',
     outlook: 'He’s 38 and has left Collingwood for one last lap on the Gold Coast. The footy IQ is still there, but he averaged 79 last year on 68% time on ground. He’s a sentimental keeper at best.',
   },
@@ -91,6 +103,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'He’s gone from Brisbane to St Kilda after only 13 games in two years. He’ll get a much clearer path at the Saints. At 20 he’s a genuine unknown, but the move suggests the Saints see a role for him.',
   },
   'R. Marshall|GEE': {
+    delta: 6,
     verdict: 'Win-now asset',
     outlook: 'He’s a 201cm ruck, not a forward: a three-time Silk–Miller medallist who started on St Kilda’s rookie list and built himself into one of the most mobile big men in the game. He averaged 106–117 from 2023 to 2025 when he was St Kilda’s No.1 ruck. That ended when the Saints brought in Tom De Koning. Marshall’s ruck-contest share fell to 50% and his average to 83, and he asked to be traded. Geelong gave up their first-round pick (No.14) to get him, but he’ll share the ruck with 21-year-old Mitchell Edwards rather than own it outright. If he gets back above 65–70% of ruck contests he’s a 95+ ruck again. Split it evenly and he’s mid-80s. He turns 31 next month, so it’s a two-year window.',
   },
@@ -107,10 +120,12 @@ export const NOTES: Record<string, Note> = {
     outlook: 'He’s moved from Fremantle to Richmond, where midfield minutes are there for the taking. He’s been a low-60s half-back for four years. The move is his best chance yet at a bigger role.',
   },
   'K. Briggs|RIC': {
+    delta: 10,
     verdict: 'Possible great fantasy player',
     outlook: 'He’s leaving GWS for Richmond, and that’s a big deal for his fantasy value. He was a 92-average ruck in 2023–24, then fell to 72 over the last two seasons. At the Tigers he should be the No.1 ruck, so a return to the 90s is realistic. Note this hurts Nankervis.',
   },
   'T. Nankervis|RIC': {
+    delta: -15,
     verdict: 'Sell window',
     outlook: 'Richmond just traded for Kieren Briggs, and that’s a direct threat to Nankervis’ ruck minutes. At 32 and likely to be splitting the ruck load, a sharp drop is the likely outcome. Move him on if anyone still rates him.',
   },
@@ -137,6 +152,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Still elite at 34, averaging 110 for the third straight year. But rucks fall off fast, and he’s on borrowed time. Keep him for the 2027 flag push and don’t pay for 2028.',
   },
   'M. Bontempelli|WBD': {
+    delta: -3,
     verdict: 'Win-now asset',
     outlook: 'He averaged 102 at 30, a slight dip from his 106–117 prime. Butters’ arrival means the Dogs’ centre bounces get shared, so he could drift into the mid-90s. Still a premium for another season, but his best years are behind him.',
   },
@@ -201,9 +217,10 @@ export const NOTES: Record<string, Note> = {
     outlook: 'He’s 32 and averaged 78 in 2026, down from 90. His time on ground dropped to 65%, which is the giveaway. 2027 might be his last season. Keep him only if your mid-bench is empty.',
   },
   'E. Tsatas|ESS': {
-    verdict: 'Unknown quantity',
-    outlook: 'Pick 5 in 2022 with only 22 games in four years. But when he played in 2026 he averaged 79 with 24 disposals and 59% of centre bounces. The talent is obvious and the body hasn’t held up. If he gets a clean run, he’s a 90+ player.',
+    verdict: 'Depth only',
+    outlook: 'Delisted by Essendon after the 2026 season. That’s a brutal end for pick 5 in 2022. When he played in 2026 he averaged 79 with 59% of centre bounces, so the talent was never the question; the body was. He has no AFL club right now, so he’s worth nothing for 2027 unless someone picks him up. Keep an eye on the rookie lists.',
   },
+
   'A. Cadman|GWS': {
     verdict: 'Depth only',
     outlook: 'The No.1 pick in 2022, but he’s a key forward, and in fantasy terms that shows: 61 average with almost no midfield time. He’s a better real-life player than a fantasy one. Don’t let the draft number fool you.',
@@ -239,6 +256,31 @@ export const NOTES: Record<string, Note> = {
   'N. Wanganeen-Milera|STK': {
     verdict: 'Locked-in premium',
     outlook: 'He’s gone from 92 to 98 to 111 to 105 since turning 20, and has moved into the midfield (55% of centre bounces). He’s 23 with elite ball use. One of the best long-term keepers in the league.',
+  },
+  // ---------------------------------------------------------------- out for 2027
+  'D. Prestia|RIC': {
+    verdict: 'Depth only',
+    outlook: 'Retired at the end of 2026. He went out with 17 games and showed he could still win his own ball, but he scores nothing from here. Free up the list spot.',
+  },
+  'T. Liberatore|WBD': {
+    verdict: 'Depth only',
+    outlook: 'Retired after the 2026 season. One of the great tacklers of his era and a fantasy stalwart for a decade, but he won’t score a point in 2027. His retirement does open up centre bounces for Butters and Sanders at the Dogs.',
+  },
+  'A. Treloar|WBD': {
+    verdict: 'Depth only',
+    outlook: 'Retired after the Bulldogs chose not to offer him another contract. That ends a 16-season career across three clubs. He had a lot of 100-point seasons, but he’s now a list spot to clear.',
+  },
+  'C. Mills|SYD': {
+    verdict: 'Depth only',
+    outlook: 'Tore his ACL in the 2026 qualifying final. Sydney have flagged he could miss the whole of 2027, and he turns 30 next April. Only keep him if you’ve got the list space to wait a year.',
+  },
+  'Z. Williams|CAR': {
+    verdict: 'Depth only',
+    outlook: 'Delisted by Carlton after nine games in 2026. Injuries have dogged him for years. Unless another club picks him up, he has no 2027 value.',
+  },
+  'T. Sonsie|RIC': {
+    verdict: 'Depth only',
+    outlook: 'Delisted by Richmond. He showed flashes as a ball-winning forward, but he has no AFL club for 2027 right now. Watch the rookie and pre-season supplemental lists.',
   },
 };
 

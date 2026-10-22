@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { buildAttrs, type Attr } from '@/lib/scouting';
+import { futureScore, simulate2027, type Projection } from '@/lib/projection';
 import {
   best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
   type Best22, type Box, type Hist, type Line, type PlayerRow, type Slot, type Ratings, type Status,
@@ -9,8 +10,9 @@ import {
 export const CURRENT_SEASON = 2026;
 
 export interface Team {
-  id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null;
+  id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null;
 }
+export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean }
 export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null }
 
 export const getMe = cache(async (): Promise<Me | null> => {
@@ -32,6 +34,9 @@ export interface TeamAnalysis {
   status: Status;
   lineStrength: Record<Line, { score: number; rank: number }>;
   premierships: number[];
+  projection: Projection;          // 2027: keepers + simulated redraft
+  projectedStatus: Status;         // what the model says
+  future: { score: number; rank: number };
 }
 
 export interface League {
@@ -41,27 +46,30 @@ export interface League {
   attrs: Map<number, Attr[]>;
   byTeam: Map<number, TeamAnalysis>;
   seasons: { year: number; premier_id: number; runner_up_id: number; spoon_id: number; medal: string | null; gf_winner_score: number | null; gf_loser_score: number | null }[];
+  picks: Pick[];
   ladder: { season: number; team_id: number; rank: number; wins: number; losses: number; draws: number; points: number; pts_for: number; pts_against: number }[];
 }
 
 /** Everything the clubhouse, player and league pages need, in one round trip per table. */
 export const getLeague = cache(async (): Promise<League> => {
   const supabase = await createClient();
-  const [teamsQ, squadQ, seasonsQ, ladderQ] = await Promise.all([
-    supabase.from('teams').select('id,name,coach_name,short_code,keeper_id').order('id'),
+  const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
+    supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override').order('id'),
     supabase.from('squad').select(`
       team_id, is_keeper, is_rookie_keeper, lineup,
-      players!inner ( id, name, full_name, positions, afl_club, birth_date, draft_pick, draft_year, dfs_id, height_cm, debut_year, career_games, hist, photo_path,
+      players!inner ( id, name, full_name, positions, afl_club, birth_date, draft_pick, draft_year, dfs_id, height_cm, debut_year, career_games, hist, photo_path, list_status,
         player_seasons ( season, games, average, last5, status, box ) )`),
     supabase.from('seasons').select('*').order('year', { ascending: false }),
     supabase.from('ladder').select('*').order('rank'),
+    supabase.from('picks').select('id, year, round, overall, original_team_id, owner_team_id, is_optional').in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id'),
   ]);
+  const picks = (picksQ.data ?? []) as Pick[];
 
   const teams = (teamsQ.data ?? []) as Team[];
   type SquadRow = {
     team_id: number; is_keeper: boolean; is_rookie_keeper: boolean; lineup: Slot | null;
     players: { id: number; name: string; full_name: string | null; positions: Line[]; afl_club: string | null; birth_date: string | null;
-      draft_pick: number | null; draft_year: number | null; dfs_id: string | null; height_cm: number | null; debut_year: number | null; career_games: number | null; hist: Hist[] | null; photo_path: string | null;
+      draft_pick: number | null; draft_year: number | null; dfs_id: string | null; height_cm: number | null; debut_year: number | null; career_games: number | null; hist: Hist[] | null; photo_path: string | null; list_status: string | null;
       player_seasons: { season: number; games: number | null; average: number | null; last5: (number | null)[] | null; status: string | null; box: Box | null }[] };
   };
   const players: PlayerRow[] = ((squadQ.data ?? []) as unknown as SquadRow[]).map((s) => {
@@ -70,7 +78,7 @@ export const getLeague = cache(async (): Promise<League> => {
       id: s.players.id, name: s.players.name, positions: s.players.positions, afl_club: s.players.afl_club,
       birth_date: s.players.birth_date, draft_pick: s.players.draft_pick, draft_year: s.players.draft_year,
       full_name: s.players.full_name, dfs_id: s.players.dfs_id, height_cm: s.players.height_cm,
-      debut_year: s.players.debut_year, career_games: s.players.career_games, hist: s.players.hist, photo_path: s.players.photo_path, box: cur?.box ?? null, lineup: s.lineup ?? null,
+      debut_year: s.players.debut_year, career_games: s.players.career_games, hist: s.players.hist, photo_path: s.players.photo_path, list_status: s.players.list_status, box: cur?.box ?? null, lineup: s.lineup ?? null,
       team_id: s.team_id, is_keeper: s.is_keeper, is_rookie_keeper: s.is_rookie_keeper,
       games: cur?.games ?? null, average: cur?.average != null ? Number(cur.average) : null,
       last5: cur?.last5 ?? [], status: cur?.status ?? null,
@@ -92,6 +100,13 @@ export const getLeague = cache(async (): Promise<League> => {
   for (const a of analyses) {
     lineScores.set(a.team.id, Object.fromEntries(LINES.map((l) => [l, a.best.lines[l].reduce((s, p) => s + (p.average ?? 0), 0)])) as Record<Line, number>);
   }
+  const projection = simulate2027(players, teams.map((t) => t.id),
+    picks.filter((p) => p.year === CURRENT_SEASON + 1 && p.overall != null) as { overall: number; owner_team_id: number }[]);
+  const futureByTeam = teams.map((t) => ({
+    id: t.id,
+    score: players.filter((p) => p.team_id === t.id).map((p) => futureScore(p, ratings.get(p.id)?.potential ?? null)).sort((x, y) => y - x).slice(0, 18).reduce((s2, x) => s2 + x, 0),
+  })).sort((x, y) => y.score - x.score);
+
   const byTeam = new Map<number, TeamAnalysis>();
   for (const a of analyses) {
     const rank = order.findIndex((o) => o.team.id === a.team.id) + 1;
@@ -102,14 +117,18 @@ export const getLeague = cache(async (): Promise<League> => {
       const top = all[0] || 1;
       ls[l] = { score: Math.max(1, Math.round((mine / top) * 20)), rank: all.indexOf(mine) + 1 };
     }
+    const proj = projection.get(a.team.id)!;
+    const projectedStatus = statusFromRank(proj.rank);
     byTeam.set(a.team.id, {
-      ...a, rank, status: statusFromRank(rank), lineStrength: ls,
+      ...a, rank, status: a.team.status_override ?? projectedStatus, projectedStatus, projection: proj,
+      future: { score: Math.round(futureByTeam.find((f) => f.id === a.team.id)!.score), rank: futureByTeam.findIndex((f) => f.id === a.team.id) + 1 },
+      lineStrength: ls,
       premierships: seasons.filter((s) => s.premier_id === a.team.id).map((s) => s.year).sort(),
     });
   }
 
   const attrs = buildAttrs(players);
-  return { teams, players, ratings, attrs, byTeam, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
+  return { teams, players, ratings, attrs, byTeam, picks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
 });
 
 export { primaryLine };
