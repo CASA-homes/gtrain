@@ -78,6 +78,11 @@ function WhyDetails({ p }: { p: Prospect }) {
   const top = p.comps[0];
   return (
     <>
+      <a className="btn" target="_blank" rel="noreferrer" style={{ alignSelf: 'flex-start', fontSize: 12, display: 'inline-flex', alignItems: 'center', gap: 6 }}
+        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${p.name} 2026 highlights`)}`}>
+        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d0021b" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8Z"/><path fill="#fff" d="m9.75 15.02 5.75-3.02-5.75-3.02z"/></svg>
+        2026 highlights
+      </a>
       <TwoBars star={p.chance} relevant={p.relevant} />
       <span className="muted" style={{ fontSize: 12 }}>Draft slot alone would say {Math.round(p.positionOnly)}% for a 90+ season. Role: {p.role}.</span>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
