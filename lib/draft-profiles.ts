@@ -1,3 +1,6 @@
+import p2021 from './draft-profiles-2021.json';
+import p2022 from './draft-profiles-2022.json';
+import p2023 from './draft-profiles-2023.json';
 import p2024 from './draft-profiles-2024.json';
 import p2025 from './draft-profiles-2025.json';
 import p2026 from './draft-profiles-2026.json';
@@ -5,6 +8,7 @@ import p2026 from './draft-profiles-2026.json';
 // Draft profiles: what the scouts said before each player was drafted.
 // Facts and junior numbers from Rookie Me Central's AFL Draft Guides; the summary, strengths and improvements are
 // our own short read of each guide page, not their text. Each profile links back to the guide.
+// 2021–2023: from each player's Rookie Me Central draft profile page.
 // 2026 prospects (no guide yet): from Rookie Me's 2026 power rankings, combine results and scouting notes.
 export interface DraftProfile {
   year: number;                 // draft year
@@ -25,7 +29,7 @@ export interface DraftProfile {
   source: { title: string; url: string; page?: number };
 }
 
-export const DRAFT_PROFILES: DraftProfile[] = [...(p2024 as DraftProfile[]), ...(p2025 as DraftProfile[]), ...(p2026 as DraftProfile[])];
+export const DRAFT_PROFILES: DraftProfile[] = [...(p2021 as DraftProfile[]), ...(p2022 as DraftProfile[]), ...(p2023 as DraftProfile[]), ...(p2024 as DraftProfile[]), ...(p2025 as DraftProfile[]), ...(p2026 as DraftProfile[])];
 
 const key = (year: number, name: string) => `${year}|${name.toLowerCase().replace(/[^a-z]/g, '')}`;
 const INDEX = new Map(DRAFT_PROFILES.map((p) => [key(p.year, p.name), p]));
