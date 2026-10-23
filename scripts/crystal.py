@@ -69,13 +69,21 @@ def parse_rows(rows, year):
 
 REP = re.compile(r'^(Vic Metro|Vic Country|South Australia|Western Australia|Allies|Queensland|NSW/ACT|Tasmania|Northern Territory|AFL Academy)', re.I)
 def junior(rows, year):
-    rs = [r for r in parse_rows(rows, year) if r['yr'] in (year, year - 1) and r['gm'] >= 2]
+    """Best junior fantasy line: the draft (top-age) year first; if he barely played it (injury), the year before;
+    failing that, two years back (usually Under 16s) at a 10% discount."""
+    allr = [r for r in parse_rows(rows, year) if r['gm'] >= 2]
+    rs = [r for r in allr if r['yr'] in (year, year - 1)]
     top = [r for r in rs if r['yr'] == year] or rs
+    back2 = False
+    if not top:
+        top = [r for r in allr if r['yr'] == year - 2]; back2 = True
     if not top: return None
-    best = max(top, key=lambda r: r['FP'])
+    best = dict(max(top, key=lambda r: r['FP']))
+    if back2: best['FP'] = round(best['FP'] * 0.9, 1)
     prev = [r for r in rs if r['yr'] == year - 1]
     return {'FP': best['FP'], 'HO': best['HO'], 'D': best['D'], 'T': best['T'], 'M': best['M'], 'G': best['G'], 'CLR': best['CLR'], 'I50': best['I50'],
-            'rep': any(REP.match(r['team']) for r in rs), 'prevFP': max((r['FP'] for r in prev), default=None), 'team': best['team']}
+            'rep': any(REP.match(r['team']) for r in rs + top), 'prevFP': max((r['FP'] for r in prev), default=None), 'team': best['team'],
+            'season': best['yr']}
 
 def range_mid(s):
     s = (s or '').lower()
@@ -107,6 +115,9 @@ def role_of(pos, ht, strs):
     ht = ht or 0
     if 'ruck' in p: return 'Ruck'
     if not p and any(norm(s) in RUCK_TRAITS for s in strs or []): return 'Ruck'
+    # Tall players listed as utilities or midfielders (Bontempelli/Goddard types) get their own role: they can play
+    # through the middle, so they are not written off like pure key position players.
+    if ht >= 188 and ('util' in p or (('key' in p or 'tall' in p) and 'mid' in p) or ('mid' in p or 'wing' in p) and ht >= 190): return 'Tall utility'
     if 'key' in p or 'tall' in p: return 'Key position'
     if not p and ht >= 194: return 'Key position'
     if 'mid' in p or 'wing' in p: return 'Midfielder'

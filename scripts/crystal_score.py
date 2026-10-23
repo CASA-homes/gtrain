@@ -29,6 +29,15 @@ CURRENT_STARS = [q for q in train if len(q['str']) >= 2 and ((NOW_AVG.get((q['ye
 def vec(q):
     v = np.array(cm.fv(q, 10)[1:], dtype=float)
     return np.append(v, ((q.get('ht') or 186) - 186) / 4)
+def comp_pool(role):
+    """Compare like with like: rucks to ruck stars, talls to tall stars, everyone else to non-rucks."""
+    if role == 'Ruck':
+        pool = [q for q in train if q.get('role') == 'Ruck' and ((NOW_AVG.get((q['year'], q['name'])) or 0) >= 90 or (q['peak'] or 0) >= 90)]
+    elif role in ('Tall utility', 'Key position'):
+        pool = [q for q in CURRENT_STARS if q.get('role') != 'Ruck' and (q.get('ht') or 0) >= 189]
+    else:
+        pool = [q for q in CURRENT_STARS if q.get('role') != 'Ruck' and (q.get('ht') or 0) < 194]
+    return pool if len(pool) >= 2 else [q for q in CURRENT_STARS if q.get('role') != 'Ruck']
 def comp_card(q):
     j = q.get('jun') or {}
     return {'name': q['name'].replace('+', ''), 'pick': q['pick'], 'year': q['year'], 'peak': round(q['peak'], 1),
@@ -65,6 +74,7 @@ def why(p, contrib, role):
     if 'power' in (p.get('combine') or []): lines.append({'good': False, 'text': 'Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested.'})
     if role == 'Key position': lines.append({'good': False, 'text': 'Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers.'})
     elif role == 'Small forward': lines.append({'good': False, 'text': 'Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield.'})
+    elif role == 'Tall utility': lines.append({'good': False, 'text': 'Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75–90 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star.'})
     elif role == 'Ruck': lines.append({'good': True, 'text': 'Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested.'})
     return lines
 
@@ -74,8 +84,8 @@ for rank, name in PH:
     prof = PROF.get(name)
     rm = RM.get('2026|' + ALIAS.get(name, name)) or {}
     ht = (prof or {}).get('height') or int(re.sub(r'\D', '', rm.get('ht', '') or '0')[:3] or 0)
-    strs = (prof or {}).get('strengths', [])
-    imps = (prof or {}).get('improvements', [])
+    strs = list((prof or {}).get('strengths', [])) + list(rm.get('str') or [])
+    imps = list((prof or {}).get('improvements', [])) + list(rm.get('imp') or [])
     st = sorted({g for g in (kw_group(s, SMAP) for s in strs) if g})
     if any('goals' in norm(s) or 'scoreboard' in norm(s) for s in strs): st = sorted(set(st) | {'Scoreboard impact'})
     im = sorted({g for g in (kw_group(s, IMAP) for s in imps) if g})
@@ -91,10 +101,12 @@ for rank, name in PH:
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     contrib = sorted([(FEATS[i], float(model.coef_[0][i] * x[i])) for i in range(1, len(FEATS)) if abs(model.coef_[0][i] * x[i]) > 0.08], key=lambda t: -abs(t[1]))
     pv = vec(p)
-    sims = sorted((float(np.linalg.norm(pv - vec(q))), q) for q in CURRENT_STARS)
+    pool = comp_pool(role)
+    sims = sorted(((float(np.linalg.norm(pv - vec(q))), i, q) for i, q in enumerate(pool)), key=lambda t: t[:2])
+    sims = [(d, q) for d, _, q in sims]
     sims = [q for _, q in sims[:3]]
     out.append({'rank': rank, 'name': name, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
-                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'traits': st, 'flags': im,
+                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],
                 'why': why(p, contrib, role),

@@ -79,7 +79,7 @@ for p, pr in zip(train_rel, pred_r): p['oos_rel'] = float(pr)
 # Key-position players taken early almost never become fantasy stars, which a shared draft-position slope can't see.
 def _cal(rows, preds, label):
     out = {}
-    for r in ROLES + ['Midfielder', 'Defender', 'Forward']:
+    for r in ROLES + ['Tall utility', 'Midfielder', 'Defender', 'Forward']:
         idx = [i for i, p in enumerate(rows) if p.get('role') == r]
         if len(idx) < 5: continue
         hits = sum(rows[i][label] for i in idx); exp = sum(preds[i] for i in idx)
