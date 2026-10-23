@@ -11,6 +11,8 @@ import {
 } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 import { coreAge, strengthByYear, windowFor } from '@/lib/window';
+import { draftOutlook, squadSummary } from '@/lib/verdict';
+import { VerdictTabs } from '@/components/VerdictTabs';
 import { WindowChart } from '@/components/WindowChart';
 import { StadiumArt } from '@/components/StadiumArt';
 
@@ -51,11 +53,27 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   // Premiership window: past finishes, the 2027 simulation, then list strength on the age curve to 2030.
   const teamIds = [...league.byTeam.keys()];
-  const windowPts = windowFor({
-    teamId: a.team.id, teamName: a.team.name, teamIds, premierYears: a.premierships,
-    rank2026: lad?.rank ?? null, rank2027: a.projection.rank, futureRank: a.future.rank, coreAge: coreAge(a.team.id, league.players),
-    strength: strengthByYear(teamIds, league.players, league.ratings, new Map([...league.byTeam].map(([k, t]) => [k, t.projection]))),
-  });
+  const lists = new Map([...league.byTeam].map(([k, t]) => [k, t.projection]));
+  const strength = strengthByYear(teamIds, league.players, league.ratings, lists);
+  const windowOf = (id: number) => {
+    const t = league.byTeam.get(id)!;
+    const lt = league.ladder.find((l) => l.season === CURRENT_SEASON && l.team_id === id);
+    return windowFor({
+      teamId: id, teamName: t.team.name, teamIds, premierYears: t.premierships,
+      rank2026: lt?.rank ?? null, rank2027: t.projection.rank, futureRank: t.future.rank, coreAge: coreAge(id, league.players), strength,
+    });
+  };
+  const windowPts = windowOf(a.team.id);
+
+  // Verdict tabs: squad summary and a mock of the 2027 redraft guided by every club's 2027 window phase.
+  const summary = squadSummary(a.players, league.ratings);
+  const phases = new Map(teamIds.map((id) => [id, (id === a.team.id ? windowPts : windowOf(id)).find((p) => p.year === CURRENT_SEASON + 1)?.phase ?? 'Mid rebuild']));
+  const kept = new Set([...lists.values()].flatMap((l) => l.keepers));
+  const outlook = draftOutlook(a.team.id,
+    league.picks.filter((p) => p.year === CURRENT_SEASON + 1 && p.overall != null).map((p) => ({ overall: p.overall!, round: p.round, owner_team_id: p.owner_team_id })),
+    phases, league.players.filter((p) => !kept.has(p.id) && !p.list_status));
+  const note = TEAM_NOTES[a.team.name];
+
 
   // Keepers and age profile
   const keepers = a.players.filter((p) => p.is_keeper || p.is_rookie_keeper);
@@ -107,13 +125,40 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {TEAM_NOTES[a.team.name] && (
-            <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8, background: C.ink, color: '#f4f2ea', border: 0 }}>
-              <span className="eyebrow" style={{ color: '#b9c4b6' }}>The verdict</span>
-              <span title={TEAM_NOTES[a.team.name].headline} style={{ font: '600 17px/1.2 var(--font)', letterSpacing: '-.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{TEAM_NOTES[a.team.name].headline}</span>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: '#dfe5dc' }}>{TEAM_NOTES[a.team.name].body}</p>
-            </div>
-          )}
+          <VerdictTabs panels={[
+            <div key="v" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {note ? <>
+                <span title={note.headline} style={{ font: '600 17px/1.2 var(--font)', letterSpacing: '-.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{note.headline}</span>
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: '#dfe5dc' }}>{note.body}</p>
+              </> : <p style={{ margin: 0, fontSize: 14, color: '#dfe5dc' }}>No verdict written for this club yet.</p>}
+            </div>,
+            <div key="s" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {summary.length ? summary.map((x) => (
+                <div key={x.label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <span style={{ font: '500 10px var(--mono)', letterSpacing: '.06em', textTransform: 'uppercase', color: '#b9c4b6' }}>{x.label}</span>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: '#dfe5dc' }}>
+                    {x.label === 'Best young players' ? x.text : <><b style={{ color: '#f4f2ea' }}>{x.name}</b>: {x.text}</>}
+                  </p>
+                </div>
+              )) : <p style={{ margin: 0, fontSize: 14, color: '#dfe5dc' }}>Not enough 2026 games to summarise yet.</p>}
+            </div>,
+            <div key="d" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              <span style={{ font: '600 15px/1.3 var(--font)' }}>{outlook.phase} for 2027</span>
+              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, color: '#dfe5dc' }}>{outlook.strategy}</p>
+              {outlook.lines.length ? outlook.lines.map((l) => (
+                <div key={l.pick} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr)', gap: 10, alignItems: 'baseline' }}>
+                  <b className="mono" style={{ color: '#d4a62a' }}>#{l.pick}</b>
+                  <p style={{ margin: 0, fontSize: 14, lineHeight: 1.5, color: '#dfe5dc' }}>
+                    {l.call === 'rookie'
+                      ? <>Likely <b style={{ color: '#f4f2ea' }}>{l.rookie}</b>{l.rookieType ? `, ${l.rookieType}` : ''} from the 2026 national draft{l.vet ? <>, or a win-now option like {l.vet} (about {l.vetProj} projected)</> : null}.</>
+                      : <>Win-now: <b style={{ color: '#f4f2ea' }}>{l.vet}</b> (about {l.vetProj} projected in 2027){l.rookie ? <>, or the best rookie left, likely {l.rookie}</> : null}.</>}
+                  </p>
+                </div>
+              )) : <p style={{ margin: 0, fontSize: 14, color: '#dfe5dc' }}>No numbered 2027 picks yet.</p>}
+              {outlook.later.length > 0 && <span style={{ fontSize: 12, color: '#b9c4b6' }}>Later picks: {outlook.later.map((x) => `#${x}`).join(', ')}. Depth and rookie-list fliers.</span>}
+              <span style={{ fontSize: 11, color: '#8d978e' }}>A mock of the redraft: rebuilding clubs take the best rookie left, contenders the best player left on 2027 projections.</span>
+            </div>,
+          ]} />
 
           <div className="card" style={{ padding: '10px 14px 6px', display: 'flex', flexDirection: 'column', gap: 4, background: C.ink, color: '#f4f2ea', border: 0 }}>
             <span className="eyebrow" style={{ color: '#b9c4b6' }}>Premiership window</span>
