@@ -41,6 +41,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
           <span className="eyebrow">From the Keeper draft board · 16 rounds, round 16 is the keeper/rookie round</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Draft picks</h1>
         </div>
+        <Link href="/draft/history" className="btn">AFL draft review →</Link>
         <div role="tablist" aria-label="Draft year" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
           {[2027, 2028].map((yr) => (
             <Link key={yr} href={`/draft?year=${yr}`} role="tab" aria-selected={yr === year}
