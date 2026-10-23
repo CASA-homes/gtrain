@@ -8,9 +8,13 @@ import { scoutingReport } from '@/lib/scouting';
 import { photoUrl } from '@/lib/photos';
 import { careerCurve } from '@/lib/careercurve';
 import { CareerCurveChart } from '@/components/CareerCurveChart';
+import { DraftProfileCard } from '@/components/DraftProfileCard';
+import { draftProfileFor } from '@/lib/draft-profiles';
+import { DRAFTEES } from '@/lib/draft-history';
 
-export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
+  const { view } = await searchParams;
   const league = await getLeague();
   const p = league.players.find((x) => x.id === Number(id));
   if (!p) notFound();
@@ -26,6 +30,9 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const photo = photoUrl(p);
   const b = p.box;
   const cc = careerCurve(p, league.players, (o) => league.ratings.get(o.id)?.line ?? 'MID', r.potential);
+  const drafted = DRAFTEES.find((d) => d.id && d.id === p.dfs_id) ?? null;
+  const prof = draftProfileFor(drafted?.y ?? p.draft_year, drafted?.n ?? p.full_name ?? p.name);
+  const showDraft = view === 'draft';
   const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
@@ -85,6 +92,14 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
                 <span className="eyebrow">{k}</span><b style={{ fontWeight: 600 }}>{v}</b>
               </span>
             ))}
+            {prof ? (
+              <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} className="btn" aria-pressed={showDraft}
+                style={{ alignSelf: 'center', ...(showDraft ? { background: C.ink, color: '#fff', borderColor: C.ink } : {}) }}>
+                {showDraft ? 'Back to scouting report' : 'Draft profile'}
+              </Link>
+            ) : (
+              <span className="btn" aria-disabled="true" title="No draft guide profile loaded for this player yet" style={{ alignSelf: 'center', opacity: 0.45, cursor: 'default' }}>Draft profile</span>
+            )}
           </div>
         </div>
         <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
@@ -103,6 +118,28 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         </div>
       </header>
 
+      {showDraft && prof ? (
+        <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
+            <h2 className="h2">Draft profile · {prof.year}</h2>
+            <span className="mono muted" style={{ fontSize: 12 }}>
+              {drafted ? `Taken at pick ${drafted.p} by ${drafted.c}` : p.draft_pick ? `Pick ${p.draft_pick}, ${p.draft_year}` : ''}
+            </span>
+          </div>
+          <DraftProfileCard d={prof} />
+          <div style={{ borderTop: '1px solid var(--line)', paddingTop: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <span className="eyebrow">How he’s turned out</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 24px' }}>
+              <span><span className="muted">AFL games </span><b>{p.career_games ?? '–'}</b></span>
+              <span><span className="muted">{CURRENT_SEASON} average </span><b>{p.average?.toFixed(1) ?? '–'}</b></span>
+              <span><span className="muted">Verdict </span><b>{report.verdict}</b></span>
+              <span><span className="muted">Value </span><b>{r.value}</b></span>
+            </div>
+            <CareerCurveChart c={cc} lineName={LINE_NAME[line]} name={p.name} />
+          </div>
+        </section>
+      ) : (
+        <>
       <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
@@ -175,6 +212,8 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
           </div>
         </section>
       </div>
+        </>
+      )}
     </div>
   );
 }
