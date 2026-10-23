@@ -48,10 +48,10 @@ function reasonText(r: Reason, p: Prospect) {
   return r.label;
 }
 
-function Chance({ value, size = 34 }: { value: number; size?: number }) {
+function Chance({ value, size = 34, width }: { value: number; size?: number; width?: number }) {
   const bg = value >= 50 ? C.green5 : value >= 30 ? C.green4 : value >= 18 ? C.green3 : value >= 10 ? C.yellow : C.empty;
   const fg = value >= 30 ? '#fff' : C.ink;
-  return <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 2, background: bg, color: fg, borderRadius: 10, padding: '4px 10px', font: `600 ${size}px/1 var(--font)`, letterSpacing: '-.03em' }}>{Math.round(value)}<span style={{ fontSize: size * 0.45 }}>%</span></span>;
+  return <span style={{ display: 'inline-flex', alignItems: 'baseline', justifyContent: 'center', gap: 2, width, boxSizing: 'border-box', background: bg, color: fg, borderRadius: 10, padding: '4px 10px', font: `600 ${size}px/1 var(--font)`, letterSpacing: '-.03em' }}>{Math.round(value)}<span style={{ fontSize: size * 0.45 }}>%</span></span>;
 }
 
 function TwoBars({ star, relevant }: { star: number; relevant: number }) {
@@ -106,7 +106,7 @@ function WhyDetails({ p }: { p: Prospect }) {
 function ProspectCard({ p, note, info = false }: { p: Prospect; note?: string; info?: boolean }) {
   return (
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-      <div className="row-between" style={{ alignItems: 'flex-start', gap: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
           <span className="eyebrow">Phantom #{p.rank} · {p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -115,9 +115,9 @@ function ProspectCard({ p, note, info = false }: { p: Prospect; note?: string; i
           </h3>
           <span className="muted" style={{ fontSize: 12 }}>{p.junior}{p.role && p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</span>
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <Chance value={p.chance} />
-          <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>draft slot alone: {Math.round(p.positionOnly)}%</div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+          <Chance value={p.chance} size={24} width={84} />
+          <div className="muted" style={{ fontSize: 11, textAlign: 'right', lineHeight: 1.25 }}>slot alone {Math.round(p.positionOnly)}%</div>
         </div>
       </div>
       <TwoBars star={p.chance} relevant={p.relevant} />
@@ -242,7 +242,7 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
   const st = STATUS[r.status];
   return (
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
-      <div className="row-between" style={{ alignItems: 'flex-start', gap: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
           <span className="eyebrow">{r.year} draft · pick {r.pick} · {r.club}{r.role && r.role !== 'Midfielder' && r.role !== 'Unknown' ? ` · ${r.role}` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{r.name}</h3>
@@ -250,9 +250,9 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
         </div>
         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
           <span className="eyebrow">Draft night</span>
-          <Chance value={r.pre} size={22} />
+          <Chance value={r.pre} size={18} width={72} />
           <span className="eyebrow" style={{ marginTop: 2 }}>Now</span>
-          <Chance value={r.now} size={22} />
+          <Chance value={r.now} size={18} width={72} />
         </div>
       </div>
       <TrackBar r={r} path={path} />
@@ -393,7 +393,7 @@ function CrystalBallView() {
       </section>
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">Gulden alert: later picks with a star profile</h2>
+        <h2 className="h2">Diamonds in the rough: later picks with a star profile</h2>
         <span className="muted" style={{ fontSize: 13 }}>Ranked 12th or lower, but their traits and junior numbers say more than their draft range does.</span>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
           {sleepers.map((p) => <ProspectCard key={p.name} p={p} info />)}
