@@ -1,3 +1,4 @@
+import { gtrainPicksFor } from '@/lib/gtrain-draft';
 import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
 import { InfoPopover } from '@/components/InfoPopover';
@@ -245,6 +246,30 @@ function TrackBar({ r, path }: { r: Past; path: Record<string, number> }) {
   );
 }
 
+const BURGUNDY = '#7a1f3d';
+/** His G-Train redraft pick(s), in burgundy. */
+function GPick({ name, prefix = '' }: { name: string; prefix?: string }) {
+  const ps = gtrainPicksFor(name);
+  if (!ps.length) return null;
+  return <span title={ps.map((p) => `G-Train ${p.year} draft: pick ${p.pick} (${p.team})`).join('\n')} style={{ color: BURGUNDY, fontWeight: 600 }}>{prefix}{ps.map((p) => `#${p.pick}`).join(', ')}</span>;
+}
+
+/** A collapsible panel: title and count always visible, cards on click. */
+function Drop({ title, blurb, count, children }: { title: string; blurb: string; count: number; children: React.ReactNode }) {
+  return (
+    <details className="card" style={{ padding: '12px 16px' }}>
+      <summary style={{ cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', listStyle: 'revert' }}>
+        <span className="h2" style={{ display: 'inline' }}>{title}</span>
+        <span className="muted" style={{ fontSize: 13 }}>{count} player{count === 1 ? '' : 's'}</span>
+      </summary>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, paddingTop: 10 }}>
+        <span className="muted" style={{ fontSize: 13 }}>{blurb}</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>{children}</div>
+      </div>
+    </details>
+  );
+}
+
 /** Seconds footy (VFL / SANFL / WAFL) since the draft, latest first. */
 function Seconds({ r }: { r: Past }) {
   const s = (r.state ?? []).filter((x) => x.games >= 2).slice(0, 2);
@@ -269,7 +294,7 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
-          <span className="eyebrow">{r.year} draft · pick {r.pick} · {r.club}{r.role && r.role !== 'Midfielder' && r.role !== 'Unknown' ? ` · ${r.role}` : ''}</span>
+          <span className="eyebrow">{r.year} draft · pick {r.pick}<GPick name={r.name} prefix=" · G-Train " /> · {r.club}{r.role && r.role !== 'Midfielder' && r.role !== 'Unknown' ? ` · ${r.role}` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{r.name}</h3>
           <span className="pill" style={{ background: st.bg, color: st.fg, marginTop: 4, display: 'inline-block' }}>{r.status}</span>
         </div>
@@ -316,30 +341,18 @@ function PastView({ year }: { year: number }) {
         </p>
       </section>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">Beat the crystal ball</h2>
-        <span className="muted" style={{ fontSize: 13 }}>Draft-age picks we gave under a 20% chance who are already stars or ahead of the star path. Mature-age and re-drafted veterans left out.</span>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-          {surprises.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
-        </div>
-      </section>
+      <Drop title="Beat the crystal ball" count={surprises.length} blurb="Draft-age picks we gave under a 20% chance who are already stars or ahead of the star path. Mature-age and re-drafted veterans left out.">
+        {surprises.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
+      </Drop>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">Breakout watch: moving into the middle</h2>
-        <span className="muted" style={{ fontSize: 13 }}>Centre-bounce attendance is the best early sign of a fantasy breakout. These 2021–25 draftees (not yet stars, rucks left out) jumped into the centre square in 2026.</span>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-          {breakouts.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
-        </div>
-      </section>
+      <Drop title="Breakout watch: moving into the middle" count={breakouts.length} blurb="Centre-bounce attendance is the best early sign of a fantasy breakout. These 2021–25 draftees (not yet stars, rucks left out) jumped into the centre square in 2026.">
+        {breakouts.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
+      </Drop>
 
       {sleepers.length > 0 && (
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Sleeper watch: barely seen, going well in the 2s</h2>
-          <span className="muted" style={{ fontSize: 13 }}>2024–25 draftees with 8 AFL games or fewer who were rated highly on draft night or are piling up numbers in the VFL, SANFL or WAFL. Seconds average is AFL Fantasy scoring; 90+ in the 2s is green.</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-            {sleepers.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
-          </div>
-        </section>
+        <Drop title="Sleeper watch: barely seen, going well in the 2s" count={sleepers.length} blurb="2024–25 draftees with 8 AFL games or fewer who were rated highly on draft night or are piling up numbers in the VFL, SANFL or WAFL. Seconds average is AFL Fantasy scoring; 90+ in the 2s is green.">
+          {sleepers.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
+        </Drop>
       )}
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -370,12 +383,13 @@ function PastView({ year }: { year: number }) {
           </>
         )}
         <div className="table-box">
-          <table className="squad" style={{ minWidth: 980 }}>
-            <thead><tr><th style={{ width: 46 }}>Pick</th><th>Player</th><th style={{ width: 90, textAlign: 'center' }}>Draft night</th><th style={{ width: 80, textAlign: 'center' }}>Now</th><th style={{ width: 120 }}>Status</th><th style={{ width: 170 }}>Tracking</th><th>Seasons</th><th>Centre bounces</th></tr></thead>
+          <table className="squad" style={{ minWidth: 1050 }}>
+            <thead><tr><th style={{ width: 46 }}>Pick</th><th style={{ width: 70, color: BURGUNDY }}>G-Train</th><th>Player</th><th style={{ width: 90, textAlign: 'center' }}>Draft night</th><th style={{ width: 80, textAlign: 'center' }}>Now</th><th style={{ width: 120 }}>Status</th><th style={{ width: 170 }}>Tracking</th><th>Seasons</th><th>Centre bounces</th></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.name}>
                   <td className="mono">{r.pick}</td>
+                  <td className="mono"><GPick name={r.name} /></td>
                   <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{r.club}{r.mature ? ' · mature-age' : ''}{r.role === 'Key position' || r.role === 'Small forward' || r.role === 'Ruck' ? ` · ${r.role}` : ''}</div></td>
                   <td style={{ textAlign: 'center' }}><Chance value={r.pre} size={15} /></td>
                   <td style={{ textAlign: 'center' }}><Chance value={r.now} size={15} /></td>
