@@ -828,6 +828,7 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "inside midfielder",
    "comps": [
     {
      "name": "Will Ashcroft",
@@ -849,7 +850,8 @@
       "Defensive habits",
       "Versatility"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
      "name": "Andrew Brayshaw",
@@ -870,7 +872,8 @@
      "workons": [
       "Scoreboard imapct"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
      "name": "Bailey Smith",
@@ -891,7 +894,8 @@
      "workons": [
       "Defensive One-on-ones"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     }
    ]
   },
@@ -970,72 +974,66 @@
      "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
     }
    ],
+   "type": "inside midfielder",
    "comps": [
     {
-     "name": "Andrew Brayshaw",
-     "pick": 2,
+     "name": "James Worpel",
+     "pick": 45,
      "year": 2017,
-     "peak": 113.3,
-     "now": 94.2,
-     "jFP": 103.0,
-     "jT": 6.6,
-     "jD": 24.8,
+     "peak": 96.6,
+     "now": 79.1,
+     "jFP": 94.0,
+     "jT": 6.8,
+     "jD": 21.4,
      "scouts": [
-      "Contested ball winning",
-      "Impact in the midfield",
+      "Inside game",
+      "Tackling",
+      "Leadership",
+      "Scoreboard impact"
+     ],
+     "workons": [
       "Kicking",
-      "Endurance",
-      "Leadership"
+      "Agility"
      ],
-     "workons": [
-      "Scoreboard imapct"
-     ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
-     "name": "Sam Flanders",
-     "pick": 11,
+     "name": "Hugh McCluggage",
+     "pick": 3,
+     "year": 2016,
+     "peak": 102.3,
+     "now": 74.5,
+     "jFP": 103.0,
+     "jT": 4.6,
+     "jD": 29.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Chad Warner",
+     "pick": 39,
      "year": 2019,
-     "peak": 107.8,
-     "now": 91.9,
-     "jFP": 102.0,
-     "jT": 4.7,
-     "jD": 22.4,
+     "peak": 93.0,
+     "now": 92.6,
+     "jFP": 105.9,
+     "jT": 6.4,
+     "jD": 27.1,
      "scouts": [
-      "Clean hands",
       "Contested work",
-      "Goal sense",
-      "X-factor",
-      "One-on-ones"
+      "Clearances",
+      "Defensive pressure",
+      "Strength",
+      "Accumulation"
      ],
      "workons": [
-      "Set shot goal kicking",
-      "Kicking consistency",
-      "Four quarter consistency"
+      "Speed",
+      "Kicking penetration"
      ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Jason Horne-Francis",
-     "pick": 1,
-     "year": 2021,
-     "peak": 95.8,
-     "now": 95.8,
-     "jFP": 77.7,
-     "jT": 4.2,
-     "jD": 16.5,
-     "scouts": [
-      "Contested ball",
-      "Defensive effort",
-      "Scoreboard impact",
-      "Explosiveness",
-      "Physicality"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Outside game"
-     ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     }
    ]
   },
@@ -1091,72 +1089,67 @@
      "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "half-back",
    "comps": [
     {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7,
+     "now": 94.7,
+     "jFP": 78.0,
+     "jT": 1.5,
+     "jD": 20.8,
      "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
+      "Intercept game",
       "Kicking",
-      "Overhead marking"
+      "Reading the play",
+      "Rebounding",
+      "Run-and-carry"
      ],
      "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward"
-    },
-    {
-     "name": "Nick Daicos",
-     "pick": 4,
-     "year": 2021,
-     "peak": 116.6,
-     "now": 116.6,
-     "jFP": 136.0,
-     "jT": 3.4,
-     "jD": 35.8,
-     "scouts": [
-      "Consistency",
-      "Production",
-      "Clean Skills",
-      "Leadership",
-      "Endurance"
-     ],
-     "workons": [
-      "Impact per Kick",
+      "Defensive craft",
       "Strength"
      ],
-     "role": "Midfielder"
+     "role": "Defender",
+     "type": "half-back"
     },
     {
-     "name": "Izak Rankine",
-     "pick": 3,
+     "name": "Alex Witherden",
+     "pick": 23,
+     "year": 2016,
+     "peak": 95.3,
+     "now": null,
+     "jFP": 80.0,
+     "jT": 3.5,
+     "jD": 23.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "half-back"
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
      "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
+     "peak": 96.9,
+     "now": 79.7,
+     "jFP": 77.0,
+     "jT": 2.5,
+     "jD": 19.8,
      "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
+      "Reading the play",
+      "Clean hands",
+      "Skills",
       "Composure",
-      "Skills"
+      "Vision"
      ],
      "workons": [
-      "Endurance",
-      "Discipline"
+      "Midfield development",
+      "Contested work"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "half-back"
     }
    ]
   },
@@ -1225,27 +1218,30 @@
      "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "inside midfielder",
    "comps": [
     {
-     "name": "Andrew Brayshaw",
-     "pick": 2,
-     "year": 2017,
-     "peak": 113.3,
-     "now": 94.2,
-     "jFP": 103.0,
-     "jT": 6.6,
-     "jD": 24.8,
+     "name": "Sam Berry",
+     "pick": 28,
+     "year": 2020,
+     "peak": 90.3,
+     "now": 90.3,
+     "jFP": 79.0,
+     "jT": 6.5,
+     "jD": 17.7,
      "scouts": [
-      "Contested ball winning",
-      "Impact in the midfield",
-      "Kicking",
+      "Contested work",
+      "Consistency",
+      "Clearances",
       "Endurance",
-      "Leadership"
+      "Evasion"
      ],
      "workons": [
-      "Scoreboard imapct"
+      "On-field speed",
+      "Kicking composure"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
      "name": "Caleb Serong",
@@ -1268,7 +1264,8 @@
       "On-field emotion",
       "Size"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
      "name": "Jye Caldwell",
@@ -1290,7 +1287,8 @@
       "Durability",
       "Kicking consistency"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     }
    ]
   },
@@ -1372,6 +1370,7 @@
      "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "inside midfielder",
    "comps": [
     {
      "name": "Nick Daicos",
@@ -1393,50 +1392,54 @@
       "Impact per Kick",
       "Strength"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
-     "name": "Bailey Smith",
-     "pick": 7,
-     "year": 2018,
-     "peak": 117.7,
-     "now": 117.7,
-     "jFP": 149.0,
-     "jT": 6.5,
-     "jD": 32.5,
+     "name": "Will Day",
+     "pick": 13,
+     "year": 2019,
+     "peak": 95.3,
+     "now": 80.9,
+     "jFP": 110.0,
+     "jT": 2.8,
+     "jD": 26.0,
      "scouts": [
-      "Endurance",
-      "Contested ball-winning",
-      "Kicking",
-      "Leadership",
-      "Attitude"
+      "Athleticism",
+      "Kicking efficiency",
+      "Footy smarts",
+      "Rebounding",
+      "Upside"
      ],
      "workons": [
-      "Defensive One-on-ones"
+      "Strength",
+      "Inside game"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
-     "name": "Will Ashcroft",
+     "name": "Noah Anderson",
      "pick": 2,
-     "year": 2022,
-     "peak": 105.6,
-     "now": 105.6,
-     "jFP": 136.0,
-     "jT": 5.0,
-     "jD": 33.5,
+     "year": 2019,
+     "peak": 103.9,
+     "now": 101.5,
+     "jFP": 116.0,
+     "jT": 3.6,
+     "jD": 28.3,
      "scouts": [
-      "Accumulation",
-      "Character",
-      "Consistency",
-      "Endurance",
-      "Inside-outside balance"
+      "Scoreboard impact",
+      "Power",
+      "Strength/size",
+      "Kick penetration",
+      "Contested ball winning"
      ],
      "workons": [
-      "Defensive habits",
-      "Versatility"
+      "Kicking consistency",
+      "Lowering the eyes"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "inside midfielder"
     }
    ]
   },
@@ -1513,72 +1516,68 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "wing",
    "comps": [
     {
-     "name": "Lachlan Ash",
-     "pick": 4,
-     "year": 2019,
-     "peak": 103.0,
-     "now": 103.0,
-     "jFP": 98.0,
-     "jT": 4.5,
-     "jD": 23.0,
+     "name": "Lachlan Sholl",
+     "pick": 64,
+     "year": 2018,
+     "peak": 85.3,
+     "now": null,
+     "jFP": 97.0,
+     "jT": 2.1,
+     "jD": 24.1,
      "scouts": [
-      "Athleticism",
-      "Endurance",
-      "Penetrating kick",
-      "Leadership",
-      "Vision"
-     ],
-     "workons": [
-      "Contested ball",
-      "Midfield craft"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Nick Daicos",
-     "pick": 4,
-     "year": 2021,
-     "peak": 116.6,
-     "now": 116.6,
-     "jFP": 136.0,
-     "jT": 3.4,
-     "jD": 35.8,
-     "scouts": [
-      "Consistency",
-      "Production",
-      "Clean Skills",
-      "Leadership",
+      "Disposal",
+      "Intercept marking",
+      "Footy smarts",
+      "Accumulation",
       "Endurance"
      ],
      "workons": [
-      "Impact per Kick",
+      "Contested work",
+      "Defensive game"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4,
+     "now": 90.4,
+     "jFP": 107.1,
+     "jT": 2.3,
+     "jD": 28.8,
+     "scouts": [
+      "Kicking accuracy",
+      "Evasiveness",
+      "Accumulation",
+      "Clean skills",
+      "Decision making"
+     ],
+     "workons": [
+      "Kicking penetration",
+      "Contested game",
       "Strength"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Harry Perryman",
+     "pick": 14,
+     "year": 2016,
+     "peak": 86.5,
+     "now": 66.8,
+     "jFP": 108.0,
+     "jT": 3.0,
+     "jD": 30.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
     }
    ]
   },
@@ -1634,73 +1633,58 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
     {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Caleb Serong",
-     "pick": 8,
-     "year": 2019,
-     "peak": 108.1,
-     "now": 90.1,
-     "jFP": 112.0,
-     "jT": 5.6,
-     "jD": 24.2,
-     "scouts": [
-      "Clean hands",
-      "Footy IQ",
-      "Leadership/competitiveness",
-      "Consistency",
-      "Clearances"
-     ],
-     "workons": [
-      "Kicking under pressure",
-      "On-field emotion",
-      "Size"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
+     "name": "Jy Simpkin",
      "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
+     "year": 2016,
+     "peak": 95.5,
+     "now": 81.7,
+     "jFP": 0.0,
+     "jT": 0.0,
+     "jD": 0.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Shai Bolton",
+     "pick": 29,
+     "year": 2016,
+     "peak": 86.8,
+     "now": 85.2,
+     "jFP": 53.0,
+     "jT": 1.3,
+     "jD": 13.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
+     "year": 2019,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
      "scouts": [
-      "Speed",
+      "Kicking",
+      "Intercept marking",
+      "Reading the play",
       "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
+      "Athleticism"
      ],
      "workons": [
-      "Strength",
-      "Endurance"
+      "Midfield craft",
+      "Scoreboard impact"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder-forward"
     }
    ]
   },
@@ -1800,6 +1784,7 @@
      "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested."
     }
    ],
+   "type": "ruck",
    "comps": [
     {
      "name": "Luke Jackson",
@@ -1822,7 +1807,8 @@
       "Size",
       "Versatility"
      ],
-     "role": "Ruck"
+     "role": "Ruck",
+     "type": "ruck"
     },
     {
      "name": "Lloyd Meek",
@@ -1843,7 +1829,8 @@
       "Goal kicking",
       "Mobility"
      ],
-     "role": "Ruck"
+     "role": "Ruck",
+     "type": "ruck"
     },
     {
      "name": "Tristan Xerri",
@@ -1856,7 +1843,8 @@
      "jD": null,
      "scouts": [],
      "workons": [],
-     "role": "Ruck"
+     "role": "Ruck",
+     "type": "ruck"
     }
    ]
   },
@@ -1939,72 +1927,76 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "wing",
    "comps": [
     {
-     "name": "Lachlan Ash",
-     "pick": 4,
-     "year": 2019,
-     "peak": 103.0,
-     "now": 103.0,
-     "jFP": 98.0,
-     "jT": 4.5,
-     "jD": 23.0,
+     "name": "Gryan Miers",
+     "pick": 57,
+     "year": 2017,
+     "peak": 92.8,
+     "now": 77.1,
+     "jFP": 86.0,
+     "jT": 3.6,
+     "jD": 17.1,
      "scouts": [
-      "Athleticism",
+      "Footy IQ",
       "Endurance",
-      "Penetrating kick",
-      "Leadership",
-      "Vision"
-     ],
-     "workons": [
-      "Contested ball",
-      "Midfield craft"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
       "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
+      "X-factor"
      ],
      "workons": [
-      "Endurance",
-      "Discipline"
+      "Speed",
+      "Vertical leap"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "wing"
     },
     {
-     "name": "Nasiah Wanganeen-Milera",
-     "pick": 11,
-     "year": 2021,
-     "peak": 110.8,
-     "now": 105.4,
-     "jFP": 66.5,
-     "jT": 2.5,
-     "jD": 15.8,
+     "name": "Bailey Scott",
+     "pick": 49,
+     "year": 2018,
+     "peak": 85.6,
+     "now": null,
+     "jFP": 103.0,
+     "jT": 4.0,
+     "jD": 23.5,
      "scouts": [
-      "Foot skills",
-      "Class",
-      "Composure",
-      "Evasiveness",
-      "Balance"
+      "Clean Hands",
+      "Skills",
+      "Versatility",
+      "Scoreboard Impact",
+      "Ball Winning"
      ],
      "workons": [
-      "Strength",
-      "Inside game"
+      "Consistency",
+      "Size"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4,
+     "now": 90.4,
+     "jFP": 107.1,
+     "jT": 2.3,
+     "jD": 28.8,
+     "scouts": [
+      "Kicking accuracy",
+      "Evasiveness",
+      "Accumulation",
+      "Clean skills",
+      "Decision making"
+     ],
+     "workons": [
+      "Kicking penetration",
+      "Contested game",
+      "Strength"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
     }
    ]
   },
@@ -2082,6 +2074,7 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "half-back",
    "comps": [
     {
      "name": "Nasiah Wanganeen-Milera",
@@ -2103,51 +2096,54 @@
       "Strength",
       "Inside game"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "half-back"
     },
     {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7,
+     "now": 94.7,
+     "jFP": 78.0,
+     "jT": 1.5,
+     "jD": 20.8,
      "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
+      "Intercept game",
       "Kicking",
-      "Overhead marking"
+      "Reading the play",
+      "Rebounding",
+      "Run-and-carry"
      ],
      "workons": [
-      "Limited midfield exposure",
-      "Speed"
+      "Defensive craft",
+      "Strength"
      ],
-     "role": "Forward"
+     "role": "Defender",
+     "type": "half-back"
+    },
+    {
+     "name": "Lachlan Ash",
+     "pick": 4,
+     "year": 2019,
+     "peak": 103.0,
+     "now": 103.0,
+     "jFP": 98.0,
+     "jT": 4.5,
+     "jD": 23.0,
+     "scouts": [
+      "Athleticism",
+      "Endurance",
+      "Penetrating kick",
+      "Leadership",
+      "Vision"
+     ],
+     "workons": [
+      "Contested ball",
+      "Midfield craft"
+     ],
+     "role": "Midfielder",
+     "type": "half-back"
     }
    ]
   },
@@ -2233,50 +2229,44 @@
      "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75\u201390 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
     }
    ],
+   "type": "key position player",
    "comps": [
     {
-     "name": "Noah Anderson",
+     "name": "Jack Lukosius",
      "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
+     "year": 2018,
+     "peak": 86.0,
+     "now": 61.5,
+     "jFP": 84.0,
+     "jT": 1.5,
+     "jD": 14.5,
      "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
+      "Kicking",
+      "Leading patterns",
+      "Work rate",
+      "Acceleration",
+      "Cleanness"
      ],
      "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
+      "Contested Marking",
+      "Strength"
      ],
-     "role": "Midfielder"
+     "role": "Key position",
+     "type": "key position player"
     },
     {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
+     "name": "Jordan Ridley",
+     "pick": 22,
+     "year": 2016,
+     "peak": 88.4,
+     "now": 57.0,
+     "jFP": 70.0,
+     "jT": 1.8,
+     "jD": 18.6,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "half-back"
     }
    ]
   },
@@ -2301,7 +2291,36 @@
    "positionOnly": 24.7,
    "reasons": [],
    "why": [],
+   "type": "midfielder-forward",
    "comps": [
+    {
+     "name": "Jy Simpkin",
+     "pick": 12,
+     "year": 2016,
+     "peak": 95.5,
+     "now": 81.7,
+     "jFP": 0.0,
+     "jT": 0.0,
+     "jD": 0.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Shai Bolton",
+     "pick": 29,
+     "year": 2016,
+     "peak": 86.8,
+     "now": 85.2,
+     "jFP": 53.0,
+     "jT": 1.3,
+     "jD": 13.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
     {
      "name": "Harry Sheezel",
      "pick": 3,
@@ -2322,51 +2341,8 @@
       "Limited midfield exposure",
       "Speed"
      ],
-     "role": "Forward"
-    },
-    {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
-     "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
-     "scouts": [
-      "Speed",
-      "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
-     ],
-     "workons": [
-      "Strength",
-      "Endurance"
-     ],
-     "role": "Midfielder"
+     "role": "Forward",
+     "type": "midfielder"
     }
    ]
   },
@@ -2439,72 +2415,49 @@
      "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "wing",
    "comps": [
     {
-     "name": "Nasiah Wanganeen-Milera",
-     "pick": 11,
-     "year": 2021,
-     "peak": 110.8,
-     "now": 105.4,
-     "jFP": 66.5,
-     "jT": 2.5,
-     "jD": 15.8,
-     "scouts": [
-      "Foot skills",
-      "Class",
-      "Composure",
-      "Evasiveness",
-      "Balance"
-     ],
-     "workons": [
-      "Strength",
-      "Inside game"
-     ],
-     "role": "Midfielder"
+     "name": "Isaac Cumming",
+     "pick": 20,
+     "year": 2016,
+     "peak": 90.6,
+     "now": 60.5,
+     "jFP": 26.0,
+     "jT": 1.0,
+     "jD": 9.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
     },
     {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
-      "Kicking",
-      "Overhead marking"
-     ],
-     "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward"
+     "name": "Harry Perryman",
+     "pick": 14,
+     "year": 2016,
+     "peak": 86.5,
+     "now": 66.8,
+     "jFP": 108.0,
+     "jT": 3.0,
+     "jD": 30.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
     },
     {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
+     "name": "Jarrod Berry",
+     "pick": 17,
+     "year": 2016,
+     "peak": 85.2,
+     "now": 75.0,
+     "jFP": 63.0,
+     "jT": 4.0,
+     "jD": 17.7,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
     }
    ]
   },
@@ -2578,72 +2531,67 @@
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
+   "type": "half-back",
    "comps": [
     {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
+     "name": "Josh Daicos",
+     "pick": 57,
+     "year": 2016,
+     "peak": 99.8,
+     "now": 99.8,
+     "jFP": 67.0,
+     "jT": 1.9,
+     "jD": 15.9,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "half-back"
     },
     {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Nasiah Wanganeen-Milera",
-     "pick": 11,
-     "year": 2021,
-     "peak": 110.8,
-     "now": 105.4,
-     "jFP": 66.5,
-     "jT": 2.5,
+     "name": "Jake Bowey",
+     "pick": 21,
+     "year": 2020,
+     "peak": 90.0,
+     "now": 90.0,
+     "jFP": 66.0,
+     "jT": 3.1,
      "jD": 15.8,
      "scouts": [
-      "Foot skills",
-      "Class",
-      "Composure",
-      "Evasiveness",
-      "Balance"
+      "Skill",
+      "Speed/Agility",
+      "Vertical leap",
+      "Toughness",
+      "Decision making"
      ],
      "workons": [
       "Strength",
       "Inside game"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "half-back"
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9,
+     "now": 79.7,
+     "jFP": 77.0,
+     "jT": 2.5,
+     "jD": 19.8,
+     "scouts": [
+      "Reading the play",
+      "Clean hands",
+      "Skills",
+      "Composure",
+      "Vision"
+     ],
+     "workons": [
+      "Midfield development",
+      "Contested work"
+     ],
+     "role": "Midfielder",
+     "type": "half-back"
     }
    ]
   },
@@ -2681,72 +2629,77 @@
      "text": "Scouts noted work-on: consistency: only 2 of 65 with that note became 90+ players (0.3\u00d7 their draft slots)."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
     {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
      "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
+     ],
+     "workons": [
+      "Strength",
+      "Damage by foot"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
+     "year": 2019,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
+     "scouts": [
       "Kicking",
-      "Overhead marking"
-     ],
-     "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward"
-    },
-    {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
+      "Intercept marking",
+      "Reading the play",
       "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
+      "Athleticism"
      ],
      "workons": [
-      "Durability",
-      "Kicking consistency"
+      "Midfield craft",
+      "Scoreboard impact"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Sam Flanders",
+     "pick": 11,
+     "year": 2019,
+     "peak": 107.8,
+     "now": 91.9,
+     "jFP": 102.0,
+     "jT": 4.7,
+     "jD": 22.4,
+     "scouts": [
+      "Clean hands",
+      "Contested work",
+      "Goal sense",
+      "X-factor",
+      "One-on-ones"
+     ],
+     "workons": [
+      "Set shot goal kicking",
+      "Kicking consistency",
+      "Four quarter consistency"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
     }
    ]
   },
@@ -2780,72 +2733,67 @@
      "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "forward",
    "comps": [
     {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
+     "name": "Shaun Mannagh",
+     "pick": 36,
+     "year": 2023,
+     "peak": 87.0,
+     "now": 75.9,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "forward"
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3,
+     "now": 92.3,
+     "jFP": 69.0,
+     "jT": 4.5,
+     "jD": 17.3,
      "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
+      "Contested ball winning",
+      "Speed",
+      "Kicking",
       "Tackling"
      ],
      "workons": [
-      "Durability",
-      "Kicking consistency"
+      "Marking",
+      "Endurance",
+      "Hitting the scoreboard"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "forward"
     },
     {
-     "name": "Jason Horne-Francis",
-     "pick": 1,
-     "year": 2021,
-     "peak": 95.8,
-     "now": 95.8,
-     "jFP": 77.7,
-     "jT": 4.2,
-     "jD": 16.5,
+     "name": "Dylan Moore",
+     "pick": 67,
+     "year": 2017,
+     "peak": 93.3,
+     "now": 76.5,
+     "jFP": 107.0,
+     "jT": 5.8,
+     "jD": 25.7,
      "scouts": [
-      "Contested ball",
-      "Defensive effort",
-      "Scoreboard impact",
-      "Explosiveness",
-      "Physicality"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Outside game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
+      "Endurance",
       "Kicking",
-      "Overhead marking"
+      "Contested ball",
+      "Clearance work",
+      "Scoreboard impact"
      ],
      "workons": [
-      "Limited midfield exposure",
-      "Speed"
+      "Speed",
+      "Goal kicking accuracy"
      ],
-     "role": "Forward"
+     "role": "Midfielder",
+     "type": "forward"
     }
    ]
   },
@@ -2932,72 +2880,77 @@
      "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
     {
-     "name": "Will Ashcroft",
-     "pick": 2,
-     "year": 2022,
-     "peak": 105.6,
-     "now": 105.6,
-     "jFP": 136.0,
-     "jT": 5.0,
-     "jD": 33.5,
-     "scouts": [
-      "Accumulation",
-      "Character",
-      "Consistency",
-      "Endurance",
-      "Inside-outside balance"
-     ],
-     "workons": [
-      "Defensive habits",
-      "Versatility"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Caleb Serong",
-     "pick": 8,
-     "year": 2019,
-     "peak": 108.1,
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1,
      "now": 90.1,
-     "jFP": 112.0,
-     "jT": 5.6,
-     "jD": 24.2,
+     "jFP": 56.0,
+     "jT": 5.3,
+     "jD": 11.5,
      "scouts": [
-      "Clean hands",
-      "Footy IQ",
-      "Leadership/competitiveness",
-      "Consistency",
-      "Clearances"
+      "Contested work",
+      "Size",
+      "Explosive pace",
+      "Competitiveness",
+      "Team first"
      ],
      "workons": [
-      "Kicking under pressure",
-      "On-field emotion",
-      "Size"
+      "Kicking Efficiency",
+      "Decision Making"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder"
     },
     {
-     "name": "Andrew Brayshaw",
-     "pick": 2,
-     "year": 2017,
-     "peak": 113.3,
-     "now": 94.2,
-     "jFP": 103.0,
-     "jT": 6.6,
-     "jD": 24.8,
+     "name": "James Rowbottom",
+     "pick": 25,
+     "year": 2018,
+     "peak": 85.1,
+     "now": 71.3,
+     "jFP": 91.0,
+     "jT": 6.5,
+     "jD": 21.9,
      "scouts": [
-      "Contested ball winning",
-      "Impact in the midfield",
-      "Kicking",
-      "Endurance",
-      "Leadership"
+      "Contested ball",
+      "Clearances",
+      "Clean hands",
+      "Tackling",
+      "Core strength"
      ],
      "workons": [
-      "Scoreboard imapct"
+      "Endurance",
+      "Kicking",
+      "Scoreboard impact"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Errol Gulden",
+     "pick": 32,
+     "year": 2020,
+     "peak": 115.1,
+     "now": 115.1,
+     "jFP": 125.0,
+     "jT": 2.0,
+     "jD": 27.3,
+     "scouts": [
+      "Speed/Agility",
+      "Footy IQ",
+      "Vision",
+      "Impact",
+      "Class"
+     ],
+     "workons": [
+      "Inside game",
+      "Kicking consistency"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
     }
    ]
   },
@@ -3051,72 +3004,67 @@
      "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
     {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
+     "name": "Shaun Mannagh",
+     "pick": 36,
+     "year": 2023,
+     "peak": 87.0,
+     "now": 75.9,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "forward"
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3,
+     "now": 92.3,
+     "jFP": 69.0,
+     "jT": 4.5,
+     "jD": 17.3,
      "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
+      "Contested ball winning",
+      "Speed",
+      "Kicking",
       "Tackling"
      ],
      "workons": [
-      "Durability",
-      "Kicking consistency"
+      "Marking",
+      "Endurance",
+      "Hitting the scoreboard"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "forward"
     },
     {
-     "name": "Jason Horne-Francis",
-     "pick": 1,
-     "year": 2021,
-     "peak": 95.8,
-     "now": 95.8,
-     "jFP": 77.7,
-     "jT": 4.2,
-     "jD": 16.5,
+     "name": "Dylan Moore",
+     "pick": 67,
+     "year": 2017,
+     "peak": 93.3,
+     "now": 76.5,
+     "jFP": 107.0,
+     "jT": 5.8,
+     "jD": 25.7,
      "scouts": [
+      "Endurance",
+      "Kicking",
       "Contested ball",
-      "Defensive effort",
-      "Scoreboard impact",
-      "Explosiveness",
-      "Physicality"
+      "Clearance work",
+      "Scoreboard impact"
      ],
      "workons": [
-      "Kicking consistency",
-      "Outside game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
-     "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
-     "scouts": [
       "Speed",
-      "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
+      "Goal kicking accuracy"
      ],
-     "workons": [
-      "Strength",
-      "Endurance"
-     ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "forward"
     }
    ]
   },
@@ -3170,74 +3118,8 @@
      "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
     }
    ],
-   "comps": [
-    {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
-     "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
-     "scouts": [
-      "Speed",
-      "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
-     ],
-     "workons": [
-      "Strength",
-      "Endurance"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "forward",
+   "comps": []
   },
   {
    "rank": 15,
@@ -3293,72 +3175,75 @@
      "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
     {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
      "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
-     "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
-     "scouts": [
-      "Speed",
-      "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
      ],
      "workons": [
       "Strength",
-      "Endurance"
+      "Damage by foot"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder"
     },
     {
-     "name": "Jason Horne-Francis",
-     "pick": 1,
-     "year": 2021,
-     "peak": 95.8,
-     "now": 95.8,
-     "jFP": 77.7,
-     "jT": 4.2,
-     "jD": 16.5,
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1,
+     "now": 90.1,
+     "jFP": 56.0,
+     "jT": 5.3,
+     "jD": 11.5,
      "scouts": [
-      "Contested ball",
-      "Defensive effort",
-      "Scoreboard impact",
-      "Explosiveness",
-      "Physicality"
+      "Contested work",
+      "Size",
+      "Explosive pace",
+      "Competitiveness",
+      "Team first"
      ],
      "workons": [
-      "Kicking consistency",
-      "Outside game"
+      "Kicking Efficiency",
+      "Decision Making"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Adam Cerra",
+     "pick": 5,
+     "year": 2017,
+     "peak": 95.1,
+     "now": 83.0,
+     "jFP": 129.0,
+     "jT": 3.8,
+     "jD": 26.3,
+     "scouts": [
+      "Kicking",
+      "Contested ball",
+      "Agility",
+      "Upside"
+     ],
+     "workons": [
+      "Speed",
+      "Injury durability"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
     }
    ]
   },
@@ -3429,29 +3314,8 @@
      "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
     }
    ],
+   "type": "midfielder-forward",
    "comps": [
-    {
-     "name": "Jason Horne-Francis",
-     "pick": 1,
-     "year": 2021,
-     "peak": 95.8,
-     "now": 95.8,
-     "jFP": 77.7,
-     "jT": 4.2,
-     "jD": 16.5,
-     "scouts": [
-      "Contested ball",
-      "Defensive effort",
-      "Scoreboard impact",
-      "Explosiveness",
-      "Physicality"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Outside game"
-     ],
-     "role": "Midfielder"
-    },
     {
      "name": "Sam Flanders",
      "pick": 11,
@@ -3473,29 +3337,55 @@
       "Kicking consistency",
       "Four quarter consistency"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "midfielder"
     },
     {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2,
+     "now": 116.2,
+     "jFP": 83.0,
+     "jT": 3.3,
+     "jD": 19.3,
      "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
+      "Footy IQ",
+      "Forward Craft",
+      "Goal Sense",
+      "Kicking",
+      "Overhead marking"
      ],
      "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
+      "Limited midfield exposure",
+      "Speed"
      ],
-     "role": "Midfielder"
+     "role": "Forward",
+     "type": "midfielder"
+    },
+    {
+     "name": "James Rowbottom",
+     "pick": 25,
+     "year": 2018,
+     "peak": 85.1,
+     "now": 71.3,
+     "jFP": 91.0,
+     "jT": 6.5,
+     "jD": 21.9,
+     "scouts": [
+      "Contested ball",
+      "Clearances",
+      "Clean hands",
+      "Tackling",
+      "Core strength"
+     ],
+     "workons": [
+      "Endurance",
+      "Kicking",
+      "Scoreboard impact"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
     }
    ]
   },
@@ -3568,74 +3458,8 @@
      "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
     }
    ],
-   "comps": [
-    {
-     "name": "Izak Rankine",
-     "pick": 3,
-     "year": 2018,
-     "peak": 99.4,
-     "now": 99.4,
-     "jFP": 90.0,
-     "jT": 2.0,
-     "jD": 15.8,
-     "scouts": [
-      "Goal sense",
-      "Explosiveness",
-      "Pressure",
-      "Composure",
-      "Skills"
-     ],
-     "workons": [
-      "Endurance",
-      "Discipline"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Zak Butters",
-     "pick": 12,
-     "year": 2018,
-     "peak": 104.5,
-     "now": 104.5,
-     "jFP": 91.0,
-     "jT": 3.8,
-     "jD": 20.0,
-     "scouts": [
-      "Speed",
-      "Agility",
-      "X-factor",
-      "Vision",
-      "Scope"
-     ],
-     "workons": [
-      "Strength",
-      "Endurance"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "forward",
+   "comps": []
   },
   {
    "rank": 26,
@@ -3699,50 +3523,58 @@
      "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75\u201390 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
     }
    ],
+   "type": "wing",
    "comps": [
     {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
+     "name": "Jarrod Berry",
+     "pick": 17,
+     "year": 2016,
+     "peak": 85.2,
+     "now": 75.0,
+     "jFP": 63.0,
+     "jT": 4.0,
+     "jD": 17.7,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
     },
     {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
+     "name": "Jordan Ridley",
+     "pick": 22,
+     "year": 2016,
+     "peak": 88.4,
+     "now": 57.0,
+     "jFP": 70.0,
+     "jT": 1.8,
+     "jD": 18.6,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "half-back"
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8,
+     "now": 105.4,
+     "jFP": 66.5,
+     "jT": 2.5,
+     "jD": 15.8,
      "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
+      "Foot skills",
+      "Class",
+      "Composure",
+      "Evasiveness",
+      "Balance"
      ],
      "workons": [
-      "Rawness",
-      "Strength/contested game"
+      "Strength",
+      "Inside game"
      ],
-     "role": "Midfielder"
+     "role": "Midfielder",
+     "type": "half-back"
     }
    ]
   },
@@ -3819,50 +3651,30 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
+   "type": "key position player",
    "comps": [
     {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
+     "name": "Jack Lukosius",
      "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
+     "year": 2018,
+     "peak": 86.0,
+     "now": 61.5,
+     "jFP": 84.0,
+     "jT": 1.5,
+     "jD": 14.5,
      "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
+      "Kicking",
+      "Leading patterns",
+      "Work rate",
+      "Acceleration",
+      "Cleanness"
      ],
      "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
+      "Contested Marking",
+      "Strength"
      ],
-     "role": "Midfielder"
+     "role": "Key position",
+     "type": "key position player"
     }
    ]
   },
@@ -3932,52 +3744,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   },
   {
    "rank": 13,
@@ -4043,52 +3811,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   },
   {
    "rank": 14,
@@ -4173,52 +3897,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   },
   {
    "rank": 27,
@@ -4283,52 +3963,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   },
   {
    "rank": 11,
@@ -4405,52 +4041,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   },
   {
    "rank": 23,
@@ -4529,52 +4121,8 @@
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
     }
    ],
-   "comps": [
-    {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
-     "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
-     ],
-     "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
-     ],
-     "role": "Midfielder"
-    },
-    {
-     "name": "Max Holmes",
-     "pick": 20,
-     "year": 2020,
-     "peak": 102.7,
-     "now": 97.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "Athleticism",
-      "Speed",
-      "Endurance",
-      "Clean hands",
-      "Rate of development"
-     ],
-     "workons": [
-      "Rawness",
-      "Strength/contested game"
-     ],
-     "role": "Midfielder"
-    }
-   ]
+   "type": "key position player",
+   "comps": []
   }
  ],
  "coef": {
