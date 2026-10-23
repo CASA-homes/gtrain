@@ -6,7 +6,7 @@ import { YearSelect } from '@/components/YearSelect';
 import { getLeague } from '@/lib/data';
 import { bestSeason, current, DRAFT_YEARS, DRAFTEES, draftStatus, type DraftStatus } from '@/lib/draft-history';
 import { draftProfileFor } from '@/lib/draft-profiles';
-import { PHANTOM_2026, PHANTOM_2026_SOURCE } from '@/lib/phantom-2026';
+import { DRAFT_2026_DONE, PHANTOM_2026, PHANTOM_2026_SOURCE } from '@/lib/phantom-2026';
 import { C } from '@/lib/ratings';
 
 const STATUS_STYLE: Record<DraftStatus, { bg: string; fg: string }> = {
@@ -40,12 +40,14 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
           <YearSelect years={years} value="2026" />
           <span className="muted" style={{ fontSize: 13 }}>
-            Projected order from <a href={PHANTOM_2026_SOURCE.url} target="_blank" rel="noreferrer">{PHANTOM_2026_SOURCE.title}</a> ({PHANTOM_2026_SOURCE.date}). It’s a ranking, not a mock draft. We’ll swap in the real order after the draft.
+            {DRAFT_2026_DONE
+              ? <>Actual order from <a href={PHANTOM_2026_SOURCE.url} target="_blank" rel="noreferrer">{PHANTOM_2026_SOURCE.title}</a> ({PHANTOM_2026_SOURCE.date}).</>
+              : <>Projected order from <a href={PHANTOM_2026_SOURCE.url} target="_blank" rel="noreferrer">{PHANTOM_2026_SOURCE.title}</a> ({PHANTOM_2026_SOURCE.date}). It’s a ranking, not a mock draft. We’ll swap in the real order after the draft.</>}
           </span>
         </div>
         <div className="table-box">
           <table className="squad" style={{ minWidth: 640 }}>
-            <thead><tr><th style={{ width: 54 }}>Rank</th><th>Prospect</th><th>From</th><th>Position</th><th>Draft profile</th></tr></thead>
+            <thead><tr><th style={{ width: 54 }}>{DRAFT_2026_DONE ? 'Pick' : 'Rank'}</th><th>Prospect</th>{DRAFT_2026_DONE && <th>Club</th>}<th>From</th><th>Position</th><th>Draft profile</th></tr></thead>
             <tbody>
               {PHANTOM_2026.map((p) => {
                 const prof = draftProfileFor(2026, p.name);
@@ -53,6 +55,7 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
                   <tr key={p.rank}>
                     <td className="mono" style={{ fontWeight: 600 }}>{p.rank}</td>
                     <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}</td>
+                    {DRAFT_2026_DONE && <td>{p.club || '–'}</td>}
                     <td className="muted">{p.from || '–'}</td>
                     <td>{p.position || '–'}</td>
                     <td>{prof ? <details><summary style={{ cursor: 'pointer' }}>View</summary><div style={{ paddingTop: 10 }}><DraftProfileCard d={prof} compact /></div></details> : <span className="muted">Coming</span>}</td>
