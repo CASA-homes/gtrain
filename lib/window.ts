@@ -41,19 +41,33 @@ export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings:
   return out;
 }
 
-function phaseOf(s: number, prev: number, next: number): Phase {
-  const d = next - prev;               // positive = getting worse
-  if (s <= 4.5) {
-    if (next > 5 && d > 1) return 'Leaving window';
-    if (prev >= 6) return 'Entering window';
-    return 'Prime window';
+/**
+ * Phases follow the list lifecycle in order: prime → leaving → early rebuild → mid rebuild → entering → prime.
+ * Each season is read off a smoothed ladder position (so one odd year doesn't flip the phase), a club can only
+ * move one step along that cycle at a time, and a lone season between two of the same phase is folded in.
+ */
+export function phasesFor(ranks: number[], flags: boolean[]): Phase[] {
+  const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
+  const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
+  const out: Phase[] = [];
+  let state: Phase = s[0] <= 3.5 ? 'Prime window' : s[0] >= 7.5 ? 'Early rebuild' : (s[1] ?? s[0]) < s[0] - 0.75 ? 'Entering window' : 'Mid rebuild';
+  let run = 0;
+  for (let i = 0; i < ranks.length; i++) {
+    const x = s[i], ahead = s[i + 1] ?? x;
+    if (i > 0) {
+      const was = state;
+      if (state === 'Prime window') { if (x > 4.5 && ahead > 4.5) state = 'Leaving window'; }
+      else if (state === 'Leaving window') { if (x <= 3.5) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild'; }
+      else if (state === 'Early rebuild') { if (x <= 7.5 && ahead <= x + 0.25) state = 'Mid rebuild'; }
+      else if (state === 'Mid rebuild') { if (x <= 5.5 && ahead <= 5.5) state = 'Entering window'; }
+      else if (state === 'Entering window') { if (x <= 3.5) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild'; }
+      run = state === was ? run + 1 : 1;
+    } else run = 1;
+    if (flags[i]) { state = 'Prime window'; run = 1; }
+    out.push(state);
   }
-  if (s <= 7) {
-    if (d >= 1 && prev <= 4.5) return 'Leaving window';
-    if (d <= -1) return 'Entering window';
-    return 'Mid rebuild';
-  }
-  return d <= -1.5 ? 'Mid rebuild' : 'Early rebuild';
+  for (let i = 1; i < out.length - 1; i++) if (out[i - 1] === out[i + 1] && out[i] !== out[i - 1] && !flags[i]) out[i] = out[i - 1];
+  return out;
 }
 
 const SPREAD: Record<number, number> = { 2027: 0.8, 2028: 1.5, 2029: 2.2, 2030: 2.8 };
@@ -78,8 +92,6 @@ export function windowFor(opts: {
     pts.push({ year: y, rank: Math.round((0.7 * r + 0.3 * prev) * 10) / 10, kind: 'proj', flag: false, lo: 0, hi: 0 });
   }
   for (const p of pts) if (p.kind === 'proj') { const s = SPREAD[p.year] ?? 2; p.lo = Math.max(1, p.rank - s); p.hi = Math.min(10, p.rank + s); }
-  return pts.map((p, i) => ({
-    ...p,
-    phase: phaseOf(p.rank, pts[i - 1]?.rank ?? p.rank, pts[i + 1]?.rank ?? p.rank),
-  }));
+  const phases = phasesFor(pts.map((p) => p.rank), pts.map((p) => p.flag));
+  return pts.map((p, i) => ({ ...p, phase: phases[i] }));
 }
