@@ -86,7 +86,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           {TEAM_NOTES[a.team.name] && (
             <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8, background: C.ink, color: '#f4f2ea', border: 0 }}>
               <span className="eyebrow" style={{ color: '#b9c4b6' }}>The verdict</span>
-              <span style={{ font: '600 22px/1.15 var(--font)', letterSpacing: '-.02em' }}>{TEAM_NOTES[a.team.name].headline}</span>
+              <span title={TEAM_NOTES[a.team.name].headline} style={{ font: '600 17px/1.2 var(--font)', letterSpacing: '-.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{TEAM_NOTES[a.team.name].headline}</span>
               <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: '#dfe5dc' }}>{TEAM_NOTES[a.team.name].body}</p>
             </div>
           )}
