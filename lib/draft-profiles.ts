@@ -1,4 +1,5 @@
 import p2024 from './draft-profiles-2024.json';
+import p2025 from './draft-profiles-2025.json';
 import p2026 from './draft-profiles-2026.json';
 
 // Draft profiles: what the scouts said before each player was drafted.
@@ -24,7 +25,7 @@ export interface DraftProfile {
   source: { title: string; url: string; page?: number };
 }
 
-export const DRAFT_PROFILES: DraftProfile[] = [...(p2024 as DraftProfile[]), ...(p2026 as DraftProfile[])];
+export const DRAFT_PROFILES: DraftProfile[] = [...(p2024 as DraftProfile[]), ...(p2025 as DraftProfile[]), ...(p2026 as DraftProfile[])];
 
 const key = (year: number, name: string) => `${year}|${name.toLowerCase().replace(/[^a-z]/g, '')}`;
 const INDEX = new Map(DRAFT_PROFILES.map((p) => [key(p.year, p.name), p]));
