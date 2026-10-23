@@ -1,7 +1,7 @@
 import { FIRST_YEAR, LAST_YEAR, NOW_YEAR, type Phase, type WindowPoint } from '@/lib/window';
 
 const PHASE: Record<Phase, { fill: string; text: string; short: string }> = {
-  'Early rebuild': { fill: '#5d6f86', text: '#9fb0c6', short: 'REBUILD' },
+  'Early rebuild': { fill: '#5d6f86', text: '#9fb0c6', short: 'EARLY REBUILD' },
   'Mid rebuild': { fill: '#6a8fbf', text: '#8fb0d8', short: 'MID REBUILD' },
   'Entering window': { fill: '#9ccb84', text: '#9ccb84', short: 'ENTERING' },
   'Prime window': { fill: '#d4a62a', text: '#d4a62a', short: 'PRIME WINDOW' },
@@ -52,7 +52,7 @@ export function WindowChart({ points }: { points: WindowPoint[] }) {
       {bands.map((b) => {
         const x = Math.max(X0 - step / 2, xOf(b.from) - step / 2), x2 = Math.min(W - 4, xOf(b.to) + step / 2);
         const c = PHASE[b.phase];
-        const label = x2 - x >= (c.short.length * 5.4 + 6) ? c.short : x2 - x >= 40 ? c.short.split(' ')[0] : '';
+        const label = x2 - x >= (c.short.length * 5.4 + 6) ? c.short : x2 - x >= 40 ? (c.short.includes('REBUILD') ? 'REBUILD' : c.short.split(' ')[0]) : '';
         return (
           <g key={`${b.phase}${b.from}`}>
             <rect x={x} y={14} width={x2 - x} height={BOT - 14 + 6} fill={c.fill} fillOpacity={b.from > NOW_YEAR ? 0.11 : 0.18} />
