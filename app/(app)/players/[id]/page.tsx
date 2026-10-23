@@ -110,8 +110,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             <span className="muted" style={{ fontSize: 12 }}>Valued as {r.line} · No.{r.lineRank} {r.line}{r.statusRisk ? ' · status at risk' : ''}</span>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <span className="eyebrow">Value stars</span>
-            <Stars value={r.valueStars} label="Value" />
+            <span className="eyebrow">Current ability</span>
+            <Stars value={r.valueStars} label="Current ability" />
             <span className="eyebrow" style={{ marginTop: 6 }}>Potential</span>
             <Stars value={r.potential} colour={C.green5} label="Potential" />
           </div>
@@ -171,7 +171,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               <span className="mono" style={{ textAlign: 'right' }}>{v}</span>
             </div>
           ))}
-          <p className="muted" style={{ fontSize: 11, margin: '6px 0 0' }}>From every {CURRENT_SEASON} game. Floor and ceiling are the average of his worst and best quarter of games; consistency is how little his scores swing. Games under 50% time on ground count against durability only.</p>
+          <p className="muted" style={{ fontSize: 11, margin: '6px 0 0' }}>From every {CURRENT_SEASON} game. Floor and ceiling are the average of his worst and best quarter of games; consistency is how little his scores swing. Games under 50% time on ground count against durability only. Durability looks back three seasons (2026 weighted most), so a big injury year still shows.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 22 }}>
             <div className="row-between"><span className="eyebrow">Career curve</span><span className="mono muted" style={{ fontSize: 11 }}>average by age · to {32}</span></div>
             <CareerCurveChart c={cc} lineName={LINE_NAME[line]} name={p.name} />
