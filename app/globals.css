@@ -120,3 +120,8 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   .club-head-kpis .kpi b { font-size: 20px; }
   .club-head-cta { display: block; text-align: center; padding: 12px 16px; }
 }
+
+/* Holo profile pictures */
+@keyframes holoSweep { 0% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
+@keyframes holoTwinkle { 0%, 100% { opacity: .35; } 50% { opacity: .75; } }
+@media (prefers-reduced-motion: reduce) { .holo-anim { animation: none !important; } }
