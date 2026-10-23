@@ -164,7 +164,7 @@ for d in H:
     j = junior(r['rows'], d['y'])
     pk = peak(d.get('h'))
     mature = d['y'] <= 2022
-    players.append({'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,
+    players.append({'id': d.get('id'), 'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,
                     'rawstr': r['str'], 'rawimp': r['imp'], 'jun': j, 'range': range_mid(r['range']), 'peak': pk,
                     'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature, 'rel': pk >= REL, 'rel_label': (1 if pk >= REL else (0 if mature else None)),
                     'label': (1 if pk >= HIT else (0 if mature else None))})

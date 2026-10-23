@@ -2,7 +2,7 @@
 import json, math, re, sys
 import numpy as np
 sys.path.insert(0, 'scripts')
-from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, train, table  # noqa: E402
+from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, train, table, players as ALL, dfs_rec  # noqa: E402
 import crystal_model as cm  # noqa: E402  (fits + validates on import)
 
 model = cm.m
@@ -38,11 +38,53 @@ def comp_pool(role):
     else:
         pool = [q for q in CURRENT_STARS if q.get('role') != 'Ruck' and (q.get('ht') or 0) < 194]
     return pool if len(pool) >= 2 else [q for q in CURRENT_STARS if q.get('role') != 'Ruck']
+# ---- Player type: what kind of footballer he is, so comparisons are like for like.
+def afl_type(q):
+    """Current AFL role from the last two AFL seasons (8+ games): centre bounces, kick-ins, goals, hitouts, kick ratio."""
+    r = dfs_rec(q.get('id'))
+    rows = sorted([c for c in (r or {}).get('career', []) if (c.get('league') or '').lower() == 'afl' and int(c.get('gms') or 0) >= 8], key=lambda c: int(c['year']))[-2:]
+    if not rows: return None
+    f = lambda k: sum(float(c.get(k) or 0) for c in rows) / len(rows)
+    cba, ki, gl, ho, k2h = f('centreBounceAttendancePercentage'), f('kickins'), f('goals'), f('hitouts'), f('k2h')
+    ht = q.get('ht') or 186
+    if ho >= 12: return 'Ruck'
+    if cba >= 50: return 'Inside mid'
+    if ki >= 20: return 'Half-back'
+    if ht >= 194 and cba < 20: return 'Key'
+    if gl >= 1.2 or (gl >= 0.6 and cba < 20 and k2h < 1.8): return 'Forward'
+    if gl >= 0.6 and cba >= 20: return 'Mid-forward'
+    if cba >= 20: return 'Midfielder'
+    return 'Wing'
+
+def prospect_type(pos, role):
+    """Listed position for a 2026 prospect -> the AFL types he should be compared with, best match first."""
+    p = (pos or '').lower()
+    if role == 'Ruck': return ['Ruck']
+    if role == 'Key position': return ['Key', 'Half-back']
+    if role == 'Tall utility': return ['Wing', 'Midfielder', 'Half-back'] if 'wing' in p else ['Key', 'Midfielder', 'Half-back']
+    if 'small fwd' in p and 'mid' in p: return ['Mid-forward', 'Forward']
+    if role == 'Small forward' or p.startswith('small'): return ['Forward', 'Mid-forward']
+    if p.startswith('def') or 'mid/def' in p: return ['Half-back', 'Wing', 'Midfielder']
+    if p.startswith('wing'): return ['Wing', 'Midfielder', 'Half-back']
+    if 'mid' in p and 'fwd' in p: return ['Mid-forward', 'Midfielder', 'Forward']
+    if p.startswith('fwd') or p == 'forward': return ['Forward', 'Mid-forward']
+    return ['Inside mid', 'Midfielder', 'Mid-forward']
+
+TYPE_LABEL = {'Inside mid': 'inside midfielder', 'Midfielder': 'midfielder', 'Mid-forward': 'midfielder-forward', 'Forward': 'forward',
+              'Half-back': 'half-back', 'Wing': 'wing', 'Key': 'key position player', 'Ruck': 'ruck'}
+# Comparison pool: every profiled draftee who has had an 85+ season or averages 85+ in 2026, typed by how he plays now.
+COMP_POOL = []
+for q in ALL:
+    if (q['peak'] or 0) >= 85 or (NOW_AVG.get((q['year'], q['name'])) or 0) >= 85:
+        t = afl_type(q)
+        if t: COMP_POOL.append(dict(q, aflType=t))
+print('comparison pool', len(COMP_POOL), {t: sum(1 for q in COMP_POOL if q['aflType'] == t) for t in TYPE_LABEL})
+
 def comp_card(q):
     j = q.get('jun') or {}
     return {'name': q['name'].replace('+', ''), 'pick': q['pick'], 'year': q['year'], 'peak': round(q['peak'], 1),
             'now': NOW_AVG.get((q['year'], q['name'])), 'jFP': j.get('FP'), 'jT': j.get('T'), 'jD': j.get('D'),
-            'scouts': q.get('rawstr', [])[:5], 'workons': q.get('rawimp', [])[:3], 'role': q.get('role')}
+            'scouts': q.get('rawstr', [])[:5], 'workons': q.get('rawimp', [])[:3], 'role': q.get('role'), 'type': TYPE_LABEL.get(q.get('aflType'), '')}
 BASE = sum(p['label'] for p in train) / len(train)
 def rate_for(f, lo, hi):
     sel = [p for p in train if f(p) is not None and lo <= f(p) < hi]
@@ -100,21 +142,35 @@ for rank, name in PH:
     prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL)
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     contrib = sorted([(FEATS[i], float(model.coef_[0][i] * x[i])) for i in range(1, len(FEATS)) if abs(model.coef_[0][i] * x[i]) > 0.08], key=lambda t: -abs(t[1]))
-    pv = vec(p)
-    pool = comp_pool(role)
-    sims = sorted(((float(np.linalg.norm(pv - vec(q))), i, q) for i, q in enumerate(pool)), key=lambda t: t[:2])
-    sims = [(d, q) for d, _, q in sims]
-    sims = [q for _, q in sims[:3]]
+    types = prospect_type((prof or {}).get('position', ''), role)
     out.append({'rank': rank, 'name': name, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
                 'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],
-                'why': why(p, contrib, role),
-                'comps': [comp_card(q) for q in sims]})
+                'why': why(p, contrib, role), 'type': TYPE_LABEL[types[0]],
+                '_vec': vec(p), '_types': types})
+
+# Comparisons: same type first (a worse type match costs 1.5), nearest profile, and each current player used at most
+# twice across the board so the same few names don't repeat. Best prospects choose first.
+used = {}
+for r in sorted(out, key=lambda r: -r['chance']):
+    cands = []
+    for q in COMP_POOL:
+        if q['aflType'] not in r['_types']: continue
+        if r['role'] in ('Key position', 'Tall utility') and (q.get('ht') or 0) < (187 if r['_types'][0] == 'Wing' else 189): continue
+        tier = r['_types'].index(q['aflType'])
+        d = float(np.linalg.norm(r['_vec'] - vec(q))) + 1.5 * tier + 0.9 * used.get(q['name'], 0)
+        if used.get(q['name'], 0) >= 2: continue
+        cands.append((d, q['name'], q))
+    cands.sort(key=lambda t: t[:2])
+    picks = [q for _, _, q in cands[:3]]
+    for q in picks: used[q['name']] = used.get(q['name'], 0) + 1
+    r['comps'] = [comp_card(q) for q in picks]
+for r in out: r.pop('_vec'); r.pop('_types')
 
 out.sort(key=lambda r: -r['chance'])
 for r in out:
-    print(f"{r['rank']:2d} {r['name']:20s} {r['role']:13s} 90+ {r['chance']:5.1f}% 80+ {r['relevant']:5.1f}% (slot {r['positionOnly']:4.1f}%) comps {', '.join(c['name'] for c in r['comps'])}")
+    print(f"{r['rank']:2d} {r['name']:20s} {r['type'][:12]:12s} {r['role']:13s} 90+ {r['chance']:5.1f}% 80+ {r['relevant']:5.1f}% (slot {r['positionOnly']:4.1f}%) comps {', '.join(c['name'] for c in r['comps'])}")
 
 # Patterns for the page (hit rate + lift beyond draft position)
 pat = []
