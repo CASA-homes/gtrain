@@ -125,3 +125,9 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 @keyframes holoSweep { 0% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } 100% { background-position: 0% 0%; } }
 @keyframes holoTwinkle { 0%, 100% { opacity: .35; } 50% { opacity: .75; } }
 @media (prefers-reduced-motion: reduce) { .holo-anim { animation: none !important; } }
+
+/* Pop-up sheets (draft profiles, prospect info): full-width bottom sheet on phones */
+@media (max-width: 640px) {
+  .sheet-backdrop { align-items: flex-end !important; padding: 0 !important; }
+  .sheet { max-width: none !important; max-height: 88vh !important; border-radius: 18px 18px 0 0 !important; padding: 18px 16px 28px !important; }
+}
