@@ -123,7 +123,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                   <th style={{ width: 40, textAlign: 'center' }}>Form</th>
                   <th style={{ width: 38, textAlign: 'center' }}>Apps</th>
                   <th style={{ width: 38, textAlign: 'center' }} title="100+ scores in the last 5">100s</th>
-                  <th style={{ width: 78 }}>Value</th>
+                  <th style={{ width: 96 }}>Current ability</th>
                   <th style={{ width: 78 }}>Pot.</th>
                 </tr>
               </thead>
@@ -192,7 +192,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                         <td style={{ textAlign: 'center' }}><FormArrow form={p.form} /></td>
                         <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600 }}>{p.tons}</td>
-                        <td><Stars value={p.valueStars} label="Value" /></td>
+                        <td><Stars value={p.valueStars} label="Current ability" /></td>
                         <td><Stars value={p.potential} colour={C.green5} label="Potential" /></td>
                       </tr>
                     );
