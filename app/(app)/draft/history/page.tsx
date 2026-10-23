@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { AvgChip, ClubDot } from '@/components/bits';
 import { DraftProfileCard } from '@/components/DraftProfileCard';
+import { DraftTabs } from '@/components/DraftTabs';
 import { YearSelect } from '@/components/YearSelect';
 import { getLeague } from '@/lib/data';
 import { bestSeason, current, DRAFT_YEARS, DRAFTEES, draftStatus, type DraftStatus } from '@/lib/draft-history';
@@ -21,14 +22,7 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
   const year = sp.year === '2026' ? 2026 : DRAFT_YEARS.includes(Number(sp.year)) ? Number(sp.year) : 2022;
   const top = sp.top === '1';
   const years = [{ value: '2026', label: '2026 (phantom)' }, ...DRAFT_YEARS.map((y) => ({ value: String(y), label: String(y) }))];
-  const tabs = (
-    <div role="tablist" aria-label="Draft section" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
-      {([['G-Train picks', '/draft', false], ['AFL draft review', '/draft/history', true]] as const).map(([label, href, on]) => (
-        <Link key={href} href={href} role="tab" aria-selected={on}
-          style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: on ? '#fff' : 'transparent', color: on ? C.ink : C.muted, boxShadow: on ? '0 1px 2px rgb(0 0 0 / .08)' : 'none' }}>{label}</Link>
-      ))}
-    </div>
-  );
+  const tabs = <DraftTabs active="review" />;
   const header = (
     <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
       <div>
