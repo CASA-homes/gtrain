@@ -1,3 +1,4 @@
+import { InfoPopover } from '@/components/InfoPopover';
 import { gtrainPicksFor } from '@/lib/gtrain-draft';
 import Link from 'next/link';
 import { AvgChip, ClubDot } from '@/components/bits';
@@ -59,7 +60,7 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
                     {DRAFT_2026_DONE && <td>{p.club || '–'}</td>}
                     <td className="muted">{p.from || '–'}</td>
                     <td>{p.position || '–'}</td>
-                    <td>{prof ? <details><summary style={{ cursor: 'pointer' }}>View</summary><div style={{ paddingTop: 10 }}><DraftProfileCard d={prof} compact /></div></details> : <span className="muted">Coming</span>}</td>
+                    <td>{prof ? <InfoPopover title={p.name} label="View"><span className="muted" style={{ fontSize: 13, marginTop: -8 }}>{DRAFT_2026_DONE ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · 2026 draft</span><DraftProfileCard d={prof} /></InfoPopover> : <span className="muted">Coming</span>}</td>
                   </tr>
                 );
               })}
@@ -121,10 +122,12 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
                     {g ? <Link href={`/players/${g.id}`} style={{ fontWeight: 600 }}>{d.n}</Link> : <span style={{ fontWeight: 600 }}>{d.n}</span>}
                     {lit && <span className="pill" style={{ marginLeft: 8, background: C.green5, color: '#fff' }}>#{rank}</span>}
                     {prof && (
-                      <details style={{ marginTop: 4 }}>
-                        <summary style={{ cursor: 'pointer', fontSize: 12, color: C.muted }}>Draft profile</summary>
-                        <div style={{ padding: '10px 0', whiteSpace: 'normal', maxWidth: 640 }}><DraftProfileCard d={prof} compact /></div>
-                      </details>
+                      <div style={{ marginTop: 2 }}>
+                        <InfoPopover title={d.n} label="Draft profile">
+                          <span className="muted" style={{ fontSize: 13, marginTop: -8 }}>Pick {d.p} · {d.c} · {d.y} draft</span>
+                          <DraftProfileCard d={prof} />
+                        </InfoPopover>
+                      </div>
                     )}
                   </td>
                   <td><span style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}><ClubDot code={d.c} size={14} />{d.c}</span></td>
