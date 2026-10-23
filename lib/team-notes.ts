@@ -4,12 +4,12 @@
 
 export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
   'Bodega Boys': {
-    headline: 'Premiers through the injuries, with a keeper dilemma ahead',
+    headline: 'Premiers through the injuries, keeper dilemma ahead',
     body: 'A season that should have fallen apart. English, Butters and Tom Green all lost big chunks of the year, and Heeney was hampered by a groin injury. Instead Bodega traded their way to the flag on the back of Bailey Smith, Rankine and Max Hall, taken at pick 6, then beat Serong by 61 in the decider. The core is strong and stable, with prime-age premiums and a deep layer of kids already scoring, like Garcia, Darcy Wilson, Humphries and Fonti. The dilemma is that a lot of the top scoring still comes from older players, who will have to make way for the youth at some point. A contender for 2027 and beyond.',
   },
 
   'Serong So’Right': {
-    headline: 'Four straight runner-ups, and a list due for a reboot',
+    headline: 'Four straight runner-ups, a list due a reboot',
     body: 'Runners-up in 2023, 2024, 2025 and 2026, the most painful run in this league. They went all-in at the 2026 deadline, knocked minor premiers Muzza’s out in the prelim, then lost the grand final by 61. There’s still quality here. Dawson (113) and Caleb Serong are prime-age premiums. Jake Bowey (90 at 24) is a genuine young talent off half-back, and Ollie Dempsey (80, finishing the year strongly) could be one too. Connor Rozee, a 104-average player in 2025, is back from the injury that wiped out his 2026, which is like adding a premium for free. The concern is everything around them. Gawn is 34, Impey, Steele, Short and Miller are all 30 or older, Liberatore has retired and Greene has gone to Geelong. With no pick before 39 in 2027, there’s no draft help coming. One more tilt is realistic, but this list needs a reboot sooner rather than later.',
   },
 
@@ -34,7 +34,7 @@ export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
     body: '9–12 and seventh in 2026, and the keeper list has got thinner since. Mills (ACL) is likely out for all of 2027, and Treloar has retired. The Mills trade cost them Max Holmes, who averaged 102 for the Ram Dawgs. What’s left is three good players and a lot of 72 to 80 depth. Jackson, Horne-Francis and Brayshaw are the keepers worth having, and Horne-Francis being reclassified as a midfielder takes away a positional edge. Max Reid (80 at 20) and Bruhn are the only young players scoring. Houston, Ryan, Bailey Williams and Graham are 28 to 30 and won’t improve. Picks 11, 18 and 21 in 2027 are the lifeline. They project last for 2027. This is a rebuild, whether they call it one or not.',
   },
   'Fo’ Sheezel my Neezel': {
-    headline: 'Youngest keeper list in the league, sitting on gold',
+    headline: 'Youngest keepers in the league, sitting on gold',
     body: 'Only 7–14 and eighth in 2026, but the keeper list averages just 23 and the draft capital is the best in the league: picks 3, 4 and 13 in 2027. Sheezel is already a top-three fantasy player at 22, and Callaghan (96 at 23) is close behind. Ed Richards and Taranto give the midfield real ballast. The rest is a crop of 19-to-23-year-olds: Mackenzie, Fitzgerald, Farrow (72 as a first-year), Rachele, Phillipou and Langford. Briggs becoming Richmond’s No.1 ruck should give them a ruck again. The next two drafts turn this into a top-four side.',
   },
   'Bito’s Boys': {
