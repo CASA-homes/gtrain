@@ -1,0 +1,3679 @@
+{
+ "2016": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2016.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Jacob Allison",
+     "result": "2.87"
+    },
+    {
+     "rank": 2,
+     "name": "Ben Ainsworth",
+     "result": "2.90"
+    },
+    {
+     "rank": 3,
+     "name": "Josh Rotham",
+     "result": "2.92"
+    },
+    {
+     "rank": 4,
+     "name": "Josh Williams",
+     "result": "2.93"
+    },
+    {
+     "rank": 4,
+     "name": "Bailey Morrish",
+     "result": "2.93"
+    },
+    {
+     "rank": 4,
+     "name": "Taylin Duman",
+     "result": "2.93"
+    },
+    {
+     "rank": 4,
+     "name": "Esava Ratugolea",
+     "result": "2.93"
+    },
+    {
+     "rank": 8,
+     "name": "Will Hayward",
+     "result": "2.94"
+    },
+    {
+     "rank": 8,
+     "name": "Tony Olango",
+     "result": "2.94"
+    },
+    {
+     "rank": 10,
+     "name": "Shai Bolton",
+     "result": "2.95"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Tom Williamson",
+     "result": "8.15"
+    },
+    {
+     "rank": 2,
+     "name": "Jack Maibaum",
+     "result": "8.19"
+    },
+    {
+     "rank": 3,
+     "name": "Sam Powell-Pepper",
+     "result": "8.24"
+    },
+    {
+     "rank": 4,
+     "name": "Harry Morrison",
+     "result": "8.26"
+    },
+    {
+     "rank": 4,
+     "name": "Oliver Florent",
+     "result": "8.26"
+    },
+    {
+     "rank": 6,
+     "name": "Matt Guelfi",
+     "result": "8.29"
+    },
+    {
+     "rank": 6,
+     "name": "Jarrod Berry",
+     "result": "8.29"
+    },
+    {
+     "rank": 8,
+     "name": "Ben Ainsworth",
+     "result": "8.36"
+    },
+    {
+     "rank": 9,
+     "name": "Jack Scrimshaw",
+     "result": "8.39"
+    },
+    {
+     "rank": 10,
+     "name": "Andrew McGrath",
+     "result": "8.38"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Jordan Gallucci",
+     "result": "89"
+    },
+    {
+     "rank": 2,
+     "name": "Esava Ratugolea",
+     "result": "76"
+    },
+    {
+     "rank": 3,
+     "name": "Will Hayward",
+     "result": "73"
+    },
+    {
+     "rank": 4,
+     "name": "Griffin Logue",
+     "result": "71"
+    },
+    {
+     "rank": 4,
+     "name": "Bailey Morrish",
+     "result": "71"
+    },
+    {
+     "rank": 6,
+     "name": "Shai Bolton",
+     "result": "68"
+    },
+    {
+     "rank": 6,
+     "name": "Callum Brown",
+     "result": "68"
+    },
+    {
+     "rank": 8,
+     "name": "Josh Rotham",
+     "result": "67"
+    },
+    {
+     "rank": 8,
+     "name": "Max Lynch",
+     "result": "67"
+    },
+    {
+     "rank": 8,
+     "name": "Jacob Allison",
+     "result": "67"
+    },
+    {
+     "rank": 8,
+     "name": "Jack Bowes",
+     "result": "67"
+    },
+    {
+     "rank": 8,
+     "name": "Tom Williamson",
+     "result": "67"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Andrew McGrath",
+     "result": "96"
+    },
+    {
+     "rank": 2,
+     "name": "Shai Bolton",
+     "result": "94"
+    },
+    {
+     "rank": 3,
+     "name": "Cameron Zurhaar",
+     "result": "92"
+    },
+    {
+     "rank": 3,
+     "name": "Brennan Cox",
+     "result": "92"
+    },
+    {
+     "rank": 5,
+     "name": "Tony Olango",
+     "result": "91"
+    },
+    {
+     "rank": 5,
+     "name": "Jordan Gallucci",
+     "result": "91"
+    },
+    {
+     "rank": 5,
+     "name": "Griffin Logue",
+     "result": "91"
+    },
+    {
+     "rank": 5,
+     "name": "Bailey Morrish",
+     "result": "91"
+    },
+    {
+     "rank": 9,
+     "name": "Oliver Florent",
+     "result": "90"
+    },
+    {
+     "rank": 9,
+     "name": "Will Hayward",
+     "result": "90"
+    }
+   ],
+   "Repeat sprints 6x30m": [
+    {
+     "rank": 1,
+     "name": "Jordan Gallucci",
+     "result": "24.36"
+    },
+    {
+     "rank": 2,
+     "name": "Andrew McGrath",
+     "result": "24.44"
+    },
+    {
+     "rank": 3,
+     "name": "Bailey Morrish",
+     "result": "24.83"
+    },
+    {
+     "rank": 4,
+     "name": "Jarrod Berry",
+     "result": "24.99"
+    },
+    {
+     "rank": 5,
+     "name": "Ben Ainsworth",
+     "result": "25.01"
+    },
+    {
+     "rank": 6,
+     "name": "Kym LeBois",
+     "result": "25.08"
+    },
+    {
+     "rank": 7,
+     "name": "Griffin Logue",
+     "result": "25.09"
+    },
+    {
+     "rank": 8,
+     "name": "Shai Bolton",
+     "result": "25.10"
+    },
+    {
+     "rank": 9,
+     "name": "Myles Poholke",
+     "result": "25.20"
+    },
+    {
+     "rank": 10,
+     "name": "Jacob Allison",
+     "result": "25.30"
+    }
+   ],
+   "Beep test": [
+    {
+     "rank": 1,
+     "name": "Jarrod Berry",
+     "result": "15.01"
+    },
+    {
+     "rank": 1,
+     "name": "Oliver Florent",
+     "result": "15.01"
+    },
+    {
+     "rank": 1,
+     "name": "Griffin Logue",
+     "result": "15.01"
+    },
+    {
+     "rank": 4,
+     "name": "Harry Morrison",
+     "result": "14.12"
+    },
+    {
+     "rank": 4,
+     "name": "Dylan Clarke",
+     "result": "14.12"
+    },
+    {
+     "rank": 6,
+     "name": "Sam Powell-Pepper",
+     "result": "14.7"
+    },
+    {
+     "rank": 7,
+     "name": "Liam Baker",
+     "result": "14.5"
+    },
+    {
+     "rank": 7,
+     "name": "Tom Williamson",
+     "result": "14.5"
+    },
+    {
+     "rank": 7,
+     "name": "Patrick Lipinski",
+     "result": "14.5"
+    },
+    {
+     "rank": 7,
+     "name": "Jordan Gallucci",
+     "result": "14.5"
+    }
+   ],
+   "3km time trial": [
+    {
+     "rank": 1,
+     "name": "Jarrod Berry",
+     "result": "9:46"
+    },
+    {
+     "rank": 2,
+     "name": "Tom Williamson",
+     "result": "9:50"
+    },
+    {
+     "rank": 3,
+     "name": "Dylan Clarke",
+     "result": "9:52"
+    },
+    {
+     "rank": 4,
+     "name": "Mark O'Connor",
+     "result": "9:56"
+    },
+    {
+     "rank": 5,
+     "name": "Griffin Logue",
+     "result": "9:58"
+    }
+   ],
+   "Kicking efficiency": [
+    {
+     "rank": 1,
+     "name": "Jordan Ridley",
+     "result": "27"
+    },
+    {
+     "rank": 2,
+     "name": "Isaac Cumming",
+     "result": "26"
+    },
+    {
+     "rank": 3,
+     "name": "Jarrod Berry",
+     "result": "25"
+    },
+    {
+     "rank": 3,
+     "name": "Ben Long",
+     "result": "25"
+    },
+    {
+     "rank": 3,
+     "name": "Sam Walker",
+     "result": "25"
+    },
+    {
+     "rank": 3,
+     "name": "Josh Williams",
+     "result": "25"
+    },
+    {
+     "rank": 7,
+     "name": "Ben Jarman",
+     "result": "24"
+    },
+    {
+     "rank": 7,
+     "name": "Tom Williamson",
+     "result": "24"
+    },
+    {
+     "rank": 7,
+     "name": "Dylan Clarke",
+     "result": "24"
+    },
+    {
+     "rank": 10,
+     "name": "Kym LeBois",
+     "result": "23"
+    },
+    {
+     "rank": 10,
+     "name": "Willem Drew",
+     "result": "23"
+    },
+    {
+     "rank": 10,
+     "name": "Josh Battle",
+     "result": "23"
+    },
+    {
+     "rank": 10,
+     "name": "Jake Waterman",
+     "result": "23"
+    }
+   ],
+   "Goalkicking": [
+    {
+     "rank": 1,
+     "name": "Sam Powell-Pepper",
+     "result": "30"
+    },
+    {
+     "rank": 2,
+     "name": "Harry Morrison",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Joe Atley",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Josh Williams",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Jonty Scharenberg",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Ryan Garthwaite",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Zach Sproule",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Tim English",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Liam Baker",
+     "result": "25"
+    },
+    {
+     "rank": 10,
+     "name": "Ben Jarman",
+     "result": "24"
+    },
+    {
+     "rank": 10,
+     "name": "Tyson Stengle",
+     "result": "24"
+    }
+   ],
+   "Clean hands": [
+    {
+     "rank": 1,
+     "name": "Ben Jarman",
+     "result": "28"
+    },
+    {
+     "rank": 1,
+     "name": "Oliver Florent",
+     "result": "28"
+    },
+    {
+     "rank": 1,
+     "name": "Ryan Garthwaite",
+     "result": "28"
+    },
+    {
+     "rank": 4,
+     "name": "Callum Brown",
+     "result": "27"
+    },
+    {
+     "rank": 4,
+     "name": "Jarrod Berry",
+     "result": "27"
+    },
+    {
+     "rank": 4,
+     "name": "Will Hayward",
+     "result": "27"
+    },
+    {
+     "rank": 4,
+     "name": "Patrick Lipinski",
+     "result": "27"
+    },
+    {
+     "rank": 4,
+     "name": "Sam Powell-Pepper",
+     "result": "27"
+    },
+    {
+     "rank": 4,
+     "name": "Jack Bowes",
+     "result": "27"
+    },
+    {
+     "rank": 10,
+     "name": "Isaac Cumming",
+     "result": "26"
+    },
+    {
+     "rank": 10,
+     "name": "Joe Atley",
+     "result": "26"
+    },
+    {
+     "rank": 10,
+     "name": "Myles Poholke",
+     "result": "26"
+    },
+    {
+     "rank": 10,
+     "name": "Jonty Scharenberg",
+     "result": "26"
+    },
+    {
+     "rank": 10,
+     "name": "Harry Perryman",
+     "result": "26"
+    },
+    {
+     "rank": 10,
+     "name": "Jack Maibaum",
+     "result": "26"
+    }
+   ]
+  }
+ },
+ "2017": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2017.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Jack Petruccelle",
+     "result": "2.87"
+    },
+    {
+     "rank": 2,
+     "name": "Kane Farrell",
+     "result": "2.90"
+    },
+    {
+     "rank": 3,
+     "name": "Aiden Bonar",
+     "result": "2.90"
+    },
+    {
+     "rank": 4,
+     "name": "Ben Miller",
+     "result": "2.91"
+    },
+    {
+     "rank": 5,
+     "name": "Nick Coffield",
+     "result": "2.91"
+    },
+    {
+     "rank": 6,
+     "name": "Ben Paton",
+     "result": "2.95"
+    },
+    {
+     "rank": 7,
+     "name": "Brent Daniels",
+     "result": "2.95"
+    },
+    {
+     "rank": 8,
+     "name": "Stefan Okunbar",
+     "result": "2.95"
+    },
+    {
+     "rank": 9,
+     "name": "Jaidyn Stephenson",
+     "result": "2.95"
+    },
+    {
+     "rank": 10,
+     "name": "Nicholas Shipley",
+     "result": "2.97"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Kane Farrell",
+     "result": "8.10"
+    },
+    {
+     "rank": 1,
+     "name": "Ben Miller",
+     "result": "8.10"
+    },
+    {
+     "rank": 3,
+     "name": "Brent Daniels",
+     "result": "8.11"
+    },
+    {
+     "rank": 4,
+     "name": "Trent Mynott",
+     "result": "8.20"
+    },
+    {
+     "rank": 5,
+     "name": "Nathan Kreuger",
+     "result": "8.21"
+    },
+    {
+     "rank": 6,
+     "name": "Aaron Naughton",
+     "result": "8.22"
+    },
+    {
+     "rank": 7,
+     "name": "Mitchell Podhajski",
+     "result": "8.26"
+    },
+    {
+     "rank": 8,
+     "name": "Oscar Allen",
+     "result": "8.27"
+    },
+    {
+     "rank": 9,
+     "name": "Stefan Okunbar",
+     "result": "8.29"
+    },
+    {
+     "rank": 10,
+     "name": "Matthew Ling",
+     "result": "8.30"
+    },
+    {
+     "rank": 10,
+     "name": "Callan England",
+     "result": "8.30"
+    },
+    {
+     "rank": 10,
+     "name": "Aiden Bonar",
+     "result": "8.30"
+    },
+    {
+     "rank": 10,
+     "name": "Andrew Brayshaw",
+     "result": "8.30"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Aiden Bonar",
+     "result": "89"
+    },
+    {
+     "rank": 2,
+     "name": "Kyron Hayden",
+     "result": "82"
+    },
+    {
+     "rank": 3,
+     "name": "Ben Paton",
+     "result": "80"
+    },
+    {
+     "rank": 4,
+     "name": "Harrison Jones",
+     "result": "79"
+    },
+    {
+     "rank": 5,
+     "name": "Jordan Houlahan",
+     "result": "77"
+    },
+    {
+     "rank": 6,
+     "name": "Jordan Johnston",
+     "result": "75"
+    },
+    {
+     "rank": 7,
+     "name": "Jack Petruccelle",
+     "result": "74"
+    },
+    {
+     "rank": 8,
+     "name": "Noah Balta",
+     "result": "74"
+    },
+    {
+     "rank": 9,
+     "name": "Adam Sambono",
+     "result": "73"
+    },
+    {
+     "rank": 10,
+     "name": "Hayden McLean",
+     "result": "73"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Kyron Hayden",
+     "result": "103"
+    },
+    {
+     "rank": 2,
+     "name": "Kane Farrell",
+     "result": "95"
+    },
+    {
+     "rank": 3,
+     "name": "Jordan Houlahan",
+     "result": "95"
+    },
+    {
+     "rank": 4,
+     "name": "Hayden McLean",
+     "result": "92"
+    },
+    {
+     "rank": 5,
+     "name": "Noah Balta",
+     "result": "89"
+    },
+    {
+     "rank": 6,
+     "name": "Harrison Jones",
+     "result": "88"
+    },
+    {
+     "rank": 7,
+     "name": "Oscar Allen",
+     "result": "88"
+    },
+    {
+     "rank": 8,
+     "name": "Tom McCartin",
+     "result": "88"
+    },
+    {
+     "rank": 9,
+     "name": "Matthew Day",
+     "result": "87"
+    },
+    {
+     "rank": 10,
+     "name": "Nathan Kreuger",
+     "result": "87"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Dylan Moore",
+     "result": "6:09"
+    },
+    {
+     "rank": 2,
+     "name": "Lochie O'Brien",
+     "result": "6:12"
+    },
+    {
+     "rank": 3,
+     "name": "Gryan Miers",
+     "result": "6:13"
+    },
+    {
+     "rank": 4,
+     "name": "Andrew Brayshaw",
+     "result": "6:14"
+    },
+    {
+     "rank": 4,
+     "name": "Trent Mynott",
+     "result": "6:14"
+    },
+    {
+     "rank": 6,
+     "name": "Aiden Domic",
+     "result": "6:15"
+    },
+    {
+     "rank": 7,
+     "name": "Angus Styles",
+     "result": "6:17"
+    },
+    {
+     "rank": 7,
+     "name": "Changkuoth Jiath",
+     "result": "6:17"
+    },
+    {
+     "rank": 9,
+     "name": "Nathan Murphy",
+     "result": "6:21"
+    },
+    {
+     "rank": 9,
+     "name": "Jaidyn Stephenson",
+     "result": "6:21"
+    }
+   ],
+   "Yo-yo": [
+    {
+     "rank": 1,
+     "name": "Andrew Brayshaw",
+     "result": "22.4"
+    },
+    {
+     "rank": 2,
+     "name": "Dylan Moore",
+     "result": "22.3"
+    },
+    {
+     "rank": 3,
+     "name": "Matthew Ling",
+     "result": "21.8"
+    },
+    {
+     "rank": 3,
+     "name": "Alex Martini",
+     "result": "21.8"
+    },
+    {
+     "rank": 3,
+     "name": "Aaron Naughton",
+     "result": "21.8"
+    },
+    {
+     "rank": 3,
+     "name": "Jaidyn Stephenson",
+     "result": "21.8"
+    },
+    {
+     "rank": 7,
+     "name": "Callan England",
+     "result": "21.6"
+    },
+    {
+     "rank": 7,
+     "name": "Nicholas Shipley",
+     "result": "21.6"
+    },
+    {
+     "rank": 9,
+     "name": "Brent Daniels",
+     "result": "21.5"
+    },
+    {
+     "rank": 9,
+     "name": "Ethan Floyd",
+     "result": "21.5"
+    },
+    {
+     "rank": 9,
+     "name": "Tom McCartin",
+     "result": "21.5"
+    },
+    {
+     "rank": 9,
+     "name": "Cillian McDaid",
+     "result": "21.5"
+    },
+    {
+     "rank": 9,
+     "name": "Gryan Miers",
+     "result": "21.5"
+    }
+   ],
+   "Kicking efficiency": [
+    {
+     "rank": 1,
+     "name": "Connor Ballenden",
+     "result": "30"
+    },
+    {
+     "rank": 2,
+     "name": "Jack Higgins",
+     "result": "29"
+    },
+    {
+     "rank": 2,
+     "name": "Angus Schumacher",
+     "result": "29"
+    },
+    {
+     "rank": 2,
+     "name": "Jack Payne",
+     "result": "29"
+    },
+    {
+     "rank": 2,
+     "name": "Hayden McLean",
+     "result": "29"
+    },
+    {
+     "rank": 2,
+     "name": "Jackson Ross",
+     "result": "29"
+    },
+    {
+     "rank": 2,
+     "name": "Ned Reeves",
+     "result": "29"
+    },
+    {
+     "rank": 8,
+     "name": "Jordan Houlahan",
+     "result": "28"
+    },
+    {
+     "rank": 8,
+     "name": "Hunter Clark",
+     "result": "28"
+    },
+    {
+     "rank": 8,
+     "name": "Lloyd Meek",
+     "result": "28"
+    }
+   ],
+   "Goalkicking": [
+    {
+     "rank": 1,
+     "name": "Jordan Houlahan",
+     "result": "30"
+    },
+    {
+     "rank": 1,
+     "name": "Angus Schumacher",
+     "result": "30"
+    },
+    {
+     "rank": 1,
+     "name": "Jackson Ross",
+     "result": "30"
+    },
+    {
+     "rank": 1,
+     "name": "Ben Miller",
+     "result": "30"
+    },
+    {
+     "rank": 5,
+     "name": "Jake Patmore",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Ryley Stoddart",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Changkuoth Jiath",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Andrew Brayshaw",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Connor Ballenden",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Aaron Naughton",
+     "result": "25"
+    },
+    {
+     "rank": 5,
+     "name": "Aiden Bonar",
+     "result": "25"
+    }
+   ]
+  }
+ },
+ "2018": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2018.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Tom McKenzie",
+     "result": "2.904"
+    },
+    {
+     "rank": 2,
+     "name": "Connor Rozee",
+     "result": "2.910"
+    },
+    {
+     "rank": 3,
+     "name": "Will Hamill",
+     "result": "2.914"
+    },
+    {
+     "rank": 4,
+     "name": "Izak Rankine",
+     "result": "2.930"
+    },
+    {
+     "rank": 5,
+     "name": "Connor Idun",
+     "result": "2.945"
+    },
+    {
+     "rank": 6,
+     "name": "Bailey Williams",
+     "result": "2.946"
+    },
+    {
+     "rank": 7,
+     "name": "Xavier O'Neill",
+     "result": "2.957"
+    },
+    {
+     "rank": 8,
+     "name": "Xavier O'Halloran",
+     "result": "2.960"
+    },
+    {
+     "rank": 9,
+     "name": "Ben King",
+     "result": "2.965"
+    },
+    {
+     "rank": 10,
+     "name": "Sam Sturt",
+     "result": "2.966"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Izak Rankine",
+     "result": "8.039"
+    },
+    {
+     "rank": 2,
+     "name": "Xavier O'Halloran",
+     "result": "8.063"
+    },
+    {
+     "rank": 3,
+     "name": "Rhylee West",
+     "result": "8.216"
+    },
+    {
+     "rank": 4,
+     "name": "Will Hamill",
+     "result": "8.222"
+    },
+    {
+     "rank": 5,
+     "name": "James Blanck",
+     "result": "8.258"
+    },
+    {
+     "rank": 6,
+     "name": "Chayce Jones",
+     "result": "8.270"
+    },
+    {
+     "rank": 7,
+     "name": "Ben Jarvis",
+     "result": "8.308"
+    },
+    {
+     "rank": 8,
+     "name": "Connor Rozee",
+     "result": "8.326"
+    },
+    {
+     "rank": 9,
+     "name": "Ely Smith",
+     "result": "8.328"
+    },
+    {
+     "rank": 10,
+     "name": "Sam Sturt",
+     "result": "8.396"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Ely Smith",
+     "result": "77"
+    },
+    {
+     "rank": 2,
+     "name": "Laitham Vandermeer",
+     "result": "72"
+    },
+    {
+     "rank": 2,
+     "name": "Ben Jarvis",
+     "result": "72"
+    },
+    {
+     "rank": 4,
+     "name": "Izak Rankine",
+     "result": "70"
+    },
+    {
+     "rank": 5,
+     "name": "Irving Mosquito",
+     "result": "68"
+    },
+    {
+     "rank": 5,
+     "name": "Bailey Scott",
+     "result": "68"
+    },
+    {
+     "rank": 7,
+     "name": "Isaac Quaynor",
+     "result": "67"
+    },
+    {
+     "rank": 7,
+     "name": "Connor Rozee",
+     "result": "67"
+    },
+    {
+     "rank": 7,
+     "name": "Buku Khamis",
+     "result": "67"
+    },
+    {
+     "rank": 10,
+     "name": "Chayce Jones",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Will Hamill",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Charlie Sprague",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Xavier O'Halloran",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Rhylee West",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Riley Grundy",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Connor Idun",
+     "result": "66"
+    },
+    {
+     "rank": 10,
+     "name": "Bailey Williams",
+     "result": "66"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Bailey Williams",
+     "result": "94"
+    },
+    {
+     "rank": 2,
+     "name": "Sam Sturt",
+     "result": "91"
+    },
+    {
+     "rank": 2,
+     "name": "Chayce Jones",
+     "result": "91"
+    },
+    {
+     "rank": 4,
+     "name": "Connor Rozee",
+     "result": "88"
+    },
+    {
+     "rank": 4,
+     "name": "Laitham Vandermeer",
+     "result": "88"
+    },
+    {
+     "rank": 6,
+     "name": "Ely Smith",
+     "result": "86"
+    },
+    {
+     "rank": 6,
+     "name": "Isaac Quaynor",
+     "result": "86"
+    },
+    {
+     "rank": 6,
+     "name": "Will Hamill",
+     "result": "86"
+    },
+    {
+     "rank": 6,
+     "name": "Ben Jarvis",
+     "result": "86"
+    },
+    {
+     "rank": 10,
+     "name": "Xavier O'Neill",
+     "result": "84"
+    },
+    {
+     "rank": 10,
+     "name": "Jackson Hately",
+     "result": "84"
+    },
+    {
+     "rank": 10,
+     "name": "Zac Foot",
+     "result": "84"
+    },
+    {
+     "rank": 10,
+     "name": "Bailey Scott",
+     "result": "84"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Jacob Kennerley",
+     "result": "6:04"
+    },
+    {
+     "rank": 2,
+     "name": "Chayce Jones",
+     "result": "6:05"
+    },
+    {
+     "rank": 3,
+     "name": "Sam Walsh",
+     "result": "6:07"
+    },
+    {
+     "rank": 4,
+     "name": "Will Golds",
+     "result": "6:10"
+    },
+    {
+     "rank": 5,
+     "name": "Luke English",
+     "result": "6:11"
+    },
+    {
+     "rank": 6,
+     "name": "Ned McHenry",
+     "result": "6:11"
+    },
+    {
+     "rank": 7,
+     "name": "Oscar Brownless",
+     "result": "6:13"
+    },
+    {
+     "rank": 8,
+     "name": "Jordan Clark",
+     "result": "6:14"
+    },
+    {
+     "rank": 9,
+     "name": "Xavier O'Halloran",
+     "result": "6:14"
+    },
+    {
+     "rank": 10,
+     "name": "Zac Foot",
+     "result": "6:15"
+    }
+   ],
+   "Yo-yo": [
+    {
+     "rank": 1,
+     "name": "Ned McHenry",
+     "result": "22.2"
+    },
+    {
+     "rank": 2,
+     "name": "Sam Walsh",
+     "result": "22.1"
+    },
+    {
+     "rank": 2,
+     "name": "Luke English",
+     "result": "22.1"
+    },
+    {
+     "rank": 4,
+     "name": "Will Golds",
+     "result": "21.8"
+    },
+    {
+     "rank": 5,
+     "name": "Xavier O'Halloran",
+     "result": "21.6"
+    },
+    {
+     "rank": 5,
+     "name": "Oscar Brownless",
+     "result": "21.6"
+    },
+    {
+     "rank": 7,
+     "name": "Will Hamill",
+     "result": "21.4"
+    },
+    {
+     "rank": 7,
+     "name": "Ely Smith",
+     "result": "21.4"
+    },
+    {
+     "rank": 7,
+     "name": "Jez McLennan",
+     "result": "21.4"
+    },
+    {
+     "rank": 7,
+     "name": "Lachlan Sholl",
+     "result": "21.4"
+    },
+    {
+     "rank": 7,
+     "name": "Fraser Turner",
+     "result": "21.4"
+    }
+   ],
+   "Kicking efficiency": [
+    {
+     "rank": 1,
+     "name": "Tarryn Thomas",
+     "result": "27"
+    },
+    {
+     "rank": 1,
+     "name": "Xavier O'Neill",
+     "result": "27"
+    },
+    {
+     "rank": 3,
+     "name": "Matt McGannon",
+     "result": "25"
+    },
+    {
+     "rank": 4,
+     "name": "Ely Smith",
+     "result": "24"
+    },
+    {
+     "rank": 5,
+     "name": "Laithan Vandermeer",
+     "result": "23"
+    },
+    {
+     "rank": 5,
+     "name": "Jack Lukosius",
+     "result": "23"
+    },
+    {
+     "rank": 7,
+     "name": "Chayce Jones",
+     "result": "22"
+    },
+    {
+     "rank": 7,
+     "name": "Noah Answerth",
+     "result": "22"
+    },
+    {
+     "rank": 7,
+     "name": "Nicholas Baker",
+     "result": "22"
+    },
+    {
+     "rank": 7,
+     "name": "Xavier O'Halloran",
+     "result": "22"
+    },
+    {
+     "rank": 7,
+     "name": "James Blanck",
+     "result": "22"
+    },
+    {
+     "rank": 7,
+     "name": "Riley Grundy",
+     "result": "22"
+    }
+   ],
+   "Goalkicking": [
+    {
+     "rank": 1,
+     "name": "Isaac Quaynor",
+     "result": "30"
+    },
+    {
+     "rank": 2,
+     "name": "Keidean Coleman",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Tarryn Thomas",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Tom McKenzie",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Mark Keane",
+     "result": "25"
+    },
+    {
+     "rank": 2,
+     "name": "Jack Lukosius",
+     "result": "25"
+    },
+    {
+     "rank": 7,
+     "name": "Izak Rankine",
+     "result": "24"
+    },
+    {
+     "rank": 7,
+     "name": "Jordan Morrisey",
+     "result": "24"
+    },
+    {
+     "rank": 7,
+     "name": "Angus Hanrahan",
+     "result": "24"
+    }
+   ]
+  }
+ },
+ "2019": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2019.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Sam Philp",
+     "result": "2.867"
+    },
+    {
+     "rank": 2,
+     "name": "Ben Johnson",
+     "result": "2.885"
+    },
+    {
+     "rank": 3,
+     "name": "Malcolm Rosas",
+     "result": "2.924"
+    },
+    {
+     "rank": 4,
+     "name": "Mitch Georgiades",
+     "result": "2.925"
+    },
+    {
+     "rank": 5,
+     "name": "Noah Cumberland",
+     "result": "2.931"
+    },
+    {
+     "rank": 6,
+     "name": "Finn Maginness",
+     "result": "2.957"
+    },
+    {
+     "rank": 7,
+     "name": "Harrison Jones",
+     "result": "2.963"
+    },
+    {
+     "rank": 8,
+     "name": "Jeremy Sharp",
+     "result": "2.966"
+    },
+    {
+     "rank": 9,
+     "name": "Brady Rowles",
+     "result": "2.968"
+    },
+    {
+     "rank": 10,
+     "name": "Dylan Stephens",
+     "result": "2.972"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Hayden Young",
+     "result": "7.940"
+    },
+    {
+     "rank": 2,
+     "name": "Elijah Taylor",
+     "result": "8.005"
+    },
+    {
+     "rank": 3,
+     "name": "Thomson Dow",
+     "result": "8.061"
+    },
+    {
+     "rank": 4,
+     "name": "Trent Rivers",
+     "result": "8.100"
+    },
+    {
+     "rank": 5,
+     "name": "Oisin Gallen",
+     "result": "8.197"
+    },
+    {
+     "rank": 6,
+     "name": "Chad Warner",
+     "result": "8.203"
+    },
+    {
+     "rank": 7,
+     "name": "Sam Flanders",
+     "result": "8.206"
+    },
+    {
+     "rank": 8,
+     "name": "Noah Cumberland",
+     "result": "8.208"
+    },
+    {
+     "rank": 9,
+     "name": "Connor Budarick",
+     "result": "8.242"
+    },
+    {
+     "rank": 10,
+     "name": "Dylan Stephens",
+     "result": "8.245"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Miles Bergman",
+     "result": "77"
+    },
+    {
+     "rank": 2,
+     "name": "Brady Rowles",
+     "result": "73"
+    },
+    {
+     "rank": 3,
+     "name": "Ben Johnson",
+     "result": "70"
+    },
+    {
+     "rank": 4,
+     "name": "Daniel Mott",
+     "result": "70"
+    },
+    {
+     "rank": 5,
+     "name": "Cody Weightman",
+     "result": "69"
+    },
+    {
+     "rank": 6,
+     "name": "Sam Flanders",
+     "result": "69"
+    },
+    {
+     "rank": 7,
+     "name": "Lachlan Williams",
+     "result": "69"
+    },
+    {
+     "rank": 8,
+     "name": "Sam Philp",
+     "result": "69"
+    },
+    {
+     "rank": 9,
+     "name": "Nick Bryan",
+     "result": "69"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Brady Rowles",
+     "result": "98"
+    },
+    {
+     "rank": 2,
+     "name": "Miles Bergman",
+     "result": "90"
+    },
+    {
+     "rank": 3,
+     "name": "Sam Flanders",
+     "result": "88"
+    },
+    {
+     "rank": 4,
+     "name": "Cian McBride",
+     "result": "87"
+    },
+    {
+     "rank": 5,
+     "name": "Lachlan Williams",
+     "result": "86"
+    },
+    {
+     "rank": 5,
+     "name": "Hugo Ralphsmith",
+     "result": "86"
+    },
+    {
+     "rank": 7,
+     "name": "Jaxon Prior",
+     "result": "85"
+    },
+    {
+     "rank": 7,
+     "name": "Nick Bryan",
+     "result": "85"
+    },
+    {
+     "rank": 9,
+     "name": "Oscar Lewis",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Kysaiah Pickett",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Cody Weightman",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Will Day",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Brady Rowles",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Cooper Stephens",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Harrison Jones",
+     "result": "83"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Jay Rantall",
+     "result": "5:50"
+    },
+    {
+     "rank": 2,
+     "name": "Finn Maginness",
+     "result": "5:51"
+    },
+    {
+     "rank": 3,
+     "name": "Dylan Stephens",
+     "result": "6:01"
+    },
+    {
+     "rank": 4,
+     "name": "Louis Butler",
+     "result": "6:09"
+    },
+    {
+     "rank": 5,
+     "name": "Hugo Ralphsmith",
+     "result": "6:12"
+    },
+    {
+     "rank": 5,
+     "name": "Jeremy Sharp",
+     "result": "6:12"
+    },
+    {
+     "rank": 7,
+     "name": "Connor Budarick",
+     "result": "6:15"
+    },
+    {
+     "rank": 7,
+     "name": "Jai Jackson",
+     "result": "6:15"
+    },
+    {
+     "rank": 9,
+     "name": "Will Martyn",
+     "result": "6:16"
+    },
+    {
+     "rank": 10,
+     "name": "Ned Cahill",
+     "result": "6:17"
+    },
+    {
+     "rank": 10,
+     "name": "Matt Rowell",
+     "result": "6:17"
+    },
+    {
+     "rank": 10,
+     "name": "Noah Anderson",
+     "result": "6:17"
+    },
+    {
+     "rank": 10,
+     "name": "Cooper Stephens",
+     "result": "6:17"
+    },
+    {
+     "rank": 10,
+     "name": "Cian McBride",
+     "result": "6:17"
+    }
+   ],
+   "Yo-yo": [
+    {
+     "rank": 1,
+     "name": "Jay Rantall",
+     "result": "21.8"
+    },
+    {
+     "rank": 2,
+     "name": "Cooper Stephens",
+     "result": "21.8"
+    },
+    {
+     "rank": 3,
+     "name": "Connor Budarick",
+     "result": "21.6"
+    },
+    {
+     "rank": 4,
+     "name": "Chad Warner",
+     "result": "21.6"
+    },
+    {
+     "rank": 5,
+     "name": "Oscar Lewis",
+     "result": "21.5"
+    },
+    {
+     "rank": 6,
+     "name": "Sam Philp",
+     "result": "21.5"
+    },
+    {
+     "rank": 7,
+     "name": "Lachlan Ash",
+     "result": "21.4"
+    },
+    {
+     "rank": 8,
+     "name": "Harrison Jones",
+     "result": "21.4"
+    },
+    {
+     "rank": 9,
+     "name": "Finn Maginness",
+     "result": "21.4"
+    },
+    {
+     "rank": 10,
+     "name": "Trey Ruscoe",
+     "result": "21.4"
+    }
+   ]
+  }
+ },
+ "2020": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2020.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Reef McInnes",
+     "result": "2.779"
+    },
+    {
+     "rank": 2,
+     "name": "Max Holmes",
+     "result": "2.801"
+    },
+    {
+     "rank": 3,
+     "name": "Godfrey Okerenyang",
+     "result": "2.86"
+    },
+    {
+     "rank": 4,
+     "name": "Liam Kolar",
+     "result": "2.870"
+    },
+    {
+     "rank": 5,
+     "name": "Isiah Winder",
+     "result": "2.873"
+    },
+    {
+     "rank": 6,
+     "name": "Seamus Mitchell",
+     "result": "2.88"
+    },
+    {
+     "rank": 7,
+     "name": "Zavier Maher",
+     "result": "2.887"
+    },
+    {
+     "rank": 8,
+     "name": "Josh Eyre",
+     "result": "2.89"
+    },
+    {
+     "rank": 9,
+     "name": "Fraser Rosman",
+     "result": "2.896"
+    },
+    {
+     "rank": 10,
+     "name": "Jamarra Ugle-Hagan",
+     "result": "2.897"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Brodie Lake",
+     "result": "7.90"
+    },
+    {
+     "rank": 2,
+     "name": "Mitchell Duval",
+     "result": "7.98"
+    },
+    {
+     "rank": 3,
+     "name": "Harry Grant",
+     "result": "8.00"
+    },
+    {
+     "rank": 4,
+     "name": "Nathan O'Driscoll",
+     "result": "8.12"
+    },
+    {
+     "rank": 5,
+     "name": "Denver Grainger-Barras",
+     "result": "8.13"
+    },
+    {
+     "rank": 6,
+     "name": "Isiah Winder",
+     "result": "8.18"
+    },
+    {
+     "rank": 7,
+     "name": "Marc Sheather",
+     "result": "8.23"
+    },
+    {
+     "rank": 8,
+     "name": "Chris Walker",
+     "result": "8.27"
+    },
+    {
+     "rank": 9,
+     "name": "Kellen Johnson",
+     "result": "8.27"
+    },
+    {
+     "rank": 10,
+     "name": "Taj Schofield",
+     "result": "8.31"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Godfrey Okerenyang",
+     "result": "84"
+    },
+    {
+     "rank": 2,
+     "name": "Pierce Roseby",
+     "result": "76"
+    },
+    {
+     "rank": 2,
+     "name": "Isiah Winder",
+     "result": "76"
+    },
+    {
+     "rank": 4,
+     "name": "Jack Carroll",
+     "result": "74"
+    },
+    {
+     "rank": 4,
+     "name": "Chris Walker",
+     "result": "74"
+    },
+    {
+     "rank": 6,
+     "name": "Kellen Johnson",
+     "result": "73"
+    },
+    {
+     "rank": 7,
+     "name": "Shannon Neale",
+     "result": "73"
+    },
+    {
+     "rank": 8,
+     "name": "Harry Grant",
+     "result": "70"
+    },
+    {
+     "rank": 9,
+     "name": "Joshua Green",
+     "result": "68"
+    },
+    {
+     "rank": 9,
+     "name": "Sam Thorne",
+     "result": "68"
+    },
+    {
+     "rank": 9,
+     "name": "Nick Brewer",
+     "result": "68"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Dominic Bedendo",
+     "result": "99"
+    },
+    {
+     "rank": 2,
+     "name": "Aiden Fyfe",
+     "result": "95"
+    },
+    {
+     "rank": 2,
+     "name": "Godfrey Okerenyang",
+     "result": "95"
+    },
+    {
+     "rank": 4,
+     "name": "Eddie Ford",
+     "result": "94"
+    },
+    {
+     "rank": 4,
+     "name": "Sam Berry",
+     "result": "94"
+    },
+    {
+     "rank": 4,
+     "name": "Brodie Lake",
+     "result": "94"
+    },
+    {
+     "rank": 4,
+     "name": "Kellen Johnson",
+     "result": "94"
+    },
+    {
+     "rank": 8,
+     "name": "Chris Walker",
+     "result": "93"
+    },
+    {
+     "rank": 8,
+     "name": "Josh Eyre",
+     "result": "93"
+    },
+    {
+     "rank": 10,
+     "name": "Archie Perkins",
+     "result": "92"
+    },
+    {
+     "rank": 10,
+     "name": "Isiah Winder",
+     "result": "92"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Harry Sharp",
+     "result": "5:28"
+    },
+    {
+     "rank": 2,
+     "name": "Fraser Rodman",
+     "result": "5:52"
+    },
+    {
+     "rank": 3,
+     "name": "Liam Kolar",
+     "result": "6:02"
+    },
+    {
+     "rank": 4,
+     "name": "Nik Cox",
+     "result": "6:03"
+    },
+    {
+     "rank": 5,
+     "name": "Sam Berry",
+     "result": "6:10"
+    },
+    {
+     "rank": 6,
+     "name": "Ryan Angwin",
+     "result": "6:11"
+    },
+    {
+     "rank": 7,
+     "name": "Heath Chapman",
+     "result": "6:20"
+    },
+    {
+     "rank": 8,
+     "name": "Nathan O'Driscoll",
+     "result": "6:23"
+    },
+    {
+     "rank": 9,
+     "name": "Jye Sinderberry",
+     "result": "6:28"
+    },
+    {
+     "rank": 10,
+     "name": "Malachy Carruthers",
+     "result": "6:30"
+    }
+   ]
+  }
+ },
+ "2021": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2021.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Harvey Harrison",
+     "result": "2.845"
+    },
+    {
+     "rank": 2,
+     "name": "Taj Woewodin",
+     "result": "2.898"
+    },
+    {
+     "rank": 3,
+     "name": "Luke Polson",
+     "result": "2.900"
+    },
+    {
+     "rank": 4,
+     "name": "Hugh Stagg",
+     "result": "2.910"
+    },
+    {
+     "rank": 5,
+     "name": "Noah Pegoraro",
+     "result": "2.926"
+    },
+    {
+     "rank": 6,
+     "name": "Bryce Watson",
+     "result": "2.951"
+    },
+    {
+     "rank": 7,
+     "name": "Brad Hough",
+     "result": "2.960"
+    },
+    {
+     "rank": 8,
+     "name": "Corey Warner",
+     "result": "2.969"
+    },
+    {
+     "rank": 9,
+     "name": "Sam Butler",
+     "result": "2.974"
+    },
+    {
+     "rank": 10,
+     "name": "Mitchell Knevitt",
+     "result": "2.976"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Alastair Lord",
+     "result": "7.940"
+    },
+    {
+     "rank": 2,
+     "name": "Bryce Watson",
+     "result": "8.006"
+    },
+    {
+     "rank": 3,
+     "name": "Matt Johnson",
+     "result": "8.061"
+    },
+    {
+     "rank": 4,
+     "name": "Jesse Motlop",
+     "result": "8.063"
+    },
+    {
+     "rank": 5,
+     "name": "Cooper Beecken",
+     "result": "8.070"
+    },
+    {
+     "rank": 6,
+     "name": "Ronald Fejo Jnr",
+     "result": "8.080"
+    },
+    {
+     "rank": 7,
+     "name": "Arthur Jones",
+     "result": "8.189"
+    },
+    {
+     "rank": 8,
+     "name": "Cooper Murley",
+     "result": "8.200"
+    },
+    {
+     "rank": 9,
+     "name": "Toby Triffett",
+     "result": "8.226"
+    },
+    {
+     "rank": 10,
+     "name": "Judd Mcvee",
+     "result": "8.238"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Corey Warner",
+     "result": "76"
+    },
+    {
+     "rank": 2,
+     "name": "William Bella",
+     "result": "75"
+    },
+    {
+     "rank": 2,
+     "name": "Leek Alleer",
+     "result": "75"
+    },
+    {
+     "rank": 2,
+     "name": "Noah Pegoraro",
+     "result": "75"
+    },
+    {
+     "rank": 5,
+     "name": "Lochlan Paton",
+     "result": "73"
+    },
+    {
+     "rank": 6,
+     "name": "Tom Brown",
+     "result": "72"
+    },
+    {
+     "rank": 6,
+     "name": "Matt Johnson",
+     "result": "72"
+    },
+    {
+     "rank": 6,
+     "name": "Luke Polson",
+     "result": "72"
+    },
+    {
+     "rank": 9,
+     "name": "Sam Butler",
+     "result": "71"
+    },
+    {
+     "rank": 9,
+     "name": "Richard Farmer",
+     "result": "71"
+    },
+    {
+     "rank": 9,
+     "name": "Brady Hough",
+     "result": "71"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Leek Alleer",
+     "result": "107"
+    },
+    {
+     "rank": 2,
+     "name": "Corey Warner",
+     "result": "100"
+    },
+    {
+     "rank": 3,
+     "name": "Josh Gibcus",
+     "result": "95"
+    },
+    {
+     "rank": 4,
+     "name": "Jahmal Stretch",
+     "result": "93"
+    },
+    {
+     "rank": 5,
+     "name": "Noah Pegoraro",
+     "result": "92"
+    },
+    {
+     "rank": 6,
+     "name": "Tyler McGinniss",
+     "result": "91"
+    },
+    {
+     "rank": 7,
+     "name": "Matt Johnson",
+     "result": "89"
+    },
+    {
+     "rank": 8,
+     "name": "Kai Lohmann",
+     "result": "88"
+    },
+    {
+     "rank": 9,
+     "name": "Luke Polson",
+     "result": "88"
+    },
+    {
+     "rank": 10,
+     "name": "Sam Butler",
+     "result": "87"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Cooper Hamilton",
+     "result": "5:48"
+    },
+    {
+     "rank": 2,
+     "name": "Josh Ward",
+     "result": "5:57",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 3,
+     "name": "Hamish Sinnott",
+     "result": "5:58"
+    },
+    {
+     "rank": 4,
+     "name": "Josh Fahey",
+     "result": "5:59",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 5,
+     "name": "Ned Long",
+     "result": "6:05",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 6,
+     "name": "Karl Worner",
+     "result": "6:07",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 7,
+     "name": "Blake Howes",
+     "result": "6:08",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 8,
+     "name": "Connor MacDonald",
+     "result": "6:08",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 9,
+     "name": "Finn Callaghan",
+     "result": "6:10",
+     "note": "Strava submission (not combine-tested)"
+    },
+    {
+     "rank": 10,
+     "name": "Charlie Dean",
+     "result": "6:11",
+     "note": "Strava submission (not combine-tested)"
+    }
+   ]
+  }
+ },
+ "2022": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2022.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Edward Allan",
+     "result": "2.814"
+    },
+    {
+     "rank": 2,
+     "name": "Toby McMullin",
+     "result": "2.880"
+    },
+    {
+     "rank": 3,
+     "name": "Coby Burgiel",
+     "result": "2.883"
+    },
+    {
+     "rank": 4,
+     "name": "James Van Es",
+     "result": "2.910"
+    },
+    {
+     "rank": 5,
+     "name": "Darcy Jones",
+     "result": "2.912"
+    },
+    {
+     "rank": 6,
+     "name": "Olli Hotton",
+     "result": "2.924"
+    },
+    {
+     "rank": 7,
+     "name": "Reuben Ginbey",
+     "result": "2.928"
+    },
+    {
+     "rank": 8,
+     "name": "Cooper Vickery",
+     "result": "2.928"
+    },
+    {
+     "rank": 9,
+     "name": "Josh Weddle",
+     "result": "2.937"
+    },
+    {
+     "rank": 10,
+     "name": "Lloyd Johnston",
+     "result": "2.951"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Darcy Jones",
+     "result": "7.702"
+    },
+    {
+     "rank": 2,
+     "name": "Jaxon Binns",
+     "result": "8.182"
+    },
+    {
+     "rank": 3,
+     "name": "Elijah Hewett",
+     "result": "8.217"
+    },
+    {
+     "rank": 4,
+     "name": "Steely Green",
+     "result": "8.247"
+    },
+    {
+     "rank": 5,
+     "name": "Edward Allan",
+     "result": "8.255"
+    },
+    {
+     "rank": 6,
+     "name": "Luke Teal",
+     "result": "8.267"
+    },
+    {
+     "rank": 7,
+     "name": "Toby McMullin",
+     "result": "8.285"
+    },
+    {
+     "rank": 8,
+     "name": "Jacob Konstanty",
+     "result": "8.292"
+    },
+    {
+     "rank": 9,
+     "name": "Harry Rowston",
+     "result": "8.325"
+    },
+    {
+     "rank": 10,
+     "name": "Noah Long",
+     "result": "8.343"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Darcy Jones",
+     "result": "75"
+    },
+    {
+     "rank": 1,
+     "name": "James Van Es",
+     "result": "75"
+    },
+    {
+     "rank": 3,
+     "name": "Jack O\u2019Sullivan",
+     "result": "72"
+    },
+    {
+     "rank": 4,
+     "name": "Oli Hotton",
+     "result": "70"
+    },
+    {
+     "rank": 4,
+     "name": "Reuben Ginbey",
+     "result": "70"
+    },
+    {
+     "rank": 4,
+     "name": "Elijah Hewett",
+     "result": "70"
+    },
+    {
+     "rank": 7,
+     "name": "Jacob Konstanty",
+     "result": "69"
+    },
+    {
+     "rank": 8,
+     "name": "Blake Drury",
+     "result": "68"
+    },
+    {
+     "rank": 8,
+     "name": "Tyrell Dewar",
+     "result": "68"
+    },
+    {
+     "rank": 8,
+     "name": "Josh Weddle",
+     "result": "68"
+    },
+    {
+     "rank": 8,
+     "name": "Edward Allan",
+     "result": "68"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "James Van Es",
+     "result": "98"
+    },
+    {
+     "rank": 2,
+     "name": "Aaron Cadman",
+     "result": "93",
+     "note": "asterisk on source page"
+    },
+    {
+     "rank": 3,
+     "name": "Will Verrall",
+     "result": "90"
+    },
+    {
+     "rank": 3,
+     "name": "Josh Weddle",
+     "result": "90"
+    },
+    {
+     "rank": 5,
+     "name": "Jack O'Sullivan",
+     "result": "89"
+    },
+    {
+     "rank": 6,
+     "name": "Darcy Jones",
+     "result": "87"
+    },
+    {
+     "rank": 6,
+     "name": "Mattaes Phillipou",
+     "result": "87"
+    },
+    {
+     "rank": 8,
+     "name": "Toby McMullin",
+     "result": "84"
+    },
+    {
+     "rank": 9,
+     "name": "Mitch Szybkowski",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Reuben Ginbey",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Anthony Munkara",
+     "result": "83"
+    },
+    {
+     "rank": 9,
+     "name": "Lachie Cowan",
+     "result": "83"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Oliver Hollands",
+     "result": "5:54"
+    },
+    {
+     "rank": 1,
+     "name": "Jason Gillbee",
+     "result": "5:54"
+    },
+    {
+     "rank": 3,
+     "name": "Jaxon Binns",
+     "result": "6:00"
+    },
+    {
+     "rank": 4,
+     "name": "Josh Weddle",
+     "result": "6:03"
+    },
+    {
+     "rank": 5,
+     "name": "Reuben Ginbey",
+     "result": "6:15"
+    },
+    {
+     "rank": 6,
+     "name": "Jakob Ryan",
+     "result": "6:16"
+    },
+    {
+     "rank": 7,
+     "name": "Steely Green",
+     "result": "6:17"
+    },
+    {
+     "rank": 8,
+     "name": "Will Dowling",
+     "result": "6:21"
+    },
+    {
+     "rank": 9,
+     "name": "Blake Drury",
+     "result": "6:25"
+    },
+    {
+     "rank": 9,
+     "name": "Seth Campbell",
+     "result": "6:25"
+    },
+    {
+     "rank": 9,
+     "name": "Mattaes Phillipou",
+     "result": "6:25"
+    }
+   ]
+  }
+ },
+ "2023": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2023.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Aiden O'Driscoll",
+     "result": "2.871"
+    },
+    {
+     "rank": 2,
+     "name": "Will Graham",
+     "result": "2.915"
+    },
+    {
+     "rank": 3,
+     "name": "Caleb Windsor",
+     "result": "2.916"
+    },
+    {
+     "rank": 4,
+     "name": "Lance Collard",
+     "result": "2.923"
+    },
+    {
+     "rank": 5,
+     "name": "Kane McAuliffe",
+     "result": "2.930"
+    },
+    {
+     "rank": 6,
+     "name": "Zane Zakostelsky",
+     "result": "2.954"
+    },
+    {
+     "rank": 7,
+     "name": "Phoenix Gothard",
+     "result": "2.963"
+    },
+    {
+     "rank": 8,
+     "name": "Taylor Goad",
+     "result": "2.965"
+    },
+    {
+     "rank": 9,
+     "name": "Eion McElholm",
+     "result": "2.993"
+    },
+    {
+     "rank": 10,
+     "name": "Harry DeMattia",
+     "result": "2.996"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Lance Collard",
+     "result": "8.157"
+    },
+    {
+     "rank": 2,
+     "name": "Koltyn Tholstrup",
+     "result": "8.194"
+    },
+    {
+     "rank": 3,
+     "name": "Angus Hastie",
+     "result": "8.204"
+    },
+    {
+     "rank": 4,
+     "name": "Bodie Ryan",
+     "result": "8.208"
+    },
+    {
+     "rank": 5,
+     "name": "Zane Zakostelsky",
+     "result": "8.233"
+    },
+    {
+     "rank": 6,
+     "name": "Ashton Moir",
+     "result": "8.244"
+    },
+    {
+     "rank": 7,
+     "name": "Reece Torrent",
+     "result": "8.260"
+    },
+    {
+     "rank": 8,
+     "name": "Darcy Wilson",
+     "result": "8.263"
+    },
+    {
+     "rank": 9,
+     "name": "Aiden O'Driscoll",
+     "result": "8.302"
+    },
+    {
+     "rank": 10,
+     "name": "Nate Caddy",
+     "result": "8.331"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Zane Zakostelsky",
+     "result": "80"
+    },
+    {
+     "rank": 2,
+     "name": "Will Graham",
+     "result": "78"
+    },
+    {
+     "rank": 2,
+     "name": "Phoenix Gothard",
+     "result": "78"
+    },
+    {
+     "rank": 2,
+     "name": "Mitchell Edwards",
+     "result": "78"
+    },
+    {
+     "rank": 5,
+     "name": "Kane McAuliffe",
+     "result": "77"
+    },
+    {
+     "rank": 6,
+     "name": "Darcy Wilson",
+     "result": "76"
+    },
+    {
+     "rank": 7,
+     "name": "Riley Hardeman",
+     "result": "75"
+    },
+    {
+     "rank": 8,
+     "name": "Jack Delean",
+     "result": "74"
+    },
+    {
+     "rank": 8,
+     "name": "Taylor Goad",
+     "result": "74"
+    },
+    {
+     "rank": 10,
+     "name": "Aiden O'Driscoll",
+     "result": "73"
+    },
+    {
+     "rank": 10,
+     "name": "Caleb Windsor",
+     "result": "73"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Darcy Wilson",
+     "result": "98"
+    },
+    {
+     "rank": 2,
+     "name": "Zane Duursma",
+     "result": "97"
+    },
+    {
+     "rank": 3,
+     "name": "Will Graham",
+     "result": "95"
+    },
+    {
+     "rank": 4,
+     "name": "Kane McAuliffe",
+     "result": "95"
+    },
+    {
+     "rank": 5,
+     "name": "Mitchell Edwards",
+     "result": "94"
+    },
+    {
+     "rank": 6,
+     "name": "Zane Zakostelsky",
+     "result": "94"
+    },
+    {
+     "rank": 7,
+     "name": "Aiden O'Driscoll",
+     "result": "92"
+    },
+    {
+     "rank": 8,
+     "name": "Caleb Windsor",
+     "result": "92"
+    },
+    {
+     "rank": 9,
+     "name": "Riley Hardeman",
+     "result": "91"
+    },
+    {
+     "rank": 10,
+     "name": "Cooper Simpson",
+     "result": "90"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Tarkyn O'Leary",
+     "result": "5:48"
+    },
+    {
+     "rank": 2,
+     "name": "Darcy Wilson",
+     "result": "5:52"
+    },
+    {
+     "rank": 3,
+     "name": "Ethan Read",
+     "result": "5:56"
+    },
+    {
+     "rank": 4,
+     "name": "Jordan Croft",
+     "result": "6:05"
+    },
+    {
+     "rank": 5,
+     "name": "Caiden Cleary",
+     "result": "6:06"
+    },
+    {
+     "rank": 5,
+     "name": "Aiden O'Driscoll",
+     "result": "6:06"
+    },
+    {
+     "rank": 7,
+     "name": "Archie Roberts",
+     "result": "6:08"
+    },
+    {
+     "rank": 8,
+     "name": "Connor O'Sullivan",
+     "result": "6:11"
+    },
+    {
+     "rank": 9,
+     "name": "Joel Freijah",
+     "result": "6:13"
+    },
+    {
+     "rank": 10,
+     "name": "Harvey Johnston",
+     "result": "6:17"
+    },
+    {
+     "rank": 10,
+     "name": "Koltyn Tholstrup",
+     "result": "6:17"
+    }
+   ]
+  }
+ },
+ "2024": {
+  "source": "https://www.topendsports.com/sport/afl/combine/results-2024.htm",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Gabriel Stumpf",
+     "result": "2.815"
+    },
+    {
+     "rank": 2,
+     "name": "Leo Lombard",
+     "result": "2.851"
+    },
+    {
+     "rank": 3,
+     "name": "Rhys Unwin",
+     "result": "2.914"
+    },
+    {
+     "rank": 4,
+     "name": "Jasper Alger",
+     "result": "2.931"
+    },
+    {
+     "rank": 5,
+     "name": "Malakai Champion",
+     "result": "2.938"
+    },
+    {
+     "rank": 6,
+     "name": "Charlie West",
+     "result": "2.957"
+    },
+    {
+     "rank": 7,
+     "name": "Jaxon Artemis",
+     "result": "2.959"
+    },
+    {
+     "rank": 8,
+     "name": "Charlie Nicholls",
+     "result": "2.962"
+    },
+    {
+     "rank": 9,
+     "name": "David Colbert",
+     "result": "2.965"
+    },
+    {
+     "rank": 10,
+     "name": "Luke Urquhart",
+     "result": "2.975"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Leo Lombard",
+     "result": "7.812"
+    },
+    {
+     "rank": 2,
+     "name": "Malakai Champion",
+     "result": "7.836"
+    },
+    {
+     "rank": 3,
+     "name": "Will Hayes",
+     "result": "7.850"
+    },
+    {
+     "rank": 4,
+     "name": "Bo Allan",
+     "result": "7.940"
+    },
+    {
+     "rank": 5,
+     "name": "Rhys Unwin",
+     "result": "8.012"
+    },
+    {
+     "rank": 6,
+     "name": "Kayle Gerreyn",
+     "result": "8.082"
+    },
+    {
+     "rank": 7,
+     "name": "Harry Armstrong",
+     "result": "8.132"
+    },
+    {
+     "rank": 8,
+     "name": "Finn O'Sullivan",
+     "result": "8.136"
+    },
+    {
+     "rank": 9,
+     "name": "Thomas Sims",
+     "result": "8.136"
+    },
+    {
+     "rank": 10,
+     "name": "Jasper Alger",
+     "result": "8.141"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Gabriel Stumpf",
+     "result": "76"
+    },
+    {
+     "rank": 2,
+     "name": "Jack Whitlock",
+     "result": "75"
+    },
+    {
+     "rank": 3,
+     "name": "Floyd Burmeister",
+     "result": "74"
+    },
+    {
+     "rank": 4,
+     "name": "Bo Allan",
+     "result": "72"
+    },
+    {
+     "rank": 5,
+     "name": "David Colbert",
+     "result": "71"
+    },
+    {
+     "rank": 6,
+     "name": "Jonty Faull",
+     "result": "71"
+    },
+    {
+     "rank": 7,
+     "name": "Josh Smillie",
+     "result": "71"
+    },
+    {
+     "rank": 8,
+     "name": "Matt Whitlock",
+     "result": "71"
+    },
+    {
+     "rank": 9,
+     "name": "Charlie West",
+     "result": "70"
+    },
+    {
+     "rank": 10,
+     "name": "Lucas Camporeale",
+     "result": "69"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Alix Tauru",
+     "result": "94"
+    },
+    {
+     "rank": 2,
+     "name": "Finn O'Sullivan",
+     "result": "93"
+    },
+    {
+     "rank": 3,
+     "name": "Bo Allan",
+     "result": "92"
+    },
+    {
+     "rank": 4,
+     "name": "Lucas Camporeale",
+     "result": "91"
+    },
+    {
+     "rank": 5,
+     "name": "Jack Whitlock",
+     "result": "91"
+    },
+    {
+     "rank": 6,
+     "name": "Floyd Burmeister",
+     "result": "90"
+    },
+    {
+     "rank": 7,
+     "name": "Thomas Sims",
+     "result": "90"
+    },
+    {
+     "rank": 8,
+     "name": "Matt Whitlock",
+     "result": "90"
+    },
+    {
+     "rank": 9,
+     "name": "Noah Mraz",
+     "result": "88"
+    },
+    {
+     "rank": 10,
+     "name": "Joel Cochran",
+     "result": "87"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Joel Cochran",
+     "result": "6:05"
+    },
+    {
+     "rank": 2,
+     "name": "Tobie Travaglia",
+     "result": "6:13"
+    },
+    {
+     "rank": 3,
+     "name": "Angus Clarke",
+     "result": "6:16"
+    },
+    {
+     "rank": 3,
+     "name": "Will Hayes",
+     "result": "6:16"
+    },
+    {
+     "rank": 5,
+     "name": "Hamish Davis",
+     "result": "6:18"
+    },
+    {
+     "rank": 6,
+     "name": "Harry Charleson",
+     "result": "6:21"
+    },
+    {
+     "rank": 7,
+     "name": "Adrian Cole",
+     "result": "6:24"
+    },
+    {
+     "rank": 7,
+     "name": "Harvey Langford",
+     "result": "6:24"
+    },
+    {
+     "rank": 9,
+     "name": "Christian Moraes",
+     "result": "6:25"
+    },
+    {
+     "rank": 9,
+     "name": "Luke Urquhart",
+     "result": "6:25"
+    }
+   ]
+  }
+ },
+ "2025": {
+  "source": "https://central.rookieme.com/afl/wp-json/wp/v2/posts/204313",
+  "tests": {
+   "20m sprint": [
+    {
+     "rank": 1,
+     "name": "Oskar Taylor",
+     "result": "2.823"
+    },
+    {
+     "rank": 2,
+     "name": "Tylah Williams",
+     "result": "2.892"
+    },
+    {
+     "rank": 3,
+     "name": "Hunter Holmes",
+     "result": "2.895"
+    },
+    {
+     "rank": 4,
+     "name": "Avery Thomas",
+     "result": "2.898"
+    },
+    {
+     "rank": 5,
+     "name": "Thomas Burton",
+     "result": "2.915"
+    },
+    {
+     "rank": 6,
+     "name": "Noah Roberts-Thomson",
+     "result": "2.916"
+    },
+    {
+     "rank": 7,
+     "name": "Blake Thredgold",
+     "result": "2.918"
+    },
+    {
+     "rank": 8,
+     "name": "Cooper Duff-Tytler",
+     "result": "2.922"
+    },
+    {
+     "rank": 9,
+     "name": "Sam Grlj",
+     "result": "2.926"
+    },
+    {
+     "rank": 10,
+     "name": "Max King",
+     "result": "2.929"
+    }
+   ],
+   "Agility": [
+    {
+     "rank": 1,
+     "name": "Lachlan Dovaston",
+     "result": "7.794"
+    },
+    {
+     "rank": 2,
+     "name": "Oskar Taylor",
+     "result": "7.840"
+    },
+    {
+     "rank": 3,
+     "name": "Xavier Taylor",
+     "result": "7.869"
+    },
+    {
+     "rank": 4,
+     "name": "Tylah Williams",
+     "result": "7.878"
+    },
+    {
+     "rank": 5,
+     "name": "Avery Thomas",
+     "result": "7.887"
+    },
+    {
+     "rank": 6,
+     "name": "Noah Roberts-Thomson",
+     "result": "8.024"
+    },
+    {
+     "rank": 7,
+     "name": "Jacob Farrow",
+     "result": "8.034"
+    },
+    {
+     "rank": 8,
+     "name": "Jevan Phillipou",
+     "result": "8.089"
+    },
+    {
+     "rank": 9,
+     "name": "Zeke Uwland",
+     "result": "8.108"
+    },
+    {
+     "rank": 10,
+     "name": "Harry Kyle",
+     "result": "8.116"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "rank": 1,
+     "name": "Max King",
+     "result": "80"
+    },
+    {
+     "rank": 2,
+     "name": "Avery Thomas",
+     "result": "75"
+    },
+    {
+     "rank": 3,
+     "name": "Zeke Uwland",
+     "result": "75"
+    },
+    {
+     "rank": 4,
+     "name": "Thomas Burton",
+     "result": "74"
+    },
+    {
+     "rank": 5,
+     "name": "Lachlan Dovaston",
+     "result": "74"
+    },
+    {
+     "rank": 6,
+     "name": "Leon Kickett",
+     "result": "74"
+    },
+    {
+     "rank": 7,
+     "name": "Koby Coulson",
+     "result": "72"
+    },
+    {
+     "rank": 8,
+     "name": "Beau Addinsall",
+     "result": "71"
+    },
+    {
+     "rank": 9,
+     "name": "Harry Kyle",
+     "result": "71"
+    },
+    {
+     "rank": 10,
+     "name": "Blake Thredgold",
+     "result": "71"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "rank": 1,
+     "name": "Harry Kyle",
+     "result": "98"
+    },
+    {
+     "rank": 2,
+     "name": "Zeke Uwland",
+     "result": "95"
+    },
+    {
+     "rank": 3,
+     "name": "Jevan Phillipou",
+     "result": "90"
+    },
+    {
+     "rank": 4,
+     "name": "Lachlan Dovaston",
+     "result": "89"
+    },
+    {
+     "rank": 5,
+     "name": "Max King",
+     "result": "89"
+    },
+    {
+     "rank": 6,
+     "name": "Blake Thredgold",
+     "result": "89"
+    },
+    {
+     "rank": 7,
+     "name": "Beau Addinsall",
+     "result": "88"
+    },
+    {
+     "rank": 8,
+     "name": "Tylah Williams",
+     "result": "88"
+    },
+    {
+     "rank": 9,
+     "name": "Willem Duursma",
+     "result": "87"
+    },
+    {
+     "rank": 10,
+     "name": "Jack Dalton",
+     "result": "84"
+    },
+    {
+     "rank": 10,
+     "name": "Mitch Marsh",
+     "result": "84"
+    },
+    {
+     "rank": 10,
+     "name": "Avery Thomas",
+     "result": "84"
+    }
+   ],
+   "2km time trial": [
+    {
+     "rank": 1,
+     "name": "Jack Dalton",
+     "result": "5:53"
+    },
+    {
+     "rank": 2,
+     "name": "Sam Grlj",
+     "result": "5:59"
+    },
+    {
+     "rank": 3,
+     "name": "Louis Emmett",
+     "result": "6:07"
+    },
+    {
+     "rank": 4,
+     "name": "Cameron Nairn",
+     "result": "6:13"
+    },
+    {
+     "rank": 5,
+     "name": "Beau Addinsall",
+     "result": "6:15"
+    },
+    {
+     "rank": 6,
+     "name": "Willem Duursma",
+     "result": "6:19"
+    },
+    {
+     "rank": 7,
+     "name": "Fred Rodriguez",
+     "result": "6:20"
+    },
+    {
+     "rank": 8,
+     "name": "Daniel Annable",
+     "result": "6:21"
+    },
+    {
+     "rank": 9,
+     "name": "Cooper Duff-Tytler",
+     "result": "6:21"
+    },
+    {
+     "rank": 10,
+     "name": "Aidan Schubert",
+     "result": "6:21"
+    }
+   ]
+  }
+ },
+ "2026": {
+  "source": "https://central.rookieme.com/afl/2026/10/05/top-10s-2026-national-afl-draft-combine/",
+  "tests": {
+   "2km time trial": [
+    {
+     "name": "Albert MacGowan"
+    },
+    {
+     "name": "Lachlan Hicks"
+    },
+    {
+     "name": "Cody Walker"
+    },
+    {
+     "name": "Caylen Murray"
+    },
+    {
+     "name": "Harvie Cooke"
+    },
+    {
+     "name": "Leo Steed"
+    },
+    {
+     "name": "Toby Krasna"
+    },
+    {
+     "name": "Archie Van Dyk"
+    },
+    {
+     "name": "George Gale"
+    },
+    {
+     "name": "Sam Tassone"
+    },
+    {
+     "name": "Jake Eime"
+    }
+   ],
+   "20m sprint": [
+    {
+     "name": "Mason McGroder"
+    },
+    {
+     "name": "Cameron Maynard"
+    },
+    {
+     "name": "Wil Malady"
+    },
+    {
+     "name": "Andrio Sousa"
+    },
+    {
+     "name": "Ethan Drever"
+    },
+    {
+     "name": "Darcy Szerszyn"
+    },
+    {
+     "name": "Sam Devers"
+    },
+    {
+     "name": "Anthony Long"
+    },
+    {
+     "name": "Lachlan Hicks"
+    },
+    {
+     "name": "Gus Kennedy"
+    }
+   ],
+   "Agility": [
+    {
+     "name": "Lachlan Hicks"
+    },
+    {
+     "name": "Wil Malady"
+    },
+    {
+     "name": "George Dimer"
+    },
+    {
+     "name": "Archie Spencer"
+    },
+    {
+     "name": "Harvie Cooke"
+    },
+    {
+     "name": "Tyson Bradley"
+    },
+    {
+     "name": "Jordan Knapp"
+    },
+    {
+     "name": "Leo Steed"
+    },
+    {
+     "name": "Andrio Sousa"
+    },
+    {
+     "name": "Darcy Szerszyn"
+    }
+   ],
+   "Standing vertical jump": [
+    {
+     "name": "Sam Gayfer"
+    },
+    {
+     "name": "Sam Devers"
+    },
+    {
+     "name": "Mason McGroder"
+    },
+    {
+     "name": "Gus Kennedy"
+    },
+    {
+     "name": "Andrio Sousa"
+    },
+    {
+     "name": "Darcy Szerszyn"
+    },
+    {
+     "name": "Ethan Drever"
+    },
+    {
+     "name": "Lewis Houndsome"
+    },
+    {
+     "name": "Tyson Bradley"
+    },
+    {
+     "name": "George Dimer"
+    }
+   ],
+   "Running vertical jump": [
+    {
+     "name": "Sam Gayfer"
+    },
+    {
+     "name": "Mason McGroder"
+    },
+    {
+     "name": "Sam Devers"
+    },
+    {
+     "name": "Gus Kennedy"
+    },
+    {
+     "name": "Ethan Drever"
+    },
+    {
+     "name": "Harry Van Hattum"
+    },
+    {
+     "name": "Xavier Ladbrook"
+    },
+    {
+     "name": "Ethan Herbert"
+    },
+    {
+     "name": "Tyson Bradley"
+    },
+    {
+     "name": "Harvie Cooke"
+    },
+    {
+     "name": "Andrio Sousa"
+    },
+    {
+     "name": "Darcy Szerszyn"
+    }
+   ]
+  }
+ }
+}
