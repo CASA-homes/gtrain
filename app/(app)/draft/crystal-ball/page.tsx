@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
+import { YearSelect } from '@/components/YearSelect';
 import { crystalUnlocked } from '@/lib/crystal-access';
 import { getMe } from '@/lib/data';
 import { lockCrystal, unlockCrystal } from './actions';
@@ -21,6 +23,12 @@ const D = data as unknown as {
   patterns: Pattern[]; numbers: Record<string, Bucket[]>;
   validation: { name: string; year: number; pick: number; peak: number; chance: number; positionOnly: number; jFP: number | null; traits: string[] }[];
   prospects: Prospect[];
+  past: { years: number[]; path: Record<string, number>; surprises: string[]; players: Past[] };
+};
+type Past = {
+  year: number; pick: number; name: string; club: string; age: number | null; mature: boolean; pre: number; positionOnly: number; now: number;
+  games: number; current: { games: number; avg: number } | null; best: number | null; peak: number | null; track: number | null;
+  status: 'Star' | 'On star track' | 'Close' | 'Behind' | 'Yet to debut' | 'Too early'; traits: string[]; jFP: number | null; seasons: [number, number, number][];
 };
 
 const base = D.meta.trainHits / D.meta.trainN;
@@ -110,6 +118,163 @@ function PatternList({ title, rows, good }: { title: string; rows: Pattern[]; go
   );
 }
 
+const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
+  Star: { bg: C.green5, fg: '#fff' }, 'On star track': { bg: C.green4, fg: '#fff' }, Close: { bg: '#d8ecd0', fg: C.ink },
+  Behind: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
+};
+
+function Header({ view }: { view: 'next' | 'past' }) {
+  return (
+    <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
+      <div>
+        <span className="eyebrow">{view === 'next' ? 'What the draft profiles of today’s stars had in common, and who in 2026 has it' : 'What we would have said on draft night, and how they’re tracking'}</span>
+        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
+      </div>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+        <DraftTabs active="crystal" showCrystal />
+        <form action={lockCrystal}><button className="btn" type="submit" style={{ fontSize: 12 }}>Lock</button></form>
+      </div>
+      <div role="tablist" aria-label="Crystal ball view" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2, flexBasis: '100%', width: 'fit-content' }}>
+        {([['next', '2026 prospects', '/draft/crystal-ball'], ['past', 'Previous drafts: how they’re tracking', '/draft/crystal-ball?view=past']] as const).map(([k, label, href]) => (
+          <Link key={k} href={href} role="tab" aria-selected={view === k}
+            style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: view === k ? '#fff' : 'transparent', color: view === k ? C.ink : C.muted }}>{label}</Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Seasons({ s }: { s: Past['seasons'] }) {
+  if (!s.length) return <span className="muted">–</span>;
+  return (
+    <span className="mono" style={{ fontSize: 12, display: 'inline-flex', gap: 8, flexWrap: 'wrap' }}>
+      {s.map(([y, g, a]) => <span key={y} title={`${g} games`} style={{ opacity: g >= 5 ? 1 : 0.5 }}>’{String(y).slice(2)} <b style={{ fontWeight: 600 }}>{a.toFixed(0)}</b></span>)}
+    </span>
+  );
+}
+
+function TrackBar({ r, path }: { r: Past; path: Record<string, number> }) {
+  // Best season so far against the typical star path at the same stage.
+  const n = Math.min(2026 - r.year, 5);
+  const ref = path[String(n)];
+  if (!r.best || !ref) return <span className="muted" style={{ fontSize: 12 }}>{r.games ? 'Not enough games yet' : 'Yet to debut'}</span>;
+  const w = Math.min(140, (r.best / ref) * 100);
+  return (
+    <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 140 }}>
+      <span style={{ position: 'relative', height: 10, background: 'var(--line)', borderRadius: 5 }}>
+        <span style={{ position: 'absolute', inset: 0, width: `${(w / 140) * 100}%`, background: (r.track ?? 0) >= 100 ? C.green5 : (r.track ?? 0) >= 88 ? C.green3 : C.yellow, borderRadius: 5 }} />
+        <span aria-hidden="true" style={{ position: 'absolute', top: -3, bottom: -3, left: `${(100 / 140) * 100}%`, width: 2, background: C.ink, opacity: 0.6 }} />
+      </span>
+      <span className="muted" style={{ fontSize: 11 }}>Best {r.best.toFixed(0)} vs star path {ref.toFixed(0)} by year {n}</span>
+    </span>
+  );
+}
+
+function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
+  const st = STATUS[r.status];
+  return (
+    <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+      <div className="row-between" style={{ alignItems: 'flex-start', gap: 10 }}>
+        <div style={{ minWidth: 0 }}>
+          <span className="eyebrow">{r.year} draft · pick {r.pick} · {r.club}</span>
+          <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{r.name}</h3>
+          <span className="pill" style={{ background: st.bg, color: st.fg, marginTop: 4, display: 'inline-block' }}>{r.status}</span>
+        </div>
+        <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
+          <span className="eyebrow">Draft night</span>
+          <Chance value={r.pre} size={22} />
+          <span className="eyebrow" style={{ marginTop: 2 }}>Now</span>
+          <Chance value={r.now} size={22} />
+        </div>
+      </div>
+      <TrackBar r={r} path={path} />
+      <Seasons s={r.seasons} />
+    </article>
+  );
+}
+
+function PastView({ year }: { year: number }) {
+  const P = D.past.players;
+  const path = D.past.path;
+  const surprises = D.past.surprises.map((k) => P.find((r) => `${r.name}|${r.year}` === k)).filter(Boolean) as Past[];
+  const rows = P.filter((r) => r.year === year).sort((a, b) => a.pick - b.pick);
+  const count = (s: Past['status']) => rows.filter((r) => r.status === s).length;
+  const expected = rows.reduce((t, r) => t + r.pre / 100, 0);
+  const tops = rows.filter((r) => r.status !== 'Star' && (r.status === 'On star track' || r.status === 'Close')).sort((a, b) => b.now - a.now).slice(0, 4);
+  const slow = rows.filter((r) => r.pre >= 25 && (r.status === 'Behind' || r.status === 'Yet to debut')).sort((a, b) => b.pre - a.pre).slice(0, 4);
+  const years = D.past.years.slice().reverse().map((y) => ({ value: String(y), label: `${y} draft` }));
+
+  return (
+    <div className="wrap">
+      <Header view="past" />
+
+      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '80ch' }}>
+          <b>Draft night</b> is the chance the crystal ball would have given each player before he was picked, worked out without his own draft year in the data.
+          <b> Tracking</b> compares his best season so far with the path today’s stars took: eventual {D.meta.hitBar}+ players averaged about
+          {' '}{Object.entries(path).slice(0, 4).map(([n, v]) => `${Math.round(v)} in year ${n}`).join(', ')}.
+          <b> Now</b> updates the chance with what he has actually done, using how players at the same stage turned out in 2016–2021.
+        </p>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2 className="h2">Beat the crystal ball</h2>
+        <span className="muted" style={{ fontSize: 13 }}>Draft-age picks we gave under a 20% chance who are already stars or ahead of the star path. Mature-age and re-drafted veterans left out.</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+          {surprises.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
+        </div>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div className="row-between" style={{ flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+          <h2 className="h2">The {year} draft</h2>
+          <YearSelect years={years} value={String(year)} />
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px', fontSize: 13 }}>
+          <span>Crystal ball expected <b>{expected.toFixed(1)}</b> stars from this draft</span>
+          {(['Star', 'On star track', 'Close', 'Behind', 'Yet to debut'] as const).map((s) => (
+            <span key={s}><span className="pill" style={{ background: STATUS[s].bg, color: STATUS[s].fg }}>{s}</span> {count(s)}</span>
+          ))}
+        </div>
+        {tops.length > 0 && (
+          <>
+            <span className="eyebrow">Best placed to get there</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+              {tops.map((r) => <PastCard key={r.name} r={r} path={path} />)}
+            </div>
+          </>
+        )}
+        {slow.length > 0 && (
+          <>
+            <span className="eyebrow">Rated highly, not there yet</span>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+              {slow.map((r) => <PastCard key={r.name} r={r} path={path} />)}
+            </div>
+          </>
+        )}
+        <div className="table-box">
+          <table className="squad" style={{ minWidth: 820 }}>
+            <thead><tr><th style={{ width: 46 }}>Pick</th><th>Player</th><th style={{ width: 90, textAlign: 'center' }}>Draft night</th><th style={{ width: 80, textAlign: 'center' }}>Now</th><th style={{ width: 120 }}>Status</th><th style={{ width: 170 }}>Tracking</th><th>Seasons</th></tr></thead>
+            <tbody>
+              {rows.map((r) => (
+                <tr key={r.name}>
+                  <td className="mono">{r.pick}</td>
+                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{r.club}{r.mature ? ' · mature-age' : ''}</div></td>
+                  <td style={{ textAlign: 'center' }}><Chance value={r.pre} size={15} /></td>
+                  <td style={{ textAlign: 'center' }}><Chance value={r.now} size={15} /></td>
+                  <td><span className="pill" style={{ background: STATUS[r.status].bg, color: STATUS[r.status].fg }}>{r.status}</span></td>
+                  <td><TrackBar r={r} path={path} /></td>
+                  <td><Seasons s={r.seasons} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function CrystalBallView() {
   const P = D.prospects;
   const likely = [...P].sort((a, b) => b.chance - a.chance).slice(0, 4);
@@ -123,14 +288,7 @@ function CrystalBallView() {
 
   return (
     <div className="wrap">
-      <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <span className="eyebrow">What the draft profiles of today’s stars had in common, and who in 2026 has it</span>
-          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
-        </div>
-        <DraftTabs active="crystal" showCrystal />
-          <form action={lockCrystal}><button className="btn" type="submit" style={{ fontSize: 12 }}>Lock</button></form>
-      </div>
+      <Header view="next" />
 
       <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '78ch' }}>
@@ -250,10 +408,11 @@ function CrystalBallView() {
 export const dynamic = 'force-dynamic';
 
 /** Password wall: nothing from the model is rendered until the password is entered. */
-export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string }> }) {
+export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string; view?: string; year?: string }> }) {
   const me = await getMe();
+  const sp = await searchParams;
   if (!(await crystalUnlocked(me))) {
-    const wrong = (await searchParams).wrong === '1';
+    const wrong = sp.wrong === '1';
     return (
       <div className="wrap">
         <form action={unlockCrystal} className="card" style={{ padding: 24, maxWidth: 420, display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -268,6 +427,10 @@ export default async function CrystalBallPage({ searchParams }: { searchParams: 
         </form>
       </div>
     );
+  }
+  if (sp.view === 'past') {
+    const y = Number(sp.year);
+    return <PastView year={D.past.years.includes(y) ? y : 2025} />;
   }
   return <CrystalBallView />;
 }
