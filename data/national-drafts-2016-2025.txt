@@ -1,0 +1,676 @@
+# AFL national drafts 2016–2025, from Wikipedia (each year's "AFL draft" page). year|pick|player|drafted to|recruited from|league
+2016|1|Andrew McGrath|Essendon|Sandringham Dragons|TAC Cup
+2016|2|Tim Taranto|Greater Western Sydney|Sandringham Dragons|TAC Cup
+2016|3|Hugh McCluggage|Brisbane Lions|North Ballarat Rebels|TAC Cup
+2016|4|Ben Ainsworth|Gold Coast|Gippsland Power|TAC Cup
+2016|5|Will Setterfield|Greater Western Sydney|Sandringham Dragons|TAC Cup
+2016|6|Sam Petrevski-Seton|Carlton|Claremont|WAFL
+2016|7|Jack Scrimshaw|Gold Coast|Sandringham Dragons|TAC Cup
+2016|8|Griffin Logue|Fremantle|Swan Districts|WAFL
+2016|9|Will Brodie|Gold Coast|Murray Bushrangers|TAC Cup
+2016|10|Jack Bowes|Gold Coast|Cairns|AFL Cairns
+2016|11|Oliver Florent|Sydney|Sandringham Dragons|TAC Cup
+2016|12|Jy Simpkin|North Melbourne|Murray Bushrangers|TAC Cup
+2016|13|Daniel Venables|West Coast|Western Jets|TAC Cup
+2016|14|Harry Perryman|Greater Western Sydney|Collingullie-Glenfield Park|RFNL
+2016|15|Jordan Gallucci|Adelaide|Eastern Ranges|TAC Cup
+2016|16|Todd Marshall|Port Adelaide|Murray Bushrangers|TAC Cup
+2016|17|Jarrod Berry|Brisbane Lions|North Ballarat Rebels|TAC Cup
+2016|18|Sam Powell-Pepper|Port Adelaide|East Perth|WAFL
+2016|19|Tim English|Western Bulldogs|South Fremantle|WAFL
+2016|20|Isaac Cumming|Greater Western Sydney|North Broken Hill|BHFL
+2016|21|Will Hayward|Sydney|North Adelaide|SANFL
+2016|22|Jordan Ridley|Essendon|Oakleigh Chargers|TAC Cup
+2016|23|Alex Witherden|Brisbane Lions|Geelong Falcons|TAC Cup
+2016|24|Cedric Cox|Brisbane Lions|North Ballarat Rebels|TAC Cup
+2016|25|Ben Long|St Kilda|NT Thunder|NEAFL
+2016|26|Brandan Parfitt|Geelong|NT Thunder|NEAFL
+2016|27|Zac Fisher|Carlton|Perth|WAFL
+2016|28|Patrick Lipinski|Western Bulldogs|Northern Knights|TAC Cup
+2016|29|Shai Bolton|Richmond|South Fremantle|WAFL
+2016|30|Sam McLarty|Collingwood|Oakleigh Chargers|TAC Cup
+2016|31|Josh Begley|Essendon|Eastern Ranges|TAC Cup
+2016|32|Joe Atley|Port Adelaide|Bendigo Pioneers|TAC Cup
+2016|33|Willem Drew|Port Adelaide|North Ballarat Rebels|TAC Cup
+2016|34|Declan Watson|North Melbourne|Aspley|NEAFL
+2016|35|Callum Brown|Collingwood|Eastern Ranges|TAC Cup
+2016|36|Josh Williams|North Melbourne|Surfers Paradise|QAFL
+2016|37|Josh Rotham|West Coast|West Perth|WAFL
+2016|38|Sean Darcy|Fremantle|Geelong Falcons|TAC Cup
+2016|39|Josh Battle|St Kilda|Dandenong Stingrays|TAC Cup
+2016|40|Tom Stewart|Geelong|Geelong|VFL
+2016|41|Brennan Cox|Fremantle|Woodville-West Torrens|SANFL
+2016|42|Kobe Mutch|Essendon|Bendigo Pioneers|TAC Cup
+2016|43|Esava Ratugolea|Geelong|Murray Bushrangers|TAC Cup
+2016|44|Myles Poholke|Adelaide|Dandenong Stingrays|TAC Cup
+2016|45|Jack Maibaum|Sydney|Eastern Ranges|TAC Cup
+2016|46|Mitch Hannan|Melbourne|Footscray|VFL
+2016|47|Harrison Macreadie|Carlton|Henty|HFL
+2016|48|Darcy Cameron|Sydney|Claremont|WAFL
+2016|49|Lewis Young|Western Bulldogs|Sturt|SANFL
+2016|50|Kayle Kirby|Collingwood|Bendigo Pioneers|TAC Cup
+2016|51|Elliott Himmelberg|Adelaide|Redland|NEAFL
+2016|52|Willie Rioli|West Coast|Glenelg|SANFL
+2016|53|Jack Graham|Richmond|North Adelaide|SANFL
+2016|54|Lachlan Tiziani|Greater Western Sydney|Murray Bushrangers|TAC Cup
+2016|55|Jacob Allison|Brisbane Lions|Aspley|NEAFL
+2016|56|Ed Phillips|St Kilda|Oakleigh Chargers|TAC Cup
+2016|57|Josh Daicos|Collingwood|Oakleigh Chargers|TAC Cup
+2016|58|Matt de Boer|Greater Western Sydney|Fremantle|AFL
+2016|59|Cameron Polson|Carlton|Sandringham Dragons|TAC Cup
+2016|60|Quinton Narkle|Geelong|Perth|WAFL
+2016|61|Tom Williamson|Carlton|North Ballarat Rebels|TAC Cup
+2016|62|Matthew Signorello|Adelaide|Northern Knights|TAC Cup
+2016|63|Dylan Clarke|Essendon|Eastern Ranges|TAC Cup
+2016|64|Dion Johnstone|Melbourne|Oakleigh Chargers|TAC Cup
+2016|65|Pat Kerr|Carlton|Oakleigh Chargers|TAC Cup
+2016|66|Luke Ryan|Fremantle|Coburg|VFL
+2016|67|Brad Scheer|Gold Coast|Palm Beach Currumbin|QAFL
+2016|68|Timm House|Geelong|Geelong|VFL
+2016|69|Ryan Abbott|Geelong|Grovedale|GFL
+2016|70|Fergus Greene|Western Bulldogs|Bendigo Pioneers|TAC Cup
+2016|71|Corey Lyons|Brisbane Lions|Sandringham Dragons|TAC Cup
+2016|72|Ryan Garthwaite|Richmond|Murray Bushrangers|TAC Cup
+2016|73|Nick Larkey|North Melbourne|Oakleigh Chargers|TAC Cup
+2016|74|Harry Morrison|Hawthorn|Murray Bushrangers|TAC Cup
+2016|75|Ben Davis|Adelaide|UNSW|Sydney AFL
+2016|76|Mitchell Lewis|Hawthorn|Calder Cannons|TAC Cup
+2016|77|Jake Waterman|West Coast|Claremont|WAFL
+2017|1|Cameron Rayner|Brisbane Lions|Western Jets|TAC Cup
+2017|2|Andrew Brayshaw|Fremantle|Sandringham Dragons|TAC Cup
+2017|3|Paddy Dow|Carlton|Bendigo Pioneers|TAC Cup
+2017|4|Luke Davies-Uniacke|North Melbourne|Dandenong Stingrays|TAC Cup
+2017|5|Adam Cerra|Fremantle|Eastern Ranges|TAC Cup
+2017|6|Jaidyn Stephenson|Collingwood|Eastern Ranges|TAC Cup
+2017|7|Hunter Clark|St Kilda|Dandenong Stingrays|TAC Cup
+2017|8|Nick Coffield|St Kilda|Northern Knights|TAC Cup
+2017|9|Aaron Naughton|Western Bulldogs|Peel Thunder|WAFL
+2017|10|Lochie O'Brien|Carlton|Bendigo Pioneers|TAC Cup
+2017|11|Aiden Bonar|Greater Western Sydney|Dandenong Stingrays|TAC Cup
+2017|12|Darcy Fogarty|Adelaide|Glenelg|SANFL
+2017|13|Jarrod Brander|West Coast|Bendigo Pioneers|TAC Cup
+2017|14|Matthew Ling|Sydney|Geelong Falcons|TAC Cup
+2017|15|Zac Bailey|Brisbane Lions|Norwood|SANFL
+2017|16|Ed Richards|Western Bulldogs|Oakleigh Chargers|TAC Cup
+2017|17|Jack Higgins|Richmond|Oakleigh Chargers|TAC Cup
+2017|18|Brandon Starcevich|Brisbane Lions|East Perth|WAFL
+2017|19|Wil Powell|Gold Coast|Claremont|WAFL
+2017|20|Callum Coleman-Jones|Richmond|Sturt|SANFL
+2017|21|Oscar Allen|West Coast|West Perth|WAFL
+2017|22|Lachie Fogarty|Geelong|Western Jets|TAC Cup
+2017|23|Will Walker|North Melbourne|Sandringham Dragons|TAC Cup
+2017|24|Tim Kelly|Geelong|South Fremantle|WAFL
+2017|25|Noah Balta|Richmond|Calder Cannons|TAC Cup
+2017|26|Liam Ryan|West Coast|Subiaco|WAFL
+2017|27|Brent Daniels|Greater Western Sydney|Bendigo Pioneers|TAC Cup
+2017|28|Sam Taylor|Greater Western Sydney|Swan Districts|WAFL
+2017|29|Charlie Spargo|Melbourne|Murray Bushrangers|TAC Cup
+2017|30|Tom De Koning|Carlton|Dandenong Stingrays|TAC Cup
+2017|31|Bayley Fritsch|Melbourne|Casey|VFL
+2017|32|Brayden Ainsworth|West Coast|Subiaco|WAFL
+2017|33|Tom McCartin|Sydney|Geelong Falcons|TAC Cup
+2017|34|Patrick Naish|Richmond|Northern Knights|TAC Cup
+2017|35|Oscar Clavarino|St Kilda|Dandenong Stingrays|TAC Cup
+2017|36|Charlie Constable|Geelong|Sandringham Dragons|TAC Cup
+2017|37|Harrison Petty|Melbourne|Norwood|SANFL
+2017|38|Jack Petruccelle|West Coast|Northern Knights|TAC Cup
+2017|39|Nathan Murphy|Collingwood|Sandringham Dragons|TAC Cup
+2017|40|Andrew McPherson|Adelaide|Woodville-West Torrens|SANFL
+2017|41|Toby Wooller|Brisbane Lions|Oakleigh Chargers|TAC Cup
+2017|42|Charlie Ballard|Gold Coast|Sturt|SANFL
+2017|43|Connor Ballenden|Brisbane Lions|Brisbane|NEAFL
+2017|44|Hugh Dixon|Fremantle|Tigers|TSL
+2017|45|James Worpel|Hawthorn|Geelong Falcons|TAC Cup
+2017|46|Ben Paton|St Kilda|Murray Bushrangers|TAC Cup
+2017|47|Sam Hayes|Port Adelaide|Eastern Ranges|TAC Cup
+2017|48|Oskar Baker|Melbourne|Aspley|NEAFL
+2017|49|Jordan Houlahan|Essendon|Sturt|SANFL
+2017|50|Tyler Brown|Collingwood|Eastern Ranges|TAC Cup
+2017|51|Kane Farrell|Port Adelaide|Bendigo Pioneers|TAC Cup
+2017|52|Brayden Crossley|Gold Coast|Palm Beach Currumbin|QAFL
+2017|54|Jack Payne|Brisbane Lions|Noosa|QAFL
+2017|55|Connor Nutting|Gold Coast|Broadbeach|QAFL
+2017|56|Zac Langdon|Greater Western Sydney|Claremont|WAFL
+2017|57|Gryan Miers|Geelong|Geelong Falcons|TAC Cup
+2017|58|Jake Patmore|Port Adelaide|Claremont|WAFL
+2017|59|Mitch Crowden|Fremantle|Sturt|SANFL
+2017|60|Joel Garner|Port Adelaide|Eastern Ranges|TAC Cup
+2017|61|Dom Barry|Port Adelaide|Glenelg|SANFL
+2017|62|Kyron Hayden|North Melbourne|Subiaco|WAFL
+2017|63|Ben Miller|Richmond|Subiaco|WAFL
+2017|64|Nick Shipley|Greater Western Sydney|St George|Sydney AFL
+2017|65|Tom North|Fremantle|Eastern Ranges|TAC Cup
+2017|66|Brandon Zerk-Thatcher|Essendon|Sturt|SANFL
+2017|67|Dylan Moore|Hawthorn|Eastern Ranges|TAC Cup
+2017|68|Hamish Brayshaw|West Coast|Sandringham Dragons|TAC Cup
+2017|69|Lloyd Meek|Fremantle|Greater Western Victoria Rebels|TAC Cup
+2017|70|Angus Schumacher|Carlton|Bendigo Pioneers|TAC Cup
+2017|71|Jackson Ross|Hawthorn|Eastern Ranges|TAC Cup
+2017|72|Tristan Xerri|North Melbourne|Western Jets|TAC Cup
+2017|73|Sam Switkowski|Fremantle|Box Hill|VFL
+2017|74|Callum Porter|Western Bulldogs|Gippsland Power|TAC Cup
+2017|75|Scott Jones|Fremantle|East Perth|WAFL
+2017|76|Matt Guelfi|Essendon|Claremont|WAFL
+2017|77|Billy Hartung|North Melbourne|Hawthorn|AFL
+2017|78|Jarrod Garlett|Carlton|South Fremantle|WAFL
+2018|1|Sam Walsh|Carlton|Geelong Falcons|TAC Cup
+2018|2|Jack Lukosius|Gold Coast|Woodville-West Torrens|SANFL
+2018|3|Izak Rankine|Gold Coast|West Adelaide|SANFL
+2018|4|Max King|St Kilda|Sandringham Dragons|TAC Cup
+2018|5|Connor Rozee|Port Adelaide|North Adelaide|SANFL
+2018|6|Ben King|Gold Coast|Sandringham Dragons|TAC Cup
+2018|7|Bailey Smith|Western Bulldogs|Sandringham Dragons|TAC Cup
+2018|8|Tarryn Thomas|North Melbourne|North Launceston|TSL
+2018|9|Chayce Jones|Adelaide|Launceston|TSL
+2018|10|Nick Blakey|Sydney|UNSW-Eastern Sub.|AFL Syd.
+2018|11|Jye Caldwell|GWS Giants|Bendigo Pioneers|TAC Cup
+2018|12|Zak Butters|Port Adelaide|Western Jets|TAC Cup
+2018|13|Isaac Quaynor|Collingwood|Oakleigh Chargers|TAC Cup
+2018|14|Jackson Hately|GWS Giants|Central District|SANFL
+2018|15|Jordan Clark|Geelong|Claremont|WAFL
+2018|16|Ned McHenry|Adelaide|Geelong Falcons|TAC Cup
+2018|17|Sam Sturt|Fremantle|Dandenong Stingrays|TAC Cup
+2018|18|Xavier Duursma|Port Adelaide|Gippsland Power|TAC Cup
+2018|19|Liam Stocker|Carlton|Sandringham Dragons|TAC Cup
+2018|20|Riley Collier-Dawkins|Richmond|Oakleigh Chargers|TAC Cup
+2018|21|Ely Smith|Brisbane Lions|Murray Bushrangers|TAC Cup
+2018|22|Xavier O'Halloran|GWS Giants|Western Jets|TAC Cup
+2018|23|Jez McLennan|Gold Coast|Central District|SANFL
+2018|24|Bobby Hill|GWS Giants|Perth|WAFL
+2018|25|James Rowbottom|Sydney|Oakleigh Chargers|TAC Cup
+2018|26|Rhylee West|Western Bulldogs|Calder Cannons|TAC Cup
+2018|27|Tom Sparrow|Melbourne|South Adelaide|SANFL
+2018|28|Xavier O'Neill|West Coast|Oakleigh Chargers|TAC Cup
+2018|29|Will Kelly|Collingwood|Oakleigh Chargers|TAC Cup
+2018|30|Will Hamill|Adelaide|Dandenong Stingrays|TAC Cup
+2018|31|Luke Foley|West Coast|Subiaco|WAFL
+2018|32|Luke Valente|Fremantle|Norwood|SANFL
+2018|33|James Jordon|Melbourne|Oakleigh Chargers|TAC Cup
+2018|34|Kieren Briggs|GWS Giants|Pennant Hills|AFL Syd.
+2018|35|Bailey Williams|West Coast|Dandenong Stingrays|TAC Cup
+2018|36|Tom Berry|Brisbane Lions|GWV Rebels|TAC Cup
+2018|37|Laitham Vandermeer|Western Bulldogs|Murray Bushrangers|TAC Cup
+2018|38|Irving Mosquito|Essendon|Gippsland Power|TAC Cup
+2018|39|Jarrod Cameron|West Coast|Swan Districts|WAFL
+2018|40|Tom Joyce|Brisbane Lions|East Fremantle|WAFL
+2018|41|Jack Bytel|St Kilda|Calder Cannons|TAC Cup
+2018|42|Connor McFadyen|Brisbane Lions|Wilston Grange|QAFL
+2018|43|Jack Ross|Richmond|Oakleigh Chargers|TAC Cup
+2018|44|Justin McInerney|Sydney|Northern Knights|TAC Cup
+2018|45|Ben Cavarra|Western Bulldogs|Williamstown|VFL
+2018|46|Curtis Taylor|North Melbourne|Calder Cannons|TAC Cup
+2018|47|Matthew Parker|St Kilda|South Fremantle|WAFL
+2018|48|Ben Jarvis|Geelong|Norwood|SANFL
+2018|49|Bailey Scott|North Melbourne|Broadbeach|QAFL
+2018|50|Jacob Kennerley|Geelong|Norwood|SANFL
+2018|51|Zac Foot|Sydney|Dandenong Stingrays|TAC Cup
+2018|52|Jacob Koschitzke|Hawthorn|Murray Bushrangers|TAC Cup
+2018|53|Aaron Nietschke|Melbourne|Central District|SANFL
+2018|54|Nick Hind|St Kilda|Essendon|VFL
+2018|55|Noah Answerth|Brisbane Lions|Oakleigh Chargers|TAC Cup
+2018|56|Marty Hore|Melbourne|Collingwood|VFL
+2018|57|Lachie Schultz|Fremantle|Williamstown|VFL
+2018|58|Fraser Turner|Richmond|Clarence|TSL
+2018|59|Brett Bewley|Fremantle|Williamstown|VFL
+2018|60|Noah Gown|Essendon|Gippsland Power|TAC Cup
+2018|61|Connor Idun|GWS Giants|Geelong Falcons|TAC Cup
+2018|62|Luke English|Richmond|Perth|WAFL
+2018|63|Mathew Walker|Hawthorn|Murray Bushrangers|TAC Cup
+2018|64|Lachlan Sholl|Adelaide|Calder Cannons|TAC Cup
+2018|65|Darcy Fort|Geelong|Central District|SANFL
+2018|66|Finbar O'Dwyer|Carlton|Murray Bushrangers|TAC Cup
+2018|67|Robbie Young|St Kilda|North Adelaide|SANFL
+2018|68|Jake Tarca|Geelong|South Adelaide|SANFL
+2018|69|Joel Crocker|North Melbourne|Sandringham Dragons|TAC Cup
+2018|70|Ben Silvagni|Carlton|Oakleigh Chargers|TAC Cup
+2018|71|Caleb Graham|Gold Coast|Palm Beach Currumbin|QAFL
+2018|72|Brayden Ham|Essendon|Geelong Falcons|TAC Cup
+2018|73|Riley Grundy|Port Adelaide|Sturt|SANFL
+2018|74|Oscar Brownless|Geelong|Geelong Falcons|TAC Cup
+2018|75|Toby Bedford|Melbourne|Dandenong Stingrays|TAC Cup
+2018|76|Boyd Woodcock|Port Adelaide|North Adelaide|SANFL
+2018|77|Atu Bosenavulagi|Collingwood|Oakleigh Chargers|TAC Cup
+2018|78|Will Hayes|Western Bulldogs|Footscray|VFL
+2019|1|Matt Rowell|Gold Coast|Oakleigh Chargers|NAB League
+2019|2|Noah Anderson|Gold Coast|Oakleigh Chargers|NAB League
+2019|3|Luke Jackson|Melbourne|East Fremantle|WAFL
+2019|4|Lachlan Ash|Greater Western Sydney|Murray Bushrangers|NAB League
+2019|5|Dylan Stephens|Sydney|Norwood|SANFL
+2019|6|Fischer McAsey|Adelaide|Sandringham Dragons|NAB League
+2019|7|Hayden Young|Fremantle|Dandenong Stingrays|NAB League
+2019|8|Caleb Serong|Fremantle|Gippsland Power|NAB League
+2019|9|Liam Henry|Fremantle|Claremont|WAFL
+2019|10|Tom Green|Greater Western Sydney|Canberra Demons|NEAFL
+2019|11|Sam Flanders|Gold Coast|Gippsland Power|NAB League
+2019|12|Kysaiah Pickett|Melbourne|Woodville-West Torrens|SANFL
+2019|13|Will Day|Hawthorn|West Adelaide|SANFL
+2019|14|Miles Bergman|Port Adelaide|Sandringham Dragons|NAB League
+2019|15|Cody Weightman|Western Bulldogs|Dandenong Stingrays|NAB League
+2019|16|Cooper Stephens|Geelong|Geelong Falcons|NAB League
+2019|17|Brodie Kemp|Carlton|Bendigo Pioneers|NAB League
+2019|18|Mitch Georgiades|Port Adelaide|Subiaco|WAFL
+2019|19|Sam De Koning|Geelong|Dandenong Stingrays|NAB League
+2019|20|Sam Philp|Carlton|Northern Knights|NAB League
+2019|21|Thomson Dow|Richmond|Bendigo Pioneers|NAB League
+2019|22|Deven Robertson|Brisbane Lions|Perth|WAFL
+2019|23|Dylan Williams|Port Adelaide|Oakleigh Chargers|NAB League
+2019|24|Harry Schoenberg|Adelaide|Woodville-West Torrens|SANFL
+2019|25|Jackson Mead|Port Adelaide|Woodville-West Torrens|SANFL
+2019|26|Will Gould|Sydney|Glenelg|SANFL
+2019|27|Jeremy Sharp|Gold Coast|East Fremantle|WAFL
+2019|28|Josh Worrell|Adelaide|Sandringham Dragons|NAB League
+2019|29|Finn Maginness|Hawthorn|Sandringham Dragons|NAB League
+2019|30|Harrison Jones|Essendon|Calder Cannons|NAB League
+2019|31|Charlie Comben|North Melbourne|Gippsland Power|NAB League
+2019|32|Trent Rivers|Melbourne|East Fremantle|WAFL
+2019|33|Brock Smith|Brisbane Lions|Gippsland Power|NAB League
+2019|34|Jack Mahony|North Melbourne|Sandringham Dragons|NAB League
+2019|35|Flynn Perez|North Melbourne|Bendigo Pioneers|NAB League
+2019|36|Elijah Taylor|Sydney|Perth|WAFL
+2019|37|Keidean Coleman|Brisbane Lions|Brisbane Lions|NEAFL
+2019|38|Nick Bryan|Essendon|Oakleigh Chargers|NAB League
+2019|39|Chad Warner|Sydney|East Fremantle|WAFL
+2019|40|Jay Rantall|Collingwood|GWV Rebels|NAB League
+2019|41|Francis Evans|Geelong|Calder Cannons|NAB League
+2019|42|Ronin O'Connor|Adelaide|Claremont|WAFL
+2019|43|Noah Cumberland|Richmond|Brisbane Lions|NEAFL
+2019|44|Will Martyn|Richmond|Brisbane Lions|NEAFL
+2019|45|Trent Bianco|Collingwood|Oakleigh Chargers|NAB League
+2019|46|Hugo Ralphsmith|Richmond|Sandringham Dragons|NAB League
+2019|47|Sam Ramsay|Carlton|Calder Cannons|NAB League
+2019|48|Lachlan Gollant|Adelaide|Calder Cannons|NAB League
+2019|49|Callum Jamieson|West Coast|Claremont|WAFL
+2019|50|Cameron Taheny|Geelong|Norwood|SANFL
+2019|51|Jake Riccardi|Greater Western Sydney|Werribee|VFL
+2019|52|Ryan Byrnes|St Kilda|Sandringham Dragons|NAB League
+2019|53|Louis Butler|Western Bulldogs|Sandringham Dragons|NAB League
+2019|54|Bigoa Nyuon|Richmond|Dandenong Stingrays|NAB League
+2019|55|Trey Ruscoe|Collingwood|East Fremantle|WAFL
+2019|56|Ned Cahill|Essendon|Dandenong Stingrays|NAB League
+2019|57|Josh Morris|Hawthorn|Woodville-West Torrens|SANFL
+2019|58|Ben Johnson|West Coast|West Perth|WAFL
+2019|59|Jaxon Prior|Brisbane Lions|West Perth|WAFL
+2019|60|Jy Farrar|Gold Coast|Adelaide|SANFL
+2019|61|Michael Frederick|Fremantle|Woodville-West Torrens|SANFL
+2019|62|Riley Garcia|Western Bulldogs|Swan Districts|WAFL
+2019|63|Lachlan Johnson|Essendon|Oakleigh Chargers|NAB League
+2019|64|Leo Connolly|St Kilda|Gippsland Power|NAB League
+2019|65|Thomas Hutchesson|Greater Western Sydney|Adelaide|SANFL
+2020|1|Jamarra Ugle-Hagan|Western Bulldogs|Oakleigh Chargers|NAB League
+2020|2|Riley Thilthorpe|Adelaide|West Adelaide|SANFL
+2020|3|Will Phillips|North Melbourne|Oakleigh Chargers|NAB League
+2020|4|Logan McDonald|Sydney|Perth|WAFL
+2020|5|Braeden Campbell|Sydney|Pennant Hills|Sydney AFL
+2020|6|Denver Grainger-Barras|Hawthorn|Swan Districts|WAFL
+2020|7|Elijah Hollands|Gold Coast|Murray Bushrangers|NAB League
+2020|8|Nik Cox|Essendon|Northern Knights|NAB League
+2020|9|Archie Perkins|Essendon|Sandringham Dragons|NAB League
+2020|10|Zach Reid|Essendon|Gippsland Power|NAB League
+2020|11|Luke Pedlar|Adelaide|Glenelg|SANFL
+2020|12|Tanner Bruhn|Greater Western Sydney|Geelong Falcons|NAB League
+2020|13|Tom Powell|North Melbourne|Sturt|SANFL
+2020|14|Heath Chapman|Fremantle .mw-parser-output .citation{word-wrap:break-word}.mw-parser-output .citation:target{background-color:rgba(0,127,255,0.133)}|West Perth|WAFL
+2020|15|Conor Stone|Greater Western Sydney|Oakleigh Chargers|NAB League
+2020|16|Lachie Jones|Port Adelaide|Woodville-West Torrens|SANFL
+2020|17|Oliver Henry|Collingwood|Geelong Falcons|NAB League
+2020|18|Ryan Angwin|Greater Western Sydney|Gippsland Power|NAB League
+2020|19|Finlay Macrae|Collingwood|Oakleigh Chargers|NAB League
+2020|20|Max Holmes|Geelong|Sandringham Dragons|NAB League
+2020|21|Jake Bowey+|Melbourne|Sandringham Dragons|NAB League
+2020|22|Bailey Laurie|Melbourne|Oakleigh Chargers|NAB League
+2020|23|Reef McInnes|Collingwood|Oakleigh Chargers|NAB League
+2020|24|Blake Coleman|Brisbane Lions|Morningside|QAFL
+2020|25|Brayden Cook|Adelaide|South Adelaide|SANFL
+2020|26|Matthew McLeod-Allison|St Kilda|Calder Cannons|NAB League
+2020|27|Nathan O'Driscoll|Fremantle|Perth|WAFL
+2020|28|Sam Berry|Adelaide|Gippsland Power|NAB League
+2020|29|Seamus Mitchell|Hawthorn|Bendigo Pioneers|NAB League
+2020|30|Caleb Poulter|Collingwood|Woodville-West Torrens|SANFL
+2020|31|Liam McMahon|Collingwood|Northern Knights|NAB League
+2020|32|Errol Gulden|Sydney|UNSW-Eastern Suburbs Bulldogs|Sydney AFL
+2020|33|Shannon Neale|Geelong|South Fremantle|WAFL
+2020|34|Fraser Rosman|Melbourne|Sandringham Dragons|NAB League
+2020|35|Connor Downie|Hawthorn|Eastern Ranges|NAB League
+2020|36|Charlie Lazzaro|North Melbourne|Geelong Falcons|NAB League
+2020|37|Corey Durdin|Carlton|Central District|SANFL
+2020|38|James Rowe|Adelaide|Woodville-West Torrens|SANFL
+2020|39|Josh Eyre|Essendon|Calder Cannons|NAB League
+2020|40|Samson Ryan|Richmond|Western Magpies|QAFL
+2020|41|Jack Carroll|Carlton|East Fremantle|WAFL
+2020|42|Phoenix Spicer|North Melbourne|South Adelaide|SANFL
+2020|43|Harry Sharp|Brisbane Lions|GWV Rebels|NAB League
+2020|44|Beau McCreery|Collingwood|South Adelaide|SANFL
+2020|45|Tom Highmore|St Kilda|South Adelaide|SANFL
+2020|46|Tyler Brockman|Hawthorn|Subiaco|WAFL
+2020|47|Nick Stevens|Geelong|GWV Rebels|NAB League
+2020|48|Henry Smith|Brisbane Lions|Woodville-West Torrens|SANFL
+2020|49|Ollie Lord|Port Adelaide|Sandringham Dragons|NAB League
+2020|50|Brandon Walker|Fremantle|East Fremantle|WAFL
+2020|51|Maurice Rioli Jr.|Richmond|Oakleigh Chargers|NAB League
+2020|52|Luke Edwards|West Coast|Glenelg|SANFL
+2020|53|Cody Brand|Essendon|Calder Cannons|NAB League
+2020|54|Joel Western|Fremantle|Claremont|WAFL
+2020|55|Dominic Bedendo|Western Bulldogs|Murray Bushrangers|NAB League
+2020|56|Eddie Ford|North Melbourne|Western Jets|NAB League
+2020|57|Isiah Winder|West Coast|Peel Thunder|WAFL
+2020|58|Cameron Fleeton|Greater Western Sydney|Geelong Falcons|NAB League
+2020|59|Jacob Wehr|Greater Western Sydney|Woodville-West Torrens|SANFL
+2021|1|Jason Horne-Francis|North Melbourne|South Adelaide|SANFL
+2021|2|Sam Darcy|Western Bulldogs|Oakleigh Chargers|NAB League
+2021|3|Finn Callaghan|Greater Western Sydney|Sandringham Dragons|NAB League
+2021|4|Nick Daicos|Collingwood|Oakleigh Chargers|NAB League
+2021|5|Mac Andrew|Gold Coast|Dandenong Stingrays|NAB League
+2021|6|Josh Rachele|Adelaide|Murray Bushrangers|NAB League
+2021|7|Josh Ward|Hawthorn|Northern Knights|NAB League
+2021|8|Jye Amiss|Fremantle|East Perth|WAFL
+2021|9|Josh Gibcus|Richmond|GWV Rebels|NAB League
+2021|10|Neil Erasmus|Fremantle|Subiaco|WAFL
+2021|11|Nasiah Wanganeen-Milera|St Kilda|Glenelg|SANFL
+2021|12|Josh Sinn|Port Adelaide|Sandringham Dragons|NAB League
+2021|13|Ben Hobbs|Essendon|GWV Rebels|NAB League
+2021|14|Campbell Chesser|West Coast|Sandringham Dragons|NAB League
+2021|15|Leek Aleer|Greater Western Sydney|Central District|SANFL
+2021|16|Darcy Wilmot|Brisbane Lions|Northern Knights|NAB League
+2021|17|Tom Brown|Richmond|Murray Bushrangers|NAB League
+2021|18|Angus Sheldrick|Sydney|Claremont|WAFL
+2021|19|Jacob van Rooyen|Melbourne|Claremont|WAFL
+2021|20|Kai Lohmann|Brisbane Lions|GWV Rebels|NAB League
+2021|21|Matthew Johnson|Fremantle|Subiaco|WAFL
+2021|22|Josh Goater|North Melbourne|Calder Cannons|NAB League
+2021|23|Sam Butler|Hawthorn|GWV Rebels|NAB League
+2021|24|Toby Conway|Geelong|Geelong Falcons|NAB League
+2021|25|Mitch Knevitt|Geelong|Geelong Falcons|NAB League
+2021|26|Connor MacDonald|Hawthorn|Dandenong Stingrays|NAB League
+2021|27|Jesse Motlop|Carlton|South Fremantle|WAFL
+2021|28|Tyler Sonsie|Richmond|Eastern Ranges|NAB League
+2021|29|Sam Banks|Richmond|Tasmania Devils|NAB League
+2021|30|Judson Clarke|Richmond|Dandenong Stingrays|NAB League
+2021|31|Brady Hough|West Coast|Peel Thunder|WAFL
+2021|32|James Willis|Geelong|North Adelaide|SANFL
+2021|33|Mitchito Owens|St Kilda|Sandringham Dragons|NAB League
+2021|34|Matthew Roberts|Sydney|South Adelaide|SANFL
+2021|35|Paul Curtis|North Melbourne|Western Jets|NAB League
+2021|36|Jake Soligo|Adelaide|Eastern Ranges|NAB League
+2021|37|Rhett Bazzo|West Coast|Swan Districts|WAFL
+2021|38|Miller Bergman|North Melbourne|Dandenong Stingrays|NAB League
+2021|39|Blake Howes|Melbourne|Sandringham Dragons|NAB League
+2021|40|Corey Warner|Sydney|East Fremantle|WAFL
+2021|41|James Tunstill|Brisbane Lions|East Perth|WAFL
+2021|42|Josh Fahey|Greater Western Sydney|Queanbeyan Tigers|AFL Canberra
+2021|43|Arthur Jones|Western Bulldogs|Claremont|WAFL
+2021|44|Zac Taylor|Adelaide|Calder Cannons|NAB League
+2021|45|Arlo Draper|Collingwood|South Adelaide|SANFL
+2021|46|Alastair Lord|Essendon|Norwood|SANFL
+2021|47|Marcus Windhager|St Kilda|Sandringham Dragons|NAB League
+2021|48|Flynn Kroeger|Geelong|Eastern Ranges|NAB League
+2021|49|Cooper Murley|Collingwood|Norwood|SANFL
+2021|50|Garrett McDonagh|Essendon|Richmond|VFL
+2021|51|Oscar Adams|St Kilda|Glenelg|SANFL
+2021|52|Harvey Harrison|Collingwood|North Adelaide|SANFL
+2021|53|Jai Serong|Hawthorn|Gippsland Power|NAB League
+2021|54|Eric 'Roy' Benning|Fremantle|Claremont|WAFL
+2021|55|Hugh Jackson|Port Adelaide|North Adelaide|SANFL
+2021|56|Dante Visentini|Port Adelaide|Sandringham Dragons|NAB League
+2021|57|Jack Williams|West Coast|East Fremantle|WAFL
+2021|58|Lachlan Rankin|Sydney|Oakleigh Chargers|NAB League
+2021|59|Jackson Archer|North Melbourne|Northern Knights|NAB League
+2021|60|Jase Burgoyne|Port Adelaide|Woodville-West Torrens|SANFL
+2021|61|Luke Cleary|Western Bulldogs|Sandringham Dragons|NAB League
+2021|62|Greg Clark|West Coast|Subiaco|WAFL
+2021|63|Charlie Constable|Gold Coast|Geelong|AFL
+2021|64|Cooper Whyte|Geelong|Geelong Falcons|NAB League
+2021|65|Taj Woewodin|Melbourne|East Fremantle|WAFL
+2022|1|Aaron Cadman|Greater Western Sydney|Greater Western Victoria Rebels|NAB League
+2022|2|Will Ashcroft|Brisbane Lions|Sandringham Dragons|NAB League
+2022|3|Harry Sheezel|North Melbourne|Sandringham Dragons|NAB League
+2022|4|George Wardlaw|North Melbourne|Oakleigh Chargers|NAB League
+2022|5|Elijah Tsatas|Essendon|Oakleigh Chargers|NAB League
+2022|6|Bailey Humphrey|Gold Coast|Gippsland Power|NAB League
+2022|7|Cameron Mackenzie|Hawthorn|Sandringham Dragons|NAB League
+2022|8|Jhye Clark|Geelong|Geelong Falcons|NAB League
+2022|9|Reuben Ginbey|West Coast|East Perth|WAFL
+2022|10|Mattaes Phillipou|St Kilda|Woodville-West Torrens|SANFL
+2022|11|Oliver Hollands|Carlton|Murray Bushrangers|NAB League
+2022|12|Jaspa Fletcher|Brisbane Lions|Sherwood Magpies|QAFL
+2022|13|Jedd Busslinger|Western Bulldogs|East Perth|WAFL
+2022|14|Elijah Hewett|West Coast|Swan Districts|WAFL
+2022|15|Matthew Jefferson|Melbourne|Oakleigh Chargers|NAB League
+2022|16|Harry Rowston|Greater Western Sydney|Calder Cannons|NAB League
+2022|17|Max Michalanney|Adelaide|Norwood|SANFL
+2022|18|Josh Weddle|Hawthorn|Oakleigh Chargers|NAB League
+2022|19|Ed Allan|Collingwood|Claremont|WAFL
+2022|20|Jacob Konstanty|Sydney|Gippsland Power|NAB League
+2022|21|Darcy Jones|Greater Western Sydney|Swan Districts|WAFL
+2022|22|Max Gruzewski|Greater Western Sydney|Oakleigh Chargers|NAB League
+2022|23|Harry Barnett|West Coast|West Adelaide|SANFL
+2022|24|Charlie Clarke|Western Bulldogs|Sandringham Dragons|NAB League
+2022|25|Lewis Hayes|Essendon|Eastern Ranges|NAB League
+2022|26|Brayden George|North Melbourne|Murray Bushrangers|NAB League
+2022|27|Cooper Vickery|Sydney|Gippsland Power|NAB League
+2022|28|Jakob Ryan|Collingwood|Glenelg|SANFL
+2022|29|Coby Burgiel|West Coast|Gippsland Power|NAB League
+2022|30|Lachie Cowan|Carlton|Tasmania Devils|NAB League
+2022|31|James van Es|St Kilda|Greater Western Victoria Rebels|NAB League
+2022|32|Jaxon Binns|Carlton|Dandenong Stingrays|NAB League
+2022|33|Hugh Davies|Fremantle|Claremont|WAFL
+2022|34|Toby McMullin|Greater Western Sydney|Sandringham Dragons|NAB League
+2022|35|Olli Hotton|St Kilda|Sandringham Dragons|NAB League
+2022|36|Tom McCallum|Port Adelaide|Tasmania Devils|NAB League
+2022|37|Henry Hustwaite|Hawthorn|Dandenong Stingrays|NAB League
+2022|38|Jed Adams|Melbourne|Peel Thunder|WAFL
+2022|39|Harvey Gallagher|Western Bulldogs|Bendigo Pioneers|NAB League
+2022|40|Caleb Mitchell|Sydney|Murray Bushrangers|NAB League
+2022|41|Tom Emmett|Fremantle|Sturt|SANFL
+2022|42|Max Knobel|Fremantle|Gippsland Power|NAB League
+2022|43|Billy Dowling|Adelaide|North Adelaide|SANFL
+2022|44|Isaac Keeler|St Kilda|North Adelaide|SANFL
+2022|45|Alwyn Davey Jr.|Essendon|Oakleigh Chargers|NAB League
+2022|46|Jack O'Sullivan|Hawthorn|Oakleigh Chargers|NAB League
+2022|47|Harry Lemmey|Carlton|West Adelaide|SANFL
+2022|48|Joe Richards|Collingwood|Wangaratta|O&MFNL
+2022|49|Kaleb Smith|Richmond|East Fremantle|WAFL
+2022|50|Hugh Bond|Adelaide|Greater Western Victoria Rebels|NAB League
+2022|51|Bailey Macdonald|Hawthorn|Oakleigh Chargers|NAB League
+2022|52|Phoenix Foster|Geelong|Norwood|SANFL
+2022|53|Thomas Scully|Port Adelaide|West Adelaide|SANFL
+2022|54|Jayden Davey|Essendon|Oakleigh Chargers|NAB League
+2022|55|Steely Green|Richmond|South Fremantle|WAFL
+2022|56|Cooper Harvey|North Melbourne|Northern Knights|NAB League
+2022|57|Corey Wagner|Fremantle|Port Melbourne|VFL
+2022|58|Noah Long|West Coast|Bendigo Pioneers|NAB League
+2022|59|Kyle Marshall|Port Adelaide|South Adelaide|SANFL
+2023|1|Harley Reid|West Coast|Bendigo Pioneers|Talent League
+2023|2|Colby McKercher|North Melbourne|Tasmania Devils|Talent League
+2023|3|Jed Walter|Gold Coast|Palm Beach Currumbin|QAFL
+2023|4|Zane Duursma|North Melbourne|Gippsland Power|Talent League
+2023|5|Nick Watson|Hawthorn|Eastern Ranges|Talent League
+2023|6|Ryley Sanders|Western Bulldogs|Sandringham Dragons|Talent League
+2023|7|Caleb Windsor|Melbourne|Eastern Ranges|Talent League
+2023|8|Daniel Curtin|Adelaide|Claremont|WAFL
+2023|9|Ethan Read|Gold Coast|Palm Beach Currumbin|QAFL
+2023|10|Nate Caddy|Essendon|Northern Knights|Talent League
+2023|11|Connor O'Sullivan|Geelong|Murray Bushrangers|Talent League
+2023|12|Phoenix Gothard|Greater Western Sydney|Murray Bushrangers|Talent League
+2023|13|Koltyn Tholstrup|Melbourne|Subiaco|WAFL
+2023|14|Jake Rogers|Gold Coast|Broadbeach|QAFL
+2023|15|Jordan Croft|Western Bulldogs|Calder Cannons|Talent League
+2023|16|Will Green|Sydney|Northern Knights|Talent League
+2023|17|James Leake|Greater Western Sydney|Tasmania Devils|Talent League
+2023|18|Darcy Wilson|St Kilda|Murray Bushrangers|Talent League
+2023|19|Will McCabe|Hawthorn|Central District|SANFL
+2023|20|Taylor Goad|North Melbourne|South Adelaide|SANFL
+2023|21|Charlie Edwards|Adelaide|Sandringham Dragons|Talent League
+2023|22|Wil Dawson|North Melbourne|Gippsland Power|Talent League
+2023|23|Riley Hardeman|North Melbourne|Swan Districts|WAFL
+2023|24|Caiden Cleary|Sydney|Sydney University|AFL Sydney
+2023|25|Harry DeMattia|Collingwood|Dandenong Stingrays|Talent League
+2023|26|Will Graham|Gold Coast|Palm Beach Currumbin|QAFL
+2023|27|Oscar Ryan|Adelaide|Murray Bushrangers|Talent League
+2023|28|Lance Collard|St Kilda|Subiaco|WAFL
+2023|29|Ashton Moir|Carlton|Glenelg|SANFL
+2023|30|Archer Reid|West Coast|Gippsland Power|Talent League
+2023|31|Logan Morris|Brisbane Lions|Western Jets|Talent League
+2023|32|Mitchell Edwards|Geelong|Peel Thunder|WAFL
+2023|33|Angus Hastie|St Kilda|Geelong Falcons|Talent League
+2023|34|Billy Wilson|Carlton|Dandenong Stingrays|Talent League
+2023|35|Cooper Simpson|Fremantle|Dandenong Stingrays|Talent League
+2023|36|Shaun Mannagh|Geelong|Werribee|VFL
+2023|37|Tew Jiath|Collingwood|Gippsland Power|Talent League
+2023|38|Clay Hall|West Coast|Peel Thunder|WAFL
+2023|39|Luamon Lual|Essendon|Greater Western Victoria Rebels|Talent League
+2023|40|Kane McAuliffe|Richmond|North Adelaide|SANFL
+2023|41|Ollie Murphy|Fremantle|Sandringham Dragons|Talent League
+2023|42|Luke Lloyd|Brisbane Lions|Sandringham Dragons|Talent League
+2023|43|Liam Fawcett|Richmond|Central District|SANFL
+2023|44|Joe Fonti|Greater Western Sydney|Claremont|WAFL
+2023|45|Joel Freijah|Western Bulldogs|Greater Western Victoria Rebels|Talent League
+2023|46|Bodie Ryan|Hawthorn|Glenelg|SANFL
+2023|47|Lachlan Smith|Western Bulldogs|Gippsland Power|Talent League
+2023|48|Thomas Anastasopoulos|Port Adelaide|Geelong Falcons|Talent League
+2023|49|Harvey Johnston|West Coast|Sandringham Dragons|Talent League
+2023|50|Hugo Garcia|St Kilda|Calder Cannons|Talent League
+2023|51|Zane Zakostelsky|Brisbane Lions|Claremont|WAFL
+2023|52|Lachlan Charleson|Port Adelaide|Greater Western Victoria Rebels|Talent League
+2023|53|Patrick Snell|Sydney|Wilston Grange|QAFL
+2023|54|Archie Roberts|Essendon|Sandringham Dragons|Talent League
+2023|55|Aiden O'Driscoll|Western Bulldogs|Perth|WAFL
+2023|56|Calsher Dear|Hawthorn|Sandringham Dragons|Talent League
+2023|57|Will Lorenz|Port Adelaide|Oakleigh Chargers|Talent League
+2023|58|George Stevens|Geelong|Greater Western Victoria Rebels|Talent League
+2023|59|Harvey Thomas|Greater Western Sydney|Oakleigh Chargers|Talent League
+2023|60|Jack Delean|Fremantle|South Adelaide|SANFL
+2023|61|Oliver Wiltshire|Geelong|Barwon Heads|BFNL
+2023|62|Arie Schoenmaker|St Kilda|Tasmania Devils|Talent League
+2023|63|Lawson Humphries|Geelong|Swan Districts|WAFL
+2023|64|Reece Torrent|Brisbane Lions|Peel Thunder|WAFL
+2024|1|Sam Lalor|Richmond|Greater Western Victoria Rebels|Talent League
+2024|2|Finn O'Sullivan|North Melbourne|Oakleigh Chargers|Talent League
+2024|3|Jagga Smith|Carlton|Oakleigh Chargers|Talent League
+2024|4|Sid Draper|Adelaide|South Adelaide|SANFL
+2024|5|Levi Ashcroft|Brisbane Lions|Sandringham Dragons|Talent League
+2024|6|Harvey Langford|Melbourne|Dandenong Stingrays|Talent League
+2024|7|Josh Smillie|Richmond|Eastern Ranges|Talent League
+2024|8|Tobie Travaglia|St Kilda|Bendigo Pioneers|Talent League
+2024|9|Leo Lombard|Gold Coast|Broadbeach|QAFL
+2024|10|Alix Tauru|St Kilda|Gippsland Power|Talent League
+2024|11|Xavier Lindsay|Melbourne|Gippsland Power|Talent League
+2024|12|Taj Hotton|Richmond|Sandringham Dragons|Talent League
+2024|13|Isaac Kako|Essendon|Calder Cannons|Talent League
+2024|14|Jonty Faull|Richmond|Greater Western Victoria Rebels|Talent League
+2024|15|Joe Berry|Port Adelaide|Murray Bushrangers|Talent League
+2024|16|Bo Allan|West Coast|Peel Thunder|WAFL
+2024|17|Murphy Reid|Fremantle|Sandringham Dragons|Talent League
+2024|18|Oliver Hannaford|Greater Western Sydney|Greater Western Victoria Rebels|Talent League
+2024|19|Harrison Oliver|Greater Western Sydney|Sandringham Dragons|Talent League
+2024|20|Cooper Hynes|Western Bulldogs|Dandenong Stingrays|Talent League
+2024|21|Luke Trainor|Richmond|Sandringham Dragons|Talent League
+2024|22|Jesse Dattoli|Sydney|Northern Knights|Talent League
+2024|23|Harry Armstrong|Richmond|Sandringham Dragons|Talent League
+2024|24|Cody Angove|Greater Western Sydney|Claremont|WAFL
+2024|25|Sam Marshall|Brisbane Lions|Sandringham Dragons|Talent League
+2024|26|Ned Bowman|Sydney|Norwood|SANFL
+2024|27|Matt Whitlock|North Melbourne|Murray Bushrangers|Talent League
+2024|28|Thomas Sims|Richmond|Northern Knights|Talent League
+2024|29|Lachie Jaques|Western Bulldogs|Geelong Falcons|Talent League
+2024|30|Jobe Shanahan|West Coast|Bendigo Pioneers|Talent League
+2024|31|Josh Dolan|Western Bulldogs|Sandringham Dragons|Talent League
+2024|32|James Barrat|St Kilda|Bendigo Pioneers|Talent League
+2024|33|Jack Whitlock|Port Adelaide|Murray Bushrangers|Talent League
+2024|34|Charlie Nicholls|Fremantle|Central District|SANFL
+2024|35|Noah Mraz|Hawthorn|Dandenong Stingrays|Talent League
+2024|36|Jack Ough|Greater Western Sydney|Greater Western Victoria Rebels|Talent League
+2024|37|Kayle Gerreyn|Essendon|West Perth|WAFL
+2024|38|Christian Moraes|Port Adelaide|Eastern Ranges|Talent League
+2024|39|Angus Clarke|Essendon|Glenelg|SANFL
+2024|40|Harry O'Farrell|Carlton|Calder Cannons|Talent League
+2024|41|Riley Bice|Sydney|Werribee|VFL
+2024|42|Ty Gallop|Brisbane Lions|Maroochydore|QAFL
+2024|43|Ben Camporeale|Carlton|Glenelg|SANFL
+2024|44|Jay Polkinghorne|Geelong|Norwood|SANFL
+2024|45|Hugh Boxshall|St Kilda|Claremont|WAFL
+2024|46|Tom Gross|West Coast|Oakleigh Chargers|Talent League
+2024|47|Joel Cochran|Collingwood|UNSW-Eastern Suburbs|AFL Sydney
+2024|48|Lucca Grego|West Coast|Western Jets|Talent League
+2024|49|Cooper Bell|Gold Coast|Belconnen|AFL Canberra
+2024|50|Charlie West|Collingwood|Woodville-West Torrens|SANFL
+2024|51|Sam Davidson|Western Bulldogs|Richmond|VFL
+2024|52|Jacob Molier|Geelong|Sturt|SANFL
+2024|53|Alex Dodson|St Kilda|Sturt|SANFL
+2024|54|Lucas Camporeale|Carlton|Glenelg|SANFL
+2024|55|Riak Andrew|Sydney|Dandenong Stingrays|Talent League
+2024|56|Will Hayes|Collingwood|Claremont|WAFL
+2024|57|Luke Urquhart|North Melbourne|East Fremantle|WAFL
+2024|58|Jasper Alger|Richmond|Oakleigh Chargers|Talent League
+2024|59|Tyler Welsh|Adelaide|Woodville-West Torrens|SANFL
+2024|60|Patrick Said|St Kilda|Calder Cannons|Talent League
+2024|61|Rhys Unwin|Essendon|Greater Western Victoria Rebels|Talent League
+2024|62|Luke Kennedy|Western Bulldogs|Sandringham Dragons|Talent League
+2024|63|Jaren Carr|Fremantle|South Fremantle|WAFL
+2024|64|Cody Anderson|Hawthorn|Eastern Ranges|Talent League
+2024|65|Hamish Davis|West Coast|Claremont|WAFL
+2024|66|Lennox Hofmann|Geelong|Sandringham Dragons|Talent League
+2024|67|River Stevens|North Melbourne|Geelong Falcons|Talent League
+2024|68|Aidan Johnson|Melbourne|Werribee|VFL
+2024|69|Keighton Matofai-Forbes|Geelong|Western Jets|Talent League
+2024|70|Zak Johnson|Essendon|Northern Knights|Talent League
+2024|71|Logan Smith|Greater Western Sydney|Queanbeyan|AFL Canberra
+2025|1|Willem Duursma|West Coast|Gippsland Power|Talent League
+2025|2|Zeke Uwland|Gold Coast|Burleigh|QAFL
+2025|3|Harry Dean|Carlton|Murray Bushrangers|Talent League
+2025|4|Cooper Duff-Tytler|West Coast|Calder Cannons|Talent League
+2025|5|Dylan Patterson|Gold Coast|Palm Beach-Currumbin|QAFL
+2025|6|Daniel Annable|Brisbane Lions|Redland-Victoria Point|QAFL
+2025|7|Sam Cumming|Richmond|North Adelaide|SANFL
+2025|8|Sam Grlj|Richmond|Oakleigh Chargers|Talent League
+2025|9|Sullivan Robey|Essendon|Eastern Ranges|Talent League
+2025|10|Jacob Farrow|Essendon|West Perth|WAFL
+2025|11|Xavier Taylor|Melbourne|Eastern Ranges|Talent League
+2025|12|Latrelle Pickett|Melbourne|Glenelg|SANFL
+2025|13|Dyson Sharp|Essendon|Central District|SANFL
+2025|14|Harry Kyle|Sydney|UNSW-Eastern Suburbs|Sydney AFL
+2025|15|Oskar Taylor|Greater Western Sydney|Eastern Ranges|Talent League
+2025|16|Lachy Dovaston|North Melbourne|Eastern Ranges|Talent League
+2025|17|Jai Murray|Gold Coast|Burleigh|QAFL
+2025|18|Beau Addinsall|Gold Coast|Burleigh|QAFL
+2025|19|Josh Lindsay|West Coast|Geelong Falcons|Talent League
+2025|20|Cameron Nairn|Hawthorn|Central District|SANFL
+2025|21|Lachlan Carmichael|Western Bulldogs|North Shore Bombers|Sydney AFL
+2025|22|Mitch Marsh|Adelaide|West Adelaide|SANFL
+2025|23|Aidan Schubert|Hawthorn|Central District|SANFL
+2025|24|Harley Barker|Geelong|Sturt|SANFL
+2025|25|Adam Sweid|Fremantle|Calder Cannons|Talent League
+2025|26|Blake Thredgold|North Melbourne|Sturt|SANFL
+2025|27|Louis Emmett|Western Bulldogs|Oakleigh Chargers|Talent League
+2025|28|Avery Thomas|Gold Coast|Tasmania Devils|Talent League
+2025|29|Sam Allen|West Coast|Oakleigh Chargers|Talent League
+2025|30|Thomas Matthews|Melbourne|Gippsland Power|Talent League
+2025|31|Zane Peucker|Richmond|Woodville-West Torrens|SANFL
+2025|32|Tyan Prindable|Collingwood|Coorparoo|QAFL
+2025|33|Hunter Holmes|Geelong|Oakleigh Chargers|Talent League
+2025|34|Jack Dalton|Hawthorn|Sandringham Dragons|Talent League
+2025|35|Jevan Phillipou|Sydney|Woodville-West Torrens|SANFL
+2025|36|Max Kondogiannis|Essendon|Oakleigh Chargers|Talent League
+2025|37|Sam Swadling|Collingwood|West Perth|WAFL
+2025|38|Koby Evans|Brisbane Lions|Perth|WAFL
+2025|39|Tylah Williams|West Coast|Swan Districts|WAFL
+2025|40|Tobyn Murray|Fremantle|Geelong|VFL
+2025|41|Charlie Banfield|St Kilda|Claremont|WAFL
+2025|42|Billy Cootee|Sydney|Norwood|SANFL
+2025|43|Cody Curtin|Brisbane Lions|Claremont|WAFL
+2025|44|Tai Hayes|Brisbane Lions|Southport|VFL
+2025|45|Talor Byrne|Carlton|Greater Western Victoria Rebels|Talent League
+2025|46|Koby Coulson|Gold Coast|Broadbeach|QAFL
+2025|47|Jack Ison|Carlton|Oakleigh Chargers|Talent League
+2025|48|Hugo Mikunda|North Melbourne|Geelong Falcons|Talent League
+2025|49|Max King|Sydney|Cardiff Hawks|AFL Hunter Central Coast
+2025|50|Archie Ludowyke|Adelaide|Sandringham Dragons|Talent League
+2025|51|Finnegan Davis|Greater Western Sydney|Western Jets|Talent League
+2025|52|Kye Fincher|St Kilda|Sandringham Dragons|Talent League
+2025|53|Hussien El Achkar|Essendon|Calder Cannons|Talent League
+2025|54|Noah Roberts-Thomson|Richmond|Sturt|SANFL
+2025|55|Zac McCarthy|Collingwood|Oakleigh Chargers|Talent League
+2025|56|Matthew LeRay|Hawthorn|Central District|SANFL
+2025|57|Angus Anderson|Collingwood|Sturt|SANFL
+2025|58|Ryan Byrnes|St Kilda|St Kilda|AFL
+2025|59|Jake Stringer|Greater Western Sydney|Greater Western Sydney|AFL
+2025|60|Will Darcy|Western Bulldogs|Oakleigh Chargers|Talent League
