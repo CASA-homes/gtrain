@@ -14,10 +14,10 @@ import { C } from '@/lib/ratings';
 type Reason = { label: string; effect: number };
 type Prospect = {
   rank: number; name: string; junior: string; position: string; height: number | null;
-  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[];
+  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string;
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
-  comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string }[];
+  comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string; type?: string }[];
 };
 type Pattern = { kind: 'strength' | 'workon'; label: string; n: number; hits: number; rate: number; lift: number };
 type Bucket = { label: string; n: number; hits: number; rate: number; lift: number };
@@ -87,7 +87,7 @@ function WhyDetails({ p }: { p: Prospect }) {
       </div>
       {top && (
         <div style={{ borderTop: '1px solid var(--line)', paddingTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <span className="eyebrow">Same profile as a draftee</span>
+          <span className="eyebrow">Same type of player{p.type ? `: ${p.type}` : ''}</span>
           <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55 }}>
             <b>{top.name}</b> (pick {top.pick}, {top.year}) looked like this before the draft:
             {top.jFP ? ` junior fantasy ${Math.round(top.jFP)}` : ''}{top.jT ? `, ${top.jT.toFixed(1)} tackles` : ''}{top.jD ? `, ${top.jD.toFixed(1)} disposals` : ''}.
@@ -97,19 +97,19 @@ function WhyDetails({ p }: { p: Prospect }) {
           <p style={{ margin: 0, fontSize: 14 }}>
             <span className="muted">This year:</span> {p.name}: junior fantasy {p.jFP?.toFixed(0) ?? '–'}, {p.jT?.toFixed(1) ?? '–'} tackles, {p.jD?.toFixed(1) ?? '–'} disposals; scouts noted {p.traits.slice(0, 5).join(', ').toLowerCase() || '–'}.
           </p>
-          {p.comps.length > 1 && <span className="muted" style={{ fontSize: 12 }}>Also similar: {p.comps.slice(1).map((c) => `${c.name} (#${c.pick} ’${String(c.year).slice(2)}, peak ${c.peak.toFixed(0)})`).join(', ')}</span>}
+          {p.comps.length > 1 && <span className="muted" style={{ fontSize: 12 }}>Other {p.type ? `${p.type}s` : 'players'} with a similar draft profile: {p.comps.slice(1).map((c) => `${c.name} (#${c.pick} ’${String(c.year).slice(2)}, peak ${c.peak.toFixed(0)})`).join(', ')}</span>}
         </div>
       )}
     </>
   );
 }
 
-function ProspectCard({ p, note, info = false }: { p: Prospect; note?: string; info?: boolean }) {
+function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; note?: string; info?: boolean; focus?: 'star' | 'relevant' }) {
   return (
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
-          <span className="eyebrow">Phantom #{p.rank} · {p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
+          <span className="eyebrow">Phantom #{p.rank} · {p.type || p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
             {p.name}
             {info && <InfoPopover title={p.name}><WhyDetails p={p} /></InfoPopover>}
@@ -117,8 +117,8 @@ function ProspectCard({ p, note, info = false }: { p: Prospect; note?: string; i
           <span className="muted" style={{ fontSize: 12 }}>{p.junior}{p.role && p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
-          <Chance value={p.chance} size={24} width={84} />
-          <div className="muted" style={{ fontSize: 11, textAlign: 'right', lineHeight: 1.25 }}>slot alone {Math.round(p.positionOnly)}%</div>
+          <Chance value={focus === 'relevant' ? p.relevant : p.chance} size={24} width={84} />
+          <div className="muted" style={{ fontSize: 11, textAlign: 'right', lineHeight: 1.25 }}>{focus === 'relevant' ? '80+ season' : `slot alone ${Math.round(p.positionOnly)}%`}</div>
         </div>
       </div>
       <TwoBars star={p.chance} relevant={p.relevant} />
@@ -362,6 +362,10 @@ function CrystalBallView() {
   const likely = [...P].sort((a, b) => b.chance - a.chance).slice(0, 4);
   const likelyNames = new Set(likely.map((p) => p.name));
   const sleepers = [...P].filter((p) => p.rank >= 12 && !likelyNames.has(p.name)).sort((a, b) => (b.chance - b.positionOnly) - (a.chance - a.positionOnly)).slice(0, 4);
+  const shown = new Set([...likely, ...sleepers].map((p) => p.name));
+  const relevant = [...P].filter((p) => !shown.has(p.name) && p.relevant >= 40).sort((a, b) => b.relevant - a.relevant).slice(0, 4);
+  relevant.forEach((p) => shown.add(p.name));
+  const relValue = [...P].filter((p) => !shown.has(p.name) && p.rank >= 15 && p.relevant >= 20).sort((a, b) => b.relevant - a.relevant).slice(0, 4);
   const caution = [...P].filter((p) => p.rank <= 15 && p.positionOnly - p.chance >= 8).sort((a, b) => (b.positionOnly - b.chance) - (a.positionOnly - a.chance)).slice(0, 4);
   const boosts = D.patterns.filter((r) => r.lift >= 1.2 && r.n >= 10).sort((a, b) => b.lift - a.lift);
   const drags = D.patterns.filter((r) => r.lift <= 0.8 && r.n >= 10).sort((a, b) => a.lift - b.lift);
@@ -400,6 +404,26 @@ function CrystalBallView() {
           {sleepers.map((p) => <ProspectCard key={p.name} p={p} info />)}
         </div>
       </section>
+
+      {relevant.length > 0 && (
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2">Fantasy relevant: likely 80+ scorers</h2>
+          <span className="muted" style={{ fontSize: 13 }}>Not quite star profiles, but the best bets for a regular 80+ season: keepers who hold a spot in your 18. The box shows the 80+ chance.</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {relevant.map((p) => <ProspectCard key={p.name} p={p} info focus="relevant" />)}
+          </div>
+        </section>
+      )}
+
+      {relValue.length > 0 && (
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2">Late value: picks 15+ who should hold a spot</h2>
+          <span className="muted" style={{ fontSize: 13 }}>Ranked 15th or lower with a real shot at 80+. The cheap end of the draft where keepers are found. The box shows the 80+ chance.</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {relValue.map((p) => <ProspectCard key={p.name} p={p} info focus="relevant" />)}
+          </div>
+        </section>
+      )}
 
       {caution.length > 0 && (
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
