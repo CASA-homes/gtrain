@@ -26,12 +26,13 @@ const D = data as unknown as {
   patterns: Pattern[]; numbers: Record<string, Bucket[]>;
   validation: { name: string; year: number; pick: number; peak: number; chance: number; positionOnly: number; jFP: number | null; traits: string[] }[];
   prospects: Prospect[];
-  past: { years: number[]; path: Record<string, number>; surprises: string[]; breakouts: string[]; players: Past[] };
+  past: { years: number[]; path: Record<string, number>; surprises: string[]; breakouts: string[]; sleepers?: string[]; players: Past[] };
 };
 type Past = {
   year: number; pick: number; name: string; club: string; age: number | null; mature: boolean; pre: number; positionOnly: number; now: number;
   games: number; current: { games: number; avg: number } | null; best: number | null; peak: number | null; track: number | null;
   status: 'Star' | 'On star track' | 'Close' | 'Behind' | 'Yet to debut' | 'Too early'; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
+  state?: { league: string; year: number; games: number; fp: number; disposals: number; tackles: number; marks: number; goals: number }[];
 };
 
 const base = D.meta.trainHits / D.meta.trainN;
@@ -239,6 +240,24 @@ function TrackBar({ r, path }: { r: Past; path: Record<string, number> }) {
   );
 }
 
+/** Seconds footy (VFL / SANFL / WAFL) since the draft, latest first. */
+function Seconds({ r }: { r: Past }) {
+  const s = (r.state ?? []).filter((x) => x.games >= 2).slice(0, 2);
+  if (!s.length) return null;
+  const tone = (fp: number) => (fp >= 90 ? C.green5 : fp >= 78 ? C.green4 : fp >= 65 ? C.ink : C.muted);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      {s.map((x) => (
+        <span key={x.league + x.year} style={{ fontSize: 12 }}>
+          <span className="muted">{x.league} {x.year} </span>
+          <b style={{ color: tone(x.fp) }}>{x.fp.toFixed(0)}</b>
+          <span className="muted"> avg · {x.games} gm · {x.disposals.toFixed(0)} disp · {x.tackles.toFixed(1)} tkl{x.goals >= 0.5 ? ` · ${x.goals.toFixed(1)} gl` : ''}</span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
 function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
   const st = STATUS[r.status];
   return (
@@ -261,6 +280,7 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
         <span style={{ fontSize: 12 }}><span className="muted">Avg </span><Seasons s={r.seasons} /></span>
         <span style={{ fontSize: 12 }}><span className="muted">Centre bounces </span><Cba c={r.cba} /></span>
       </div>
+      {r.games <= 25 && <Seconds r={r} />}
     </article>
   );
 }
@@ -270,6 +290,7 @@ function PastView({ year }: { year: number }) {
   const path = D.past.path;
   const surprises = D.past.surprises.map((k) => P.find((r) => `${r.name}|${r.year}` === k)).filter(Boolean) as Past[];
   const breakouts = (D.past.breakouts ?? []).map((k) => P.find((r) => `${r.name}|${r.year}` === k)).filter(Boolean).slice(0, 6) as Past[];
+  const sleepers = (D.past.sleepers ?? []).map((k) => P.find((r) => `${r.name}|${r.year}` === k)).filter(Boolean) as Past[];
   const rows = P.filter((r) => r.year === year).sort((a, b) => a.pick - b.pick);
   const count = (s: Past['status']) => rows.filter((r) => r.status === s).length;
   const expected = rows.reduce((t, r) => t + r.pre / 100, 0);
@@ -305,6 +326,16 @@ function PastView({ year }: { year: number }) {
           {breakouts.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
         </div>
       </section>
+
+      {sleepers.length > 0 && (
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2">Sleeper watch: barely seen, going well in the 2s</h2>
+          <span className="muted" style={{ fontSize: 13 }}>2024–25 draftees with 8 AFL games or fewer who were rated highly on draft night or are piling up numbers in the VFL, SANFL or WAFL. Seconds average is AFL Fantasy scoring; 90+ in the 2s is green.</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {sleepers.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
+          </div>
+        </section>
+      )}
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
