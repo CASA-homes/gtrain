@@ -14,7 +14,7 @@ import { C } from '@/lib/ratings';
 type Reason = { label: string; effect: number };
 type Prospect = {
   rank: number; name: string; junior: string; position: string; height: number | null;
-  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string;
+  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean;
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
   comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string; type?: string }[];
@@ -110,7 +110,7 @@ function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; 
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
-          <span className="eyebrow">Phantom #{p.rank} · {p.type || p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
+          <span className="eyebrow">{p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · {p.type || p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
             {p.name}
             {info && <InfoPopover title={p.name}><WhyDetails p={p} /></InfoPopover>}
