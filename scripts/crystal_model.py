@@ -1,6 +1,6 @@
 # Fit the crystal-ball model on 2016–2025 draftees, validate it, and score the 2026 prospects.
 # Run after scripts/crystal.py (which writes the scratch players.json).
-import json, math, re, sys
+import json, math, os, re, sys
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
@@ -61,8 +61,8 @@ print('\ntop out-of-sample scores among picks 20+:')
 for p in sorted([p for p in train if p['pick'] >= 20], key=lambda p: -p['oos'])[:15]:
     print(f"  {p['year']} #{p['pick']:2d} {p['name']:24s} {p['oos']*100:4.1f}%  peak {p['peak']:5.1f} {'HIT' if p['label'] else ''}")
 
-json.dump({'coef': coef, 'intercept': float(m.intercept_[0]), 'feats': FEATS, 'C': C}, open('/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/model.json', 'w'))
-json.dump(train, open('/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/train_scored.json', 'w'))
+json.dump({'coef': coef, 'intercept': float(m.intercept_[0]), 'feats': FEATS, 'C': C}, open(os.path.join(os.environ.get('CRYSTAL_TMP', '/tmp'), 'model.json'), 'w'))
+json.dump(train, open(os.path.join(os.environ.get('CRYSTAL_TMP', '/tmp'), 'train_scored.json'), 'w'))
 
 # Second bar: "fantasy relevant" (an 80+ season), same features.
 train_rel = [p for p in __import__('crystal').players if p['rel_label'] is not None]

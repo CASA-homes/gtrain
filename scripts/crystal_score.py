@@ -17,8 +17,11 @@ def kw_group(s, gmap):
 
 RM = json.load(open('data/rm-structured.json'))
 PROF = {p['name']: p for p in json.load(open('lib/draft-profiles-2026.json'))}
-PH = re.findall(r"rank: (\d+), name: '([^']*)'", open('lib/phantom-2026.ts').read())
-PH = [(int(r), n) for r, n in PH]
+_PT = open('lib/phantom-2026.ts').read()
+PH = [(int(r), n) for r, n in re.findall(r"rank: (\d+), name: '([^']*)'", _PT)]
+# After the national draft: rank is the actual pick and each entry carries the club that took him.
+DRAFTED = bool(re.search(r'DRAFT_2026_DONE\s*=\s*true', _PT))
+CLUB = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']*)'[^\n]*?club: '([^']*)'", _PT)}
 ALIAS = {'Mitch Harris': 'Mitchell Harris'}
 
 from crystal import role_of, combine_flags, H as HIST  # noqa: E402
@@ -143,7 +146,7 @@ for rank, name in PH:
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     contrib = sorted([(FEATS[i], float(model.coef_[0][i] * x[i])) for i in range(1, len(FEATS)) if abs(model.coef_[0][i] * x[i]) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
-    out.append({'rank': rank, 'name': name, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
+    out.append({'rank': rank, 'name': name, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
                 'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],

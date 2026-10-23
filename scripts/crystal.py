@@ -1,6 +1,6 @@
 # Crystal ball: which draft-profile traits and junior numbers predicted AFL Fantasy stars?
 # Inputs: lib/draft-history.json (picks + AFL careers), data/rm-structured.json (Rookie Me profile traits/stats).
-import json, re, math, collections, sys
+import json, os, re, math, collections, sys
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
@@ -130,11 +130,19 @@ def peak(h):
     xs = [a for (_, g, a) in (h or []) if g >= 8]
     return max(xs) if xs else 0.0
 
-DFS_CACHE = '/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/dfs-cache'
+DFS_CACHE = os.environ.get('DFS_CACHE', '/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/dfs-cache')
+_SNAP = None
 def dfs_rec(pid):
-    import os
+    """DFS career record: the local pull cache if there is one, else the committed snapshot (data/dfs-careers.json.gz)."""
+    global _SNAP
+    import os, gzip
+    if not pid: return None
     f = os.path.join(DFS_CACHE, f'{pid}.json')
-    return json.load(open(f)) if pid and os.path.exists(f) else None
+    if os.path.exists(f): return json.load(open(f))
+    if _SNAP is None:
+        snap = 'data/dfs-careers.json.gz'
+        _SNAP = json.load(gzip.open(snap, 'rt')) if os.path.exists(snap) else {}
+    return _SNAP.get(pid)
 def career_hitouts(pid):
     r = dfs_rec(pid)
     if not r: return 0
@@ -213,4 +221,4 @@ print('\nposition:')
 for g in ['MID', 'DEF', 'FWD', 'KEY', 'RUC']:
     sel = [p for p in train if p['pos'] == g]
     if sel: print(f"  {g}: n={len(sel)} hits={sum(p['label'] for p in sel)} rate={sum(p['label'] for p in sel)/len(sel):.2f} lift={sum(p['label'] for p in sel)/sum(p['exp'] for p in sel):.2f}")
-json.dump(players, open('/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/players.json', 'w'))
+json.dump(players, open(os.path.join(os.environ.get('CRYSTAL_TMP', '/tmp'), 'players.json'), 'w'))
