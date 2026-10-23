@@ -1,3 +1,5 @@
+import p2024 from './draft-profiles-2024.json';
+
 // Draft profiles: what the scouts said before each player was drafted.
 // Facts and junior numbers from Rookie Me Central's AFL Draft Guides; the summary, strengths and improvements are
 // our own short read of each guide page, not their text. Each profile links back to the guide.
@@ -20,7 +22,7 @@ export interface DraftProfile {
   source: { title: string; url: string; page?: number };
 }
 
-export const DRAFT_PROFILES: DraftProfile[] = [];
+export const DRAFT_PROFILES: DraftProfile[] = [...(p2024 as DraftProfile[])];
 
 const key = (year: number, name: string) => `${year}|${name.toLowerCase().replace(/[^a-z]/g, '')}`;
 const INDEX = new Map(DRAFT_PROFILES.map((p) => [key(p.year, p.name), p]));
