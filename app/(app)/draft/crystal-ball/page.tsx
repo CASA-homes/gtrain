@@ -2,6 +2,8 @@ import { gtrainPicksFor } from '@/lib/gtrain-draft';
 import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
 import { InfoPopover } from '@/components/InfoPopover';
+import { HighlightsLink, ProfileSheet } from '@/components/ProfileSheet';
+import { draftProfileFor } from '@/lib/draft-profiles';
 import { YearSelect } from '@/components/YearSelect';
 import { crystalUnlocked } from '@/lib/crystal-access';
 import { getMe } from '@/lib/data';
@@ -79,11 +81,7 @@ function WhyDetails({ p }: { p: Prospect }) {
   const top = p.comps[0];
   return (
     <>
-      <a className="btn" target="_blank" rel="noreferrer" style={{ alignSelf: 'flex-start', fontSize: 12, display: 'inline-flex', alignItems: 'center', gap: 6 }}
-        href={`https://www.youtube.com/results?search_query=${encodeURIComponent(`${p.name} 2026 highlights`)}`}>
-        <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="#d0021b" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8Z"/><path fill="#fff" d="m9.75 15.02 5.75-3.02-5.75-3.02z"/></svg>
-        2026 highlights
-      </a>
+      <HighlightsLink name={p.name} />
       <TwoBars star={p.chance} relevant={p.relevant} />
       <span className="muted" style={{ fontSize: 12 }}>Draft slot alone would say {Math.round(p.positionOnly)}% for a 90+ season. Role: {p.role}.</span>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -511,6 +509,36 @@ function CrystalBallView() {
         </ul>
       </section>
 
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2 className="h2">All 2026 prospects</h2>
+        <div className="table-box">
+          <table className="squad" style={{ minWidth: 760 }}>
+            <thead><tr><th style={{ width: 56 }}>Rank</th><th>Prospect</th><th style={{ width: 80, textAlign: 'center' }}>Star 90+</th><th style={{ width: 90, textAlign: 'center' }}>Relevant 80+</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
+            <tbody>
+              {[...P].sort((a, b) => b.chance - a.chance).map((p) => (
+                <tr key={p.name}>
+                  <td className="mono">{p.rank}</td>
+                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</div>
+                    {(() => { const prof = draftProfileFor(2026, p.name); return prof
+                      ? <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · 2026 draft`} />
+                      : <span className="muted" style={{ fontWeight: 400, fontSize: 12 }}>Profile coming</span>; })()}
+                  </td>
+                  <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={16} /></td>
+                  <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
+                  <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
+                  <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
+                  <td style={{ fontSize: 12 }}>{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <span className="muted" style={{ fontSize: 12 }}>
+          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is Cal Twomey’s phantom order.
+        </span>
+      </section>
+
       <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <h2 className="h2">Would it have called them?</h2>
         <span className="muted" style={{ fontSize: 13 }}>Each chance below was worked out without that player’s draft year in the data, so it’s a fair test.</span>
@@ -533,31 +561,6 @@ function CrystalBallView() {
         </div>
         <span className="muted" style={{ fontSize: 12 }}>
           Late-pick stars since 2016 (pick 20+): {D.meta.lateHits.map((h) => `${h.name} (#${h.pick})`).join(', ')}.
-        </span>
-      </section>
-
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">All 2026 prospects</h2>
-        <div className="table-box">
-          <table className="squad" style={{ minWidth: 760 }}>
-            <thead><tr><th style={{ width: 56 }}>Rank</th><th>Prospect</th><th style={{ width: 80, textAlign: 'center' }}>Star 90+</th><th style={{ width: 90, textAlign: 'center' }}>Relevant 80+</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
-            <tbody>
-              {[...P].sort((a, b) => b.chance - a.chance).map((p) => (
-                <tr key={p.name}>
-                  <td className="mono">{p.rank}</td>
-                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</div></td>
-                  <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={16} /></td>
-                  <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
-                  <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
-                  <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
-                  <td style={{ fontSize: 12 }}>{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <span className="muted" style={{ fontSize: 12 }}>
-          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is Cal Twomey’s phantom order.
         </span>
       </section>
     </div>
