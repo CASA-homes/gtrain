@@ -134,7 +134,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               <th style={{ width: 40 }}>#</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>Owner</th>
               <th style={{ width: 44, textAlign: 'center' }}>Age</th><th style={{ width: 60, textAlign: 'center' }}>Avg</th><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>Apps</th>
               {extra.map((k) => <th key={k} style={{ width: 150 }}>{label(k)}</th>)}
-              <th style={{ width: 60, textAlign: 'center' }}>Value</th><th style={{ width: 90 }}>Stars</th>
+              <th style={{ width: 60, textAlign: 'center' }}>Value</th><th style={{ width: 110 }}>Current ability</th>
             </tr>
           </thead>
           <tbody>
@@ -164,7 +164,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                     );
                   })}
                   <td style={{ textAlign: 'center' }} className="mono">{r.value}</td>
-                  <td><Stars value={r.valueStars} label="Value" /></td>
+                  <td><Stars value={r.valueStars} label="Current ability" /></td>
                 </tr>
               );
             })}
