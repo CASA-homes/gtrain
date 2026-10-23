@@ -1,4 +1,7 @@
 import { DraftTabs } from '@/components/DraftTabs';
+import { crystalUnlocked } from '@/lib/crystal-access';
+import { getMe } from '@/lib/data';
+import { lockCrystal, unlockCrystal } from './actions';
 import data from '@/lib/crystal-ball.json';
 import { C } from '@/lib/ratings';
 
@@ -107,7 +110,7 @@ function PatternList({ title, rows, good }: { title: string; rows: Pattern[]; go
   );
 }
 
-export default function CrystalBallPage() {
+function CrystalBallView() {
   const P = D.prospects;
   const likely = [...P].sort((a, b) => b.chance - a.chance).slice(0, 4);
   const likelyNames = new Set(likely.map((p) => p.name));
@@ -125,7 +128,8 @@ export default function CrystalBallPage() {
           <span className="eyebrow">What the draft profiles of today’s stars had in common, and who in 2026 has it</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
         </div>
-        <DraftTabs active="crystal" />
+        <DraftTabs active="crystal" showCrystal />
+          <form action={lockCrystal}><button className="btn" type="submit" style={{ fontSize: 12 }}>Lock</button></form>
       </div>
 
       <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -241,4 +245,29 @@ export default function CrystalBallPage() {
       </section>
     </div>
   );
+}
+
+export const dynamic = 'force-dynamic';
+
+/** Password wall: nothing from the model is rendered until the password is entered. */
+export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string }> }) {
+  const me = await getMe();
+  if (!(await crystalUnlocked(me))) {
+    const wrong = (await searchParams).wrong === '1';
+    return (
+      <div className="wrap">
+        <form action={unlockCrystal} className="card" style={{ padding: 24, maxWidth: 420, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <span className="eyebrow">Password required</span>
+          <h1 style={{ font: '600 28px var(--font)', margin: 0, letterSpacing: '-.02em' }}>🔮 Crystal ball</h1>
+          <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <span className="eyebrow">Password</span>
+            <input className="input" type="password" name="password" autoComplete="current-password" required autoFocus />
+          </label>
+          {wrong && <span style={{ color: '#b4532a', fontSize: 13 }}>That’s not it.</span>}
+          <button className="btn" type="submit" style={{ alignSelf: 'flex-start' }}>Unlock</button>
+        </form>
+      </div>
+    );
+  }
+  return <CrystalBallView />;
 }
