@@ -1,0 +1,244 @@
+import { DraftTabs } from '@/components/DraftTabs';
+import data from '@/lib/crystal-ball.json';
+import { C } from '@/lib/ratings';
+
+// Crystal ball: patterns in pre-draft profiles that led to fantasy stars, applied to the 2026 crop.
+// Built offline by scripts/crystal.py → crystal_model.py → crystal_score.py.
+
+type Reason = { label: string; effect: number };
+type Prospect = {
+  rank: number; name: string; junior: string; position: string; height: number | null;
+  jFP: number | null; jD: number | null; jT: number | null; traits: string[]; flags: string[];
+  chance: number; positionOnly: number; reasons: Reason[]; comps: { name: string; pick: number; year: number; peak: number }[];
+};
+type Pattern = { kind: 'strength' | 'workon'; label: string; n: number; hits: number; rate: number; lift: number };
+type Bucket = { label: string; n: number; hits: number; rate: number; lift: number };
+const D = data as unknown as {
+  meta: { hitBar: number; trainN: number; trainHits: number; years: string; auc: number; aucPositionOnly: number; aucLate: number; aucLatePositionOnly: number; lateHits: { name: string; pick: number; year: number; peak: number }[] };
+  patterns: Pattern[]; numbers: Record<string, Bucket[]>;
+  validation: { name: string; year: number; pick: number; peak: number; chance: number; positionOnly: number; jFP: number | null; traits: string[] }[];
+  prospects: Prospect[];
+};
+
+const base = D.meta.trainHits / D.meta.trainN;
+const pct = (x: number) => `${Math.round(x * 100)}%`;
+
+function reasonText(r: Reason, p: Prospect) {
+  if (r.label === 'Junior fantasy avg') return `Junior fantasy ${p.jFP?.toFixed(0)}`;
+  if (r.label === 'Junior tackles') return `${p.jT?.toFixed(1)} tackles a game`;
+  if (r.label === 'No junior numbers') return 'Barely played in 2026';
+  if (r.label === 'Key-position height (193cm+)') return 'Key-position size';
+  if (r.label.startsWith('needs')) return `Work-on: ${r.label.replace('needs ', '')}`;
+  return r.label;
+}
+
+function Chance({ value, size = 34 }: { value: number; size?: number }) {
+  const bg = value >= 50 ? C.green5 : value >= 30 ? C.green4 : value >= 18 ? C.green3 : value >= 10 ? C.yellow : C.empty;
+  const fg = value >= 30 ? '#fff' : C.ink;
+  return <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 2, background: bg, color: fg, borderRadius: 10, padding: '4px 10px', font: `600 ${size}px/1 var(--font)`, letterSpacing: '-.03em' }}>{Math.round(value)}<span style={{ fontSize: size * 0.45 }}>%</span></span>;
+}
+
+function ProspectCard({ p, note }: { p: Prospect; note?: string }) {
+  return (
+    <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+      <div className="row-between" style={{ alignItems: 'flex-start', gap: 10 }}>
+        <div style={{ minWidth: 0 }}>
+          <span className="eyebrow">Phantom #{p.rank} · {p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
+          <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{p.name}</h3>
+          <span className="muted" style={{ fontSize: 12 }}>{p.junior}</span>
+        </div>
+        <div style={{ textAlign: 'right' }}>
+          <Chance value={p.chance} />
+          <div className="muted" style={{ fontSize: 11, marginTop: 4 }}>draft slot alone: {Math.round(p.positionOnly)}%</div>
+        </div>
+      </div>
+      {note && <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45 }}>{note}</p>}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+        {p.reasons.map((r) => (
+          <span key={r.label} className="pill" style={{ background: r.effect > 0 ? '#d8ecd0' : '#f3d9d2', color: C.ink, fontSize: 12 }}>
+            {r.effect > 0 ? '▲' : '▼'} {reasonText(r, p)}
+          </span>
+        ))}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="mono">
+        <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b></span>
+        <span>Disposals <b>{p.jD?.toFixed(1) ?? '–'}</b></span>
+        <span>Tackles <b>{p.jT?.toFixed(1) ?? '–'}</b></span>
+      </div>
+      <span className="muted" style={{ fontSize: 12 }}>
+        Profile looks like: {p.comps.map((c, i) => <span key={c.name}>{i ? ', ' : ''}<b style={{ color: C.ink, fontWeight: 600 }}>{c.name}</b> (#{c.pick}, ’{String(c.year).slice(2)})</span>)}
+      </span>
+    </article>
+  );
+}
+
+function Bars({ title, rows, note }: { title: string; rows: Bucket[]; note?: string }) {
+  const max = Math.max(...rows.map((r) => r.rate), base) || 1;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <span className="eyebrow">{title}</span>
+      {rows.map((r) => (
+        <div key={r.label} style={{ display: 'grid', gridTemplateColumns: '92px 1fr 64px', gap: 8, alignItems: 'center', fontSize: 13 }}>
+          <span>{r.label}</span>
+          <span style={{ position: 'relative', height: 14, background: 'var(--line)', borderRadius: 7 }}>
+            <span style={{ position: 'absolute', inset: 0, width: `${(r.rate / max) * 100}%`, background: r.rate >= base * 1.5 ? C.green5 : r.rate >= base ? C.green3 : C.yellow, borderRadius: 7 }} />
+            <span aria-hidden="true" title="Average hit rate" style={{ position: 'absolute', top: -3, bottom: -3, left: `${(base / max) * 100}%`, width: 2, background: C.ink, opacity: 0.5 }} />
+          </span>
+          <span className="mono" style={{ textAlign: 'right' }}>{pct(r.rate)} <span className="muted" style={{ fontSize: 11 }}>({r.hits}/{r.n})</span></span>
+        </div>
+      ))}
+      {note && <span className="muted" style={{ fontSize: 12 }}>{note}</span>}
+    </div>
+  );
+}
+
+function PatternList({ title, rows, good }: { title: string; rows: Pattern[]; good: boolean }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <span className="eyebrow" style={{ color: good ? C.green5 : '#b4532a' }}>{title}</span>
+      {rows.map((r) => (
+        <div key={r.kind + r.label} style={{ display: 'grid', gridTemplateColumns: '1fr 70px 76px', gap: 8, fontSize: 13, alignItems: 'baseline' }}>
+          <span>{r.kind === 'workon' ? <span className="muted">Work-on: </span> : null}{r.label.replace(/^needs /, '')}</span>
+          <span className="mono" style={{ textAlign: 'right' }}>{pct(r.rate)} <span className="muted" style={{ fontSize: 11 }}>{r.hits}/{r.n}</span></span>
+          <span className="pill" style={{ justifySelf: 'end', background: r.lift >= 1 ? '#d8ecd0' : '#f3d9d2', color: C.ink }}>{r.lift.toFixed(1)}× slot</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function CrystalBallPage() {
+  const P = D.prospects;
+  const likely = [...P].sort((a, b) => b.chance - a.chance).slice(0, 4);
+  const likelyNames = new Set(likely.map((p) => p.name));
+  const sleepers = [...P].filter((p) => p.rank >= 12 && !likelyNames.has(p.name)).sort((a, b) => (b.chance - b.positionOnly) - (a.chance - a.positionOnly)).slice(0, 4);
+  const caution = [...P].filter((p) => p.rank <= 15 && p.positionOnly - p.chance >= 8).sort((a, b) => (b.positionOnly - b.chance) - (a.positionOnly - a.chance)).slice(0, 4);
+  const boosts = D.patterns.filter((r) => r.lift >= 1.2 && r.n >= 10).sort((a, b) => b.lift - a.lift);
+  const drags = D.patterns.filter((r) => r.lift <= 0.8 && r.n >= 10).sort((a, b) => a.lift - b.lift);
+  const accum = D.patterns.find((r) => r.label === 'Accumulator');
+  const fp110 = D.numbers.juniorFantasy.find((b) => b.label === '110+');
+
+  return (
+    <div className="wrap">
+      <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
+        <div>
+          <span className="eyebrow">What the draft profiles of today’s stars had in common, and who in 2026 has it</span>
+          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
+        </div>
+        <DraftTabs active="crystal" />
+      </div>
+
+      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '78ch' }}>
+          We read the Rookie Me pre-draft profile of {D.meta.trainN} national draft picks from {D.meta.years}: the scouts’ strengths and work-ons, plus their junior numbers.
+          Then we checked who went on to post a <b>{D.meta.hitBar}+ AFL Fantasy season</b>. {D.meta.trainHits} did, about {pct(base)} of picks.
+          The chance on each card is our model’s read of the same signals, scored on drafts it never saw.
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 22px', fontSize: 13 }}>
+          <span>Picks out stars better than draft slot alone: <b>{D.meta.auc}</b> vs {D.meta.aucPositionOnly} (AUC)</span>
+          <span>For picks 15+: <b>{D.meta.aucLate}</b> vs {D.meta.aucLatePositionOnly}</span>
+        </div>
+        <span className="muted" style={{ fontSize: 12 }}>It’s a nudge, not a guarantee. Most late-pick stars still look ordinary on paper, and the 2026 traits come from Rookie Me’s rankings write-ups because full draft profiles aren’t out yet.</span>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2 className="h2">Likely stars</h2>
+        <span className="muted" style={{ fontSize: 13 }}>Top-end prospects whose profiles look like Ashcroft, Smith and Brayshaw before they were drafted.</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+          {likely.map((p) => <ProspectCard key={p.name} p={p} />)}
+        </div>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2 className="h2">Gulden alert: later picks with a star profile</h2>
+        <span className="muted" style={{ fontSize: 13 }}>Ranked 12th or lower, but their traits and junior numbers say more than their draft range does.</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+          {sleepers.map((p) => <ProspectCard key={p.name} p={p} />)}
+        </div>
+      </section>
+
+      {caution.length > 0 && (
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2">Great player, harder fantasy path</h2>
+          <span className="muted" style={{ fontSize: 13 }}>High picks whose profile looks less like a fantasy scorer: talls, low junior output, or not enough football this year to judge.</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+            {caution.map((p) => <ProspectCard key={p.name} p={p} />)}
+          </div>
+        </section>
+      )}
+
+      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+        <h2 className="h2">The patterns</h2>
+        <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '78ch' }}>
+          Hit rate is how many with that note went on to a {D.meta.hitBar}+ season. “× slot” compares that with what their draft position alone would expect, so a trait only scores if it found stars the draft order missed.
+          {accum && fp110 ? <> The scouts’ <b>“Accumulator”</b> label on its own was no edge ({accum.lift.toFixed(1)}× slot), but actually piling up the ball was: juniors averaging 110+ fantasy hit {pct(fp110.rate)} of the time.</> : null}
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <PatternList title="Found stars the draft order missed" rows={boosts} good />
+          <PatternList title="Less likely than the draft order suggested" rows={drags} good={false} />
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+          <Bars title="Junior fantasy average (draft year)" rows={D.numbers.juniorFantasy} note="The line marks the average hit rate." />
+          <Bars title="Junior tackles a game" rows={D.numbers.juniorTackles} />
+          <Bars title="Height" rows={D.numbers.height} note="Talls take longer and score less; rucks are the exception." />
+          <Bars title="Where they were picked" rows={D.numbers.pick} />
+        </div>
+        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6, fontSize: 14, maxWidth: '80ch' }}>
+          <li><b>Hunters beat accumulators.</b> “Tackling / defensive pressure” and 6+ junior tackles a game were the best hidden signals: Warner, Berry, Worpel, Brayshaw.</li>
+          <li><b>Outside mids who need to “win more contested ball” do fine.</b> Gulden, Lachie Ash, Wanganeen-Milera and Callaghan all carried that note; the inside game came later.</li>
+          <li><b>“Needs consistency” and “needs to win more ball” are red flags.</b> Almost none of those players became fantasy stars.</li>
+          <li><b>Talls, “aerial” and “versatility” profiles</b> make good footballers, but rarely big fantasy scorers early.</li>
+        </ul>
+      </section>
+
+      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <h2 className="h2">Would it have called them?</h2>
+        <span className="muted" style={{ fontSize: 13 }}>Each chance below was worked out without that player’s draft year in the data, so it’s a fair test.</span>
+        <div className="table-box">
+          <table className="squad" style={{ minWidth: 620 }}>
+            <thead><tr><th>Player</th><th style={{ width: 70 }}>Pick</th><th style={{ width: 110, textAlign: 'center' }}>Crystal ball</th><th style={{ width: 110, textAlign: 'center' }}>Slot alone</th><th style={{ width: 120 }}>Best season</th><th>Profile signals</th></tr></thead>
+            <tbody>
+              {D.validation.map((v) => (
+                <tr key={v.name}>
+                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{v.name}</td>
+                  <td className="mono">#{v.pick} ’{String(v.year).slice(2)}</td>
+                  <td style={{ textAlign: 'center' }}><Chance value={v.chance} size={18} /></td>
+                  <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(v.positionOnly)}%</td>
+                  <td className="mono">{v.peak.toFixed(1)}</td>
+                  <td className="muted" style={{ fontSize: 12 }}>{[v.jFP ? `Junior fantasy ${Math.round(v.jFP)}` : null, ...v.traits.slice(0, 4)].filter(Boolean).join(' · ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <span className="muted" style={{ fontSize: 12 }}>
+          Late-pick stars since 2016 (pick 20+): {D.meta.lateHits.map((h) => `${h.name} (#${h.pick})`).join(', ')}.
+        </span>
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <h2 className="h2">All 2026 prospects</h2>
+        <div className="table-box">
+          <table className="squad" style={{ minWidth: 760 }}>
+            <thead><tr><th style={{ width: 56 }}>Rank</th><th>Prospect</th><th style={{ width: 90, textAlign: 'center' }}>Chance</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
+            <tbody>
+              {[...P].sort((a, b) => b.chance - a.chance).map((p) => (
+                <tr key={p.name}>
+                  <td className="mono">{p.rank}</td>
+                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p.position}{p.height ? ` · ${p.height}cm` : ''}</div></td>
+                  <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={16} /></td>
+                  <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
+                  <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
+                  <td style={{ fontSize: 12 }}>{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <span className="muted" style={{ fontSize: 12 }}>
+          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is Cal Twomey’s phantom order.
+        </span>
+      </section>
+    </div>
+  );
+}
