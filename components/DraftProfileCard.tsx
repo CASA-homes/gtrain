@@ -46,7 +46,7 @@ export function DraftProfileCard({ d, compact = false }: { d: DraftProfile; comp
         {!compact && ratings('On field', d.onField)}
       </div>
       <span className="muted" style={{ fontSize: 12 }}>
-        Source: <a href={d.source.url} target="_blank" rel="noreferrer">{d.source.title}</a>{d.source.page ? `, page ${d.source.page}` : ''} (Rookie Me Central). Summary is our own read of the guide.
+        Source: <a href={d.source.url} target="_blank" rel="noreferrer">{d.source.title}</a>{d.source.page ? `, page ${d.source.page}` : ''} (Rookie Me Central). Summary is our own read of the source.
       </span>
     </div>
   );
