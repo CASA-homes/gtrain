@@ -10,6 +10,8 @@ import {
   AGE_PHASES, agePhase, age, C, form, LINES, played, STATUSES, type Line, type PlayerRow, type Slot,
 } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
+import { strengthByYear, windowFor } from '@/lib/window';
+import { WindowChart } from '@/components/WindowChart';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -45,6 +47,14 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const season = league.seasons.find((s) => s.year === CURRENT_SEASON);
   const finish = season?.premier_id === a.team.id ? 'Premiers' : season?.runner_up_id === a.team.id ? 'Runners-up' : lad ? ordinal(lad.rank) : '–';
   const topPlayer = [...a.players].sort((x, y) => (y.average ?? 0) - (x.average ?? 0))[0];
+
+  // Premiership window: past finishes, the 2027 simulation, then list strength on the age curve to 2030.
+  const teamIds = [...league.byTeam.keys()];
+  const windowPts = windowFor({
+    teamId: a.team.id, teamName: a.team.name, teamIds, premierYears: a.premierships,
+    rank2026: lad?.rank ?? null, rank2027: a.projection.rank,
+    strength: strengthByYear(teamIds, league.players, league.ratings),
+  });
 
   // Keepers and age profile
   const keepers = a.players.filter((p) => p.is_keeper || p.is_rookie_keeper);
@@ -90,6 +100,11 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: '#dfe5dc' }}>{TEAM_NOTES[a.team.name].body}</p>
             </div>
           )}
+
+          <div className="card" style={{ padding: '14px 14px 10px', display: 'flex', flexDirection: 'column', gap: 6, background: C.ink, color: '#f4f2ea', border: 0 }}>
+            <span className="eyebrow" style={{ color: '#b9c4b6' }}>Premiership window</span>
+            <WindowChart points={windowPts} />
+          </div>
 
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div className="row-between">
