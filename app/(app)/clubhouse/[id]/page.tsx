@@ -10,7 +10,7 @@ import {
   AGE_PHASES, agePhase, age, C, form, LINES, played, STATUSES, type Line, type PlayerRow, type Slot,
 } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
-import { strengthByYear, windowFor } from '@/lib/window';
+import { coreAge, strengthByYear, windowFor } from '@/lib/window';
 import { WindowChart } from '@/components/WindowChart';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
@@ -52,8 +52,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const teamIds = [...league.byTeam.keys()];
   const windowPts = windowFor({
     teamId: a.team.id, teamName: a.team.name, teamIds, premierYears: a.premierships,
-    rank2026: lad?.rank ?? null, rank2027: a.projection.rank,
-    strength: strengthByYear(teamIds, league.players, league.ratings),
+    rank2026: lad?.rank ?? null, rank2027: a.projection.rank, futureRank: a.future.rank, coreAge: coreAge(a.team.id, league.players),
+    strength: strengthByYear(teamIds, league.players, league.ratings, new Map([...league.byTeam].map(([k, t]) => [k, t.projection]))),
   });
 
   // Keepers and age profile
