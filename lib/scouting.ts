@@ -21,6 +21,7 @@ export const ATTRS: Def[] = [
   { key: 't', label: 'Tackling', f: (b) => b.t ?? null, raw: (b) => `${f1(b.t)} tackles` },
   { key: 'def', label: 'Intercept & rebound', f: (b) => n(b.it) + n(b.r5), raw: (b) => `${f1(b.it)} intercepts · ${f1(b.r5)} rebounds` },
   { key: 'fwd', label: 'Scoreboard impact', f: (b) => n(b.g) * 3 + n(b.b) + n(b.mi5) + n(b.i5) * 0.5, raw: (b) => `${f1(b.g)}.${f1(b.b).replace('.', '')} · ${f1(b.i5)} inside 50s` },
+  { key: 'ki', label: 'Kick-ins', f: (b) => (n(b.gm) ? n(b.ki) / n(b.gm) : null), raw: (b) => `${f1(n(b.gm) ? n(b.ki) / n(b.gm) : 0)} a game · ${Math.round(n(b.ki))} for the season` },
   { key: 'ho', label: 'Ruckwork', f: (b) => b.ho ?? null, raw: (b) => `${f1(b.ho)} hitouts` },
   { key: 'cba', label: 'Centre bounces', f: (b) => b.cba ?? null, raw: (b) => `${b.cba ?? 0}% attended` },
   { key: 'tog', label: 'Time on ground', f: (b) => b.tog ?? null, raw: (b) => `${b.tog ?? '–'}%` },

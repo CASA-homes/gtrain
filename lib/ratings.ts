@@ -27,10 +27,14 @@ export interface PlayerRow {
   career_games: number | null;
   box: Box | null;
   hist: Hist[] | null;
+  games_log?: GameLog[] | null;   // every 2026 game from DFS: [round, fantasy points, TOG %, kick-ins]
   photo_path: string | null;
   list_status: string | null;   // Retired / Delisted / long-term injury: out of 2027 projections
   lineup: Slot | null;
 }
+
+/** One 2026 game from DFS: [round, AFL Fantasy points, time on ground %, kick-ins]. */
+export type GameLog = [number | null, number | null, number | null, number | null];
 
 /** [season, games, AFL Fantasy average] for every AFL season, from DFS. */
 export type Hist = [number, number, number];
@@ -92,13 +96,41 @@ export function age(birth: string | null, at = new Date()): number | null {
   return a;
 }
 
+/**
+ * The 2026 season from every game DFS has. Partial games (under 50% time on ground: injured, subbed, the
+ * medical sub) don't count towards floor, ceiling or consistency, but they do count against durability.
+ * Falls back to the last five Keeper scores when there's no game log.
+ */
+export interface SeasonStats { games: number; full: number[]; mean: number; floor: number; ceiling: number; cv: number | null; tons: number; partial: number; recent: number[] }
+export function seasonStats(p: Pick<PlayerRow, 'last5' | 'games_log' | 'games'>): SeasonStats {
+  const log = (p.games_log ?? []).filter((g) => g[1] != null);
+  const all = log.length ? log.map((g) => g[1]!) : played(p.last5);
+  const full = log.length ? log.filter((g) => g[2] == null || g[2] >= 50).map((g) => g[1]!) : all;
+  const mean = full.length ? full.reduce((a, b) => a + b, 0) / full.length : 0;
+  const sorted = [...full].sort((a, b) => a - b);
+  const q = Math.max(1, Math.round(sorted.length / 4));
+  const avgOf = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
+  const sd = full.length >= 2 ? Math.sqrt(full.reduce((a, b) => a + (b - mean) ** 2, 0) / (full.length - 1)) : 0;
+  return {
+    games: log.length || (p.games ?? 0),
+    full, mean,
+    floor: avgOf(sorted.slice(0, q)),          // his typical bad week: average of his worst quarter of games
+    ceiling: avgOf(sorted.slice(-q)),          // his typical big week: average of his best quarter
+    cv: full.length >= 5 && mean ? sd / mean : null,   // how far scores swing from his average (lower = steadier)
+    tons: full.filter((x) => x >= 120).length,
+    partial: log.filter((g) => g[2] != null && g[2] < 50).length,
+    recent: (log.length ? full : all).slice(-6),
+  };
+}
+
 export type Form = 'up' | 'flat' | 'down' | null;
-/** Form: last-5 average against season average, ±6% either way. */
-export function form(p: Pick<PlayerRow, 'last5' | 'average'>): Form {
-  const xs = played(p.last5);
-  if (xs.length < 2 || !p.average) return null;
-  const m = xs.reduce((a, b) => a + b, 0) / xs.length;
-  const d = (m - p.average) / p.average;
+/** Form: his last six full games against his season average, ±6% either way. */
+export function form(p: Pick<PlayerRow, 'last5' | 'average' | 'games_log' | 'games'>): Form {
+  const st = seasonStats(p);
+  const base = st.mean || p.average || 0;
+  if (st.recent.length < 2 || !base) return null;
+  const m = st.recent.reduce((a, b) => a + b, 0) / st.recent.length;
+  const d = (m - base) / base;
   return d > 0.06 ? 'up' : d < -0.06 ? 'down' : 'flat';
 }
 
@@ -143,8 +175,12 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
   const all = rows.map((p) => { const bb = bounceBack(p); return bb && bb.blended > (p.average ?? 0) ? { ...p, average: bb.blended } : p; });
   const pool = new Map<Line, PlayerRow[]>(LINES.map((l) => [l, all.filter((p) => p.positions.includes(l))]));
   const sortedAvg = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => p.average ?? 0).sort((a, b) => a - b)]));
-  const sortedCeil = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => Math.max(0, ...played(p.last5))).sort((a, b) => a - b)]));
-  const sortedFloor = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => (played(p.last5).length ? Math.min(...played(p.last5)) : 0)).sort((a, b) => a - b)]));
+  const stats = new Map(all.map((p) => [p.id, seasonStats(p)]));
+  const st = (p: PlayerRow) => stats.get(p.id)!;
+  const sortedCeil = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => st(p).ceiling).sort((a, b) => a - b)]));
+  const sortedFloor = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => st(p).floor).sort((a, b) => a - b)]));
+  // Steadiness: lower swing ranks higher, so rank on the negative. No sample (under 5 full games) ranks last.
+  const sortedSteady = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => (st(p).cv == null ? -9 : -st(p).cv!)).sort((a, b) => a - b)]));
   const benchmark = new Map(LINES.map((l) => {
     const top = [...sortedAvg.get(l)!].reverse().slice(0, STARTERS[l]);
     return [l, top.length ? top.reduce((s2, x) => s2 + x, 0) / top.length : 0];
@@ -152,28 +188,28 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
 
   const out = new Map<number, Ratings>();
   for (const p of all) {
-    const xs = played(p.last5);
+    const ss = st(p);
     const avg = p.average ?? 0;
     const eligible = (p.positions.length ? p.positions : [primaryLine(p)]).filter((l) => pool.has(l));
     // Best line: highest percentile, scarcer line on ties.
     const line = [...eligible].sort((x, y) => (pct(sortedAvg.get(y)!, avg) - pct(sortedAvg.get(x)!, avg)) || (SCARCITY_ORDER.indexOf(x) - SCARCITY_ORDER.indexOf(y)))[0];
     const avgs = sortedAvg.get(line)!;
-    const within = avg && xs.length ? xs.filter((s2) => Math.abs(s2 - avg) / avg <= 0.15).length / xs.length : 0;
-    const dur = Math.min(1, (p.games ?? 0) / 23);
+    // Durability: games out of 23, with partial games (subbed or hurt) counting half.
+    const dur = Math.min(1, (ss.games - ss.partial * 0.5) / 23);
     const f = form(p);
     const avgP = pct(avgs, avg);
     const lineRank = avgs.filter((x) => x > avg).length + 1;
     const orig = rows.find((r) => r.id === p.id);
-    const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(xs, avg), injuredBlend: p !== orig, missedSeason: !orig?.games }) : 0;
+    const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(ss.full, ss.mean || avg), injuredBlend: p !== orig, missedSeason: !orig?.games }) : 0;
     // A forward or defender who also holds MID and is living in the centre square may lose the scarcer status.
     const statusRisk = line !== 'MID' && p.positions.includes('MID') && (p.box?.cba ?? 0) >= 50;
     // A forward's 92 is worth a midfielder's 102: lift scarce-line scoring onto the midfield scale for potential.
     const lineBonus = Math.max(0, Math.round(benchmark.get('MID')! - benchmark.get(line)!));
     out.set(p.id, {
       average: to20(avgP),
-      ceiling: to20(pct(sortedCeil.get(line)!, Math.max(0, ...xs))),
-      floor: to20(pct(sortedFloor.get(line)!, xs.length ? Math.min(...xs) : 0)),
-      consistency: to20(within * 100),
+      ceiling: to20(pct(sortedCeil.get(line)!, ss.ceiling)),
+      floor: to20(pct(sortedFloor.get(line)!, ss.floor)),
+      consistency: ss.cv == null ? 1 : to20(pct(sortedSteady.get(line)!, -ss.cv)),
       durability: to20(dur * 100),
       form: f === 'up' ? 16 : f === 'down' ? 6 : f === 'flat' ? 11 : 1,
       value,
@@ -208,7 +244,7 @@ export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: n
   if (rel > 0.1) {
     let pen = 0;
     if (!o.injuredBlend && o.dur < 0.5) pen += 5;        // missed half the season (blended players already priced in)
-    if (o.downside >= 0.6) pen += 5;                      // 3+ of his last 5 well below his average
+    if (o.downside >= 0.35) pen += 5;                     // over a third of his games well below his average
     v -= Math.min(5, pen);
   }
   if (o.avg >= 104.5 && !o.injuredBlend) v = Math.max(v, 95); // 105+ is elite on any line
@@ -217,7 +253,7 @@ export function valueFromRank(line: Line, rank: number, o: { avg: number; dur: n
   if (o.injuredBlend && o.missedSeason && o.avg >= 85) v = Math.max(v, 75);   // a proven 95+ player who missed the year is still 4 stars   // injury-hit players top out at 4.5, or 4 if they missed the whole season
   return Math.max(0, Math.round(v));
 }
-/** Share of recent scores more than 20% below his average. High scores never count against him. */
+/** Share of his full games more than 20% below his average. High scores never count against him. */
 function downsideShare(xs: number[], avg: number) {
   return xs.length && avg ? xs.filter((x) => x < avg * 0.8).length / xs.length : 0;
 }

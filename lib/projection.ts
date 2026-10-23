@@ -14,11 +14,11 @@ import { noteFor } from '@/lib/notes';
 import { bounceBack } from '@/lib/injury';
 
 const SEASON_START_2027 = new Date(2027, 2, 1);
-const AGE_CURVE: Record<number, number> = {
+export const AGE_CURVE: Record<number, number> = {
   18: 1.18, 19: 1.15, 20: 1.11, 21: 1.08, 22: 1.05, 23: 1.03, 24: 1.02, 25: 1, 26: 1, 27: 0.99,
   28: 0.97, 29: 0.95, 30: 0.92, 31: 0.89, 32: 0.85, 33: 0.8,
 };
-const curve = (a: number) => AGE_CURVE[a] ?? (a < 18 ? 1.2 : 0.75);
+export const curve = (a: number) => AGE_CURVE[a] ?? (a < 18 ? 1.2 : 0.75);
 
 export function projected2027(p: PlayerRow): number {
   if (p.list_status) return 0;

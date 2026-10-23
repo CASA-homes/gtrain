@@ -5,7 +5,7 @@ import { FUTURE_CORE, FUTURE_PIN, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, f
 const isFutureAge = (p: PlayerRow) => { const a = age(p.birth_date); return a != null && a <= FUTURE_MAX_AGE; };
 import {
   age, best22, best18Total, savedLineup, buildRatings, primaryLine, statusFromRank, LINES,
-  type Best22, type Box, type Hist, type Line, type PlayerRow, type Slot, type Ratings, type Status,
+  type Best22, type Box, type GameLog, type Hist, type Line, type PlayerRow, type Slot, type Ratings, type Status,
 } from '@/lib/ratings';
 
 export const CURRENT_SEASON = 2026;
@@ -59,7 +59,7 @@ export const getLeague = cache(async (): Promise<League> => {
     supabase.from('squad').select(`
       team_id, is_keeper, is_rookie_keeper, lineup,
       players!inner ( id, name, full_name, positions, afl_club, birth_date, draft_pick, draft_year, dfs_id, height_cm, debut_year, career_games, hist, photo_path, list_status,
-        player_seasons ( season, games, average, last5, status, box ) )`),
+        player_seasons ( season, games, average, last5, status, box, games_log ) )`),
     supabase.from('seasons').select('*').order('year', { ascending: false }),
     supabase.from('ladder').select('*').order('rank'),
     supabase.from('picks').select('id, year, round, overall, original_team_id, owner_team_id, is_optional').in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id'),
@@ -71,7 +71,7 @@ export const getLeague = cache(async (): Promise<League> => {
     team_id: number; is_keeper: boolean; is_rookie_keeper: boolean; lineup: Slot | null;
     players: { id: number; name: string; full_name: string | null; positions: Line[]; afl_club: string | null; birth_date: string | null;
       draft_pick: number | null; draft_year: number | null; dfs_id: string | null; height_cm: number | null; debut_year: number | null; career_games: number | null; hist: Hist[] | null; photo_path: string | null; list_status: string | null;
-      player_seasons: { season: number; games: number | null; average: number | null; last5: (number | null)[] | null; status: string | null; box: Box | null }[] };
+      player_seasons: { season: number; games: number | null; average: number | null; last5: (number | null)[] | null; status: string | null; box: Box | null; games_log?: GameLog[] | null }[] };
   };
   const players: PlayerRow[] = ((squadQ.data ?? []) as unknown as SquadRow[]).map((s) => {
     const cur = s.players.player_seasons.find((x) => x.season === CURRENT_SEASON);
@@ -79,7 +79,7 @@ export const getLeague = cache(async (): Promise<League> => {
       id: s.players.id, name: s.players.name, positions: s.players.positions, afl_club: s.players.afl_club,
       birth_date: s.players.birth_date, draft_pick: s.players.draft_pick, draft_year: s.players.draft_year,
       full_name: s.players.full_name, dfs_id: s.players.dfs_id, height_cm: s.players.height_cm,
-      debut_year: s.players.debut_year, career_games: s.players.career_games, hist: s.players.hist, photo_path: s.players.photo_path, list_status: s.players.list_status, box: cur?.box ?? null, lineup: s.lineup ?? null,
+      debut_year: s.players.debut_year, career_games: s.players.career_games, hist: s.players.hist, photo_path: s.players.photo_path, list_status: s.players.list_status, box: cur?.box ?? null, games_log: cur?.games_log ?? null, lineup: s.lineup ?? null,
       team_id: s.team_id, is_keeper: s.is_keeper, is_rookie_keeper: s.is_rookie_keeper,
       games: cur?.games ?? null, average: cur?.average != null ? Number(cur.average) : null,
       last5: cur?.last5 ?? [], status: cur?.status ?? null,
