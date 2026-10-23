@@ -1,10 +1,11 @@
 // Holo profile pictures: players who get the shiny treatment, with their artwork background and cut-out photo.
 // Geelong's artwork is placeholder dot-style patterning in club colours; swap in licensed Indigenous artwork before rolling out widely.
-export type HoloPalette = 'geelong' | 'gws';
+export type HoloPalette = 'geelong' | 'gws' | 'wce';
 export interface Holo { art: string; photo: string; palette: HoloPalette }
 export const HOLO: Record<string, Holo> = {
   'L. Humphries': { art: '/holo/geelong-swans.svg', photo: '/players/lawson-humphries.png', palette: 'geelong' },
   'L. Ash': { art: '/holo/gws-g.svg', photo: '/players/lachie-ash.png', palette: 'gws' },
+  'H. Reid': { art: '/holo/wce-wings.svg', photo: '/players/harley-reid.png', palette: 'wce' },
 };
 
 /** Foil colours per palette: the frame, the always-on sweep, the mouse-following foil, the glints and the glare. */
@@ -26,5 +27,14 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 5px, rgb(255 255 255 / .4) 5px 6px, rgb(255 255 255 / 0) 6px 9px, rgb(255 106 19 / .4) 9px 10px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 160 90 / .95)'],
     glare: 'rgb(255 106 19 / .25)', sheen: 'rgb(255 106 19 / .5)', base: '#090909', shadow: 'rgb(0 0 0 / .45)',
+  },
+  wce: {
+    frame: 'linear-gradient(135deg, #f5f8ff 0%, #f2a900 18%, #fff1c2 32%, #00204d 50%, #1f5fc4 64%, #f5f8ff 78%, #f2a900 100%)',
+    edge: 'linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .95) 40%, rgb(242 169 0 / .85) 50%, rgb(255 255 255 / .95) 60%, transparent 75%)',
+    sweep: 'linear-gradient(120deg, transparent 18%, #1f5fc4 28%, #ffffff 36%, #7fa8e8 42%, #f2a900 50%, #fff1c2 56%, #1f5fc4 64%, #ffffff 70%, transparent 82%)',
+    foil: 'linear-gradient(60deg, transparent 20%, #7fa8e8 32%, #ffffff 40%, #f2a900 48%, #ffffff 56%, #0a3d91 66%, transparent 80%)',
+    lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .45) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(242 169 0 / .4) 10px 11px)',
+    glint: ['rgb(255 255 255 / .95)', 'rgb(255 222 120 / .95)'],
+    glare: 'rgb(127 168 232 / .25)', sheen: 'rgb(242 169 0 / .5)', base: '#00204d', shadow: 'rgb(0 32 77 / .38)',
   },
 };
