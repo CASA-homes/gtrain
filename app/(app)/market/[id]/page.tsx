@@ -51,7 +51,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
         <div style={{ padding: '12px 22px', display: 'flex', flexWrap: 'wrap', gap: '10px 22px', alignItems: 'center', fontSize: 13, borderBottom: '1px solid var(--line)' }} className="muted">
           <span>Avg <AvgChip value={p.average} /></span>
           <span style={{ display: 'inline-flex', gap: 3, alignItems: 'center' }}>Last 5 {[...p.last5].reverse().map((s, i) => <ScoreChip key={i} value={s} />)}</span>
-          <span>Value <Stars value={r.valueStars} label="Value" /></span>
+          <span>Current ability <Stars value={r.valueStars} label="Current ability" /></span>
           <span>Worth about <b style={{ color: C.ink }}>{worth.toLocaleString()} pts</b></span>
           {!open && <span className="pill" style={{ background: C.yellow, color: C.ink }}>Deal pending commish approval</span>}
           {(isSeller || me?.is_commish) && l.status !== 'withdrawn' && l.status !== 'done' && (
