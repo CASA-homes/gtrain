@@ -105,7 +105,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         </div>
       </header>
 
-      <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine || !!me?.is_commish} saved={a.lineupSaved}>
+      <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {TEAM_NOTES[a.team.name] && (
             <div className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8, background: C.ink, color: '#f4f2ea', border: 0 }}>

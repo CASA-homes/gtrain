@@ -8,7 +8,7 @@ const LIMIT: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 4 }
 
 export async function saveLineup(teamId: number, entries: { id: number; slot: Slot | null }[]) {
   const me = await getMe();
-  if (!me || (me.team_id !== teamId && !me.is_commish)) return { error: 'You can only set the lineup for your own club.' };
+  if (!me || me.team_id !== teamId) return { error: 'You can only set the lineup for your own club.' };
 
   const supabase = await createClient();
   const { data: squad, error } = await supabase.from('squad').select('player_id, players(name, positions)').eq('team_id', teamId);
@@ -37,7 +37,7 @@ export async function saveLineup(teamId: number, entries: { id: number; slot: Sl
 
 export async function resetLineup(teamId: number) {
   const me = await getMe();
-  if (!me || (me.team_id !== teamId && !me.is_commish)) return { error: 'You can only set the lineup for your own club.' };
+  if (!me || me.team_id !== teamId) return { error: 'You can only set the lineup for your own club.' };
   const supabase = await createClient();
   const r = await supabase.from('squad').update({ lineup: null }).eq('team_id', teamId);
   if (r.error) return { error: r.error.message };
