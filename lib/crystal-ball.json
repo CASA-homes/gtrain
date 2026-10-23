@@ -4242,7 +4242,19 @@
      "2024": 54.0,
      "2025": 53.0,
      "2026": 63.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 104.0,
+      "disposals": 30.0,
+      "tackles": 2.0,
+      "marks": 6.5,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -4303,7 +4315,29 @@
      "2024": 16.0,
      "2025": 13.0,
      "2026": 11.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 85.0,
+      "disposals": 15.2,
+      "tackles": 1.9,
+      "marks": 5.9,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 9,
+      "fp": 69.4,
+      "disposals": 13.7,
+      "tackles": 1.7,
+      "marks": 6.9,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -4360,7 +4394,19 @@
      "2024": 43.0,
      "2025": 77.0,
      "2026": 68.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 103.0,
+      "disposals": 25.7,
+      "tackles": 5.0,
+      "marks": 3.3,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4425,7 +4471,8 @@
      "2024": 74.0,
      "2025": 72.0,
      "2026": 79.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -4487,7 +4534,29 @@
      "2024": 6.0,
      "2025": 0.0,
      "2026": 6.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 86.2,
+      "disposals": 18.3,
+      "tackles": 0.8,
+      "marks": 11.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 57.8,
+      "disposals": 14.1,
+      "tackles": 1.7,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4551,7 +4620,29 @@
      "2024": 8.0,
      "2025": 6.0,
      "2026": 21.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 1,
+      "fp": 71.0,
+      "disposals": 17.0,
+      "tackles": 5.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 34.0,
+      "disposals": 7.0,
+      "tackles": 0.0,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4613,7 +4704,39 @@
      "2024": 24.0,
      "2025": 43.0,
      "2026": 56.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 107.9,
+      "disposals": 26.6,
+      "tackles": 5.3,
+      "marks": 6.0,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 108.0,
+      "disposals": 29.0,
+      "tackles": 4.3,
+      "marks": 4.0,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 73.7,
+      "disposals": 17.7,
+      "tackles": 4.7,
+      "marks": 2.7,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -4674,7 +4797,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 7,
+      "fp": 55.4,
+      "disposals": 8.2,
+      "tackles": 1.9,
+      "marks": 3.6,
+      "goals": 2.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -4728,7 +4863,39 @@
     "role": "Key position",
     "cba": {
      "2022": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 39.3,
+      "disposals": 9.3,
+      "tackles": 0.7,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 35.5,
+      "disposals": 9.8,
+      "tackles": 0.7,
+      "marks": 2.5,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 37.5,
+      "disposals": 10.5,
+      "tackles": 0.5,
+      "marks": 3.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4789,7 +4956,49 @@
      "2023": 13.0,
      "2025": 24.0,
      "2026": 9.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 96.2,
+      "disposals": 25.0,
+      "tackles": 4.6,
+      "marks": 5.2,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 105.7,
+      "disposals": 28.3,
+      "tackles": 5.8,
+      "marks": 4.8,
+      "goals": 0.4
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 90.2,
+      "disposals": 22.3,
+      "tackles": 6.5,
+      "marks": 2.8,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 95.9,
+      "disposals": 22.9,
+      "tackles": 5.4,
+      "marks": 4.7,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -4851,7 +5060,19 @@
      "2024": 2.0,
      "2025": 27.0,
      "2026": 55.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 65.5,
+      "disposals": 17.5,
+      "tackles": 1.0,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4903,7 +5124,39 @@
     "cba": {
      "2024": 0.0,
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 82.4,
+      "disposals": 20.0,
+      "tackles": 2.9,
+      "marks": 5.1,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 69.5,
+      "disposals": 16.5,
+      "tackles": 3.7,
+      "marks": 3.1,
+      "goals": 0.2
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 33.0,
+      "disposals": 9.7,
+      "tackles": 1.0,
+      "marks": 2.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -4957,7 +5210,59 @@
      "2023": 35.0,
      "2024": 6.0,
      "2025": 9.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 101.4,
+      "disposals": 28.4,
+      "tackles": 5.4,
+      "marks": 3.1,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 68.0,
+      "disposals": 19.0,
+      "tackles": 6.0,
+      "marks": 1.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 106.8,
+      "disposals": 26.2,
+      "tackles": 8.0,
+      "marks": 3.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 130.0,
+      "disposals": 31.4,
+      "tackles": 5.0,
+      "marks": 6.7,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 94.5,
+      "disposals": 22.5,
+      "tackles": 5.5,
+      "marks": 5.5,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -5012,7 +5317,49 @@
     "cba": {
      "2023": 6.0,
      "2024": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 69.5,
+      "disposals": 18.8,
+      "tackles": 2.8,
+      "marks": 4.4,
+      "goals": 0.2
+     },
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 63.1,
+      "disposals": 16.9,
+      "tackles": 3.1,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 73.5,
+      "disposals": 19.1,
+      "tackles": 6.0,
+      "marks": 1.8,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 59.3,
+      "disposals": 16.6,
+      "tackles": 2.7,
+      "marks": 1.7,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 20,
@@ -5067,7 +5414,59 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 38.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 67.5,
+      "disposals": 19.0,
+      "tackles": 1.0,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 63.4,
+      "disposals": 14.3,
+      "tackles": 2.0,
+      "marks": 6.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 49.2,
+      "disposals": 12.1,
+      "tackles": 1.9,
+      "marks": 4.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 42.5,
+      "disposals": 10.3,
+      "tackles": 1.5,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 11,
+      "fp": 56.4,
+      "disposals": 11.0,
+      "tackles": 2.3,
+      "marks": 5.4,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -5127,7 +5526,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 65.1,
+      "disposals": 17.8,
+      "tackles": 1.7,
+      "marks": 4.3,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -5183,7 +5594,29 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 10,
+      "fp": 69.2,
+      "disposals": 18.9,
+      "tackles": 1.6,
+      "marks": 4.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 55.9,
+      "disposals": 14.7,
+      "tackles": 1.3,
+      "marks": 4.3,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -5240,7 +5673,59 @@
      "2023": 30.0,
      "2025": 31.0,
      "2026": 41.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 92.7,
+      "disposals": 27.7,
+      "tackles": 3.7,
+      "marks": 4.0,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 86.0,
+      "disposals": 24.8,
+      "tackles": 2.5,
+      "marks": 4.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 89.5,
+      "disposals": 24.4,
+      "tackles": 4.1,
+      "marks": 3.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 7,
+      "fp": 106.3,
+      "disposals": 28.7,
+      "tackles": 4.3,
+      "marks": 4.6,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 10,
+      "fp": 88.4,
+      "disposals": 23.4,
+      "tackles": 5.1,
+      "marks": 3.2,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -5296,7 +5781,39 @@
      "2024": 18.0,
      "2025": 13.0,
      "2026": 6.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 78.7,
+      "disposals": 14.2,
+      "tackles": 1.2,
+      "marks": 8.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 82.3,
+      "disposals": 14.6,
+      "tackles": 1.7,
+      "marks": 7.7,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 64.4,
+      "disposals": 11.5,
+      "tackles": 2.5,
+      "marks": 4.0,
+      "goals": 2.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -5357,7 +5874,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 65.5,
+      "disposals": 10.5,
+      "tackles": 4.0,
+      "marks": 3.5,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 82.0,
+      "disposals": 16.1,
+      "tackles": 2.9,
+      "marks": 5.4,
+      "goals": 2.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 70.4,
+      "disposals": 15.0,
+      "tackles": 2.4,
+      "marks": 4.6,
+      "goals": 1.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -5415,7 +5964,39 @@
      "2024": 22.0,
      "2025": 24.0,
      "2026": 32.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 71.0,
+      "disposals": 20.0,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 1,
+      "fp": 89.0,
+      "disposals": 24.0,
+      "tackles": 5.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 71.1,
+      "disposals": 17.3,
+      "tackles": 4.4,
+      "marks": 2.9,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -5471,7 +6052,49 @@
     "cba": {
      "2023": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 77.6,
+      "disposals": 20.7,
+      "tackles": 1.7,
+      "marks": 6.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 32.0,
+      "disposals": 10.0,
+      "tackles": 0.7,
+      "marks": 1.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 56.0,
+      "disposals": 14.3,
+      "tackles": 0.8,
+      "marks": 5.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 60.8,
+      "disposals": 15.7,
+      "tackles": 1.9,
+      "marks": 4.3,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -5533,7 +6156,59 @@
      "2023": 0.0,
      "2025": 18.0,
      "2026": 11.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 106.3,
+      "disposals": 25.0,
+      "tackles": 4.7,
+      "marks": 5.9,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 99.3,
+      "disposals": 23.7,
+      "tackles": 5.0,
+      "marks": 5.1,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 80.8,
+      "disposals": 17.3,
+      "tackles": 1.5,
+      "marks": 5.0,
+      "goals": 2.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 72.8,
+      "disposals": 15.8,
+      "tackles": 3.7,
+      "marks": 3.4,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 48.9,
+      "disposals": 11.2,
+      "tackles": 1.6,
+      "marks": 3.1,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -5574,7 +6249,49 @@
     "role": "Ruck",
     "cba": {
      "2024": 76.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 58.7,
+      "disposals": 12.7,
+      "tackles": 2.0,
+      "marks": 1.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 100.0,
+      "disposals": 18.5,
+      "tackles": 1.8,
+      "marks": 3.3,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 74.3,
+      "disposals": 15.3,
+      "tackles": 2.3,
+      "marks": 3.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 10,
+      "fp": 58.6,
+      "disposals": 11.5,
+      "tackles": 2.4,
+      "marks": 2.1,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -5635,7 +6352,59 @@
     "cba": {
      "2023": 5.0,
      "2025": 31.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 104.2,
+      "disposals": 26.1,
+      "tackles": 4.3,
+      "marks": 5.5,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 83.3,
+      "disposals": 20.2,
+      "tackles": 5.0,
+      "marks": 4.0,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 88.8,
+      "disposals": 22.7,
+      "tackles": 4.0,
+      "marks": 4.8,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 88.5,
+      "disposals": 19.0,
+      "tackles": 5.3,
+      "marks": 4.6,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 66.4,
+      "disposals": 15.9,
+      "tackles": 4.0,
+      "marks": 3.2,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -5698,7 +6467,29 @@
      "2024": 1.0,
      "2025": 1.0,
      "2026": 28.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 126.0,
+      "disposals": 37.0,
+      "tackles": 3.0,
+      "marks": 5.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 101.0,
+      "disposals": 20.0,
+      "tackles": 9.0,
+      "marks": 4.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -5753,7 +6544,39 @@
      "2023": 0.0,
      "2024": 0.0,
      "2025": 15.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 57.8,
+      "disposals": 12.2,
+      "tackles": 4.2,
+      "marks": 1.3,
+      "goals": 1.7
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 94.3,
+      "disposals": 22.3,
+      "tackles": 5.0,
+      "marks": 3.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 9,
+      "fp": 55.1,
+      "disposals": 12.4,
+      "tackles": 3.0,
+      "marks": 2.6,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -5816,7 +6639,59 @@
      "2024": 4.0,
      "2025": 3.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 80.0,
+      "disposals": 25.5,
+      "tackles": 2.0,
+      "marks": 2.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 108.2,
+      "disposals": 29.3,
+      "tackles": 4.2,
+      "marks": 3.7,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 97.3,
+      "disposals": 27.4,
+      "tackles": 2.8,
+      "marks": 4.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 85.7,
+      "disposals": 24.5,
+      "tackles": 2.3,
+      "marks": 3.4,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 13,
+      "fp": 76.8,
+      "disposals": 22.2,
+      "tackles": 1.5,
+      "marks": 3.6,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -5873,7 +6748,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 80.6,
+      "disposals": 19.6,
+      "tackles": 1.2,
+      "marks": 6.2,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 79.5,
+      "disposals": 19.0,
+      "tackles": 2.8,
+      "marks": 5.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 68.6,
+      "disposals": 16.6,
+      "tackles": 2.5,
+      "marks": 4.6,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -5926,7 +6833,59 @@
     "role": "Midfielder",
     "cba": {
      "2023": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 59.5,
+      "disposals": 14.3,
+      "tackles": 1.3,
+      "marks": 4.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 63.0,
+      "disposals": 15.4,
+      "tackles": 1.0,
+      "marks": 4.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 1,
+      "fp": 14.0,
+      "disposals": 2.0,
+      "tackles": 0.0,
+      "marks": 1.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 58.4,
+      "disposals": 13.4,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 61.2,
+      "disposals": 13.8,
+      "tackles": 2.2,
+      "marks": 3.3,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -5983,7 +6942,19 @@
      "2024": 0.0,
      "2025": 41.0,
      "2026": 12.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 72.7,
+      "disposals": 15.3,
+      "tackles": 2.3,
+      "marks": 7.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6011,7 +6982,49 @@
     "jFP": 103.1,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 31.2,
+      "disposals": 5.8,
+      "tackles": 2.5,
+      "marks": 1.5,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 54.0,
+      "disposals": 10.9,
+      "tackles": 3.6,
+      "marks": 2.2,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 69.6,
+      "disposals": 14.6,
+      "tackles": 5.4,
+      "marks": 2.0,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 43.5,
+      "disposals": 10.5,
+      "tackles": 3.3,
+      "marks": 1.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -6074,7 +7087,19 @@
      "2024": 7.0,
      "2025": 9.0,
      "2026": 5.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 84.1,
+      "disposals": 22.9,
+      "tackles": 4.4,
+      "marks": 2.4,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6137,7 +7162,59 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 164.0,
+      "disposals": 37.0,
+      "tackles": 8.0,
+      "marks": 11.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 110.5,
+      "disposals": 34.5,
+      "tackles": 2.0,
+      "marks": 6.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 91.5,
+      "disposals": 22.5,
+      "tackles": 5.0,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 89.8,
+      "disposals": 27.0,
+      "tackles": 4.4,
+      "marks": 2.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 19,
+      "fp": 90.9,
+      "disposals": 23.5,
+      "tackles": 3.8,
+      "marks": 5.1,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -6200,7 +7277,29 @@
      "2024": 5.0,
      "2025": 1.0,
      "2026": 7.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 93.0,
+      "disposals": 15.5,
+      "tackles": 4.5,
+      "marks": 4.0,
+      "goals": 3.5
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 69.0,
+      "disposals": 10.6,
+      "tackles": 4.0,
+      "marks": 4.0,
+      "goals": 2.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6263,7 +7362,39 @@
      "2024": 56.0,
      "2025": 62.0,
      "2026": 27.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 135.0,
+      "disposals": 39.0,
+      "tackles": 3.0,
+      "marks": 5.0,
+      "goals": 2.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 96.0,
+      "disposals": 27.0,
+      "tackles": 3.0,
+      "marks": 6.0,
+      "goals": 1.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 5,
+      "fp": 79.4,
+      "disposals": 19.6,
+      "tackles": 4.0,
+      "marks": 3.6,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -6324,7 +7455,49 @@
      "2023": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 72.7,
+      "disposals": 18.3,
+      "tackles": 1.4,
+      "marks": 6.6,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 49.2,
+      "disposals": 12.8,
+      "tackles": 0.8,
+      "marks": 4.8,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 81.0,
+      "disposals": 18.5,
+      "tackles": 1.7,
+      "marks": 8.5,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 6,
+      "fp": 60.5,
+      "disposals": 14.5,
+      "tackles": 1.2,
+      "marks": 6.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6369,7 +7542,59 @@
     "role": "Tall utility",
     "cba": {
      "2023": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 80.5,
+      "disposals": 20.3,
+      "tackles": 2.4,
+      "marks": 6.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 55.5,
+      "disposals": 14.8,
+      "tackles": 1.5,
+      "marks": 3.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 74.7,
+      "disposals": 17.9,
+      "tackles": 2.7,
+      "marks": 5.0,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 7,
+      "fp": 67.3,
+      "disposals": 17.7,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 52.8,
+      "disposals": 14.3,
+      "tackles": 1.0,
+      "marks": 3.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6419,7 +7644,49 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 89.1,
+      "disposals": 22.2,
+      "tackles": 1.7,
+      "marks": 9.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 88.3,
+      "disposals": 22.5,
+      "tackles": 2.5,
+      "marks": 6.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 86.3,
+      "disposals": 22.6,
+      "tackles": 2.6,
+      "marks": 6.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 10,
+      "fp": 50.6,
+      "disposals": 12.5,
+      "tackles": 2.6,
+      "marks": 3.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -6474,7 +7741,59 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 98.8,
+      "disposals": 26.6,
+      "tackles": 4.8,
+      "marks": 3.1,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 94.4,
+      "disposals": 25.5,
+      "tackles": 4.0,
+      "marks": 4.1,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 77.4,
+      "disposals": 20.8,
+      "tackles": 3.4,
+      "marks": 2.8,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 82.1,
+      "disposals": 22.3,
+      "tackles": 3.9,
+      "marks": 3.5,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 20,
+      "fp": 55.6,
+      "disposals": 14.8,
+      "tackles": 1.8,
+      "marks": 3.7,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -6533,7 +7852,59 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 94.8,
+      "disposals": 22.0,
+      "tackles": 6.0,
+      "marks": 3.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 91.6,
+      "disposals": 21.8,
+      "tackles": 4.0,
+      "marks": 4.6,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 95.9,
+      "disposals": 23.4,
+      "tackles": 4.4,
+      "marks": 4.8,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 79.1,
+      "disposals": 20.9,
+      "tackles": 2.9,
+      "marks": 3.6,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 19,
+      "fp": 70.7,
+      "disposals": 19.2,
+      "tackles": 1.9,
+      "marks": 3.6,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -6568,7 +7939,59 @@
     "role": "Defender",
     "cba": {
      "2023": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 96.8,
+      "disposals": 21.7,
+      "tackles": 5.3,
+      "marks": 4.9,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 91.5,
+      "disposals": 23.3,
+      "tackles": 3.3,
+      "marks": 5.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 105.4,
+      "disposals": 27.7,
+      "tackles": 2.6,
+      "marks": 6.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 110.8,
+      "disposals": 29.0,
+      "tackles": 2.7,
+      "marks": 7.4,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 6,
+      "fp": 86.5,
+      "disposals": 21.9,
+      "tackles": 3.2,
+      "marks": 4.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -6621,7 +8044,59 @@
     "cba": {
      "2023": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 72.0,
+      "disposals": 16.0,
+      "tackles": 1.0,
+      "marks": 6.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 62.7,
+      "disposals": 14.0,
+      "tackles": 2.4,
+      "marks": 4.1,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 20,
+      "fp": 48.8,
+      "disposals": 10.3,
+      "tackles": 2.5,
+      "marks": 2.7,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 34.8,
+      "disposals": 7.6,
+      "tackles": 1.0,
+      "marks": 2.4,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 42.3,
+      "disposals": 10.6,
+      "tackles": 1.2,
+      "marks": 3.2,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -6671,7 +8146,49 @@
      "2024": 25.0,
      "2025": 3.0,
      "2026": 3.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 81.4,
+      "disposals": 16.6,
+      "tackles": 3.8,
+      "marks": 5.0,
+      "goals": 1.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 74.1,
+      "disposals": 18.7,
+      "tackles": 4.7,
+      "marks": 3.0,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 54.8,
+      "disposals": 14.6,
+      "tackles": 4.0,
+      "marks": 1.5,
+      "goals": 0.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 71.1,
+      "disposals": 17.4,
+      "tackles": 4.9,
+      "marks": 2.5,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -6701,7 +8218,49 @@
     "jFP": 102.7,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 94.3,
+      "disposals": 21.8,
+      "tackles": 6.2,
+      "marks": 4.5,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 56.4,
+      "disposals": 11.6,
+      "tackles": 4.6,
+      "marks": 2.6,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 60.5,
+      "disposals": 15.2,
+      "tackles": 4.3,
+      "marks": 2.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 53.7,
+      "disposals": 13.8,
+      "tackles": 3.0,
+      "marks": 2.9,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6729,7 +8288,59 @@
     "jFP": 88.6,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 63.4,
+      "disposals": 17.3,
+      "tackles": 1.6,
+      "marks": 4.2,
+      "goals": 0.2
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 19,
+      "fp": 46.4,
+      "disposals": 11.9,
+      "tackles": 2.3,
+      "marks": 2.9,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 20,
+      "fp": 47.1,
+      "disposals": 11.7,
+      "tackles": 2.4,
+      "marks": 2.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 55.6,
+      "disposals": 15.3,
+      "tackles": 1.4,
+      "marks": 3.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 36.7,
+      "disposals": 10.9,
+      "tackles": 1.2,
+      "marks": 1.7,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -6792,7 +8403,29 @@
      "2024": 59.0,
      "2025": 45.0,
      "2026": 35.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 116.5,
+      "disposals": 31.3,
+      "tackles": 4.8,
+      "marks": 5.0,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 103.3,
+      "disposals": 28.6,
+      "tackles": 2.3,
+      "marks": 4.7,
+      "goals": 1.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -6814,7 +8447,29 @@
     "jFP": 52.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 59.5,
+      "disposals": 14.0,
+      "tackles": 2.0,
+      "marks": 5.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 30.0,
+      "disposals": 6.0,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6842,7 +8497,59 @@
     "jFP": 116.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 88.0,
+      "disposals": 24.5,
+      "tackles": 2.4,
+      "marks": 4.1,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 70.4,
+      "disposals": 18.7,
+      "tackles": 2.0,
+      "marks": 4.2,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 19,
+      "fp": 54.2,
+      "disposals": 12.1,
+      "tackles": 3.4,
+      "marks": 2.5,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 54.1,
+      "disposals": 12.3,
+      "tackles": 2.6,
+      "marks": 2.9,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 54.4,
+      "disposals": 12.9,
+      "tackles": 1.6,
+      "marks": 3.5,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 25,
@@ -6864,7 +8571,29 @@
     "jFP": null,
     "seasons": [],
     "role": "Unknown",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 10,
+      "fp": 85.0,
+      "disposals": 21.0,
+      "tackles": 3.3,
+      "marks": 4.8,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 63.2,
+      "disposals": 16.7,
+      "tackles": 2.1,
+      "marks": 2.9,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -6906,7 +8635,69 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 67.2,
+      "disposals": 17.2,
+      "tackles": 1.6,
+      "marks": 6.8,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 35.2,
+      "disposals": 9.5,
+      "tackles": 1.5,
+      "marks": 2.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 54.8,
+      "disposals": 12.3,
+      "tackles": 2.3,
+      "marks": 5.3,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 22,
+      "fp": 36.4,
+      "disposals": 8.5,
+      "tackles": 1.5,
+      "marks": 3.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 49.4,
+      "disposals": 12.9,
+      "tackles": 1.9,
+      "marks": 3.9,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 33.0,
+      "disposals": 8.2,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -6956,7 +8747,49 @@
     "cba": {
      "2024": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 65.7,
+      "disposals": 14.8,
+      "tackles": 4.7,
+      "marks": 2.9,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 57.8,
+      "disposals": 13.8,
+      "tackles": 3.3,
+      "marks": 3.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 59.1,
+      "disposals": 12.9,
+      "tackles": 3.9,
+      "marks": 2.4,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 12,
+      "fp": 52.2,
+      "disposals": 12.3,
+      "tackles": 2.4,
+      "marks": 2.1,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -7011,7 +8844,49 @@
     "cba": {
      "2024": 0.0,
      "2026": 17.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 89.3,
+      "disposals": 21.4,
+      "tackles": 2.2,
+      "marks": 7.4,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 94.4,
+      "disposals": 21.4,
+      "tackles": 3.4,
+      "marks": 7.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 64.6,
+      "disposals": 15.5,
+      "tackles": 1.8,
+      "marks": 5.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 55.9,
+      "disposals": 11.8,
+      "tackles": 1.9,
+      "marks": 3.9,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -7038,7 +8913,29 @@
     "jFP": null,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 30.6,
+      "disposals": 8.0,
+      "tackles": 1.6,
+      "marks": 1.8,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 14.0,
+      "disposals": 3.0,
+      "tackles": 1.0,
+      "marks": 1.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -7073,7 +8970,49 @@
     "role": "Midfielder",
     "cba": {
      "2025": 5.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 73.0,
+      "disposals": 20.0,
+      "tackles": 3.3,
+      "marks": 3.0,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 85.9,
+      "disposals": 19.5,
+      "tackles": 5.3,
+      "marks": 4.0,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 81.2,
+      "disposals": 19.4,
+      "tackles": 5.7,
+      "marks": 3.0,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 47.1,
+      "disposals": 11.2,
+      "tackles": 3.1,
+      "marks": 1.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -7126,7 +9065,59 @@
     "cba": {
      "2025": 55.0,
      "2026": 26.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 101.5,
+      "disposals": 16.3,
+      "tackles": 4.3,
+      "marks": 4.3,
+      "goals": 0.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 74.5,
+      "disposals": 13.8,
+      "tackles": 3.3,
+      "marks": 2.8,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 79.9,
+      "disposals": 11.7,
+      "tackles": 5.5,
+      "marks": 2.4,
+      "goals": 0.2
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 67.4,
+      "disposals": 9.7,
+      "tackles": 4.6,
+      "marks": 2.4,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 58.4,
+      "disposals": 9.0,
+      "tackles": 2.9,
+      "marks": 3.1,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -7187,7 +9178,49 @@
      "2024": 17.0,
      "2025": 6.0,
      "2026": 10.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 62.0,
+      "disposals": 8.9,
+      "tackles": 2.1,
+      "marks": 5.0,
+      "goals": 1.7
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 59.3,
+      "disposals": 11.0,
+      "tackles": 1.7,
+      "marks": 4.0,
+      "goals": 1.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 43.3,
+      "disposals": 7.4,
+      "tackles": 1.7,
+      "marks": 3.7,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 51.1,
+      "disposals": 8.9,
+      "tackles": 2.5,
+      "marks": 3.0,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -7215,7 +9248,59 @@
     "jFP": 56.0,
     "seasons": [],
     "role": "Unknown",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 68.8,
+      "disposals": 18.2,
+      "tackles": 3.6,
+      "marks": 2.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 79.3,
+      "disposals": 21.1,
+      "tackles": 3.0,
+      "marks": 3.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 78.2,
+      "disposals": 19.3,
+      "tackles": 3.4,
+      "marks": 4.0,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 77.7,
+      "disposals": 19.3,
+      "tackles": 3.0,
+      "marks": 4.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 20,
+      "fp": 55.5,
+      "disposals": 14.2,
+      "tackles": 2.4,
+      "marks": 3.1,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -7265,7 +9350,49 @@
     "cba": {
      "2023": 0.0,
      "2024": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 27.0,
+      "disposals": 6.0,
+      "tackles": 1.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 51.6,
+      "disposals": 10.8,
+      "tackles": 2.4,
+      "marks": 4.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 41.5,
+      "disposals": 10.0,
+      "tackles": 2.3,
+      "marks": 2.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 10,
+      "fp": 34.7,
+      "disposals": 7.5,
+      "tackles": 3.0,
+      "marks": 1.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -7327,7 +9454,29 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 21.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 80.7,
+      "disposals": 21.3,
+      "tackles": 2.8,
+      "marks": 4.3,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 10,
+      "fp": 78.4,
+      "disposals": 20.1,
+      "tackles": 2.7,
+      "marks": 4.0,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 19,
@@ -7383,7 +9532,59 @@
     "role": "Defender",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 80.8,
+      "disposals": 21.1,
+      "tackles": 2.1,
+      "marks": 6.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 89.2,
+      "disposals": 21.8,
+      "tackles": 2.8,
+      "marks": 7.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 76.2,
+      "disposals": 19.1,
+      "tackles": 2.5,
+      "marks": 6.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 74.2,
+      "disposals": 19.6,
+      "tackles": 1.5,
+      "marks": 5.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 13,
+      "fp": 68.2,
+      "disposals": 18.0,
+      "tackles": 1.7,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 24,
@@ -7424,7 +9625,49 @@
     "cba": {
      "2022": 18.0,
      "2023": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 97.9,
+      "disposals": 23.9,
+      "tackles": 7.8,
+      "marks": 3.1,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 108.8,
+      "disposals": 26.9,
+      "tackles": 7.3,
+      "marks": 4.1,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 106.8,
+      "disposals": 27.8,
+      "tackles": 5.5,
+      "marks": 4.8,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 105.9,
+      "disposals": 23.9,
+      "tackles": 7.6,
+      "marks": 5.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 22,
@@ -7479,7 +9722,49 @@
     "role": "Midfielder",
     "cba": {
      "2019": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 119.5,
+      "disposals": 31.6,
+      "tackles": 5.8,
+      "marks": 5.2,
+      "goals": 0.4
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 102.2,
+      "disposals": 28.5,
+      "tackles": 3.4,
+      "marks": 5.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 111.6,
+      "disposals": 29.9,
+      "tackles": 3.0,
+      "marks": 6.6,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 16,
+      "fp": 106.2,
+      "disposals": 28.7,
+      "tackles": 5.3,
+      "marks": 5.3,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -7511,7 +9796,59 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 56.9,
+      "disposals": 12.4,
+      "tackles": 2.7,
+      "marks": 3.6,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 72.6,
+      "disposals": 16.7,
+      "tackles": 4.9,
+      "marks": 2.9,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 20,
+      "fp": 57.1,
+      "disposals": 12.6,
+      "tackles": 3.4,
+      "marks": 3.7,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 52.8,
+      "disposals": 12.7,
+      "tackles": 2.1,
+      "marks": 3.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 52.8,
+      "disposals": 11.8,
+      "tackles": 4.0,
+      "marks": 3.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -7556,7 +9893,59 @@
     "role": "Midfielder",
     "cba": {
      "2024": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 57.5,
+      "disposals": 15.3,
+      "tackles": 1.9,
+      "marks": 3.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 72.2,
+      "disposals": 18.5,
+      "tackles": 4.4,
+      "marks": 3.7,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 52.5,
+      "disposals": 14.0,
+      "tackles": 2.0,
+      "marks": 3.3,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 12,
+      "fp": 80.3,
+      "disposals": 21.8,
+      "tackles": 3.7,
+      "marks": 3.8,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 63.7,
+      "disposals": 15.1,
+      "tackles": 2.7,
+      "marks": 4.4,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -7612,7 +10001,29 @@
      "2024": 4.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 104.0,
+      "disposals": 17.0,
+      "tackles": 3.5,
+      "marks": 7.5,
+      "goals": 3.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 74.1,
+      "disposals": 11.8,
+      "tackles": 3.0,
+      "marks": 5.0,
+      "goals": 2.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -7670,7 +10081,8 @@
      "2024": 33.0,
      "2025": 52.0,
      "2026": 65.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -7726,7 +10138,8 @@
      "2024": 31.0,
      "2025": 38.0,
      "2026": 61.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -7783,7 +10196,29 @@
      "2024": 66.0,
      "2025": 56.0,
      "2026": 60.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 96.7,
+      "disposals": 23.0,
+      "tackles": 7.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 81.6,
+      "disposals": 18.6,
+      "tackles": 6.0,
+      "marks": 1.8,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -7839,7 +10274,49 @@
      "2024": 0.0,
      "2025": 46.0,
      "2026": 59.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 110.4,
+      "disposals": 33.2,
+      "tackles": 3.6,
+      "marks": 4.2,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 106.9,
+      "disposals": 34.1,
+      "tackles": 4.4,
+      "marks": 2.4,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 102.4,
+      "disposals": 30.8,
+      "tackles": 4.0,
+      "marks": 3.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 7,
+      "fp": 92.3,
+      "disposals": 25.0,
+      "tackles": 4.3,
+      "marks": 3.6,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -7898,7 +10375,19 @@
      "2024": 8.0,
      "2025": 38.0,
      "2026": 15.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 60.0,
+      "disposals": 17.0,
+      "tackles": 2.0,
+      "marks": 2.5,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -7955,7 +10444,39 @@
      "2024": 26.0,
      "2025": 48.0,
      "2026": 52.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 87.6,
+      "disposals": 25.1,
+      "tackles": 3.5,
+      "marks": 3.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 108.0,
+      "disposals": 30.5,
+      "tackles": 5.0,
+      "marks": 5.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 95.6,
+      "disposals": 24.4,
+      "tackles": 5.9,
+      "marks": 3.9,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -8011,7 +10532,49 @@
      "2024": 38.0,
      "2025": 10.0,
      "2026": 6.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 103.4,
+      "disposals": 26.5,
+      "tackles": 3.6,
+      "marks": 6.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 102.4,
+      "disposals": 27.8,
+      "tackles": 5.8,
+      "marks": 3.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 88.6,
+      "disposals": 19.3,
+      "tackles": 6.1,
+      "marks": 3.4,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 66.7,
+      "disposals": 16.0,
+      "tackles": 3.5,
+      "marks": 3.7,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -8068,7 +10631,8 @@
      "2024": 34.0,
      "2025": 1.0,
      "2026": 0.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -8124,7 +10688,39 @@
      "2024": 26.0,
      "2025": 4.0,
      "2026": 30.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 130.5,
+      "disposals": 35.0,
+      "tackles": 5.0,
+      "marks": 7.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 72.0,
+      "disposals": 23.0,
+      "tackles": 3.0,
+      "marks": 2.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 99.8,
+      "disposals": 23.7,
+      "tackles": 7.7,
+      "marks": 3.5,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -8180,7 +10776,29 @@
      "2024": 1.0,
      "2025": 0.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 104.5,
+      "disposals": 25.3,
+      "tackles": 6.8,
+      "marks": 5.8,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 95.0,
+      "disposals": 23.0,
+      "tackles": 6.0,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8237,7 +10855,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 10,
+      "fp": 65.2,
+      "disposals": 16.6,
+      "tackles": 1.7,
+      "marks": 4.3,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -8281,7 +10911,49 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 81.4,
+      "disposals": 23.2,
+      "tackles": 1.2,
+      "marks": 5.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 94.8,
+      "disposals": 24.7,
+      "tackles": 2.3,
+      "marks": 6.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 19,
+      "fp": 83.3,
+      "disposals": 20.8,
+      "tackles": 1.1,
+      "marks": 7.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 62.8,
+      "disposals": 15.3,
+      "tackles": 0.9,
+      "marks": 6.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8331,7 +11003,19 @@
      "2023": 35.0,
      "2025": 47.0,
      "2026": 27.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 26.0,
+      "disposals": 7.0,
+      "tackles": 1.0,
+      "marks": 1.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8376,7 +11060,49 @@
     "cba": {
      "2025": 1.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 77.3,
+      "disposals": 14.0,
+      "tackles": 1.3,
+      "marks": 5.0,
+      "goals": 3.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 67.0,
+      "disposals": 12.8,
+      "tackles": 1.7,
+      "marks": 4.2,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 54.4,
+      "disposals": 9.5,
+      "tackles": 1.9,
+      "marks": 3.5,
+      "goals": 1.7
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 42.8,
+      "disposals": 7.7,
+      "tackles": 1.1,
+      "marks": 3.4,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -8427,7 +11153,49 @@
      "2023": 27.0,
      "2025": 35.0,
      "2026": 37.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 97.7,
+      "disposals": 25.2,
+      "tackles": 4.3,
+      "marks": 4.9,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 97.3,
+      "disposals": 23.6,
+      "tackles": 5.8,
+      "marks": 4.4,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 92.5,
+      "disposals": 23.8,
+      "tackles": 5.2,
+      "marks": 4.1,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 77.9,
+      "disposals": 22.0,
+      "tackles": 3.4,
+      "marks": 3.4,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -8483,7 +11251,8 @@
      "2024": 5.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -8540,7 +11309,29 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 49.0,
+      "disposals": 12.0,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 87.7,
+      "disposals": 22.0,
+      "tackles": 2.7,
+      "marks": 6.7,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8590,7 +11381,49 @@
     "cba": {
      "2025": 5.0,
      "2026": 57.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 106.2,
+      "disposals": 31.0,
+      "tackles": 5.5,
+      "marks": 2.8,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 78.2,
+      "disposals": 23.8,
+      "tackles": 3.3,
+      "marks": 2.3,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 72.5,
+      "disposals": 20.1,
+      "tackles": 4.4,
+      "marks": 1.9,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 68.1,
+      "disposals": 19.3,
+      "tackles": 2.7,
+      "marks": 3.1,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -8635,7 +11468,39 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 75.0,
+      "disposals": 16.6,
+      "tackles": 2.6,
+      "marks": 5.4,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 60.9,
+      "disposals": 11.4,
+      "tackles": 4.0,
+      "marks": 2.8,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 49.5,
+      "disposals": 8.6,
+      "tackles": 4.2,
+      "marks": 2.5,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -8676,7 +11541,29 @@
     "cba": {
      "2024": 0.0,
      "2025": 7.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 73.8,
+      "disposals": 16.6,
+      "tackles": 4.0,
+      "marks": 1.8,
+      "goals": 1.6
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 5.0,
+      "disposals": 2.0,
+      "tackles": 1.0,
+      "marks": 0.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8727,7 +11614,49 @@
     "cba": {
      "2025": 2.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 98.8,
+      "disposals": 17.3,
+      "tackles": 1.0,
+      "marks": 9.0,
+      "goals": 3.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 78.2,
+      "disposals": 12.9,
+      "tackles": 1.3,
+      "marks": 6.3,
+      "goals": 2.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 65.8,
+      "disposals": 11.0,
+      "tackles": 1.0,
+      "marks": 5.1,
+      "goals": 2.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 54.6,
+      "disposals": 8.6,
+      "tackles": 1.1,
+      "marks": 5.2,
+      "goals": 1.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -8766,7 +11695,39 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 43.2,
+      "disposals": 7.7,
+      "tackles": 1.8,
+      "marks": 2.3,
+      "goals": 0.5
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 42.6,
+      "disposals": 6.1,
+      "tackles": 2.3,
+      "marks": 1.8,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 50.6,
+      "disposals": 8.4,
+      "tackles": 1.9,
+      "marks": 2.1,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -8800,7 +11761,49 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 73.5,
+      "disposals": 15.5,
+      "tackles": 5.4,
+      "marks": 2.8,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 54.3,
+      "disposals": 11.6,
+      "tackles": 2.4,
+      "marks": 2.6,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 67.5,
+      "disposals": 13.6,
+      "tackles": 4.4,
+      "marks": 3.0,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 51.9,
+      "disposals": 11.7,
+      "tackles": 2.9,
+      "marks": 2.3,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -8834,7 +11837,49 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 47.0,
+      "disposals": 14.0,
+      "tackles": 0.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 105.0,
+      "disposals": 22.3,
+      "tackles": 3.0,
+      "marks": 11.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 70.5,
+      "disposals": 17.7,
+      "tackles": 1.6,
+      "marks": 5.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 57.7,
+      "disposals": 14.9,
+      "tackles": 0.8,
+      "marks": 5.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8861,7 +11906,39 @@
     "jFP": 52.0,
     "seasons": [],
     "role": "Forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 52.2,
+      "disposals": 10.7,
+      "tackles": 2.4,
+      "marks": 3.5,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 48.0,
+      "disposals": 7.6,
+      "tackles": 4.0,
+      "marks": 2.5,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 44.9,
+      "disposals": 13.4,
+      "tackles": 1.1,
+      "marks": 2.6,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8883,7 +11960,49 @@
     "jFP": 66.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 64.3,
+      "disposals": 14.8,
+      "tackles": 2.1,
+      "marks": 5.1,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 59.0,
+      "disposals": 15.1,
+      "tackles": 0.9,
+      "marks": 5.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 60.5,
+      "disposals": 15.7,
+      "tackles": 1.9,
+      "marks": 4.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 10,
+      "fp": 43.7,
+      "disposals": 10.7,
+      "tackles": 1.7,
+      "marks": 3.1,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -8918,7 +12037,49 @@
      ]
     ],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 85.8,
+      "disposals": 23.1,
+      "tackles": 2.3,
+      "marks": 5.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 70.6,
+      "disposals": 18.4,
+      "tackles": 1.7,
+      "marks": 5.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 67.3,
+      "disposals": 17.1,
+      "tackles": 1.6,
+      "marks": 5.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 72.4,
+      "disposals": 19.5,
+      "tackles": 1.7,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -8946,7 +12107,39 @@
     "jFP": 79.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 21,
+      "fp": 60.6,
+      "disposals": 12.9,
+      "tackles": 3.0,
+      "marks": 3.0,
+      "goals": 1.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 50.2,
+      "disposals": 12.6,
+      "tackles": 2.1,
+      "marks": 2.7,
+      "goals": 0.4
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 74.7,
+      "disposals": 21.0,
+      "tackles": 0.7,
+      "marks": 4.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -9004,7 +12197,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 85.7,
+      "disposals": 19.4,
+      "tackles": 5.0,
+      "marks": 4.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 93.3,
+      "disposals": 22.7,
+      "tackles": 4.7,
+      "marks": 5.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 9,
+      "fp": 79.7,
+      "disposals": 20.3,
+      "tackles": 3.1,
+      "marks": 5.0,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -9030,7 +12255,39 @@
     "jFP": 49.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 46.8,
+      "disposals": 11.4,
+      "tackles": 1.9,
+      "marks": 3.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 51.9,
+      "disposals": 12.8,
+      "tackles": 2.2,
+      "marks": 3.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 42.0,
+      "disposals": 8.8,
+      "tackles": 2.3,
+      "marks": 3.4,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -9070,7 +12327,49 @@
     "role": "Midfielder",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 85.1,
+      "disposals": 21.8,
+      "tackles": 2.3,
+      "marks": 5.2,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 88.4,
+      "disposals": 21.1,
+      "tackles": 2.1,
+      "marks": 6.9,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 102.1,
+      "disposals": 26.3,
+      "tackles": 3.0,
+      "marks": 5.2,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 116.9,
+      "disposals": 29.2,
+      "tackles": 3.1,
+      "marks": 7.9,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -9103,7 +12402,39 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 55.6,
+      "disposals": 13.5,
+      "tackles": 1.7,
+      "marks": 5.2,
+      "goals": 0.1
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 20,
+      "fp": 42.5,
+      "disposals": 11.1,
+      "tackles": 1.0,
+      "marks": 4.5,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 35.8,
+      "disposals": 9.5,
+      "tackles": 1.2,
+      "marks": 3.2,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -9153,7 +12484,49 @@
      "2024": 3.0,
      "2025": 15.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 93.2,
+      "disposals": 23.5,
+      "tackles": 4.7,
+      "marks": 4.3,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 92.5,
+      "disposals": 21.7,
+      "tackles": 6.3,
+      "marks": 2.7,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 74.1,
+      "disposals": 16.7,
+      "tackles": 4.5,
+      "marks": 2.6,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 55.8,
+      "disposals": 12.8,
+      "tackles": 2.9,
+      "marks": 2.3,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -9181,7 +12554,49 @@
     "jFP": 65.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 71.7,
+      "disposals": 20.2,
+      "tackles": 3.9,
+      "marks": 2.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 42.3,
+      "disposals": 12.3,
+      "tackles": 2.3,
+      "marks": 1.0,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 61.7,
+      "disposals": 16.9,
+      "tackles": 2.8,
+      "marks": 2.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 9,
+      "fp": 58.6,
+      "disposals": 14.3,
+      "tackles": 4.2,
+      "marks": 1.9,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -9208,7 +12623,39 @@
     "jFP": 70.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 46.8,
+      "disposals": 12.5,
+      "tackles": 1.5,
+      "marks": 3.5,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 47.6,
+      "disposals": 10.7,
+      "tackles": 2.6,
+      "marks": 3.2,
+      "goals": 0.2
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 41.4,
+      "disposals": 9.5,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -9259,7 +12706,49 @@
      ]
     ],
     "role": "Tall utility",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 96.9,
+      "disposals": 27.8,
+      "tackles": 5.8,
+      "marks": 2.1,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 98.8,
+      "disposals": 29.4,
+      "tackles": 5.4,
+      "marks": 2.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 91.4,
+      "disposals": 23.8,
+      "tackles": 6.8,
+      "marks": 3.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 69.4,
+      "disposals": 18.7,
+      "tackles": 4.4,
+      "marks": 2.5,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -9293,7 +12782,49 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 59.5,
+      "disposals": 13.4,
+      "tackles": 1.5,
+      "marks": 6.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 52.5,
+      "disposals": 12.6,
+      "tackles": 0.9,
+      "marks": 5.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 35.9,
+      "disposals": 8.0,
+      "tackles": 1.7,
+      "marks": 3.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 37.2,
+      "disposals": 8.4,
+      "tackles": 1.5,
+      "marks": 3.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 19,
@@ -9342,7 +12873,49 @@
     "cba": {
      "2024": 15.0,
      "2025": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 77.9,
+      "disposals": 19.7,
+      "tackles": 2.9,
+      "marks": 4.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 85.5,
+      "disposals": 22.7,
+      "tackles": 4.5,
+      "marks": 2.2,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 92.7,
+      "disposals": 23.3,
+      "tackles": 4.7,
+      "marks": 2.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 9,
+      "fp": 53.4,
+      "disposals": 13.1,
+      "tackles": 1.9,
+      "marks": 3.3,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -9378,7 +12951,49 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 77.4,
+      "disposals": 20.2,
+      "tackles": 3.8,
+      "marks": 3.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 80.2,
+      "disposals": 19.8,
+      "tackles": 3.0,
+      "marks": 5.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 81.5,
+      "disposals": 20.6,
+      "tackles": 2.9,
+      "marks": 4.9,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 57.8,
+      "disposals": 14.5,
+      "tackles": 1.9,
+      "marks": 3.7,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 21,
@@ -9413,7 +13028,49 @@
     "role": "Forward",
     "cba": {
      "2024": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 69.4,
+      "disposals": 16.2,
+      "tackles": 2.5,
+      "marks": 5.6,
+      "goals": 0.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 77.0,
+      "disposals": 15.7,
+      "tackles": 2.6,
+      "marks": 6.2,
+      "goals": 1.4
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 62.0,
+      "disposals": 13.6,
+      "tackles": 3.5,
+      "marks": 3.7,
+      "goals": 0.8
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 61.5,
+      "disposals": 13.4,
+      "tackles": 3.6,
+      "marks": 3.3,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -9439,7 +13096,49 @@
     "jFP": 48.0,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 69.8,
+      "disposals": 12.5,
+      "tackles": 1.8,
+      "marks": 2.2,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 65.8,
+      "disposals": 9.9,
+      "tackles": 1.7,
+      "marks": 2.0,
+      "goals": 1.5
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 76.4,
+      "disposals": 11.2,
+      "tackles": 2.4,
+      "marks": 0.8,
+      "goals": 0.2
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 68.5,
+      "disposals": 14.0,
+      "tackles": 1.5,
+      "marks": 2.0,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -9488,7 +13187,49 @@
     "role": "Midfielder",
     "cba": {
      "2024": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 101.5,
+      "disposals": 27.1,
+      "tackles": 4.8,
+      "marks": 4.6,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 87.9,
+      "disposals": 22.4,
+      "tackles": 3.3,
+      "marks": 4.2,
+      "goals": 0.9
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 95.0,
+      "disposals": 24.4,
+      "tackles": 5.6,
+      "marks": 4.5,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 77.2,
+      "disposals": 18.4,
+      "tackles": 4.9,
+      "marks": 3.8,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -9532,7 +13273,49 @@
     "role": "Ruck",
     "cba": {
      "2025": 9.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 58.1,
+      "disposals": 11.9,
+      "tackles": 1.9,
+      "marks": 3.4,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 66.2,
+      "disposals": 13.8,
+      "tackles": 1.2,
+      "marks": 6.0,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 61.2,
+      "disposals": 13.6,
+      "tackles": 1.3,
+      "marks": 5.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 12,
+      "fp": 46.0,
+      "disposals": 9.7,
+      "tackles": 1.0,
+      "marks": 3.3,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": null,
@@ -9560,7 +13343,8 @@
     "jFP": 60.0,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -9582,7 +13366,49 @@
     "jFP": null,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 46.2,
+      "disposals": 10.6,
+      "tackles": 1.8,
+      "marks": 2.0,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 32.0,
+      "disposals": 8.5,
+      "tackles": 1.5,
+      "marks": 1.5,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 58.5,
+      "disposals": 12.9,
+      "tackles": 2.5,
+      "marks": 2.5,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 68.7,
+      "disposals": 16.5,
+      "tackles": 2.4,
+      "marks": 3.5,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -9608,7 +13434,39 @@
     "jFP": 31.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 56.0,
+      "disposals": 8.3,
+      "tackles": 1.8,
+      "marks": 4.4,
+      "goals": 1.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 56.7,
+      "disposals": 10.5,
+      "tackles": 1.8,
+      "marks": 4.6,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 47.9,
+      "disposals": 9.3,
+      "tackles": 2.1,
+      "marks": 3.0,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 23,
@@ -9653,7 +13511,29 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 24.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 78.0,
+      "disposals": 15.8,
+      "tackles": 2.4,
+      "marks": 4.4,
+      "goals": 2.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 56.0,
+      "disposals": 12.9,
+      "tackles": 2.0,
+      "marks": 3.3,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -9688,7 +13568,39 @@
     "role": "Defender",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 82.9,
+      "disposals": 24.9,
+      "tackles": 1.4,
+      "marks": 4.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 83.6,
+      "disposals": 23.8,
+      "tackles": 1.4,
+      "marks": 5.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 76.9,
+      "disposals": 19.7,
+      "tackles": 2.5,
+      "marks": 4.8,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -9739,7 +13651,49 @@
      "2024": 7.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 64.7,
+      "disposals": 15.1,
+      "tackles": 4.1,
+      "marks": 4.1,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 51.3,
+      "disposals": 13.6,
+      "tackles": 1.4,
+      "marks": 4.0,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 46.1,
+      "disposals": 12.5,
+      "tackles": 1.8,
+      "marks": 3.1,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 37.8,
+      "disposals": 9.6,
+      "tackles": 2.9,
+      "marks": 1.4,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -9783,7 +13737,49 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 80.4,
+      "disposals": 22.0,
+      "tackles": 2.1,
+      "marks": 5.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 64.1,
+      "disposals": 17.6,
+      "tackles": 2.1,
+      "marks": 3.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 61.6,
+      "disposals": 15.8,
+      "tackles": 2.3,
+      "marks": 4.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 61.5,
+      "disposals": 16.2,
+      "tackles": 2.3,
+      "marks": 4.2,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -9810,7 +13806,29 @@
     "jFP": 49.0,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 38.0,
+      "disposals": 6.7,
+      "tackles": 0.7,
+      "marks": 3.2,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 43.5,
+      "disposals": 9.9,
+      "tackles": 0.7,
+      "marks": 3.5,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -9832,7 +13850,49 @@
     "jFP": null,
     "seasons": [],
     "role": "Unknown",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 59.2,
+      "disposals": 10.6,
+      "tackles": 1.2,
+      "marks": 3.7,
+      "goals": 1.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 53.9,
+      "disposals": 9.4,
+      "tackles": 0.9,
+      "marks": 4.3,
+      "goals": 1.7
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 47.1,
+      "disposals": 8.0,
+      "tackles": 1.4,
+      "marks": 2.8,
+      "goals": 1.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 38.0,
+      "disposals": 6.5,
+      "tackles": 1.4,
+      "marks": 2.0,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -9858,7 +13918,39 @@
     "jFP": null,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 46.3,
+      "disposals": 9.3,
+      "tackles": 1.6,
+      "marks": 2.1,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 37.7,
+      "disposals": 8.0,
+      "tackles": 2.7,
+      "marks": 1.7,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 40.5,
+      "disposals": 9.1,
+      "tackles": 1.2,
+      "marks": 1.9,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -9909,7 +14001,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 70.8,
+      "disposals": 12.8,
+      "tackles": 4.3,
+      "marks": 3.5,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 56.4,
+      "disposals": 11.0,
+      "tackles": 3.2,
+      "marks": 2.7,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 46.9,
+      "disposals": 10.5,
+      "tackles": 2.1,
+      "marks": 3.4,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -9953,7 +14077,49 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 98.5,
+      "disposals": 27.0,
+      "tackles": 2.4,
+      "marks": 6.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 74.1,
+      "disposals": 14.9,
+      "tackles": 2.5,
+      "marks": 4.8,
+      "goals": 1.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 54.6,
+      "disposals": 12.0,
+      "tackles": 2.3,
+      "marks": 3.3,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 12,
+      "fp": 65.8,
+      "disposals": 13.0,
+      "tackles": 1.8,
+      "marks": 4.8,
+      "goals": 1.8
+     }
+    ]
    },
    {
     "age": 25,
@@ -10020,7 +14186,39 @@
      "2024": 0.0,
      "2025": 17.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 77.5,
+      "disposals": 24.0,
+      "tackles": 3.5,
+      "marks": 1.5,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 79.2,
+      "disposals": 23.0,
+      "tackles": 1.3,
+      "marks": 4.5,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 82.9,
+      "disposals": 21.9,
+      "tackles": 3.7,
+      "marks": 3.8,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -10068,7 +14266,19 @@
      "2023": 0.0,
      "2024": 1.0,
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 75.1,
+      "disposals": 14.6,
+      "tackles": 3.4,
+      "marks": 5.3,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -10090,7 +14300,49 @@
     "jFP": 30.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 31.7,
+      "disposals": 7.3,
+      "tackles": 1.0,
+      "marks": 3.2,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 34.7,
+      "disposals": 8.1,
+      "tackles": 1.0,
+      "marks": 3.3,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 36.4,
+      "disposals": 7.1,
+      "tackles": 2.0,
+      "marks": 3.6,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 35.8,
+      "disposals": 8.4,
+      "tackles": 1.1,
+      "marks": 3.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -10142,7 +14394,8 @@
      "2024": 70.0,
      "2025": 59.0,
      "2026": 80.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -10194,7 +14447,19 @@
      "2024": 4.0,
      "2025": 1.0,
      "2026": 9.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 97.5,
+      "disposals": 28.5,
+      "tackles": 0.0,
+      "marks": 5.5,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -10246,7 +14511,39 @@
      "2024": 3.0,
      "2025": 1.0,
      "2026": 3.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 59.0,
+      "disposals": 13.0,
+      "tackles": 1.5,
+      "marks": 3.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 60.0,
+      "disposals": 9.5,
+      "tackles": 2.8,
+      "marks": 4.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 54.0,
+      "disposals": 9.3,
+      "tackles": 3.0,
+      "marks": 3.5,
+      "goals": 1.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -10297,7 +14594,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 40.5,
+      "disposals": 9.0,
+      "tackles": 1.5,
+      "marks": 2.5,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 63.7,
+      "disposals": 14.8,
+      "tackles": 1.6,
+      "marks": 3.4,
+      "goals": 1.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 66.2,
+      "disposals": 13.2,
+      "tackles": 2.5,
+      "marks": 3.7,
+      "goals": 1.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -10348,7 +14677,19 @@
      "2024": 1.0,
      "2025": 5.0,
      "2026": 17.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 108.5,
+      "disposals": 20.0,
+      "tackles": 1.0,
+      "marks": 8.0,
+      "goals": 4.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -10399,7 +14740,19 @@
      "2024": 28.0,
      "2025": 10.0,
      "2026": 35.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 116.1,
+      "disposals": 32.0,
+      "tackles": 6.9,
+      "marks": 3.4,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -10449,7 +14802,19 @@
      "2024": 0.0,
      "2025": 12.0,
      "2026": 35.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 74.5,
+      "disposals": 16.0,
+      "tackles": 5.0,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -10501,7 +14866,29 @@
      "2024": 14.0,
      "2025": 4.0,
      "2026": 22.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 76.0,
+      "disposals": 17.0,
+      "tackles": 3.0,
+      "marks": 6.0,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 78.3,
+      "disposals": 18.0,
+      "tackles": 3.4,
+      "marks": 5.1,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -10552,7 +14939,39 @@
     "cba": {
      "2025": 13.0,
      "2026": 6.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 68.7,
+      "disposals": 12.6,
+      "tackles": 2.7,
+      "marks": 4.3,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 58.7,
+      "disposals": 9.0,
+      "tackles": 5.7,
+      "marks": 2.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 68.6,
+      "disposals": 14.2,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -10602,7 +15021,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 55.8,
+      "disposals": 10.7,
+      "tackles": 1.5,
+      "marks": 4.3,
+      "goals": 1.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -10652,7 +15083,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 64.8,
+      "disposals": 15.5,
+      "tackles": 2.2,
+      "marks": 5.6,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -10691,7 +15134,29 @@
     "role": "Small forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 64.2,
+      "disposals": 13.5,
+      "tackles": 4.8,
+      "marks": 1.8,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 69.9,
+      "disposals": 15.9,
+      "tackles": 4.6,
+      "marks": 2.8,
+      "goals": 1.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -10741,7 +15206,29 @@
      "2024": 6.0,
      "2025": 0.0,
      "2026": 4.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 74.5,
+      "disposals": 18.2,
+      "tackles": 5.0,
+      "marks": 2.8,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 85.1,
+      "disposals": 19.6,
+      "tackles": 4.9,
+      "marks": 4.3,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -10792,7 +15279,39 @@
      "2024": 3.0,
      "2025": 3.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 61.0,
+      "disposals": 17.0,
+      "tackles": 3.4,
+      "marks": 1.0,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 83.6,
+      "disposals": 21.7,
+      "tackles": 5.6,
+      "marks": 3.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 78.6,
+      "disposals": 19.2,
+      "tackles": 6.0,
+      "marks": 2.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -10836,7 +15355,39 @@
     "role": "Key position",
     "cba": {
      "2026": 10.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 43.7,
+      "disposals": 8.7,
+      "tackles": 3.0,
+      "marks": 1.7,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 52.5,
+      "disposals": 9.8,
+      "tackles": 1.8,
+      "marks": 3.6,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 38.6,
+      "disposals": 7.4,
+      "tackles": 1.1,
+      "marks": 2.6,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -10873,7 +15424,39 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 75.4,
+      "disposals": 11.4,
+      "tackles": 3.8,
+      "marks": 1.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 66.3,
+      "disposals": 10.2,
+      "tackles": 4.1,
+      "marks": 2.4,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 48.1,
+      "disposals": 8.8,
+      "tackles": 2.1,
+      "marks": 2.9,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -10917,7 +15500,39 @@
     "role": "Unknown",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 74.2,
+      "disposals": 21.9,
+      "tackles": 2.1,
+      "marks": 3.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 95.2,
+      "disposals": 24.8,
+      "tackles": 4.3,
+      "marks": 4.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 95.1,
+      "disposals": 23.7,
+      "tackles": 6.0,
+      "marks": 3.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -10969,7 +15584,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 16.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 125.3,
+      "disposals": 34.0,
+      "tackles": 6.0,
+      "marks": 3.7,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -11006,7 +15633,39 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 73.5,
+      "disposals": 17.0,
+      "tackles": 1.4,
+      "marks": 5.9,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 53.1,
+      "disposals": 11.9,
+      "tackles": 1.1,
+      "marks": 4.6,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 43.6,
+      "disposals": 10.7,
+      "tackles": 1.1,
+      "marks": 3.9,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -11043,7 +15702,39 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 61.6,
+      "disposals": 10.5,
+      "tackles": 2.8,
+      "marks": 1.9,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 51.7,
+      "disposals": 9.5,
+      "tackles": 1.9,
+      "marks": 1.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 19.8,
+      "disposals": 4.5,
+      "tackles": 1.5,
+      "marks": 0.4,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11079,7 +15770,39 @@
      ]
     ],
     "role": "Tall utility",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 82.3,
+      "disposals": 22.8,
+      "tackles": 3.1,
+      "marks": 4.4,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 77.7,
+      "disposals": 19.5,
+      "tackles": 2.2,
+      "marks": 6.0,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 66.9,
+      "disposals": 15.5,
+      "tackles": 3.7,
+      "marks": 3.7,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -11129,7 +15852,39 @@
     "cba": {
      "2025": 5.0,
      "2026": 20.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 73.1,
+      "disposals": 12.6,
+      "tackles": 4.8,
+      "marks": 3.4,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 49.2,
+      "disposals": 9.0,
+      "tackles": 2.5,
+      "marks": 4.0,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 52.1,
+      "disposals": 9.2,
+      "tackles": 3.4,
+      "marks": 3.7,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11179,7 +15934,39 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 69.1,
+      "disposals": 19.0,
+      "tackles": 1.2,
+      "marks": 4.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 58.7,
+      "disposals": 16.0,
+      "tackles": 1.0,
+      "marks": 5.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 59.7,
+      "disposals": 15.0,
+      "tackles": 1.4,
+      "marks": 4.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11230,7 +16017,39 @@
      "2024": 5.0,
      "2025": 4.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 102.7,
+      "disposals": 29.0,
+      "tackles": 5.4,
+      "marks": 4.3,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 96.9,
+      "disposals": 28.3,
+      "tackles": 5.1,
+      "marks": 3.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 85.8,
+      "disposals": 21.2,
+      "tackles": 4.7,
+      "marks": 4.2,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -11258,7 +16077,39 @@
     "jFP": 74.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 70.3,
+      "disposals": 18.0,
+      "tackles": 3.5,
+      "marks": 3.0,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 19,
+      "fp": 75.6,
+      "disposals": 21.7,
+      "tackles": 3.8,
+      "marks": 2.1,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 57.9,
+      "disposals": 15.3,
+      "tackles": 2.2,
+      "marks": 3.3,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -11309,7 +16160,29 @@
      "2024": 41.0,
      "2025": 19.0,
      "2026": 19.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 59.0,
+      "disposals": 19.0,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 101.3,
+      "disposals": 26.0,
+      "tackles": 6.3,
+      "marks": 4.3,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -11344,7 +16217,39 @@
      ]
     ],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 75.0,
+      "disposals": 19.8,
+      "tackles": 2.2,
+      "marks": 4.8,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 59.8,
+      "disposals": 15.9,
+      "tackles": 2.0,
+      "marks": 3.8,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 73.3,
+      "disposals": 18.5,
+      "tackles": 3.2,
+      "marks": 4.2,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11384,7 +16289,39 @@
     "role": "Small forward",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 70.9,
+      "disposals": 19.5,
+      "tackles": 1.1,
+      "marks": 4.4,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 43.1,
+      "disposals": 8.9,
+      "tackles": 2.6,
+      "marks": 2.0,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 40.4,
+      "disposals": 7.6,
+      "tackles": 2.2,
+      "marks": 0.9,
+      "goals": 1.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -11434,7 +16371,39 @@
     "role": "Forward",
     "cba": {
      "2025": 8.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 59.7,
+      "disposals": 12.8,
+      "tackles": 1.6,
+      "marks": 5.0,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 55.7,
+      "disposals": 12.4,
+      "tackles": 2.2,
+      "marks": 3.3,
+      "goals": 1.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 49.3,
+      "disposals": 11.0,
+      "tackles": 2.4,
+      "marks": 3.1,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -11479,7 +16448,29 @@
     "cba": {
      "2025": 12.0,
      "2026": 9.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 44.2,
+      "disposals": 8.6,
+      "tackles": 1.3,
+      "marks": 2.5,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 48.5,
+      "disposals": 8.0,
+      "tackles": 1.8,
+      "marks": 3.3,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11529,7 +16520,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 74.4,
+      "disposals": 15.2,
+      "tackles": 1.1,
+      "marks": 5.9,
+      "goals": 2.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -11566,7 +16569,29 @@
     "role": "Ruck",
     "cba": {
      "2026": 67.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 53.7,
+      "disposals": 9.9,
+      "tackles": 1.7,
+      "marks": 2.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 35.0,
+      "disposals": 7.7,
+      "tackles": 1.3,
+      "marks": 1.7,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -11615,7 +16640,39 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 105.1,
+      "disposals": 25.0,
+      "tackles": 4.1,
+      "marks": 7.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 80.0,
+      "disposals": 21.5,
+      "tackles": 2.9,
+      "marks": 3.9,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 66.9,
+      "disposals": 16.8,
+      "tackles": 2.1,
+      "marks": 4.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11658,7 +16715,39 @@
     "role": "Defender",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 87.2,
+      "disposals": 26.2,
+      "tackles": 1.4,
+      "marks": 4.8,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 85.8,
+      "disposals": 21.3,
+      "tackles": 2.7,
+      "marks": 6.0,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 67.6,
+      "disposals": 18.8,
+      "tackles": 2.1,
+      "marks": 3.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -11697,7 +16786,29 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 66.9,
+      "disposals": 19.0,
+      "tackles": 1.5,
+      "marks": 3.3,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 53.2,
+      "disposals": 10.3,
+      "tackles": 3.9,
+      "marks": 1.9,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 26,
@@ -11742,7 +16853,29 @@
      "2024": 1.0,
      "2025": 0.0,
      "2026": 10.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 92.0,
+      "disposals": 19.0,
+      "tackles": 6.0,
+      "marks": 3.5,
+      "goals": 1.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 86.0,
+      "disposals": 16.7,
+      "tackles": 3.8,
+      "marks": 3.5,
+      "goals": 2.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -11775,7 +16908,39 @@
      ]
     ],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 74.0,
+      "disposals": 18.2,
+      "tackles": 2.8,
+      "marks": 5.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 61.2,
+      "disposals": 16.3,
+      "tackles": 1.4,
+      "marks": 4.9,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 64.0,
+      "disposals": 15.7,
+      "tackles": 2.8,
+      "marks": 4.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -11817,7 +16982,29 @@
     "role": "Midfielder",
     "cba": {
      "2025": 38.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 104.5,
+      "disposals": 29.1,
+      "tackles": 4.5,
+      "marks": 4.2,
+      "goals": 0.5
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 68.6,
+      "disposals": 19.0,
+      "tackles": 4.1,
+      "marks": 1.9,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -11853,7 +17040,39 @@
     "role": "Defender",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 54.6,
+      "disposals": 14.6,
+      "tackles": 1.9,
+      "marks": 3.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 55.0,
+      "disposals": 12.6,
+      "tackles": 2.9,
+      "marks": 3.3,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 52.9,
+      "disposals": 13.9,
+      "tackles": 1.7,
+      "marks": 4.1,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11904,7 +17123,39 @@
      "2024": 40.0,
      "2025": 59.0,
      "2026": 46.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 70.6,
+      "disposals": 20.4,
+      "tackles": 4.4,
+      "marks": 2.2,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 103.6,
+      "disposals": 24.8,
+      "tackles": 6.6,
+      "marks": 4.4,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 91.1,
+      "disposals": 22.3,
+      "tackles": 6.1,
+      "marks": 3.0,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -11932,7 +17183,29 @@
     "jFP": 48.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 47.9,
+      "disposals": 10.6,
+      "tackles": 2.0,
+      "marks": 4.1,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 39.9,
+      "disposals": 9.3,
+      "tackles": 1.2,
+      "marks": 3.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -11954,7 +17227,39 @@
     "jFP": null,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 67.5,
+      "disposals": 15.1,
+      "tackles": 2.1,
+      "marks": 6.4,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 56.6,
+      "disposals": 12.7,
+      "tackles": 1.2,
+      "marks": 6.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 19,
+      "fp": 59.2,
+      "disposals": 11.8,
+      "tackles": 1.7,
+      "marks": 5.4,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -11997,7 +17302,39 @@
     "role": "Key position",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 52.4,
+      "disposals": 9.5,
+      "tackles": 0.8,
+      "marks": 5.4,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 42.8,
+      "disposals": 8.2,
+      "tackles": 1.8,
+      "marks": 2.7,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 25.3,
+      "disposals": 5.0,
+      "tackles": 0.7,
+      "marks": 1.7,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 19,
@@ -12046,7 +17383,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 68.8,
+      "disposals": 18.0,
+      "tackles": 3.0,
+      "marks": 3.5,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 67.0,
+      "disposals": 15.8,
+      "tackles": 3.4,
+      "marks": 4.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -12097,7 +17456,19 @@
      "2024": 0.0,
      "2025": 19.0,
      "2026": 38.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 86.4,
+      "disposals": 21.8,
+      "tackles": 2.0,
+      "marks": 7.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -12135,7 +17506,39 @@
     "role": "Defender",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 82.1,
+      "disposals": 22.5,
+      "tackles": 1.8,
+      "marks": 5.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 68.2,
+      "disposals": 18.6,
+      "tackles": 1.2,
+      "marks": 4.9,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 19,
+      "fp": 62.8,
+      "disposals": 15.8,
+      "tackles": 1.6,
+      "marks": 4.6,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -12166,7 +17569,39 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 75.6,
+      "disposals": 14.5,
+      "tackles": 3.3,
+      "marks": 1.6,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 21,
+      "fp": 84.7,
+      "disposals": 14.4,
+      "tackles": 4.6,
+      "marks": 2.0,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 63.8,
+      "disposals": 10.1,
+      "tackles": 3.1,
+      "marks": 1.6,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -12202,7 +17637,39 @@
     "role": "Small forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 58.5,
+      "disposals": 13.9,
+      "tackles": 1.5,
+      "marks": 4.9,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 57.2,
+      "disposals": 13.4,
+      "tackles": 2.6,
+      "marks": 3.6,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 53.4,
+      "disposals": 10.9,
+      "tackles": 3.5,
+      "marks": 2.7,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -12247,7 +17714,29 @@
     "cba": {
      "2024": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 61.1,
+      "disposals": 16.2,
+      "tackles": 2.4,
+      "marks": 4.1,
+      "goals": 0.1
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 58.2,
+      "disposals": 15.4,
+      "tackles": 2.0,
+      "marks": 3.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -12297,7 +17786,29 @@
      "2024": 20.0,
      "2025": 51.0,
      "2026": 67.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 122.2,
+      "disposals": 28.3,
+      "tackles": 11.0,
+      "marks": 2.5,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 108.7,
+      "disposals": 20.6,
+      "tackles": 10.7,
+      "marks": 2.8,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -12334,7 +17845,39 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 61.9,
+      "disposals": 12.5,
+      "tackles": 1.6,
+      "marks": 3.3,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 45.4,
+      "disposals": 11.5,
+      "tackles": 1.0,
+      "marks": 3.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 35.5,
+      "disposals": 8.9,
+      "tackles": 0.7,
+      "marks": 3.4,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -12360,7 +17903,39 @@
     "jFP": 71.0,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 45.5,
+      "disposals": 10.3,
+      "tackles": 1.7,
+      "marks": 1.9,
+      "goals": 1.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 36.2,
+      "disposals": 7.8,
+      "tackles": 1.0,
+      "marks": 1.9,
+      "goals": 1.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 42.2,
+      "disposals": 10.3,
+      "tackles": 1.9,
+      "marks": 2.1,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -12387,7 +17962,39 @@
     "jFP": 60.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 19,
+      "fp": 68.9,
+      "disposals": 17.4,
+      "tackles": 2.5,
+      "marks": 5.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 53.3,
+      "disposals": 12.1,
+      "tackles": 2.7,
+      "marks": 4.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 47.8,
+      "disposals": 11.7,
+      "tackles": 2.0,
+      "marks": 3.6,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -12437,7 +18044,19 @@
     "cba": {
      "2025": 3.0,
      "2026": 6.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 77.0,
+      "disposals": 21.3,
+      "tackles": 2.1,
+      "marks": 4.4,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -12463,7 +18082,8 @@
     "jFP": 57.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -12513,7 +18133,39 @@
      "2024": 1.0,
      "2025": 2.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 68.2,
+      "disposals": 13.0,
+      "tackles": 2.8,
+      "marks": 5.2,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 66.9,
+      "disposals": 11.4,
+      "tackles": 2.6,
+      "marks": 5.0,
+      "goals": 1.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 70.2,
+      "disposals": 12.2,
+      "tackles": 3.6,
+      "marks": 4.0,
+      "goals": 1.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -12561,7 +18213,39 @@
     "role": "Midfielder",
     "cba": {
      "2025": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 102.2,
+      "disposals": 26.9,
+      "tackles": 2.6,
+      "marks": 6.8,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 83.2,
+      "disposals": 21.3,
+      "tackles": 4.3,
+      "marks": 4.1,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 83.9,
+      "disposals": 20.6,
+      "tackles": 4.2,
+      "marks": 3.9,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -12604,7 +18288,39 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 105.1,
+      "disposals": 30.5,
+      "tackles": 4.8,
+      "marks": 3.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 97.4,
+      "disposals": 27.4,
+      "tackles": 5.9,
+      "marks": 2.5,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 19,
+      "fp": 73.8,
+      "disposals": 20.9,
+      "tackles": 3.7,
+      "marks": 2.9,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -12653,7 +18369,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 88.5,
+      "disposals": 19.8,
+      "tackles": 5.3,
+      "marks": 3.0,
+      "goals": 1.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -12680,7 +18408,39 @@
     "jFP": 36.0,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 56.8,
+      "disposals": 9.1,
+      "tackles": 2.2,
+      "marks": 3.6,
+      "goals": 2.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 62.6,
+      "disposals": 13.2,
+      "tackles": 3.3,
+      "marks": 2.8,
+      "goals": 1.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 35.1,
+      "disposals": 6.7,
+      "tackles": 1.7,
+      "marks": 1.8,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 21,
@@ -12718,7 +18478,39 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 84.3,
+      "disposals": 17.5,
+      "tackles": 2.7,
+      "marks": 4.7,
+      "goals": 2.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 59.4,
+      "disposals": 13.6,
+      "tackles": 1.8,
+      "marks": 2.8,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 7,
+      "fp": 39.9,
+      "disposals": 10.0,
+      "tackles": 1.7,
+      "marks": 2.1,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -12755,7 +18547,39 @@
      ]
     ],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 69.2,
+      "disposals": 17.7,
+      "tackles": 1.5,
+      "marks": 4.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 89.9,
+      "disposals": 22.7,
+      "tackles": 1.1,
+      "marks": 6.3,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 96.2,
+      "disposals": 26.0,
+      "tackles": 1.1,
+      "marks": 6.2,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 20,
@@ -12803,7 +18627,19 @@
      "2024": 0.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 84.0,
+      "disposals": 22.2,
+      "tackles": 2.1,
+      "marks": 5.2,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -12829,7 +18665,39 @@
     "jFP": 74.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 87.4,
+      "disposals": 19.6,
+      "tackles": 4.6,
+      "marks": 5.1,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 73.8,
+      "disposals": 18.9,
+      "tackles": 3.6,
+      "marks": 3.3,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 21,
+      "fp": 64.5,
+      "disposals": 15.6,
+      "tackles": 2.0,
+      "marks": 4.7,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -12874,7 +18742,8 @@
     "cba": {
      "2025": 21.0,
      "2026": 48.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -12920,7 +18789,8 @@
     "cba": {
      "2025": 2.0,
      "2026": 68.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -12960,7 +18830,8 @@
     "role": "Midfielder",
     "cba": {
      "2026": 56.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -12995,7 +18866,29 @@
     "role": "Midfielder",
     "cba": {
      "2025": 23.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 56.1,
+      "disposals": 16.8,
+      "tackles": 2.5,
+      "marks": 1.5,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 81.9,
+      "disposals": 21.1,
+      "tackles": 5.4,
+      "marks": 3.0,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -13040,7 +18933,8 @@
     "cba": {
      "2025": 6.0,
      "2026": 10.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -13086,7 +18980,19 @@
     "cba": {
      "2025": 10.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 91.0,
+      "disposals": 23.0,
+      "tackles": 3.0,
+      "marks": 3.0,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13115,7 +19021,19 @@
     "jFP": 90.0,
     "seasons": [],
     "role": "Tall utility",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 53.0,
+      "disposals": 16.3,
+      "tackles": 3.3,
+      "marks": 1.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13160,7 +19078,29 @@
     "cba": {
      "2025": 2.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 89.3,
+      "disposals": 20.4,
+      "tackles": 6.2,
+      "marks": 4.7,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 90.2,
+      "disposals": 23.2,
+      "tackles": 4.2,
+      "marks": 4.6,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -13204,7 +19144,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 90.0,
+      "disposals": 25.3,
+      "tackles": 5.0,
+      "marks": 3.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -13249,7 +19201,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 61.4,
+      "disposals": 14.6,
+      "tackles": 2.4,
+      "marks": 5.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 57.4,
+      "disposals": 11.4,
+      "tackles": 2.8,
+      "marks": 5.6,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13294,7 +19268,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 89.0,
+      "disposals": 23.5,
+      "tackles": 3.0,
+      "marks": 3.0,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13339,7 +19325,29 @@
     "cba": {
      "2025": 10.0,
      "2026": 31.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 68.0,
+      "disposals": 15.0,
+      "tackles": 7.0,
+      "marks": 0.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 81.3,
+      "disposals": 21.0,
+      "tackles": 4.3,
+      "marks": 4.0,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -13383,7 +19391,8 @@
     "cba": {
      "2025": 12.0,
      "2026": 8.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -13427,7 +19436,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 44.7,
+      "disposals": 10.0,
+      "tackles": 1.0,
+      "marks": 3.3,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -13472,7 +19493,19 @@
     "cba": {
      "2025": 1.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 70.8,
+      "disposals": 16.0,
+      "tackles": 3.3,
+      "marks": 4.3,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -13518,7 +19551,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 73.6,
+      "disposals": 17.8,
+      "tackles": 4.0,
+      "marks": 5.6,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13561,7 +19606,8 @@
     "cba": {
      "2025": 1.0,
      "2026": 25.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -13600,7 +19646,29 @@
     "role": "Unknown",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 68.9,
+      "disposals": 17.9,
+      "tackles": 3.4,
+      "marks": 2.1,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 56.2,
+      "disposals": 11.6,
+      "tackles": 3.5,
+      "marks": 2.0,
+      "goals": 1.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -13639,7 +19707,29 @@
     "role": "Defender",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 73.1,
+      "disposals": 19.8,
+      "tackles": 2.6,
+      "marks": 5.0,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 81.5,
+      "disposals": 22.2,
+      "tackles": 2.3,
+      "marks": 4.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -13684,7 +19774,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 78.0,
+      "disposals": 20.5,
+      "tackles": 6.0,
+      "marks": 1.5,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 71.2,
+      "disposals": 19.5,
+      "tackles": 3.4,
+      "marks": 2.6,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -13730,7 +19842,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 85.0,
+      "disposals": 21.8,
+      "tackles": 1.8,
+      "marks": 6.8,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -13773,7 +19897,29 @@
     "role": "Midfielder",
     "cba": {
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 69.5,
+      "disposals": 17.3,
+      "tackles": 3.1,
+      "marks": 2.4,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 58.7,
+      "disposals": 12.5,
+      "tackles": 2.2,
+      "marks": 2.4,
+      "goals": 1.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -13816,7 +19962,29 @@
     "role": "Key position",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 37.2,
+      "disposals": 6.6,
+      "tackles": 0.8,
+      "marks": 2.8,
+      "goals": 1.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 49.0,
+      "disposals": 11.0,
+      "tackles": 2.0,
+      "marks": 2.0,
+      "goals": 2.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -13858,7 +20026,29 @@
      ]
     ],
     "role": "Forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 65.5,
+      "disposals": 16.7,
+      "tackles": 3.1,
+      "marks": 2.0,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 88.6,
+      "disposals": 22.8,
+      "tackles": 2.4,
+      "marks": 5.2,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -13902,7 +20092,29 @@
     "role": "Midfielder",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 90.9,
+      "disposals": 24.9,
+      "tackles": 3.1,
+      "marks": 4.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 67.1,
+      "disposals": 19.5,
+      "tackles": 1.8,
+      "marks": 3.7,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -13931,7 +20143,29 @@
     "jFP": 35.0,
     "seasons": [],
     "role": "Forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 68.2,
+      "disposals": 18.1,
+      "tackles": 2.5,
+      "marks": 3.9,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 48.4,
+      "disposals": 11.7,
+      "tackles": 2.3,
+      "marks": 2.8,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -13973,7 +20207,29 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 55.0,
+      "disposals": 11.6,
+      "tackles": 1.0,
+      "marks": 4.5,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 55.4,
+      "disposals": 13.3,
+      "tackles": 0.9,
+      "marks": 4.9,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -14009,7 +20265,29 @@
     "role": "Ruck",
     "cba": {
      "2025": 16.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 11.5,
+      "disposals": 2.5,
+      "tackles": 1.0,
+      "marks": 0.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 54.0,
+      "disposals": 8.6,
+      "tackles": 3.0,
+      "marks": 3.4,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -14048,7 +20326,29 @@
     "role": "Defender",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 70.4,
+      "disposals": 19.4,
+      "tackles": 2.2,
+      "marks": 3.9,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 20,
+      "fp": 70.8,
+      "disposals": 17.0,
+      "tackles": 1.9,
+      "marks": 5.1,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -14093,7 +20393,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 53.9,
+      "disposals": 9.9,
+      "tackles": 2.0,
+      "marks": 4.2,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -14136,7 +20448,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 78.0,
+      "disposals": 18.9,
+      "tackles": 3.2,
+      "marks": 4.3,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 61.9,
+      "disposals": 13.6,
+      "tackles": 2.9,
+      "marks": 2.5,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -14164,7 +20498,29 @@
     "jFP": 87.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 52.8,
+      "disposals": 12.9,
+      "tackles": 1.4,
+      "marks": 5.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 46.7,
+      "disposals": 10.2,
+      "tackles": 1.6,
+      "marks": 4.7,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -14207,7 +20563,19 @@
     "role": "Key position",
     "cba": {
      "2026": 5.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 50.3,
+      "disposals": 9.5,
+      "tackles": 1.4,
+      "marks": 3.3,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -14234,7 +20602,19 @@
     "jFP": 53.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 37.9,
+      "disposals": 7.3,
+      "tackles": 1.2,
+      "marks": 2.7,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -14272,7 +20652,29 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 64.8,
+      "disposals": 15.6,
+      "tackles": 1.4,
+      "marks": 7.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 57.2,
+      "disposals": 14.0,
+      "tackles": 1.0,
+      "marks": 5.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -14311,7 +20713,29 @@
     "role": "Tall utility",
     "cba": {
      "2026": 36.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 112.6,
+      "disposals": 32.0,
+      "tackles": 5.6,
+      "marks": 4.9,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 90.9,
+      "disposals": 23.8,
+      "tackles": 6.2,
+      "marks": 2.9,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -14340,7 +20764,29 @@
     "jFP": 74.0,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 59.8,
+      "disposals": 14.7,
+      "tackles": 0.5,
+      "marks": 5.4,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 54.3,
+      "disposals": 10.9,
+      "tackles": 1.2,
+      "marks": 4.2,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -14386,7 +20832,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 83.1,
+      "disposals": 23.1,
+      "tackles": 3.4,
+      "marks": 4.1,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 73.6,
+      "disposals": 20.2,
+      "tackles": 4.0,
+      "marks": 3.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -14428,7 +20896,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 49.8,
+      "disposals": 12.8,
+      "tackles": 0.8,
+      "marks": 2.8,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 58.8,
+      "disposals": 14.3,
+      "tackles": 0.5,
+      "marks": 5.3,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -14463,7 +20953,19 @@
     "role": "Key position",
     "cba": {
      "2025": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 65.1,
+      "disposals": 13.8,
+      "tackles": 2.0,
+      "marks": 6.7,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 24,
@@ -14507,7 +21009,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 122.5,
+      "disposals": 33.0,
+      "tackles": 3.0,
+      "marks": 7.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 98.0,
+      "disposals": 24.6,
+      "tackles": 3.0,
+      "marks": 7.5,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -14546,7 +21070,19 @@
     "cba": {
      "2025": 1.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 54.6,
+      "disposals": 8.6,
+      "tackles": 3.1,
+      "marks": 3.1,
+      "goals": 1.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -14575,7 +21111,29 @@
     "jFP": 109.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 89.7,
+      "disposals": 27.0,
+      "tackles": 3.6,
+      "marks": 3.1,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 79.9,
+      "disposals": 22.2,
+      "tackles": 4.6,
+      "marks": 2.3,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -14611,7 +21169,29 @@
     "role": "Key position",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 75.7,
+      "disposals": 12.0,
+      "tackles": 2.7,
+      "marks": 4.8,
+      "goals": 3.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 53.1,
+      "disposals": 8.9,
+      "tackles": 2.5,
+      "marks": 3.5,
+      "goals": 1.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -14656,7 +21236,29 @@
     "cba": {
      "2025": 21.0,
      "2026": 41.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 90.2,
+      "disposals": 21.7,
+      "tackles": 7.1,
+      "marks": 3.6,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 111.0,
+      "disposals": 24.5,
+      "tackles": 9.4,
+      "marks": 4.2,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -14701,7 +21303,19 @@
     "role": "Midfielder",
     "cba": {
      "2025": 18.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 79.1,
+      "disposals": 22.0,
+      "tackles": 2.6,
+      "marks": 3.3,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -14729,7 +21343,29 @@
     "jFP": 70.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 56.5,
+      "disposals": 15.5,
+      "tackles": 1.4,
+      "marks": 4.2,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 53.4,
+      "disposals": 15.0,
+      "tackles": 1.3,
+      "marks": 3.7,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -14762,7 +21398,19 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 62.6,
+      "disposals": 16.8,
+      "tackles": 2.7,
+      "marks": 3.2,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -14791,7 +21439,29 @@
     "jFP": 47.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 45.2,
+      "disposals": 8.5,
+      "tackles": 2.2,
+      "marks": 2.8,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 38.5,
+      "disposals": 8.6,
+      "tackles": 1.5,
+      "marks": 3.5,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -14836,7 +21506,29 @@
     "role": "Key position",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 68.2,
+      "disposals": 12.4,
+      "tackles": 1.3,
+      "marks": 5.8,
+      "goals": 2.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 62.2,
+      "disposals": 10.5,
+      "tackles": 1.4,
+      "marks": 5.0,
+      "goals": 2.4
+     }
+    ]
    },
    {
     "age": 23,
@@ -14875,7 +21567,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 97.0,
+      "disposals": 23.2,
+      "tackles": 4.4,
+      "marks": 5.2,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 65.5,
+      "disposals": 20.0,
+      "tackles": 1.5,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -14901,7 +21615,29 @@
     "jFP": null,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 35.9,
+      "disposals": 7.1,
+      "tackles": 0.6,
+      "marks": 3.0,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 53.5,
+      "disposals": 10.0,
+      "tackles": 2.2,
+      "marks": 4.2,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -14935,7 +21671,29 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 80.5,
+      "disposals": 15.7,
+      "tackles": 1.7,
+      "marks": 2.7,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 60.1,
+      "disposals": 13.9,
+      "tackles": 1.2,
+      "marks": 2.5,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -14967,7 +21725,29 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 87.3,
+      "disposals": 22.4,
+      "tackles": 2.7,
+      "marks": 6.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 69.6,
+      "disposals": 18.3,
+      "tackles": 1.9,
+      "marks": 4.8,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 19,
@@ -14994,7 +21774,29 @@
     "jFP": 40.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 47.7,
+      "disposals": 9.3,
+      "tackles": 3.9,
+      "marks": 2.6,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 38.8,
+      "disposals": 8.8,
+      "tackles": 2.2,
+      "marks": 2.8,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -15032,7 +21834,29 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 5,
+      "fp": 59.8,
+      "disposals": 15.0,
+      "tackles": 1.2,
+      "marks": 3.2,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 45.9,
+      "disposals": 10.5,
+      "tackles": 1.7,
+      "marks": 2.3,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -15061,7 +21885,29 @@
     "jFP": 94.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 72.6,
+      "disposals": 16.9,
+      "tackles": 5.1,
+      "marks": 3.1,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 60.0,
+      "disposals": 13.8,
+      "tackles": 3.5,
+      "marks": 3.2,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -15104,7 +21950,29 @@
     "role": "Forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 48.2,
+      "disposals": 9.3,
+      "tackles": 0.8,
+      "marks": 2.3,
+      "goals": 2.8
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 52.2,
+      "disposals": 11.4,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 1.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -15131,7 +21999,29 @@
     "jFP": 38.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 48.3,
+      "disposals": 10.3,
+      "tackles": 0.7,
+      "marks": 4.8,
+      "goals": 1.2
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 28.3,
+      "disposals": 6.5,
+      "tackles": 0.7,
+      "marks": 1.8,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -15158,7 +22048,29 @@
     "jFP": 82.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 62.0,
+      "disposals": 12.8,
+      "tackles": 4.1,
+      "marks": 2.5,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 39.4,
+      "disposals": 8.7,
+      "tackles": 1.6,
+      "marks": 2.2,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -15199,7 +22111,29 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 42.0,
+      "disposals": 9.5,
+      "tackles": 2.6,
+      "marks": 1.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 46.6,
+      "disposals": 11.6,
+      "tackles": 2.4,
+      "marks": 2.2,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -15236,7 +22170,29 @@
     "role": "Midfielder",
     "cba": {
      "2026": 1.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 79.7,
+      "disposals": 18.0,
+      "tackles": 7.4,
+      "marks": 2.4,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 54.0,
+      "disposals": 13.5,
+      "tackles": 2.8,
+      "marks": 2.7,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 20,
@@ -15258,7 +22214,19 @@
     "jFP": null,
     "seasons": [],
     "role": "Unknown",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 49.1,
+      "disposals": 14.3,
+      "tackles": 1.1,
+      "marks": 3.4,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -15286,7 +22254,29 @@
     "jFP": 83.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 61.3,
+      "disposals": 13.1,
+      "tackles": 3.6,
+      "marks": 2.6,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 66.1,
+      "disposals": 16.5,
+      "tackles": 4.0,
+      "marks": 2.1,
+      "goals": 0.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -15331,7 +22321,19 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 58.5,
+      "disposals": 14.3,
+      "tackles": 2.9,
+      "marks": 3.0,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -15358,7 +22360,29 @@
     "jFP": 49.0,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 19,
+      "fp": 78.6,
+      "disposals": 20.7,
+      "tackles": 1.5,
+      "marks": 6.2,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 34.0,
+      "disposals": 9.4,
+      "tackles": 1.0,
+      "marks": 2.4,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -15385,7 +22409,29 @@
     "jFP": 69.0,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 52.8,
+      "disposals": 11.8,
+      "tackles": 1.5,
+      "marks": 4.1,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 42.8,
+      "disposals": 9.8,
+      "tackles": 2.3,
+      "marks": 2.6,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 24,
@@ -15423,7 +22469,29 @@
     "role": "Unknown",
     "cba": {
      "2025": 14.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 63.4,
+      "disposals": 13.4,
+      "tackles": 2.1,
+      "marks": 4.6,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 10,
+      "fp": 73.9,
+      "disposals": 12.7,
+      "tackles": 3.5,
+      "marks": 5.3,
+      "goals": 2.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -15449,7 +22517,29 @@
     "jFP": 63.0,
     "seasons": [],
     "role": "Forward",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 55.2,
+      "disposals": 13.4,
+      "tackles": 1.3,
+      "marks": 4.0,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 41.2,
+      "disposals": 10.7,
+      "tackles": 1.5,
+      "marks": 2.0,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -15493,7 +22583,29 @@
     "cba": {
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 86.5,
+      "disposals": 26.4,
+      "tackles": 1.4,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 93.7,
+      "disposals": 25.4,
+      "tackles": 2.0,
+      "marks": 4.9,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -15520,7 +22632,29 @@
     "jFP": 89.0,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 38.0,
+      "disposals": 7.3,
+      "tackles": 1.0,
+      "marks": 0.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 11,
+      "fp": 50.2,
+      "disposals": 8.0,
+      "tackles": 2.3,
+      "marks": 1.6,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -15560,7 +22694,8 @@
     "role": "Tall utility",
     "cba": {
      "2026": 30.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -15600,7 +22735,19 @@
     "role": "Unknown",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 92.5,
+      "disposals": 21.5,
+      "tackles": 3.5,
+      "marks": 5.5,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -15640,7 +22787,8 @@
     "role": "Key position",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -15679,7 +22827,8 @@
     "role": "Ruck",
     "cba": {
      "2026": 17.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -15716,7 +22865,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 76.2,
+      "disposals": 20.7,
+      "tackles": 3.1,
+      "marks": 3.8,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -15753,7 +22914,19 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 115.0,
+      "disposals": 31.0,
+      "tackles": 4.3,
+      "marks": 6.3,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -15786,7 +22959,19 @@
     "role": "Unknown",
     "cba": {
      "2026": 43.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 50.0,
+      "disposals": 11.0,
+      "tackles": 6.0,
+      "marks": 0.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -15824,7 +23009,8 @@
     "role": "Midfielder",
     "cba": {
      "2026": 3.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -15862,7 +23048,19 @@
     "role": "Tall utility",
     "cba": {
      "2026": 33.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 67.7,
+      "disposals": 15.7,
+      "tackles": 2.7,
+      "marks": 3.7,
+      "goals": 1.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -15901,7 +23099,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 109.0,
+      "disposals": 31.0,
+      "tackles": 1.0,
+      "marks": 6.0,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -15938,7 +23148,19 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 65.8,
+      "disposals": 15.7,
+      "tackles": 3.0,
+      "marks": 5.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 20,
@@ -15976,7 +23198,19 @@
     "role": "Small forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 67.0,
+      "disposals": 16.7,
+      "tackles": 1.3,
+      "marks": 3.0,
+      "goals": 1.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -16015,7 +23249,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 37.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 88.0,
+      "disposals": 23.0,
+      "tackles": 4.0,
+      "marks": 5.0,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -16054,7 +23300,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 69.5,
+      "disposals": 19.9,
+      "tackles": 2.9,
+      "marks": 2.9,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -16082,7 +23340,19 @@
     "jFP": 77.0,
     "seasons": [],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 70.7,
+      "disposals": 21.3,
+      "tackles": 1.7,
+      "marks": 2.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -16121,7 +23391,19 @@
     "role": "Small forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 50.8,
+      "disposals": 11.5,
+      "tackles": 2.4,
+      "marks": 1.2,
+      "goals": 1.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -16159,7 +23441,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 2.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 102.5,
+      "disposals": 28.7,
+      "tackles": 3.2,
+      "marks": 5.2,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -16199,7 +23493,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 24.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 77.9,
+      "disposals": 23.2,
+      "tackles": 4.6,
+      "marks": 3.3,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -16235,7 +23541,8 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -16272,7 +23579,19 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 76.0,
+      "disposals": 17.4,
+      "tackles": 1.8,
+      "marks": 5.9,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -16309,7 +23628,19 @@
      ]
     ],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 73.9,
+      "disposals": 19.0,
+      "tackles": 3.0,
+      "marks": 4.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -16331,7 +23662,19 @@
     "jFP": null,
     "seasons": [],
     "role": "Unknown",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 56.2,
+      "disposals": 12.6,
+      "tackles": 1.7,
+      "marks": 4.6,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -16367,7 +23710,19 @@
      ]
     ],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 17,
+      "fp": 66.3,
+      "disposals": 12.7,
+      "tackles": 1.6,
+      "marks": 4.9,
+      "goals": 1.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -16395,7 +23750,8 @@
     "jFP": 74.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -16423,7 +23779,8 @@
     "jFP": 100.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -16451,7 +23808,8 @@
     "jFP": null,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -16491,7 +23849,19 @@
     "role": "Ruck",
     "cba": {
      "2026": 28.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 12,
+      "fp": 64.9,
+      "disposals": 14.6,
+      "tackles": 1.5,
+      "marks": 5.2,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -16519,7 +23889,19 @@
     "jFP": 45.0,
     "seasons": [],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 49.6,
+      "disposals": 12.4,
+      "tackles": 2.1,
+      "marks": 3.8,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -16547,7 +23929,8 @@
     "jFP": 82.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -16569,7 +23952,19 @@
     "jFP": null,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 47.1,
+      "disposals": 9.4,
+      "tackles": 3.3,
+      "marks": 1.1,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -16607,7 +24002,19 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 70.5,
+      "disposals": 16.7,
+      "tackles": 1.9,
+      "marks": 3.9,
+      "goals": 1.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -16636,7 +24043,19 @@
     "jFP": 89.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 65.3,
+      "disposals": 17.1,
+      "tackles": 4.6,
+      "marks": 2.3,
+      "goals": 0.3
+     }
+    ]
    },
    {
     "age": 18,
@@ -16660,7 +24079,19 @@
     "jFP": 72.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 65.9,
+      "disposals": 20.2,
+      "tackles": 1.3,
+      "marks": 3.2,
+      "goals": 0.4
+     }
+    ]
    },
    {
     "age": 18,
@@ -16699,7 +24130,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 88.7,
+      "disposals": 20.2,
+      "tackles": 4.0,
+      "marks": 5.2,
+      "goals": 0.9
+     }
+    ]
    },
    {
     "age": 18,
@@ -16728,7 +24171,19 @@
     "jFP": null,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 20,
+      "fp": 65.8,
+      "disposals": 13.2,
+      "tackles": 2.0,
+      "marks": 3.8,
+      "goals": 2.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -16767,7 +24222,19 @@
     "role": "Key position",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 68.2,
+      "disposals": 18.6,
+      "tackles": 1.3,
+      "marks": 5.3,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -16805,7 +24272,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 92.6,
+      "disposals": 28.4,
+      "tackles": 2.7,
+      "marks": 4.5,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -16833,7 +24312,19 @@
     "jFP": 37.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 15,
+      "fp": 46.0,
+      "disposals": 10.1,
+      "tackles": 3.4,
+      "marks": 2.3,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -16861,7 +24352,8 @@
     "jFP": 55.0,
     "seasons": [],
     "role": "Small forward",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 20,
@@ -16892,7 +24384,8 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -16928,7 +24421,19 @@
      ]
     ],
     "role": "Tall utility",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 62.6,
+      "disposals": 14.2,
+      "tackles": 2.6,
+      "marks": 3.9,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 23,
@@ -16961,7 +24466,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 3.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 10,
+      "fp": 101.9,
+      "disposals": 23.8,
+      "tackles": 5.5,
+      "marks": 3.8,
+      "goals": 1.6
+     }
+    ]
    },
    {
     "age": 18,
@@ -16998,7 +24515,19 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 63.3,
+      "disposals": 10.1,
+      "tackles": 2.4,
+      "marks": 4.4,
+      "goals": 1.6
+     }
+    ]
    },
    {
     "age": 21,
@@ -17024,7 +24553,19 @@
     "jFP": null,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 71.4,
+      "disposals": 16.0,
+      "tackles": 2.4,
+      "marks": 4.9,
+      "goals": 0.8
+     }
+    ]
    },
    {
     "age": 18,
@@ -17063,7 +24604,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 66.0,
+      "disposals": 12.7,
+      "tackles": 2.7,
+      "marks": 5.3,
+      "goals": 1.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -17092,7 +24645,19 @@
     "jFP": 114.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 67.2,
+      "disposals": 15.6,
+      "tackles": 4.4,
+      "marks": 3.3,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -17131,7 +24696,19 @@
     "role": "Tall utility",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 65.8,
+      "disposals": 14.2,
+      "tackles": 2.5,
+      "marks": 4.2,
+      "goals": 1.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -17158,7 +24735,19 @@
     "jFP": 74.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 53.4,
+      "disposals": 14.2,
+      "tackles": 1.9,
+      "marks": 3.4,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 18,
@@ -17186,7 +24775,8 @@
     "jFP": null,
     "seasons": [],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": []
    },
    {
     "age": 18,
@@ -17222,7 +24812,19 @@
      ]
     ],
     "role": "Key position",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 46.2,
+      "disposals": 8.0,
+      "tackles": 1.3,
+      "marks": 4.4,
+      "goals": 1.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -17251,7 +24853,19 @@
     "jFP": 107.0,
     "seasons": [],
     "role": "Defender",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 57.9,
+      "disposals": 16.0,
+      "tackles": 1.4,
+      "marks": 3.9,
+      "goals": 0.1
+     }
+    ]
    },
    {
     "age": 18,
@@ -17278,7 +24892,19 @@
     "jFP": 87.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 89.9,
+      "disposals": 24.1,
+      "tackles": 3.0,
+      "marks": 4.9,
+      "goals": 0.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -17316,7 +24942,19 @@
     "role": "Small forward",
     "cba": {
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 53.3,
+      "disposals": 11.3,
+      "tackles": 2.0,
+      "marks": 1.3,
+      "goals": 2.2
+     }
+    ]
    },
    {
     "age": 18,
@@ -17354,7 +24992,19 @@
      ]
     ],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 47.1,
+      "disposals": 11.6,
+      "tackles": 1.7,
+      "marks": 3.1,
+      "goals": 0.5
+     }
+    ]
    },
    {
     "age": 18,
@@ -17382,7 +25032,19 @@
     "jFP": 89.0,
     "seasons": [],
     "role": "Ruck",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 32.0,
+      "disposals": 6.6,
+      "tackles": 0.8,
+      "marks": 2.2,
+      "goals": 0.7
+     }
+    ]
    },
    {
     "age": 18,
@@ -17411,7 +25073,19 @@
     "jFP": 73.0,
     "seasons": [],
     "role": "Midfielder",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 62.4,
+      "disposals": 15.4,
+      "tackles": 2.3,
+      "marks": 4.4,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 22,
@@ -17449,7 +25123,19 @@
     "role": "Midfielder",
     "cba": {
      "2026": 16.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 111.0,
+      "disposals": 25.8,
+      "tackles": 8.5,
+      "marks": 2.8,
+      "goals": 1.0
+     }
+    ]
    },
    {
     "age": 24,
@@ -17524,7 +25210,19 @@
      "2024": 2.0,
      "2025": 0.0,
      "2026": 0.0
-    }
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 56.0,
+      "disposals": 14.5,
+      "tackles": 2.5,
+      "marks": 3.5,
+      "goals": 0.0
+     }
+    ]
    },
    {
     "age": 31,
@@ -17635,7 +25333,8 @@
      "2024": 31.0,
      "2025": 2.0,
      "2026": 6.0
-    }
+    },
+    "state": []
    },
    {
     "age": 18,
@@ -17664,7 +25363,19 @@
     "jFP": 24.0,
     "seasons": [],
     "role": "Tall utility",
-    "cba": {}
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 16,
+      "fp": 46.0,
+      "disposals": 9.6,
+      "tackles": 1.3,
+      "marks": 3.7,
+      "goals": 1.0
+     }
+    ]
    }
   ],
   "surprises": [
@@ -17686,6 +25397,16 @@
    "Sullivan Robey|2025",
    "Willem Duursma|2025",
    "Sam Lalor|2024"
+  ],
+  "sleepers": [
+   "Daniel Annable|2025",
+   "Jack Ough|2024",
+   "Dylan Patterson|2025",
+   "Lachlan Carmichael|2025",
+   "Jack Dalton|2025",
+   "Kye Fincher|2025",
+   "Ben Camporeale|2024",
+   "Lucas Camporeale|2024"
   ]
  }
 }
