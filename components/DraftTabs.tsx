@@ -7,11 +7,11 @@ const TABS = [
   ['crystal', 'Crystal ball', '/draft/crystal-ball'],
 ] as const;
 
-/** Section switcher for the draft area. */
-export function DraftTabs({ active }: { active: (typeof TABS)[number][0] }) {
+/** Section switcher for the draft area. The crystal ball tab only shows for the commish. */
+export function DraftTabs({ active, showCrystal = false }: { active: (typeof TABS)[number][0]; showCrystal?: boolean }) {
   return (
     <div role="tablist" aria-label="Draft section" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2, flexWrap: 'wrap' }}>
-      {TABS.map(([key, label, href]) => {
+      {TABS.filter(([key]) => key !== 'crystal' || showCrystal).map(([key, label, href]) => {
         const on = key === active;
         return (
           <Link key={key} href={href} role="tab" aria-selected={on}
