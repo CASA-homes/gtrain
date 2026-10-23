@@ -1,8 +1,7 @@
-import { InfoPopover } from '@/components/InfoPopover';
+import { ProfileSheet } from '@/components/ProfileSheet';
 import { gtrainPicksFor } from '@/lib/gtrain-draft';
 import Link from 'next/link';
 import { AvgChip, ClubDot } from '@/components/bits';
-import { DraftProfileCard } from '@/components/DraftProfileCard';
 import { DraftTabs } from '@/components/DraftTabs';
 import { YearSelect } from '@/components/YearSelect';
 import { getLeague } from '@/lib/data';
@@ -60,7 +59,7 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
                     {DRAFT_2026_DONE && <td>{p.club || '–'}</td>}
                     <td className="muted">{p.from || '–'}</td>
                     <td>{p.position || '–'}</td>
-                    <td>{prof ? <InfoPopover title={p.name} label="View"><span className="muted" style={{ fontSize: 13, marginTop: -8 }}>{DRAFT_2026_DONE ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · 2026 draft</span><DraftProfileCard d={prof} /></InfoPopover> : <span className="muted">Coming</span>}</td>
+                    <td>{prof ? <ProfileSheet name={p.name} profile={prof} label="View" highlights={2026} context={`${DRAFT_2026_DONE ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · 2026 draft`} /> : <span className="muted">Coming</span>}</td>
                   </tr>
                 );
               })}
@@ -123,10 +122,7 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
                     {lit && <span className="pill" style={{ marginLeft: 8, background: C.green5, color: '#fff' }}>#{rank}</span>}
                     {prof && (
                       <div style={{ marginTop: 2 }}>
-                        <InfoPopover title={d.n} label="Draft profile">
-                          <span className="muted" style={{ fontSize: 13, marginTop: -8 }}>Pick {d.p} · {d.c} · {d.y} draft</span>
-                          <DraftProfileCard d={prof} />
-                        </InfoPopover>
+                        <ProfileSheet name={d.n} profile={prof} context={`Pick ${d.p} · ${d.c} · ${d.y} draft`} />
                       </div>
                     )}
                   </td>
