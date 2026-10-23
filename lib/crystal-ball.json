@@ -1,0 +1,2398 @@
+{
+ "meta": {
+  "hitBar": 90,
+  "trainN": 435,
+  "trainHits": 47,
+  "years": "2016\u20132025",
+  "auc": 0.733,
+  "aucPositionOnly": 0.69,
+  "aucLate": 0.609,
+  "aucLatePositionOnly": 0.531,
+  "lateHits": [
+   {
+    "name": "Errol Gulden",
+    "pick": 32,
+    "year": 2020,
+    "peak": 115.1
+   },
+   {
+    "name": "Tristan Xerri",
+    "pick": 72,
+    "year": 2017,
+    "peak": 114.5
+   },
+   {
+    "name": "Max Holmes",
+    "pick": 20,
+    "year": 2020,
+    "peak": 102.7
+   },
+   {
+    "name": "Josh Daicos",
+    "pick": 57,
+    "year": 2016,
+    "peak": 99.8
+   },
+   {
+    "name": "James Worpel",
+    "pick": 45,
+    "year": 2017,
+    "peak": 96.6
+   },
+   {
+    "name": "Sean Darcy",
+    "pick": 38,
+    "year": 2016,
+    "peak": 95.4
+   },
+   {
+    "name": "Alex Witherden",
+    "pick": 23,
+    "year": 2016,
+    "peak": 95.3
+   },
+   {
+    "name": "Archie Roberts",
+    "pick": 54,
+    "year": 2023,
+    "peak": 94.7
+   },
+   {
+    "name": "Lloyd Meek",
+    "pick": 69,
+    "year": 2017,
+    "peak": 93.8
+   },
+   {
+    "name": "Dylan Moore",
+    "pick": 67,
+    "year": 2017,
+    "peak": 93.3
+   },
+   {
+    "name": "Chad Warner",
+    "pick": 39,
+    "year": 2019,
+    "peak": 93.0
+   },
+   {
+    "name": "Gryan Miers",
+    "pick": 57,
+    "year": 2017,
+    "peak": 92.8
+   },
+   {
+    "name": "Kieren Briggs",
+    "pick": 34,
+    "year": 2018,
+    "peak": 92.3
+   },
+   {
+    "name": "Isaac Cumming",
+    "pick": 20,
+    "year": 2016,
+    "peak": 90.6
+   },
+   {
+    "name": "Jase Burgoyne",
+    "pick": 60,
+    "year": 2021,
+    "peak": 90.4
+   },
+   {
+    "name": "Sam Berry",
+    "pick": 28,
+    "year": 2020,
+    "peak": 90.3
+   },
+   {
+    "name": "Tom Sparrow",
+    "pick": 27,
+    "year": 2018,
+    "peak": 90.1
+   },
+   {
+    "name": "Jake Bowey",
+    "pick": 21,
+    "year": 2020,
+    "peak": 90.0
+   },
+   {
+    "name": "Hugo Garcia",
+    "pick": 50,
+    "year": 2023,
+    "peak": 90.0
+   }
+  ]
+ },
+ "patterns": [
+  {
+   "kind": "strength",
+   "label": "Ruck craft",
+   "n": 12,
+   "hits": 3,
+   "rate": 0.25,
+   "lift": 2.18
+  },
+  {
+   "kind": "strength",
+   "label": "Defensive pressure",
+   "n": 53,
+   "hits": 12,
+   "rate": 0.226,
+   "lift": 1.7
+  },
+  {
+   "kind": "strength",
+   "label": "Contested / inside",
+   "n": 71,
+   "hits": 14,
+   "rate": 0.197,
+   "lift": 1.48
+  },
+  {
+   "kind": "strength",
+   "label": "Leadership / character",
+   "n": 64,
+   "hits": 12,
+   "rate": 0.188,
+   "lift": 1.41
+  },
+  {
+   "kind": "strength",
+   "label": "Inside-outside balance",
+   "n": 11,
+   "hits": 2,
+   "rate": 0.182,
+   "lift": 1.4
+  },
+  {
+   "kind": "strength",
+   "label": "X-factor / hurt",
+   "n": 32,
+   "hits": 6,
+   "rate": 0.188,
+   "lift": 1.32
+  },
+  {
+   "kind": "strength",
+   "label": "Kicking / skills",
+   "n": 116,
+   "hits": 20,
+   "rate": 0.172,
+   "lift": 1.3
+  },
+  {
+   "kind": "strength",
+   "label": "Speed / agility",
+   "n": 120,
+   "hits": 17,
+   "rate": 0.142,
+   "lift": 1.25
+  },
+  {
+   "kind": "strength",
+   "label": "Engine / work rate",
+   "n": 86,
+   "hits": 12,
+   "rate": 0.14,
+   "lift": 1.23
+  },
+  {
+   "kind": "strength",
+   "label": "Footy IQ / vision",
+   "n": 116,
+   "hits": 17,
+   "rate": 0.147,
+   "lift": 1.18
+  },
+  {
+   "kind": "strength",
+   "label": "Scoreboard impact",
+   "n": 94,
+   "hits": 12,
+   "rate": 0.128,
+   "lift": 1.01
+  },
+  {
+   "kind": "strength",
+   "label": "Accumulator",
+   "n": 48,
+   "hits": 5,
+   "rate": 0.104,
+   "lift": 0.98
+  },
+  {
+   "kind": "strength",
+   "label": "Consistency",
+   "n": 30,
+   "hits": 4,
+   "rate": 0.133,
+   "lift": 0.95
+  },
+  {
+   "kind": "strength",
+   "label": "Size / strength",
+   "n": 49,
+   "hits": 7,
+   "rate": 0.143,
+   "lift": 0.87
+  },
+  {
+   "kind": "strength",
+   "label": "Intercept / rebound",
+   "n": 45,
+   "hits": 3,
+   "rate": 0.067,
+   "lift": 0.79
+  },
+  {
+   "kind": "strength",
+   "label": "Upside",
+   "n": 44,
+   "hits": 4,
+   "rate": 0.091,
+   "lift": 0.78
+  },
+  {
+   "kind": "strength",
+   "label": "Clean hands",
+   "n": 74,
+   "hits": 6,
+   "rate": 0.081,
+   "lift": 0.68
+  },
+  {
+   "kind": "strength",
+   "label": "Athleticism",
+   "n": 107,
+   "hits": 9,
+   "rate": 0.084,
+   "lift": 0.67
+  },
+  {
+   "kind": "strength",
+   "label": "Aerial / marking",
+   "n": 112,
+   "hits": 8,
+   "rate": 0.071,
+   "lift": 0.53
+  },
+  {
+   "kind": "strength",
+   "label": "Versatility",
+   "n": 78,
+   "hits": 4,
+   "rate": 0.051,
+   "lift": 0.47
+  },
+  {
+   "kind": "workon",
+   "label": "needs contested/inside game",
+   "n": 62,
+   "hits": 11,
+   "rate": 0.177,
+   "lift": 1.67
+  },
+  {
+   "kind": "workon",
+   "label": "needs speed/athleticism",
+   "n": 50,
+   "hits": 8,
+   "rate": 0.16,
+   "lift": 1.51
+  },
+  {
+   "kind": "workon",
+   "label": "needs kicking",
+   "n": 74,
+   "hits": 12,
+   "rate": 0.162,
+   "lift": 1.26
+  },
+  {
+   "kind": "workon",
+   "label": "needs strength/size",
+   "n": 79,
+   "hits": 11,
+   "rate": 0.139,
+   "lift": 1.13
+  },
+  {
+   "kind": "workon",
+   "label": "needs endurance",
+   "n": 54,
+   "hits": 6,
+   "rate": 0.111,
+   "lift": 1.0
+  },
+  {
+   "kind": "workon",
+   "label": "durability concern",
+   "n": 14,
+   "hits": 2,
+   "rate": 0.143,
+   "lift": 0.99
+  },
+  {
+   "kind": "workon",
+   "label": "needs defensive work",
+   "n": 21,
+   "hits": 2,
+   "rate": 0.095,
+   "lift": 0.9
+  },
+  {
+   "kind": "workon",
+   "label": "needs finishing",
+   "n": 37,
+   "hits": 3,
+   "rate": 0.081,
+   "lift": 0.77
+  },
+  {
+   "kind": "workon",
+   "label": "needs composure/decisions",
+   "n": 16,
+   "hits": 1,
+   "rate": 0.062,
+   "lift": 0.71
+  },
+  {
+   "kind": "workon",
+   "label": "raw / limited exposure",
+   "n": 17,
+   "hits": 1,
+   "rate": 0.059,
+   "lift": 0.6
+  },
+  {
+   "kind": "workon",
+   "label": "needs outside game",
+   "n": 12,
+   "hits": 1,
+   "rate": 0.083,
+   "lift": 0.43
+  },
+  {
+   "kind": "workon",
+   "label": "needs consistency",
+   "n": 65,
+   "hits": 2,
+   "rate": 0.031,
+   "lift": 0.32
+  },
+  {
+   "kind": "workon",
+   "label": "needs to win more ball",
+   "n": 33,
+   "hits": 0,
+   "rate": 0.0,
+   "lift": 0.0
+  }
+ ],
+ "numbers": {
+  "juniorFantasy": [
+   {
+    "label": "Under 75",
+    "n": 176,
+    "hits": 13,
+    "rate": 0.074,
+    "lift": 0.77
+   },
+   {
+    "label": "75\u201390",
+    "n": 88,
+    "hits": 10,
+    "rate": 0.114,
+    "lift": 0.92
+   },
+   {
+    "label": "90\u2013100",
+    "n": 32,
+    "hits": 5,
+    "rate": 0.156,
+    "lift": 1.19
+   },
+   {
+    "label": "100\u2013110",
+    "n": 29,
+    "hits": 8,
+    "rate": 0.276,
+    "lift": 1.77
+   },
+   {
+    "label": "110+",
+    "n": 23,
+    "hits": 8,
+    "rate": 0.348,
+    "lift": 1.96
+   }
+  ],
+  "juniorDisposals": [
+   {
+    "label": "Under 15",
+    "n": 120,
+    "hits": 8,
+    "rate": 0.067,
+    "lift": 0.67
+   },
+   {
+    "label": "15\u201320",
+    "n": 100,
+    "hits": 14,
+    "rate": 0.14,
+    "lift": 1.2
+   },
+   {
+    "label": "20\u201325",
+    "n": 91,
+    "hits": 11,
+    "rate": 0.121,
+    "lift": 0.99
+   },
+   {
+    "label": "25+",
+    "n": 37,
+    "hits": 11,
+    "rate": 0.297,
+    "lift": 1.88
+   }
+  ],
+  "juniorTackles": [
+   {
+    "label": "Under 3",
+    "n": 164,
+    "hits": 12,
+    "rate": 0.073,
+    "lift": 0.73
+   },
+   {
+    "label": "3\u20134.5",
+    "n": 108,
+    "hits": 17,
+    "rate": 0.157,
+    "lift": 1.21
+   },
+   {
+    "label": "4.5\u20136",
+    "n": 48,
+    "hits": 9,
+    "rate": 0.188,
+    "lift": 1.31
+   },
+   {
+    "label": "6+",
+    "n": 28,
+    "hits": 6,
+    "rate": 0.214,
+    "lift": 1.89
+   }
+  ],
+  "height": [
+   {
+    "label": "Under 180cm",
+    "n": 60,
+    "hits": 8,
+    "rate": 0.133,
+    "lift": 1.47
+   },
+   {
+    "label": "180\u2013185cm",
+    "n": 144,
+    "hits": 23,
+    "rate": 0.16,
+    "lift": 1.42
+   },
+   {
+    "label": "186\u2013192cm",
+    "n": 134,
+    "hits": 10,
+    "rate": 0.075,
+    "lift": 0.72
+   },
+   {
+    "label": "193cm+",
+    "n": 97,
+    "hits": 6,
+    "rate": 0.062,
+    "lift": 0.53
+   }
+  ],
+  "pick": [
+   {
+    "label": "Picks 1\u20135",
+    "n": 31,
+    "hits": 14,
+    "rate": 0.452,
+    "lift": 1.16
+   },
+   {
+    "label": "Picks 6\u201310",
+    "n": 30,
+    "hits": 3,
+    "rate": 0.1,
+    "lift": 0.47
+   },
+   {
+    "label": "Picks 11\u201320",
+    "n": 66,
+    "hits": 13,
+    "rate": 0.197,
+    "lift": 1.47
+   },
+   {
+    "label": "Picks 21\u201340",
+    "n": 130,
+    "hits": 8,
+    "rate": 0.062,
+    "lift": 0.76
+   },
+   {
+    "label": "Pick 41+",
+    "n": 178,
+    "hits": 9,
+    "rate": 0.051,
+    "lift": 0.99
+   }
+  ]
+ },
+ "validation": [
+  {
+   "name": "Will Ashcroft",
+   "year": 2022,
+   "pick": 2,
+   "peak": 105.6,
+   "chance": 58.9,
+   "positionOnly": 47.2,
+   "jFP": 136.0,
+   "traits": [
+    "Accumulator",
+    "Consistency",
+    "Contested / inside",
+    "Engine / work rate",
+    "Inside-outside balance",
+    "Leadership / character"
+   ]
+  },
+  {
+   "name": "Nick Daicos",
+   "year": 2021,
+   "pick": 4,
+   "peak": 116.6,
+   "chance": 44.0,
+   "positionOnly": 31.0,
+   "jFP": 136.0,
+   "traits": [
+    "Accumulator",
+    "Consistency",
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Leadership / character",
+    "Scoreboard impact"
+   ]
+  },
+  {
+   "name": "Harry Sheezel",
+   "year": 2022,
+   "pick": 3,
+   "peak": 116.2,
+   "chance": 30.5,
+   "positionOnly": 39.3,
+   "jFP": 83.0,
+   "traits": [
+    "Aerial / marking",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Scoreboard impact"
+   ]
+  },
+  {
+   "name": "Bailey Smith",
+   "year": 2018,
+   "pick": 7,
+   "peak": 117.7,
+   "chance": 38.4,
+   "positionOnly": 20.7,
+   "jFP": 149.0,
+   "traits": [
+    "Engine / work rate",
+    "Kicking / skills",
+    "Leadership / character",
+    "Versatility"
+   ]
+  },
+  {
+   "name": "Nasiah Wanganeen-Milera",
+   "year": 2021,
+   "pick": 11,
+   "peak": 110.8,
+   "chance": 27.7,
+   "positionOnly": 17.3,
+   "jFP": 66.5,
+   "traits": [
+    "Footy IQ / vision",
+    "Inside-outside balance",
+    "Kicking / skills",
+    "Speed / agility"
+   ]
+  },
+  {
+   "name": "Caleb Serong",
+   "year": 2019,
+   "pick": 8,
+   "peak": 108.1,
+   "chance": 25.2,
+   "positionOnly": 17.7,
+   "jFP": 112.0,
+   "traits": [
+    "Clean hands",
+    "Consistency",
+    "Contested / inside",
+    "Footy IQ / vision",
+    "Leadership / character",
+    "Size / strength"
+   ]
+  },
+  {
+   "name": "Zak Butters",
+   "year": 2018,
+   "pick": 12,
+   "peak": 104.5,
+   "chance": 26.7,
+   "positionOnly": 14.9,
+   "jFP": 91.0,
+   "traits": [
+    "Footy IQ / vision",
+    "Speed / agility",
+    "Upside",
+    "X-factor / hurt"
+   ]
+  },
+  {
+   "name": "Errol Gulden",
+   "year": 2020,
+   "pick": 32,
+   "peak": 115.1,
+   "chance": 15.3,
+   "positionOnly": 7.6,
+   "jFP": 125.0,
+   "traits": [
+    "Footy IQ / vision",
+    "Speed / agility",
+    "Versatility",
+    "X-factor / hurt"
+   ]
+  },
+  {
+   "name": "Chad Warner",
+   "year": 2019,
+   "pick": 39,
+   "peak": 93.0,
+   "chance": 15.0,
+   "positionOnly": 6.9,
+   "jFP": 105.9,
+   "traits": [
+    "Accumulator",
+    "Contested / inside",
+    "Defensive pressure",
+    "Size / strength"
+   ]
+  },
+  {
+   "name": "Sam Berry",
+   "year": 2020,
+   "pick": 28,
+   "peak": 90.3,
+   "chance": 26.0,
+   "positionOnly": 8.5,
+   "jFP": 79.0,
+   "traits": [
+    "Consistency",
+    "Contested / inside",
+    "Defensive pressure",
+    "Engine / work rate",
+    "Speed / agility"
+   ]
+  },
+  {
+   "name": "Jake Bowey",
+   "year": 2020,
+   "pick": 21,
+   "peak": 90.0,
+   "chance": 20.1,
+   "positionOnly": 10.9,
+   "jFP": 66.0,
+   "traits": [
+    "Athleticism",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Leadership / character",
+    "Scoreboard impact",
+    "Speed / agility"
+   ]
+  },
+  {
+   "name": "Jase Burgoyne",
+   "year": 2021,
+   "pick": 60,
+   "peak": 90.4,
+   "chance": 13.2,
+   "positionOnly": 5.4,
+   "jFP": 107.1,
+   "traits": [
+    "Accumulator",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Speed / agility"
+   ]
+  }
+ ],
+ "prospects": [
+  {
+   "rank": 2,
+   "name": "Cody Walker",
+   "junior": "Bendigo Pioneers",
+   "position": "MID",
+   "height": 184,
+   "jFP": 138.0,
+   "jD": 30.3,
+   "jT": 6.3,
+   "traits": [
+    "Contested / inside",
+    "Engine / work rate",
+    "Leadership / character"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 70.1,
+   "positionOnly": 44.8,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.75
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.31
+    },
+    {
+     "label": "Contested / inside",
+     "effect": 0.26
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Will Ashcroft",
+     "pick": 2,
+     "year": 2022,
+     "peak": 105.6
+    },
+    {
+     "name": "Bailey Smith",
+     "pick": 7,
+     "year": 2018,
+     "peak": 117.7
+    },
+    {
+     "name": "Andrew Brayshaw",
+     "pick": 2,
+     "year": 2017,
+     "peak": 113.3
+    }
+   ]
+  },
+  {
+   "rank": 4,
+   "name": "Ethan Drever",
+   "junior": "GWV Rebels",
+   "position": "MID",
+   "height": 188,
+   "jFP": 121.0,
+   "jD": 28.2,
+   "jT": 6.5,
+   "traits": [
+    "Athleticism",
+    "Contested / inside",
+    "Defensive pressure",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 64.5,
+   "positionOnly": 31.5,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.51
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.34
+    },
+    {
+     "label": "Contested / inside",
+     "effect": 0.26
+    },
+    {
+     "label": "Athleticism",
+     "effect": -0.25
+    }
+   ],
+   "comps": [
+    {
+     "name": "James Worpel",
+     "pick": 45,
+     "year": 2017,
+     "peak": 96.6
+    },
+    {
+     "name": "Chad Warner",
+     "pick": 39,
+     "year": 2019,
+     "peak": 93.0
+    },
+    {
+     "name": "Adam Cerra",
+     "pick": 5,
+     "year": 2017,
+     "peak": 95.1
+    }
+   ]
+  },
+  {
+   "rank": 22,
+   "name": "Noah Williams",
+   "junior": "Geelong Falcons",
+   "position": "MID",
+   "height": 177,
+   "jFP": 89.0,
+   "jD": 21.0,
+   "jT": 7.8,
+   "traits": [
+    "Defensive pressure",
+    "Kicking / skills",
+    "Leadership / character",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 43.5,
+   "positionOnly": 10.1,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.48
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Sam Berry",
+     "pick": 28,
+     "year": 2020,
+     "peak": 90.3
+    },
+    {
+     "name": "Andrew Brayshaw",
+     "pick": 2,
+     "year": 2017,
+     "peak": 113.3
+    },
+    {
+     "name": "Chad Warner",
+     "pick": 39,
+     "year": 2019,
+     "peak": 93.0
+    }
+   ]
+  },
+  {
+   "rank": 5,
+   "name": "Heath Mellody",
+   "junior": "Claremont",
+   "position": "MID/DEF",
+   "height": 184,
+   "jFP": 104.0,
+   "jD": 28.3,
+   "jT": 2.5,
+   "traits": [
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills"
+   ],
+   "flags": [],
+   "chance": 39.1,
+   "positionOnly": 27.6,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.27
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.24
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.11
+    }
+   ],
+   "comps": [
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7
+    },
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Nick Daicos",
+     "pick": 4,
+     "year": 2021,
+     "peak": 116.6
+    }
+   ]
+  },
+  {
+   "rank": 7,
+   "name": "Harry Van Hattum",
+   "junior": "Northern Knights",
+   "position": "RUC",
+   "height": 205,
+   "jFP": 111.0,
+   "jD": 19.1,
+   "jT": 1.7,
+   "traits": [
+    "Leadership / character",
+    "Speed / agility",
+    "X-factor / hurt"
+   ],
+   "flags": [],
+   "chance": 36.9,
+   "positionOnly": 22.5,
+   "reasons": [
+    {
+     "label": "X-factor / hurt",
+     "effect": 0.38
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.37
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.2
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Kieren Briggs",
+     "pick": 34,
+     "year": 2018,
+     "peak": 92.3
+    }
+   ]
+  },
+  {
+   "rank": 8,
+   "name": "Ethan Matthews",
+   "junior": "GIANTS Academy",
+   "position": "MID",
+   "height": 186,
+   "jFP": 164.0,
+   "jD": 35.3,
+   "jT": 5.3,
+   "traits": [
+    "Engine / work rate",
+    "Scoreboard impact"
+   ],
+   "flags": [],
+   "chance": 36.6,
+   "positionOnly": 20.6,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.78
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.2
+    }
+   ],
+   "comps": [
+    {
+     "name": "Bailey Smith",
+     "pick": 7,
+     "year": 2018,
+     "peak": 117.7
+    },
+    {
+     "name": "Will Ashcroft",
+     "pick": 2,
+     "year": 2022,
+     "peak": 105.6
+    },
+    {
+     "name": "Nick Daicos",
+     "pick": 4,
+     "year": 2021,
+     "peak": 116.6
+    }
+   ]
+  },
+  {
+   "rank": 12,
+   "name": "Leo Steed",
+   "junior": "Swan Districts",
+   "position": "MID/FWD",
+   "height": 176,
+   "jFP": 90.0,
+   "jD": 23.5,
+   "jT": 4.0,
+   "traits": [
+    "Defensive pressure",
+    "Engine / work rate",
+    "Leadership / character"
+   ],
+   "flags": [],
+   "chance": 29.2,
+   "positionOnly": 15.7,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Gryan Miers",
+     "pick": 57,
+     "year": 2017,
+     "peak": 92.8
+    },
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Dylan Moore",
+     "pick": 67,
+     "year": 2017,
+     "peak": 93.3
+    }
+   ]
+  },
+  {
+   "rank": 25,
+   "name": "Albert MacGowan",
+   "junior": "Sandringham Dragons",
+   "position": "Wing/MID",
+   "height": 187,
+   "jFP": 115.0,
+   "jD": 27.9,
+   "jT": 4.6,
+   "traits": [
+    "Engine / work rate"
+   ],
+   "flags": [
+    "needs contested/inside game"
+   ],
+   "chance": 23.2,
+   "positionOnly": 9.2,
+   "reasons": [
+    {
+     "label": "needs contested/inside game",
+     "effect": 0.52
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.43
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.12
+    }
+   ],
+   "comps": [
+    {
+     "name": "Lachlan Ash",
+     "pick": 4,
+     "year": 2019,
+     "peak": 103.0
+    },
+    {
+     "name": "Noah Anderson",
+     "pick": 2,
+     "year": 2019,
+     "peak": 103.9
+    },
+    {
+     "name": "Will Day",
+     "pick": 13,
+     "year": 2019,
+     "peak": 95.3
+    }
+   ]
+  },
+  {
+   "rank": 20,
+   "name": "Harvie Cooke",
+   "junior": "Northern Knights",
+   "position": "MID/FWD",
+   "height": 176,
+   "jFP": 110.0,
+   "jD": 24.7,
+   "jT": 4.9,
+   "traits": [
+    "Accumulator",
+    "Contested / inside",
+    "Defensive pressure",
+    "Engine / work rate"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 23.1,
+   "positionOnly": 10.9,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Accumulator",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.35
+    },
+    {
+     "label": "Contested / inside",
+     "effect": 0.26
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.16
+    }
+   ],
+   "comps": [
+    {
+     "name": "Dylan Moore",
+     "pick": 67,
+     "year": 2017,
+     "peak": 93.3
+    },
+    {
+     "name": "Chad Warner",
+     "pick": 39,
+     "year": 2019,
+     "peak": 93.0
+    },
+    {
+     "name": "Will Ashcroft",
+     "pick": 2,
+     "year": 2022,
+     "peak": 105.6
+    }
+   ]
+  },
+  {
+   "rank": 21,
+   "name": "Khaled El Souki",
+   "junior": "Western Jets (Bulldogs NGA)",
+   "position": "Small FWD",
+   "height": 175,
+   "jFP": 83.0,
+   "jD": 17.1,
+   "jT": 2.7,
+   "traits": [
+    "Defensive pressure",
+    "Kicking / skills",
+    "Scoreboard impact"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 22.6,
+   "positionOnly": 10.5,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.09
+    }
+   ],
+   "comps": [
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    },
+    {
+     "name": "Gryan Miers",
+     "pick": 57,
+     "year": 2017,
+     "peak": 92.8
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3
+    }
+   ]
+  },
+  {
+   "rank": 17,
+   "name": "Toby Krasna",
+   "junior": "Northern Knights",
+   "position": "Wing/MID",
+   "height": 181,
+   "jFP": 86.0,
+   "jD": 21.3,
+   "jT": 3.3,
+   "traits": [
+    "Kicking / skills",
+    "Leadership / character",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 22.2,
+   "positionOnly": 12.3,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3
+    }
+   ]
+  },
+  {
+   "rank": 1,
+   "name": "Dougie Cochrane",
+   "junior": "Port Adelaide NGA",
+   "position": "Key position utility",
+   "height": 196,
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "traits": [
+    "Athleticism",
+    "Versatility"
+   ],
+   "flags": [],
+   "chance": 20.4,
+   "positionOnly": 58.9,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": -0.51
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.41
+    },
+    {
+     "label": "Athleticism",
+     "effect": -0.25
+    }
+   ],
+   "comps": [
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Kieren Briggs",
+     "pick": 34,
+     "year": 2018,
+     "peak": 92.3
+    }
+   ]
+  },
+  {
+   "rank": 6,
+   "name": "Gus Teixeira",
+   "junior": "Sandringham Dragons",
+   "position": "MID/FWD",
+   "height": 181,
+   "jFP": 83.0,
+   "jD": 18.0,
+   "jT": 3.0,
+   "traits": [
+    "Scoreboard impact",
+    "Size / strength"
+   ],
+   "flags": [],
+   "chance": 19.9,
+   "positionOnly": 24.7,
+   "reasons": [],
+   "comps": [
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Gryan Miers",
+     "pick": 57,
+     "year": 2017,
+     "peak": 92.8
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9
+    }
+   ]
+  },
+  {
+   "rank": 10,
+   "name": "Caylen Murray",
+   "junior": "Brisbane Northern Academy",
+   "position": "MID/DEF",
+   "height": 183,
+   "jFP": 101.0,
+   "jD": 24.0,
+   "jT": 1.8,
+   "traits": [
+    "Engine / work rate",
+    "Scoreboard impact",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 18.9,
+   "positionOnly": 17.8,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.23
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.19
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    }
+   ],
+   "comps": [
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    },
+    {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4
+    }
+   ]
+  },
+  {
+   "rank": 14,
+   "name": "Sam Gayfer",
+   "junior": "Northern Knights",
+   "position": "Key FWD",
+   "height": 194,
+   "jFP": 69.0,
+   "jD": 12.4,
+   "jT": 2.6,
+   "traits": [
+    "Defensive pressure",
+    "Scoreboard impact",
+    "Size / strength"
+   ],
+   "flags": [],
+   "chance": 16.9,
+   "positionOnly": 14.1,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.23
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.1
+    }
+   ],
+   "comps": [
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    }
+   ]
+  },
+  {
+   "rank": 3,
+   "name": "Arki Butler",
+   "junior": "Sandringham Dragons",
+   "position": "FWD/MID",
+   "height": 182,
+   "jFP": 82.0,
+   "jD": 16.5,
+   "jT": 2.0,
+   "traits": [],
+   "flags": [
+    "needs consistency"
+   ],
+   "chance": 16.2,
+   "positionOnly": 36.8,
+   "reasons": [
+    {
+     "label": "needs consistency",
+     "effect": -0.57
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9
+    },
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    }
+   ]
+  },
+  {
+   "rank": 18,
+   "name": "Jackson Phillips",
+   "junior": "Dandenong Stingrays",
+   "position": "Wing/MID",
+   "height": 182,
+   "jFP": 87.0,
+   "jD": 19.4,
+   "jT": 3.4,
+   "traits": [
+    "Engine / work rate",
+    "Kicking / skills"
+   ],
+   "flags": [],
+   "chance": 16.2,
+   "positionOnly": 11.8,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    }
+   ],
+   "comps": [
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9
+    }
+   ]
+  },
+  {
+   "rank": 28,
+   "name": "Archie Elliott",
+   "junior": "GWV Rebels",
+   "position": "FWD",
+   "height": 182,
+   "jFP": 76.0,
+   "jD": 12.5,
+   "jT": 3.8,
+   "traits": [
+    "Defensive pressure"
+   ],
+   "flags": [],
+   "chance": 14.4,
+   "positionOnly": 8.5,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.13
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3
+    },
+    {
+     "name": "Jason Horne-Francis",
+     "pick": 1,
+     "year": 2021,
+     "peak": 95.8
+    }
+   ]
+  },
+  {
+   "rank": 19,
+   "name": "George Dimer",
+   "junior": "Sandringham Dragons",
+   "position": "Small FWD",
+   "height": 173,
+   "jFP": 75.0,
+   "jD": 16.0,
+   "jT": 3.3,
+   "traits": [
+    "Clean hands",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 14.1,
+   "positionOnly": 11.3,
+   "reasons": [
+    {
+     "label": "Clean hands",
+     "effect": -0.41
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.24
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.14
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jake Bowey+",
+     "pick": 21,
+     "year": 2020,
+     "peak": 90.0
+    },
+    {
+     "name": "Zak Butters",
+     "pick": 12,
+     "year": 2018,
+     "peak": 104.5
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    }
+   ]
+  },
+  {
+   "rank": 16,
+   "name": "Tyson Bradley",
+   "junior": "Sandringham Dragons",
+   "position": "Key DEF",
+   "height": 195,
+   "jFP": 66.0,
+   "jD": 14.5,
+   "jT": 1.0,
+   "traits": [
+    "Intercept / rebound",
+    "Kicking / skills",
+    "Leadership / character"
+   ],
+   "flags": [
+    "needs speed/athleticism"
+   ],
+   "chance": 12.4,
+   "positionOnly": 12.8,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.28
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.27
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    },
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    }
+   ]
+  },
+  {
+   "rank": 29,
+   "name": "Kodah Edwards",
+   "junior": "South Adelaide",
+   "position": "MID/FWD",
+   "height": 184,
+   "jFP": 95.0,
+   "jD": 22.0,
+   "jT": 3.3,
+   "traits": [
+    "Leadership / character",
+    "Scoreboard impact"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 11.6,
+   "positionOnly": 8.3,
+   "reasons": [
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.14
+    }
+   ],
+   "comps": [
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Jason Horne-Francis",
+     "pick": 1,
+     "year": 2021,
+     "peak": 95.8
+    }
+   ]
+  },
+  {
+   "rank": 26,
+   "name": "George Gale",
+   "junior": "Claremont",
+   "position": "Wing/MID",
+   "height": 190,
+   "jFP": 106.0,
+   "jD": 27.8,
+   "jT": 2.8,
+   "traits": [
+    "Accumulator",
+    "Engine / work rate",
+    "Kicking / skills"
+   ],
+   "flags": [
+    "needs speed/athleticism"
+   ],
+   "chance": 10.4,
+   "positionOnly": 9.0,
+   "reasons": [
+    {
+     "label": "Accumulator",
+     "effect": -0.47
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.39
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.3
+    }
+   ],
+   "comps": [
+    {
+     "name": "Noah Anderson",
+     "pick": 2,
+     "year": 2019,
+     "peak": 103.9
+    },
+    {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4
+    },
+    {
+     "name": "Luke Davies-Uniacke",
+     "pick": 4,
+     "year": 2017,
+     "peak": 97.4
+    }
+   ]
+  },
+  {
+   "rank": 30,
+   "name": "Keenan Boi",
+   "junior": "Gippsland Power (Hawthorn NGA)",
+   "position": "Small FWD/MID",
+   "height": 177,
+   "jFP": 74.0,
+   "jD": 15.2,
+   "jT": 3.6,
+   "traits": [
+    "Aerial / marking",
+    "Defensive pressure",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 10.3,
+   "positionOnly": 8.0,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.61
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.16
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Zac Bailey",
+     "pick": 15,
+     "year": 2017,
+     "peak": 92.3
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    }
+   ]
+  },
+  {
+   "rank": 24,
+   "name": "Jake Eime",
+   "junior": "Central District",
+   "position": "DEF/Wing",
+   "height": 182,
+   "jFP": 76.0,
+   "jD": 20.3,
+   "jT": 1.3,
+   "traits": [
+    "Engine / work rate",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 8.1,
+   "positionOnly": 9.5,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": -0.25
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.18
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.13
+    }
+   ],
+   "comps": [
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9
+    }
+   ]
+  },
+  {
+   "rank": 9,
+   "name": "Mitch Harris",
+   "junior": "South Australia",
+   "position": "Key DEF",
+   "height": 196,
+   "jFP": 37.0,
+   "jD": 8.8,
+   "jT": 1.0,
+   "traits": [
+    "Aerial / marking",
+    "Footy IQ / vision"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 6.1,
+   "positionOnly": 19.1,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.64
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.28
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.24
+    }
+   ],
+   "comps": [
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    }
+   ]
+  },
+  {
+   "rank": 13,
+   "name": "Clancy Snell",
+   "junior": "Gippsland Power",
+   "position": "Key DEF",
+   "height": 196,
+   "jFP": 61.0,
+   "jD": 13.0,
+   "jT": 2.5,
+   "traits": [
+    "Aerial / marking",
+    "Clean hands",
+    "Footy IQ / vision"
+   ],
+   "flags": [],
+   "chance": 5.2,
+   "positionOnly": 14.8,
+   "reasons": [
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.41
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.34
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.24
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.11
+    }
+   ],
+   "comps": [
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    }
+   ]
+  },
+  {
+   "rank": 15,
+   "name": "Lochie Burrows",
+   "junior": "Sandringham Dragons",
+   "position": "MID/FWD",
+   "height": 179,
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "traits": [
+    "Athleticism",
+    "Leadership / character",
+    "Versatility"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 5.2,
+   "positionOnly": 13.4,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": -0.51
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.41
+    },
+    {
+     "label": "Athleticism",
+     "effect": -0.25
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.17
+    }
+   ],
+   "comps": [
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6
+    },
+    {
+     "name": "Gryan Miers",
+     "pick": 57,
+     "year": 2017,
+     "peak": 92.8
+    },
+    {
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1
+    }
+   ]
+  },
+  {
+   "rank": 27,
+   "name": "Billy Wigmore",
+   "junior": "Western Jets",
+   "position": "Tall DEF",
+   "height": 188,
+   "jFP": 80.0,
+   "jD": 18.6,
+   "jT": 1.9,
+   "traits": [
+    "Aerial / marking",
+    "Clean hands",
+    "Footy IQ / vision",
+    "Intercept / rebound"
+   ],
+   "flags": [],
+   "chance": 4.1,
+   "positionOnly": 8.7,
+   "reasons": [
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.41
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.24
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.18
+    }
+   ],
+   "comps": [
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Jordan Clark",
+     "pick": 15,
+     "year": 2018,
+     "peak": 96.9
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    }
+   ]
+  },
+  {
+   "rank": 23,
+   "name": "Jack Pickett",
+   "junior": "Geelong Falcons",
+   "position": "Key FWD",
+   "height": 194,
+   "jFP": 62.0,
+   "jD": 8.8,
+   "jT": 1.0,
+   "traits": [
+    "Aerial / marking",
+    "Scoreboard impact"
+   ],
+   "flags": [],
+   "chance": 3.7,
+   "positionOnly": 9.8,
+   "reasons": [
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.33
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.28
+    }
+   ],
+   "comps": [
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0
+    },
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8
+    },
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    }
+   ]
+  },
+  {
+   "rank": 11,
+   "name": "Wil Malady",
+   "junior": "Gippsland Power",
+   "position": "Tall FWD",
+   "height": 190,
+   "jFP": 61.0,
+   "jD": 10.1,
+   "jT": 1.7,
+   "traits": [
+    "Aerial / marking",
+    "Scoreboard impact",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs consistency",
+    "needs to win more ball"
+   ],
+   "chance": 2.5,
+   "positionOnly": 16.6,
+   "reasons": [
+    {
+     "label": "needs consistency",
+     "effect": -0.57
+    },
+    {
+     "label": "needs to win more ball",
+     "effect": -0.57
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.34
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.2
+    }
+   ],
+   "comps": [
+    {
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8
+    },
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2
+    },
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7
+    }
+   ]
+  }
+ ],
+ "coef": {
+  "Draft position": 0.64,
+  "Junior fantasy avg": 0.35,
+  "Junior tackles": 0.17,
+  "No junior numbers": -0.51,
+  "Key-position height (193cm+)": -0.02,
+  "Defensive pressure": 0.61,
+  "Contested / inside": 0.26,
+  "Leadership / character": 0.17,
+  "Kicking / skills": 0.39,
+  "Footy IQ / vision": 0.24,
+  "Speed / agility": 0.18,
+  "X-factor / hurt": 0.38,
+  "Engine / work rate": -0.04,
+  "Accumulator": -0.47,
+  "Aerial / marking": -0.47,
+  "Versatility": -0.41,
+  "Athleticism": -0.25,
+  "Upside": 0.02,
+  "Clean hands": -0.41,
+  "needs contested/inside game": 0.52,
+  "needs consistency": -0.57,
+  "needs to win more ball": -0.57,
+  "raw / limited exposure": 0.0
+ }
+}
