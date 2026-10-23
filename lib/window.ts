@@ -26,19 +26,38 @@ export function projectAhead(p: PlayerRow, r: Ratings | undefined, k: number): n
   return v;
 }
 
-/** Best-18 projected strength for every team, each year 2028–2030. */
-export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings: Map<number, Ratings>) {
+/** Each year's redraft refills a list, so a slot is never worth less than a typical drafted player. */
+const REPLACEMENT = 72;
+
+/** Projected strength for every team, 2027–2030: best 18 (each slot at least replacement level) plus the captain's doubled score. */
+export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings: Map<number, Ratings>,
+  lists?: Map<number, { keepers: number[]; drafted: { playerId: number }[] }>) {
+  const byId = new Map(players.map((p) => [p.id, p]));
+  // The 2027 list: the simulated keepers plus who the redraft gives each club; otherwise the current squad.
+  const listOf = (id: number) => {
+    const l = lists?.get(id);
+    if (!l) return players.filter((p) => p.team_id === id);
+    return [...l.keepers, ...l.drafted.map((d) => d.playerId)].map((x) => byId.get(x)).filter((p): p is PlayerRow => !!p);
+  };
   const out = new Map<number, Map<number, number>>();
-  for (let year = NOW_YEAR + 2; year <= LAST_YEAR; year++) {
+  for (let year = NOW_YEAR + 1; year <= LAST_YEAR; year++) {
     const k = year - NOW_YEAR;
     const m = new Map<number, number>();
     for (const id of teamIds) {
-      const vals = players.filter((p) => p.team_id === id).map((p) => projectAhead(p, ratings.get(p.id), k)).sort((a, b) => b - a).slice(0, 18);
-      m.set(id, vals.reduce((s, x) => s + x, 0));
+      const vals = listOf(id).map((p) => projectAhead(p, ratings.get(p.id), k)).sort((a, b) => b - a);
+      const best = Array.from({ length: 18 }, (_, i) => Math.max(vals[i] ?? 0, REPLACEMENT));
+      m.set(id, best.reduce((s2, x) => s2 + x, 0) + best[0]);
     }
     out.set(year, m);
   }
   return out;
+}
+
+/** Average age (now) of a team's ten best players on 2027 projections: the core whose age sets the window. */
+export function coreAge(teamId: number, players: PlayerRow[]): number {
+  const core = players.filter((p) => p.team_id === teamId).sort((a, b) => projected2027(b) - projected2027(a)).slice(0, 10);
+  const ages = core.map((p) => age(p.birth_date)).filter((x): x is number => x != null);
+  return ages.length ? ages.reduce((s2, x) => s2 + x, 0) / ages.length : 26;
 }
 
 /**
@@ -46,24 +65,27 @@ export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings:
  * Each season is read off a smoothed ladder position (so one odd year doesn't flip the phase), a club can only
  * move one step along that cycle at a time, and a lone season between two of the same phase is folded in.
  */
-export function phasesFor(ranks: number[], flags: boolean[]): Phase[] {
+export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Phase[] {
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
+  const YOUNG = 22.5, OLD = 28.5;
   const out: Phase[] = [];
-  let state: Phase = s[0] <= 3.5 ? 'Prime window' : s[0] >= 7.5 ? 'Early rebuild' : (s[1] ?? s[0]) < s[0] - 0.75 ? 'Entering window' : 'Mid rebuild';
+  let state: Phase = s[0] <= 3.5 ? (ages[0] < YOUNG ? 'Entering window' : 'Prime window') : s[0] >= 7.5 ? 'Early rebuild'
+    : (s[1] ?? s[0]) < s[0] - 0.75 ? 'Entering window' : 'Mid rebuild';
   let run = 0;
   for (let i = 0; i < ranks.length; i++) {
-    const x = s[i], ahead = s[i + 1] ?? x;
+    const x = s[i], ahead = s[i + 1] ?? x, a = ages[i];
     if (i > 0) {
       const was = state;
-      if (state === 'Prime window') { if (x > 4.5 && ahead > 4.5) state = 'Leaving window'; }
-      else if (state === 'Leaving window') { if (x <= 3.5) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild'; }
-      else if (state === 'Early rebuild') { if (x <= 7.5 && ahead <= x + 0.25) state = 'Mid rebuild'; }
-      else if (state === 'Mid rebuild') { if (x <= 5.5 && ahead <= 5.5) state = 'Entering window'; }
-      else if (state === 'Entering window') { if (x <= 3.5) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild'; }
+      if (state === 'Prime window') { if ((x > 4.5 && ahead > 4.5) || (a >= OLD && ahead > x + 0.5)) state = 'Leaving window'; }
+      else if (state === 'Leaving window') { if (x <= 3 && a < OLD) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild'; }
+      else if (state === 'Early rebuild') { if ((x <= 7.5 && ahead <= x + 0.25) || (a <= 24 && ahead <= x - 1)) state = 'Mid rebuild'; }
+      else if (state === 'Mid rebuild') { if (x <= 6 && ahead <= 5) state = 'Entering window'; }
+      else if (state === 'Entering window') { if (x <= 4 && a >= YOUNG) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild'; }
       run = state === was ? run + 1 : 1;
     } else run = 1;
-    if (flags[i]) { state = 'Prime window'; run = 1; }
+    // A flag is a flag, but a premiership won by a very young core is the start of a window, not its peak.
+    if (flags[i]) { state = a < YOUNG ? 'Entering window' : 'Prime window'; run = 1; }
     out.push(state);
   }
   for (let i = 1; i < out.length - 1; i++) if (out[i - 1] === out[i + 1] && out[i] !== out[i - 1] && !flags[i]) out[i] = out[i - 1];
@@ -74,7 +96,7 @@ const SPREAD: Record<number, number> = { 2027: 0.8, 2028: 1.5, 2029: 2.2, 2030: 
 
 export function windowFor(opts: {
   teamId: number; teamName: string; teamIds: number[]; premierYears: number[];
-  rank2026: number | null; rank2027: number; strength: Map<number, Map<number, number>>;
+  rank2026: number | null; rank2027: number; strength: Map<number, Map<number, number>>; coreAge: number; futureRank: number;
 }): WindowPoint[] {
   const pts: Omit<WindowPoint, 'phase'>[] = [];
   for (let y = FIRST_YEAR; y < NOW_YEAR; y++) {
@@ -82,16 +104,21 @@ export function windowFor(opts: {
     if (f) pts.push({ year: y, rank: f.rank, kind: f.est ? 'est' : 'actual', flag: opts.premierYears.includes(y), lo: f.rank, hi: f.rank });
   }
   if (opts.rank2026 != null) pts.push({ year: NOW_YEAR, rank: opts.rank2026, kind: 'actual', flag: opts.premierYears.includes(NOW_YEAR), lo: opts.rank2026, hi: opts.rank2026 });
-  pts.push({ year: 2027, rank: opts.rank2027, kind: 'proj', flag: false, lo: 0, hi: 0 });
-  for (let y = NOW_YEAR + 2; y <= LAST_YEAR; y++) {
+  const rankIn = (y: number) => {
     const m = opts.strength.get(y)!;
-    const order = [...opts.teamIds].sort((a, b) => (m.get(b) ?? 0) - (m.get(a) ?? 0));
-    const r = order.indexOf(opts.teamId) + 1;
-    // Lean a little on the previous year so one-year jumps don't look sharper than a projection can know.
+    return [...opts.teamIds].sort((a, b) => (m.get(b) ?? 0) - (m.get(a) ?? 0)).indexOf(opts.teamId) + 1;
+  };
+  // 2027: half the redraft simulation, half list strength. Later years lean a little on the year before.
+  pts.push({ year: 2027, rank: Math.round((0.5 * opts.rank2027 + 0.5 * rankIn(2027)) * 10) / 10, kind: 'proj', flag: false, lo: 0, hi: 0 });
+  // Further out, the future build (best young core, plus the next draft's top picks) counts for more each year.
+  const FUTURE_W: Record<number, number> = { 2028: 0.2, 2029: 0.35, 2030: 0.5 };
+  for (let y = NOW_YEAR + 2; y <= LAST_YEAR; y++) {
     const prev = pts[pts.length - 1].rank;
-    pts.push({ year: y, rank: Math.round((0.7 * r + 0.3 * prev) * 10) / 10, kind: 'proj', flag: false, lo: 0, hi: 0 });
+    const fw = FUTURE_W[y] ?? 0.5;
+    const target = (1 - fw) * rankIn(y) + fw * opts.futureRank;
+    pts.push({ year: y, rank: Math.round((0.75 * target + 0.25 * prev) * 10) / 10, kind: 'proj', flag: false, lo: 0, hi: 0 });
   }
   for (const p of pts) if (p.kind === 'proj') { const s = SPREAD[p.year] ?? 2; p.lo = Math.max(1, p.rank - s); p.hi = Math.min(10, p.rank + s); }
-  const phases = phasesFor(pts.map((p) => p.rank), pts.map((p) => p.flag));
+  const phases = phasesFor(pts.map((p) => p.rank), pts.map((p) => p.flag), pts.map((p) => opts.coreAge + (p.year - NOW_YEAR)));
   return pts.map((p, i) => ({ ...p, phase: phases[i] }));
 }
