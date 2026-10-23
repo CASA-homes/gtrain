@@ -6,6 +6,8 @@ import { getLeague, CURRENT_SEASON } from '@/lib/data';
 import { age, C, form, played } from '@/lib/ratings';
 import { scoutingReport } from '@/lib/scouting';
 import { photoUrl } from '@/lib/photos';
+import { HOLO } from '@/lib/holo';
+import { HoloAvatar } from '@/components/HoloAvatar';
 import { careerCurve } from '@/lib/careercurve';
 import { CareerCurveChart } from '@/components/CareerCurveChart';
 import { DraftProfileCard } from '@/components/DraftProfileCard';
@@ -59,14 +61,16 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
       </div>
 
       <header style={{ display: 'flex', flexWrap: 'wrap', gap: 28, alignItems: 'center', paddingBottom: 28, borderBottom: '1px solid var(--line)' }}>
+        {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} /> : (
         <div style={{ width: 168, height: 168, borderRadius: 24, background: '#e8eee5', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', flex: 'none' }}>
-          {photo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={photo} alt={p.full_name ?? p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
-          ) : (
-            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
-          )}
-        </div>
+            {photo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={photo} alt={p.full_name ?? p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
+            ) : (
+              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
+            )}
+          </div>
+        )}
         <div style={{ flex: '999 1 360px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
             {p.positions.map((pos) => (
