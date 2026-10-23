@@ -69,19 +69,28 @@ export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Ph
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
   const YOUNG = 22.5, OLD = 28.5;
+  // Entering needs a list on the rise with a core old enough to win but young enough to stay together.
+  const readyAge = (a: number) => a >= YOUNG && a <= 27;
   const out: Phase[] = [];
-  let state: Phase = s[0] <= 3.5 ? (ages[0] < YOUNG ? 'Entering window' : 'Prime window') : s[0] >= 7.5 ? 'Early rebuild'
-    : (s[1] ?? s[0]) < s[0] - 0.75 ? 'Entering window' : 'Mid rebuild';
+  let state: Phase = s[0] <= 4.5 ? (ages[0] < YOUNG ? 'Entering window' : 'Prime window') : s[0] >= 7.5 ? 'Early rebuild' : 'Mid rebuild';
   let run = 0;
   for (let i = 0; i < ranks.length; i++) {
     const x = s[i], ahead = s[i + 1] ?? x, a = ages[i];
     if (i > 0) {
       const was = state;
-      if (state === 'Prime window') { if ((x > 4.5 && ahead > 4.5) || (a >= OLD && ahead > x + 0.5)) state = 'Leaving window'; }
-      else if (state === 'Leaving window') { if (x <= 3 && a < OLD) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild'; }
-      else if (state === 'Early rebuild') { if ((x <= 7.5 && ahead <= x + 0.25) || (a <= 24 && ahead <= x - 1)) state = 'Mid rebuild'; }
-      else if (state === 'Mid rebuild') { if (x <= 6 && ahead <= 5) state = 'Entering window'; }
-      else if (state === 'Entering window') { if (x <= 4 && a >= YOUNG) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild'; }
+      if (state === 'Prime window') {
+        // Leaving is a fast decline: a sharp drop coming, an old core starting to slide, or already out of the top half.
+        if (ahead >= x + 1.5 || (a >= OLD && ahead > x + 0.5) || (x > 5 && ahead > 5)) state = 'Leaving window';
+      } else if (state === 'Leaving window') {
+        if (x <= 3 && a < OLD) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild';
+      } else if (state === 'Early rebuild') {
+        if ((x <= 7.5 && ahead <= x + 0.25) || (a <= 24 && ahead <= x - 1)) state = 'Mid rebuild';
+      } else if (state === 'Mid rebuild') {
+        if (x >= 7 && ahead >= x + 0.75) state = 'Early rebuild';            // going backwards: back into the rebuild
+        else if (x <= 6.5 && (ahead <= x - 0.5 || x <= 5) && readyAge(a)) state = 'Entering window';
+      } else if (state === 'Entering window') {
+        if (x <= 4 && a >= YOUNG) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild';
+      }
       run = state === was ? run + 1 : 1;
     } else run = 1;
     // A flag is a flag, but a premiership won by a very young core is the start of a window, not its peak.
@@ -91,6 +100,11 @@ export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Ph
   for (let i = 1; i < out.length - 1; i++) if (out[i - 1] === out[i + 1] && out[i] !== out[i - 1] && !flags[i]) out[i] = out[i - 1];
   return out;
 }
+
+/** Commish calls: set a club's phase for particular seasons when the numbers can't see what's coming. */
+export const WINDOW_PIN: Record<string, Record<number, Phase>> = {
+  'A Brayshaw Thing': { 2029: 'Mid rebuild', 2030: 'Entering window' },
+};
 
 const SPREAD: Record<number, number> = { 2027: 0.8, 2028: 1.5, 2029: 2.2, 2030: 2.8 };
 
@@ -120,5 +134,6 @@ export function windowFor(opts: {
   }
   for (const p of pts) if (p.kind === 'proj') { const s = SPREAD[p.year] ?? 2; p.lo = Math.max(1, p.rank - s); p.hi = Math.min(10, p.rank + s); }
   const phases = phasesFor(pts.map((p) => p.rank), pts.map((p) => p.flag), pts.map((p) => opts.coreAge + (p.year - NOW_YEAR)));
-  return pts.map((p, i) => ({ ...p, phase: phases[i] }));
+  const pin = WINDOW_PIN[opts.teamName] ?? {};
+  return pts.map((p, i) => ({ ...p, phase: pin[p.year] ?? phases[i] }));
 }
