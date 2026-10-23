@@ -37,14 +37,26 @@ function pct(sorted: number[], x: number) {
 }
 const to20 = (p: number) => Math.max(1, Math.min(20, Math.round(p / 5)));
 
+/** Specialist stats and the per-game level that counts as doing it regularly. */
+const SPECIALIST: Record<string, number> = { ki: 1.5, ho: 8, cba: 20 };
+
 /** Build every player's box-score attributes in one pass. */
 export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
   const pool = all.filter(usable);
   const sorted = new Map(ATTRS.map((a) => [a.key, pool.map((p) => a.f(p.box!) ?? 0).sort((x, y) => x - y)]));
+  // Specialist stats most players never record. Rank only against players who do it regularly, otherwise half a
+  // kick-in a game would beat the hundreds of zeroes and look elite. Below the bar: 1–3.
+  const sparse = new Map(Object.entries(SPECIALIST).map(([k, min]) => [k, sorted.get(k)!.filter((x) => x >= min)]));
+  const grade = (key: string, v: number) => {
+    const min = SPECIALIST[key];
+    if (min == null) return to20(pct(sorted.get(key)!, v));
+    if (v < min) return Math.max(1, Math.round((v / min) * 3));
+    return 4 + Math.round((pct(sparse.get(key)!, v) / 100) * 16);
+  };
   const out = new Map<number, Attr[]>();
   for (const p of all) {
     if (!p.box) continue;
-    out.set(p.id, ATTRS.map((a) => ({ key: a.key, label: a.label, value: to20(pct(sorted.get(a.key)!, a.f(p.box!) ?? 0)), raw: a.raw(p.box!) })));
+    out.set(p.id, ATTRS.map((a) => ({ key: a.key, label: a.label, value: grade(a.key, a.f(p.box!) ?? 0), raw: a.raw(p.box!) })));
   }
   return out;
 }
