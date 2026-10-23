@@ -1,5 +1,5 @@
 """Pull 2026 player data from DFS Australia for every rostered G-Train player.
-Usage: python3 scripts/dfs-pull.py <cache_dir>  -> writes data/dfs-2026.json
+Usage: python3 scripts/dfs-pull.py <cache_dir>  -> writes data/dfs-2026.json (season box, career history, every 2026 game)
 """
 import json, os, re, sys, urllib.request, urllib.parse
 from concurrent.futures import ThreadPoolExecutor
@@ -80,6 +80,12 @@ def record(team, n, club, pid, d):
                          r5='rebound50s', it='intercepts', cm='contestedMarks', mi5='marksInside50', rp='ratingPoints').items():
             box[k] = avg(g26, f)
     o['box'] = {k: v for k, v in box.items() if v is not None} or None
+    # Every 2026 game: [round, fantasy points, time on ground %, kick-ins], oldest first.
+    def gnum(g, k):
+        x = num(g.get(k))
+        return int(x) if x is not None else None
+    o['games26'] = sorted([[gnum(g, 'round'), gnum(g, 'FP'), gnum(g, 'timeOnGroundPercentage'), gnum(g, 'kickins')]
+                           for g in g26 if num(g.get('FP')) is not None], key=lambda x: (x[0] is None, x[0] or 0)) or None
     return o
 
 def one(row):
