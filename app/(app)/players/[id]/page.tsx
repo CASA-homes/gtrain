@@ -25,7 +25,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const report = scoutingReport(p, r, attrs);
   const photo = photoUrl(p);
   const b = p.box;
-  const cc = careerCurve(p, league.players, (o) => league.ratings.get(o.id)?.line ?? 'MID');
+  const cc = careerCurve(p, league.players, (o) => league.ratings.get(o.id)?.line ?? 'MID', r.potential);
   const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
