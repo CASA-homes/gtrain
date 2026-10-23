@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { DraftTabs } from '@/components/DraftTabs';
 import { TeamBadge } from '@/components/bits';
 import { getLeague, getMe, type Pick } from '@/lib/data';
 import { pickValue } from '@/lib/picks';
@@ -41,7 +42,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
           <span className="eyebrow">From the Keeper draft board · 16 rounds, round 16 is the keeper/rookie round</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Draft picks</h1>
         </div>
-        <Link href="/draft/history" className="btn">AFL draft review →</Link>
+        <DraftTabs active="picks" />
         <div role="tablist" aria-label="Draft year" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
           {[2027, 2028].map((yr) => (
             <Link key={yr} href={`/draft?year=${yr}`} role="tab" aria-selected={yr === year}
