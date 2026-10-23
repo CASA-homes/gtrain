@@ -14,7 +14,7 @@ import { C } from '@/lib/ratings';
 type Reason = { label: string; effect: number };
 type Prospect = {
   rank: number; name: string; junior: string; position: string; height: number | null;
-  jFP: number | null; jD: number | null; jT: number | null; traits: string[]; flags: string[];
+  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[];
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
   comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string }[];
@@ -42,6 +42,7 @@ function reasonText(r: Reason, p: Prospect) {
   if (r.label === 'Junior tackles') return `${p.jT?.toFixed(1)} tackles a game`;
   if (r.label === 'No junior numbers') return 'Barely played in 2026';
   if (r.label === 'Key position') return 'Key-position role';
+  if (r.label === 'Tall utility') return 'Tall-utility role';
   if (r.label === 'Small forward') return 'Small-forward role';
   if (r.label.startsWith('Combine: ')) return r.label.replace('Combine: ', 'Combine ');
   if (r.label.startsWith('needs')) return `Work-on: ${r.label.replace('needs ', '')}`;
@@ -130,7 +131,7 @@ function ProspectCard({ p, note, info = false }: { p: Prospect; note?: string; i
         ))}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="mono">
-        <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b></span>
+        <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b>{p.jSeason && p.jSeason < 2026 ? <span className="muted"> ({p.jSeason}{p.jSeason <= 2024 ? ' U16, −10%' : ''})</span> : null}</span>
         <span>Disposals <b>{p.jD?.toFixed(1) ?? '–'}</b></span>
         <span>Tackles <b>{p.jT?.toFixed(1) ?? '–'}</b></span>
       </div>
