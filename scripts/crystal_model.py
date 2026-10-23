@@ -10,17 +10,22 @@ from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, players, train  # no
 TRAITS = ['Defensive pressure', 'Contested / inside', 'Leadership / character', 'Kicking / skills', 'Footy IQ / vision', 'Speed / agility',
           'X-factor / hurt', 'Engine / work rate', 'Accumulator', 'Aerial / marking', 'Versatility', 'Athleticism', 'Upside', 'Clean hands']
 FLAGS = ['needs contested/inside game', 'needs consistency', 'needs to win more ball', 'raw / limited exposure']
-FEATS = ['Draft position', 'Junior fantasy avg', 'Junior tackles', 'No junior numbers', 'Key-position height (193cm+)'] + TRAITS + FLAGS
+ROLES = ['Key position', 'Ruck', 'Small forward']
+# Roles are a hard fact about how fantasy scores are earned, so let them speak louder than a single scout's trait.
+ROLE_W = {'Key position': 3.0, 'Ruck': 0.0, 'Small forward': 2.0}   # ruck acts through the calibration only: past ruck stars were late picks, so a ruck boost on top of draft slot overshoots for early rucks
+COMBO = ['Combine: top-10 endurance', 'Combine: top-10 speed/jump']
+FEATS = ['Draft position', 'Junior fantasy avg', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS
 
 def fv(p, pick):
     j = p.get('jun') or {}
-    fp = j.get('FP') or 0
-    has = 1 if fp > 20 else 0
+    fp = (j.get('FP') or 0) - (j.get('HO') or 0)   # take hitouts out: a ruck's junior score isn't comparable to a mid's
+    has = 1 if (j.get('FP') or 0) > 20 else 0
     x = [-math.log(pick),
          (min(max(fp, 40), 140) - 85) / 25 if has else 0,
          (min(max(j.get('T') or 0, 0), 8) - 3.5) / 1.5 if has else 0,
-         0 if has else 1,
-         1 if (p.get('ht') or 0) >= 193 else 0]
+         0 if has else 1]
+    x += [ROLE_W[r] if p.get('role') == r else 0 for r in ROLES]
+    x += [1 if 'endurance' in (p.get('combine') or []) else 0, 1 if 'power' in (p.get('combine') or []) else 0]
     x += [1 if t in p['str'] else 0 for t in TRAITS]
     x += [1 if f in p['imp'] else 0 for f in FLAGS]
     return x
@@ -58,3 +63,34 @@ for p in sorted([p for p in train if p['pick'] >= 20], key=lambda p: -p['oos'])[
 
 json.dump({'coef': coef, 'intercept': float(m.intercept_[0]), 'feats': FEATS, 'C': C}, open('/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/model.json', 'w'))
 json.dump(train, open('/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/train_scored.json', 'w'))
+
+# Second bar: "fantasy relevant" (an 80+ season), same features.
+train_rel = [p for p in __import__('crystal').players if p['rel_label'] is not None]
+Xr = np.array([fv(p, p['pick']) for p in train_rel]); yr_ = np.array([p['rel_label'] for p in train_rel]); yrs_r = np.array([p['year'] for p in train_rel])
+pred_r = np.zeros(len(yr_))
+for yr in sorted(set(yrs_r)):
+    tr, te = yrs_r != yr, yrs_r == yr
+    mm = LogisticRegression(C=C, max_iter=2000).fit(Xr[tr], yr_[tr]); pred_r[te] = mm.predict_proba(Xr[te])[:, 1]
+m_rel = LogisticRegression(C=C, max_iter=2000).fit(Xr, yr_)
+print('\n80+ model: n', len(yr_), 'hits', int(yr_.sum()), 'LOYO AUC', round(roc_auc_score(yr_, pred_r), 3))
+for p, pr in zip(train_rel, pred_r): p['oos_rel'] = float(pr)
+
+# Role calibration: scale the odds so each role's predicted stars (out-of-sample) match how many it actually produced.
+# Key-position players taken early almost never become fantasy stars, which a shared draft-position slope can't see.
+def _cal(rows, preds, label):
+    out = {}
+    for r in ROLES + ['Midfielder', 'Defender', 'Forward']:
+        idx = [i for i, p in enumerate(rows) if p.get('role') == r]
+        if len(idx) < 5: continue
+        hits = sum(rows[i][label] for i in idx); exp = sum(preds[i] for i in idx)
+        out[r] = round(min(3.0, max(0.15, (hits + 0.5) / (exp + 0.5))), 3)
+    return out
+ROLE_CAL = _cal(train, pred, 'label')
+ROLE_CAL_REL = _cal(train_rel, pred_r, 'rel_label')
+print('role calibration (90+):', ROLE_CAL, '| (80+):', ROLE_CAL_REL)
+
+def prob(model, x, role, cal=None):
+    cal = ROLE_CAL if cal is None else cal
+    p = float(model.predict_proba([x])[0, 1]); f = cal.get(role, 1.0)
+    o = p / (1 - p) * f
+    return o / (1 + o)

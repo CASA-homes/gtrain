@@ -9,6 +9,7 @@ H = json.load(open('lib/draft-history.json'))
 RM = json.load(open('data/rm-structured.json'))
 HIT = 90.0      # "star" for fantasy: a season averaging 90+ (8+ games)
 ELITE = 100.0
+REL = 80.0      # "fantasy relevant": a season averaging 80+
 
 GROUPS = {
   'Accumulator': ['accumulation', 'production', 'ball winning', 'accumulator'],
@@ -73,7 +74,7 @@ def junior(rows, year):
     if not top: return None
     best = max(top, key=lambda r: r['FP'])
     prev = [r for r in rs if r['yr'] == year - 1]
-    return {'FP': best['FP'], 'D': best['D'], 'T': best['T'], 'M': best['M'], 'G': best['G'], 'CLR': best['CLR'], 'I50': best['I50'],
+    return {'FP': best['FP'], 'HO': best['HO'], 'D': best['D'], 'T': best['T'], 'M': best['M'], 'G': best['G'], 'CLR': best['CLR'], 'I50': best['I50'],
             'rep': any(REP.match(r['team']) for r in rs), 'prevFP': max((r['FP'] for r in prev), default=None), 'team': best['team']}
 
 def range_mid(s):
@@ -98,9 +99,48 @@ def posgroup(pos, ht):
     if 'forw' in p: return 'FWD'
     return 'MID'
 
+RUCK_TRAITS = {'ruck craft', 'ruck work', 'ruckwork', 'ruck nous', 'hitouts'}
+def role_of(pos, ht, strs):
+    """Fantasy role from the draft profile. Only players listed as rucks are rucks; key position = listed key/tall,
+    or 194cm+ with no listed position; small forward = listed small forward (not a mid), or 178cm or under listed as a forward."""
+    p = (pos or '').lower()
+    ht = ht or 0
+    if 'ruck' in p: return 'Ruck'
+    if not p and any(norm(s) in RUCK_TRAITS for s in strs or []): return 'Ruck'
+    if 'key' in p or 'tall' in p: return 'Key position'
+    if not p and ht >= 194: return 'Key position'
+    if 'mid' in p or 'wing' in p: return 'Midfielder'
+    if 'small forward' in p or ('forward' in p and ht and ht <= 178): return 'Small forward'
+    if 'def' in p: return 'Defender'
+    if 'forward' in p: return 'Forward'
+    return 'Midfielder' if not p and ht and ht < 194 else 'Unknown'
+
 def peak(h):
     xs = [a for (_, g, a) in (h or []) if g >= 8]
     return max(xs) if xs else 0.0
+
+DFS_CACHE = '/tmp/claude-0/-home-claude/29f08a6b-131d-545f-988a-2f0ce595c883/scratchpad/dfs-cache'
+def dfs_rec(pid):
+    import os
+    f = os.path.join(DFS_CACHE, f'{pid}.json')
+    return json.load(open(f)) if pid and os.path.exists(f) else None
+def career_hitouts(pid):
+    r = dfs_rec(pid)
+    if not r: return 0
+    g = sum(int(c.get('gms') or 0) for c in r.get('career', []) if (c.get('league') or 'afl').lower() == 'afl')
+    ho = sum(float(c.get('hitouts') or 0) * int(c.get('gms') or 0) for c in r.get('career', []) if (c.get('league') or 'afl').lower() == 'afl')
+    return ho / g if g else 0
+
+COMBINE = json.load(open('data/combine-top10.json'))
+CGROUPS = {'endurance': ['2km time trial', 'Yo-yo', '3km time trial', 'Beep test'], 'power': ['20m sprint', 'Standing vertical jump', 'Running vertical jump']}
+_ck = lambda n: re.sub('[^a-z]', '', n.lower())
+_CB = {}
+for _y, _v in COMBINE.items():
+    for _t, _rows in _v['tests'].items():
+        for _r in _rows:
+            for _g, _ts in CGROUPS.items():
+                if _t in _ts: _CB.setdefault((int(_y), _ck(_r['name'])), set()).add(_g)
+def combine_flags(year, name): return sorted(_CB.get((year, _ck(name)), set()))
 
 players = []
 for d in H:
@@ -113,9 +153,9 @@ for d in H:
     j = junior(r['rows'], d['y'])
     pk = peak(d.get('h'))
     mature = d['y'] <= 2022
-    players.append({'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'str': st, 'imp': im,
+    players.append({'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,
                     'rawstr': r['str'], 'rawimp': r['imp'], 'jun': j, 'range': range_mid(r['range']), 'peak': pk,
-                    'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature,
+                    'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature, 'rel': pk >= REL, 'rel_label': (1 if pk >= REL else (0 if mature else None)),
                     'label': (1 if pk >= HIT else (0 if mature else None))})
 
 train = [p for p in players if p['label'] is not None]

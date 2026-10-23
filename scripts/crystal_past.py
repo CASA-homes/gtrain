@@ -5,12 +5,26 @@ import json, math, sys
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 sys.path.insert(0, 'scripts')
-from crystal import players, train, H, HIT  # noqa: E402
+from crystal import players, train, H, HIT, dfs_rec  # noqa: E402
 import crystal_model as cm  # noqa: E402
 
 YEARS = [2021, 2022, 2023, 2024, 2025]
 NOW = 2026
 byname = {(p['year'], p['name']): p for p in players}
+
+def cba_by_season(pid, year):
+    """{season number: centre-bounce attendance %} from DFS (AFL seasons with 5+ games)."""
+    r = dfs_rec(pid)
+    out = {}
+    for c in (r or {}).get('career', []):
+        if (c.get('league') or 'afl').lower() != 'afl' or int(c.get('gms') or 0) < 5: continue
+        try: out[int(c['year']) - year] = float(c.get('centreBounceAttendancePercentage') or 0)
+        except (TypeError, ValueError): pass
+    return out
+
+def role_for(d):
+    p = byname.get((d['y'], d['n']))
+    return (p or {}).get('role', 'Unknown')
 
 def season_avgs(h, year):
     """{season number: avg} for seasons with 5+ games (season 1 = first year after the draft)."""
@@ -60,10 +74,13 @@ for n in range(1, 5):
         upto = {k: v for k, v in sa.items() if k <= n}
         best = max(upto.values()) if upto else 0
         played = 1 if upto else 0
-        rows.append([logit(hist_pre[(d['y'], d['n'])]), (best - 70) / 10 if played else 0, 0 if played else 1])
+        cb = {k: v for k, v in cba_by_season(d.get('id'), d['y']).items() if k <= n}
+        role = role_for(d)
+        rows.append([logit(hist_pre[(d['y'], d['n'])]), (best - 70) / 10 if played else 0, 0 if played else 1,
+                     (max(cb.values()) - 30) / 20 if cb else 0, 1 if role == 'Key position' else 0, 1 if role == 'Small forward' else 0])
         ys.append(1 if any(g >= 8 and a >= HIT for (_, g, a) in (d.get('h') or [])) else 0)
     upd[n] = LogisticRegression(C=1.0, max_iter=2000).fit(np.array(rows), np.array(ys))
-    print('updated-chance model season', n, 'coef', np.round(upd[n].coef_, 2))
+    print('updated-chance model season', n, '[pre, best avg, no games, CBA%, key pos, small fwd] coef', np.round(upd[n].coef_, 2))
 
 # 4) Score each 2021–2025 draftee.
 past = []
@@ -90,15 +107,20 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
     if hit: now = 1.0
     else:
         nn = min(n_now, 4)
-        x = [logit(pc), (best_any - 70) / 10 if best_any else 0, 0 if best_any else 1]
+        cb_now = cba_by_season(d.get('id'), d['y'])
+        role = role_for(d)
+        x = [logit(pc), (best_any - 70) / 10 if best_any else 0, 0 if best_any else 1,
+             (max(cb_now.values()) - 30) / 20 if cb_now else 0, 1 if role == 'Key position' else 0, 1 if role == 'Small forward' else 0]
         now = float(upd[nn].predict_proba([x])[0, 1])
     p = byname.get((d['y'], d['n']))
+    cbs = cba_by_season(d.get('id'), d['y'])
     age = (d['y'] - int(d['dob'][:4])) if d.get('dob') else None
     past.append({'age': age, 'mature': bool(age and age >= 21),'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'],
                  'pre': round(pc * 100, 1), 'positionOnly': round(po * 100, 1), 'now': round(now * 100, 1),
                  'games': games, 'current': cur, 'best': round(best_any, 1) if best_any else None, 'peak': round(peak, 1) if peak else None,
                  'track': track, 'status': status, 'traits': (p or {}).get('str', []), 'jFP': ((p or {}).get('jun') or {}).get('FP'),
-                 'seasons': [[y, g, round(a, 1)] for (y, g, a) in h if g > 0]})
+                 'seasons': [[y, g, round(a, 1)] for (y, g, a) in h if g > 0], 'role': role_for(d),
+                 'cba': {str(d['y'] + k): v for k, v in sorted(cbs.items())}})
 
 # Surprises: low pre-draft chance, but already a star or ahead of the star path.
 sur = [r for r in past if r['pre'] < 20 and not r['mature'] and (r['status'] in ('Star', 'On star track'))]
@@ -108,8 +130,19 @@ for yr in YEARS:
     rs = [r for r in past if r['year'] == yr]
     print(yr, {s: sum(1 for r in rs if r['status'] == s) for s in ['Star', 'On star track', 'Close', 'Behind', 'Yet to debut', 'Too early']})
 
+brk = []
+for r in past:
+    c = r['cba']
+    if r['status'] == 'Star' or str(NOW) not in c or r['role'] == 'Ruck' or not r['current'] or r['current']['avg'] < 55: continue
+    prev = c.get(str(NOW - 1))
+    jump = c[str(NOW)] - (prev if prev is not None else 0)
+    if c[str(NOW)] >= 30 and (prev is None or jump >= 15):
+        brk.append((jump, r))
+brk.sort(key=lambda t: -t[0])
+for j, r in brk[:10]: print('breakout', r['year'], r['name'], r['cba'], r['now'], r['current'])
 D = json.load(open('lib/crystal-ball.json'))
 D['past'] = {'years': YEARS, 'path': {str(k): round(v, 1) for k, v in path.items() if v}, 'players': past,
-             'surprises': [r['name'] + '|' + str(r['year']) for r in sur[:8]]}
+             'surprises': [r['name'] + '|' + str(r['year']) for r in sur[:8]],
+             'breakouts': [r['name'] + '|' + str(r['year']) for _, r in brk[:8]]}
 json.dump(D, open('lib/crystal-ball.json', 'w'), indent=1)
 print('wrote past block:', len(past), 'players')
