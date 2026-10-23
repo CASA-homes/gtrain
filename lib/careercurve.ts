@@ -13,7 +13,7 @@ export interface CareerCurve {
   cone: { age: number; lo: number; hi: number }[];   // range of outcomes around the projection
   similar: CurvePoint[];      // similar players on his line, by age
   similarCount: number;       // how many players shaped the similar curve
-  prime: [number, number] | null;   // ages where the projection is within 3% of its peak
+  prime: [number, number] | null;   // the typical prime window for his position
   nowAge: number | null;
   toAge: number;              // right edge of the chart: 32, or later for players already older
 }
@@ -46,6 +46,9 @@ function byAge(p: PlayerRow, minGames: number): Map<number, CurvePoint> {
  * Projection: next season is his 2027 projection (age curve, injury blend and known role changes). After that,
  * half the site's age curve and half the similar players' change, so it rises into a prime and then declines.
  */
+/** Typical fantasy prime by position. */
+export const PRIME_BY_LINE: Record<Line, [number, number]> = { MID: [23, 28], DEF: [25, 30], FWD: [24, 28], RUC: [26, 31] };
+
 export function careerCurve(p: PlayerRow, all: PlayerRow[], lineOf: (p: PlayerRow) => Line, potentialStars: number | null = null): CareerCurve {
   const actualMap = byAge(p, 5);
   const actual = [...actualMap.values()].sort((a, b) => a.age - b.age);
@@ -150,12 +153,7 @@ export function careerCurve(p: PlayerRow, all: PlayerRow[], lineOf: (p: PlayerRo
     return { age: k.age, lo: Math.round(Math.min(lo, k.mid) * 10) / 10, hi: Math.round(Math.max(hi, k.mid) * 10) / 10 };
   });
 
-  let prime: [number, number] | null = null;
-  const future = projected.slice(1);
-  if (future.length >= 3) {
-    const peak = Math.max(...future.map((x) => x.avg));
-    const inPrime = future.filter((x) => x.avg >= peak * 0.97).map((x) => x.age);
-    if (inPrime.length) prime = [Math.min(...inPrime), Math.max(...inPrime)];
-  }
+  // Prime is a fixed window by position, not read off the projection: rucks and key defenders mature later.
+  const prime: [number, number] = PRIME_BY_LINE[line];
   return { actual, projected, cone, similar, similarCount, prime, nowAge, toAge };
 }

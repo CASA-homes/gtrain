@@ -146,6 +146,24 @@ function pct(sorted: number[], x: number) {
   for (const v of sorted) if (v < x) below++;
   return (below / sorted.length) * 100;
 }
+/**
+ * Durability bar (1–20): availability over the last three seasons, not just this one, weighted 60/30/10 to
+ * 2026/2025/2024, skipping his debut season. 2026 counts partial games (subbed or hurt) as half. Seasons before his debut are skipped.
+ * The scale is steep on purpose: playing every game is 20, missing a fifth of the footy is about 13, missing
+ * a third is about 8, so one big injury year shows clearly.
+ */
+export function durabilityScore(p: Pick<PlayerRow, 'hist' | 'debut_year'>, dur26: number): number {
+  const w: [number, number][] = [[2026, 0.6], [2025, 0.3], [2024, 0.1]];
+  let num = 0, den = 0;
+  for (const [y, wt] of w) {
+    if (y < 2026 && p.debut_year && y <= p.debut_year) continue;   // debut year is about selection, not injury
+    const g = y === 2026 ? dur26 * 23 : (p.hist ?? []).find((h) => h[0] === y)?.[1] ?? 0;
+    num += wt * Math.min(1, g / 23); den += wt;
+  }
+  const avail = den ? num / den : dur26;
+  return Math.max(1, Math.min(20, Math.round(20 * Math.pow(Math.max(0, (avail - 0.35) / 0.65), 1.4))));
+}
+
 const to20 = (p: number) => Math.max(1, Math.min(20, Math.round(p / 5)));
 
 export interface Ratings {
@@ -186,19 +204,32 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
     return [l, top.length ? top.reduce((s2, x) => s2 + x, 0) / top.length : 0];
   }));
 
+  // Best line: highest percentile, scarcer line on ties.
+  const lineOf = new Map(all.map((p) => {
+    const avg = p.average ?? 0;
+    const eligible = (p.positions.length ? p.positions : [primaryLine(p)]).filter((l) => pool.has(l));
+    return [p.id, [...eligible].sort((x, y) => (pct(sortedAvg.get(y)!, avg) - pct(sortedAvg.get(x)!, avg)) || (SCARCITY_ORDER.indexOf(x) - SCARCITY_ORDER.indexOf(y)))[0]];
+  }));
+  // Rank: players valued on the same line count in full; dual-position players valued on another line count half,
+  // because a MID/FWD playing forward only sometimes takes a midfield spot.
+  const lineRankOf = (p: PlayerRow, line: Line) => {
+    const avg = p.average ?? 0;
+    let r = 1;
+    for (const q of pool.get(line)!) if ((q.average ?? 0) > avg) r += lineOf.get(q.id) === line ? 1 : 0.5;
+    return Math.round(r);
+  };
+
   const out = new Map<number, Ratings>();
   for (const p of all) {
     const ss = st(p);
     const avg = p.average ?? 0;
-    const eligible = (p.positions.length ? p.positions : [primaryLine(p)]).filter((l) => pool.has(l));
-    // Best line: highest percentile, scarcer line on ties.
-    const line = [...eligible].sort((x, y) => (pct(sortedAvg.get(y)!, avg) - pct(sortedAvg.get(x)!, avg)) || (SCARCITY_ORDER.indexOf(x) - SCARCITY_ORDER.indexOf(y)))[0];
+    const line = lineOf.get(p.id)!;
     const avgs = sortedAvg.get(line)!;
-    // Durability: games out of 23, with partial games (subbed or hurt) counting half.
+    // Value penalty uses 2026 availability: games out of 23, with partial games (subbed or hurt) counting half.
     const dur = Math.min(1, (ss.games - ss.partial * 0.5) / 23);
     const f = form(p);
     const avgP = pct(avgs, avg);
-    const lineRank = avgs.filter((x) => x > avg).length + 1;
+    const lineRank = lineRankOf(p, line);
     const orig = rows.find((r) => r.id === p.id);
     const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(ss.full, ss.mean || avg), injuredBlend: p !== orig, missedSeason: !orig?.games }) : 0;
     // A forward or defender who also holds MID and is living in the centre square may lose the scarcer status.
@@ -210,7 +241,7 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
       ceiling: to20(pct(sortedCeil.get(line)!, ss.ceiling)),
       floor: to20(pct(sortedFloor.get(line)!, ss.floor)),
       consistency: ss.cv == null ? 1 : to20(pct(sortedSteady.get(line)!, -ss.cv)),
-      durability: to20(dur * 100),
+      durability: durabilityScore(p, dur),
       form: f === 'up' ? 16 : f === 'down' ? 6 : f === 'flat' ? 11 : 1,
       value,
       valueStars: starsFromValue(value),
@@ -276,6 +307,13 @@ export function abilityStars(avg: number): number {
   return 0.5;
 }
 
+/** Year-on-year scoring multiplier by age (a 22-year-old typically adds 5%). */
+export const AGE_CURVE: Record<number, number> = {
+  18: 1.18, 19: 1.15, 20: 1.11, 21: 1.08, 22: 1.05, 23: 1.03, 24: 1.02, 25: 1, 26: 1, 27: 0.99,
+  28: 0.97, 29: 0.95, 30: 0.92, 31: 0.89, 32: 0.85, 33: 0.8,
+};
+export const curve = (a: number) => AGE_CURVE[a] ?? (a < 18 ? 1.2 : 0.75);
+
 const SEASON_NOW = 2026;
 /** What a typical player averages in his nth AFL season. */
 const EXPECTED = [55, 55, 65, 75, 82, 88];
@@ -293,7 +331,27 @@ const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x
  * Prime (24–27): current ability, with a little extra if he's still climbing.
  * 28+: current ability less an age drop (29 −0.5, 30–32 −1, 33+ −1.5).
  */
-export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average'>, lineBonus = 0): number | null {
+/**
+ * Projected peak for a young player: his 2026 level (blended with his last 10 full games, so a strong back half
+ * counts), plus some momentum if he's improved season on season, grown along the age curve to 26 (capped at +15%).
+ * Needs 10+ games in 2026; returns null otherwise.
+ */
+export function projectedPeak(p: Pick<PlayerRow, 'birth_date' | 'hist' | 'average' | 'games_log'>): number | null {
+  const a = age(p.birth_date);
+  const full = (p.hist ?? []).filter((h) => h[1] >= 5);
+  const cur = full.find((h) => h[0] === SEASON_NOW);
+  if (a == null || !cur || cur[1] < 10) return null;
+  const log = (p.games_log ?? []).filter((g) => g[1] != null && (g[2] ?? 100) >= 50).map((g) => g[1] as number);
+  const last10 = log.slice(-10);
+  const base = last10.length >= 6 ? 0.6 * cur[2] + 0.4 * (last10.reduce((x, y) => x + y, 0) / last10.length) : cur[2];
+  const prev = full.filter((h) => h[0] < SEASON_NOW).pop();
+  const momentum = prev ? clamp((cur[2] - prev[2]) * 0.3, 0, 4) : 0;
+  let growth = 1;
+  for (let x = a; x <= 26; x++) growth *= Math.max(1, curve(x));
+  return (base + momentum) * Math.min(1.15, growth);
+}
+
+export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average' | 'games_log'>, lineBonus = 0): number | null {
   const a = age(p.birth_date);
   if (a == null) return null;
   const hist = (p.hist ?? []).filter((h) => h[1] > 0);
@@ -313,7 +371,8 @@ export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draf
       const [yr, , f] = full[full.length - 1];
       const n = hist.filter((h) => h[0] <= yr).length;
       S = 3 + (f / EXPECTED[Math.min(n, 5)] - 1) * 5;
-      if (full.length >= 2) S += clamp((full[full.length - 1][2] - full[full.length - 2][2]) / 15, -0.75, 1.5);
+      // One-year jump, trusted in proportion to how many games it was built on (16+ games = full credit).
+      if (full.length >= 2) S += clamp((full[full.length - 1][2] - full[full.length - 2][2]) / 20, -0.75, 1.5) * Math.min(1, full[full.length - 1][1] / 16);
       S -= Math.max(0, a - 22) * 0.3;
     } else if (hist.length) {
       S = 3 + (hist[hist.length - 1][2] / EXPECTED[1] - 1) * 5;
@@ -330,11 +389,13 @@ export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draf
     const wS = 0.8 * Math.min(1, cg / 40);
     let P = S + (1 - wS) * Math.max(0, D - S);
     if (a <= 21) P += 0.25;
-    return halfStar(Math.max(P, C));
+    const pk = projectedPeak(p);
+    return halfStar(Math.max(P, C, pk ? abilityStars(pk + lineBonus) : 0));
   }
   if (a <= 27) {
     const slope = full.length >= 2 ? full[full.length - 1][2] - full[full.length - 2][2] : 0;
-    return halfStar(C + (a <= 26 ? clamp(slope / 20, 0, 0.5) : 0));
+    const pk = a <= 25 ? projectedPeak(p) : null;
+    return halfStar(Math.max(C + (a <= 26 ? clamp(slope / 20, 0, 0.5) : 0), pk ? abilityStars(pk + lineBonus) : 0));
   }
   const drop = a === 28 ? 0 : a === 29 ? 0.5 : a <= 32 ? 1 : 1.5;
   return halfStar(C - drop);

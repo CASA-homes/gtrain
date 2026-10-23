@@ -336,7 +336,7 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   if (p.average && (r.line !== 'MID' || p.positions.length > 1) && (r.lineRank <= 15 || r.statusRisk)) {
     const parts: string[] = [];
     parts.push(`Valued as a ${one}: he’s the No.${r.lineRank} ${one} in the league by average, ${r.lineEdge >= 0 ? `${r.lineEdge.toFixed(1)} points better than` : `${Math.abs(r.lineEdge).toFixed(1)} points short of`} a typical starting ${one}.`);
-    if (r.line === 'FWD') parts.push('Forwards are the hardest line to fill in this format, because the scoring drops away fast after the top ten. That scarcity is why his value stars sit higher than his raw average would suggest.');
+    if (r.line === 'FWD') parts.push('Forwards are the hardest line to fill in this format, because the scoring drops away fast after the top ten. That scarcity is why his current ability stars sit higher than his raw average would suggest.');
     else if (r.line === 'DEF') parts.push('Premium defenders are rarer than premium midfielders, so his average goes further on the back line.');
     else if (r.line === 'RUC') parts.push('There’s only one ruck slot, so the gap between a top ruck and the rest is worth a lot each week.');
     if (r.statusRisk) {
