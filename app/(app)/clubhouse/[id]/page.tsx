@@ -101,7 +101,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             </div>
           )}
 
-          <div className="card" style={{ padding: '14px 14px 10px', display: 'flex', flexDirection: 'column', gap: 6, background: C.ink, color: '#f4f2ea', border: 0 }}>
+          <div className="card" style={{ padding: '10px 14px 6px', display: 'flex', flexDirection: 'column', gap: 4, background: C.ink, color: '#f4f2ea', border: 0 }}>
             <span className="eyebrow" style={{ color: '#b9c4b6' }}>Premiership window</span>
             <WindowChart points={windowPts} />
           </div>
