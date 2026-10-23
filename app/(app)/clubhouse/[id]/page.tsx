@@ -12,6 +12,7 @@ import {
 import { createClient } from '@/lib/supabase/server';
 import { coreAge, strengthByYear, windowFor } from '@/lib/window';
 import { WindowChart } from '@/components/WindowChart';
+import { StadiumArt } from '@/components/StadiumArt';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -71,24 +72,37 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="wrap">
-      <header className="ribbon">
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-          <TeamBadge code={a.team.short_code} />
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-              <h1 style={{ font: '600 34px/1.05 var(--font)', letterSpacing: '-.03em' }}>{a.team.name}</h1>
-              <span style={{ display: 'inline-flex', gap: 2 }}>{a.premierships.map((y) => <Cup key={y} year={y} />)}</span>
-            </div>
-            <span className="muted">Coach {a.team.coach_name}{isMine ? ' · your club' : ''}</span>
+      <header className="club-head">
+        {season?.premier_id === a.team.id && (
+          <div className="club-head-band">
+            <svg width="13" height="14" viewBox="0 0 26 28" aria-hidden="true"><path d="M7 2 H19 V9 C19 13 16.5 16 13 16 C9.5 16 7 13 7 9 Z" fill="currentColor" /><rect x="11.5" y="16" width="3" height="5" fill="currentColor" /><rect x="7.5" y="21" width="11" height="4" rx="1" fill="currentColor" /></svg>
+            {CURRENT_SEASON} PREMIERS
           </div>
+        )}
+        <StadiumArt className="club-head-art" />
+        <div className="club-head-body">
+          <div className="club-head-id">
+            <TeamBadge code={a.team.short_code} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
+                <h1 className="club-head-name">{a.team.name}</h1>
+                {a.premierships.length > 0 && (
+                  <span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap' }}>
+                    {a.premierships.map((y) => <span key={y} className="flag-chip"><Cup size={11} /> {y}</span>)}
+                  </span>
+                )}
+              </div>
+              <span className="muted">Coach {a.team.coach_name}{isMine ? ' · your club' : ''}</span>
+            </div>
+          </div>
+          <div className="club-head-kpis">
+            <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>
+            <div className="kpi"><span className="eyebrow">Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
+            <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
+            <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
+          </div>
+          {isMine && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">Set keepers</Link>}
         </div>
-        <div className="kpis">
-          <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>
-          <div className="kpi"><span className="eyebrow">Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
-          <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
-          <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
-        </div>
-        {isMine && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark">Set keepers</Link>}
       </header>
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine || !!me?.is_commish} saved={a.lineupSaved}>
