@@ -8,7 +8,7 @@ const PHASE: Record<Phase, { fill: string; text: string; short: string }> = {
   'Leaving window': { fill: '#d0583f', text: '#e8806b', short: 'LEAVING' },
 };
 
-const W = 500, X0 = 64, X1 = 482, TOP = 40, BOT = 172;
+const W = 500, X0 = 64, X1 = 482, TOP = 26, BOT = 98, H = 118;
 const n = LAST_YEAR - FIRST_YEAR;
 const step = (X1 - X0) / n;
 const xOf = (year: number) => X0 + (year - FIRST_YEAR) * step;
@@ -47,7 +47,7 @@ export function WindowChart({ points }: { points: WindowPoint[] }) {
   const now = points.find((p) => p.year === NOW_YEAR);
 
   return (
-    <svg viewBox={`0 0 ${W} 200`} width="100%" role="img" style={{ display: 'block' }}
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" style={{ display: 'block' }}
       aria-label={`Ladder finishes ${FIRST_YEAR}–${NOW_YEAR} and projected ${NOW_YEAR + 1}–${LAST_YEAR}. Now: ${now?.phase ?? ''}.`}>
       {bands.map((b) => {
         const x = Math.max(X0 - step / 2, xOf(b.from) - step / 2), x2 = Math.min(W - 4, xOf(b.to) + step / 2);
@@ -55,8 +55,8 @@ export function WindowChart({ points }: { points: WindowPoint[] }) {
         const label = x2 - x >= (c.short.length * 5.4 + 6) ? c.short : x2 - x >= 40 ? c.short.split(' ')[0] : '';
         return (
           <g key={`${b.phase}${b.from}`}>
-            <rect x={x} y={22} width={x2 - x} height={BOT - 22 + 6} fill={c.fill} fillOpacity={b.from > NOW_YEAR ? 0.11 : 0.18} />
-            {label && <text x={(x + x2) / 2} y={15} textAnchor="middle" fill={c.text} fontFamily="var(--mono)" fontSize={8.5} letterSpacing={0.4}>{label}</text>}
+            <rect x={x} y={14} width={x2 - x} height={BOT - 14 + 6} fill={c.fill} fillOpacity={b.from > NOW_YEAR ? 0.11 : 0.18} />
+            {label && <text x={(x + x2) / 2} y={10} textAnchor="middle" fill={c.text} fontFamily="var(--mono)" fontSize={8} letterSpacing={0.4}>{label}</text>}
           </g>
         );
       })}
@@ -66,20 +66,20 @@ export function WindowChart({ points }: { points: WindowPoint[] }) {
           <text x={X0 - step / 2 - 4} y={yOf(r) + 3} textAnchor="end" fill="#8d978e" fontFamily="var(--mono)" fontSize={9}>{r === 1 ? '1st' : r === 5 ? '5th' : '10th'}</text>
         </g>
       ))}
-      <line x1={xOf(NOW_YEAR)} x2={xOf(NOW_YEAR)} y1={22} y2={BOT + 6} stroke="#f4f2ea" strokeOpacity={0.35} strokeDasharray="2 3" />
+      <line x1={xOf(NOW_YEAR)} x2={xOf(NOW_YEAR)} y1={14} y2={BOT + 6} stroke="#f4f2ea" strokeOpacity={0.35} strokeDasharray="2 3" />
       {area && <path d={area} fill="#f4f2ea" fillOpacity={0.06} />}
       {fan && <path d={fan} fill="#f4f2ea" fillOpacity={0.1} />}
       <path d={smooth(pastXY)} fill="none" stroke="#f4f2ea" strokeWidth={2.5} strokeLinecap="round" />
       <path d={smooth(futXY)} fill="none" stroke="#f4f2ea" strokeWidth={2} strokeDasharray="5 4" strokeLinecap="round" strokeOpacity={0.8} />
       {points.map((p) => {
         const x = xOf(p.year), y = yOf(p.rank);
-        if (p.flag) return <circle key={p.year} cx={x} cy={y} r={6} fill="#d4a62a" stroke="#151a16" strokeWidth={2}><title>{`${p.year}: premiers`}</title></circle>;
+        if (p.flag) return <circle key={p.year} cx={x} cy={y} r={5} fill="#d4a62a" stroke="#151a16" strokeWidth={2}><title>{`${p.year}: premiers`}</title></circle>;
         if (p.kind === 'proj') return <circle key={p.year} cx={x} cy={y} r={3.5} fill="#151a16" stroke="#f4f2ea" strokeWidth={1.5}><title>{`${p.year}: projected ~${Math.round(p.rank)}`}</title></circle>;
-        if (p.year === NOW_YEAR) return <g key={p.year}><circle cx={x} cy={y} r={8} fill="none" stroke="#f4f2ea" strokeOpacity={0.35} /><circle cx={x} cy={y} r={4.5} fill="#f4f2ea"><title>{`${p.year}: ${p.rank}`}</title></circle></g>;
+        if (p.year === NOW_YEAR) return <g key={p.year}><circle cx={x} cy={y} r={7} fill="none" stroke="#f4f2ea" strokeOpacity={0.35} /><circle cx={x} cy={y} r={4.5} fill="#f4f2ea"><title>{`${p.year}: ${p.rank}`}</title></circle></g>;
         return <circle key={p.year} cx={x} cy={y} r={3.5} fill="#f4f2ea" fillOpacity={p.kind === 'est' ? 0.45 : 1}><title>{`${p.year}: ${p.kind === 'est' ? '~' : ''}${p.rank}`}</title></circle>;
       })}
       {points.map((p) => (
-        <text key={p.year} x={xOf(p.year)} y={192} textAnchor="middle" fill={p.year === NOW_YEAR ? '#f4f2ea' : '#8d978e'} fontFamily="var(--mono)" fontSize={9.5}>’{String(p.year).slice(2)}</text>
+        <text key={p.year} x={xOf(p.year)} y={H - 4} textAnchor="middle" fill={p.year === NOW_YEAR ? '#f4f2ea' : '#8d978e'} fontFamily="var(--mono)" fontSize={9.5}>’{String(p.year).slice(2)}</text>
       ))}
     </svg>
   );
