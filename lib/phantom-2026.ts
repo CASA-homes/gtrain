@@ -6,7 +6,10 @@ export const PHANTOM_2026_SOURCE = {
   date: '20 Oct 2026',
 };
 
-export interface Prospect { rank: number; name: string; from: string; position: string }
+export interface Prospect { rank: number; name: string; from: string; position: string; club?: string }
+
+/** Flip to true once the national draft is run: `rank` then means the actual pick and `club` the AFL club that took him. */
+export const DRAFT_2026_DONE = false;
 
 export const PHANTOM_2026: Prospect[] = [
   { rank: 1, name: 'Dougie Cochrane', from: 'Port Adelaide (SANFL)', position: 'Tall utility' },

@@ -755,6 +755,8 @@
   {
    "rank": 2,
    "name": "Cody Walker",
+   "club": null,
+   "drafted": false,
    "junior": "Bendigo Pioneers",
    "position": "MID",
    "height": 184,
@@ -902,6 +904,8 @@
   {
    "rank": 4,
    "name": "Ethan Drever",
+   "club": null,
+   "drafted": false,
    "junior": "GWV Rebels",
    "position": "MID",
    "height": 188,
@@ -1040,6 +1044,8 @@
   {
    "rank": 5,
    "name": "Heath Mellody",
+   "club": null,
+   "drafted": false,
    "junior": "Claremont",
    "position": "MID/DEF",
    "height": 184,
@@ -1156,6 +1162,8 @@
   {
    "rank": 22,
    "name": "Noah Williams",
+   "club": null,
+   "drafted": false,
    "junior": "Geelong Falcons",
    "position": "MID",
    "height": 177,
@@ -1295,6 +1303,8 @@
   {
    "rank": 8,
    "name": "Ethan Matthews",
+   "club": null,
+   "drafted": false,
    "junior": "GIANTS Academy",
    "position": "MID",
    "height": 186,
@@ -1446,6 +1456,8 @@
   {
    "rank": 25,
    "name": "Albert MacGowan",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "Wing/MID",
    "height": 187,
@@ -1584,6 +1596,8 @@
   {
    "rank": 12,
    "name": "Leo Steed",
+   "club": null,
+   "drafted": false,
    "junior": "Swan Districts",
    "position": "MID/FWD",
    "height": 176,
@@ -1691,6 +1705,8 @@
   {
    "rank": 7,
    "name": "Harry Van Hattum",
+   "club": null,
+   "drafted": false,
    "junior": "Northern Knights",
    "position": "RUC",
    "height": 205,
@@ -1851,6 +1867,8 @@
   {
    "rank": 17,
    "name": "Toby Krasna",
+   "club": null,
+   "drafted": false,
    "junior": "Northern Knights",
    "position": "Wing/MID",
    "height": 181,
@@ -2003,6 +2021,8 @@
   {
    "rank": 10,
    "name": "Caylen Murray",
+   "club": null,
+   "drafted": false,
    "junior": "Brisbane Northern Academy",
    "position": "MID/DEF",
    "height": 183,
@@ -2150,6 +2170,8 @@
   {
    "rank": 1,
    "name": "Dougie Cochrane",
+   "club": null,
+   "drafted": false,
    "junior": "Port Adelaide NGA",
    "position": "Key position utility",
    "height": 196,
@@ -2273,6 +2295,8 @@
   {
    "rank": 6,
    "name": "Gus Teixeira",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "MID/FWD",
    "height": 181,
@@ -2349,6 +2373,8 @@
   {
    "rank": 18,
    "name": "Jackson Phillips",
+   "club": null,
+   "drafted": false,
    "junior": "Dandenong Stingrays",
    "position": "Wing/MID",
    "height": 182,
@@ -2464,6 +2490,8 @@
   {
    "rank": 24,
    "name": "Jake Eime",
+   "club": null,
+   "drafted": false,
    "junior": "Central District",
    "position": "DEF/Wing",
    "height": 182,
@@ -2598,6 +2626,8 @@
   {
    "rank": 3,
    "name": "Arki Butler",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "FWD/MID",
    "height": 182,
@@ -2706,6 +2736,8 @@
   {
    "rank": 28,
    "name": "Archie Elliott",
+   "club": null,
+   "drafted": false,
    "junior": "GWV Rebels",
    "position": "FWD",
    "height": 182,
@@ -2800,6 +2832,8 @@
   {
    "rank": 20,
    "name": "Harvie Cooke",
+   "club": null,
+   "drafted": false,
    "junior": "Northern Knights",
    "position": "MID/FWD",
    "height": 176,
@@ -2957,6 +2991,8 @@
   {
    "rank": 30,
    "name": "Keenan Boi",
+   "club": null,
+   "drafted": false,
    "junior": "Gippsland Power (Hawthorn NGA)",
    "position": "Small FWD/MID",
    "height": 177,
@@ -3071,6 +3107,8 @@
   {
    "rank": 21,
    "name": "Khaled El Souki",
+   "club": null,
+   "drafted": false,
    "junior": "Western Jets (Bulldogs NGA)",
    "position": "Small FWD",
    "height": 175,
@@ -3124,6 +3162,8 @@
   {
    "rank": 15,
    "name": "Lochie Burrows",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "MID/FWD",
    "height": 179,
@@ -3250,6 +3290,8 @@
   {
    "rank": 29,
    "name": "Kodah Edwards",
+   "club": null,
+   "drafted": false,
    "junior": "South Adelaide",
    "position": "MID/FWD",
    "height": 184,
@@ -3392,6 +3434,8 @@
   {
    "rank": 19,
    "name": "George Dimer",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "Small FWD",
    "height": 173,
@@ -3464,6 +3508,8 @@
   {
    "rank": 26,
    "name": "George Gale",
+   "club": null,
+   "drafted": false,
    "junior": "Claremont",
    "position": "Wing/MID",
    "height": 190,
@@ -3581,6 +3627,8 @@
   {
    "rank": 9,
    "name": "Mitch Harris",
+   "club": null,
+   "drafted": false,
    "junior": "South Australia",
    "position": "Key DEF",
    "height": 196,
@@ -3681,6 +3729,8 @@
   {
    "rank": 16,
    "name": "Tyson Bradley",
+   "club": null,
+   "drafted": false,
    "junior": "Sandringham Dragons",
    "position": "Key DEF",
    "height": 195,
@@ -3750,6 +3800,8 @@
   {
    "rank": 13,
    "name": "Clancy Snell",
+   "club": null,
+   "drafted": false,
    "junior": "Gippsland Power",
    "position": "Key DEF",
    "height": 196,
@@ -3817,6 +3869,8 @@
   {
    "rank": 14,
    "name": "Sam Gayfer",
+   "club": null,
+   "drafted": false,
    "junior": "Northern Knights",
    "position": "Key FWD",
    "height": 194,
@@ -3903,6 +3957,8 @@
   {
    "rank": 27,
    "name": "Billy Wigmore",
+   "club": null,
+   "drafted": false,
    "junior": "Western Jets",
    "position": "Tall DEF",
    "height": 188,
@@ -3969,6 +4025,8 @@
   {
    "rank": 11,
    "name": "Wil Malady",
+   "club": null,
+   "drafted": false,
    "junior": "Gippsland Power",
    "position": "Tall FWD",
    "height": 190,
@@ -4047,6 +4105,8 @@
   {
    "rank": 23,
    "name": "Jack Pickett",
+   "club": null,
+   "drafted": false,
    "junior": "Geelong Falcons",
    "position": "Key FWD",
    "height": 194,
