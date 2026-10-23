@@ -128,7 +128,7 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
                       <span className="muted" style={{ fontSize: 12 }}>{p?.positions.join('/')} · {p?.average?.toFixed(1)} avg · {team(l.team_id)?.name}</span>
                     </div>
                     <span style={{ fontSize: 13 }}><span className="eyebrow">Ask </span>{l.asking ?? 'Open'}</span>
-                    <span style={{ fontSize: 13 }} className="muted">{(l.offers ?? []).length} offer{(l.offers ?? []).length === 1 ? '' : 's'}{r ? <><br /><Stars value={r.valueStars} label="Value" /></> : null}</span>
+                    <span style={{ fontSize: 13 }} className="muted">{(l.offers ?? []).length} offer{(l.offers ?? []).length === 1 ? '' : 's'}{r ? <><br /><Stars value={r.valueStars} label="Current ability" /></> : null}</span>
                   </Link>
                 );
               }) : <div className="muted" style={{ padding: 16 }}>Nothing listed{line ? ` at ${line}` : ''} yet.</div>}
