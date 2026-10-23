@@ -6,6 +6,8 @@ import { getLeague, CURRENT_SEASON } from '@/lib/data';
 import { age, C, form, played } from '@/lib/ratings';
 import { scoutingReport } from '@/lib/scouting';
 import { photoUrl } from '@/lib/photos';
+import { careerCurve } from '@/lib/careercurve';
+import { CareerCurveChart } from '@/components/CareerCurveChart';
 
 export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -23,6 +25,8 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
   const report = scoutingReport(p, r, attrs);
   const photo = photoUrl(p);
   const b = p.box;
+  const cc = careerCurve(p, league.players, (o) => league.ratings.get(o.id)?.line ?? 'MID');
+  const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
     ['Average', r.average], ['Ceiling', r.ceiling], ['Floor', r.floor],
@@ -130,6 +134,11 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
               <span className="mono" style={{ textAlign: 'right' }}>{v}</span>
             </div>
           ))}
+          <p className="muted" style={{ fontSize: 11, margin: '6px 0 0' }}>From every {CURRENT_SEASON} game. Floor and ceiling are the average of his worst and best quarter of games; consistency is how little his scores swing. Games under 50% time on ground count against durability only.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 22 }}>
+            <div className="row-between"><span className="eyebrow">Career curve</span><span className="mono muted" style={{ fontSize: 11 }}>average by age · to {32}</span></div>
+            <CareerCurveChart c={cc} lineName={LINE_NAME[line]} name={p.name} />
+          </div>
         </section>
 
         <section>
@@ -164,20 +173,6 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
               {[...p.last5].reverse().map((s, i) => <span key={i} style={{ transform: 'scale(1.25)', transformOrigin: 'left center', marginRight: 10 }}><ScoreChip value={s} /></span>)}
             </div>
           </div>
-          {p.hist && p.hist.length > 0 && (
-            <div>
-              <span className="eyebrow">Career, AFL Fantasy average by season</span>
-              <div style={{ display: 'flex', gap: 4, alignItems: 'flex-end', height: 90, marginTop: 10 }}>
-                {p.hist.slice(-10).map(([y, g, avg]) => (
-                  <div key={y} title={`${y}: ${avg} from ${g} games`} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, minWidth: 0 }}>
-                    <span className="mono" style={{ fontSize: 10 }}>{Math.round(avg)}</span>
-                    <div style={{ width: '100%', maxWidth: 34, height: Math.max(3, (avg / 130) * 60), borderRadius: 4, background: avg >= 100 ? C.green5 : avg >= 90 ? C.green4 : avg >= 80 ? C.green3 : avg >= 70 ? C.green2 : C.yellow }} />
-                    <span className="mono muted" style={{ fontSize: 10 }}>’{String(y).slice(2)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </section>
       </div>
     </div>
