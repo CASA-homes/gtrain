@@ -1,3 +1,4 @@
+import { gtrainPicksFor } from '@/lib/gtrain-draft';
 import Link from 'next/link';
 import { AvgChip, ClubDot } from '@/components/bits';
 import { DraftProfileCard } from '@/components/DraftProfileCard';
@@ -96,10 +97,10 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
       </div>
 
       <div className="table-box">
-        <table className="squad" style={{ minWidth: 980 }}>
+        <table className="squad" style={{ minWidth: 1040 }}>
           <thead>
             <tr>
-              <th style={{ width: 46 }}>Pick</th><th>Player</th><th style={{ width: 150 }}>Drafted by</th><th>Recruited from</th>
+              <th style={{ width: 46 }}>Pick</th><th style={{ width: 64, color: '#7a1f3d' }} title="Pick in the G-Train redraft">G-Train</th><th>Player</th><th style={{ width: 150 }}>Drafted by</th><th>Recruited from</th>
               <th style={{ width: 22, padding: 0 }} aria-hidden="true" />
               <th style={{ width: 150 }}>Status</th><th style={{ width: 90, textAlign: 'center' }}>2026 avg</th><th style={{ width: 70, textAlign: 'center' }}>Games</th><th style={{ width: 110 }}>Best season</th><th>G-Train</th>
             </tr>
@@ -113,6 +114,9 @@ export default async function DraftHistoryPage({ searchParams }: { searchParams:
               return (
                 <tr key={d.p} style={{ opacity: grey && !lit ? 0.45 : 1, background: lit ? '#eef6ea' : undefined, boxShadow: lit ? `inset 4px 0 0 ${C.green5}` : undefined }}>
                   <td className="mono" style={{ fontWeight: 600 }}>{d.p}</td>
+                  <td className="mono" style={{ color: '#7a1f3d', fontWeight: 600 }} title={gtrainPicksFor(d.n).map((x) => `G-Train ${x.year} draft: pick ${x.pick} (${x.team})`).join('\n') || undefined}>
+                    {gtrainPicksFor(d.n).map((x) => `#${x.pick}`).join(', ')}
+                  </td>
                   <td style={{ whiteSpace: 'nowrap' }}>
                     {g ? <Link href={`/players/${g.id}`} style={{ fontWeight: 600 }}>{d.n}</Link> : <span style={{ fontWeight: 600 }}>{d.n}</span>}
                     {lit && <span className="pill" style={{ marginLeft: 8, background: C.green5, color: '#fff' }}>#{rank}</span>}
