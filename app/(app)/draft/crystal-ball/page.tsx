@@ -9,6 +9,7 @@ import { crystalUnlocked } from '@/lib/crystal-access';
 import { getMe } from '@/lib/data';
 import { lockCrystal, unlockCrystal } from './actions';
 import data from '@/lib/crystal-ball.json';
+import freeAgents from '@/lib/free-agents.json';
 import { C } from '@/lib/ratings';
 
 // Crystal ball: patterns in pre-draft profiles that led to fantasy stars, applied to the 2026 crop.
@@ -187,19 +188,19 @@ const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
   Behind: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
 };
 
-function Header({ view }: { view: 'next' | 'past' }) {
+function Header({ view }: { view: 'next' | 'past' | 'fa' }) {
   return (
     <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
       <div>
-        <span className="eyebrow">{view === 'next' ? 'What the draft profiles of today’s stars had in common, and who in 2026 has it' : 'What we would have said on draft night, and how they’re tracking'}</span>
+        <span className="eyebrow">{view === 'next' ? 'What the draft profiles of today’s stars had in common, and who in 2026 has it' : view === 'fa' ? 'Every unowned player in the league, and who is worth a pick' : 'What we would have said on draft night, and how they’re tracking'}</span>
         <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
       </div>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
         <DraftTabs active="crystal" showCrystal />
         <form action={lockCrystal}><button className="btn" type="submit" style={{ fontSize: 12 }}>Lock</button></form>
       </div>
-      <div role="tablist" aria-label="Crystal ball view" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2, flexBasis: '100%', width: 'fit-content' }}>
-        {([['next', '2026 prospects', '/draft/crystal-ball'], ['past', 'Previous drafts: how they’re tracking', '/draft/crystal-ball?view=past']] as const).map(([k, label, href]) => (
+      <div role="tablist" aria-label="Crystal ball view" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2, flexWrap: 'wrap', maxWidth: '100%', flexBasis: '100%', width: 'fit-content' }}>
+        {([['next', '2026 prospects', '/draft/crystal-ball'], ['past', 'Previous drafts: how they’re tracking', '/draft/crystal-ball?view=past'], ['fa', '2027 free agents', '/draft/crystal-ball?view=fa']] as const).map(([k, label, href]) => (
           <Link key={k} href={href} role="tab" aria-selected={view === k}
             style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: view === k ? '#fff' : 'transparent', color: view === k ? C.ink : C.muted }}>{label}</Link>
         ))}
@@ -570,7 +571,7 @@ function CrystalBallView() {
 export const dynamic = 'force-dynamic';
 
 /** Password wall: nothing from the model is rendered until the password is entered. */
-export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string; view?: string; year?: string }> }) {
+export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string; view?: string; year?: string; pos?: string }> }) {
   const me = await getMe();
   const sp = await searchParams;
   if (!(await crystalUnlocked(me))) {
@@ -590,9 +591,115 @@ export default async function CrystalBallPage({ searchParams }: { searchParams: 
       </div>
     );
   }
+  if (sp.view === 'fa') return <FreeAgentsView pos={sp.pos} />;
   if (sp.view === 'past') {
     const y = Number(sp.year);
     return <PastView year={D.past.years.includes(y) ? y : 2025} />;
   }
   return <CrystalBallView />;
+}
+
+// ---------- 2027 free agents ----------
+type FA = { name: string; full: string; pos: string; club: string; status: string; own: string; gp: number; avg: number | null; l5: number | null;
+  age: number | null; a25: number | null; a24: number | null; proj: number | null; tags: string[]; why: string[] };
+const FAD = freeAgents as unknown as { updated: string; players: FA[] };
+const FA_TAG: Record<string, string> = {
+  'Breakout signs': '#e9d7f5', 'Young and rising': '#d8ecd0', 'Finished strong': '#d6e6f5', 'Bigger role': '#f5ecc8', 'Injury discount': '#f3d9d2', 'Proven ceiling': '#f6e1c6',
+};
+const FA_STATUS: Record<string, string> = { SEASON: 'Season-ending injury', LONG: 'Long-term injury', SHORT: 'Short-term injury', OUT: 'Out of the side', SUSP: 'Suspended' };
+const FA_POS = ['All', 'DEF', 'MID', 'RUC', 'FWD'] as const;
+const fmt = (x: number | null) => (x == null ? '–' : Math.round(x));
+const updatedLabel = (d: string) => new Date(d + 'T00:00:00').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+
+function FATags({ p }: { p: FA }) {
+  return (
+    <span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap' }}>
+      {p.tags.map((t) => <span key={t} className="pill" style={{ background: FA_TAG[t] ?? C.empty, color: C.ink, fontSize: 11 }}>{t}</span>)}
+    </span>
+  );
+}
+
+function FreeAgentsView({ pos }: { pos?: string }) {
+  const filt = FA_POS.includes(pos as (typeof FA_POS)[number]) ? pos! : 'All';
+  const all = FAD.players.filter((p) => filt === 'All' || p.pos.split('/').includes(filt));
+  const targets = all.filter((p) => p.tags.length).sort((a, b) => (b.proj ?? 0) - (a.proj ?? 0));
+  const ranked = all.filter((p) => p.avg != null);
+  const unplayed = all.filter((p) => p.avg == null);
+  return (
+    <div className="wrap">
+      <Header view="fa" />
+      <div className="row-between" style={{ flexWrap: 'wrap', gap: 10 }}>
+        <span className="muted" style={{ fontSize: 12 }}>From the Keeper board, {updatedLabel(FAD.updated)} · {FAD.players.length} unowned players · refreshed once keepers lock</span>
+        <div role="tablist" aria-label="Position" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
+          {FA_POS.map((p) => (
+            <Link key={p} href={p === 'All' ? '/draft/crystal-ball?view=fa' : `/draft/crystal-ball?view=fa&pos=${p}`} role="tab" aria-selected={p === filt}
+              style={{ padding: '5px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: 'none', background: p === filt ? '#fff' : 'transparent', color: p === filt ? C.ink : C.muted }}>{p}</Link>
+          ))}
+        </div>
+      </div>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
+          <h2 className="h2">Draft targets</h2>
+          <span className="muted" style={{ fontSize: 12 }}>Undervalued on their 2026 average · sorted by 2027 outlook</span>
+        </div>
+        {targets.length === 0 ? <p className="muted" style={{ margin: 0 }}>None at this position yet.</p> : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 10 }}>
+            {targets.map((p) => (
+              <div key={p.name} className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <div className="row-between" style={{ alignItems: 'flex-start', gap: 8 }}>
+                  <div style={{ minWidth: 0 }}>
+                    <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
+                    <div style={{ fontWeight: 600, fontSize: 16 }}>{p.full}</div>
+                  </div>
+                  <div style={{ textAlign: 'right', flex: 'none' }}>
+                    <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{fmt(p.proj)}</div>
+                    <span className="muted" style={{ fontSize: 10 }}>2027 outlook</span>
+                  </div>
+                </div>
+                <FATags p={p} />
+                <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, lineHeight: 1.45 }}>{p.why.map((w) => <li key={w}>{w}</li>)}</ul>
+                <span className="muted mono" style={{ fontSize: 11 }}>’26 {fmt(p.avg)} ({p.gp}g){p.a25 != null ? ` · ’25 ${fmt(p.a25)}` : ''}{FA_STATUS[p.status] ? ` · ${FA_STATUS[p.status]}` : ''}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
+          <h2 className="h2">All free agents by 2026 average</h2>
+          <span className="muted" style={{ fontSize: 12 }}>Last 5 leaves out games he was injured in</span>
+        </div>
+        <div className="table-box" style={{ maxHeight: '75vh', overflow: 'auto' }}>
+          <table className="squad">
+            <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#fff' }}>
+              <tr><th style={{ width: 36 }}>#</th><th>Player</th><th style={{ textAlign: 'right' }}>GP</th><th style={{ textAlign: 'right' }}>’26 avg</th><th style={{ textAlign: 'right' }}>Last 5</th><th style={{ textAlign: 'right' }}>’25 avg</th><th style={{ textAlign: 'right' }}>2027</th><th>Tag</th></tr>
+            </thead>
+            <tbody>
+              {[...ranked, ...unplayed].map((p, i) => (
+                <tr key={p.name} style={{ background: p.tags.length ? '#f4f9f1' : undefined }}>
+                  <td className="mono muted">{p.avg != null ? i + 1 : ''}</td>
+                  <td style={{ minWidth: 150 }}>
+                    <span style={{ fontWeight: 600 }}>{p.full}</span>
+                    <div className="muted" style={{ fontSize: 11 }}>{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}{FA_STATUS[p.status] ? ` · ${FA_STATUS[p.status]}` : ''}</div>
+                  </td>
+                  <td className="mono" style={{ textAlign: 'right' }}>{p.gp}</td>
+                  <td className="mono" style={{ textAlign: 'right', fontWeight: 600 }}>{fmt(p.avg)}</td>
+                  <td className="mono" style={{ textAlign: 'right' }}>{fmt(p.l5)}</td>
+                  <td className="mono muted" style={{ textAlign: 'right' }}>{fmt(p.a25)}</td>
+                  <td className="mono" style={{ textAlign: 'right' }}>{fmt(p.proj)}</td>
+                  <td><FATags p={p} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="muted" style={{ fontSize: 12, margin: 0, maxWidth: '80ch' }}>
+          The 2027 outlook blends his 2026 average, his last five and his 2025 season, then adjusts for age: up for players 23 and under, down from 30.
+          A tag means the outlook beats what the 2026 average says, for a reason you can see: a missed or interrupted year, a strong finish, a young player on the way up, more centre bounces, or a recent season well above this one.
+        </p>
+      </section>
+    </div>
+  );
 }
