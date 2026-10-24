@@ -131,3 +131,5 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   .sheet-backdrop { align-items: flex-end !important; padding: 0 !important; }
   .sheet { max-width: none !important; max-height: 88vh !important; border-radius: 18px 18px 0 0 !important; padding: 18px 16px 28px !important; }
 }
+
+@media (max-width: 640px) { .draft-team { font-size: 12px; white-space: normal; } }
