@@ -93,6 +93,21 @@ def rate_for(f, lo, hi):
     sel = [p for p in train if f(p) is not None and lo <= f(p) < hi]
     return (sum(p['label'] for p in sel), len(sel)) if sel else (0, 0)
 TAB = {g: (n, hits, rate, lift) for g, n, hits, rate, lift in table('str', GROUPS) + table('imp', IMPS)}
+# Accumulators who made it: of draftees with the scouts' 'Accumulator' tag who played 50+ AFL games, how many had an
+# 80+ season, against everyone else who played 50+. The tag doesn't predict making it; it predicts the ceiling.
+def _afl_games(q):
+    r = dfs_rec(q['id']) if q.get('id') else None
+    return sum(int(c.get('gms') or 0) for c in (r or {}).get('career', []) if (c.get('league') or 'afl').lower() == 'afl')
+def _made_stats(rows):
+    made = [q for q in rows if _afl_games(q) >= 50]
+    peaks = sorted(q['peak'] for q in made)
+    return {'n': len(rows), 'made': len(made), 'rel': sum(1 for q in made if q['peak'] >= 80), 'star': sum(1 for q in made if q['peak'] >= 90),
+            'medPeak': round(peaks[len(peaks) // 2], 1) if peaks else None}
+ACC = _made_stats([q for q in train if 'Accumulator' in q['str']])
+REST = _made_stats([q for q in train if 'Accumulator' not in q['str']])
+ACC['examples'] = [q['name'].replace('+', '') for q in sorted([q for q in train if 'Accumulator' in q['str'] and q['peak'] >= 88], key=lambda q: -q['peak'])][:4]
+print('accumulator ceiling:', ACC, 'vs', REST)
+
 def why(p, contrib, role):
     lines = []
     j = p.get('jun') or {}
@@ -115,6 +130,8 @@ def why(p, contrib, role):
                 lines.append({'good': True, 'text': f"Scouts noted {label.lower()}. {hits} of {n} draftees with that note became 90+ players, {lift:.1f}× what their draft slots predicted."})
             else:
                 lines.append({'good': False, 'text': f"Scouts noted {label.lower()}: only {hits} of {n} with that note became 90+ players ({lift:.1f}× their draft slots)."})
+    if 'Accumulator' in p['str'] and ACC['made']:
+        lines.append({'good': True, 'text': f"Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: {round(ACC['rel'] / ACC['made'] * 100)}% of accumulators who played 50+ games had an 80+ season, against {round(REST['rel'] / REST['made'] * 100)}% of everyone else (best season typically {ACC['medPeak']:.0f} vs {REST['medPeak']:.0f}). {', '.join(ACC['examples'][:3])}."})
     if 'endurance' in (p.get('combine') or []): lines.append({'good': True, 'text': 'Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash).'})
     if 'power' in (p.get('combine') or []): lines.append({'good': False, 'text': 'Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested.'})
     if role == 'Key position': lines.append({'good': False, 'text': 'Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers.'})
@@ -150,7 +167,7 @@ for rank, name in PH:
                 'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],
-                'why': why(p, contrib, role), 'type': TYPE_LABEL[types[0]],
+                'why': why(p, contrib, role), 'type': TYPE_LABEL[types[0]], 'ceiling': 'Accumulator' in st,
                 '_vec': vec(p), '_types': types})
 
 # Comparisons: same type first (a worse type match costs 1.5), nearest profile, and each current player used at most
@@ -206,6 +223,7 @@ late_hits = [p for p in train if p['label'] and p['pick'] >= 20]
 meta = {'relBar': 80, 'aucRel': round(cm.roc_auc_score(cm.yr_, cm.pred_r), 3), 'hitBar': 90, 'trainN': len(train), 'trainHits': int(sum(p['label'] for p in train)), 'years': '2016–2025',
         'auc': round(cm.roc_auc_score(cm.y, cm.pred), 3), 'aucPositionOnly': round(cm.roc_auc_score(cm.y, cm.predp), 3),
         'aucLate': round(cm.roc_auc_score(cm.y[cm.late], cm.pred[cm.late]), 3), 'aucLatePositionOnly': round(cm.roc_auc_score(cm.y[cm.late], cm.predp[cm.late]), 3),
+        'accumulator': {'acc': ACC, 'rest': REST},
         'lateHits': [{'name': p['name'].replace('+', ''), 'pick': p['pick'], 'year': p['year'], 'peak': round(p['peak'], 1)} for p in sorted(late_hits, key=lambda p: -p['peak'])]}
 json.dump({'meta': meta, 'patterns': pat, 'numbers': num, 'validation': val, 'prospects': out,
            'coef': {k: round(float(v), 2) for k, v in zip(FEATS, model.coef_[0])}, 'roleCal': cm.ROLE_CAL}, open('lib/crystal-ball.json', 'w'), indent=1)

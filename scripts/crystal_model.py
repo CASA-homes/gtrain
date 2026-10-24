@@ -8,7 +8,9 @@ sys.path.insert(0, 'scripts')
 from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, players, train  # noqa: E402
 
 TRAITS = ['Defensive pressure', 'Contested / inside', 'Leadership / character', 'Kicking / skills', 'Footy IQ / vision', 'Speed / agility',
-          'X-factor / hurt', 'Engine / work rate', 'Accumulator', 'Aerial / marking', 'Versatility', 'Athleticism', 'Upside', 'Clean hands']
+          'X-factor / hurt', 'Engine / work rate', 'Aerial / marking', 'Versatility', 'Athleticism', 'Upside', 'Clean hands']
+# 'Accumulator' is left out on purpose: the tag says little about WHETHER a player makes it, but a lot about how
+# well he scores once he does, so crystal_score.py reports it as a ceiling note instead of letting it pull the chance down.
 FLAGS = ['needs contested/inside game', 'needs consistency', 'needs to win more ball', 'raw / limited exposure']
 ROLES = ['Key position', 'Ruck', 'Small forward']
 # Roles are a hard fact about how fantasy scores are earned, so let them speak louder than a single scout's trait.
