@@ -1,15 +1,16 @@
 // Holo profile pictures: players who get the shiny treatment, with their artwork background and cut-out photo.
 // Geelong's artwork is placeholder dot-style patterning in club colours; swap in licensed Indigenous artwork before rolling out widely.
-export type HoloPalette = 'geelong' | 'gws' | 'wce';
+export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade';
 export interface Holo { art: string; photo: string; palette: HoloPalette }
 export const HOLO: Record<string, Holo> = {
   'L. Humphries': { art: '/holo/geelong-swans.svg', photo: '/players/lawson-humphries.png', palette: 'geelong' },
   'L. Ash': { art: '/holo/gws-g.svg', photo: '/players/lachie-ash.png', palette: 'gws' },
   'H. Reid': { art: '/holo/wce-wings.svg', photo: '/players/harley-reid.png', palette: 'wce' },
+  'I. Rankine': { art: '/holo/ade-feathers.svg', photo: '/players/izak-rankine.png', palette: 'ade' },
 };
 
 /** Foil colours per palette: the frame, the always-on sweep, the mouse-following foil, the glints and the glare. */
-export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge: string; foil: string; lines: string; glint: [string, string]; glare: string; sheen: string; base: string; shadow: string }> = {
+export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge: string; foil: string; lines: string; glint: [string, string]; glare: string; sheen: string; base: string; shadow: string; dim?: number }> = {
   geelong: {
     frame: 'linear-gradient(135deg, #ffffff 0%, #a9bdd8 18%, #f3f6fb 34%, #0c2347 50%, #d4a62a 64%, #fff3c4 76%, #a9bdd8 100%)',
     edge: 'linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .95) 40%, rgb(212 166 42 / .8) 50%, rgb(255 255 255 / .95) 60%, transparent 75%)',
@@ -36,5 +37,14 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .45) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(242 169 0 / .4) 10px 11px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 222 120 / .95)'],
     glare: 'rgb(127 168 232 / .25)', sheen: 'rgb(242 169 0 / .5)', base: '#00204d', shadow: 'rgb(0 32 77 / .38)',
+  },
+  ade: {
+    frame: 'linear-gradient(135deg, #1a1a1a 0%, #e21937 18%, #ffc72c 34%, #0b0b0c 50%, #ffe9a6 64%, #c8102e 80%, #1a1a1a 100%)',
+    edge: 'linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .9) 42%, rgb(255 199 44 / .85) 50%, rgb(255 255 255 / .9) 58%, transparent 75%)',
+    sweep: 'linear-gradient(120deg, transparent 22%, #5a0a16 30%, #ffffff 38%, #ffc72c 46%, #ffe9a6 52%, #e21937 58%, #ffffff 66%, transparent 78%)',
+    foil: 'linear-gradient(60deg, transparent 22%, #e21937 34%, #ffffff 42%, #ffc72c 48%, #ffe9a6 56%, #2a2a2e 66%, transparent 80%)',
+    lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .4) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(255 199 44 / .4) 10px 11px)',
+    glint: ['rgb(255 255 255 / .95)', 'rgb(255 214 110 / .95)'],
+    glare: 'rgb(255 199 44 / .15)', sheen: 'rgb(255 199 44 / .45)', base: '#0b0b0c', shadow: 'rgb(0 0 0 / .45)', dim: 0.5,
   },
 };
