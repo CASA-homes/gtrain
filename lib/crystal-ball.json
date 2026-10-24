@@ -1,15 +1,37 @@
 {
  "meta": {
   "relBar": 80,
-  "aucRel": 0.725,
+  "aucRel": 0.724,
   "hitBar": 90,
   "trainN": 435,
   "trainHits": 47,
   "years": "2016\u20132025",
-  "auc": 0.749,
+  "auc": 0.747,
   "aucPositionOnly": 0.69,
-  "aucLate": 0.635,
+  "aucLate": 0.637,
   "aucLatePositionOnly": 0.531,
+  "accumulator": {
+   "acc": {
+    "n": 48,
+    "made": 18,
+    "rel": 10,
+    "star": 4,
+    "medPeak": 82.7,
+    "examples": [
+     "Nick Daicos",
+     "Will Ashcroft",
+     "Chad Warner",
+     "Jase Burgoyne"
+    ]
+   },
+   "rest": {
+    "n": 387,
+    "made": 187,
+    "rel": 74,
+    "star": 41,
+    "medPeak": 73.0
+   }
+  },
   "lateHits": [
    {
     "name": "Errol Gulden",
@@ -565,7 +587,7 @@
    "year": 2022,
    "pick": 2,
    "peak": 105.6,
-   "chance": 55.7,
+   "chance": 63.0,
    "positionOnly": 47.2,
    "jFP": 136.0,
    "traits": [
@@ -582,7 +604,7 @@
    "year": 2021,
    "pick": 4,
    "peak": 116.6,
-   "chance": 41.4,
+   "chance": 50.4,
    "positionOnly": 31.0,
    "jFP": 136.0,
    "traits": [
@@ -600,7 +622,7 @@
    "year": 2022,
    "pick": 3,
    "peak": 116.2,
-   "chance": 40.4,
+   "chance": 40.3,
    "positionOnly": 39.3,
    "jFP": 83.0,
    "traits": [
@@ -615,7 +637,7 @@
    "year": 2018,
    "pick": 7,
    "peak": 117.7,
-   "chance": 29.0,
+   "chance": 26.5,
    "positionOnly": 20.7,
    "jFP": 149.0,
    "traits": [
@@ -630,7 +652,7 @@
    "year": 2021,
    "pick": 11,
    "peak": 110.8,
-   "chance": 37.1,
+   "chance": 37.4,
    "positionOnly": 17.3,
    "jFP": 66.5,
    "traits": [
@@ -645,7 +667,7 @@
    "year": 2019,
    "pick": 8,
    "peak": 108.1,
-   "chance": 22.3,
+   "chance": 20.0,
    "positionOnly": 17.7,
    "jFP": 112.0,
    "traits": [
@@ -662,7 +684,7 @@
    "year": 2018,
    "pick": 12,
    "peak": 104.5,
-   "chance": 30.9,
+   "chance": 30.4,
    "positionOnly": 14.9,
    "jFP": 91.0,
    "traits": [
@@ -677,7 +699,7 @@
    "year": 2020,
    "pick": 32,
    "peak": 115.1,
-   "chance": 12.6,
+   "chance": 11.5,
    "positionOnly": 7.6,
    "jFP": 125.0,
    "traits": [
@@ -692,7 +714,7 @@
    "year": 2019,
    "pick": 39,
    "peak": 93.0,
-   "chance": 14.2,
+   "chance": 17.6,
    "positionOnly": 6.9,
    "jFP": 105.9,
    "traits": [
@@ -707,7 +729,7 @@
    "year": 2020,
    "pick": 28,
    "peak": 90.3,
-   "chance": 18.3,
+   "chance": 17.1,
    "positionOnly": 8.5,
    "jFP": 79.0,
    "traits": [
@@ -740,7 +762,7 @@
    "year": 2021,
    "pick": 60,
    "peak": 90.4,
-   "chance": 11.5,
+   "chance": 16.6,
    "positionOnly": 5.4,
    "jFP": 107.1,
    "traits": [
@@ -775,29 +797,29 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 62.3,
-   "relevant": 83.1,
+   "chance": 67.7,
+   "relevant": 85.4,
    "positionOnly": 44.8,
    "reasons": [
     {
-     "label": "Accumulator",
-     "effect": -0.42
-    },
-    {
-     "label": "Junior fantasy avg",
-     "effect": 0.31
-    },
-    {
      "label": "Junior tackles",
-     "effect": 0.24
-    },
-    {
-     "label": "Contested / inside",
      "effect": 0.23
     },
     {
+     "label": "Contested / inside",
+     "effect": 0.2
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.19
+    },
+    {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.13
     }
    ],
    "why": [
@@ -808,10 +830,6 @@
     {
      "good": true,
      "text": "6.3 tackles a game. Juniors laying 6+ became stars 21% of the time: hunters score, as Warner, Berry and Brayshaw showed."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted accumulator: only 5 of 48 with that note became 90+ players (1.0\u00d7 their draft slots)."
     },
     {
      "good": true,
@@ -827,10 +845,15 @@
     },
     {
      "good": true,
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 56% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 83 vs 73). Nick Daicos, Will Ashcroft, Chad Warner."
+    },
+    {
+     "good": true,
      "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
    "type": "inside midfielder",
+   "ceiling": true,
    "comps": [
     {
      "name": "Will Ashcroft",
@@ -923,29 +946,29 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 53.2,
-   "relevant": 69.8,
+   "chance": 49.3,
+   "relevant": 67.2,
    "positionOnly": 31.5,
    "reasons": [
     {
      "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": 0.57
     },
     {
      "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
+     "effect": -0.42
     },
     {
      "label": "Junior tackles",
-     "effect": 0.26
+     "effect": 0.25
     },
     {
      "label": "Contested / inside",
-     "effect": 0.23
+     "effect": 0.2
     },
     {
-     "label": "Junior fantasy avg",
-     "effect": 0.21
+     "label": "Speed / agility",
+     "effect": 0.16
     }
    ],
    "why": [
@@ -979,6 +1002,7 @@
     }
    ],
    "type": "inside midfielder",
+   "ceiling": false,
    "comps": [
     {
      "name": "James Worpel",
@@ -999,20 +1023,6 @@
       "Kicking",
       "Agility"
      ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Hugh McCluggage",
-     "pick": 3,
-     "year": 2016,
-     "peak": 102.3,
-     "now": 74.5,
-     "jFP": 103.0,
-     "jT": 4.6,
-     "jD": 29.0,
-     "scouts": [],
-     "workons": [],
      "role": "Midfielder",
      "type": "inside midfielder"
     },
@@ -1038,6 +1048,174 @@
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
+    },
+    {
+     "name": "Hugh McCluggage",
+     "pick": 3,
+     "year": 2016,
+     "peak": 102.3,
+     "now": 74.5,
+     "jFP": 103.0,
+     "jT": 4.6,
+     "jD": 29.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 8,
+   "name": "Ethan Matthews",
+   "club": null,
+   "drafted": false,
+   "junior": "GIANTS Academy",
+   "position": "MID",
+   "height": 186,
+   "role": "Midfielder",
+   "jFP": 164.0,
+   "jD": 35.3,
+   "jT": 5.3,
+   "jSeason": 2026,
+   "traits": [
+    "Accumulator",
+    "Clean hands",
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Scoreboard impact"
+   ],
+   "flags": [
+    "needs contested/inside game",
+    "needs strength/size"
+   ],
+   "chance": 41.3,
+   "relevant": 70.7,
+   "positionOnly": 20.6,
+   "reasons": [
+    {
+     "label": "needs contested/inside game",
+     "effect": 0.51
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.45
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.34
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.26
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.2
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 164. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
+    },
+    {
+     "good": true,
+     "text": "5.3 tackles a game. Juniors laying 4.5+ became stars 20% of the time: hunters score, as Warner, Berry and Brayshaw showed."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted work-on: contested/inside game. 11 of 62 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 56% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 83 vs 73). Nick Daicos, Will Ashcroft, Chad Warner."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": true,
+   "comps": [
+    {
+     "name": "Nick Daicos",
+     "pick": 4,
+     "year": 2021,
+     "peak": 116.6,
+     "now": 116.6,
+     "jFP": 136.0,
+     "jT": 3.4,
+     "jD": 35.8,
+     "scouts": [
+      "Consistency",
+      "Production",
+      "Clean Skills",
+      "Leadership",
+      "Endurance"
+     ],
+     "workons": [
+      "Impact per Kick",
+      "Strength"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Day",
+     "pick": 13,
+     "year": 2019,
+     "peak": 95.3,
+     "now": 80.9,
+     "jFP": 110.0,
+     "jT": 2.8,
+     "jD": 26.0,
+     "scouts": [
+      "Athleticism",
+      "Kicking efficiency",
+      "Footy smarts",
+      "Rebounding",
+      "Upside"
+     ],
+     "workons": [
+      "Strength",
+      "Inside game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Noah Anderson",
+     "pick": 2,
+     "year": 2019,
+     "peak": 103.9,
+     "now": 101.5,
+     "jFP": 116.0,
+     "jT": 3.6,
+     "jD": 28.3,
+     "scouts": [
+      "Scoreboard impact",
+      "Power",
+      "Strength/size",
+      "Kick penetration",
+      "Contested ball winning"
+     ],
+     "workons": [
+      "Kicking consistency",
+      "Lowering the eyes"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
     }
    ]
   },
@@ -1060,8 +1238,8 @@
     "Kicking / skills"
    ],
    "flags": [],
-   "chance": 42.5,
-   "relevant": 71.4,
+   "chance": 39.7,
+   "relevant": 69.0,
    "positionOnly": 27.6,
    "reasons": [
     {
@@ -1073,12 +1251,8 @@
      "effect": 0.26
     },
     {
-     "label": "Junior fantasy avg",
-     "effect": 0.11
-    },
-    {
      "label": "Junior tackles",
-     "effect": -0.09
+     "effect": -0.08
     }
    ],
    "why": [
@@ -1096,6 +1270,7 @@
     }
    ],
    "type": "half-back",
+   "ceiling": false,
    "comps": [
     {
      "name": "Archie Roberts",
@@ -1179,17 +1354,17 @@
     "Speed / agility"
    ],
    "flags": [],
-   "chance": 39.3,
-   "relevant": 45.3,
+   "chance": 36.8,
+   "relevant": 43.4,
    "positionOnly": 10.1,
    "reasons": [
     {
      "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": 0.57
     },
     {
      "label": "Junior tackles",
-     "effect": 0.37
+     "effect": 0.36
     },
     {
      "label": "Kicking / skills",
@@ -1197,11 +1372,11 @@
     },
     {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
     },
     {
      "label": "Leadership / character",
-     "effect": 0.11
+     "effect": 0.12
     }
    ],
    "why": [
@@ -1227,6 +1402,7 @@
     }
    ],
    "type": "inside midfielder",
+   "ceiling": false,
    "comps": [
     {
      "name": "Sam Berry",
@@ -1301,155 +1477,275 @@
    ]
   },
   {
-   "rank": 8,
-   "name": "Ethan Matthews",
+   "rank": 7,
+   "name": "Harry Van Hattum",
    "club": null,
    "drafted": false,
-   "junior": "GIANTS Academy",
-   "position": "MID",
-   "height": 186,
-   "role": "Midfielder",
-   "jFP": 164.0,
-   "jD": 35.3,
-   "jT": 5.3,
+   "junior": "Northern Knights",
+   "position": "RUC",
+   "height": 205,
+   "role": "Ruck",
+   "jFP": 111.0,
+   "jD": 19.1,
+   "jT": 1.7,
    "jSeason": 2026,
    "traits": [
-    "Accumulator",
-    "Clean hands",
-    "Engine / work rate",
-    "Footy IQ / vision",
+    "Aerial / marking",
+    "Athleticism",
     "Kicking / skills",
-    "Scoreboard impact"
+    "Leadership / character",
+    "Ruck craft",
+    "Speed / agility",
+    "Upside",
+    "X-factor / hurt"
    ],
    "flags": [
-    "needs contested/inside game",
-    "needs strength/size"
+    "needs consistency",
+    "needs endurance"
    ],
-   "chance": 36.6,
-   "relevant": 67.7,
-   "positionOnly": 20.6,
+   "chance": 33.9,
+   "relevant": 23.7,
+   "positionOnly": 22.5,
    "reasons": [
     {
-     "label": "needs contested/inside game",
-     "effect": 0.5
+     "label": "needs consistency",
+     "effect": -0.59
     },
     {
-     "label": "Clean hands",
-     "effect": -0.43
-    },
-    {
-     "label": "Accumulator",
+     "label": "Combine: top-10 speed/jump",
      "effect": -0.42
+    },
+    {
+     "label": "X-factor / hurt",
+     "effect": 0.4
     },
     {
      "label": "Kicking / skills",
      "effect": 0.34
     },
     {
-     "label": "Junior fantasy avg",
-     "effect": 0.33
+     "label": "Aerial / marking",
+     "effect": -0.32
     }
    ],
    "why": [
     {
      "good": true,
-     "text": "Junior fantasy average of 164. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
-    },
-    {
-     "good": true,
-     "text": "5.3 tackles a game. Juniors laying 4.5+ became stars 20% of the time: hunters score, as Warner, Berry and Brayshaw showed."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 11 of 62 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
+     "text": "Junior fantasy average of 111. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 2 of 65 with that note became 90+ players (0.3\u00d7 their draft slots)."
     },
     {
-     "good": false,
-     "text": "Scouts noted accumulator: only 5 of 48 with that note became 90+ players (1.0\u00d7 their draft slots)."
+     "good": true,
+     "text": "Scouts noted x-factor / hurt. 6 of 32 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
     },
     {
      "good": true,
      "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
     },
     {
+     "good": false,
+     "text": "Scouts noted aerial / marking: only 8 of 112 with that note became 90+ players (0.5\u00d7 their draft slots)."
+    },
+    {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted athleticism: only 9 of 107 with that note became 90+ players (0.7\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted upside. 4 of 44 draftees with that note became 90+ players, 0.8\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": true,
+     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested."
     }
    ],
-   "type": "inside midfielder",
+   "type": "ruck",
+   "ceiling": false,
    "comps": [
     {
-     "name": "Nick Daicos",
-     "pick": 4,
-     "year": 2021,
-     "peak": 116.6,
-     "now": 116.6,
-     "jFP": 136.0,
-     "jT": 3.4,
-     "jD": 35.8,
-     "scouts": [
-      "Consistency",
-      "Production",
-      "Clean Skills",
-      "Leadership",
-      "Endurance"
-     ],
-     "workons": [
-      "Impact per Kick",
-      "Strength"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Will Day",
-     "pick": 13,
+     "name": "Luke Jackson",
+     "pick": 3,
      "year": 2019,
-     "peak": 95.3,
-     "now": 80.9,
-     "jFP": 110.0,
-     "jT": 2.8,
-     "jD": 26.0,
+     "peak": 104.0,
+     "now": 104.0,
+     "jFP": 101.3,
+     "jT": 2.4,
+     "jD": 18.6,
      "scouts": [
       "Athleticism",
-      "Kicking efficiency",
-      "Footy smarts",
-      "Rebounding",
-      "Upside"
+      "Ruck Craft",
+      "Follow-up work",
+      "Tackling",
+      "Marking"
      ],
      "workons": [
-      "Strength",
-      "Inside game"
+      "Lack of senior experience",
+      "Size",
+      "Versatility"
      ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
+     "role": "Ruck",
+     "type": "ruck"
     },
     {
-     "name": "Noah Anderson",
-     "pick": 2,
-     "year": 2019,
-     "peak": 103.9,
-     "now": 101.5,
-     "jFP": 116.0,
-     "jT": 3.6,
-     "jD": 28.3,
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8,
+     "now": 72.9,
+     "jFP": 84.0,
+     "jT": 3.4,
+     "jD": 13.6,
      "scouts": [
-      "Scoreboard impact",
-      "Power",
-      "Strength/size",
-      "Kick penetration",
-      "Contested ball winning"
+      "Ruck work",
+      "Smarts",
+      "Hands at ground level",
+      "Contested marking"
      ],
      "workons": [
-      "Kicking consistency",
-      "Lowering the eyes"
+      "Goal kicking",
+      "Mobility"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Tristan Xerri",
+     "pick": 72,
+     "year": 2017,
+     "peak": 114.5,
+     "now": 96.5,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [],
+     "workons": [],
+     "role": "Ruck",
+     "type": "ruck"
+    }
+   ]
+  },
+  {
+   "rank": 12,
+   "name": "Leo Steed",
+   "club": null,
+   "drafted": false,
+   "junior": "Swan Districts",
+   "position": "MID/FWD",
+   "height": 176,
+   "role": "Midfielder",
+   "jFP": 90.0,
+   "jD": 23.5,
+   "jT": 4.0,
+   "jSeason": 2026,
+   "traits": [
+    "Defensive pressure",
+    "Engine / work rate",
+    "Leadership / character"
+   ],
+   "flags": [],
+   "chance": 31.1,
+   "relevant": 52.6,
+   "positionOnly": 15.7,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.57
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.13
+    },
+    {
+     "label": "Leadership / character",
+     "effect": 0.12
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 90. Draftees at 90+ became 90+ AFL Fantasy players 25% of the time (21 of 84), against 11% for all picks."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    }
+   ],
+   "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Jy Simpkin",
+     "pick": 12,
+     "year": 2016,
+     "peak": 95.5,
+     "now": 81.7,
+     "jFP": 0.0,
+     "jT": 0.0,
+     "jD": 0.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Shai Bolton",
+     "pick": 29,
+     "year": 2016,
+     "peak": 86.8,
+     "now": 85.2,
+     "jFP": 53.0,
+     "jT": 1.3,
+     "jD": 13.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
+     "year": 2019,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
+     "scouts": [
+      "Kicking",
+      "Intercept marking",
+      "Reading the play",
+      "Agility",
+      "Athleticism"
+     ],
+     "workons": [
+      "Midfield craft",
+      "Scoreboard impact"
      ],
      "role": "Midfielder",
-     "type": "inside midfielder"
+     "type": "midfielder-forward"
     }
    ]
   },
@@ -1477,13 +1773,13 @@
     "needs contested/inside game",
     "needs speed/athleticism"
    ],
-   "chance": 34.6,
-   "relevant": 58.4,
+   "chance": 31.0,
+   "relevant": 54.9,
    "positionOnly": 9.2,
    "reasons": [
     {
      "label": "needs contested/inside game",
-     "effect": 0.5
+     "effect": 0.51
     },
     {
      "label": "Kicking / skills",
@@ -1494,12 +1790,12 @@
      "effect": 0.26
     },
     {
-     "label": "Junior fantasy avg",
-     "effect": 0.18
-    },
-    {
      "label": "Combine: top-10 endurance",
      "effect": 0.13
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.11
     }
    ],
    "why": [
@@ -1529,6 +1825,7 @@
     }
    ],
    "type": "wing",
+   "ceiling": false,
    "comps": [
     {
      "name": "Lachlan Sholl",
@@ -1594,277 +1891,6 @@
    ]
   },
   {
-   "rank": 12,
-   "name": "Leo Steed",
-   "club": null,
-   "drafted": false,
-   "junior": "Swan Districts",
-   "position": "MID/FWD",
-   "height": 176,
-   "role": "Midfielder",
-   "jFP": 90.0,
-   "jD": 23.5,
-   "jT": 4.0,
-   "jSeason": 2026,
-   "traits": [
-    "Defensive pressure",
-    "Engine / work rate",
-    "Leadership / character"
-   ],
-   "flags": [],
-   "chance": 33.8,
-   "relevant": 55.3,
-   "positionOnly": 15.7,
-   "reasons": [
-    {
-     "label": "Defensive pressure",
-     "effect": 0.61
-    },
-    {
-     "label": "Combine: top-10 endurance",
-     "effect": 0.13
-    },
-    {
-     "label": "Leadership / character",
-     "effect": 0.11
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Junior fantasy average of 90. Draftees at 90+ became 90+ AFL Fantasy players 25% of the time (21 of 84), against 11% for all picks."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    }
-   ],
-   "type": "midfielder-forward",
-   "comps": [
-    {
-     "name": "Jy Simpkin",
-     "pick": 12,
-     "year": 2016,
-     "peak": 95.5,
-     "now": 81.7,
-     "jFP": 0.0,
-     "jT": 0.0,
-     "jD": 0.0,
-     "scouts": [],
-     "workons": [],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
-    },
-    {
-     "name": "Shai Bolton",
-     "pick": 29,
-     "year": 2016,
-     "peak": 86.8,
-     "now": 85.2,
-     "jFP": 53.0,
-     "jT": 1.3,
-     "jD": 13.5,
-     "scouts": [],
-     "workons": [],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
-    },
-    {
-     "name": "Hayden Young",
-     "pick": 7,
-     "year": 2019,
-     "peak": 92.9,
-     "now": 78.7,
-     "jFP": 89.0,
-     "jT": 3.6,
-     "jD": 22.3,
-     "scouts": [
-      "Kicking",
-      "Intercept marking",
-      "Reading the play",
-      "Agility",
-      "Athleticism"
-     ],
-     "workons": [
-      "Midfield craft",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
-    }
-   ]
-  },
-  {
-   "rank": 7,
-   "name": "Harry Van Hattum",
-   "club": null,
-   "drafted": false,
-   "junior": "Northern Knights",
-   "position": "RUC",
-   "height": 205,
-   "role": "Ruck",
-   "jFP": 111.0,
-   "jD": 19.1,
-   "jT": 1.7,
-   "jSeason": 2026,
-   "traits": [
-    "Aerial / marking",
-    "Athleticism",
-    "Kicking / skills",
-    "Leadership / character",
-    "Ruck craft",
-    "Speed / agility",
-    "Upside",
-    "X-factor / hurt"
-   ],
-   "flags": [
-    "needs consistency",
-    "needs endurance"
-   ],
-   "chance": 32.9,
-   "relevant": 22.9,
-   "positionOnly": 22.5,
-   "reasons": [
-    {
-     "label": "needs consistency",
-     "effect": -0.6
-    },
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
-    },
-    {
-     "label": "X-factor / hurt",
-     "effect": 0.4
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.34
-    },
-    {
-     "label": "Aerial / marking",
-     "effect": -0.34
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Junior fantasy average of 111. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted work-on: consistency: only 2 of 65 with that note became 90+ players (0.3\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted x-factor / hurt. 6 of 32 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted aerial / marking: only 8 of 112 with that note became 90+ players (0.5\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted athleticism: only 9 of 107 with that note became 90+ players (0.7\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted upside. 4 of 44 draftees with that note became 90+ players, 0.8\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    },
-    {
-     "good": true,
-     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested."
-    }
-   ],
-   "type": "ruck",
-   "comps": [
-    {
-     "name": "Luke Jackson",
-     "pick": 3,
-     "year": 2019,
-     "peak": 104.0,
-     "now": 104.0,
-     "jFP": 101.3,
-     "jT": 2.4,
-     "jD": 18.6,
-     "scouts": [
-      "Athleticism",
-      "Ruck Craft",
-      "Follow-up work",
-      "Tackling",
-      "Marking"
-     ],
-     "workons": [
-      "Lack of senior experience",
-      "Size",
-      "Versatility"
-     ],
-     "role": "Ruck",
-     "type": "ruck"
-    },
-    {
-     "name": "Lloyd Meek",
-     "pick": 69,
-     "year": 2017,
-     "peak": 93.8,
-     "now": 72.9,
-     "jFP": 84.0,
-     "jT": 3.4,
-     "jD": 13.6,
-     "scouts": [
-      "Ruck work",
-      "Smarts",
-      "Hands at ground level",
-      "Contested marking"
-     ],
-     "workons": [
-      "Goal kicking",
-      "Mobility"
-     ],
-     "role": "Ruck",
-     "type": "ruck"
-    },
-    {
-     "name": "Tristan Xerri",
-     "pick": 72,
-     "year": 2017,
-     "peak": 114.5,
-     "now": 96.5,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [],
-     "workons": [],
-     "role": "Ruck",
-     "type": "ruck"
-    }
-   ]
-  },
-  {
    "rank": 17,
    "name": "Toby Krasna",
    "club": null,
@@ -1890,17 +1916,17 @@
     "needs contested/inside game",
     "needs strength/size"
    ],
-   "chance": 31.1,
-   "relevant": 45.8,
+   "chance": 29.3,
+   "relevant": 43.6,
    "positionOnly": 12.3,
    "reasons": [
     {
      "label": "needs contested/inside game",
-     "effect": 0.5
+     "effect": 0.51
     },
     {
      "label": "Clean hands",
-     "effect": -0.43
+     "effect": -0.45
     },
     {
      "label": "Kicking / skills",
@@ -1912,7 +1938,7 @@
     },
     {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
     }
    ],
    "why": [
@@ -1946,6 +1972,7 @@
     }
    ],
    "type": "wing",
+   "ceiling": false,
    "comps": [
     {
      "name": "Gryan Miers",
@@ -2043,17 +2070,17 @@
     "needs contested/inside game",
     "needs defensive work"
    ],
-   "chance": 30.6,
-   "relevant": 57.2,
+   "chance": 28.1,
+   "relevant": 54.3,
    "positionOnly": 17.8,
    "reasons": [
     {
      "label": "needs contested/inside game",
-     "effect": 0.5
+     "effect": 0.51
     },
     {
      "label": "Versatility",
-     "effect": -0.45
+     "effect": -0.46
     },
     {
      "label": "Kicking / skills",
@@ -2061,11 +2088,11 @@
     },
     {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
     },
     {
      "label": "Junior tackles",
-     "effect": -0.15
+     "effect": -0.14
     }
    ],
    "why": [
@@ -2095,6 +2122,7 @@
     }
    ],
    "type": "half-back",
+   "ceiling": false,
    "comps": [
     {
      "name": "Nasiah Wanganeen-Milera",
@@ -2192,13 +2220,13 @@
     "durability concern",
     "needs strength/size"
    ],
-   "chance": 24.7,
-   "relevant": 60.8,
+   "chance": 24.2,
+   "relevant": 59.9,
    "positionOnly": 58.9,
    "reasons": [
     {
      "label": "Versatility",
-     "effect": -0.45
+     "effect": -0.46
     },
     {
      "label": "Kicking / skills",
@@ -2206,7 +2234,7 @@
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     },
     {
      "label": "Footy IQ / vision",
@@ -2214,7 +2242,7 @@
     },
     {
      "label": "Athleticism",
-     "effect": -0.13
+     "effect": -0.12
     }
    ],
    "why": [
@@ -2252,6 +2280,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": [
     {
      "name": "Jack Lukosius",
@@ -2310,12 +2339,13 @@
     "Size / strength"
    ],
    "flags": [],
-   "chance": 24.6,
-   "relevant": 57.0,
+   "chance": 23.7,
+   "relevant": 56.0,
    "positionOnly": 24.7,
    "reasons": [],
    "why": [],
    "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
      "name": "Jy Simpkin",
@@ -2346,144 +2376,188 @@
      "type": "midfielder-forward"
     },
     {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
      "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
-      "Kicking",
-      "Overhead marking"
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
      ],
      "workons": [
-      "Limited midfield exposure",
-      "Speed"
+      "Strength",
+      "Damage by foot"
      ],
-     "role": "Forward",
+     "role": "Midfielder",
      "type": "midfielder"
     }
    ]
   },
   {
-   "rank": 18,
-   "name": "Jackson Phillips",
+   "rank": 20,
+   "name": "Harvie Cooke",
    "club": null,
    "drafted": false,
-   "junior": "Dandenong Stingrays",
-   "position": "Wing/MID",
-   "height": 182,
+   "junior": "Northern Knights",
+   "position": "MID/FWD",
+   "height": 176,
    "role": "Midfielder",
-   "jFP": 87.0,
-   "jD": 19.4,
-   "jT": 3.4,
+   "jFP": 110.0,
+   "jD": 24.7,
+   "jT": 4.9,
    "jSeason": 2026,
    "traits": [
+    "Accumulator",
+    "Consistency",
+    "Contested / inside",
+    "Defensive pressure",
     "Engine / work rate",
-    "Footy IQ / vision",
-    "Kicking / skills",
-    "Scoreboard impact",
-    "Speed / agility"
+    "Leadership / character",
+    "Scoreboard impact"
    ],
    "flags": [
-    "needs contested/inside game",
-    "needs to win more ball"
+    "needs composure/decisions",
+    "needs strength/size"
    ],
-   "chance": 23.0,
-   "relevant": 31.7,
-   "positionOnly": 11.8,
+   "chance": 22.3,
+   "relevant": 36.9,
+   "positionOnly": 10.9,
    "reasons": [
     {
-     "label": "needs to win more ball",
-     "effect": -0.58
+     "label": "Defensive pressure",
+     "effect": 0.57
     },
     {
-     "label": "needs contested/inside game",
-     "effect": 0.5
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.42
     },
     {
-     "label": "Kicking / skills",
-     "effect": 0.34
+     "label": "Contested / inside",
+     "effect": 0.2
     },
     {
-     "label": "Footy IQ / vision",
-     "effect": 0.26
+     "label": "Combine: top-10 endurance",
+     "effect": 0.13
     },
     {
-     "label": "Speed / agility",
-     "effect": 0.15
+     "label": "Leadership / character",
+     "effect": 0.12
     }
    ],
    "why": [
     {
+     "good": true,
+     "text": "Junior fantasy average of 110. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
+    },
+    {
+     "good": true,
+     "text": "4.9 tackles a game. Juniors laying 4.5+ became stars 20% of the time: hunters score, as Warner, Berry and Brayshaw showed."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted contested / inside. 14 of 71 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 56% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 83 vs 73). Nick Daicos, Will Ashcroft, Chad Warner."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    },
+    {
      "good": false,
-     "text": "Scouts noted work-on: to win more ball: only 0 of 33 with that note became 90+ players (0.0\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 11 of 62 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
     }
    ],
-   "type": "wing",
+   "type": "midfielder-forward",
+   "ceiling": true,
    "comps": [
     {
-     "name": "Isaac Cumming",
-     "pick": 20,
-     "year": 2016,
-     "peak": 90.6,
-     "now": 60.5,
-     "jFP": 26.0,
-     "jT": 1.0,
-     "jD": 9.0,
-     "scouts": [],
-     "workons": [],
+     "name": "Sam Flanders",
+     "pick": 11,
+     "year": 2019,
+     "peak": 107.8,
+     "now": 91.9,
+     "jFP": 102.0,
+     "jT": 4.7,
+     "jD": 22.4,
+     "scouts": [
+      "Clean hands",
+      "Contested work",
+      "Goal sense",
+      "X-factor",
+      "One-on-ones"
+     ],
+     "workons": [
+      "Set shot goal kicking",
+      "Kicking consistency",
+      "Four quarter consistency"
+     ],
      "role": "Midfielder",
-     "type": "wing"
+     "type": "midfielder"
     },
     {
-     "name": "Harry Perryman",
-     "pick": 14,
-     "year": 2016,
-     "peak": 86.5,
-     "now": 66.8,
-     "jFP": 108.0,
-     "jT": 3.0,
-     "jD": 30.5,
-     "scouts": [],
-     "workons": [],
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1,
+     "now": 90.1,
+     "jFP": 56.0,
+     "jT": 5.3,
+     "jD": 11.5,
+     "scouts": [
+      "Contested work",
+      "Size",
+      "Explosive pace",
+      "Competitiveness",
+      "Team first"
+     ],
+     "workons": [
+      "Kicking Efficiency",
+      "Decision Making"
+     ],
      "role": "Midfielder",
-     "type": "wing"
+     "type": "midfielder"
     },
     {
-     "name": "Jarrod Berry",
-     "pick": 17,
-     "year": 2016,
-     "peak": 85.2,
-     "now": 75.0,
-     "jFP": 63.0,
-     "jT": 4.0,
-     "jD": 17.7,
-     "scouts": [],
-     "workons": [],
+     "name": "James Rowbottom",
+     "pick": 25,
+     "year": 2018,
+     "peak": 85.1,
+     "now": 71.3,
+     "jFP": 91.0,
+     "jT": 6.5,
+     "jD": 21.9,
+     "scouts": [
+      "Contested ball",
+      "Clearances",
+      "Clean hands",
+      "Tackling",
+      "Core strength"
+     ],
+     "workons": [
+      "Endurance",
+      "Kicking",
+      "Scoreboard impact"
+     ],
      "role": "Midfielder",
-     "type": "wing"
+     "type": "midfielder"
     }
    ]
   },
@@ -2512,8 +2586,8 @@
     "needs defensive work",
     "needs strength/size"
    ],
-   "chance": 22.9,
-   "relevant": 30.4,
+   "chance": 21.9,
+   "relevant": 29.2,
    "positionOnly": 9.5,
    "reasons": [
     {
@@ -2526,11 +2600,11 @@
     },
     {
      "label": "Junior tackles",
-     "effect": -0.19
+     "effect": -0.18
     },
     {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
     },
     {
      "label": "Combine: top-10 endurance",
@@ -2560,6 +2634,7 @@
     }
    ],
    "type": "half-back",
+   "ceiling": false,
    "comps": [
     {
      "name": "Josh Daicos",
@@ -2624,6 +2699,133 @@
    ]
   },
   {
+   "rank": 18,
+   "name": "Jackson Phillips",
+   "club": null,
+   "drafted": false,
+   "junior": "Dandenong Stingrays",
+   "position": "Wing/MID",
+   "height": 182,
+   "role": "Midfielder",
+   "jFP": 87.0,
+   "jD": 19.4,
+   "jT": 3.4,
+   "jSeason": 2026,
+   "traits": [
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Scoreboard impact",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs contested/inside game",
+    "needs to win more ball"
+   ],
+   "chance": 21.4,
+   "relevant": 30.0,
+   "positionOnly": 11.8,
+   "reasons": [
+    {
+     "label": "needs to win more ball",
+     "effect": -0.58
+    },
+    {
+     "label": "needs contested/inside game",
+     "effect": 0.51
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.34
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.26
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.16
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Scouts noted work-on: to win more ball: only 0 of 33 with that note became 90+ players (0.0\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted work-on: contested/inside game. 11 of 62 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    }
+   ],
+   "type": "wing",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Isaac Cumming",
+     "pick": 20,
+     "year": 2016,
+     "peak": 90.6,
+     "now": 60.5,
+     "jFP": 26.0,
+     "jT": 1.0,
+     "jD": 9.0,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Lachlan Sholl",
+     "pick": 64,
+     "year": 2018,
+     "peak": 85.3,
+     "now": null,
+     "jFP": 97.0,
+     "jT": 2.1,
+     "jD": 24.1,
+     "scouts": [
+      "Disposal",
+      "Intercept marking",
+      "Footy smarts",
+      "Accumulation",
+      "Endurance"
+     ],
+     "workons": [
+      "Contested work",
+      "Defensive game"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Harry Perryman",
+     "pick": 14,
+     "year": 2016,
+     "peak": 86.5,
+     "now": 66.8,
+     "jFP": 108.0,
+     "jT": 3.0,
+     "jD": 30.5,
+     "scouts": [],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "wing"
+    }
+   ]
+  },
+  {
    "rank": 3,
    "name": "Arki Butler",
    "club": null,
@@ -2640,13 +2842,13 @@
    "flags": [
     "needs consistency"
    ],
-   "chance": 21.4,
-   "relevant": 51.1,
+   "chance": 21.2,
+   "relevant": 50.8,
    "positionOnly": 36.8,
    "reasons": [
     {
      "label": "needs consistency",
-     "effect": -0.6
+     "effect": -0.59
     },
     {
      "label": "Junior tackles",
@@ -2660,28 +2862,29 @@
     }
    ],
    "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
-     "name": "Tom Powell",
-     "pick": 13,
-     "year": 2020,
-     "peak": 86.9,
-     "now": 71.2,
-     "jFP": 0.0,
-     "jT": 3.0,
-     "jD": 24.3,
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2,
+     "now": 116.2,
+     "jFP": 83.0,
+     "jT": 3.3,
+     "jD": 19.3,
      "scouts": [
-      "Accumulation",
-      "Consistency",
-      "Contested ball",
-      "Stoppage craft",
-      "Handball skills"
+      "Footy IQ",
+      "Forward Craft",
+      "Goal Sense",
+      "Kicking",
+      "Overhead marking"
      ],
      "workons": [
-      "Strength",
-      "Damage by foot"
+      "Limited midfield exposure",
+      "Speed"
      ],
-     "role": "Midfielder",
+     "role": "Forward",
      "type": "midfielder"
     },
     {
@@ -2708,25 +2911,24 @@
      "type": "midfielder-forward"
     },
     {
-     "name": "Sam Flanders",
-     "pick": 11,
-     "year": 2019,
-     "peak": 107.8,
-     "now": 91.9,
-     "jFP": 102.0,
-     "jT": 4.7,
-     "jD": 22.4,
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
      "scouts": [
-      "Clean hands",
-      "Contested work",
-      "Goal sense",
-      "X-factor",
-      "One-on-ones"
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
      ],
      "workons": [
-      "Set shot goal kicking",
-      "Kicking consistency",
-      "Four quarter consistency"
+      "Strength",
+      "Damage by foot"
      ],
      "role": "Midfielder",
      "type": "midfielder"
@@ -2750,13 +2952,13 @@
     "Defensive pressure"
    ],
    "flags": [],
-   "chance": 19.9,
-   "relevant": 27.9,
+   "chance": 18.5,
+   "relevant": 26.5,
    "positionOnly": 8.5,
    "reasons": [
     {
      "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": 0.57
     }
    ],
    "why": [
@@ -2766,6 +2968,7 @@
     }
    ],
    "type": "forward",
+   "ceiling": false,
    "comps": [
     {
      "name": "Shaun Mannagh",
@@ -2830,165 +3033,6 @@
    ]
   },
   {
-   "rank": 20,
-   "name": "Harvie Cooke",
-   "club": null,
-   "drafted": false,
-   "junior": "Northern Knights",
-   "position": "MID/FWD",
-   "height": 176,
-   "role": "Midfielder",
-   "jFP": 110.0,
-   "jD": 24.7,
-   "jT": 4.9,
-   "jSeason": 2026,
-   "traits": [
-    "Accumulator",
-    "Consistency",
-    "Contested / inside",
-    "Defensive pressure",
-    "Engine / work rate",
-    "Leadership / character",
-    "Scoreboard impact"
-   ],
-   "flags": [
-    "needs composure/decisions",
-    "needs strength/size"
-   ],
-   "chance": 18.4,
-   "relevant": 32.6,
-   "positionOnly": 10.9,
-   "reasons": [
-    {
-     "label": "Defensive pressure",
-     "effect": 0.61
-    },
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
-    },
-    {
-     "label": "Accumulator",
-     "effect": -0.42
-    },
-    {
-     "label": "Contested / inside",
-     "effect": 0.23
-    },
-    {
-     "label": "Junior fantasy avg",
-     "effect": 0.15
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Junior fantasy average of 110. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
-    },
-    {
-     "good": true,
-     "text": "4.9 tackles a game. Juniors laying 4.5+ became stars 20% of the time: hunters score, as Warner, Berry and Brayshaw showed."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted accumulator: only 5 of 48 with that note became 90+ players (1.0\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted contested / inside. 14 of 71 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted leadership / character. 12 of 64 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    }
-   ],
-   "type": "midfielder-forward",
-   "comps": [
-    {
-     "name": "Tom Sparrow",
-     "pick": 27,
-     "year": 2018,
-     "peak": 90.1,
-     "now": 90.1,
-     "jFP": 56.0,
-     "jT": 5.3,
-     "jD": 11.5,
-     "scouts": [
-      "Contested work",
-      "Size",
-      "Explosive pace",
-      "Competitiveness",
-      "Team first"
-     ],
-     "workons": [
-      "Kicking Efficiency",
-      "Decision Making"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "James Rowbottom",
-     "pick": 25,
-     "year": 2018,
-     "peak": 85.1,
-     "now": 71.3,
-     "jFP": 91.0,
-     "jT": 6.5,
-     "jD": 21.9,
-     "scouts": [
-      "Contested ball",
-      "Clearances",
-      "Clean hands",
-      "Tackling",
-      "Core strength"
-     ],
-     "workons": [
-      "Endurance",
-      "Kicking",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Errol Gulden",
-     "pick": 32,
-     "year": 2020,
-     "peak": 115.1,
-     "now": 115.1,
-     "jFP": 125.0,
-     "jT": 2.0,
-     "jD": 27.3,
-     "scouts": [
-      "Speed/Agility",
-      "Footy IQ",
-      "Vision",
-      "Impact",
-      "Class"
-     ],
-     "workons": [
-      "Inside game",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    }
-   ]
-  },
-  {
    "rank": 30,
    "name": "Keenan Boi",
    "club": null,
@@ -3009,21 +3053,21 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 13.0,
-   "relevant": 18.9,
+   "chance": 12.2,
+   "relevant": 18.2,
    "positionOnly": 8.0,
    "reasons": [
     {
      "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": 0.57
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     },
     {
      "label": "Speed / agility",
-     "effect": 0.15
+     "effect": 0.16
     }
    ],
    "why": [
@@ -3041,6 +3085,7 @@
     }
    ],
    "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
      "name": "Shaun Mannagh",
@@ -3125,13 +3170,13 @@
    "flags": [
     "needs strength/size"
    ],
-   "chance": 9.0,
-   "relevant": 12.6,
+   "chance": 8.2,
+   "relevant": 11.7,
    "positionOnly": 10.5,
    "reasons": [
     {
      "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": 0.57
     },
     {
      "label": "Small forward",
@@ -3157,6 +3202,7 @@
     }
    ],
    "type": "forward",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -3180,25 +3226,25 @@
    "flags": [
     "needs strength/size"
    ],
-   "chance": 6.4,
-   "relevant": 21.4,
+   "chance": 6.2,
+   "relevant": 21.2,
    "positionOnly": 13.4,
    "reasons": [
     {
-     "label": "No junior numbers",
+     "label": "Versatility",
      "effect": -0.46
     },
     {
-     "label": "Versatility",
-     "effect": -0.45
+     "label": "No junior numbers",
+     "effect": -0.43
     },
     {
      "label": "Athleticism",
-     "effect": -0.13
+     "effect": -0.12
     },
     {
      "label": "Leadership / character",
-     "effect": 0.11
+     "effect": 0.12
     }
    ],
    "why": [
@@ -3216,26 +3262,27 @@
     }
    ],
    "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
-     "name": "Tom Powell",
-     "pick": 13,
+     "name": "Errol Gulden",
+     "pick": 32,
      "year": 2020,
-     "peak": 86.9,
-     "now": 71.2,
-     "jFP": 0.0,
-     "jT": 3.0,
-     "jD": 24.3,
+     "peak": 115.1,
+     "now": 115.1,
+     "jFP": 125.0,
+     "jT": 2.0,
+     "jD": 27.3,
      "scouts": [
-      "Accumulation",
-      "Consistency",
-      "Contested ball",
-      "Stoppage craft",
-      "Handball skills"
+      "Speed/Agility",
+      "Footy IQ",
+      "Vision",
+      "Impact",
+      "Class"
      ],
      "workons": [
-      "Strength",
-      "Damage by foot"
+      "Inside game",
+      "Kicking consistency"
      ],
      "role": "Midfielder",
      "type": "midfielder"
@@ -3313,25 +3360,25 @@
     "needs kicking",
     "needs outside game"
    ],
-   "chance": 6.1,
-   "relevant": 16.6,
+   "chance": 5.3,
+   "relevant": 14.8,
    "positionOnly": 8.3,
    "reasons": [
     {
      "label": "Versatility",
-     "effect": -0.45
+     "effect": -0.46
     },
     {
      "label": "Clean hands",
-     "effect": -0.43
+     "effect": -0.45
     },
     {
      "label": "Contested / inside",
-     "effect": 0.23
+     "effect": 0.2
     },
     {
      "label": "Leadership / character",
-     "effect": 0.11
+     "effect": 0.12
     }
    ],
    "why": [
@@ -3357,6 +3404,7 @@
     }
    ],
    "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
      "name": "Sam Flanders",
@@ -3432,80 +3480,6 @@
    ]
   },
   {
-   "rank": 19,
-   "name": "George Dimer",
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "Small FWD",
-   "height": 173,
-   "role": "Small forward",
-   "jFP": 75.0,
-   "jD": 16.0,
-   "jT": 3.3,
-   "jSeason": 2026,
-   "traits": [
-    "Clean hands",
-    "Footy IQ / vision",
-    "Kicking / skills",
-    "Speed / agility"
-   ],
-   "flags": [],
-   "chance": 3.5,
-   "relevant": 7.8,
-   "positionOnly": 11.3,
-   "reasons": [
-    {
-     "label": "Small forward",
-     "effect": -0.54
-    },
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
-    },
-    {
-     "label": "Clean hands",
-     "effect": -0.43
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.34
-    },
-    {
-     "label": "Footy IQ / vision",
-     "effect": 0.26
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    },
-    {
-     "good": false,
-     "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
-    }
-   ],
-   "type": "forward",
-   "comps": []
-  },
-  {
    "rank": 26,
    "name": "George Gale",
    "club": null,
@@ -3526,14 +3500,10 @@
    "flags": [
     "needs speed/athleticism"
    ],
-   "chance": 3.4,
-   "relevant": 22.1,
+   "chance": 4.3,
+   "relevant": 25.6,
    "positionOnly": 9.0,
    "reasons": [
-    {
-     "label": "Accumulator",
-     "effect": -0.42
-    },
     {
      "label": "Kicking / skills",
      "effect": 0.34
@@ -3541,10 +3511,6 @@
     {
      "label": "Combine: top-10 endurance",
      "effect": 0.13
-    },
-    {
-     "label": "Junior fantasy avg",
-     "effect": 0.12
     }
    ],
    "why": [
@@ -3553,12 +3519,12 @@
      "text": "Junior fantasy average of 106. Draftees at 100+ became 90+ AFL Fantasy players 31% of the time (16 of 52), against 11% for all picks."
     },
     {
-     "good": false,
-     "text": "Scouts noted accumulator: only 5 of 48 with that note became 90+ players (1.0\u00d7 their draft slots)."
+     "good": true,
+     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 56% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 83 vs 73). Nick Daicos, Will Ashcroft, Chad Warner."
     },
     {
      "good": true,
@@ -3570,6 +3536,7 @@
     }
    ],
    "type": "wing",
+   "ceiling": true,
    "comps": [
     {
      "name": "Jarrod Berry",
@@ -3625,6 +3592,81 @@
    ]
   },
   {
+   "rank": 19,
+   "name": "George Dimer",
+   "club": null,
+   "drafted": false,
+   "junior": "Sandringham Dragons",
+   "position": "Small FWD",
+   "height": 173,
+   "role": "Small forward",
+   "jFP": 75.0,
+   "jD": 16.0,
+   "jT": 3.3,
+   "jSeason": 2026,
+   "traits": [
+    "Clean hands",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Speed / agility"
+   ],
+   "flags": [],
+   "chance": 3.5,
+   "relevant": 7.5,
+   "positionOnly": 11.3,
+   "reasons": [
+    {
+     "label": "Small forward",
+     "effect": -0.54
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.45
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.42
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.34
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.26
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 17 of 120 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
+    }
+   ],
+   "type": "forward",
+   "ceiling": false,
+   "comps": []
+  },
+  {
    "rank": 9,
    "name": "Mitch Harris",
    "club": null,
@@ -3648,21 +3690,17 @@
     "needs composure/decisions",
     "needs kicking"
    ],
-   "chance": 0.5,
-   "relevant": 1.7,
+   "chance": 0.6,
+   "relevant": 1.8,
    "positionOnly": 19.1,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
-    },
-    {
-     "label": "Junior fantasy avg",
-     "effect": -0.27
+     "effect": -0.32
     },
     {
      "label": "Footy IQ / vision",
@@ -3671,6 +3709,10 @@
     {
      "label": "Junior tackles",
      "effect": -0.21
+    },
+    {
+     "label": "Junior fantasy avg",
+     "effect": -0.17
     }
    ],
    "why": [
@@ -3700,6 +3742,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": [
     {
      "name": "Jack Lukosius",
@@ -3753,11 +3796,11 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
+     "effect": -0.42
     },
     {
      "label": "Kicking / skills",
@@ -3768,8 +3811,8 @@
      "effect": -0.21
     },
     {
-     "label": "Junior fantasy avg",
-     "effect": -0.11
+     "label": "Leadership / character",
+     "effect": 0.12
     }
    ],
    "why": [
@@ -3795,6 +3838,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -3816,21 +3860,21 @@
     "Footy IQ / vision"
    ],
    "flags": [],
-   "chance": 0.4,
-   "relevant": 2.2,
+   "chance": 0.3,
+   "relevant": 2.1,
    "positionOnly": 14.8,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "Clean hands",
-     "effect": -0.43
+     "effect": -0.45
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     },
     {
      "label": "Footy IQ / vision",
@@ -3838,7 +3882,7 @@
     },
     {
      "label": "Junior fantasy avg",
-     "effect": -0.14
+     "effect": -0.09
     }
    ],
    "why": [
@@ -3864,6 +3908,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -3898,23 +3943,23 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
-    },
-    {
-     "label": "Defensive pressure",
-     "effect": 0.61
+     "effect": -2.27
     },
     {
      "label": "needs consistency",
-     "effect": -0.6
+     "effect": -0.59
+    },
+    {
+     "label": "Defensive pressure",
+     "effect": 0.57
     },
     {
      "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
+     "effect": -0.42
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     }
    ],
    "why": [
@@ -3923,12 +3968,12 @@
      "text": "Junior fantasy average of 69: low output for a future fantasy star; most stars scored 90+ as juniors."
     },
     {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
-    },
-    {
      "good": false,
      "text": "Scouts noted work-on: consistency: only 2 of 65 with that note became 90+ players (0.3\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 12 of 53 draftees with that note became 90+ players, 1.7\u00d7 what their draft slots predicted."
     },
     {
      "good": false,
@@ -3952,6 +3997,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -3977,20 +4023,20 @@
     "needs composure/decisions"
    ],
    "chance": 0.2,
-   "relevant": 1.4,
+   "relevant": 1.3,
    "positionOnly": 8.7,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "Clean hands",
-     "effect": -0.43
+     "effect": -0.45
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     },
     {
      "label": "Footy IQ / vision",
@@ -3998,7 +4044,7 @@
     },
     {
      "label": "Junior tackles",
-     "effect": -0.14
+     "effect": -0.13
     }
    ],
    "why": [
@@ -4020,6 +4066,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -4050,11 +4097,11 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "needs consistency",
-     "effect": -0.6
+     "effect": -0.59
     },
     {
      "label": "needs to win more ball",
@@ -4062,11 +4109,11 @@
     },
     {
      "label": "Combine: top-10 speed/jump",
-     "effect": -0.44
+     "effect": -0.42
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     }
    ],
    "why": [
@@ -4100,6 +4147,7 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   },
   {
@@ -4132,11 +4180,11 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -2.26
+     "effect": -2.27
     },
     {
      "label": "needs consistency",
-     "effect": -0.6
+     "effect": -0.59
     },
     {
      "label": "needs to win more ball",
@@ -4148,7 +4196,7 @@
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.34
+     "effect": -0.32
     }
    ],
    "why": [
@@ -4182,45 +4230,45 @@
     }
    ],
    "type": "key position player",
+   "ceiling": false,
    "comps": []
   }
  ],
  "coef": {
-  "Draft position": 0.75,
-  "Junior fantasy avg": 0.15,
+  "Draft position": 0.77,
+  "Junior fantasy avg": 0.09,
   "Junior tackles": 0.13,
-  "No junior numbers": -0.46,
-  "Key position": -0.75,
+  "No junior numbers": -0.43,
+  "Key position": -0.76,
   "Ruck": 0.0,
   "Small forward": -0.27,
   "Combine: top-10 endurance": 0.13,
-  "Combine: top-10 speed/jump": -0.44,
-  "Defensive pressure": 0.61,
-  "Contested / inside": 0.23,
-  "Leadership / character": 0.11,
+  "Combine: top-10 speed/jump": -0.42,
+  "Defensive pressure": 0.57,
+  "Contested / inside": 0.2,
+  "Leadership / character": 0.12,
   "Kicking / skills": 0.34,
   "Footy IQ / vision": 0.26,
-  "Speed / agility": 0.15,
+  "Speed / agility": 0.16,
   "X-factor / hurt": 0.4,
-  "Engine / work rate": -0.0,
-  "Accumulator": -0.42,
-  "Aerial / marking": -0.34,
-  "Versatility": -0.45,
-  "Athleticism": -0.13,
-  "Upside": 0.1,
-  "Clean hands": -0.43,
-  "needs contested/inside game": 0.5,
-  "needs consistency": -0.6,
+  "Engine / work rate": -0.03,
+  "Aerial / marking": -0.32,
+  "Versatility": -0.46,
+  "Athleticism": -0.12,
+  "Upside": 0.12,
+  "Clean hands": -0.45,
+  "needs contested/inside game": 0.51,
+  "needs consistency": -0.59,
   "needs to win more ball": -0.58,
   "raw / limited exposure": -0.02
  },
  "roleCal": {
-  "Key position": 0.359,
-  "Ruck": 2.653,
-  "Small forward": 0.512,
-  "Tall utility": 0.265,
-  "Midfielder": 0.978,
-  "Defender": 0.817,
+  "Key position": 0.356,
+  "Ruck": 2.661,
+  "Small forward": 0.517,
+  "Tall utility": 0.26,
+  "Midfielder": 0.972,
+  "Defender": 0.826,
   "Forward": 1.252
  },
  "past": {
@@ -4246,7 +4294,7 @@
     "pick": 1,
     "name": "Jason Horne-Francis",
     "club": "NTH",
-    "pre": 68.5,
+    "pre": 67.9,
     "positionOnly": 56.2,
     "now": 100.0,
     "games": 101,
@@ -4323,9 +4371,9 @@
     "pick": 2,
     "name": "Sam Darcy",
     "club": "WBD",
-    "pre": 34.9,
+    "pre": 35.1,
     "positionOnly": 43.2,
-    "now": 41.4,
+    "now": 40.7,
     "games": 51,
     "current": {
      "games": 6,
@@ -4406,7 +4454,7 @@
     "pick": 3,
     "name": "Finn Callaghan",
     "club": "GWS",
-    "pre": 44.9,
+    "pre": 43.9,
     "positionOnly": 35.8,
     "now": 100.0,
     "games": 90,
@@ -4475,7 +4523,7 @@
     "pick": 4,
     "name": "Nick Daicos",
     "club": "COL",
-    "pre": 41.4,
+    "pre": 50.4,
     "positionOnly": 31.0,
     "now": 100.0,
     "games": 118,
@@ -4543,7 +4591,7 @@
     "club": "GCS",
     "pre": 16.3,
     "positionOnly": 27.5,
-    "now": 16.3,
+    "now": 16.2,
     "games": 88,
     "current": {
      "games": 23,
@@ -4625,9 +4673,9 @@
     "pick": 6,
     "name": "Josh Rachele",
     "club": "ADE",
-    "pre": 32.7,
+    "pre": 31.8,
     "positionOnly": 24.8,
-    "now": 24.7,
+    "now": 23.9,
     "games": 95,
     "current": {
      "games": 25,
@@ -4711,9 +4759,9 @@
     "pick": 7,
     "name": "Josh Ward",
     "club": "HAW",
-    "pre": 46.7,
+    "pre": 43.9,
     "positionOnly": 22.7,
-    "now": 66.4,
+    "now": 65.1,
     "games": 92,
     "current": {
      "games": 25,
@@ -4880,7 +4928,7 @@
     "club": "RIC",
     "pre": 0.6,
     "positionOnly": 19.5,
-    "now": 0.2,
+    "now": 0.3,
     "games": 22,
     "current": {
      "games": 1,
@@ -4964,9 +5012,9 @@
     "pick": 10,
     "name": "Neil Erasmus",
     "club": "FRE",
-    "pre": 6.8,
+    "pre": 10.5,
     "positionOnly": 18.3,
-    "now": 13.2,
+    "now": 14.4,
     "games": 65,
     "current": {
      "games": 27,
@@ -5067,7 +5115,7 @@
     "pick": 11,
     "name": "Nasiah Wanganeen-Milera",
     "club": "STK",
-    "pre": 37.1,
+    "pre": 37.4,
     "positionOnly": 17.3,
     "now": 100.0,
     "games": 102,
@@ -5141,9 +5189,9 @@
     "pick": 12,
     "name": "Josh Sinn",
     "club": "PTA",
-    "pre": 22.0,
+    "pre": 21.7,
     "positionOnly": 16.3,
-    "now": 2.9,
+    "now": 2.8,
     "games": 30,
     "current": null,
     "best": 51.2,
@@ -5225,9 +5273,9 @@
     "pick": 13,
     "name": "Ben Hobbs",
     "club": "ESS",
-    "pre": 20.9,
+    "pre": 27.4,
     "positionOnly": 15.5,
-    "now": 35.5,
+    "now": 36.7,
     "games": 64,
     "current": null,
     "best": 76.5,
@@ -5331,9 +5379,9 @@
     "pick": 14,
     "name": "Campbell Chesser",
     "club": "WCE",
-    "pre": 28.1,
+    "pre": 27.0,
     "positionOnly": 14.8,
-    "now": 1.7,
+    "now": 1.6,
     "games": 39,
     "current": {
      "games": 3,
@@ -5430,7 +5478,7 @@
     "club": "GWS",
     "pre": 0.5,
     "positionOnly": 14.2,
-    "now": 1.8,
+    "now": 1.9,
     "games": 32,
     "current": {
      "games": 7,
@@ -5535,9 +5583,9 @@
     "pick": 16,
     "name": "Darcy Wilmot",
     "club": "BRL",
-    "pre": 22.9,
+    "pre": 23.7,
     "positionOnly": 13.6,
-    "now": 28.0,
+    "now": 27.9,
     "games": 110,
     "current": {
      "games": 27,
@@ -5607,7 +5655,7 @@
     "pick": 17,
     "name": "Tom Brown",
     "club": "RIC",
-    "pre": 11.6,
+    "pre": 11.9,
     "positionOnly": 13.0,
     "now": 4.1,
     "games": 60,
@@ -5685,9 +5733,9 @@
     "pick": 18,
     "name": "Angus Sheldrick",
     "club": "SYD",
-    "pre": 13.6,
+    "pre": 12.7,
     "positionOnly": 12.6,
-    "now": 20.4,
+    "now": 20.1,
     "games": 48,
     "current": {
      "games": 20,
@@ -5796,7 +5844,7 @@
     "club": "MEL",
     "pre": 0.3,
     "positionOnly": 12.1,
-    "now": 2.6,
+    "now": 2.7,
     "games": 79,
     "current": {
      "games": 22,
@@ -5882,9 +5930,9 @@
     "pick": 20,
     "name": "Kai Lohmann",
     "club": "BRL",
-    "pre": 2.8,
+    "pre": 2.9,
     "positionOnly": 11.7,
-    "now": 7.0,
+    "now": 7.3,
     "games": 80,
     "current": {
      "games": 27,
@@ -5977,7 +6025,7 @@
     "club": "FRE",
     "pre": 14.6,
     "positionOnly": 11.3,
-    "now": 21.9,
+    "now": 21.8,
     "games": 81,
     "current": {
      "games": 26,
@@ -6065,9 +6113,9 @@
     "pick": 22,
     "name": "Josh Goater",
     "club": "NTH",
-    "pre": 6.2,
+    "pre": 5.9,
     "positionOnly": 11.0,
-    "now": 3.1,
+    "now": 3.0,
     "games": 18,
     "current": {
      "games": 6,
@@ -6163,9 +6211,9 @@
     "pick": 23,
     "name": "Sam Butler",
     "club": "HAW",
-    "pre": 12.0,
+    "pre": 11.5,
     "positionOnly": 10.7,
-    "now": 7.1,
+    "now": 7.0,
     "games": 33,
     "current": {
      "games": 8,
@@ -6279,7 +6327,7 @@
     "club": "GEE",
     "pre": 6.6,
     "positionOnly": 10.3,
-    "now": 46.7,
+    "now": 47.1,
     "games": 6,
     "current": null,
     "best": 75.2,
@@ -6360,9 +6408,9 @@
     "pick": 25,
     "name": "Mitch Knevitt",
     "club": "GEE",
-    "pre": 5.6,
+    "pre": 8.2,
     "positionOnly": 10.1,
-    "now": 4.2,
+    "now": 4.5,
     "games": 23,
     "current": {
      "games": 2,
@@ -6473,9 +6521,9 @@
     "pick": 26,
     "name": "Connor MacDonald",
     "club": "HAW",
-    "pre": 22.8,
+    "pre": 29.2,
     "positionOnly": 9.8,
-    "now": 45.7,
+    "now": 46.9,
     "games": 114,
     "current": {
      "games": 25,
@@ -6560,7 +6608,7 @@
     "club": "CAR",
     "pre": 4.4,
     "positionOnly": 9.5,
-    "now": 2.6,
+    "now": 2.7,
     "games": 63,
     "current": null,
     "best": 50.8,
@@ -6645,9 +6693,9 @@
     "pick": 28,
     "name": "Tyler Sonsie",
     "club": "RIC",
-    "pre": 11.0,
+    "pre": 10.4,
     "positionOnly": 9.3,
-    "now": 10.7,
+    "now": 10.5,
     "games": 55,
     "current": {
      "games": 15,
@@ -6760,9 +6808,9 @@
     "pick": 29,
     "name": "Sam Banks",
     "club": "RIC",
-    "pre": 25.7,
+    "pre": 25.4,
     "positionOnly": 9.1,
-    "now": 26.8,
+    "now": 26.3,
     "games": 61,
     "current": {
      "games": 18,
@@ -6849,7 +6897,7 @@
     "pick": 30,
     "name": "Judson Clarke",
     "club": "RIC",
-    "pre": 15.3,
+    "pre": 14.8,
     "positionOnly": 8.9,
     "now": 1.0,
     "games": 20,
@@ -6954,9 +7002,9 @@
     "pick": 31,
     "name": "Brady Hough",
     "club": "WCE",
-    "pre": 6.6,
+    "pre": 6.5,
     "positionOnly": 8.7,
-    "now": 13.9,
+    "now": 14.0,
     "games": 98,
     "current": {
      "games": 23,
@@ -7023,9 +7071,9 @@
     "pick": 32,
     "name": "James Willis",
     "club": "GEE",
-    "pre": 10.3,
+    "pre": 9.2,
     "positionOnly": 8.5,
-    "now": 2.7,
+    "now": 2.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -7093,9 +7141,9 @@
     "pick": 33,
     "name": "Mitchito Owens",
     "club": "STK",
-    "pre": 3.8,
+    "pre": 3.7,
     "positionOnly": 8.3,
-    "now": 18.7,
+    "now": 19.2,
     "games": 92,
     "current": {
      "games": 20,
@@ -7168,9 +7216,9 @@
     "pick": 34,
     "name": "Matthew Roberts",
     "club": "SYD",
-    "pre": 19.2,
+    "pre": 23.7,
     "positionOnly": 8.1,
-    "now": 32.2,
+    "now": 33.1,
     "games": 69,
     "current": {
      "games": 21,
@@ -7283,7 +7331,7 @@
     "pick": 35,
     "name": "Paul Curtis",
     "club": "NTH",
-    "pre": 11.8,
+    "pre": 11.5,
     "positionOnly": 8.0,
     "now": 12.2,
     "games": 98,
@@ -7368,9 +7416,9 @@
     "pick": 36,
     "name": "Jake Soligo",
     "club": "ADE",
-    "pre": 10.2,
+    "pre": 14.1,
     "positionOnly": 7.8,
-    "now": 55.3,
+    "now": 57.3,
     "games": 107,
     "current": {
      "games": 22,
@@ -7566,9 +7614,9 @@
     "pick": 38,
     "name": "Miller Bergman",
     "club": "NTH",
-    "pre": 8.7,
+    "pre": 8.4,
     "positionOnly": 7.5,
-    "now": 1.4,
+    "now": 1.3,
     "games": 16,
     "current": null,
     "best": 44.9,
@@ -7663,7 +7711,7 @@
     "pick": 39,
     "name": "Blake Howes",
     "club": "MEL",
-    "pre": 4.5,
+    "pre": 4.6,
     "positionOnly": 7.4,
     "now": 3.8,
     "games": 48,
@@ -7755,7 +7803,7 @@
     "pick": 40,
     "name": "Corey Warner",
     "club": "SYD",
-    "pre": 6.5,
+    "pre": 6.3,
     "positionOnly": 7.3,
     "now": 1.9,
     "games": 28,
@@ -7862,9 +7910,9 @@
     "pick": 41,
     "name": "James Tunstill",
     "club": "BRL",
-    "pre": 3.0,
+    "pre": 4.5,
     "positionOnly": 7.1,
-    "now": 2.0,
+    "now": 2.2,
     "games": 22,
     "current": {
      "games": 11,
@@ -7973,7 +8021,7 @@
     "pick": 42,
     "name": "Josh Fahey",
     "club": "GWS",
-    "pre": 17.2,
+    "pre": 16.2,
     "positionOnly": 7.0,
     "now": 0.6,
     "games": 7,
@@ -8060,9 +8108,9 @@
     "pick": 43,
     "name": "Arthur Jones",
     "club": "WBD",
-    "pre": 14.7,
+    "pre": 13.9,
     "positionOnly": 6.9,
-    "now": 3.6,
+    "now": 3.5,
     "games": 38,
     "current": {
      "games": 20,
@@ -8165,9 +8213,9 @@
     "pick": 44,
     "name": "Zac Taylor",
     "club": "ADE",
-    "pre": 25.7,
+    "pre": 23.8,
     "positionOnly": 6.8,
-    "now": 6.4,
+    "now": 6.1,
     "games": 48,
     "current": {
      "games": 22,
@@ -8257,9 +8305,9 @@
     "pick": 45,
     "name": "Arlo Draper",
     "club": "COL",
-    "pre": 6.9,
+    "pre": 6.4,
     "positionOnly": 6.7,
-    "now": 2.5,
+    "now": 2.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -8329,9 +8377,9 @@
     "pick": 46,
     "name": "Alastair Lord",
     "club": "ESS",
-    "pre": 18.8,
+    "pre": 26.9,
     "positionOnly": 6.6,
-    "now": 3.1,
+    "now": 3.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -8409,9 +8457,9 @@
     "pick": 47,
     "name": "Marcus Windhager",
     "club": "STK",
-    "pre": 2.2,
+    "pre": 2.1,
     "positionOnly": 6.5,
-    "now": 49.9,
+    "now": 50.9,
     "games": 97,
     "current": {
      "games": 23,
@@ -8494,7 +8542,7 @@
     "pick": 48,
     "name": "Flynn Kroeger",
     "club": "GEE",
-    "pre": 5.7,
+    "pre": 5.6,
     "positionOnly": 6.4,
     "now": 2.4,
     "games": 0,
@@ -8538,9 +8586,9 @@
     "pick": 49,
     "name": "Cooper Murley",
     "club": "COL",
-    "pre": 12.4,
+    "pre": 16.9,
     "positionOnly": 6.3,
-    "now": 2.8,
+    "now": 3.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -8618,7 +8666,7 @@
     "pick": 50,
     "name": "Garrett McDonagh",
     "club": "ESS",
-    "pre": 4.9,
+    "pre": 4.8,
     "positionOnly": 6.2,
     "now": 2.3,
     "games": 0,
@@ -8662,7 +8710,7 @@
     "pick": 51,
     "name": "Oscar Adams",
     "club": "STK",
-    "pre": 1.3,
+    "pre": 1.2,
     "positionOnly": 6.1,
     "now": 0.5,
     "games": 21,
@@ -8766,9 +8814,9 @@
     "pick": 52,
     "name": "Harvey Harrison",
     "club": "COL",
-    "pre": 5.1,
+    "pre": 7.0,
     "positionOnly": 6.0,
-    "now": 2.3,
+    "now": 2.5,
     "games": 28,
     "current": {
      "games": 12,
@@ -8858,9 +8906,9 @@
     "pick": 53,
     "name": "Jai Serong",
     "club": "HAW",
-    "pre": 2.0,
+    "pre": 1.9,
     "positionOnly": 6.0,
-    "now": 13.2,
+    "now": 13.6,
     "games": 33,
     "current": {
      "games": 24,
@@ -8957,7 +9005,7 @@
     "club": "FRE",
     "pre": 2.7,
     "positionOnly": 5.9,
-    "now": 2.0,
+    "now": 2.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -9004,7 +9052,7 @@
     "pick": 55,
     "name": "Hugh Jackson",
     "club": "PTA",
-    "pre": 4.5,
+    "pre": 6.2,
     "positionOnly": 5.8,
     "now": 0.5,
     "games": 9,
@@ -9081,9 +9129,9 @@
     "pick": 56,
     "name": "Dante Visentini",
     "club": "PTA",
-    "pre": 2.3,
+    "pre": 2.2,
     "positionOnly": 5.7,
-    "now": 6.6,
+    "now": 6.8,
     "games": 29,
     "current": {
      "games": 15,
@@ -9186,9 +9234,9 @@
     "pick": 57,
     "name": "Jack Williams",
     "club": "WCE",
-    "pre": 1.5,
+    "pre": 1.4,
     "positionOnly": 5.7,
-    "now": 1.7,
+    "now": 1.8,
     "games": 54,
     "current": {
      "games": 12,
@@ -9289,7 +9337,7 @@
     "pick": 58,
     "name": "Lachlan Rankin",
     "club": "SYD",
-    "pre": 8.9,
+    "pre": 8.6,
     "positionOnly": 5.6,
     "now": 2.6,
     "games": 0,
@@ -9369,7 +9417,7 @@
     "pick": 59,
     "name": "Jackson Archer",
     "club": "NTH",
-    "pre": 5.1,
+    "pre": 5.0,
     "positionOnly": 5.5,
     "now": 1.1,
     "games": 26,
@@ -9461,7 +9509,7 @@
     "pick": 60,
     "name": "Jase Burgoyne",
     "club": "PTA",
-    "pre": 11.5,
+    "pre": 16.6,
     "positionOnly": 5.4,
     "now": 100.0,
     "games": 78,
@@ -9545,7 +9593,7 @@
     "pick": 61,
     "name": "Luke Cleary",
     "club": "WBD",
-    "pre": 10.1,
+    "pre": 9.7,
     "positionOnly": 5.4,
     "now": 2.5,
     "games": 23,
@@ -9653,9 +9701,9 @@
     "pick": 62,
     "name": "Greg Clark",
     "club": "WCE",
-    "pre": 5.9,
+    "pre": 8.7,
     "positionOnly": 5.3,
-    "now": 2.4,
+    "now": 2.6,
     "games": 21,
     "current": null,
     "best": 48.4,
@@ -9736,9 +9784,9 @@
     "pick": 63,
     "name": "Charlie Constable",
     "club": "GCS",
-    "pre": 4.1,
+    "pre": 3.9,
     "positionOnly": 5.3,
-    "now": 24.0,
+    "now": 24.4,
     "games": 15,
     "current": null,
     "best": 82.9,
@@ -9833,7 +9881,7 @@
     "pick": 64,
     "name": "Cooper Whyte",
     "club": "GEE",
-    "pre": 6.1,
+    "pre": 5.8,
     "positionOnly": 5.2,
     "now": 2.4,
     "games": 1,
@@ -9917,7 +9965,7 @@
     "pick": 65,
     "name": "Taj Woewodin",
     "club": "MEL",
-    "pre": 3.4,
+    "pre": 3.1,
     "positionOnly": 5.1,
     "now": 0.4,
     "games": 21,
@@ -10014,7 +10062,7 @@
     "pick": 1,
     "name": "Aaron Cadman",
     "club": "GWS",
-    "pre": 9.3,
+    "pre": 9.7,
     "positionOnly": 60.9,
     "now": 3.2,
     "games": 77,
@@ -10092,7 +10140,7 @@
     "pick": 2,
     "name": "Will Ashcroft",
     "club": "BRL",
-    "pre": 55.7,
+    "pre": 63.0,
     "positionOnly": 47.2,
     "now": 100.0,
     "games": 85,
@@ -10151,7 +10199,7 @@
     "pick": 3,
     "name": "Harry Sheezel",
     "club": "NTH",
-    "pre": 40.4,
+    "pre": 40.3,
     "positionOnly": 39.3,
     "now": 100.0,
     "games": 89,
@@ -10208,9 +10256,9 @@
     "pick": 4,
     "name": "George Wardlaw",
     "club": "NTH",
-    "pre": 56.9,
+    "pre": 54.2,
     "positionOnly": 34.0,
-    "now": 63.0,
+    "now": 61.4,
     "games": 55,
     "current": {
      "games": 16,
@@ -10287,9 +10335,9 @@
     "pick": 5,
     "name": "Elijah Tsatas",
     "club": "ESS",
-    "pre": 24.8,
+    "pre": 32.0,
     "positionOnly": 30.1,
-    "now": 54.1,
+    "now": 55.4,
     "games": 22,
     "current": {
      "games": 6,
@@ -10385,9 +10433,9 @@
     "pick": 6,
     "name": "Bailey Humphrey",
     "club": "GCS",
-    "pre": 33.8,
+    "pre": 31.9,
     "positionOnly": 27.1,
-    "now": 24.0,
+    "now": 23.1,
     "games": 83,
     "current": {
      "games": 20,
@@ -10456,9 +10504,9 @@
     "pick": 7,
     "name": "Cameron Mackenzie",
     "club": "HAW",
-    "pre": 22.9,
+    "pre": 21.4,
     "positionOnly": 24.7,
-    "now": 38.7,
+    "now": 37.9,
     "games": 69,
     "current": {
      "games": 23,
@@ -10545,9 +10593,9 @@
     "pick": 8,
     "name": "Jhye Clark",
     "club": "GEE",
-    "pre": 36.8,
+    "pre": 44.7,
     "positionOnly": 22.8,
-    "now": 21.8,
+    "now": 22.1,
     "games": 35,
     "current": {
      "games": 9,
@@ -10643,9 +10691,9 @@
     "pick": 9,
     "name": "Reuben Ginbey",
     "club": "WCE",
-    "pre": 16.1,
+    "pre": 15.4,
     "positionOnly": 21.2,
-    "now": 13.0,
+    "now": 12.7,
     "games": 76,
     "current": {
      "games": 13,
@@ -10701,9 +10749,9 @@
     "pick": 10,
     "name": "Mattaes Phillipou",
     "club": "STK",
-    "pre": 4.3,
+    "pre": 4.4,
     "positionOnly": 19.8,
-    "now": 13.9,
+    "now": 14.2,
     "games": 65,
     "current": {
      "games": 21,
@@ -10789,9 +10837,9 @@
     "pick": 11,
     "name": "Oliver Hollands",
     "club": "CAR",
-    "pre": 13.1,
+    "pre": 17.7,
     "positionOnly": 18.6,
-    "now": 19.0,
+    "now": 20.1,
     "games": 79,
     "current": {
      "games": 14,
@@ -10867,9 +10915,9 @@
     "pick": 12,
     "name": "Jaspa Fletcher",
     "club": "BRL",
-    "pre": 17.3,
+    "pre": 15.9,
     "positionOnly": 17.6,
-    "now": 32.1,
+    "now": 31.6,
     "games": 95,
     "current": {
      "games": 27,
@@ -10936,7 +10984,7 @@
     "pick": 13,
     "name": "Jedd Busslinger",
     "club": "WBD",
-    "pre": 4.2,
+    "pre": 4.1,
     "positionOnly": 16.7,
     "now": 1.6,
     "games": 15,
@@ -11022,9 +11070,9 @@
     "pick": 14,
     "name": "Elijah Hewett",
     "club": "WCE",
-    "pre": 11.0,
+    "pre": 10.4,
     "positionOnly": 15.9,
-    "now": 13.6,
+    "now": 13.4,
     "games": 40,
     "current": {
      "games": 6,
@@ -11171,9 +11219,9 @@
     "pick": 16,
     "name": "Harry Rowston",
     "club": "GWS",
-    "pre": 18.7,
+    "pre": 17.1,
     "positionOnly": 14.5,
-    "now": 14.0,
+    "now": 13.5,
     "games": 29,
     "current": {
      "games": 12,
@@ -11264,9 +11312,9 @@
     "pick": 17,
     "name": "Max Michalanney",
     "club": "ADE",
-    "pre": 9.4,
+    "pre": 9.7,
     "positionOnly": 13.9,
-    "now": 8.3,
+    "now": 8.4,
     "games": 91,
     "current": {
      "games": 25,
@@ -11323,7 +11371,7 @@
     "club": "HAW",
     "pre": 0.6,
     "positionOnly": 13.4,
-    "now": 3.6,
+    "now": 3.8,
     "games": 82,
     "current": {
      "games": 22,
@@ -11400,9 +11448,9 @@
     "pick": 19,
     "name": "Ed Allan",
     "club": "COL",
-    "pre": 11.4,
+    "pre": 11.2,
     "positionOnly": 12.9,
-    "now": 20.6,
+    "now": 20.5,
     "games": 34,
     "current": {
      "games": 19,
@@ -11492,9 +11540,9 @@
     "pick": 20,
     "name": "Jacob Konstanty",
     "club": "SYD",
-    "pre": 6.5,
+    "pre": 6.0,
     "positionOnly": 12.4,
-    "now": 1.0,
+    "now": 0.9,
     "games": 33,
     "current": {
      "games": 10,
@@ -11569,9 +11617,9 @@
     "pick": 21,
     "name": "Darcy Jones",
     "club": "GWS",
-    "pre": 7.0,
+    "pre": 10.2,
     "positionOnly": 12.0,
-    "now": 5.7,
+    "now": 6.1,
     "games": 37,
     "current": null,
     "best": 60.7,
@@ -11632,7 +11680,7 @@
     "pick": 22,
     "name": "Max Gruzewski",
     "club": "GWS",
-    "pre": 7.8,
+    "pre": 7.9,
     "positionOnly": 11.6,
     "now": 1.5,
     "games": 26,
@@ -11725,7 +11773,7 @@
     "pick": 23,
     "name": "Harry Barnett",
     "club": "WCE",
-    "pre": 7.2,
+    "pre": 6.8,
     "positionOnly": 11.3,
     "now": 2.5,
     "games": 2,
@@ -11796,9 +11844,9 @@
     "pick": 24,
     "name": "Charlie Clarke",
     "club": "WBD",
-    "pre": 34.3,
+    "pre": 32.1,
     "positionOnly": 10.9,
-    "now": 3.7,
+    "now": 3.5,
     "games": 1,
     "current": null,
     "best": null,
@@ -11872,7 +11920,7 @@
     "pick": 25,
     "name": "Lewis Hayes",
     "club": "ESS",
-    "pre": 2.3,
+    "pre": 2.2,
     "positionOnly": 10.6,
     "now": 1.0,
     "games": 1,
@@ -11948,7 +11996,7 @@
     "pick": 26,
     "name": "Brayden George",
     "club": "NTH",
-    "pre": 7.3,
+    "pre": 7.6,
     "positionOnly": 10.3,
     "now": 2.5,
     "games": 0,
@@ -12071,9 +12119,9 @@
     "pick": 28,
     "name": "Jakob Ryan",
     "club": "COL",
-    "pre": 20.2,
+    "pre": 20.1,
     "positionOnly": 9.8,
-    "now": 3.2,
+    "now": 3.1,
     "games": 1,
     "current": null,
     "best": null,
@@ -12148,7 +12196,7 @@
     "pick": 29,
     "name": "Coby Burgiel",
     "club": "WCE",
-    "pre": 2.6,
+    "pre": 2.5,
     "positionOnly": 9.5,
     "now": 2.0,
     "games": 0,
@@ -12208,9 +12256,9 @@
     "pick": 30,
     "name": "Lachie Cowan",
     "club": "CAR",
-    "pre": 8.2,
+    "pre": 7.7,
     "positionOnly": 9.3,
-    "now": 7.2,
+    "now": 7.1,
     "games": 62,
     "current": {
      "games": 24,
@@ -12300,7 +12348,7 @@
     "club": "STK",
     "pre": 0.8,
     "positionOnly": 9.1,
-    "now": 0.8,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -12356,9 +12404,9 @@
     "pick": 32,
     "name": "Jaxon Binns",
     "club": "CAR",
-    "pre": 8.5,
+    "pre": 11.5,
     "positionOnly": 8.9,
-    "now": 5.6,
+    "now": 6.0,
     "games": 8,
     "current": null,
     "best": 61.8,
@@ -12438,9 +12486,9 @@
     "pick": 33,
     "name": "Hugh Davies",
     "club": "FRE",
-    "pre": 0.5,
+    "pre": 0.8,
     "positionOnly": 8.7,
-    "now": 0.8,
+    "now": 0.9,
     "games": 2,
     "current": null,
     "best": null,
@@ -12503,7 +12551,7 @@
     "pick": 34,
     "name": "Toby McMullin",
     "club": "GWS",
-    "pre": 4.7,
+    "pre": 4.9,
     "positionOnly": 8.5,
     "now": 1.3,
     "games": 36,
@@ -12595,9 +12643,9 @@
     "pick": 35,
     "name": "Olli Hotton",
     "club": "STK",
-    "pre": 13.1,
+    "pre": 12.6,
     "positionOnly": 8.3,
-    "now": 2.9,
+    "now": 2.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -12724,9 +12772,9 @@
     "pick": 37,
     "name": "Henry Hustwaite",
     "club": "HAW",
-    "pre": 12.5,
+    "pre": 11.7,
     "positionOnly": 8.0,
-    "now": 2.8,
+    "now": 2.7,
     "games": 11,
     "current": {
      "games": 1,
@@ -12893,9 +12941,9 @@
     "pick": 39,
     "name": "Harvey Gallagher",
     "club": "WBD",
-    "pre": 8.9,
+    "pre": 12.5,
     "positionOnly": 7.7,
-    "now": 3.7,
+    "now": 4.0,
     "games": 28,
     "current": {
      "games": 3,
@@ -12984,7 +13032,7 @@
     "pick": 40,
     "name": "Caleb Mitchell",
     "club": "SYD",
-    "pre": 5.1,
+    "pre": 4.8,
     "positionOnly": 7.5,
     "now": 2.3,
     "games": 3,
@@ -13062,7 +13110,7 @@
     "pick": 41,
     "name": "Tom Emmett",
     "club": "FRE",
-    "pre": 5.4,
+    "pre": 5.2,
     "positionOnly": 7.4,
     "now": 0.7,
     "games": 15,
@@ -13207,9 +13255,9 @@
     "pick": 43,
     "name": "Billy Dowling",
     "club": "ADE",
-    "pre": 3.7,
+    "pre": 5.1,
     "positionOnly": 7.1,
-    "now": 8.2,
+    "now": 8.9,
     "games": 13,
     "current": {
      "games": 3,
@@ -13384,7 +13432,7 @@
     "pick": 45,
     "name": "Alwyn Davey Jr.",
     "club": "ESS",
-    "pre": 4.9,
+    "pre": 4.6,
     "positionOnly": 6.9,
     "now": 1.9,
     "games": 0,
@@ -13413,9 +13461,9 @@
     "pick": 46,
     "name": "Jack O'Sullivan",
     "club": "HAW",
-    "pre": 3.4,
+    "pre": 3.3,
     "positionOnly": 6.8,
-    "now": 2.1,
+    "now": 2.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -13479,7 +13527,7 @@
     "club": "CAR",
     "pre": 0.4,
     "positionOnly": 6.7,
-    "now": 0.7,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -13535,9 +13583,9 @@
     "pick": 48,
     "name": "Joe Richards",
     "club": "COL",
-    "pre": 4.9,
+    "pre": 4.7,
     "positionOnly": 6.6,
-    "now": 32.8,
+    "now": 33.3,
     "games": 51,
     "current": {
      "games": 20,
@@ -13602,7 +13650,7 @@
     "pick": 49,
     "name": "Kaleb Smith",
     "club": "RIC",
-    "pre": 4.8,
+    "pre": 4.6,
     "positionOnly": 6.5,
     "now": 1.0,
     "games": 12,
@@ -13669,9 +13717,9 @@
     "pick": 50,
     "name": "Hugh Bond",
     "club": "ADE",
-    "pre": 22.8,
+    "pre": 19.9,
     "positionOnly": 6.4,
-    "now": 2.5,
+    "now": 2.3,
     "games": 19,
     "current": {
      "games": 7,
@@ -13762,7 +13810,7 @@
     "pick": 51,
     "name": "Bailey Macdonald",
     "club": "HAW",
-    "pre": 6.0,
+    "pre": 5.9,
     "positionOnly": 6.3,
     "now": 1.6,
     "games": 22,
@@ -13850,7 +13898,7 @@
     "club": "GEE",
     "pre": 2.3,
     "positionOnly": 6.2,
-    "now": 1.9,
+    "now": 2.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -13897,7 +13945,7 @@
     "pick": 53,
     "name": "Thomas Scully",
     "club": "PTA",
-    "pre": 4.6,
+    "pre": 4.4,
     "positionOnly": 6.1,
     "now": 2.3,
     "games": 0,
@@ -13961,9 +14009,9 @@
     "pick": 54,
     "name": "Jayden Davey",
     "club": "ESS",
-    "pre": 6.5,
+    "pre": 5.9,
     "positionOnly": 6.0,
-    "now": 2.1,
+    "now": 2.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -14019,9 +14067,9 @@
     "pick": 55,
     "name": "Steely Green",
     "club": "RIC",
-    "pre": 14.2,
+    "pre": 12.5,
     "positionOnly": 5.9,
-    "now": 2.2,
+    "now": 2.1,
     "games": 44,
     "current": {
      "games": 20,
@@ -14102,9 +14150,9 @@
     "pick": 56,
     "name": "Cooper Harvey",
     "club": "NTH",
-    "pre": 6.3,
+    "pre": 6.0,
     "positionOnly": 5.9,
-    "now": 11.8,
+    "now": 11.9,
     "games": 17,
     "current": {
      "games": 7,
@@ -14188,9 +14236,9 @@
     "pick": 57,
     "name": "Corey Wagner",
     "club": "FRE",
-    "pre": 4.3,
+    "pre": 4.2,
     "positionOnly": 5.8,
-    "now": 16.0,
+    "now": 16.2,
     "games": 73,
     "current": {
      "games": 16,
@@ -14287,7 +14335,7 @@
     "pick": 58,
     "name": "Noah Long",
     "club": "WCE",
-    "pre": 7.1,
+    "pre": 6.3,
     "positionOnly": 5.7,
     "now": 1.5,
     "games": 36,
@@ -14347,7 +14395,7 @@
     "pick": 59,
     "name": "Kyle Marshall",
     "club": "PTA",
-    "pre": 0.5,
+    "pre": 0.6,
     "positionOnly": 5.6,
     "now": 0.8,
     "games": 0,
@@ -14411,9 +14459,9 @@
     "pick": 1,
     "name": "Harley Reid",
     "club": "WCE",
-    "pre": 67.7,
+    "pre": 65.7,
     "positionOnly": 61.2,
-    "now": 84.8,
+    "now": 83.5,
     "games": 62,
     "current": {
      "games": 23,
@@ -14464,9 +14512,9 @@
     "pick": 2,
     "name": "Colby McKercher",
     "club": "NTH",
-    "pre": 71.6,
+    "pre": 67.4,
     "positionOnly": 46.2,
-    "now": 68.9,
+    "now": 65.5,
     "games": 62,
     "current": {
      "games": 23,
@@ -14528,7 +14576,7 @@
     "pick": 3,
     "name": "Jed Walter",
     "club": "GCS",
-    "pre": 4.7,
+    "pre": 4.5,
     "positionOnly": 37.6,
     "now": 1.0,
     "games": 48,
@@ -14612,9 +14660,9 @@
     "pick": 4,
     "name": "Zane Duursma",
     "club": "NTH",
-    "pre": 24.1,
+    "pre": 23.8,
     "positionOnly": 31.9,
-    "now": 1.7,
+    "now": 1.6,
     "games": 38,
     "current": {
      "games": 15,
@@ -14695,9 +14743,9 @@
     "pick": 5,
     "name": "Nick Watson",
     "club": "HAW",
-    "pre": 29.9,
+    "pre": 29.0,
     "positionOnly": 27.8,
-    "now": 25.9,
+    "now": 25.0,
     "games": 66,
     "current": {
      "games": 23,
@@ -14758,9 +14806,9 @@
     "pick": 6,
     "name": "Ryley Sanders",
     "club": "WBD",
-    "pre": 21.3,
+    "pre": 25.3,
     "positionOnly": 24.7,
-    "now": 54.0,
+    "now": 55.6,
     "games": 58,
     "current": {
      "games": 23,
@@ -14821,9 +14869,9 @@
     "pick": 7,
     "name": "Caleb Windsor",
     "club": "MEL",
-    "pre": 35.3,
+    "pre": 33.5,
     "positionOnly": 22.3,
-    "now": 22.0,
+    "now": 20.8,
     "games": 57,
     "current": {
      "games": 21,
@@ -14883,9 +14931,9 @@
     "pick": 8,
     "name": "Daniel Curtin",
     "club": "ADE",
-    "pre": 40.6,
+    "pre": 38.5,
     "positionOnly": 20.3,
-    "now": 34.4,
+    "now": 32.6,
     "games": 50,
     "current": {
      "games": 18,
@@ -14957,9 +15005,9 @@
     "pick": 9,
     "name": "Ethan Read",
     "club": "GCS",
-    "pre": 9.6,
+    "pre": 14.4,
     "positionOnly": 18.7,
-    "now": 2.9,
+    "now": 3.3,
     "games": 40,
     "current": {
      "games": 15,
@@ -15040,9 +15088,9 @@
     "pick": 10,
     "name": "Nate Caddy",
     "club": "ESS",
-    "pre": 3.6,
+    "pre": 3.5,
     "positionOnly": 17.4,
-    "now": 2.8,
+    "now": 2.9,
     "games": 49,
     "current": {
      "games": 22,
@@ -15102,9 +15150,9 @@
     "pick": 11,
     "name": "Connor O'Sullivan",
     "club": "GEE",
-    "pre": 1.0,
+    "pre": 0.9,
     "positionOnly": 16.2,
-    "now": 2.5,
+    "now": 2.6,
     "games": 51,
     "current": {
      "games": 25,
@@ -15164,7 +15212,7 @@
     "pick": 12,
     "name": "Phoenix Gothard",
     "club": "GWS",
-    "pre": 9.7,
+    "pre": 9.5,
     "positionOnly": 15.2,
     "now": 8.0,
     "games": 16,
@@ -15225,9 +15273,9 @@
     "pick": 13,
     "name": "Koltyn Tholstrup",
     "club": "MEL",
-    "pre": 9.5,
+    "pre": 9.3,
     "positionOnly": 14.3,
-    "now": 12.4,
+    "now": 12.3,
     "games": 43,
     "current": {
      "games": 24,
@@ -15297,9 +15345,9 @@
     "pick": 14,
     "name": "Jake Rogers",
     "club": "GCS",
-    "pre": 32.7,
+    "pre": 29.7,
     "positionOnly": 13.5,
-    "now": 2.7,
+    "now": 2.5,
     "games": 27,
     "current": {
      "games": 9,
@@ -15380,7 +15428,7 @@
     "pick": 15,
     "name": "Jordan Croft",
     "club": "WBD",
-    "pre": 1.0,
+    "pre": 1.1,
     "positionOnly": 12.8,
     "now": 0.3,
     "games": 19,
@@ -15458,7 +15506,7 @@
     "club": "SYD",
     "pre": 2.1,
     "positionOnly": 12.2,
-    "now": 2.9,
+    "now": 3.1,
     "games": 3,
     "current": {
      "games": 3,
@@ -15527,7 +15575,7 @@
     "club": "GWS",
     "pre": 4.7,
     "positionOnly": 11.7,
-    "now": 2.6,
+    "now": 2.7,
     "games": 8,
     "current": {
      "games": 5,
@@ -15601,9 +15649,9 @@
     "pick": 18,
     "name": "Darcy Wilson",
     "club": "STK",
-    "pre": 11.8,
+    "pre": 10.7,
     "positionOnly": 11.2,
-    "now": 46.9,
+    "now": 46.2,
     "games": 63,
     "current": {
      "games": 22,
@@ -15667,7 +15715,7 @@
     "club": "HAW",
     "pre": 0.5,
     "positionOnly": 10.7,
-    "now": 0.9,
+    "now": 1.0,
     "games": 4,
     "current": {
      "games": 4,
@@ -15734,9 +15782,9 @@
     "pick": 20,
     "name": "Taylor Goad",
     "club": "NTH",
-    "pre": 6.7,
+    "pre": 7.4,
     "positionOnly": 10.3,
-    "now": 4.6,
+    "now": 4.8,
     "games": 2,
     "current": {
      "games": 2,
@@ -15803,9 +15851,9 @@
     "pick": 21,
     "name": "Charlie Edwards",
     "club": "ADE",
-    "pre": 5.2,
+    "pre": 5.0,
     "positionOnly": 9.9,
-    "now": 4.2,
+    "now": 4.1,
     "games": 2,
     "current": {
      "games": 2,
@@ -15871,9 +15919,9 @@
     "pick": 22,
     "name": "Wil Dawson",
     "club": "NTH",
-    "pre": 2.2,
+    "pre": 2.3,
     "positionOnly": 9.5,
-    "now": 1.6,
+    "now": 1.7,
     "games": 18,
     "current": {
      "games": 10,
@@ -15953,9 +16001,9 @@
     "pick": 23,
     "name": "Riley Hardeman",
     "club": "NTH",
-    "pre": 8.3,
+    "pre": 12.5,
     "positionOnly": 9.2,
-    "now": 3.6,
+    "now": 4.2,
     "games": 27,
     "current": {
      "games": 7,
@@ -16035,9 +16083,9 @@
     "pick": 24,
     "name": "Caiden Cleary",
     "club": "SYD",
-    "pre": 12.9,
+    "pre": 10.5,
     "positionOnly": 8.9,
-    "now": 5.1,
+    "now": 4.7,
     "games": 28,
     "current": {
      "games": 11,
@@ -16118,9 +16166,9 @@
     "pick": 25,
     "name": "Harry DeMattia",
     "club": "COL",
-    "pre": 7.7,
+    "pre": 7.2,
     "positionOnly": 8.6,
-    "now": 4.8,
+    "now": 4.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -16178,7 +16226,7 @@
     "pick": 26,
     "name": "Will Graham",
     "club": "GCS",
-    "pre": 5.8,
+    "pre": 5.4,
     "positionOnly": 8.3,
     "now": 11.8,
     "games": 37,
@@ -16251,9 +16299,9 @@
     "pick": 27,
     "name": "Oscar Ryan",
     "club": "ADE",
-    "pre": 13.5,
+    "pre": 12.8,
     "positionOnly": 8.1,
-    "now": 6.1,
+    "now": 5.8,
     "games": 2,
     "current": {
      "games": 2,
@@ -16320,7 +16368,7 @@
     "club": "STK",
     "pre": 2.0,
     "positionOnly": 7.9,
-    "now": 0.2,
+    "now": 0.3,
     "games": 15,
     "current": null,
     "best": 27.2,
@@ -16390,9 +16438,9 @@
     "pick": 29,
     "name": "Ashton Moir",
     "club": "CAR",
-    "pre": 3.1,
+    "pre": 3.4,
     "positionOnly": 7.6,
-    "now": 1.3,
+    "now": 1.4,
     "games": 13,
     "current": {
      "games": 2,
@@ -16472,7 +16520,7 @@
     "pick": 30,
     "name": "Archer Reid",
     "club": "WCE",
-    "pre": 0.6,
+    "pre": 0.5,
     "positionOnly": 7.4,
     "now": 0.2,
     "games": 20,
@@ -16541,7 +16589,7 @@
     "club": "BRL",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 2.9,
+    "now": 3.2,
     "games": 71,
     "current": {
      "games": 26,
@@ -16601,9 +16649,9 @@
     "pick": 32,
     "name": "Mitchell Edwards",
     "club": "GEE",
-    "pre": 2.9,
+    "pre": 3.2,
     "positionOnly": 7.0,
-    "now": 11.9,
+    "now": 12.8,
     "games": 20,
     "current": {
      "games": 20,
@@ -16660,7 +16708,7 @@
     "pick": 33,
     "name": "Angus Hastie",
     "club": "STK",
-    "pre": 8.9,
+    "pre": 8.7,
     "positionOnly": 6.9,
     "now": 3.0,
     "games": 21,
@@ -16741,9 +16789,9 @@
     "pick": 34,
     "name": "Billy Wilson",
     "club": "CAR",
-    "pre": 12.2,
+    "pre": 17.7,
     "positionOnly": 6.7,
-    "now": 24.1,
+    "now": 27.0,
     "games": 21,
     "current": {
      "games": 17,
@@ -16816,9 +16864,9 @@
     "pick": 35,
     "name": "Cooper Simpson",
     "club": "FRE",
-    "pre": 6.7,
+    "pre": 6.3,
     "positionOnly": 6.6,
-    "now": 4.6,
+    "now": 4.5,
     "games": 5,
     "current": null,
     "best": null,
@@ -16877,9 +16925,9 @@
     "pick": 36,
     "name": "Shaun Mannagh",
     "club": "GEE",
-    "pre": 5.4,
+    "pre": 5.2,
     "positionOnly": 6.4,
-    "now": 44.5,
+    "now": 45.0,
     "games": 60,
     "current": {
      "games": 25,
@@ -16944,9 +16992,9 @@
     "pick": 37,
     "name": "Tew Jiath",
     "club": "COL",
-    "pre": 15.1,
+    "pre": 15.0,
     "positionOnly": 6.3,
-    "now": 6.3,
+    "now": 6.2,
     "games": 1,
     "current": null,
     "best": null,
@@ -17009,9 +17057,9 @@
     "pick": 38,
     "name": "Clay Hall",
     "club": "WCE",
-    "pre": 8.2,
+    "pre": 6.5,
     "positionOnly": 6.1,
-    "now": 9.7,
+    "now": 9.1,
     "games": 16,
     "current": null,
     "best": 55.0,
@@ -17073,7 +17121,7 @@
     "pick": 39,
     "name": "Luamon Lual",
     "club": "ESS",
-    "pre": 9.4,
+    "pre": 9.5,
     "positionOnly": 6.0,
     "now": 1.3,
     "games": 12,
@@ -17141,9 +17189,9 @@
     "pick": 40,
     "name": "Kane McAuliffe",
     "club": "RIC",
-    "pre": 21.0,
+    "pre": 19.2,
     "positionOnly": 5.9,
-    "now": 53.7,
+    "now": 52.4,
     "games": 24,
     "current": {
      "games": 10,
@@ -17226,7 +17274,7 @@
     "club": "FRE",
     "pre": 0.9,
     "positionOnly": 5.8,
-    "now": 1.1,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -17274,7 +17322,7 @@
     "pick": 42,
     "name": "Luke Lloyd",
     "club": "BRL",
-    "pre": 4.8,
+    "pre": 4.6,
     "positionOnly": 5.6,
     "now": 4.0,
     "games": 0,
@@ -17403,9 +17451,9 @@
     "pick": 44,
     "name": "Joe Fonti",
     "club": "GWS",
-    "pre": 3.3,
+    "pre": 3.4,
     "positionOnly": 5.4,
-    "now": 14.0,
+    "now": 14.6,
     "games": 43,
     "current": {
      "games": 22,
@@ -17474,9 +17522,9 @@
     "pick": 45,
     "name": "Joel Freijah",
     "club": "WBD",
-    "pre": 5.5,
+    "pre": 4.9,
     "positionOnly": 5.3,
-    "now": 35.7,
+    "now": 35.6,
     "games": 61,
     "current": {
      "games": 25,
@@ -17537,7 +17585,7 @@
     "pick": 46,
     "name": "Bodie Ryan",
     "club": "HAW",
-    "pre": 9.2,
+    "pre": 9.6,
     "positionOnly": 5.2,
     "now": 1.6,
     "games": 5,
@@ -17607,7 +17655,7 @@
     "pick": 47,
     "name": "Lachlan Smith",
     "club": "WBD",
-    "pre": 4.4,
+    "pre": 4.2,
     "positionOnly": 5.1,
     "now": 3.9,
     "games": 2,
@@ -17672,7 +17720,7 @@
     "club": "PTA",
     "pre": 1.8,
     "positionOnly": 5.0,
-    "now": 1.8,
+    "now": 1.9,
     "games": 5,
     "current": {
      "games": 5,
@@ -17738,7 +17786,7 @@
     "pick": 49,
     "name": "Harvey Johnston",
     "club": "WCE",
-    "pre": 7.4,
+    "pre": 6.9,
     "positionOnly": 5.0,
     "now": 1.3,
     "games": 14,
@@ -17805,7 +17853,7 @@
     "pick": 50,
     "name": "Hugo Garcia",
     "club": "STK",
-    "pre": 3.8,
+    "pre": 5.4,
     "positionOnly": 4.9,
     "now": 100.0,
     "games": 48,
@@ -17879,7 +17927,7 @@
     "club": "BRL",
     "pre": 0.8,
     "positionOnly": 4.8,
-    "now": 2.0,
+    "now": 2.3,
     "games": 3,
     "current": {
      "games": 3,
@@ -17946,7 +17994,7 @@
     "pick": 52,
     "name": "Lachlan Charleson",
     "club": "PTA",
-    "pre": 4.3,
+    "pre": 4.0,
     "positionOnly": 4.7,
     "now": 3.3,
     "games": 0,
@@ -18006,7 +18054,7 @@
     "club": "SYD",
     "pre": 0.1,
     "positionOnly": 4.6,
-    "now": 0.5,
+    "now": 0.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -18063,7 +18111,7 @@
     "pick": 54,
     "name": "Archie Roberts",
     "club": "ESS",
-    "pre": 8.8,
+    "pre": 8.0,
     "positionOnly": 4.6,
     "now": 100.0,
     "games": 48,
@@ -18127,7 +18175,7 @@
     "club": "WBD",
     "pre": 3.1,
     "positionOnly": 4.5,
-    "now": 3.4,
+    "now": 3.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -18234,9 +18282,9 @@
     "pick": 57,
     "name": "Will Lorenz",
     "club": "PTA",
-    "pre": 10.5,
+    "pre": 9.9,
     "positionOnly": 4.4,
-    "now": 3.1,
+    "now": 3.0,
     "games": 11,
     "current": {
      "games": 3,
@@ -18314,9 +18362,9 @@
     "pick": 58,
     "name": "George Stevens",
     "club": "GEE",
-    "pre": 14.3,
+    "pre": 11.9,
     "positionOnly": 4.3,
-    "now": 6.2,
+    "now": 5.7,
     "games": 4,
     "current": {
      "games": 2,
@@ -18389,9 +18437,9 @@
     "pick": 59,
     "name": "Harvey Thomas",
     "club": "GWS",
-    "pre": 4.6,
+    "pre": 4.1,
     "positionOnly": 4.3,
-    "now": 16.2,
+    "now": 16.1,
     "games": 62,
     "current": {
      "games": 22,
@@ -18452,7 +18500,7 @@
     "club": "FRE",
     "pre": 0.7,
     "positionOnly": 4.2,
-    "now": 1.7,
+    "now": 1.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -18509,7 +18557,7 @@
     "pick": 61,
     "name": "Oliver Wiltshire",
     "club": "GEE",
-    "pre": 3.6,
+    "pre": 3.7,
     "positionOnly": 4.1,
     "now": 1.7,
     "games": 18,
@@ -18579,9 +18627,9 @@
     "pick": 62,
     "name": "Arie Schoenmaker",
     "club": "STK",
-    "pre": 14.3,
+    "pre": 12.8,
     "positionOnly": 4.1,
-    "now": 6.2,
+    "now": 5.8,
     "games": 7,
     "current": null,
     "best": null,
@@ -18648,9 +18696,9 @@
     "pick": 63,
     "name": "Lawson Humphries",
     "club": "GEE",
-    "pre": 5.9,
+    "pre": 5.5,
     "positionOnly": 4.0,
-    "now": 29.3,
+    "now": 29.5,
     "games": 60,
     "current": {
      "games": 24,
@@ -18708,7 +18756,7 @@
     "pick": 64,
     "name": "Reece Torrent",
     "club": "BRL",
-    "pre": 4.4,
+    "pre": 4.1,
     "positionOnly": 4.0,
     "now": 3.9,
     "games": 0,
@@ -18766,9 +18814,9 @@
     "pick": 1,
     "name": "Sam Lalor",
     "club": "RIC",
-    "pre": 69.6,
+    "pre": 67.7,
     "positionOnly": 58.9,
-    "now": 67.9,
+    "now": 65.5,
     "games": 23,
     "current": {
      "games": 12,
@@ -18812,9 +18860,9 @@
     "pick": 2,
     "name": "Finn O'Sullivan",
     "club": "NTH",
-    "pre": 13.5,
+    "pre": 13.6,
     "positionOnly": 44.8,
-    "now": 61.8,
+    "now": 62.1,
     "games": 41,
     "current": {
      "games": 19,
@@ -18859,9 +18907,9 @@
     "pick": 3,
     "name": "Jagga Smith",
     "club": "CAR",
-    "pre": 30.8,
+    "pre": 38.4,
     "positionOnly": 36.8,
-    "now": 83.6,
+    "now": 85.6,
     "games": 25,
     "current": {
      "games": 25,
@@ -18900,9 +18948,9 @@
     "pick": 4,
     "name": "Sid Draper",
     "club": "ADE",
-    "pre": 24.1,
+    "pre": 23.4,
     "positionOnly": 31.5,
-    "now": 2.9,
+    "now": 2.7,
     "games": 10,
     "current": null,
     "best": 29.3,
@@ -18957,9 +19005,9 @@
     "pick": 5,
     "name": "Levi Ashcroft",
     "club": "BRL",
-    "pre": 28.3,
+    "pre": 35.5,
     "positionOnly": 27.6,
-    "now": 60.2,
+    "now": 63.7,
     "games": 54,
     "current": {
      "games": 27,
@@ -19003,9 +19051,9 @@
     "pick": 6,
     "name": "Harvey Langford",
     "club": "MEL",
-    "pre": 57.8,
+    "pre": 53.6,
     "positionOnly": 24.7,
-    "now": 49.8,
+    "now": 46.5,
     "games": 46,
     "current": {
      "games": 24,
@@ -19061,9 +19109,9 @@
     "pick": 7,
     "name": "Josh Smillie",
     "club": "RIC",
-    "pre": 26.7,
+    "pre": 25.4,
     "positionOnly": 22.5,
-    "now": 10.9,
+    "now": 10.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -19102,9 +19150,9 @@
     "pick": 8,
     "name": "Tobie Travaglia",
     "club": "STK",
-    "pre": 41.4,
+    "pre": 39.4,
     "positionOnly": 20.6,
-    "now": 12.3,
+    "now": 11.4,
     "games": 18,
     "current": {
      "games": 7,
@@ -19169,9 +19217,9 @@
     "pick": 9,
     "name": "Leo Lombard",
     "club": "GCS",
-    "pre": 21.3,
+    "pre": 19.8,
     "positionOnly": 19.1,
-    "now": 17.2,
+    "now": 16.3,
     "games": 27,
     "current": {
      "games": 23,
@@ -19292,9 +19340,9 @@
     "pick": 11,
     "name": "Xavier Lindsay",
     "club": "MEL",
-    "pre": 20.5,
+    "pre": 18.1,
     "positionOnly": 16.6,
-    "now": 13.0,
+    "now": 12.0,
     "games": 25,
     "current": {
      "games": 7,
@@ -19349,9 +19397,9 @@
     "pick": 12,
     "name": "Taj Hotton",
     "club": "RIC",
-    "pre": 18.2,
+    "pre": 16.5,
     "positionOnly": 15.7,
-    "now": 14.8,
+    "now": 13.9,
     "games": 17,
     "current": {
      "games": 10,
@@ -19416,9 +19464,9 @@
     "pick": 13,
     "name": "Isaac Kako",
     "club": "ESS",
-    "pre": 23.3,
+    "pre": 22.2,
     "positionOnly": 14.8,
-    "now": 8.5,
+    "now": 8.1,
     "games": 38,
     "current": {
      "games": 15,
@@ -19517,7 +19565,7 @@
     "pick": 15,
     "name": "Joe Berry",
     "club": "PTA",
-    "pre": 7.3,
+    "pre": 7.0,
     "positionOnly": 13.4,
     "now": 6.2,
     "games": 35,
@@ -19574,9 +19622,9 @@
     "pick": 16,
     "name": "Bo Allan",
     "club": "WCE",
-    "pre": 24.4,
+    "pre": 23.5,
     "positionOnly": 12.8,
-    "now": 11.1,
+    "now": 10.6,
     "games": 25,
     "current": {
      "games": 19,
@@ -19632,9 +19680,9 @@
     "pick": 17,
     "name": "Murphy Reid",
     "club": "FRE",
-    "pre": 18.0,
+    "pre": 16.4,
     "positionOnly": 12.3,
-    "now": 61.8,
+    "now": 60.6,
     "games": 49,
     "current": {
      "games": 25,
@@ -19676,9 +19724,9 @@
     "pick": 18,
     "name": "Oliver Hannaford",
     "club": "GWS",
-    "pre": 18.2,
+    "pre": 17.6,
     "positionOnly": 11.8,
-    "now": 3.2,
+    "now": 3.1,
     "games": 5,
     "current": {
      "games": 5,
@@ -19737,7 +19785,7 @@
     "pick": 19,
     "name": "Harrison Oliver",
     "club": "GWS",
-    "pre": 6.4,
+    "pre": 6.3,
     "positionOnly": 11.3,
     "now": 2.2,
     "games": 5,
@@ -19798,9 +19846,9 @@
     "pick": 20,
     "name": "Cooper Hynes",
     "club": "WBD",
-    "pre": 6.2,
+    "pre": 8.7,
     "positionOnly": 10.9,
-    "now": 7.8,
+    "now": 9.3,
     "games": 31,
     "current": {
      "games": 23,
@@ -19867,7 +19915,7 @@
     "club": "RIC",
     "pre": 1.0,
     "positionOnly": 10.5,
-    "now": 1.7,
+    "now": 1.8,
     "games": 32,
     "current": {
      "games": 11,
@@ -19923,9 +19971,9 @@
     "pick": 22,
     "name": "Jesse Dattoli",
     "club": "SYD",
-    "pre": 6.5,
+    "pre": 9.0,
     "positionOnly": 10.1,
-    "now": 13.8,
+    "now": 16.1,
     "games": 8,
     "current": {
      "games": 5,
@@ -20053,9 +20101,9 @@
     "pick": 24,
     "name": "Cody Angove",
     "club": "GWS",
-    "pre": 25.3,
+    "pre": 25.0,
     "positionOnly": 9.5,
-    "now": 10.5,
+    "now": 10.2,
     "games": 5,
     "current": {
      "games": 1,
@@ -20117,9 +20165,9 @@
     "pick": 25,
     "name": "Sam Marshall",
     "club": "BRL",
-    "pre": 11.4,
+    "pre": 14.4,
     "positionOnly": 9.2,
-    "now": 3.4,
+    "now": 3.9,
     "games": 13,
     "current": {
      "games": 2,
@@ -20183,9 +20231,9 @@
     "pick": 26,
     "name": "Ned Bowman",
     "club": "SYD",
-    "pre": 2.7,
+    "pre": 3.0,
     "positionOnly": 9.0,
-    "now": 3.2,
+    "now": 3.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -20298,9 +20346,9 @@
     "pick": 28,
     "name": "Thomas Sims",
     "club": "RIC",
-    "pre": 2.8,
+    "pre": 2.9,
     "positionOnly": 8.5,
-    "now": 1.5,
+    "now": 1.6,
     "games": 11,
     "current": null,
     "best": 37.5,
@@ -20356,9 +20404,9 @@
     "pick": 29,
     "name": "Lachie Jaques",
     "club": "WBD",
-    "pre": 10.7,
+    "pre": 10.1,
     "positionOnly": 8.3,
-    "now": 14.4,
+    "now": 14.1,
     "games": 10,
     "current": {
      "games": 10,
@@ -20474,9 +20522,9 @@
     "pick": 31,
     "name": "Josh Dolan",
     "club": "WBD",
-    "pre": 11.8,
+    "pre": 11.0,
     "positionOnly": 7.9,
-    "now": 5.1,
+    "now": 4.9,
     "games": 24,
     "current": {
      "games": 13,
@@ -20539,7 +20587,7 @@
     "pick": 32,
     "name": "James Barrat",
     "club": "STK",
-    "pre": 0.7,
+    "pre": 0.6,
     "positionOnly": 7.7,
     "now": 0.9,
     "games": 0,
@@ -20685,7 +20733,7 @@
     "club": "HAW",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 0.7,
+    "now": 0.8,
     "games": 4,
     "current": {
      "games": 4,
@@ -20743,9 +20791,9 @@
     "pick": 36,
     "name": "Jack Ough",
     "club": "GWS",
-    "pre": 5.0,
+    "pre": 4.6,
     "positionOnly": 7.0,
-    "now": 3.6,
+    "now": 3.5,
     "games": 5,
     "current": {
      "games": 5,
@@ -20804,9 +20852,9 @@
     "pick": 37,
     "name": "Kayle Gerreyn",
     "club": "ESS",
-    "pre": 4.6,
+    "pre": 6.7,
     "positionOnly": 6.9,
-    "now": 4.2,
+    "now": 5.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -20855,9 +20903,9 @@
     "pick": 38,
     "name": "Christian Moraes",
     "club": "PTA",
-    "pre": 3.3,
+    "pre": 4.3,
     "positionOnly": 6.7,
-    "now": 3.5,
+    "now": 4.1,
     "games": 26,
     "current": {
      "games": 12,
@@ -20923,9 +20971,9 @@
     "pick": 39,
     "name": "Angus Clarke",
     "club": "ESS",
-    "pre": 6.9,
+    "pre": 6.8,
     "positionOnly": 6.6,
-    "now": 13.6,
+    "now": 13.7,
     "games": 20,
     "current": {
      "games": 6,
@@ -21034,9 +21082,9 @@
     "pick": 41,
     "name": "Riley Bice",
     "club": "SYD",
-    "pre": 10.5,
+    "pre": 9.7,
     "positionOnly": 6.3,
-    "now": 37.9,
+    "now": 37.3,
     "games": 36,
     "current": {
      "games": 20,
@@ -21151,9 +21199,9 @@
     "pick": 43,
     "name": "Ben Camporeale",
     "club": "CAR",
-    "pre": 3.8,
+    "pre": 4.9,
     "positionOnly": 6.1,
-    "now": 3.8,
+    "now": 4.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -21260,9 +21308,9 @@
     "pick": 45,
     "name": "Hugh Boxshall",
     "club": "STK",
-    "pre": 10.1,
+    "pre": 8.7,
     "positionOnly": 5.9,
-    "now": 34.6,
+    "now": 33.0,
     "games": 21,
     "current": {
      "games": 10,
@@ -21327,9 +21375,9 @@
     "pick": 46,
     "name": "Tom Gross",
     "club": "WCE",
-    "pre": 6.1,
+    "pre": 5.5,
     "positionOnly": 5.8,
-    "now": 1.9,
+    "now": 1.8,
     "games": 12,
     "current": {
      "games": 4,
@@ -21434,9 +21482,9 @@
     "pick": 48,
     "name": "Lucca Grego",
     "club": "WCE",
-    "pre": 9.3,
+    "pre": 8.3,
     "positionOnly": 5.6,
-    "now": 6.1,
+    "now": 5.7,
     "games": 1,
     "current": null,
     "best": null,
@@ -21481,7 +21529,7 @@
     "club": "GCS",
     "pre": 0.2,
     "positionOnly": 5.5,
-    "now": 0.5,
+    "now": 0.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -21597,9 +21645,9 @@
     "pick": 51,
     "name": "Sam Davidson",
     "club": "WBD",
-    "pre": 4.3,
+    "pre": 4.1,
     "positionOnly": 5.4,
-    "now": 14.2,
+    "now": 14.3,
     "games": 37,
     "current": {
      "games": 18,
@@ -21658,7 +21706,7 @@
     "pick": 52,
     "name": "Jacob Molier",
     "club": "GEE",
-    "pre": 4.1,
+    "pre": 4.0,
     "positionOnly": 5.3,
     "now": 4.0,
     "games": 0,
@@ -21706,7 +21754,7 @@
     "pick": 53,
     "name": "Alex Dodson",
     "club": "STK",
-    "pre": 3.3,
+    "pre": 3.1,
     "positionOnly": 5.2,
     "now": 3.5,
     "games": 1,
@@ -21762,9 +21810,9 @@
     "pick": 54,
     "name": "Lucas Camporeale",
     "club": "CAR",
-    "pre": 2.7,
+    "pre": 3.8,
     "positionOnly": 5.1,
-    "now": 3.2,
+    "now": 3.9,
     "games": 3,
     "current": null,
     "best": null,
@@ -21865,7 +21913,7 @@
     "pick": 56,
     "name": "Will Hayes",
     "club": "COL",
-    "pre": 4.5,
+    "pre": 4.3,
     "positionOnly": 5.0,
     "now": 1.1,
     "games": 12,
@@ -21925,9 +21973,9 @@
     "pick": 57,
     "name": "Luke Urquhart",
     "club": "NTH",
-    "pre": 12.4,
+    "pre": 11.3,
     "positionOnly": 4.9,
-    "now": 7.0,
+    "now": 6.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -21976,9 +22024,9 @@
     "pick": 58,
     "name": "Jasper Alger",
     "club": "RIC",
-    "pre": 1.4,
+    "pre": 1.5,
     "positionOnly": 4.8,
-    "now": 1.3,
+    "now": 1.4,
     "games": 12,
     "current": {
      "games": 8,
@@ -22041,7 +22089,7 @@
     "pick": 59,
     "name": "Tyler Welsh",
     "club": "ADE",
-    "pre": 0.3,
+    "pre": 0.4,
     "positionOnly": 4.8,
     "now": 0.7,
     "games": 0,
@@ -22090,7 +22138,7 @@
     "pick": 60,
     "name": "Patrick Said",
     "club": "STK",
-    "pre": 2.5,
+    "pre": 2.3,
     "positionOnly": 4.7,
     "now": 3.1,
     "games": 0,
@@ -22139,9 +22187,9 @@
     "pick": 61,
     "name": "Rhys Unwin",
     "club": "ESS",
-    "pre": 8.5,
+    "pre": 8.4,
     "positionOnly": 4.7,
-    "now": 5.8,
+    "now": 5.7,
     "games": 7,
     "current": {
      "games": 4,
@@ -22202,9 +22250,9 @@
     "pick": 62,
     "name": "Luke Kennedy",
     "club": "WBD",
-    "pre": 4.9,
+    "pre": 4.5,
     "positionOnly": 4.6,
-    "now": 2.7,
+    "now": 2.6,
     "games": 8,
     "current": {
      "games": 8,
@@ -22261,7 +22309,7 @@
     "pick": 63,
     "name": "Jaren Carr",
     "club": "FRE",
-    "pre": 3.7,
+    "pre": 3.5,
     "positionOnly": 4.5,
     "now": 3.7,
     "games": 0,
@@ -22295,9 +22343,9 @@
     "pick": 64,
     "name": "Cody Anderson",
     "club": "HAW",
-    "pre": 15.5,
+    "pre": 13.5,
     "positionOnly": 4.5,
-    "now": 7.9,
+    "now": 7.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -22345,9 +22393,9 @@
     "pick": 65,
     "name": "Hamish Davis",
     "club": "WCE",
-    "pre": 4.4,
+    "pre": 4.0,
     "positionOnly": 4.4,
-    "now": 5.1,
+    "now": 5.0,
     "games": 29,
     "current": {
      "games": 21,
@@ -22404,7 +22452,7 @@
     "club": "GEE",
     "pre": 0.5,
     "positionOnly": 4.4,
-    "now": 0.7,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -22451,9 +22499,9 @@
     "pick": 67,
     "name": "River Stevens",
     "club": "NTH",
-    "pre": 6.7,
+    "pre": 6.3,
     "positionOnly": 4.3,
-    "now": 4.5,
+    "now": 4.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -22500,9 +22548,9 @@
     "pick": 68,
     "name": "Aidan Johnson",
     "club": "MEL",
-    "pre": 3.5,
+    "pre": 3.3,
     "positionOnly": 4.3,
-    "now": 1.0,
+    "now": 0.9,
     "games": 6,
     "current": {
      "games": 1,
@@ -22560,9 +22608,9 @@
     "pick": 69,
     "name": "Keighton Matofai-Forbes",
     "club": "GEE",
-    "pre": 5.8,
+    "pre": 5.5,
     "positionOnly": 4.2,
-    "now": 4.7,
+    "now": 4.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -22608,9 +22656,9 @@
     "pick": 70,
     "name": "Zak Johnson",
     "club": "ESS",
-    "pre": 10.9,
+    "pre": 9.9,
     "positionOnly": 4.2,
-    "now": 9.3,
+    "now": 8.9,
     "games": 16,
     "current": {
      "games": 7,
@@ -22674,9 +22722,9 @@
     "pick": 71,
     "name": "Logan Smith",
     "club": "GWS",
-    "pre": 1.8,
+    "pre": 1.7,
     "positionOnly": 4.1,
-    "now": 2.6,
+    "now": 2.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -22723,9 +22771,9 @@
     "pick": 1,
     "name": "Willem Duursma",
     "club": "WCE",
-    "pre": 37.7,
+    "pre": 36.5,
     "positionOnly": 58.9,
-    "now": 63.1,
+    "now": 61.6,
     "games": 22,
     "current": {
      "games": 22,
@@ -22764,9 +22812,9 @@
     "pick": 2,
     "name": "Zeke Uwland",
     "club": "GCS",
-    "pre": 28.7,
+    "pre": 35.9,
     "positionOnly": 44.8,
-    "now": 38.0,
+    "now": 42.7,
     "games": 17,
     "current": {
      "games": 17,
@@ -22818,7 +22866,7 @@
     "club": "CAR",
     "pre": 5.9,
     "positionOnly": 36.8,
-    "now": 6.4,
+    "now": 6.6,
     "games": 22,
     "current": {
      "games": 22,
@@ -22857,9 +22905,9 @@
     "pick": 4,
     "name": "Cooper Duff-Tytler",
     "club": "WCE",
-    "pre": 11.3,
+    "pre": 10.9,
     "positionOnly": 31.5,
-    "now": 16.0,
+    "now": 15.8,
     "games": 16,
     "current": {
      "games": 16,
@@ -22897,9 +22945,9 @@
     "pick": 5,
     "name": "Dylan Patterson",
     "club": "GCS",
-    "pre": 37.8,
+    "pre": 36.8,
     "positionOnly": 27.6,
-    "now": 22.3,
+    "now": 21.4,
     "games": 5,
     "current": {
      "games": 5,
@@ -22946,9 +22994,9 @@
     "pick": 6,
     "name": "Daniel Annable",
     "club": "BRL",
-    "pre": 37.9,
+    "pre": 32.9,
     "positionOnly": 24.7,
-    "now": 21.4,
+    "now": 18.5,
     "games": 3,
     "current": {
      "games": 3,
@@ -22995,9 +23043,9 @@
     "pick": 7,
     "name": "Sam Cumming",
     "club": "RIC",
-    "pre": 16.5,
+    "pre": 16.3,
     "positionOnly": 22.5,
-    "now": 34.5,
+    "now": 33.9,
     "games": 14,
     "current": {
      "games": 14,
@@ -23040,9 +23088,9 @@
     "pick": 8,
     "name": "Sam Grlj",
     "club": "RIC",
-    "pre": 20.0,
+    "pre": 19.6,
     "positionOnly": 20.6,
-    "now": 29.4,
+    "now": 29.1,
     "games": 21,
     "current": {
      "games": 21,
@@ -23079,9 +23127,9 @@
     "pick": 9,
     "name": "Sullivan Robey",
     "club": "ESS",
-    "pre": 12.8,
+    "pre": 11.8,
     "positionOnly": 19.1,
-    "now": 31.9,
+    "now": 30.6,
     "games": 15,
     "current": {
      "games": 15,
@@ -23129,9 +23177,9 @@
     "pick": 10,
     "name": "Jacob Farrow",
     "club": "ESS",
-    "pre": 21.3,
+    "pre": 20.9,
     "positionOnly": 17.8,
-    "now": 45.7,
+    "now": 45.4,
     "games": 21,
     "current": {
      "games": 21,
@@ -23229,9 +23277,9 @@
     "pick": 12,
     "name": "Latrelle Pickett",
     "club": "MEL",
-    "pre": 10.3,
+    "pre": 10.2,
     "positionOnly": 15.7,
-    "now": 7.4,
+    "now": 7.5,
     "games": 16,
     "current": {
      "games": 16,
@@ -23279,9 +23327,9 @@
     "pick": 13,
     "name": "Dyson Sharp",
     "club": "ESS",
-    "pre": 31.6,
+    "pre": 27.4,
     "positionOnly": 14.8,
-    "now": 58.9,
+    "now": 55.0,
     "games": 15,
     "current": {
      "games": 15,
@@ -23332,7 +23380,7 @@
     "club": "SYD",
     "pre": 2.2,
     "positionOnly": 14.1,
-    "now": 4.9,
+    "now": 5.1,
     "games": 12,
     "current": {
      "games": 12,
@@ -23381,9 +23429,9 @@
     "pick": 15,
     "name": "Oskar Taylor",
     "club": "GWS",
-    "pre": 28.5,
+    "pre": 28.3,
     "positionOnly": 13.4,
-    "now": 17.1,
+    "now": 16.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -23421,9 +23469,9 @@
     "pick": 16,
     "name": "Lachy Dovaston",
     "club": "NTH",
-    "pre": 18.3,
+    "pre": 16.8,
     "positionOnly": 12.8,
-    "now": 13.1,
+    "now": 12.4,
     "games": 6,
     "current": {
      "games": 6,
@@ -23472,9 +23520,9 @@
     "pick": 17,
     "name": "Jai Murray",
     "club": "GCS",
-    "pre": 22.6,
+    "pre": 20.6,
     "positionOnly": 12.3,
-    "now": 29.1,
+    "now": 27.5,
     "games": 9,
     "current": {
      "games": 9,
@@ -23522,9 +23570,9 @@
     "pick": 18,
     "name": "Beau Addinsall",
     "club": "GCS",
-    "pre": 10.8,
+    "pre": 13.2,
     "positionOnly": 11.8,
-    "now": 27.1,
+    "now": 30.2,
     "games": 9,
     "current": {
      "games": 9,
@@ -23574,9 +23622,9 @@
     "pick": 19,
     "name": "Josh Lindsay",
     "club": "WCE",
-    "pre": 25.9,
+    "pre": 25.1,
     "positionOnly": 11.3,
-    "now": 43.9,
+    "now": 43.1,
     "games": 15,
     "current": {
      "games": 15,
@@ -23660,9 +23708,9 @@
     "pick": 21,
     "name": "Lachlan Carmichael",
     "club": "WBD",
-    "pre": 36.0,
+    "pre": 33.6,
     "positionOnly": 10.5,
-    "now": 20.5,
+    "now": 18.8,
     "games": 2,
     "current": {
      "games": 2,
@@ -23709,9 +23757,9 @@
     "pick": 22,
     "name": "Mitch Marsh",
     "club": "ADE",
-    "pre": 7.7,
+    "pre": 7.5,
     "positionOnly": 10.1,
-    "now": 7.0,
+    "now": 6.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -23743,9 +23791,9 @@
     "pick": 23,
     "name": "Aidan Schubert",
     "club": "HAW",
-    "pre": 8.2,
+    "pre": 7.8,
     "positionOnly": 9.8,
-    "now": 7.3,
+    "now": 7.1,
     "games": 1,
     "current": {
      "games": 1,
@@ -23791,9 +23839,9 @@
     "pick": 24,
     "name": "Harley Barker",
     "club": "GEE",
-    "pre": 11.1,
+    "pre": 10.5,
     "positionOnly": 9.5,
-    "now": 8.9,
+    "now": 8.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -23820,9 +23868,9 @@
     "pick": 25,
     "name": "Adam Sweid",
     "club": "FRE",
-    "pre": 26.7,
+    "pre": 23.9,
     "positionOnly": 9.2,
-    "now": 16.3,
+    "now": 14.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -23878,9 +23926,9 @@
     "pick": 27,
     "name": "Louis Emmett",
     "club": "WBD",
-    "pre": 1.4,
+    "pre": 1.3,
     "positionOnly": 8.7,
-    "now": 2.5,
+    "now": 2.6,
     "games": 7,
     "current": {
      "games": 7,
@@ -23930,9 +23978,9 @@
     "pick": 28,
     "name": "Avery Thomas",
     "club": "GCS",
-    "pre": 6.7,
+    "pre": 6.8,
     "positionOnly": 8.5,
-    "now": 6.4,
+    "now": 6.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -23970,9 +24018,9 @@
     "pick": 29,
     "name": "Sam Allen",
     "club": "WCE",
-    "pre": 6.8,
+    "pre": 6.4,
     "positionOnly": 8.3,
-    "now": 6.5,
+    "now": 6.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -23999,9 +24047,9 @@
     "pick": 30,
     "name": "Thomas Matthews",
     "club": "MEL",
-    "pre": 6.2,
+    "pre": 6.0,
     "positionOnly": 8.0,
-    "now": 6.1,
+    "now": 6.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -24033,9 +24081,9 @@
     "pick": 31,
     "name": "Zane Peucker",
     "club": "RIC",
-    "pre": 14.1,
+    "pre": 14.0,
     "positionOnly": 7.9,
-    "now": 10.5,
+    "now": 10.2,
     "games": 2,
     "current": {
      "games": 2,
@@ -24083,9 +24131,9 @@
     "pick": 32,
     "name": "Tyan Prindable",
     "club": "COL",
-    "pre": 24.8,
+    "pre": 22.2,
     "positionOnly": 7.7,
-    "now": 15.5,
+    "now": 13.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -24124,7 +24172,7 @@
     "pick": 33,
     "name": "Hunter Holmes",
     "club": "GEE",
-    "pre": 3.6,
+    "pre": 3.4,
     "positionOnly": 7.5,
     "now": 4.3,
     "games": 0,
@@ -24160,9 +24208,9 @@
     "pick": 34,
     "name": "Jack Dalton",
     "club": "HAW",
-    "pre": 6.9,
+    "pre": 9.0,
     "positionOnly": 7.3,
-    "now": 15.6,
+    "now": 18.6,
     "games": 5,
     "current": {
      "games": 5,
@@ -24211,7 +24259,7 @@
     "pick": 35,
     "name": "Jevan Phillipou",
     "club": "SYD",
-    "pre": 4.3,
+    "pre": 4.2,
     "positionOnly": 7.2,
     "now": 4.8,
     "games": 0,
@@ -24303,9 +24351,9 @@
     "pick": 37,
     "name": "Sam Swadling",
     "club": "COL",
-    "pre": 4.9,
+    "pre": 6.7,
     "positionOnly": 6.9,
-    "now": 21.2,
+    "now": 25.6,
     "games": 9,
     "current": {
      "games": 9,
@@ -24353,9 +24401,9 @@
     "pick": 38,
     "name": "Koby Evans",
     "club": "BRL",
-    "pre": 10.9,
+    "pre": 11.2,
     "positionOnly": 6.7,
-    "now": 8.8,
+    "now": 8.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -24422,9 +24470,9 @@
     "pick": 40,
     "name": "Tobyn Murray",
     "club": "FRE",
-    "pre": 7.3,
+    "pre": 7.1,
     "positionOnly": 6.5,
-    "now": 6.8,
+    "now": 6.7,
     "games": 1,
     "current": {
      "games": 1,
@@ -24454,9 +24502,9 @@
     "pick": 41,
     "name": "Charlie Banfield",
     "club": "STK",
-    "pre": 2.8,
+    "pre": 2.7,
     "positionOnly": 6.3,
-    "now": 3.7,
+    "now": 3.6,
     "games": 3,
     "current": {
      "games": 3,
@@ -24502,7 +24550,7 @@
     "pick": 42,
     "name": "Billy Cootee",
     "club": "SYD",
-    "pre": 4.9,
+    "pre": 4.7,
     "positionOnly": 6.2,
     "now": 11.1,
     "games": 11,
@@ -24596,9 +24644,9 @@
     "pick": 44,
     "name": "Tai Hayes",
     "club": "BRL",
-    "pre": 6.5,
+    "pre": 6.0,
     "positionOnly": 6.0,
-    "now": 6.3,
+    "now": 6.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -24634,9 +24682,9 @@
     "pick": 45,
     "name": "Talor Byrne",
     "club": "CAR",
-    "pre": 12.3,
+    "pre": 11.1,
     "positionOnly": 5.9,
-    "now": 16.7,
+    "now": 15.9,
     "games": 20,
     "current": {
      "games": 20,
@@ -24685,9 +24733,9 @@
     "pick": 46,
     "name": "Koby Coulson",
     "club": "GCS",
-    "pre": 14.9,
+    "pre": 12.7,
     "positionOnly": 5.8,
-    "now": 10.9,
+    "now": 9.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -24726,9 +24774,9 @@
     "pick": 47,
     "name": "Jack Ison",
     "club": "CAR",
-    "pre": 17.2,
+    "pre": 16.3,
     "positionOnly": 5.7,
-    "now": 22.4,
+    "now": 21.8,
     "games": 8,
     "current": {
      "games": 8,
@@ -24777,9 +24825,9 @@
     "pick": 48,
     "name": "Hugo Mikunda",
     "club": "NTH",
-    "pre": 6.1,
+    "pre": 5.6,
     "positionOnly": 5.6,
-    "now": 6.1,
+    "now": 5.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -24847,7 +24895,7 @@
     "club": "ADE",
     "pre": 0.2,
     "positionOnly": 5.4,
-    "now": 0.3,
+    "now": 0.4,
     "games": 2,
     "current": {
      "games": 2,
@@ -24893,9 +24941,9 @@
     "pick": 51,
     "name": "Finnegan Davis",
     "club": "GWS",
-    "pre": 3.3,
+    "pre": 4.4,
     "positionOnly": 5.4,
-    "now": 4.1,
+    "now": 4.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -24934,9 +24982,9 @@
     "pick": 52,
     "name": "Kye Fincher",
     "club": "STK",
-    "pre": 4.8,
+    "pre": 4.5,
     "positionOnly": 5.3,
-    "now": 5.2,
+    "now": 5.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -24973,7 +25021,7 @@
     "pick": 53,
     "name": "Hussien El Achkar",
     "club": "ESS",
-    "pre": 4.3,
+    "pre": 4.1,
     "positionOnly": 5.2,
     "now": 5.0,
     "games": 9,
@@ -25023,7 +25071,7 @@
     "pick": 54,
     "name": "Noah Roberts-Thomson",
     "club": "RIC",
-    "pre": 4.0,
+    "pre": 3.9,
     "positionOnly": 5.1,
     "now": 4.6,
     "games": 3,
@@ -25073,7 +25121,7 @@
     "pick": 55,
     "name": "Zac McCarthy",
     "club": "COL",
-    "pre": 2.3,
+    "pre": 2.2,
     "positionOnly": 5.0,
     "now": 3.3,
     "games": 0,
@@ -25113,9 +25161,9 @@
     "pick": 56,
     "name": "Matthew LeRay",
     "club": "HAW",
-    "pre": 3.8,
+    "pre": 3.5,
     "positionOnly": 5.0,
-    "now": 4.4,
+    "now": 4.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -25154,9 +25202,9 @@
     "pick": 57,
     "name": "Angus Anderson",
     "club": "COL",
-    "pre": 3.2,
+    "pre": 2.9,
     "positionOnly": 4.9,
-    "now": 12.0,
+    "now": 11.6,
     "games": 17,
     "current": {
      "games": 17,
@@ -25204,9 +25252,9 @@
     "pick": 58,
     "name": "Ryan Byrnes",
     "club": "STK",
-    "pre": 4.7,
+    "pre": 6.5,
     "positionOnly": 4.8,
-    "now": 19.5,
+    "now": 23.9,
     "games": 90,
     "current": {
      "games": 15,
@@ -25291,9 +25339,9 @@
     "pick": 59,
     "name": "Jake Stringer",
     "club": "GWS",
-    "pre": 3.8,
+    "pre": 3.7,
     "positionOnly": 4.8,
-    "now": 34.3,
+    "now": 33.8,
     "games": 250,
     "current": {
      "games": 23,
@@ -25405,7 +25453,7 @@
     "club": "WBD",
     "pre": 0.9,
     "positionOnly": 4.7,
-    "now": 1.8,
+    "now": 1.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -25442,8 +25490,8 @@
    "Hugo Garcia|2023",
    "Archie Roberts|2023",
    "Lawson Humphries|2023",
-   "Jase Burgoyne|2021",
    "Joel Freijah|2023",
+   "Jase Burgoyne|2021",
    "Darcy Wilson|2023",
    "Jaspa Fletcher|2022",
    "Murphy Reid|2024"
@@ -25462,10 +25510,10 @@
    "Daniel Annable|2025",
    "Jack Ough|2024",
    "Dylan Patterson|2025",
-   "Lachlan Carmichael|2025",
    "Jack Dalton|2025",
-   "Kye Fincher|2025",
+   "Lachlan Carmichael|2025",
    "Ben Camporeale|2024",
+   "Kye Fincher|2025",
    "Lucas Camporeale|2024"
   ]
  }
