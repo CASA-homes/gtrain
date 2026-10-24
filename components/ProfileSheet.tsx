@@ -1,6 +1,10 @@
 import { InfoPopover } from '@/components/InfoPopover';
 import { DraftProfileCard } from '@/components/DraftProfileCard';
 import type { DraftProfile } from '@/lib/draft-profiles';
+import { JuniorStats, type RMComp } from '@/components/JuniorStats';
+import rmStats from '@/lib/rm-stats-2026.json';
+
+const RM = (rmStats as unknown as { players: Record<string, RMComp[]> }).players;
 
 /** YouTube search for this year's highlights: always lands on something current, unlike a fixed video link. */
 export function HighlightsLink({ name, year = 2026 }: { name: string; year?: number }) {
@@ -20,7 +24,12 @@ export function ProfileSheet({ name, profile, context, label = 'Draft profile', 
   return (
     <InfoPopover title={name} label={label}>
       <span className="muted" style={{ fontSize: 13, marginTop: -8 }}>{context}</span>
-      {highlights && <HighlightsLink name={name} year={highlights} />}
+      {(highlights || (highlights === 2026 && RM[name])) && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+          {highlights && <HighlightsLink name={name} year={highlights} />}
+          {highlights === 2026 && RM[name] && <JuniorStats comps={RM[name]} name={name} />}
+        </div>
+      )}
       <DraftProfileCard d={profile} />
     </InfoPopover>
   );
