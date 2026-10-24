@@ -18,7 +18,7 @@ import { C } from '@/lib/ratings';
 type Reason = { label: string; effect: number };
 type Prospect = {
   rank: number; name: string; junior: string; position: string; height: number | null;
-  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean;
+  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean; ceiling?: boolean;
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
   comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string; type?: string }[];
@@ -26,7 +26,8 @@ type Prospect = {
 type Pattern = { kind: 'strength' | 'workon'; label: string; n: number; hits: number; rate: number; lift: number };
 type Bucket = { label: string; n: number; hits: number; rate: number; lift: number };
 const D = data as unknown as {
-  meta: { hitBar: number; relBar: number; aucRel: number; trainN: number; trainHits: number; years: string; auc: number; aucPositionOnly: number; aucLate: number; aucLatePositionOnly: number; lateHits: { name: string; pick: number; year: number; peak: number }[] };
+  meta: { hitBar: number; relBar: number; aucRel: number; trainN: number; trainHits: number; years: string; auc: number; aucPositionOnly: number; aucLate: number; aucLatePositionOnly: number; lateHits: { name: string; pick: number; year: number; peak: number }[];
+    accumulator?: { acc: { made: number; rel: number; medPeak: number | null; examples: string[] }; rest: { made: number; rel: number; medPeak: number | null } } };
   patterns: Pattern[]; numbers: Record<string, Bucket[]>;
   validation: { name: string; year: number; pick: number; peak: number; chance: number; positionOnly: number; jFP: number | null; traits: string[] }[];
   prospects: Prospect[];
@@ -110,6 +111,12 @@ function WhyDetails({ p }: { p: Prospect }) {
   );
 }
 
+function CeilingPill({ small = false }: { small?: boolean }) {
+  const a = D.meta.accumulator;
+  const tip = a ? `Accumulator: ${Math.round((a.acc.rel / a.acc.made) * 100)}% of accumulators who played 50+ games had an 80+ season, against ${Math.round((a.rest.rel / a.rest.made) * 100)}% of everyone else` : 'Accumulator';
+  return <span className="pill" title={tip} style={{ background: '#f5e3a8', color: C.ink, fontSize: small ? 11 : 12, whiteSpace: 'nowrap' }}>★ High ceiling</span>;
+}
+
 function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; note?: string; info?: boolean; focus?: 'star' | 'relevant' }) {
   return (
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
@@ -135,6 +142,7 @@ function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; 
             {r.effect > 0 ? '▲' : '▼'} {reasonText(r, p)}
           </span>
         ))}
+        {p.ceiling && <CeilingPill />}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="mono">
         <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b>{p.jSeason && p.jSeason < 2026 ? <span className="muted"> ({p.jSeason}{p.jSeason <= 2024 ? ' U16, −10%' : ''})</span> : null}</span>
@@ -420,6 +428,7 @@ function CrystalBallView() {
   const drags = D.patterns.filter((r) => r.lift <= 0.8 && r.n >= 10).sort((a, b) => a.lift - b.lift);
   const accum = D.patterns.find((r) => r.label === 'Accumulator');
   const fp110 = D.numbers.juniorFantasy.find((b) => b.label === '110+');
+  const acc = D.meta.accumulator;
 
   return (
     <div className="wrap">
@@ -488,7 +497,7 @@ function CrystalBallView() {
         <h2 className="h2">The patterns</h2>
         <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '78ch' }}>
           Hit rate is how many with that note went on to a {D.meta.hitBar}+ season. “× slot” compares that with what their draft position alone would expect, so a trait only scores if it found stars the draft order missed.
-          {accum && fp110 ? <> The scouts’ <b>“Accumulator”</b> label on its own was no edge ({accum.lift.toFixed(1)}× slot), but actually piling up the ball was: juniors averaging 110+ fantasy hit {pct(fp110.rate)} of the time.</> : null}
+          {accum && fp110 && acc ? <> The scouts’ <b>“Accumulator”</b> label doesn’t predict who makes it ({accum.lift.toFixed(1)}× slot), so it no longer counts against a player. It predicts the ceiling instead: {pct(acc.acc.rel / acc.acc.made)} of accumulators who played 50+ games had an 80+ season, against {pct(acc.rest.rel / acc.rest.made)} of everyone else. Those players get a gold <b>High ceiling</b> tag. Piling up the ball as a junior also counts: juniors averaging 110+ fantasy hit {pct(fp110.rate)} of the time.</> : null}
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
           <PatternList title="Found stars the draft order missed" rows={boosts} good />
@@ -503,7 +512,7 @@ function CrystalBallView() {
         <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6, fontSize: 14, maxWidth: '80ch' }}>
           <li><b>Role first.</b> None of the 56 key-position defenders and forwards drafted since 2016 has had a 90+ fantasy season. Listed rucks did: 6 of 34 (English, Xerri, Darcy, Meek, Briggs, Jackson). Small forwards are rare too unless they move into the midfield.</li>
           <li><b>Elite engines win.</b> A top-10 2km or yo-yo at the combine meant more stars than the draft order expected (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash); top-10 sprint and jump results meant fewer.</li>
-          <li><b>Hunters beat accumulators.</b> “Tackling / defensive pressure” and 6+ junior tackles a game were the best hidden signals: Warner, Berry, Worpel, Brayshaw.</li>
+          <li><b>Hunters find a way in; accumulators score once they’re in.</b> “Tackling / defensive pressure” and 6+ junior tackles a game were the best signals of who makes it (Warner, Berry, Worpel, Brayshaw). Accumulators make it a little less often, but the ones who do score big: Daicos, Ashcroft, Warner, Burgoyne.</li>
           <li><b>Outside mids who need to “win more contested ball” do fine.</b> Gulden, Lachie Ash, Wanganeen-Milera and Callaghan all carried that note; the inside game came later.</li>
           <li><b>“Needs consistency” and “needs to win more ball” are red flags.</b> Almost none of those players became fantasy stars.</li>
           <li><b>Talls, “aerial” and “versatility” profiles</b> make good footballers, but rarely big fantasy scorers early.</li>
@@ -529,7 +538,7 @@ function CrystalBallView() {
                   <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
                   <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
                   <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
-                  <td style={{ fontSize: 12 }}>{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
+                  <td style={{ fontSize: 12 }}>{p.ceiling && <><CeilingPill small />{' '}</>}{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
                 </tr>
               ))}
             </tbody>
