@@ -45,9 +45,11 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
       <div style={{ width: 'min(380px, 100%)', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <span style={{ font: '600 16px var(--font)' }}>Check your inbox</span>
         <span style={{ color: 'rgb(244 241 230 / .75)', fontSize: 14 }}>
-          We sent a sign-in email to {state.email}. Tap the link, or type the 6-digit code from it here.
+          We sent a sign-in link to {state.email}. Tap it to sign in.
         </span>
-        <form onSubmit={verify} style={{ display: 'flex', gap: 8 }}>
+        <details style={{ fontSize: 13, color: 'rgb(244 241 230 / .6)' }}>
+        <summary style={{ cursor: 'pointer' }}>Email has a 6-digit code?</summary>
+        <form onSubmit={verify} style={{ display: 'flex', gap: 8, marginTop: 8 }}>
           <label htmlFor="code" className="sr-only">6-digit code</label>
           <input id="code" inputMode="numeric" autoComplete="one-time-code" maxLength={8} value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456"
             style={{ flex: '1 1 auto', minWidth: 0, minHeight: 48, borderRadius: 99, border: '1px solid rgb(244 241 230 / .3)', background: 'rgb(244 241 230 / .08)', color: 'var(--cream)', padding: '0 18px', font: '500 18px var(--mono)', letterSpacing: '.2em', textAlign: 'center' }} />
@@ -56,6 +58,7 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
             {state.checking ? 'Checking…' : 'Sign in'}
           </button>
         </form>
+        </details>
         {state.codeError && <span role="status" style={{ fontSize: 13, color: '#f3c2b9' }}>{state.codeError}</span>}
       </div>
     );
