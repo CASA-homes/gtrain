@@ -19,6 +19,29 @@ import { StadiumArt } from '@/components/StadiumArt';
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
 
+/** Age, change on last year's average, and the general direction of a player's average (-2 falling fast … +2 rising fast). */
+function trendOf(p: PlayerRow): { age: number | null; prevAvg: number | null; delta: number | null; trend: -2 | -1 | 0 | 1 | 2 | null } {
+  const seasons = (p.hist ?? []).filter((h) => h[1] >= 5 && h[0] < CURRENT_SEASON).map((h) => [h[0], h[2]] as [number, number]);
+  if (p.average != null && (p.games ?? 0) >= 3) seasons.push([CURRENT_SEASON, p.average]);
+  seasons.sort((x, y) => x[0] - y[0]);
+  const prev = (p.hist ?? []).find((h) => h[0] === CURRENT_SEASON - 1 && h[1] >= 5);
+  const prevAvg = prev ? prev[2] : null;
+  const delta = prevAvg != null && p.average != null ? p.average - prevAvg : null;
+  // Points a season over the last three seasons; with only one season, the last five against the season average.
+  let slope: number | null = null;
+  const recent = seasons.slice(-3);
+  if (recent.length >= 2) {
+    const n = recent.length, mx = recent.reduce((t, r) => t + r[0], 0) / n, my = recent.reduce((t, r) => t + r[1], 0) / n;
+    const num = recent.reduce((t, r) => t + (r[0] - mx) * (r[1] - my), 0), den = recent.reduce((t, r) => t + (r[0] - mx) ** 2, 0);
+    slope = den ? num / den : null;
+  } else if (p.average != null) {
+    const l5 = played(p.last5);
+    if (l5.length >= 3) slope = (l5.reduce((t, x) => t + x, 0) / l5.length - p.average) / 2;
+  }
+  const trend = slope == null ? null : slope >= 6 ? 2 : slope >= 2 ? 1 : slope > -2 ? 0 : slope > -6 ? -1 : -2;
+  return { age: age(p.birth_date), prevAvg, delta, trend };
+}
+
 export default async function Clubhouse({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
@@ -42,6 +65,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
       games: p.games, tons: played(p.last5).filter((s) => s >= 100).length, form: form(p),
       valueStars: r.valueStars, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
       slot: slotOf.get(p.id) ?? null,
+      ...trendOf(p),
     };
   });
 
