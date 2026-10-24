@@ -11,6 +11,34 @@ export interface SquadPlayer {
   last5: (number | null)[]; games: number | null; tons: number; form: Form;
   valueStars: number; potential: number | null; is_keeper: boolean; status: string | null;
   slot: Slot | null;
+  age: number | null; prevAvg: number | null; delta: number | null; trend: -2 | -1 | 0 | 1 | 2 | null;
+}
+
+const TREND: Record<string, { colour: string; rot: number; label: string }> = {
+  '2': { colour: '#1f6b3a', rot: -90, label: 'Rising fast' },
+  '1': { colour: '#7cc47f', rot: -45, label: 'Rising' },
+  '0': { colour: '#ecd56a', rot: 0, label: 'Steady' },
+  '-1': { colour: '#f2a65a', rot: 45, label: 'Dipping' },
+  '-2': { colour: '#d9483b', rot: 90, label: 'Falling' },
+};
+
+/** Arrow showing the general direction of a player's average across recent seasons. */
+function TrendArrow({ trend }: { trend: SquadPlayer['trend'] }) {
+  if (trend == null) return <span className="muted">–</span>;
+  const t = TREND[String(trend)];
+  return (
+    <span title={t.label} aria-label={t.label} style={{ display: 'inline-flex', width: 22, height: 22, borderRadius: 999, background: t.colour, alignItems: 'center', justifyContent: 'center' }}>
+      <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true" style={{ transform: `rotate(${t.rot}deg)` }}>
+        <path d="M4 10h11M11 5.5 15.5 10 11 14.5" fill="none" stroke={trend === 0 || trend === 1 ? '#1d2a20' : '#fff'} strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
+}
+
+function Delta({ p }: { p: SquadPlayer }) {
+  if (p.delta == null) return <span className="muted">–</span>;
+  const d = Math.round(p.delta);
+  return <span className="mono" title={`2025: ${Math.round(p.prevAvg!)}`} style={{ fontWeight: 600, color: d > 0 ? '#1f6b3a' : d < 0 ? '#b8392e' : C.muted }}>{d > 0 ? '+' : ''}{d}</span>;
 }
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
@@ -84,7 +112,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
     },
     { title: 'Extended squad', sub: `${inSlot(null).length} not selected`, groups: [{ key: 'EXT', name: 'Not selected', colour: C.muted, players: inSlot(null), need: 0 }] },
   ];
-  const cols = (open ? 10 : 9) + (editable ? 1 : 0);
+  const cols = (open ? 13 : 9) + (editable ? 1 : 0);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
@@ -101,7 +129,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
           <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
             <path d={open ? 'M12 5 L7 10 L12 15' : 'M8 5 L13 10 L8 15'} fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          {open ? 'Hide last 5' : 'Show last 5'}
+          {open ? 'Hide detail' : 'Show detail'}
         </button>
       </div>
       {blocks.map((b) => (
@@ -111,7 +139,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
             <span className="muted" style={{ fontSize: 13 }}>{b.sub}</span>
           </div>
           <div className="table-box">
-            <table className="squad" style={{ minWidth: open ? 790 : 610 }}>
+            <table className="squad" style={{ minWidth: open ? 930 : 610 }}>
               <thead>
                 <tr>
                   {editable && <th style={{ width: 34 }}><span className="sr-only">Swap</span></th>}
@@ -120,6 +148,9 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                   <th>Player</th>
                   <th style={{ width: 54, textAlign: 'center' }}>Avg</th>
                   {open && <th style={{ width: 176, textAlign: 'center' }}>Last 5</th>}
+                  {open && <th style={{ width: 40, textAlign: 'center' }}>Age</th>}
+                  {open && <th style={{ width: 48, textAlign: 'center' }} title="Change on last year's average">± ’25</th>}
+                  {open && <th style={{ width: 50, textAlign: 'center' }} title="General trend of his average over recent seasons">Trend</th>}
                   <th style={{ width: 40, textAlign: 'center' }}>Form</th>
                   <th style={{ width: 38, textAlign: 'center' }}>Apps</th>
                   <th style={{ width: 38, textAlign: 'center' }} title="100+ scores in the last 5">100s</th>
@@ -189,6 +220,9 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                             </div>
                           </td>
                         )}
+                        {open && <td className="mono" style={{ textAlign: 'center' }}>{p.age != null ? Math.floor(p.age) : '–'}</td>}
+                        {open && <td style={{ textAlign: 'center' }}><Delta p={p} /></td>}
+                        {open && <td style={{ textAlign: 'center' }}><TrendArrow trend={p.trend} /></td>}
                         <td style={{ textAlign: 'center' }}><FormArrow form={p.form} /></td>
                         <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600 }}>{p.tons}</td>
@@ -205,6 +239,14 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
       ))}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 18px', alignItems: 'center', fontSize: 12 }} className="muted">
         {editable && <span>Drag a player onto another, or tap <b style={{ fontWeight: 600 }}>⇅</b> on two players, to swap them.</span>}
+        {open && (
+          <>
+            <span className="eyebrow">Trend</span>
+            {(['2', '1', '0', '-1', '-2'] as const).map((k) => (
+              <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><TrendArrow trend={Number(k) as SquadPlayer['trend']} />{TREND[k].label}</span>
+            ))}
+          </>
+        )}
         <span className="eyebrow">Scores</span>
         {([['120+', C.green5], ['100–119', C.green4], ['70–99', C.green3], ['50–69', C.yellow], ['Under 50', C.redBg]] as const).map(([l, c]) => (
           <span key={l} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
