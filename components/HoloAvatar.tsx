@@ -25,8 +25,8 @@ export function HoloAvatar({ holo, alt, size = 168 }: { holo: Holo; alt: string;
       <div style={{ position: 'relative', width: '100%', height: '100%', borderRadius: size * 0.125, overflow: 'hidden', background: f.base }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={holo.art} alt="" style={{ ...abs, width: '100%', height: '100%', objectFit: 'cover' }} />
-        <div className="holo-anim" style={{ ...abs, mixBlendMode: 'color-dodge', opacity: 0.7, background: f.sweep, backgroundSize: '280% 280%', animation: 'holoSweep 6s ease-in-out infinite' }} />
-        <div style={{ ...abs, mixBlendMode: 'color-dodge', opacity: m.on ? 0.85 : 0.45, background: f.foil, backgroundSize: '240% 240%', backgroundPosition: pos }} />
+        <div className="holo-anim" style={{ ...abs, mixBlendMode: 'color-dodge', opacity: 0.7 * (f.dim ?? 1), background: f.sweep, backgroundSize: '280% 280%', animation: 'holoSweep 6s ease-in-out infinite' }} />
+        <div style={{ ...abs, mixBlendMode: 'color-dodge', opacity: (m.on ? 0.85 : 0.45) * (f.dim ?? 1), background: f.foil, backgroundSize: '240% 240%', backgroundPosition: pos }} />
         <div style={{ ...abs, mixBlendMode: 'overlay', opacity: 0.55, background: f.lines }} />
         <div className="holo-anim" style={{ ...abs, mixBlendMode: 'screen', background: `radial-gradient(circle, ${f.glint[0]} 0 0.8px, transparent 1.4px) 0 0 / 17px 17px, radial-gradient(circle, ${f.glint[1]} 0 0.7px, transparent 1.3px) 8px 9px / 23px 23px`, animation: 'holoTwinkle 2.6s ease-in-out infinite' }} />
         <div style={{ ...abs, mixBlendMode: 'screen', opacity: m.on ? 0.95 : 0.4, background: `radial-gradient(circle at ${pos}, rgb(255 255 255 / .7), ${f.glare} 25%, transparent 50%)` }} />
