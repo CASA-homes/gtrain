@@ -4,13 +4,16 @@ import { TeamBadge } from '@/components/bits';
 import { getLeague, getMe, type Pick } from '@/lib/data';
 import { pickValue } from '@/lib/picks';
 import { C } from '@/lib/ratings';
+import { GTRAIN_DRAFTS } from '@/lib/gtrain-draft';
+
+const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
 
 const ROUND_COLOUR = (r: number) => (r <= 2 ? C.green5 : r <= 4 ? C.green4 : r <= 8 ? C.green3 : r <= 15 ? C.green2 : C.empty);
 
 export default async function DraftPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
   const { year: y } = await searchParams;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
-  const year = y === '2028' ? 2028 : 2027;
+  const year = y === '2028' ? 2028 : y === '2026' ? 2026 : 2027;
   const team = new Map(league.teams.map((t) => [t.id, t]));
   const list = league.picks.filter((p) => p.year === year);
   // 2028 has no pick numbers yet: order by round, then the provisional order on the Keeper board (insert order).
@@ -44,15 +47,16 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
         </div>
         <DraftTabs active="picks" />
         <div role="tablist" aria-label="Draft year" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
-          {[2027, 2028].map((yr) => (
+          {[2026, 2027, 2028].map((yr) => (
             <Link key={yr} href={`/draft?year=${yr}`} role="tab" aria-selected={yr === year}
               style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: yr === year ? '#fff' : 'transparent', color: yr === year ? C.ink : C.muted }}>
-              {yr} draft
+              {yr === 2026 ? '2026 results' : `${yr} draft`}
             </Link>
           ))}
         </div>
       </div>
 
+      {year === 2026 ? <Results2026 league={league} myTeam={me?.team_id ?? null} /> : (
       <div className="split" style={{ alignItems: 'flex-start' }}>
         {/* Draft-day order */}
         <section style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -129,6 +133,62 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
           </div>
         </section>
       </div>
+      )}
     </div>
+  );
+}
+
+/** Draft-day board for the 2026 G-Train redraft: every selection from pick 1 down, grouped by round. */
+function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof getLeague>>; myTeam: number | null }) {
+  const teamByName = new Map(league.teams.map((t) => [norm(t.name), t]));
+  const playerByName = new Map<string, (typeof league.players)[number]>();
+  for (const p of league.players) { playerByName.set(norm(p.full_name ?? p.name), p); if (!playerByName.has(norm(p.name))) playerByName.set(norm(p.name), p); }
+  const picks = [...GTRAIN_DRAFTS[2026]].sort((a, b) => a.pick - b.pick);
+  const rounds = Array.from(new Set(picks.map((p) => Math.ceil(p.pick / 10))));
+  return (
+    <section style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 820 }}>
+      <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
+        <h2 className="h2">2026 draft day</h2>
+        <span className="muted" style={{ fontSize: 12 }}>21 Feb 2026 · {picks.length} selections · gaps are passed picks</span>
+      </div>
+      <div className="table-box">
+        <table className="squad">
+          <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#fff' }}>
+            <tr><th style={{ width: 56 }}>Pick</th><th>Player</th><th>Picked by</th><th style={{ width: 70, textAlign: 'right' }}>2026 avg</th></tr>
+          </thead>
+          {rounds.map((r) => (
+            <tbody key={r}>
+              <tr className="group"><td colSpan={4}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span className="dot" style={{ background: ROUND_COLOUR(r), boxShadow: 'inset 0 0 0 1px rgb(0 0 0 / .1)' }} />{r === 16 ? 'Round 16 · keeper / rookie round' : `Round ${r}`}
+                </span>
+              </td></tr>
+              {picks.filter((p) => Math.ceil(p.pick / 10) === r).map((p) => {
+                const t = teamByName.get(norm(p.team));
+                const pl = playerByName.get(norm(p.name));
+                const mine = t != null && t.id === myTeam;
+                return (
+                  <tr key={p.pick} style={{ background: mine ? '#eef5ea' : undefined }}>
+                    <td className="mono" style={{ fontWeight: 600 }}>{p.pick}</td>
+                    <td>
+                      {pl ? <Link href={`/players/${pl.id}`} style={{ fontWeight: 600, color: 'inherit', textDecoration: 'none' }}>{p.name}</Link> : <span style={{ fontWeight: 600 }}>{p.name}</span>}
+                      {pl?.afl_club && <div className="muted" style={{ fontSize: 11 }}>{pl.afl_club}</div>}
+                    </td>
+                    <td style={{ whiteSpace: 'nowrap' }}>
+                      {t ? (
+                        <Link href={`/clubhouse/${t.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: mine ? 700 : 500, color: 'inherit', textDecoration: 'none' }}>
+                          <TeamBadge code={t.short_code} size={20} /><span className="draft-team">{t.name}</span>
+                        </Link>
+                      ) : p.team}
+                    </td>
+                    <td className="mono" style={{ textAlign: 'right' }}>{pl?.average != null && (pl.games ?? 0) > 0 ? Math.round(pl.average) : <span className="muted">–</span>}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </section>
   );
 }
