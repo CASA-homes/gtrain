@@ -18,6 +18,8 @@ def post(data, name=None):
 CLUB = {'Adelaide Crows':'ADE','Brisbane Lions':'BRL','Carlton':'CAR','Collingwood':'COL','Essendon':'ESS','Fremantle':'FRE','Geelong Cats':'GEE','Gold Coast Suns':'GCS','GWS Giants':'GWS','Hawthorn':'HAW','Melbourne':'MEL','North Melbourne':'NTH','Port Adelaide':'PTA','Richmond':'RIC','St Kilda':'STK','Sydney Swans':'SYD','West Coast Eagles':'WCE','Western Bulldogs':'WBD'}
 names = list(post({'action': 'afl_fantasy_player_name_list_mysql'}, 'names.json')['players'].values())
 norm = lambda s: re.sub(r'\s+', ' ', s.lower().replace('’', "'")).strip()
+# Anyone already on a G-Train list can't be a free agent: never match to them.
+OWNED = {o['dfs_id'] for o in json.load(open('data/dfs-2026.json'))}
 rows = [r for r in csv.DictReader(open('data/keeper-fa-2027.tsv'), delimiter='\t') if r['status'] not in ('DEL', 'RET')]
 def num(x):
     try: return float(x)
@@ -26,11 +28,12 @@ def one(r):
     ini, *rest = r['name'].split(' '); sur = norm(' '.join(rest)); club = CLUB.get(r['club'])
     cs = [p for p in names if norm(p['playerName']).endswith(' ' + sur) and norm(p['playerName'])[0] == ini[0].lower()]
     best, bs = None, -1
-    for p in cs[:8]:
+    for p in [c for c in cs if c['playerId'] not in OWNED][:8]:
         d = post({'action': 'afl_fantasy_player_summary_call_mysql', 'playerId': p['playerId']}, p['playerId'] + '.json')
         nm = (d.get('name') or [{}])[0]; car = d.get('career') or []
         c26 = next((c for c in car if c['year'] == '2026' and (c.get('league') or '').lower() == 'afl'), None)
-        s = (10 if c26 and c26.get('teamAbbr') == club else 0) + (6 if nm.get('teamAbbr') == club else 0) + (3 if c26 else 0) + (1 if any(int(c['year']) >= 2024 for c in car) else 0)
+        gp = int(num(r['gp']) or 0)
+        s = (8 if (int(num(c26.get('gms')) or 0) if c26 else 0) == gp else 0) + (10 if c26 and c26.get('teamAbbr') == club else 0) + (6 if nm.get('teamAbbr') == club else 0) + (3 if c26 else 0) + (1 if any(int(c['year']) >= 2024 for c in car) else 0)
         if s > bs: bs, best = s, (p['playerId'], d)
     o = dict(r)
     if best:
