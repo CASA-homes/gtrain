@@ -59,7 +59,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
 
       <header className="ph">
         <div className="ph-top">
-          {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={112} /> : (
+          {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={104} /> : (
             <div className="ph-photo">
               {photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -78,14 +78,14 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               {p.status && <span className="pill ph-pill" style={{ background: C.redBg, color: C.redFg, borderColor: C.redBg }}>{p.status}</span>}
               {p.list_status && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.list_status}</span>}
             </div>
-            <h1 className="ph-name">{p.full_name ?? p.name}<ClubDot code={p.afl_club} size={22} /></h1>
+            <h1 className="ph-name">{p.full_name ?? p.name}</h1>
             <div className="ph-sub">
-              <span>{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
+              <span className="ph-club"><ClubDot code={p.afl_club} size={13} />{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
               {owner ? <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
             </div>
             <div className="ph-rating">
               <div className="ph-value" title={`${valueRank} of ${league.players.length} in the league · valued as ${r.line}, No.${r.lineRank} ${r.line}${r.statusRisk ? ' · status at risk' : ''}`}>
-                <b>{r.value}</b><span>Value<br />#{valueRank} · {r.line} {r.lineRank}</span>
+                <b>{r.value}</b><span>Value<br />#{valueRank} · {r.line}{r.lineRank}</span>
               </div>
               <div className="ph-stars">
                 <span><em>Ability</em><Stars value={r.valueStars} label="Current ability" /></span>
