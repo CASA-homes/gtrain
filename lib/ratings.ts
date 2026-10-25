@@ -188,10 +188,17 @@ const SCARCITY_ORDER: Line[] = ['FWD', 'RUC', 'DEF', 'MID'];
  * of his lines he ranks highest in, because that's where a coach will play him: a 92-average MID/FWD is ordinary
  * as a midfielder but elite as a forward, and his value reflects the forward ranking.
  */
-export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
+/**
+ * Ratings for every rostered player, measured against the rostered pool. `extra` players (free agents) are rated
+ * against that same pool without joining it, so adding them never moves a rostered player's numbers.
+ */
+export function buildRatings(rows: PlayerRow[], extra: PlayerRow[] = []): Map<number, Ratings> {
   // Injured players are valued on their blended average (recent peak + interrupted 2026), not the injury-hit number.
-  const all = rows.map((p) => { const bb = bounceBack(p); return bb && bb.blended > (p.average ?? 0) ? { ...p, average: bb.blended } : p; });
-  const pool = new Map<Line, PlayerRow[]>(LINES.map((l) => [l, all.filter((p) => p.positions.includes(l))]));
+  const blend = (p: PlayerRow) => { const bb = bounceBack(p); return bb && bb.blended > (p.average ?? 0) ? { ...p, average: bb.blended } : p; };
+  const base = rows.map(blend);
+  const all = [...base, ...extra.map(blend)];
+  const origs = new Map([...rows, ...extra].map((r) => [r.id, r]));
+  const pool = new Map<Line, PlayerRow[]>(LINES.map((l) => [l, base.filter((p) => p.positions.includes(l))]));
   const sortedAvg = new Map(LINES.map((l) => [l, pool.get(l)!.map((p) => p.average ?? 0).sort((a, b) => a - b)]));
   const stats = new Map(all.map((p) => [p.id, seasonStats(p)]));
   const st = (p: PlayerRow) => stats.get(p.id)!;
@@ -230,7 +237,7 @@ export function buildRatings(rows: PlayerRow[]): Map<number, Ratings> {
     const f = form(p);
     const avgP = pct(avgs, avg);
     const lineRank = lineRankOf(p, line);
-    const orig = rows.find((r) => r.id === p.id);
+    const orig = origs.get(p.id);
     const value = avg ? valueFromRank(line, lineRank, { avg, dur, downside: downsideShare(ss.full, ss.mean || avg), injuredBlend: p !== orig, missedSeason: !orig?.games }) : 0;
     // A forward or defender who also holds MID and is living in the centre square may lose the scarcer status.
     const statusRisk = line !== 'MID' && p.positions.includes('MID') && (p.box?.cba ?? 0) >= 50;

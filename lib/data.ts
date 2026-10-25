@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
+import freeAgentData from '@/lib/free-agent-players.json';
 import { buildAttrs, type Attr } from '@/lib/scouting';
 import { FUTURE_CORE, FUTURE_PIN, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
 const isFutureAge = (p: PlayerRow) => { const a = age(p.birth_date); return a != null && a <= FUTURE_MAX_AGE; };
@@ -9,6 +10,11 @@ import {
 } from '@/lib/ratings';
 
 export const CURRENT_SEASON = 2026;
+
+// Every player nobody in the league owns, from the Keeper board with full DFS stats (scripts/fa-pull.py → fa-build.py).
+type FARow = Omit<PlayerRow, 'team_id' | 'is_keeper' | 'is_rookie_keeper' | 'photo_path' | 'list_status' | 'lineup'> & { owned_pct: string };
+const FA_ROWS = (freeAgentData as unknown as { updated: string; players: FARow[] }).players;
+export const FREE_AGENTS_UPDATED = (freeAgentData as unknown as { updated: string }).updated;
 
 export interface Team {
   id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null;
@@ -43,6 +49,9 @@ export interface TeamAnalysis {
 export interface League {
   teams: Team[];
   players: PlayerRow[];
+  /** Unowned players. team_id is 0. Rated against the rostered pool without changing it. */
+  freeAgents: PlayerRow[];
+  ownedPct: Map<number, string>;
   ratings: Map<number, Ratings>;
   attrs: Map<number, Attr[]>;
   byTeam: Map<number, TeamAnalysis>;
@@ -86,7 +95,12 @@ export const getLeague = cache(async (): Promise<League> => {
     };
   });
 
-  const ratings = buildRatings(players);
+  const rosteredIds = new Set(players.map((p) => p.dfs_id).filter(Boolean));
+  const freeAgents: PlayerRow[] = FA_ROWS.filter((f) => !f.dfs_id || !rosteredIds.has(f.dfs_id)).map(({ owned_pct: _o, ...f }) => ({
+    ...f, team_id: 0, is_keeper: false, is_rookie_keeper: false, photo_path: null, list_status: null, lineup: null,
+  }));
+  const ownedPct = new Map(FA_ROWS.map((f) => [f.id, f.owned_pct]));
+  const ratings = buildRatings(players, freeAgents);
   const seasons = (seasonsQ.data ?? []) as League['seasons'];
 
   const analyses = teams.map((team) => {
@@ -162,8 +176,8 @@ export const getLeague = cache(async (): Promise<League> => {
     });
   }
 
-  const attrs = buildAttrs(players);
-  return { teams, players, ratings, attrs, byTeam, picks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
+  const attrs = buildAttrs(players, freeAgents);
+  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
 });
 
 export { primaryLine };

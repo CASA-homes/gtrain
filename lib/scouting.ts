@@ -41,8 +41,10 @@ const to20 = (p: number) => Math.max(1, Math.min(20, Math.round(p / 5)));
 const SPECIALIST: Record<string, number> = { ki: 1.5, ho: 8, cba: 20 };
 
 /** Build every player's box-score attributes in one pass. */
-export function buildAttrs(all: PlayerRow[]): Map<number, Attr[]> {
-  const pool = all.filter(usable);
+/** Box-score attributes, graded against rostered players; `extra` (free agents) are graded against the same pool. */
+export function buildAttrs(rostered: PlayerRow[], extra: PlayerRow[] = []): Map<number, Attr[]> {
+  const all = [...rostered, ...extra];
+  const pool = rostered.filter(usable);
   const sorted = new Map(ATTRS.map((a) => [a.key, pool.map((p) => a.f(p.box!) ?? 0).sort((x, y) => x - y)]));
   // Specialist stats most players never record. Rank only against players who do it regularly, otherwise half a
   // kick-in a game would beat the hundreds of zeroes and look elite. Below the bar: 1–3.
