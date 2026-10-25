@@ -155,3 +155,12 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 }
 
 @media (max-width: 640px) { .draft-team { font-size: 12px; white-space: normal; } }
+
+/* Players: the Owned / Not owned switch */
+.own-toggle { display: grid; grid-template-columns: 1fr 1fr auto; gap: 4px; padding: 4px; border-radius: 14px; background: var(--line); }
+.own-toggle a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 10px; text-decoration: none; color: var(--muted, #6b726c); font: 600 15px var(--font); }
+.own-toggle a span { font: 500 12px var(--mono); padding: 2px 7px; border-radius: 99px; background: rgb(0 0 0 / .06); }
+.own-toggle a.on { background: var(--ink); color: #fff; box-shadow: 0 2px 8px rgb(0 0 0 / .18); }
+.own-toggle a.on span { background: rgb(255 255 255 / .16); }
+.own-toggle a.all { font-size: 13px; font-weight: 500; }
+.players-filter summary::-webkit-details-marker { display: none; }
