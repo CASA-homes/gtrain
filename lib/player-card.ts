@@ -3,6 +3,8 @@ import games from '@/lib/player-games.json';
 import type { CardGame, CardProps } from '@/components/PlayerCard';
 import type { Box, Line, PlayerRow, Ratings } from '@/lib/ratings';
 
+const CURRENT = 2026;
+
 const G = (games as unknown as { players: Record<string, { g: CardGame[]; p: [string | null, string | null, number][] }> }).players;
 
 type Stat = [string, (b: Box) => number | null | undefined, (v: number) => string];
@@ -30,6 +32,7 @@ export function playerCard(p: PlayerRow, r: Ratings, rostered: PlayerRow[], rati
   }).filter((x): x is { label: string; value: string; pct: number } => x != null) : [];
   return {
     playerNo: p.dfs_id ? p.dfs_id.replace('CD_I', '') : null, games: d.g, prev: d.p, pct, lineName: LINE_NAME[line],
+    seasons: [...(p.hist ?? [])].filter((h) => h[1] > 0).sort((a, b) => b[0] - a[0]), current: CURRENT,
     poolNote: `percentile · ${pool.length} rostered ${LINE_NAME[line]}s, 8+ games`,
   };
 }
