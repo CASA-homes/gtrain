@@ -5,7 +5,7 @@ import type { PlayerRow } from '@/lib/ratings';
 import type { Trade } from '@/lib/trades-2026';
 
 /** Round headshot with a club-colour ring. Falls back to initials when the player isn't on a G-Train list. */
-export function Face({ p, label, size = 36 }: { p: PlayerRow | null; label: string; size?: number }) {
+export function Face({ p, label, size = 36 }: { p: Pick<PlayerRow, 'afl_club' | 'photo_path' | 'dfs_id'> | null; label: string; size?: number }) {
   const club = p?.afl_club ? CLUBS[p.afl_club] : null;
   const src = p ? photoUrl(p) : null;
   const ring = club ? (club.m ? `conic-gradient(${club.a} 0 45%, ${club.m} 45% 55%, ${club.b} 55% 100%)` : `conic-gradient(${club.a} 0 50%, ${club.b} 50% 100%)`) : '#d9ddd6';

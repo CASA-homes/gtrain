@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState, useTransition } from 'react';
-import { AvgChip, ClubDot, FormArrow, PosDots, ScoreChip, Stars } from '@/components/bits';
+import { AvgChip, FormArrow, PosDots, ScoreChip, Stars } from '@/components/bits';
+import { Face } from '@/components/TradeHighlights';
 import { C, LINES, type Form, type Line, type Slot } from '@/lib/ratings';
 import { resetLineup, saveLineup } from '@/app/(app)/clubhouse/[id]/lineup-actions';
 
@@ -11,6 +12,7 @@ export interface SquadPlayer {
   last5: (number | null)[]; games: number | null; tons: number; form: Form;
   valueStars: number; potential: number | null; is_keeper: boolean; status: string | null;
   slot: Slot | null;
+  photo_path: string | null; dfs_id: string | null;
   age: number | null; prevAvg: number | null; delta: number | null; trend: -2 | -1 | 0 | 1 | 2 | null;
 }
 
@@ -144,7 +146,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                 <tr>
                   {editable && <th style={{ width: 34 }}><span className="sr-only">Swap</span></th>}
                   <th style={{ width: 82 }}>Pos</th>
-                  <th style={{ width: 26 }}><span className="sr-only">Club</span></th>
+                  <th style={{ width: 40 }}><span className="sr-only">Player photo</span></th>
                   <th>Player</th>
                   <th style={{ width: 54, textAlign: 'center' }}>Avg</th>
                   {open && <th style={{ width: 176, textAlign: 'center' }}>Last 5</th>}
@@ -206,7 +208,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                           </td>
                         )}
                         <td><PosDots positions={p.positions} /></td>
-                        <td style={{ paddingLeft: 2, paddingRight: 2 }}><ClubDot code={p.afl_club} /></td>
+                        <td style={{ paddingLeft: 2, paddingRight: 2, paddingTop: 4, paddingBottom: 4 }}><Face p={p} label={p.name} size={32} /></td>
                         <td style={{ whiteSpace: 'nowrap' }}>
                           <Link href={`/players/${p.id}`} draggable={false}>{p.name}</Link>
                           {p.is_keeper && <span className="keeper-tag">K</span>}
