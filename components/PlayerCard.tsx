@@ -11,6 +11,8 @@ export interface CardProps {
   pct: { label: string; value: string; pct: number }[];
   lineName: string;
   poolNote: string;
+  seasons: [number, number, number][];  // [year, games, average], newest first
+  current: number;
 }
 
 const tone = (s: number): [string, string] => s >= 120 ? ['#1f6b3a', '#fff'] : s >= 100 ? ['#4f9a5f', '#fff'] : s >= 80 ? ['#9ccb84', '#151a16'] : s >= 70 ? ['#d6e49a', '#151a16'] : s >= 50 ? ['#f1e8a8', '#151a16'] : ['#f3c2b9', '#7a1d12'];
@@ -27,7 +29,7 @@ function Card({ title, note, children }: { title: string; note?: string; childre
   );
 }
 
-export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote }: CardProps) {
+export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, seasons, current }: CardProps) {
   const [heatIdx, setHeatIdx] = useState(() => {
     for (let i = games.length - 1; i >= 0; i--) if (games[i][14]) return i;
     return -1;
@@ -83,6 +85,18 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote }: C
 
   return (
     <div className="pc-grid">
+      {seasons.length > 0 && (
+        <Card title="Season averages" note={`${seasons.length} season${seasons.length > 1 ? 's' : ''} · AFL Fantasy`}>
+          <div className="pc-form">
+            {seasons.slice(0, 10).map(([y, gm, avg]) => (
+              <div key={y} className="pc-fchip" title={`${y}: ${gm} games`}>
+                <b style={{ background: tone(avg)[0], color: tone(avg)[1], outline: y === current ? '2px solid #151a16' : 'none', outlineOffset: 1 }}>{Math.round(avg)}</b>
+                <span>’{String(y).slice(2)}</span><i>{gm} gm</i>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
       <Card title="Form" note="last 10 games · tap one for its heat map">
         <div className="pc-form">
           {games.slice(-10).map((g, i) => {
