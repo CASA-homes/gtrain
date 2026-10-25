@@ -119,15 +119,6 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         </div>
       </div>
 
-      <div className="own-toggle" role="tablist" aria-label="Ownership">
-        {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length]] as const).map(([k, lab, n]) => (
-          <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
-            {lab}<span>{n}</span>
-          </Link>
-        ))}
-        <Link href={ownHref('all')} role="tab" aria-selected={own === 'all'} className={`all${own === 'all' ? ' on' : ''}`}>All</Link>
-      </div>
-
       <form className="card players-filter" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
         {own !== 'owned' && <input type="hidden" name="own" value={own} />}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -135,9 +126,18 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           <button type="submit" className="btn dark">Go</button>
         </div>
         <details open={activeFilters > 0 || undefined}>
-          <summary className="btn" style={{ listStyle: 'none', cursor: 'pointer', width: 'fit-content' }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4" /></svg>
-            Filters{activeFilters ? ` · ${activeFilters}` : ''}
+          <summary className="pf-row">
+            <span className="btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4" /></svg>
+              Filters{activeFilters ? ` · ${activeFilters}` : ''}
+            </span>
+            <span className="own-toggle" role="tablist" aria-label="Ownership">
+              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['all', 'All', null]] as const).map(([k, lab, n]) => (
+                <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
+                  {lab}{n != null && <span>{n}</span>}
+                </Link>
+              ))}
+            </span>
           </summary>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 10, alignItems: 'end', marginTop: 12 }}>
             {sel('line', 'Position', sp.line ?? '', <><option value="">All positions</option>{LINES.map((l) => <option key={l}>{l}</option>)}</>)}
