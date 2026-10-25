@@ -64,7 +64,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
       id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, last5: p.last5,
       games: p.games, tons: played(p.last5).filter((s) => s >= 100).length, form: form(p),
       valueStars: r.valueStars, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
-      slot: slotOf.get(p.id) ?? null,
+      slot: slotOf.get(p.id) ?? null, photo_path: p.photo_path, dfs_id: p.dfs_id,
       ...trendOf(p),
     };
   });
