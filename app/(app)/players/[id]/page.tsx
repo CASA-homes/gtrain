@@ -47,81 +47,64 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
 
   const bio: [string, string][] = [
     ['Age', a != null ? String(a) : '–'],
-    ['Height', p.height_cm ? `${p.height_cm} cm` : '–'],
-    ['Drafted', p.draft_pick ? `#${p.draft_pick}, ${p.draft_year}` : p.draft_year ? `${p.draft_year}` : '–'],
-    ['AFL games', p.career_games != null ? String(p.career_games) : '–'],
+    ['Height', p.height_cm ? `${p.height_cm}cm` : '–'],
+    ['Drafted', p.draft_pick ? `#${p.draft_pick} ’${String(p.draft_year).slice(2)}` : p.draft_year ? `${p.draft_year}` : '–'],
+    ['Games', p.career_games != null ? String(p.career_games) : '–'],
     ['Debut', p.debut_year ? String(p.debut_year) : '–'],
   ];
 
   return (
     <div className="wrap">
-      <div className="row-between" style={{ alignItems: 'center' }}>
-        <span className="mono muted" style={{ fontSize: 12 }}><Link href="/players">Players</Link> / {p.name}</span>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <Link href={`/players?compare=${p.id}`} className="btn">Compare</Link>
-          <Link href={`/market?player=${p.id}`} className="btn dark">Make an offer</Link>
-        </div>
-      </div>
+      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/players">Players</Link> / {p.name}</span>
 
-      <header style={{ display: 'flex', flexWrap: 'wrap', gap: 28, alignItems: 'center', paddingBottom: 28, borderBottom: '1px solid var(--line)' }}>
-        {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} /> : (
-        <div style={{ width: 168, height: 168, borderRadius: 24, background: '#e8eee5', overflow: 'hidden', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', flex: 'none' }}>
-            {photo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={photo} alt={p.full_name ?? p.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center' }} />
-            ) : (
-              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
-            )}
-          </div>
-        )}
-        <div style={{ flex: '999 1 360px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-            {p.positions.map((pos) => (
-              <span key={pos} className="pill" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#fff', border: '1px solid var(--line)', padding: '3px 10px' }}>
-                <span className="dot" style={{ background: C[pos] }} />{pos}
-              </span>
-            ))}
-            {(p.is_keeper || p.is_rookie_keeper) && <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 10px' }}>{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
-            {p.status && <span className="pill" style={{ background: C.redBg, color: C.redFg, padding: '4px 10px' }}>{p.status}</span>}
-            {p.list_status && <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 10px' }}>{p.list_status}</span>}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <h1 style={{ font: '600 52px/1 var(--font)', letterSpacing: '-.04em' }}>{p.full_name ?? p.name}</h1>
-            <ClubDot code={p.afl_club} size={40} />
-          </div>
-          <div className="muted" style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 18px' }}>
-            <span>{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
-            {owner ? <span>Owned by <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link></span> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned across Keeper leagues` : ''}</span>}
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 22px', marginTop: 4 }}>
-            {bio.map(([k, v]) => (
-              <span key={k} style={{ display: 'flex', flexDirection: 'column' }}>
-                <span className="eyebrow">{k}</span><b style={{ fontWeight: 600 }}>{v}</b>
-              </span>
-            ))}
-            {prof ? (
-              <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} className="btn" aria-pressed={showDraft}
-                style={{ alignSelf: 'center', ...(showDraft ? { background: C.ink, color: '#fff', borderColor: C.ink } : {}) }}>
-                {showDraft ? 'Back to scouting report' : 'Draft profile'}
-              </Link>
-            ) : (
-              <span className="btn" aria-disabled="true" title="No draft guide profile loaded for this player yet" style={{ alignSelf: 'center', opacity: 0.45, cursor: 'default' }}>Draft profile</span>
-            )}
+      <header className="ph">
+        <div className="ph-top">
+          {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={112} /> : (
+            <div className="ph-photo">
+              {photo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={photo} alt={p.full_name ?? p.name} />
+              ) : (
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
+              )}
+            </div>
+          )}
+          <div className="ph-main">
+            <div className="ph-tags">
+              {p.positions.map((pos) => (
+                <span key={pos} className="pill ph-pill"><span className="dot" style={{ background: C[pos] }} />{pos}</span>
+              ))}
+              {(p.is_keeper || p.is_rookie_keeper) && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
+              {p.status && <span className="pill ph-pill" style={{ background: C.redBg, color: C.redFg, borderColor: C.redBg }}>{p.status}</span>}
+              {p.list_status && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.list_status}</span>}
+            </div>
+            <h1 className="ph-name">{p.full_name ?? p.name}<ClubDot code={p.afl_club} size={22} /></h1>
+            <div className="ph-sub">
+              <span>{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
+              {owner ? <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
+            </div>
+            <div className="ph-rating">
+              <div className="ph-value" title={`${valueRank} of ${league.players.length} in the league · valued as ${r.line}, No.${r.lineRank} ${r.line}${r.statusRisk ? ' · status at risk' : ''}`}>
+                <b>{r.value}</b><span>Value<br />#{valueRank} · {r.line} {r.lineRank}</span>
+              </div>
+              <div className="ph-stars">
+                <span><em>Ability</em><Stars value={r.valueStars} label="Current ability" /></span>
+                <span><em>Potential</em><Stars value={r.potential} colour={C.green5} label="Potential" /></span>
+              </div>
+            </div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span className="eyebrow">Value</span>
-            <span style={{ font: '600 48px/1 var(--font)', letterSpacing: '-.03em', color: C.green5 }}>{r.value}</span>
-            <span className="muted" style={{ fontSize: 12 }}>{valueRank} of {league.players.length} in the league</span>
-            <span className="muted" style={{ fontSize: 12 }}>Valued as {r.line} · No.{r.lineRank} {r.line}{r.statusRisk ? ' · status at risk' : ''}</span>
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <span className="eyebrow">Current ability</span>
-            <Stars value={r.valueStars} label="Current ability" />
-            <span className="eyebrow" style={{ marginTop: 6 }}>Potential</span>
-            <Stars value={r.potential} colour={C.green5} label="Potential" />
-          </div>
+        <div className="ph-bio">
+          {bio.map(([k, v]) => (
+            <div key={k}><span>{k}</span><b>{v}</b></div>
+          ))}
+          {prof ? (
+            <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className={`ph-draft${showDraft ? ' on' : ''}`}>
+              {showDraft ? 'Back' : 'Draft profile'}
+            </Link>
+          ) : (
+            <span className="ph-draft off" title="No draft guide profile loaded for this player yet">Draft profile</span>
+          )}
         </div>
       </header>
 
