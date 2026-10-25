@@ -1,12 +1,13 @@
 // Holo profile pictures: players who get the shiny treatment, with their artwork background and cut-out photo.
 // Geelong's artwork is placeholder dot-style patterning in club colours; swap in licensed Indigenous artwork before rolling out widely.
-export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade';
+export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade' | 'gcs';
 export interface Holo { art: string; photo: string; palette: HoloPalette }
 export const HOLO: Record<string, Holo> = {
   'L. Humphries': { art: '/holo/geelong-swans.svg', photo: '/players/lawson-humphries.png', palette: 'geelong' },
   'L. Ash': { art: '/holo/gws-g.svg', photo: '/players/lachie-ash.png', palette: 'gws' },
   'H. Reid': { art: '/holo/wce-wings.svg', photo: '/players/harley-reid.png', palette: 'wce' },
   'I. Rankine': { art: '/holo/ade-feathers.svg', photo: '/players/izak-rankine.png', palette: 'ade' },
+  'N. Anderson': { art: '/holo/gcs-sunrise.svg', photo: '/players/noah-anderson.png', palette: 'gcs' },
 };
 
 /** Foil colours per palette: the frame, the always-on sweep, the mouse-following foil, the glints and the glare. */
@@ -46,5 +47,14 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .4) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(255 199 44 / .4) 10px 11px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 214 110 / .95)'],
     glare: 'rgb(255 199 44 / .15)', sheen: 'rgb(255 199 44 / .45)', base: '#0b0b0c', shadow: 'rgb(0 0 0 / .45)', dim: 0.5,
+  },
+  gcs: {
+    frame: 'linear-gradient(135deg, #7c0a0e 0%, #ffc72c 18%, #ffe7a0 32%, #d7261e 50%, #ffc72c 66%, #fff3d0 80%, #7c0a0e 100%)',
+    edge: 'linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .9) 42%, rgb(255 199 44 / .9) 50%, rgb(255 255 255 / .9) 58%, transparent 75%)',
+    sweep: 'linear-gradient(120deg, transparent 22%, #7c0a0e 30%, #ffffff 38%, #ffc72c 46%, #ffe7a0 52%, #f26a1b 58%, #ffffff 66%, transparent 78%)',
+    foil: 'linear-gradient(60deg, transparent 22%, #f26a1b 34%, #ffffff 42%, #ffc72c 48%, #ffe7a0 56%, #7c0a0e 66%, transparent 80%)',
+    lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .4) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(255 199 44 / .4) 10px 11px)',
+    glint: ['rgb(255 255 255 / .95)', 'rgb(255 222 120 / .95)'],
+    glare: 'rgb(255 199 44 / .2)', sheen: 'rgb(255 199 44 / .45)', base: '#4a0508', shadow: 'rgb(74 5 8 / .4)', dim: 0.6,
   },
 };
