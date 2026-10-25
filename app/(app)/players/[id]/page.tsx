@@ -12,6 +12,8 @@ import { careerCurve } from '@/lib/careercurve';
 import { CareerCurveChart } from '@/components/CareerCurveChart';
 import { DraftProfileCard } from '@/components/DraftProfileCard';
 import { draftProfileFor } from '@/lib/draft-profiles';
+import { PlayerCard } from '@/components/PlayerCard';
+import { playerCard } from '@/lib/player-card';
 import { DRAFTEES } from '@/lib/draft-history';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
@@ -35,6 +37,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const drafted = DRAFTEES.find((d) => d.id && d.id === p.dfs_id) ?? null;
   const prof = draftProfileFor(drafted?.y ?? p.draft_year, drafted?.n ?? p.full_name ?? p.name);
   const showDraft = view === 'draft';
+  const card = playerCard(p, r, league.players, league.ratings);
   const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
@@ -144,6 +147,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
         </section>
       ) : (
         <>
+      {card && <PlayerCard {...card} />}
       <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
