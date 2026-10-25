@@ -18,14 +18,14 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const { id } = await params;
   const { view } = await searchParams;
   const league = await getLeague();
-  const p = league.players.find((x) => x.id === Number(id));
+  const p = league.players.find((x) => x.id === Number(id)) ?? league.freeAgents.find((x) => x.id === Number(id));
   if (!p) notFound();
   const r = league.ratings.get(p.id)!;
   const attrs = league.attrs.get(p.id);
-  const owner = league.teams.find((t) => t.id === p.team_id)!;
+  const owner = league.teams.find((t) => t.id === p.team_id) ?? null;
   const line = r.line;
   const xs = played(p.last5);
-  const valueRank = [...league.ratings.values()].filter((x) => x.value > r.value).length + 1;
+  const valueRank = league.players.filter((x) => (league.ratings.get(x.id)?.value ?? 0) > r.value).length + 1;
   const f = form(p);
   const a = age(p.birth_date);
   const report = scoutingReport(p, r, attrs);
@@ -88,7 +88,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
           </div>
           <div className="muted" style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 18px' }}>
             <span>{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
-            <span>Owned by <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link></span>
+            {owner ? <span>Owned by <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link></span> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned across Keeper leagues` : ''}</span>}
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 22px', marginTop: 4 }}>
             {bio.map(([k, v]) => (
