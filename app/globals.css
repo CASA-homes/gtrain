@@ -156,13 +156,21 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 
 @media (max-width: 640px) { .draft-team { font-size: 12px; white-space: normal; } }
 
-/* Players: the Owned / Not owned switch */
-.own-toggle { display: grid; grid-template-columns: 1fr 1fr auto; gap: 4px; padding: 4px; border-radius: 14px; background: var(--line); }
-.own-toggle a { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 10px; text-decoration: none; color: var(--muted, #6b726c); font: 600 15px var(--font); }
-.own-toggle a span { font: 500 12px var(--mono); padding: 2px 7px; border-radius: 99px; background: rgb(0 0 0 / .06); }
-.own-toggle a.on { background: var(--ink); color: #fff; box-shadow: 0 2px 8px rgb(0 0 0 / .18); }
-.own-toggle a.on span { background: rgb(255 255 255 / .16); }
-.own-toggle a.all { font-size: 13px; font-weight: 500; }
+/* Players: Filters button and the Owned / Not owned / All switch, on one line */
+.pf-row { list-style: none; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; cursor: pointer; }
+.own-toggle { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: var(--line); }
+.own-toggle a { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 10px; border-radius: 8px; text-decoration: none; color: var(--muted); font: 600 12.5px var(--font); white-space: nowrap; }
+.own-toggle a span { font: 500 10.5px var(--mono); padding: 1px 6px; border-radius: 99px; background: rgb(0 0 0 / .06); }
+.own-toggle a.on { background: var(--ink); color: #fff; }
+.own-toggle a.on span { background: rgb(255 255 255 / .18); }
+.pf-row .btn { min-height: 36px; padding: 0 12px; }
+@media (max-width: 480px) {
+  .pf-row { flex-wrap: nowrap; gap: 6px; }
+  .pf-row .btn { padding: 0 10px; gap: 6px; }
+  .own-toggle { flex: 1; min-width: 0; }
+  .own-toggle a { flex: 1; justify-content: center; padding: 0 6px; font-size: 12px; }
+  .own-toggle a span { display: none; }
+}
 .players-filter summary::-webkit-details-marker { display: none; }
 
 /* Player card (FotMob-style match centre on the player page) */
