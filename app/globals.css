@@ -164,3 +164,44 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .own-toggle a.on span { background: rgb(255 255 255 / .16); }
 .own-toggle a.all { font-size: 13px; font-weight: 500; }
 .players-filter summary::-webkit-details-marker { display: none; }
+
+/* Player card (FotMob-style match centre on the player page) */
+.pc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 12px; align-items: start; }
+.pc-card { background: #fff; border-radius: 16px; padding: 14px; box-shadow: 0 0 0 1px var(--line-soft), 0 1px 0 var(--line); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.pc-card h3 { margin: 0 0 2px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font: 600 14px var(--font); }
+.pc-card h3 small { font: 400 12px var(--font); color: var(--muted); text-align: right; }
+.pc-note { margin: 0; font-size: 12px; line-height: 1.45; color: #3a423c; }
+.pc-form { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.pc-fchip { display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; }
+.pc-fchip b { width: 100%; text-align: center; border-radius: 7px; padding: 6px 0; font: 700 12px var(--mono); }
+.pc-fchip span { font-size: 9px; font-weight: 600; }
+.pc-fchip i { font-size: 8px; color: var(--muted); font-style: normal; }
+.pc-dist { display: flex; height: 14px; border-radius: 7px; overflow: hidden; gap: 2px; }
+.pc-distl { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; font-size: 11px; }
+.pc-distl div { display: flex; flex-direction: column; }
+.pc-distl i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; }
+.pc-distl b { font: 700 15px var(--mono); }
+.pc-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 10px; color: var(--muted); }
+.pc-legend i { display: inline-block; width: 14px; height: 2px; vertical-align: middle; margin-right: 4px; }
+.pc-pbar { display: grid; grid-template-columns: minmax(96px, 1.2fr) 46px minmax(60px, 2fr) 24px; align-items: center; gap: 8px; font-size: 12px; padding: 3px 0; }
+.pc-pbar b { font: 600 12px var(--mono); text-align: right; }
+.pc-pbar em { font: 700 12px var(--mono); font-style: normal; text-align: right; }
+.pc-track { height: 8px; background: #eceee9; border-radius: 4px; overflow: hidden; }
+.pc-track div { height: 100%; border-radius: 4px; }
+.pc-heat { width: 100%; border-radius: 10px; display: block; background: #ddd; aspect-ratio: 640 / 476; object-fit: cover; }
+.pc-games { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px; -webkit-overflow-scrolling: touch; }
+.pc-games button { flex: none; border: 0; border-radius: 8px; padding: 5px 8px; font: 600 11px var(--mono); cursor: pointer; display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.pc-games button small { font: 500 9px var(--font); opacity: .7; }
+.pc-zones { display: grid; grid-template-columns: repeat(4, 1fr); border-radius: 50% / 40%; overflow: hidden; border: 1.5px solid #cfd8c9; min-height: 92px; }
+.pc-zones div { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 8px 2px; border-right: 1px dashed rgb(255 255 255 / .6); text-align: center; }
+.pc-zones b { font: 700 16px var(--mono); }
+.pc-zones span { font-size: 9px; line-height: 1.15; }
+.pc-q { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.pc-q div { background: var(--sunk); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; }
+.pc-q span { font-size: 10px; color: var(--muted); }
+.pc-q b { font: 700 16px var(--mono); }
+.pc-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pc-orow { display: grid; grid-template-columns: 1fr auto 36px; gap: 6px; align-items: center; font-size: 12px; padding: 3px 0; }
+.pc-orow span { font-weight: 600; } .pc-orow em { color: var(--muted); font-style: normal; font-size: 10px; }
+.pc-orow b { text-align: center; border-radius: 6px; padding: 3px 0; font: 700 12px var(--mono); }
+@media (max-width: 640px) { .pc-grid { grid-template-columns: 1fr; } }
