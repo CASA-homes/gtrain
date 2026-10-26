@@ -61,7 +61,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
 
       <header className="ph">
         <div className="ph-top">
-          {HOLO[p.name] ? <HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={104} /> : (
+          {HOLO[p.name] ? <div className="ph-holo"><HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={104} /></div> : (
             <div className="ph-photo">
               {photo ? (
                 // eslint-disable-next-line @next/next/no-img-element
