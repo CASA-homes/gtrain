@@ -134,9 +134,9 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               Filters{activeFilters ? ` · ${activeFilters}` : ''}
             </span>
             <span className="own-toggle" role="tablist" aria-label="Ownership">
-              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'My watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
+              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
                 <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
-                  {k === 'watch' ? <><b className="ot-my">My&nbsp;</b>watchlist</> : lab}{n != null && <span>{n}</span>}
+                  {lab}{n != null && <span>{n}</span>}
                 </Link>
               ))}
             </span>
