@@ -1,6 +1,6 @@
 // Holo profile pictures: players who get the shiny treatment, with their artwork background and cut-out photo.
 // Geelong's artwork is placeholder dot-style patterning in club colours; swap in licensed Indigenous artwork before rolling out widely.
-export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade' | 'gcs';
+export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade' | 'gcs' | 'col';
 export interface Holo { art: string; photo: string; palette: HoloPalette }
 export const HOLO: Record<string, Holo> = {
   'L. Humphries': { art: '/holo/geelong-swans.svg', photo: '/players/lawson-humphries.png', palette: 'geelong' },
@@ -8,6 +8,7 @@ export const HOLO: Record<string, Holo> = {
   'H. Reid': { art: '/holo/wce-wings.svg', photo: '/players/harley-reid.png', palette: 'wce' },
   'I. Rankine': { art: '/holo/ade-feathers.svg', photo: '/players/izak-rankine.png', palette: 'ade' },
   'N. Anderson': { art: '/holo/gcs-sunrise.svg', photo: '/players/noah-anderson.png', palette: 'gcs' },
+  'J. Daicos': { art: '/holo/col-magpie.jpg', photo: '/players/josh-daicos.png', palette: 'col' },
 };
 
 /** Foil colours per palette: the frame, the always-on sweep, the mouse-following foil, the glints and the glare. */
@@ -56,5 +57,14 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .4) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(255 199 44 / .4) 10px 11px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 222 120 / .95)'],
     glare: 'rgb(255 199 44 / .2)', sheen: 'rgb(255 199 44 / .45)', base: '#4a0508', shadow: 'rgb(74 5 8 / .4)', dim: 0.6,
+  },
+  col: {
+    frame: 'linear-gradient(135deg, #0a0a0b 0%, #c9cbd0 18%, #ffffff 32%, #17171a 50%, #e6e7ea 66%, #8a8b91 80%, #0a0a0b 100%)',
+    edge: 'linear-gradient(115deg, transparent 25%, rgb(255 255 255 / .95) 42%, rgb(201 203 208 / .9) 50%, rgb(255 255 255 / .95) 58%, transparent 75%)',
+    sweep: 'linear-gradient(120deg, transparent 22%, #3a3a40 30%, #ffffff 38%, #c9cbd0 46%, #ffffff 52%, #8a8b91 58%, #ffffff 66%, transparent 78%)',
+    foil: 'linear-gradient(60deg, transparent 22%, #8a8b91 34%, #ffffff 42%, #c9cbd0 48%, #ffffff 56%, #2c2c31 66%, transparent 80%)',
+    lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .38) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(201 203 208 / .35) 10px 11px)',
+    glint: ['rgb(255 255 255 / .95)', 'rgb(220 224 232 / .95)'],
+    glare: 'rgb(201 203 208 / .2)', sheen: 'rgb(230 232 236 / .5)', base: '#0a0a0b', shadow: 'rgb(0 0 0 / .45)', dim: 0.55,
   },
 };
