@@ -10,9 +10,19 @@ export interface Award { key: string; title: string; blurb: string; player: Play
 export function draftAwards(players: PlayerRow[], ratings: Map<number, Ratings>): Award[] {
   const byName = new Map<string, PlayerRow>();
   for (const p of players) { if (p.full_name) byName.set(norm(p.full_name), p); if (!byName.has(norm(p.name))) byName.set(norm(p.name), p); }
+  // Draft list sometimes uses a short first name (Brad v Bradley): fall back to surname + first-name prefix, if unique.
+  const loose = (n: string) => {
+    const [first, ...rest] = norm(n).split(' ');
+    const last = rest.join(' ');
+    const hits = players.filter((p) => {
+      const [f, ...r] = norm(p.full_name ?? p.name).split(' ');
+      return r.join(' ') === last && (f.startsWith(first) || first.startsWith(f));
+    });
+    return hits.length === 1 ? hits[0] : undefined;
+  };
   const aflPick = new Map(DRAFTEES.filter((d) => d.y === 2025 && d.id).map((d) => [d.id!, d.p]));
   const rows = GTRAIN_DRAFTS[2026].map((g) => {
-    const p = byName.get(norm(g.name));
+    const p = byName.get(norm(g.name)) ?? loose(g.name);
     if (!p) return null;
     const r = ratings.get(p.id);
     const a = age(p.birth_date);
@@ -45,23 +55,25 @@ export function draftAwards(players: PlayerRow[], ratings: Map<number, Ratings>)
   const mx = xs.reduce((a, b) => a + b, 0) / xs.length, my = ys.reduce((a, b) => a + b, 0) / ys.length;
   const slope = xs.reduce((t, x, i) => t + (x - mx) * (ys[i] - my), 0) / xs.reduce((t, x) => t + (x - mx) ** 2, 0);
   const expect = (pick: number) => my + slope * (Math.log(pick) - mx);
-  const value = fresh(fit).map((x) => ({ x, over: x.avg - expect(x.g.pick) })).sort((a, b) => b.over - a.over)[0];
-  add('value', 'Best value pick', 'Most points above his draft slot', value?.x,
-    value ? `Pick ${value.x.g.pick} usually returns about ${expect(value.x.g.pick).toFixed(0)}; he averaged ${value.x.avg.toFixed(0)}, +${value.over.toFixed(0)}.` : '');
-
-  // Best asset: young and already good, judged on value with potential as the tiebreak
-  const asset = fresh(rows).filter((x) => (x.a ?? 99) <= 25 && x.gm >= 8).sort((a, b) => (b.r!.value + (b.r!.potential ?? 0) * 4) - (a.r!.value + (a.r!.potential ?? 0) * 4))[0];
-  add('asset', 'Best long-term asset', 'Young, scoring now, years left in him', asset,
-    asset ? `Value ${asset.r!.value} at ${asset.a}, potential ${asset.r!.potential} stars. A keeper for years.` : '');
-
   // Best win-now: 28 or older, the highest scorer
   const winNow = fresh(rows).filter((x) => (x.a ?? 0) >= 28 && x.gm >= 8).sort((a, b) => b.avg - a.avg)[0];
   add('winnow', 'Best win-now asset', 'Veteran who delivered straight away', winNow,
     winNow ? `${winNow.avg.toFixed(0)} average at ${winNow.a}. Points this year, not a long-term play.` : '');
 
   // Worst top-10 pick: the lowest value among picks 1-10
-  const worst = fresh(rows).filter((x) => x.g.pick <= 10).sort((a, b) => a.r!.value - b.r!.value || a.avg - b.avg)[0];
+  const value = fresh(fit).map((x) => ({ x, over: x.avg - expect(x.g.pick) })).sort((a, b) => b.over - a.over)[0];
+  add('value', 'Best value pick', 'Most points above his draft slot', value?.x,
+    value ? `Pick ${value.x.g.pick} usually returns about ${expect(value.x.g.pick).toFixed(0)}; he averaged ${value.x.avg.toFixed(0)}, +${value.over.toFixed(0)}.` : '');
+
+  // Best asset: young and already good, judged on value with potential as the tiebreak
+  const asset = fresh(rows).filter((x) => (x.a ?? 99) <= 25 && x.gm >= 8 && x.avg >= 80).sort((a, b) => (b.r!.value + (b.r!.potential ?? 0) * 4) - (a.r!.value + (a.r!.potential ?? 0) * 4))[0];
+  add('asset', 'Best long-term asset', 'Young, scoring now, years left in him', asset,
+    asset ? `Value ${asset.r!.value} at ${asset.a}, potential ${asset.r!.potential} stars. A keeper for years.` : '');
+
+  // Teenagers taken as development picks aren't judged yet; this is for picks meant to score now.
+  const worst = fresh(rows).filter((x) => x.g.pick <= 10 && (x.a ?? 0) >= 22).sort((a, b) => (a.avg - expect(a.g.pick)) - (b.avg - expect(b.g.pick)))[0];
   add('worst', 'Worst top-10 pick', 'The early pick that hasn’t paid off yet', worst,
-    worst ? (worst.gm ? `${worst.avg.toFixed(0)} average from ${worst.gm} games after going at pick ${worst.g.pick}.` : `Hasn’t played an AFL game since going at pick ${worst.g.pick}.`) : '');
-  return out;
+    worst ? (worst.gm ? `Went at pick ${worst.g.pick} as a ready-made player and averaged ${worst.avg.toFixed(0)} from ${worst.gm} games, about ${Math.round(expect(worst.g.pick) - worst.avg)} under what that slot returns.` : `Hasn’t played an AFL game since going at pick ${worst.g.pick}.`) : '');
+  const ORDER = ['rookie', 'diamond', 'value', 'asset', 'winnow', 'worst'];
+  return out.sort((x, y) => ORDER.indexOf(x.key) - ORDER.indexOf(y.key));
 }
