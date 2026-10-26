@@ -5,6 +5,7 @@ import { InfoPopover } from '@/components/InfoPopover';
 import { HighlightsLink, ProfileSheet } from '@/components/ProfileSheet';
 import { draftProfileFor } from '@/lib/draft-profiles';
 import { YearSelect } from '@/components/YearSelect';
+import { TableSearch } from '@/components/TableSearch';
 import { crystalUnlocked } from '@/lib/crystal-access';
 import { getMe } from '@/lib/data';
 import { lockCrystal, unlockCrystal } from './actions';
@@ -773,16 +774,17 @@ function FreeAgentsView({ pos }: { pos?: string }) {
       <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
           <h2 className="h2">All free agents by 2026 average</h2>
-          <span className="muted" style={{ fontSize: 12 }}>Last 5 leaves out games he was injured in</span>
+          <TableSearch scope="fa-all" placeholder="Search free agents" />
         </div>
+        <span className="muted" style={{ fontSize: 12, marginTop: -6 }}>Last 5 leaves out games he was injured in</span>
         <div className="table-box" style={{ maxHeight: '75vh', overflow: 'auto' }}>
-          <table className="squad">
+          <table className="squad fa-all">
             <thead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#fff' }}>
               <tr><th style={{ width: 36 }}>#</th><th>Player</th><th style={{ textAlign: 'right' }}>GP</th><th style={{ textAlign: 'right' }}>’26 avg</th><th style={{ textAlign: 'right' }}>Last 5</th><th style={{ textAlign: 'right' }}>’25 avg</th><th style={{ textAlign: 'right' }}>2027</th><th>Tag</th></tr>
             </thead>
             <tbody>
               {[...ranked, ...unplayed].map((p, i) => (
-                <tr key={p.name} style={{ background: p.tags.length ? '#f4f9f1' : undefined }}>
+                <tr key={p.name} data-n={`${p.full} ${p.name}`.toLowerCase()} style={{ background: p.tags.length ? '#f4f9f1' : undefined }}>
                   <td className="mono muted">{p.avg != null ? i + 1 : ''}</td>
                   <td style={{ minWidth: 150 }}>
                     <FAName p={p} size={14} />
