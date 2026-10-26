@@ -167,6 +167,7 @@ def why(p, contrib, role):
     elif role == 'Ruck': lines.append({'good': True, 'text': 'Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested.'})
     return lines
 
+AFL_JG = json.load(open('data/junior-games-2026.json'))['players']
 # DFS ids for prospects (they appear in DFS's player list once they're on an AFL list, i.e. after the draft)
 try:
     DFS_ID = {norm(p['playerName']): p['playerId'] for p in json.load(open(f'{DFS_CACHE}/names.json'))['players'].values()}
@@ -178,7 +179,7 @@ for rank, name in PH:
     prof = PROF.get(name)
     rm = RM.get('2026|' + ALIAS.get(name, name)) or {}
     ht = (prof or {}).get('height') or int(re.sub(r'\D', '', rm.get('ht', '') or '0')[:3] or 0)
-    strs = list((prof or {}).get('strengths', [])) + list(rm.get('str') or [])
+    strs = list((prof or {}).get('strengths', [])) + list(rm.get('str') or []) + list(((prof or {}).get('zh') or {}).get('strengths') or [])
     imps = list((prof or {}).get('improvements', [])) + list(rm.get('imp') or [])
     st = sorted({g for g in (kw_group(s, SMAP) for s in strs) if g})
     if any('goals' in norm(s) or 'scoreboard' in norm(s) for s in strs): st = sorted(set(st) | {'Scoreboard impact'})
@@ -187,7 +188,12 @@ for rank, name in PH:
     if any('consisten' in norm(s) for s in imps): im = sorted(set(im) | {'needs consistency'})
     j = junior(rm.get('rows', []), 2026) if rm else None
     jg = junior_games(DFS_ID.get(norm(name)), 2026) if DFS_ID.get(norm(name)) else None
-    if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120']}
+    if not jg and name in AFL_JG:   # per-game AF from the AFL match centre (Talent League + U18 champs, 2025–26)
+        gs = [x for yr in AFL_JG[name].values() for comp in yr.values() for x in comp]
+        if gs:
+            best_yr = max(AFL_JG[name], key=lambda y: max((x for c in AFL_JG[name][y].values() for x in c), default=0))
+            jg = {'max': float(max(gs)), 'maxYr': int(best_yr), 'g120': sum(1 for x in gs if x >= 120), 'g150': sum(1 for x in gs if x >= 150), 'gms': len(gs)}
+    if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120'], 'g150': jg.get('g150'), 'jGames': jg.get('gms')}
     listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
     role = role_of(listed, ht, strs)
     p = {'name': name, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
@@ -201,7 +207,7 @@ for rank, name in PH:
     contrib = sorted([(k, v) for k, v in eff.items() if abs(v) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
     out.append({'rank': rank, 'name': name, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
-                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'jMax': j and j.get('max'), 'j120': j and j.get('g120'), 'traits': st, 'flags': im,
+                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'jMax': (j and j.get('max')) or (jg and jg['max']), 'j120': (j and j.get('g120')) or (jg and jg['g120']), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],
                 'why': why(p, contrib, role), 'type': TYPE_LABEL[types[0]], 'ceiling': 'Accumulator' in st,

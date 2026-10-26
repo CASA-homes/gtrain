@@ -118,7 +118,8 @@ def role_of(pos, ht, strs):
     # Tall players listed as utilities or midfielders (Bontempelli/Goddard types) get their own role: they can play
     # through the middle, so they are not written off like pure key position players.
     if ht >= 188 and ('util' in p or (('key' in p or 'tall' in p) and 'mid' in p) or ('mid' in p or 'wing' in p) and ht >= 190): return 'Tall utility'
-    if 'key' in p or 'tall' in p: return 'Key position'
+    # A 'tall' listing under 190cm is a third tall / half-back or half-forward, not a key position player
+    if ('key' in p or 'tall' in p) and not (ht and ht < 190 and 'key' not in p): return 'Key position'
     if not p and ht >= 194: return 'Key position'
     if 'mid' in p or 'wing' in p: return 'Midfielder'
     if 'small forward' in p or ('forward' in p and ht and ht <= 178): return 'Small forward'

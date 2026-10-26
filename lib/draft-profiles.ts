@@ -11,7 +11,8 @@ import p2026 from './draft-profiles-2026.json';
 // our own short read of each guide page, not their text. Each profile links back to the guide.
 // 2020: Rookie Me's 2020 draft guide (facts, strengths, work-ons, junior numbers) plus ESPN's final 2020 phantom draft for the scouting read.
 // 2021–2023: from each player's Rookie Me Central draft profile page.
-// 2026 prospects (no guide yet): from Rookie Me's 2026 power rankings, combine results and scouting notes.
+// 2026 prospects (no guide yet): from Rookie Me's 2026 power rankings, combine results and scouting notes, plus Zero Hanger's
+// big board, first-edition mock and profiles (zh) and every junior game's AF score from the AFL match centre (games).
 export interface DraftProfile {
   year: number;                 // draft year
   name: string;                 // as drafted
@@ -29,6 +30,10 @@ export interface DraftProfile {
   improvements: string[];
   summary: string;              // our own one-to-two-sentence read
   source: { title: string; url: string; page?: number };
+  // 2026: Zero Hanger's read (big-board rank, mock pick, profile) — our own summary of it
+  zh?: { rank?: number; range?: string; mock?: string; landing?: string[]; strengths?: string[]; note?: string; url: string; source: string };
+  // 2026: every junior game's AFL Fantasy score (AFL match centre, Talent League + U18 champs 2025–26)
+  games?: { max: number; g120: number; g150: number; n: number; seasons: { label: string; n: number; avg: number; best: number; scores: number[] }[] };
 }
 
 export const DRAFT_PROFILES: DraftProfile[] = [...(p2020 as DraftProfile[]), ...(p2021 as DraftProfile[]), ...(p2022 as DraftProfile[]), ...(p2023 as DraftProfile[]), ...(p2024 as DraftProfile[]), ...(p2025 as DraftProfile[]), ...(p2026 as DraftProfile[])];

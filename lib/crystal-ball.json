@@ -787,8 +787,8 @@
    "jD": 30.3,
    "jT": 6.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 159.0,
+   "j120": 4,
    "traits": [
     "Accumulator",
     "Contested / inside",
@@ -825,6 +825,10 @@
     }
    ],
    "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 159, 4 games of 120+. Goes big when it's on, not just a steady accumulator."
+    },
     {
      "good": true,
      "text": "Junior fantasy average of 138. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
@@ -939,8 +943,8 @@
    "jD": 28.2,
    "jT": 6.5,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 148.0,
+   "j120": 3,
    "traits": [
     "Athleticism",
     "Contested / inside",
@@ -976,6 +980,10 @@
     }
    ],
    "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 148, 3 games of 120+. Goes big when it's on, not just a steady accumulator."
+    },
     {
      "good": true,
      "text": "Junior fantasy average of 121. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
@@ -1083,8 +1091,8 @@
    "jD": 35.3,
    "jT": 5.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 151.0,
+   "j120": 4,
    "traits": [
     "Accumulator",
     "Clean hands",
@@ -1123,6 +1131,10 @@
     }
    ],
    "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 151, 4 games of 120+. Goes big when it's on, not just a steady accumulator."
+    },
     {
      "good": true,
      "text": "Junior fantasy average of 164. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
@@ -1240,8 +1252,8 @@
    "jD": 27.9,
    "jT": 4.6,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 139.0,
+   "j120": 2,
    "traits": [
     "Consistency",
     "Engine / work rate",
@@ -1279,6 +1291,10 @@
     }
    ],
    "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 139, 2 games of 120+. Goes big when it's on, not just a steady accumulator."
+    },
     {
      "good": true,
      "text": "Junior fantasy average of 115. Draftees at 110+ became 90+ AFL Fantasy players 35% of the time (8 of 23), against 11% for all picks."
@@ -1383,8 +1399,8 @@
    "jD": 28.3,
    "jT": 2.5,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 115.0,
+   "j120": 0,
    "traits": [
     "Engine / work rate",
     "Footy IQ / vision",
@@ -1500,8 +1516,8 @@
    "jD": 21.0,
    "jT": 7.8,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 140.0,
+   "j120": 1,
    "traits": [
     "Defensive pressure",
     "Kicking / skills",
@@ -1535,6 +1551,10 @@
     }
    ],
    "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 140, well above his 89 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 1.7\u00d7 their draft slots (2 of 7: Harry Sheezel (83 avg, 159 best), Sam Berry (79 avg, 149 best)). A few huge games say the scoring is in him."
+    },
     {
      "good": true,
      "text": "7.8 tackles a game. Juniors laying 6+ became stars 21% of the time: hunters score, as Warner, Berry and Brayshaw showed."
@@ -1642,8 +1662,8 @@
    "jD": 19.1,
    "jT": 1.7,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 100.0,
+   "j120": 0,
    "traits": [
     "Aerial / marking",
     "Athleticism",
@@ -1804,8 +1824,8 @@
    "jD": 24.0,
    "jT": 1.8,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 128.0,
+   "j120": 1,
    "traits": [
     "Engine / work rate",
     "Intercept / rebound",
@@ -1947,8 +1967,8 @@
    "jD": 23.5,
    "jT": 4.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 103.0,
+   "j120": 0,
    "traits": [
     "Defensive pressure",
     "Engine / work rate",
@@ -2059,8 +2079,8 @@
    "jD": 24.7,
    "jT": 4.9,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 127.0,
+   "j120": 3,
    "traits": [
     "Accumulator",
     "Consistency",
@@ -2203,8 +2223,8 @@
    "jD": 21.3,
    "jT": 3.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 102.0,
+   "j120": 0,
    "traits": [
     "Clean hands",
     "Engine / work rate",
@@ -2350,8 +2370,8 @@
    "jD": 18.0,
    "jT": 3.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 116.0,
+   "j120": 0,
    "traits": [
     "Scoreboard impact",
     "Size / strength"
@@ -2454,8 +2474,8 @@
    "jD": 20.3,
    "jT": 1.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 83.0,
+   "j120": 0,
    "traits": [
     "Engine / work rate",
     "Intercept / rebound",
@@ -2725,8 +2745,8 @@
    "jD": 16.5,
    "jT": 2.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 104.0,
+   "j120": 0,
    "traits": [],
    "flags": [
     "needs consistency"
@@ -2832,8 +2852,8 @@
    "jD": 19.4,
    "jT": 3.4,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 123.0,
+   "j120": 1,
    "traits": [
     "Engine / work rate",
     "Footy IQ / vision",
@@ -2971,8 +2991,8 @@
    "jD": 12.5,
    "jT": 3.8,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 110.0,
+   "j120": 0,
    "traits": [
     "Defensive pressure"
    ],
@@ -3074,11 +3094,13 @@
    "jD": 15.2,
    "jT": 3.6,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 126.0,
+   "j120": 1,
    "traits": [
     "Aerial / marking",
     "Defensive pressure",
+    "Scoreboard impact",
+    "Size / strength",
     "Speed / agility"
    ],
    "flags": [
@@ -3183,8 +3205,8 @@
    "jD": 17.1,
    "jT": 2.7,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 105.0,
+   "j120": 0,
    "traits": [
     "Defensive pressure",
     "Kicking / skills",
@@ -3233,6 +3255,144 @@
    "comps": []
   },
   {
+   "rank": 27,
+   "name": "Billy Wigmore",
+   "club": null,
+   "drafted": false,
+   "junior": "Western Jets",
+   "position": "Tall DEF",
+   "height": 188,
+   "role": "Defender",
+   "jFP": 80.0,
+   "jD": 18.6,
+   "jT": 1.9,
+   "jSeason": 2026,
+   "jMax": 163.0,
+   "j120": 3,
+   "traits": [
+    "Aerial / marking",
+    "Clean hands",
+    "Footy IQ / vision",
+    "Intercept / rebound"
+   ],
+   "flags": [
+    "needs composure/decisions"
+   ],
+   "chance": 6.7,
+   "relevant": 14.0,
+   "positionOnly": 8.7,
+   "reasons": [
+    {
+     "label": "Big junior games (140+)",
+     "effect": 0.54
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.44
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.29
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.22
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.11
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 163, 3 games of 120+, well above his 80 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 1.7\u00d7 their draft slots (2 of 7: Harry Sheezel (83 avg, 159 best), Sam Berry (79 avg, 149 best)). A few huge games say the scoring is in him."
+    },
+    {
+     "good": false,
+     "text": "Junior fantasy average of 80. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted aerial / marking: only 8 of 112 with that note became 90+ players (0.5\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Finn Callaghan",
+     "pick": 3,
+     "year": 2021,
+     "peak": 100.6,
+     "now": 95.6,
+     "jFP": 87.0,
+     "jT": 3.2,
+     "jD": 24.3,
+     "scouts": [],
+     "workons": [
+      "Contested game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Luke Davies-Uniacke",
+     "pick": 4,
+     "year": 2017,
+     "peak": 97.4,
+     "now": 90.0,
+     "jFP": 105.0,
+     "jT": 3.5,
+     "jD": 24.2,
+     "scouts": [
+      "Powerful",
+      "Penetrating kick",
+      "Contested marking",
+      "Big game player",
+      "Acceleration"
+     ],
+     "workons": [
+      "Endurance",
+      "Speed"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Ed Richards",
+     "pick": 16,
+     "year": 2017,
+     "peak": 101.4,
+     "now": 101.4,
+     "jFP": 56.0,
+     "jT": 2.9,
+     "jD": 15.0,
+     "scouts": [
+      "Speed",
+      "Kicking",
+      "Leap",
+      "Clearance work",
+      "Clean hands"
+     ],
+     "workons": [
+      "Endurance",
+      "Contested ball winning"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
    "rank": 15,
    "name": "Lochie Burrows",
    "club": null,
@@ -3245,8 +3405,8 @@
    "jD": null,
    "jT": null,
    "jSeason": null,
-   "jMax": null,
-   "j120": null,
+   "jMax": 103.0,
+   "j120": 0,
    "traits": [
     "Athleticism",
     "Leadership / character",
@@ -3379,18 +3539,20 @@
    "jD": 27.8,
    "jT": 2.8,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 98.0,
+   "j120": 0,
    "traits": [
     "Accumulator",
+    "Aerial / marking",
     "Engine / work rate",
-    "Kicking / skills"
+    "Kicking / skills",
+    "Size / strength"
    ],
    "flags": [
     "needs speed/athleticism"
    ],
-   "chance": 5.4,
-   "relevant": 26.3,
+   "chance": 4.1,
+   "relevant": 17.1,
    "positionOnly": 9.0,
    "reasons": [
     {
@@ -3400,6 +3562,10 @@
     {
      "label": "Kicking / skills",
      "effect": 0.34
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.29
     },
     {
      "label": "Combine: top-10 endurance",
@@ -3414,6 +3580,10 @@
     {
      "good": true,
      "text": "Scouts noted kicking / skills. 20 of 116 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted aerial / marking: only 8 of 112 with that note became 90+ players (0.5\u00d7 their draft slots)."
     },
     {
      "good": true,
@@ -3483,8 +3653,8 @@
    "jD": 22.0,
    "jT": 3.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 117.0,
+   "j120": 0,
    "traits": [
     "Clean hands",
     "Contested / inside",
@@ -3628,8 +3798,8 @@
    "jD": 16.0,
    "jT": 3.3,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 92.0,
+   "j120": 0,
    "traits": [
     "Clean hands",
     "Footy IQ / vision",
@@ -3709,8 +3879,8 @@
    "jD": 8.8,
    "jT": 1.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 62.0,
+   "j120": 0,
    "traits": [
     "Aerial / marking",
     "Athleticism",
@@ -3814,8 +3984,8 @@
    "jD": 14.5,
    "jT": 1.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 87.0,
+   "j120": 0,
    "traits": [
     "Intercept / rebound",
     "Kicking / skills",
@@ -3888,8 +4058,8 @@
    "jD": 13.0,
    "jT": 2.5,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 90.0,
+   "j120": 0,
    "traits": [
     "Aerial / marking",
     "Clean hands",
@@ -3956,8 +4126,8 @@
    "jD": 12.4,
    "jT": 2.6,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 128.0,
+   "j120": 1,
    "traits": [
     "Aerial / marking",
     "Athleticism",
@@ -4035,81 +4205,6 @@
    "comps": []
   },
   {
-   "rank": 27,
-   "name": "Billy Wigmore",
-   "club": null,
-   "drafted": false,
-   "junior": "Western Jets",
-   "position": "Tall DEF",
-   "height": 188,
-   "role": "Key position",
-   "jFP": 80.0,
-   "jD": 18.6,
-   "jT": 1.9,
-   "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
-   "traits": [
-    "Aerial / marking",
-    "Clean hands",
-    "Footy IQ / vision",
-    "Intercept / rebound"
-   ],
-   "flags": [
-    "needs composure/decisions"
-   ],
-   "chance": 0.2,
-   "relevant": 1.2,
-   "positionOnly": 8.7,
-   "reasons": [
-    {
-     "label": "Key position",
-     "effect": -2.2
-    },
-    {
-     "label": "Clean hands",
-     "effect": -0.44
-    },
-    {
-     "label": "Aerial / marking",
-     "effect": -0.29
-    },
-    {
-     "label": "Footy IQ / vision",
-     "effect": 0.22
-    },
-    {
-     "label": "Junior tackles",
-     "effect": -0.11
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 80. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted clean hands: only 6 of 74 with that note became 90+ players (0.7\u00d7 their draft slots)."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted aerial / marking: only 8 of 112 with that note became 90+ players (0.5\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 17 of 116 draftees with that note became 90+ players, 1.2\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
-    }
-   ],
-   "type": "key position player",
-   "ceiling": false,
-   "comps": []
-  },
-  {
    "rank": 11,
    "name": "Wil Malady",
    "club": null,
@@ -4122,8 +4217,8 @@
    "jD": 10.1,
    "jT": 1.7,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 112.0,
+   "j120": 0,
    "traits": [
     "Aerial / marking",
     "Scoreboard impact",
@@ -4205,8 +4300,8 @@
    "jD": 8.8,
    "jT": 1.0,
    "jSeason": 2025,
-   "jMax": null,
-   "j120": null,
+   "jMax": 90.0,
+   "j120": 0,
    "traits": [
     "Aerial / marking",
     "Athleticism",
