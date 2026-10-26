@@ -16,14 +16,17 @@ ROLES = ['Key position', 'Ruck', 'Small forward']
 # Roles are a hard fact about how fantasy scores are earned, so let them speak louder than a single scout's trait.
 ROLE_W = {'Key position': 3.0, 'Ruck': 0.0, 'Small forward': 2.0}   # ruck acts through the calibration only: past ruck stars were late picks, so a ruck boost on top of draft slot overshoots for early rucks
 COMBO = ['Combine: top-10 endurance', 'Combine: top-10 speed/jump']
-FEATS = ['Draft position', 'Junior fantasy avg', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)']
+FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)']
 
 def fv(p, pick):
     j = p.get('jun') or {}
     fp = (j.get('FP') or 0) - (j.get('HO') or 0)   # take hitouts out: a ruck's junior score isn't comparable to a mid's
     has = 1 if (j.get('FP') or 0) > 20 else 0
+    # Junior scoring only ever helps as it goes up. Low output (under 85) counts against him unless his contested work
+    # (5+ tackles or 4+ clearances a game) says he was a hidden scorer held back by role or minutes.
+    hidden = (j.get('T') or 0) >= 5 or (j.get('CLR') or 0) >= 4
     x = [-math.log(pick),
-         (min(max(fp, 40), 140) - 85) / 25 if has else 0,
+         0,   # low output is NOT counted against him: tested, a penalty made the model worse once pick, tackles and missing data are in
          (min(max(j.get('T') or 0, 0), 8) - 3.5) / 1.5 if has else 0,
          0 if has else 1]
     x += [ROLE_W[r] if p.get('role') == r else 0 for r in ROLES]

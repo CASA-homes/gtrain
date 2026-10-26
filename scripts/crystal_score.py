@@ -116,8 +116,10 @@ def why(p, contrib, role):
         lo = 110 if fp >= 110 else 100 if fp >= 100 else 90
         h, n = rate_for(lambda q: (q['jun'] or {}).get('FP') if q['jun'] and q['jun']['FP'] > 20 else None, lo, 999)
         lines.append({'good': True, 'text': f"Junior fantasy average of {fp:.0f}. Draftees at {lo}+ became 90+ AFL Fantasy players {round(h / n * 100)}% of the time ({h} of {n}), against {round(BASE * 100)}% for all picks."})
-    elif fp and fp < 70:
-        lines.append({'good': False, 'text': f"Junior fantasy average of {fp:.0f}: low output for a future fantasy star; most stars scored 90+ as juniors."})
+    elif fp and fp < 85 and ((t or 0) >= 5 or (j.get('CLR') or 0) >= 4):
+        lines.append({'good': True, 'text': f"Junior fantasy average of {fp:.0f} undersells him: {t or 0:.1f} tackles and {j.get('CLR') or 0:.1f} clearances a game. Low scorers with that contested work became stars at about 1.2–1.3× their draft slots: a hidden scorer."})
+    elif fp and fp < 85:
+        lines.append({'good': False, 'text': f"Junior fantasy average of {fp:.0f}. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."})
     if t and t >= 4.5:
         lo = 6 if t >= 6 else 4.5
         h, n = rate_for(lambda q: (q['jun'] or {}).get('T') if q['jun'] and q['jun']['FP'] > 20 else None, lo, 99)
@@ -161,7 +163,10 @@ for rank, name in PH:
     prob = cm.prob(model, x, role)
     prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL)
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
-    contrib = sorted([(FEATS[i], float(model.coef_[0][i] * x[i])) for i in range(1, len(FEATS)) if abs(model.coef_[0][i] * x[i]) > 0.08], key=lambda t: -abs(t[1]))
+    eff = {FEATS[i]: float(model.coef_[0][i] * x[i]) for i in range(1, len(FEATS))}
+    # One junior-scoring line on the page: the low-output penalty and the big-numbers boost are two halves of the same thing
+    eff['Junior fantasy avg'] = eff.pop('Low junior numbers', 0) + eff.pop('Big junior numbers (95+)', 0)
+    contrib = sorted([(k, v) for k, v in eff.items() if abs(v) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
     out.append({'rank': rank, 'name': name, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
                 'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
