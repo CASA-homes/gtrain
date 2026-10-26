@@ -55,11 +55,6 @@ export function draftAwards(players: PlayerRow[], ratings: Map<number, Ratings>)
   const mx = xs.reduce((a, b) => a + b, 0) / xs.length, my = ys.reduce((a, b) => a + b, 0) / ys.length;
   const slope = xs.reduce((t, x, i) => t + (x - mx) * (ys[i] - my), 0) / xs.reduce((t, x) => t + (x - mx) ** 2, 0);
   const expect = (pick: number) => my + slope * (Math.log(pick) - mx);
-  // Best win-now: 28 or older, the highest scorer
-  const winNow = fresh(rows).filter((x) => (x.a ?? 0) >= 28 && x.gm >= 8).sort((a, b) => b.avg - a.avg)[0];
-  add('winnow', 'Best win-now asset', 'Veteran who delivered straight away', winNow,
-    winNow ? `${winNow.avg.toFixed(0)} average at ${winNow.a}. Points this year, not a long-term play.` : '');
-
   // Worst top-10 pick: the lowest value among picks 1-10
   const value = fresh(fit).map((x) => ({ x, over: x.avg - expect(x.g.pick) })).sort((a, b) => b.over - a.over)[0];
   add('value', 'Best value pick', 'Most points above his draft slot', value?.x,
@@ -74,6 +69,6 @@ export function draftAwards(players: PlayerRow[], ratings: Map<number, Ratings>)
   const worst = fresh(rows).filter((x) => x.g.pick <= 10 && (x.a ?? 0) >= 22).sort((a, b) => (a.avg - expect(a.g.pick)) - (b.avg - expect(b.g.pick)))[0];
   add('worst', 'Worst top-10 pick', 'The early pick that hasn’t paid off yet', worst,
     worst ? (worst.gm ? `Went at pick ${worst.g.pick} as a ready-made player and averaged ${worst.avg.toFixed(0)} from ${worst.gm} games, about ${Math.round(expect(worst.g.pick) - worst.avg)} under what that slot returns.` : `Hasn’t played an AFL game since going at pick ${worst.g.pick}.`) : '');
-  const ORDER = ['rookie', 'diamond', 'value', 'asset', 'winnow', 'worst'];
+  const ORDER = ['rookie', 'diamond', 'value', 'asset', 'worst'];
   return out.sort((x, y) => ORDER.indexOf(x.key) - ORDER.indexOf(y.key));
 }
