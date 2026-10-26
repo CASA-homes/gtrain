@@ -10,6 +10,7 @@ import { getMe } from '@/lib/data';
 import { lockCrystal, unlockCrystal } from './actions';
 import data from '@/lib/crystal-ball.json';
 import freeAgents from '@/lib/free-agents.json';
+import seconds from '@/lib/fa-seconds.json';
 import { C } from '@/lib/ratings';
 
 // Crystal ball: patterns in pre-draft profiles that led to fantasy stars, applied to the 2026 crop.
@@ -643,6 +644,12 @@ const FAD = freeAgents as unknown as { updated: string; players: FA[] };
 const FA_TAG: Record<string, string> = {
   'Breakout signs': '#e9d7f5', 'Young and rising': '#d8ecd0', 'Finished strong': '#d6e6f5', 'Bigger role': '#f5ecc8', 'Injury discount': '#f3d9d2', 'Proven ceiling': '#f6e1c6',
 };
+type Sec = { name: string; full: string; pos: string; club: string; age: number | null; league: string; year: number; g: number; avg: number; max: number; g100: number;
+  disp: number; tkl: number; mk: number; gl: number; ho: number; last: number[]; aflG: number; aflAvg: number | null; ruck: boolean; why: string[] };
+const SEC = seconds as unknown as { updated: string; players: Sec[] };
+/** Seconds (VFL / SANFL / WAFL) numbers are always shown in purple so they're never mistaken for AFL output. */
+const S2 = { fg: '#5b2d8e', bg: '#f3ecfa', line: '#dccbef' };
+const SEC_BY = new Map(SEC.players.map((p) => [p.name + '|' + p.club, p]));
 const FA_STATUS: Record<string, string> = { SEASON: 'Season-ending injury', LONG: 'Long-term injury', SHORT: 'Short-term injury', OUT: 'Out of the side', SUSP: 'Suspended' };
 const FA_POS = ['All', 'DEF', 'MID', 'RUC', 'FWD'] as const;
 const fmt = (x: number | null) => (x == null ? '–' : Math.round(x));
@@ -653,6 +660,52 @@ function FATags({ p }: { p: FA }) {
     <span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap' }}>
       {p.tags.map((t) => <span key={t} className="pill" style={{ background: FA_TAG[t] ?? C.empty, color: C.ink, fontSize: 11 }}>{t}</span>)}
     </span>
+  );
+}
+
+function SecondsPanel({ pos, targets }: { pos: string; targets: Set<string> }) {
+  const list = SEC.players.filter((p) => pos === 'All' || p.pos.split('/').includes(pos));
+  return (
+    <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
+        <h2 className="h2">Dominating the 2s</h2>
+        <span style={{ fontSize: 12, color: S2.fg }}>Purple numbers are VFL / SANFL / WAFL, not AFL · 27 and under · 90+ average</span>
+      </div>
+      {list.length === 0 ? <p className="muted" style={{ margin: 0 }}>Nobody at this position tore up the seconds.</p> : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 10 }}>
+          {list.map((p) => (
+            <div key={p.name + p.club} className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 8, borderColor: S2.line }}>
+              <div className="row-between" style={{ alignItems: 'flex-start', gap: 8 }}>
+                <div style={{ minWidth: 0 }}>
+                  <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
+                  <div style={{ fontWeight: 600, fontSize: 16 }}>{p.full}</div>
+                </div>
+                <div style={{ textAlign: 'right', flex: 'none', color: S2.fg }}>
+                  <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{Math.round(p.avg)}</div>
+                  <span style={{ fontSize: 10 }}>{p.league} avg ’{String(p.year).slice(2)}</span>
+                </div>
+              </div>
+              <span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap' }}>
+                <span className="pill" style={{ background: S2.bg, color: S2.fg, fontSize: 11 }}>Dominating the 2s</span>
+                {targets.has(p.name + '|' + p.club) && <span className="pill" style={{ background: FA_TAG['Breakout signs'], color: C.ink, fontSize: 11 }}>Also a draft target</span>}
+              </span>
+              <div style={{ background: S2.bg, color: S2.fg, borderRadius: 10, padding: '8px 10px', display: 'flex', flexDirection: 'column', gap: 5, fontSize: 12 }}>
+                <span className="mono">{p.league} {p.year} · {p.g} gm · max {p.max} · {p.g100}× 100+</span>
+                <span className="mono">{p.disp.toFixed(0)} disp · {p.tkl.toFixed(1)} tkl · {p.mk.toFixed(1)} mk{p.gl >= 0.5 ? ` · ${p.gl.toFixed(1)} gl` : ''}{p.ho >= 5 ? ` · ${p.ho.toFixed(0)} ho` : ''}</span>
+                {p.last.length > 0 && (
+                  <span style={{ display: 'inline-flex', gap: 4, alignItems: 'center', flexWrap: 'wrap' }}>
+                    <span>Last {p.last.length}</span>
+                    {p.last.map((x, i) => <span key={i} className="mono" style={{ background: '#fff', borderRadius: 6, padding: '1px 6px', fontWeight: x >= 100 ? 700 : 400 }}>{x}</span>)}
+                  </span>
+                )}
+              </div>
+              <ul style={{ margin: 0, paddingLeft: 16, fontSize: 13, lineHeight: 1.45 }}>{p.why.map((w) => <li key={w}>{w}</li>)}</ul>
+              <span className="muted mono" style={{ fontSize: 11 }}>AFL ’26 {p.aflAvg != null ? `${fmt(p.aflAvg)} (${p.aflG}g)` : 'no games'}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -703,6 +756,8 @@ function FreeAgentsView({ pos }: { pos?: string }) {
         )}
       </section>
 
+      <SecondsPanel pos={filt} targets={new Set(targets.map((t) => t.name + '|' + t.club))} />
+
       <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
           <h2 className="h2">All free agents by 2026 average</h2>
@@ -726,7 +781,7 @@ function FreeAgentsView({ pos }: { pos?: string }) {
                   <td className="mono" style={{ textAlign: 'right' }}>{fmt(p.l5)}</td>
                   <td className="mono muted" style={{ textAlign: 'right' }}>{fmt(p.a25)}</td>
                   <td className="mono" style={{ textAlign: 'right' }}>{fmt(p.proj)}</td>
-                  <td><FATags p={p} /></td>
+                  <td><span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap', alignItems: 'center' }}><FATags p={p} />{SEC_BY.get(p.name + '|' + p.club) && <span className="pill" title="Seconds average (VFL / SANFL / WAFL)" style={{ background: S2.bg, color: S2.fg, fontSize: 11 }}>{SEC_BY.get(p.name + '|' + p.club)!.league} {Math.round(SEC_BY.get(p.name + '|' + p.club)!.avg)}</span>}</span></td>
                 </tr>
               ))}
             </tbody>
