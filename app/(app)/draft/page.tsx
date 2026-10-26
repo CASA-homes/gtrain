@@ -199,11 +199,12 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
         <h2 className="h2">Draft day, one season on</h2>
       </div>
       <span className="muted" style={{ fontSize: 12, marginTop: -4 }}>Judged on 2026 output, age and long-term rating.</span>
+      <div className="award-scroll">
       {awards.map((a) => {
         const t = teamByName.get(norm(a.team));
         const mine = t && t.id === myTeam;
         return (
-          <div key={a.key} className="card" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 6, ...(mine ? { borderColor: 'var(--ink)' } : {}) }}>
+          <div key={a.key} className="card" style={{ flexShrink: 0, padding: 12, display: 'flex', flexDirection: 'column', gap: 6, ...(mine ? { borderColor: 'var(--ink)' } : {}) }}>
             <span style={{ font: '600 11px var(--font)', textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--muted, #777)' }}>{a.title}</span>
             <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
               <Face p={a.player} label={a.player.name} size={44} />
@@ -217,6 +218,7 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
           </div>
         );
       })}
+      </div>
     </aside>
     </div>
   );
