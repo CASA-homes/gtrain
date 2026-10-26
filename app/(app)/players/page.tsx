@@ -1,3 +1,4 @@
+import { getWatchlist } from '@/lib/watchlist';
 import Link from 'next/link';
 import { AvgChip, Bar20, ClubDot, FormArrow, PosDots, Stars } from '@/components/bits';
 import { getLeague, getMe, FREE_AGENTS_UPDATED } from '@/lib/data';
@@ -37,7 +38,7 @@ const PRESETS: { name: string; hint: string; q: Record<string, string> }[] = [
 
 export default async function PlayersPage({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
+  const [league, me, watch] = await Promise.all([getLeague(), getMe(), getWatchlist()]);
   const q = (sp.q ?? '').toLowerCase();
   const line = LINES.includes(sp.line as Line) ? (sp.line as Line) : null;
   const team = sp.team ? Number(sp.team) : null;
@@ -57,7 +58,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     return (r as unknown as Record<string, number>)[key] ?? null;
   };
 
-  const own = sp.own === 'free' ? 'free' : sp.own === 'all' ? 'all' : 'owned';
+  const own = sp.own === 'free' ? 'free' : sp.own === 'all' ? 'all' : sp.own === 'watch' ? 'watch' : 'owned';
   const club = sp.club && CLUBS[sp.club] ? sp.club : null;
   const status = sp.status === 'playing' || sp.status === 'injured' ? sp.status : null;
   const period = PERIODS.some(([k]) => k === sp.period) ? sp.period! : 'season';
@@ -69,7 +70,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     const last = xs.slice(-n);
     return last.length ? Math.round((last.reduce((t, x) => t + x, 0) / last.length) * 10) / 10 : null;
   };
-  const pool = own === 'owned' ? league.players : own === 'free' ? league.freeAgents : [...league.players, ...league.freeAgents];
+  const pool = own === 'owned' ? league.players : own === 'free' ? league.freeAgents
+    : own === 'watch' ? [...league.players, ...league.freeAgents].filter((p) => watch.ids.has(p.id)) : [...league.players, ...league.freeAgents];
   const rows = pool
     .filter((p) => (!q || p.name.toLowerCase().includes(q) || (p.full_name ?? '').toLowerCase().includes(q))
       && (!line || p.positions.includes(line))
@@ -114,7 +116,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     <div className="wrap">
       <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow">{own === 'owned' ? 'On a G-Train list' : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
+          <span className="eyebrow">{own === 'owned' ? 'On a G-Train list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Players</h1>
         </div>
       </div>
@@ -132,9 +134,9 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               Filters{activeFilters ? ` · ${activeFilters}` : ''}
             </span>
             <span className="own-toggle" role="tablist" aria-label="Ownership">
-              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['all', 'All', null]] as const).map(([k, lab, n]) => (
+              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'My watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
                 <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
-                  {lab}{n != null && <span>{n}</span>}
+                  {k === 'watch' ? <><b className="ot-my">My&nbsp;</b>watchlist</> : lab}{n != null && <span>{n}</span>}
                 </Link>
               ))}
             </span>
@@ -178,7 +180,10 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
       </form>
       <p className="muted" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
-      <div className="table-box">
+      {own === 'watch' && rows.length === 0 && (
+          <div className="card muted" style={{ padding: 16 }}>Your watchlist is empty. Tap the grey star above a player’s name on his profile to add him.</div>
+        )}
+        <div className="table-box">
         <table className="squad" style={{ minWidth: 760 + extra.length * 150 }}>
           <thead>
             <tr>
@@ -198,7 +203,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                   <td><PosDots positions={p.positions} /></td>
                   <td><ClubDot code={p.afl_club} /></td>
                   <td style={{ whiteSpace: 'nowrap' }}>
-                    <Link href={`/players/${p.id}`}>{p.name}</Link>{(p.is_keeper || p.is_rookie_keeper) && <span className="keeper-tag">K</span>}
+                    <Link href={`/players/${p.id}`}>{p.name}</Link>{(p.is_keeper || p.is_rookie_keeper) && <span className="keeper-tag">K</span>}{watch.ids.has(p.id) && <span title="On your watchlist" aria-label="On your watchlist" style={{ color: '#e2b100', marginLeft: 4 }}>★</span>}
                     {p.status && <span className="pill" title={STATUS_LABEL[p.status] ?? p.status} style={{ marginLeft: 6, background: '#f3c2b9', color: '#7a1d12' }}>{p.status}</span>}
                   </td>
                   <td style={{ whiteSpace: 'nowrap' }}>

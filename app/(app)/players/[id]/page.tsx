@@ -15,11 +15,13 @@ import { draftProfileFor } from '@/lib/draft-profiles';
 import { PlayerCard } from '@/components/PlayerCard';
 import { playerCard } from '@/lib/player-card';
 import { DRAFTEES } from '@/lib/draft-history';
+import { WatchStar } from '@/components/WatchStar';
+import { getWatchlist } from '@/lib/watchlist';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
   const { view } = await searchParams;
-  const league = await getLeague();
+  const [league, watch] = await Promise.all([getLeague(), getWatchlist()]);
   const p = league.players.find((x) => x.id === Number(id)) ?? league.freeAgents.find((x) => x.id === Number(id));
   if (!p) notFound();
   const r = league.ratings.get(p.id)!;
@@ -77,6 +79,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               {(p.is_keeper || p.is_rookie_keeper) && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
               {p.status && <span className="pill ph-pill" style={{ background: C.redBg, color: C.redFg, borderColor: C.redBg }}>{p.status}</span>}
               {p.list_status && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.list_status}</span>}
+              <WatchStar playerId={p.id} initial={watch.ids.has(p.id)} name={p.full_name ?? p.name} size={20} />
             </div>
             <h1 className="ph-name">{p.full_name ?? p.name}</h1>
             <div className="ph-sub">

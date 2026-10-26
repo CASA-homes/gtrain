@@ -163,6 +163,7 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .own-toggle a span { font: 500 10.5px var(--mono); padding: 1px 6px; border-radius: 99px; background: rgb(0 0 0 / .06); }
 .own-toggle a.on { background: var(--ink); color: #fff; }
 .own-toggle a.on span { background: rgb(255 255 255 / .18); }
+.own-toggle a b.ot-my { font-weight: inherit; }
 .pf-row .btn { min-height: 36px; padding: 0 12px; }
 @media (max-width: 480px) {
   .pf-row { flex-wrap: nowrap; gap: 6px; }
@@ -279,3 +280,5 @@ tr.cb-row-star .pill { box-shadow: 0 0 0 1px rgb(255 255 255 / .5); }
 tr.cb-row-track > td { background: #bfe0b0; }
 tr.cb-row-close > td { background: #e3f2dc; }
 tr.cb-row-building > td { background: #dcebf2; }
+
+@media (max-width: 480px) { .own-toggle a b.ot-my { display: none; } }
