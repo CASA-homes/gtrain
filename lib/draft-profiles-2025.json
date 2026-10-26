@@ -1,3799 +1,3983 @@
 [
-{
-"year": 2025,
-"name": "Beau Addinsall",
-"junior": "Suns Academy",
-"state": "Queensland",
-"position": "MID",
-"height": 182,
-"dob": "2007-03-09",
-"projection": "20-30",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "32.0"
-},
-{
-"label": "Marks",
-"value": "5.0"
-},
-{
-"label": "Tackles",
-"value": "3.7"
-},
-{
-"label": "Clearances",
-"value": "7.7"
-},
-{
-"label": "Goals",
-"value": "1.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "129.0"
-}
-],
-"strengths": [
-"Accumulation",
-"Agility",
-"Clean hands",
-"Running power",
-"Stoppage craft",
-"Vision"
-],
-"improvements": [
-"Impact per possession",
-"Kick-to-handball ratio"
-],
-"summary": "Gold Coast academy ball magnet who averaged 32 disposals and nearly 8 clearances in the Talent League, with a 129 junior fantasy average. Clean at stoppages, covers ground and links up in transition. Needed to hurt more with each touch and kick it more often.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 6
-}
-},
-{
-"year": 2025,
-"name": "Daniel Annable",
-"junior": "Lions Academy",
-"state": "Queensland",
-"position": "MID",
-"height": 184,
-"dob": "2007-05-04",
-"projection": "3-6",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Below avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Elite",
-"Contested": "Elite",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "24.8"
-},
-{
-"label": "Marks",
-"value": "2.8"
-},
-{
-"label": "Disposal eff %",
-"value": "67.7"
-},
-{
-"label": "Clearances",
-"value": "4.3"
-},
-{
-"label": "Inside 50s",
-"value": "5.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "86.3"
-}
-],
-"strengths": [
-"Clean hands",
-"Competitiveness",
-"Consistency",
-"Running power",
-"Stoppage craft",
-"Work rate"
-],
-"improvements": [
-"Kicking under pressure",
-"Flair"
-],
-"summary": "Brisbane academy midfielder rated elite for contested ball and consistency. A clean, one-touch extractor at stoppages who added two-way running and goals, including snaps resting forward. Not quick, and his kicking under pressure and flair needed work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 7
-}
-},
-{
-"year": 2025,
-"name": "Harley Barker",
-"junior": "Sturt",
-"state": "South Australia",
-"position": "Wing",
-"height": 188,
-"dob": "2007-05-02",
-"projection": "25-35",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "16.0"
-},
-{
-"label": "Marks",
-"value": "5.5"
-},
-{
-"label": "Disposal eff %",
-"value": "73.4"
-},
-{
-"label": "Inside 50s",
-"value": "3.3"
-},
-{
-"label": "Goals",
-"value": "1.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "72.0"
-}
-],
-"strengths": [
-"Kicking",
-"Outside run",
-"Overhead marking",
-"Speed",
-"Versatility",
-"Work rate"
-],
-"improvements": [
-"Contested game",
-"Ground balls"
-],
-"summary": "Modern athletic wingman with speed (a 2.86s 20m) and an aerobic engine who runs both ways and uses the ball well by foot. Strong overhead on the outside. Contested and ground-ball work were the gaps.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 8
-}
-},
-{
-"year": 2025,
-"name": "Sam Cumming",
-"junior": "North Adelaide",
-"state": "South Australia",
-"position": "MID/FWD",
-"height": 183,
-"dob": "2007-07-27",
-"projection": "5-15",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "17.0"
-},
-{
-"label": "Marks",
-"value": "3.5"
-},
-{
-"label": "Disposal eff %",
-"value": "76.5"
-},
-{
-"label": "Inside 50s",
-"value": "3.3"
-},
-{
-"label": "Goals",
-"value": "1.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "70.3"
-}
-],
-"strengths": [
-"Competitiveness",
-"Consistency",
-"Overhead marking",
-"Power",
-"Scoreboard impact",
-"Work rate"
-],
-"improvements": [
-"Kicking technique",
-"Outside game"
-],
-"summary": "Powerful inside midfielder who also goes forward and marks strongly overhead. Rarely had fewer than 20 touches in the SANFL under-18s and was rated elite for ceiling. Kicking technique and his outside game were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 9
-}
-},
-{
-"year": 2025,
-"name": "Harry Dean",
-"junior": "Murray Bushrangers",
-"state": "Vic Country",
-"position": "Tall DEF",
-"height": 194,
-"dob": "2007-11-13",
-"projection": "5-10",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "15.3"
-},
-{
-"label": "Marks",
-"value": "6.3"
-},
-{
-"label": "Disposal eff %",
-"value": "85.2"
-},
-{
-"label": "Cont. marks",
-"value": "1.5"
-},
-{
-"label": "Rebound 50s",
-"value": "2.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "64.5"
-}
-],
-"strengths": [
-"Athleticism",
-"Competitiveness",
-"Distribution",
-"Intercepting",
-"Overhead marking",
-"Reading the play"
-],
-"improvements": [
-"In-between size",
-"Versatility"
-],
-"summary": "Elite aerial defender who reads the play early and marks or spoils at the drop zone. Tough one-on-one, and a clean left-foot kick out of defence (85% efficiency). In-between size and versatility were the question marks.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 10
-}
-},
-{
-"year": 2025,
-"name": "Lachy Dovaston",
-"junior": "Eastern Ranges",
-"state": "Vic Metro",
-"position": "FWD",
-"height": 178,
-"dob": "2007-05-29",
-"projection": "12-20",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Elite",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "12.8"
-},
-{
-"label": "Marks",
-"value": "2.0"
-},
-{
-"label": "Disposal eff %",
-"value": "60.8"
-},
-{
-"label": "Tackles",
-"value": "3.5"
-},
-{
-"label": "Goals",
-"value": "2.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "67.3"
-}
-],
-"strengths": [
-"Agility",
-"Consistency",
-"Defensive pressure",
-"Scoreboard impact",
-"Speed",
-"Work rate"
-],
-"improvements": [
-"Goalkicking accuracy",
-"Size"
-],
-"summary": "Elite-agility small forward who does more than kick goals: he creates turnovers, runs in transition and added midfield and stoppage craft during the year. Small, and his goalkicking accuracy was the main work-on.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 11
-}
-},
-{
-"year": 2025,
-"name": "Cooper Duff-Tytler",
-"junior": "Calder Cannons",
-"state": "Vic Metro",
-"position": "RUCK/FWD",
-"height": 201,
-"dob": "2007-08-22",
-"projection": "1-3",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Elite",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "14.5"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "53.4"
-},
-{
-"label": "Hitouts",
-"value": "14.0"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "77.0"
-}
-],
-"strengths": [
-"Athleticism",
-"Cleanliness",
-"Follow-up work",
-"Mobility",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Physicality",
-"Ruck craft"
-],
-"summary": "Elite-ceiling 201cm ruck-forward with rare agility and mobility for his size. Vic Metro's No.1 ruck but named at centre half-forward in the All-Australian side, and played forward on VFL debut for Essendon. Needs to add strength and refine his ruck craft.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 12
-}
-},
-{
-"year": 2025,
-"name": "Louis Emmett",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "RUCK/FWD",
-"height": 199,
-"dob": "2007-03-23",
-"projection": "15-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Elite",
-"Speed": "Average",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "12.7"
-},
-{
-"label": "Marks",
-"value": "4.3"
-},
-{
-"label": "Disposal eff %",
-"value": "73.7"
-},
-{
-"label": "Hitouts",
-"value": "8.0"
-},
-{
-"label": "Goals",
-"value": "0.7"
-},
-{
-"label": "AFL Fantasy",
-"value": "61.0"
-}
-],
-"strengths": [
-"Aerial ability",
-"Clean hands",
-"Mobility",
-"Running capacity",
-"Physicality",
-"Versatility"
-],
-"improvements": [
-"Consistency",
-"Contest craft"
-],
-"summary": "Mobile 199cm forward and fourth-midfielder ruck with an elite engine (third in the combine 2km). Strong contested marker with a big leap who links up through the ground. Consistency and contest craft were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 14
-}
-},
-{
-"year": 2025,
-"name": "Willem Duursma",
-"junior": "Gippsland Power",
-"state": "Vic Country",
-"position": "UTIL",
-"height": 193,
-"dob": "2007-06-21",
-"projection": "1-3",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "24.3"
-},
-{
-"label": "Marks",
-"value": "5.3"
-},
-{
-"label": "Disposal eff %",
-"value": "74.2"
-},
-{
-"label": "Clearances",
-"value": "2.0"
-},
-{
-"label": "Rebound 50s",
-"value": "3.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "94.5"
-}
-],
-"strengths": [
-"Aerial ability",
-"Athleticism",
-"Clean hands",
-"Ground coverage",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Contested game",
-"Kicking consistency"
-],
-"summary": "Elite-ceiling 193cm utility from a basketball background with outstanding aerial reach, who dominated in the air in defence then became a mobile marking threat forward (16 goals in 13 games). A 94.5 junior fantasy average at the carnival. Contested work and kicking consistency were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 13
-}
-},
-{
-"year": 2025,
-"name": "Jacob Farrow",
-"junior": "West Perth",
-"state": "Western Australia",
-"position": "DEF/MID",
-"height": 187,
-"dob": "2007-09-21",
-"projection": "8-15",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "19.0"
-},
-{
-"label": "Marks",
-"value": "4.8"
-},
-{
-"label": "Disposal eff %",
-"value": "89.5"
-},
-{
-"label": "Tackles",
-"value": "3.5"
-},
-{
-"label": "Rebound 50s",
-"value": "4.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "78.0"
-}
-],
-"strengths": [
-"Agility",
-"Intercept marking",
-"Kicking",
-"Power",
-"Rebounding",
-"Size"
-],
-"improvements": [
-"Defensive craft",
-"Endurance"
-],
-"summary": "Powerful half-back with one of the best long kicks in the draft (compared to Hayden Young's left foot) and 89% efficiency at the carnival. Intercepts, rebounds and takes on the game with speed. Defensive craft and endurance were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 15
-}
-},
-{
-"year": 2025,
-"name": "Oliver Greeves",
-"junior": "Eastern Ranges",
-"state": "Vic Metro",
-"position": "MID",
-"height": 191,
-"dob": "2007-02-07",
-"projection": "12-25",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Below avg",
-"Speed": "Below avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Elite",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "25.0"
-},
-{
-"label": "Marks",
-"value": "5.3"
-},
-{
-"label": "Disposal eff %",
-"value": "73.0"
-},
-{
-"label": "Clearances",
-"value": "4.5"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "92.0"
-}
-],
-"strengths": [
-"Class",
-"Clean hands",
-"Kicking power",
-"Scoreboard impact",
-"Size",
-"Stoppage craft"
-],
-"improvements": [
-"Defensive transition",
-"Speed"
-],
-"summary": "Big-bodied 191cm stoppage midfielder rated elite on contested ball, with clean hands and a powerful kick; 25 disposals and a 92 junior fantasy average for Vic Metro. Also showed outside class and run for Eastern. Below average for speed and endurance.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 16
-}
-},
-{
-"year": 2025,
-"name": "Sam Grlj",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "MID/DEF",
-"height": 182,
-"dob": "2007-07-26",
-"projection": "5-12",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Elite",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "17.0"
-},
-{
-"label": "Marks",
-"value": "2.5"
-},
-{
-"label": "Disposal eff %",
-"value": "72.1"
-},
-{
-"label": "Inside 50s",
-"value": "2.0"
-},
-{
-"label": "Rebound 50s",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "57.0"
-}
-],
-"strengths": [
-"Competitiveness",
-"Dare",
-"Evasiveness",
-"Line-breaking",
-"Running power",
-"Speed"
-],
-"improvements": [
-"Accumulation",
-"Composure"
-],
-"summary": "Elite-speed, high-ceiling runner who breaks lines from half-back and the midfield with dare and repeat efforts (top 10 in both the combine sprint and 2km). Low accumulator as a junior, and his composure with the ball needed work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 17
-}
-},
-{
-"year": 2025,
-"name": "Noah Hibbins-Hargreaves",
-"junior": "Dandenong Stingrays",
-"state": "Vic Country",
-"position": "FWD/MID",
-"height": 186,
-"dob": "2007-11-16",
-"projection": "12-20",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "12.0"
-},
-{
-"label": "Marks",
-"value": "3.3"
-},
-{
-"label": "Disposal eff %",
-"value": "83.3"
-},
-{
-"label": "Clearances",
-"value": "1.3"
-},
-{
-"label": "Goals",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "53.8"
-}
-],
-"strengths": [
-"Class",
-"Decision making",
-"Finishing",
-"Overhead marking",
-"Scoreboard impact",
-"Versatility"
-],
-"improvements": [
-"Durability",
-"Ground balls"
-],
-"summary": "Deadeye forward (82% conversion as a bottom-ager) who is quick on the lead and strong overhead, and added wing and on-ball minutes in his draft year. Elite ceiling. Durability and ground-ball work were the flags.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 18
-}
-},
-{
-"year": 2025,
-"name": "Jack Ison",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "FWD/MID",
-"height": 191,
-"dob": "2007-03-26",
-"projection": "20-40",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "20.5"
-},
-{
-"label": "Marks",
-"value": "2.7"
-},
-{
-"label": "Tackles",
-"value": "4.5"
-},
-{
-"label": "Inside 50s",
-"value": "4.5"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "88.0"
-}
-],
-"strengths": [
-"Agility",
-"Decision making",
-"Kicking",
-"Poise",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Ground balls",
-"Work rate"
-],
-"summary": "Carlton academy left-footer: tall, agile midfielder-forward whose kicking inside 50 is a weapon and who has poise in traffic. Can play almost anywhere. Ground-ball work and work rate were the questions.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 19
-}
-},
-{
-"year": 2025,
-"name": "Max King",
-"junior": "Swans Academy",
-"state": "NSW/ACT",
-"position": "FWD/MID",
-"height": 191,
-"dob": "2007-01-09",
-"projection": "15-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Elite",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Below avg",
-"Contested": "Above avg",
-"Disposal": "Below avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "7.3"
-},
-{
-"label": "Marks",
-"value": "2.7"
-},
-{
-"label": "Disposal eff %",
-"value": "50.0"
-},
-{
-"label": "Inside 50s",
-"value": "1.3"
-},
-{
-"label": "Goals",
-"value": "0.7"
-},
-{
-"label": "AFL Fantasy",
-"value": "34.7"
-}
-],
-"strengths": [
-"Aerial ability",
-"Athleticism",
-"Power",
-"Speed",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Finishing",
-"Footy IQ"
-],
-"summary": "Sydney academy enigma: a freak 191cm athlete with elite speed (2.83s 20m) and a 98cm running jump who can take a screamer or run the length of the ground. Very raw: low output, poor consistency and ball use, and his finishing and footy IQ needed work. Pure upside, not a fantasy profile yet.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 20
-}
-},
-{
-"year": 2025,
-"name": "Josh Lindsay",
-"junior": "Geelong Falcons",
-"state": "Vic Country",
-"position": "DEF/MID",
-"height": 183,
-"dob": "2007-04-07",
-"projection": "5-15",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Elite"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "22.3"
-},
-{
-"label": "Marks",
-"value": "3.8"
-},
-{
-"label": "Disposal eff %",
-"value": "76.4"
-},
-{
-"label": "Rebound 50s",
-"value": "3.0"
-},
-{
-"label": "Tackles",
-"value": "1.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "74.8"
-}
-],
-"strengths": [
-"Class",
-"Decision making",
-"Efficiency",
-"Footy IQ",
-"Kicking",
-"Vision"
-],
-"improvements": [
-"Contested game",
-"Defensive work rate"
-],
-"summary": "Consensus best kick in the draft: a free-roaming half-back with elite vision and decision-making who sets up play with a kick-first game. Teams play for him to get the ball. Contested work and defensive effort were the work-ons. A classic rebounding-defender fantasy type.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 21
-}
-},
-{
-"year": 2025,
-"name": "Archie Ludowyke",
-"junior": "Sandringham Dragons",
-"state": "Vic Metro",
-"position": "Key FWD",
-"height": 197,
-"dob": "2007-11-19",
-"projection": "15-25",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Below avg",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "9.3"
-},
-{
-"label": "Marks",
-"value": "5.3"
-},
-{
-"label": "Cont. marks",
-"value": "1.3"
-},
-{
-"label": "Inside 50s",
-"value": "1.7"
-},
-{
-"label": "Goals",
-"value": "3.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "65.0"
-}
-],
-"strengths": [
-"Aerial ability",
-"Leading patterns",
-"Mobility",
-"Scoreboard impact",
-"Upside",
-"Vertical leap"
-],
-"improvements": [
-"Consistency",
-"Strength"
-],
-"summary": "Lean, springy 197cm key forward in the Aaron Cadman mould: leads hard, marks at the highest point and kicked over three goals a game. Needed to add strength and become more consistent.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 22
-}
-},
-{
-"year": 2025,
-"name": "Mitch Marsh",
-"junior": "West Adelaide",
-"state": "South Australia",
-"position": "Tall FWD",
-"height": 190,
-"dob": "2007-02-15",
-"projection": "8-15",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "8.5"
-},
-{
-"label": "Marks",
-"value": "6.0"
-},
-{
-"label": "Disposal eff %",
-"value": "64.7"
-},
-{
-"label": "Inside 50s",
-"value": "2.3"
-},
-{
-"label": "Goals",
-"value": "3.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "67.8"
-}
-],
-"strengths": [
-"Athleticism",
-"Kicking power",
-"Leading patterns",
-"Overhead marking",
-"Running capacity",
-"Scoreboard impact"
-],
-"improvements": [
-"Consistency",
-"Strength"
-],
-"summary": "Athletic, high-marking 190cm forward who topped the national carnival goalkicking (12 in four games) after two a game in the SANFL under-18s. Steady set shot and long kick. Needed to add strength and consistency.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 23
-}
-},
-{
-"year": 2025,
-"name": "Zac McCarthy",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "RUCK/FWD",
-"height": 199,
-"dob": "2007-10-27",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Below avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "9.8"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "61.5"
-},
-{
-"label": "Hitouts",
-"value": "4.8"
-},
-{
-"label": "Goals",
-"value": "1.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "56.3"
-}
-],
-"strengths": [
-"Aerial ability",
-"Mobility",
-"Reach",
-"Scoreboard impact",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Durability",
-"Strength"
-],
-"summary": "Lightly framed, still-improving 199cm forward who can pinch-hit in the ruck. Big reach overhead and a high-upside long-term type. Needed a lot more strength and to stay on the park.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 24
-}
-},
-{
-"year": 2025,
-"name": "Cameron Nairn",
-"junior": "Central District",
-"state": "South Australia",
-"position": "FWD/Wing",
-"height": 188,
-"dob": "2007-10-15",
-"projection": "20-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "10.0"
-},
-{
-"label": "Marks",
-"value": "5.3"
-},
-{
-"label": "Disposal eff %",
-"value": "75.0"
-},
-{
-"label": "Inside 50s",
-"value": "1.3"
-},
-{
-"label": "Goals",
-"value": "2.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "60.5"
-}
-],
-"strengths": [
-"Kicking",
-"Leading patterns",
-"Overhead marking",
-"Running capacity",
-"Scoreboard impact",
-"Versatility"
-],
-"improvements": [
-"Consistency",
-"Ground balls"
-],
-"summary": "Medium forward who plays above his height, covers big ground and kicks goals: back-to-back 22-goal SANFL under-18 seasons and a seven-goal haul for SA at the carnival. Clinical by foot. Consistency and ground-ball work were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 25
-}
-},
-{
-"year": 2025,
-"name": "Dylan Patterson",
-"junior": "Suns Academy",
-"state": "Queensland",
-"position": "MID/DEF",
-"height": 183,
-"dob": "2007-09-01",
-"projection": "2-5",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Elite",
-"Endurance": "Average",
-"Speed": "Elite",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "19.8"
-},
-{
-"label": "Marks",
-"value": "3.5"
-},
-{
-"label": "Disposal eff %",
-"value": "73.4"
-},
-{
-"label": "Rebound 50s",
-"value": "5.0"
-},
-{
-"label": "Tackles",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "67.8"
-}
-],
-"strengths": [
-"Dare",
-"Hurt factor",
-"Line-breaking",
-"Power",
-"Speed",
-"Tenacity"
-],
-"improvements": [
-"Composure",
-"Endurance"
-],
-"summary": "Gold Coast academy speedster with elite agility and speed: a daring, line-breaking half-back and midfielder who takes the game on and hurts teams with each possession. High risk, high reward. Composure and endurance were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 26
-}
-},
-{
-"year": 2025,
-"name": "Jevan Phillipou",
-"junior": "Woodville-West Torrens",
-"state": "South Australia",
-"position": "MID/FWD",
-"height": 183,
-"dob": "2007-03-30",
-"projection": "15-25",
-"statsFrom": "SANFL U18s",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "22.7"
-},
-{
-"label": "Marks",
-"value": "4.4"
-},
-{
-"label": "Clearances",
-"value": "4.9"
-},
-{
-"label": "Inside 50s",
-"value": "3.7"
-},
-{
-"label": "Goals",
-"value": "1.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "91.6"
-}
-],
-"strengths": [
-"Agility",
-"Dual-footed",
-"Overhead marking",
-"Power",
-"Running capacity",
-"Scoreboard impact"
-],
-"improvements": [
-"Composure",
-"Defensive game"
-],
-"summary": "High-impact midfielder-forward who wins the hard ball, takes big marks for his size and hits the scoreboard; a 91.6 junior fantasy average in the SANFL under-18s. Tested well at the combine (third in the running jump, eighth in agility). Composure and his defensive game needed work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 27
-}
-},
-{
-"year": 2025,
-"name": "Sullivan Robey",
-"junior": "Eastern Ranges",
-"state": "Vic Metro",
-"position": "FWD/MID",
-"height": 192,
-"dob": "2007-10-04",
-"projection": "5-10",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Elite"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "19.7"
-},
-{
-"label": "Marks",
-"value": "6.2"
-},
-{
-"label": "Tackles",
-"value": "2.7"
-},
-{
-"label": "Inside 50s",
-"value": "4.7"
-},
-{
-"label": "Goals",
-"value": "2.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "98.0"
-}
-],
-"strengths": [
-"Clean hands",
-"Mobility",
-"Physicality",
-"Power",
-"Scoreboard impact",
-"Size"
-],
-"improvements": [
-"Decision making",
-"Exposure"
-],
-"summary": "Big, powerful 192cm midfielder-forward with elite strength: a lead-up target forward who is also mobile at ground level in the midfield. Kicked goals in eight of nine Talent League games and averaged 98 fantasy points. Rare dual-position profile; decision-making and limited exposure were the flags.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 28
-}
-},
-{
-"year": 2025,
-"name": "Aidan Schubert",
-"junior": "Central District",
-"state": "South Australia",
-"position": "RUCK/FWD",
-"height": 194,
-"dob": "2007-12-21",
-"projection": "8-15",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Below avg",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Elite",
-"Disposal": "Below avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "17.0"
-},
-{
-"label": "Marks",
-"value": "7.0"
-},
-{
-"label": "Disposal eff %",
-"value": "58.8"
-},
-{
-"label": "Goals",
-"value": "2.5"
-},
-{
-"label": "Hitouts",
-"value": "7.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "94.3"
-}
-],
-"strengths": [
-"Aerial ability",
-"Competitiveness",
-"Contested marking",
-"Mobility",
-"Reach",
-"Scoreboard impact"
-],
-"improvements": [
-"Composure",
-"Kicking"
-],
-"summary": "Elite contested-marking 194cm forward who doubles as a second ruck; kicked six against Vic Metro and averaged 94 fantasy points at the carnival. Raw and rangy but competitive. Kicking and composure needed a lot of work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 29
-}
-},
-{
-"year": 2025,
-"name": "Dyson Sharp",
-"junior": "Central District",
-"state": "South Australia",
-"position": "MID",
-"height": 187,
-"dob": "2007-05-23",
-"projection": "3-10",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Elite"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Elite",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "27.0"
-},
-{
-"label": "Marks",
-"value": "4.5"
-},
-{
-"label": "Disposal eff %",
-"value": "79.6"
-},
-{
-"label": "Clearances",
-"value": "6.0"
-},
-{
-"label": "Tackles",
-"value": "5.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "106.8"
-}
-],
-"strengths": [
-"Clean hands",
-"Competitiveness",
-"Contested game",
-"Leadership",
-"Strength",
-"Tackling"
-],
-"improvements": [
-"Kicking",
-"Outside game"
-],
-"summary": "The best contested-ball winner in the crop: SA's captain dominated the carnival with 27 disposals, 11 contested possessions, 6 clearances and 5 tackles a game (106.8 fantasy). Strong, tough and clean in tight, with SANFL League exposure. Kicking and outside game were the work-ons. A ready-made fantasy accumulator profile.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 30
-}
-},
-{
-"year": 2025,
-"name": "Adam Sweid",
-"junior": "Calder Cannons",
-"state": "Vic Metro",
-"position": "MID/FWD",
-"height": 176,
-"dob": "2007-09-14",
-"projection": "20-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "17.0"
-},
-{
-"label": "Marks",
-"value": "2.8"
-},
-{
-"label": "Disposal eff %",
-"value": "75.0"
-},
-{
-"label": "Tackles",
-"value": "4.8"
-},
-{
-"label": "Clearances",
-"value": "4.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "75.8"
-}
-],
-"strengths": [
-"Defensive pressure",
-"Evasiveness",
-"Resilience",
-"Scoreboard impact",
-"Speed",
-"Work rate"
-],
-"improvements": [
-"Composure",
-"Size"
-],
-"summary": "Resilient small midfielder-forward who lost his bottom-age year to a knee reconstruction, then bounced back with a consistent, high-work-rate 2025. Quick, evasive, tackles hard and wins clearances. Small, and composure was the work-on.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 31
-}
-},
-{
-"year": 2025,
-"name": "Oskar Taylor",
-"junior": "Eastern Ranges",
-"state": "Vic Metro",
-"position": "DEF",
-"height": 183,
-"dob": "2007-08-01",
-"projection": "12-20",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Elite",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Elite"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "20.5"
-},
-{
-"label": "Marks",
-"value": "3.9"
-},
-{
-"label": "Tackles",
-"value": "2.3"
-},
-{
-"label": "Rebound 50s",
-"value": "3.3"
-},
-{
-"label": "Inside 50s",
-"value": "2.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "73.9"
-}
-],
-"strengths": [
-"Consistency",
-"Dare",
-"Defensive accountability",
-"Kicking",
-"Rebounding",
-"Speed"
-],
-"improvements": [
-"Contested game",
-"Strength"
-],
-"summary": "Elite-kicking, elite-speed half-back (fastest 20m sprint at the combine, 2.823s) who takes the kick-ins, carves through teams on the rebound and finishes chains inside 50. Consistent and accountable. Contested work and strength were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 32
-}
-},
-{
-"year": 2025,
-"name": "Xavier Taylor",
-"junior": "Eastern Ranges",
-"state": "Vic Metro",
-"position": "Tall DEF",
-"height": 192,
-"dob": "2007-01-30",
-"projection": "5-10",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Elite",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Above avg",
-"Contested": "Elite",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "15.0"
-},
-{
-"label": "Marks",
-"value": "4.5"
-},
-{
-"label": "Disposal eff %",
-"value": "78.3"
-},
-{
-"label": "Tackles",
-"value": "2.0"
-},
-{
-"label": "Rebound 50s",
-"value": "3.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "58.5"
-}
-],
-"strengths": [
-"Aerial ability",
-"Athleticism",
-"Competitiveness",
-"Consistency",
-"Defensive versatility",
-"Intercepting"
-],
-"improvements": [
-"Decision making",
-"Kicking"
-],
-"summary": "Well-rounded 192cm defender who can lock down talls or smalls, then grew into a star interceptor and rebounder. Elite agility, sub-three-second speed and elite contested work. Decision-making and kicking were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 33
-}
-},
-{
-"year": 2025,
-"name": "Blake Thredgold",
-"junior": "Sturt",
-"state": "South Australia",
-"position": "Key DEF",
-"height": 194,
-"dob": "2007-08-27",
-"projection": "25-40",
-"statsFrom": "SANFL U18s",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "11.6"
-},
-{
-"label": "Marks",
-"value": "5.4"
-},
-{
-"label": "Disposal eff %",
-"value": "78.0"
-},
-{
-"label": "Tackles",
-"value": "1.1"
-},
-{
-"label": "Rebound 50s",
-"value": "2.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "52.1"
-}
-],
-"strengths": [
-"Aerial ability",
-"Athleticism",
-"Lockdown defence",
-"One-on-ones",
-"Reading the play",
-"Versatility"
-],
-"improvements": [
-"Decision making",
-"Production"
-],
-"summary": "Lockdown key defender who thrives on big matchups (held Mitch Marsh goalless in a grand final) and added more intercepting late in the year. Elite in the air and a good athlete. Low ball production and decision-making were the flags.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 34
-}
-},
-{
-"year": 2025,
-"name": "Zeke Uwland",
-"junior": "Suns Academy",
-"state": "Queensland",
-"position": "UTIL",
-"height": 179,
-"dob": "2007-04-24",
-"projection": "1-3",
-"statsFrom": "VFL",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Elite",
-"Consistency": "Elite",
-"Contested": "Average",
-"Disposal": "Elite"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "16.5"
-},
-{
-"label": "Kicks",
-"value": "11.8"
-},
-{
-"label": "Marks",
-"value": "4.5"
-},
-{
-"label": "Inside 50s",
-"value": "3.8"
-},
-{
-"label": "Rebound 50s",
-"value": "2.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "67.5"
-}
-],
-"strengths": [
-"Accumulation",
-"Consistency",
-"Decision making",
-"Kicking",
-"Running capacity",
-"Versatility"
-],
-"improvements": [
-"Acceleration",
-"Durability"
-],
-"summary": "Gold Coast academy all-rounder rated elite for ceiling, consistency and disposal: a smart, hard-running, kick-first player who can play any line and drives transition with lethal foot skills. Already held his own at VFL level. Acceleration and durability were the only real flags.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 35
-}
-},
-{
-"year": 2025,
-"name": "Sam Allen",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "Wing",
-"height": 182,
-"dob": "2007-01-13",
-"projection": "Late",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Elite",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "21.3"
-},
-{
-"label": "Marks",
-"value": "3.3"
-},
-{
-"label": "Tackles",
-"value": "2.7"
-},
-{
-"label": "Inside 50s",
-"value": "4.3"
-},
-{
-"label": "Goals",
-"value": "1.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "74.0"
-}
-],
-"strengths": [
-"Athleticism",
-"Competitiveness",
-"Leadership",
-"Overhead marking",
-"Running capacity",
-"Versatility"
-],
-"improvements": [
-"Midfield craft",
-"Strength"
-],
-"summary": "Endless-tank wingman with elite endurance who roams to find the ball, marks well overhead and hits the scoreboard; also played half-back and forward. Midfield craft and strength were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 40
-}
-},
-{
-"year": 2025,
-"name": "Talor Byrne",
-"junior": "GWV Rebels",
-"state": "Vic Country",
-"position": "MID/FWD",
-"height": 174,
-"dob": "2007-11-14",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "10.3"
-},
-{
-"label": "Marks",
-"value": "4.3"
-},
-{
-"label": "Disposal eff %",
-"value": "67.7"
-},
-{
-"label": "Tackles",
-"value": "2.7"
-},
-{
-"label": "Goals",
-"value": "2.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "60.3"
-}
-],
-"strengths": [
-"Clean hands",
-"Evasiveness",
-"Power",
-"Pressure",
-"Speed",
-"Toughness"
-],
-"improvements": [
-"Endurance",
-"Size"
-],
-"summary": "Explosive, tough small forward who can push through the midfield, with clean hands, crumbing smarts and a potent left foot. Small and needed a bigger tank.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 42
-}
-},
-{
-"year": 2025,
-"name": "Lachlan Carmichael",
-"junior": "Swans Academy",
-"state": "NSW/ACT",
-"position": "DEF",
-"height": 184,
-"dob": "2007-08-27",
-"projection": "20-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "24.8"
-},
-{
-"label": "Marks",
-"value": "5.0"
-},
-{
-"label": "Disposal eff %",
-"value": "81.8"
-},
-{
-"label": "Rebound 50s",
-"value": "4.8"
-},
-{
-"label": "Tackles",
-"value": "3.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "95.0"
-}
-],
-"strengths": [
-"Competitiveness",
-"Consistency",
-"Decision making",
-"Intercepting",
-"Kicking",
-"Rebounding"
-],
-"improvements": [
-"Contested ball",
-"Midfield craft"
-],
-"summary": "Sydney academy playmaking half-back who takes the kick-ins everywhere he goes, intercepts, and uses it efficiently (82%) by foot; 95 junior fantasy average at the carnival. Contested ball and midfield craft were the work-ons. Rebounding-defender fantasy type.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 43
-}
-},
-{
-"year": 2025,
-"name": "Koby Coulson",
-"junior": "Suns Academy",
-"state": "Queensland",
-"position": "MID",
-"height": 180,
-"dob": "2007-07-31",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Elite",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "24.3"
-},
-{
-"label": "Marks",
-"value": "2.0"
-},
-{
-"label": "Disposal eff %",
-"value": "60.8"
-},
-{
-"label": "Inside 50s",
-"value": "5.5"
-},
-{
-"label": "Clearances",
-"value": "4.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "80.5"
-}
-],
-"strengths": [
-"Agility",
-"Consistency",
-"Contested ball",
-"Tackling",
-"Toughness",
-"Work rate"
-],
-"improvements": [
-"Kicking composure",
-"Polish"
-],
-"summary": "Gold Coast academy inside midfielder with elite contested work, agility and power: high-production (24 disposals, 5.5 inside 50s) and a dogged two-way competitor. Kicking composure and polish were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 45
-}
-},
-{
-"year": 2025,
-"name": "Cody Curtin",
-"junior": "Claremont",
-"state": "Western Australia",
-"position": "Key FWD",
-"height": 200,
-"dob": "2007-05-18",
-"projection": "35-50",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Below avg",
-"Strength": "Elite"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Average",
-"Contested": "Elite",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "8.5"
-},
-{
-"label": "Marks",
-"value": "4.3"
-},
-{
-"label": "Disposal eff %",
-"value": "70.6"
-},
-{
-"label": "Cont. marks",
-"value": "1.8"
-},
-{
-"label": "Goals",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "54.8"
-}
-],
-"strengths": [
-"Competitiveness",
-"Contested marking",
-"Physicality",
-"Scoreboard impact",
-"Strength",
-"Versatility"
-],
-"improvements": [
-"Running power",
-"Speed"
-],
-"summary": "Powerful 200cm key forward (brother of Dan Curtin) with elite strength and contested marking who kicked 32.9 in nine WAFL Colts games, including six in the grand final. Vice-like hands. Not quick, and needed more running power.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 46
-}
-},
-{
-"year": 2025,
-"name": "Jack Dalton",
-"junior": "Sandringham Dragons",
-"state": "Vic Metro",
-"position": "MID",
-"height": 177,
-"dob": "2007-04-05",
-"projection": "30-45",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Average",
-"Endurance": "Elite",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Elite",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "22.0"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "69.7"
-},
-{
-"label": "Tackles",
-"value": "6.0"
-},
-{
-"label": "Inside 50s",
-"value": "3.7"
-},
-{
-"label": "AFL Fantasy",
-"value": "88.3"
-}
-],
-"strengths": [
-"Accumulation",
-"Competitiveness",
-"Consistency",
-"Endurance",
-"Inside-outside balance",
-"Work rate"
-],
-"improvements": [
-"Explosive speed",
-"Kicking on the run"
-],
-"summary": "Workhorse running machine, arguably the best endurance athlete in the crop, rated elite for consistency. Came back from a long injury to average 28.5 disposals in the Talent League, with a balanced inside-outside game and six tackles a game at the carnival. Lacks explosive speed. Strong fantasy accumulator profile.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 47
-}
-},
-{
-"year": 2025,
-"name": "Will Darcy",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "DEF/FWD",
-"height": 196,
-"dob": "2007-03-14",
-"projection": "40-60",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Below avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Below avg",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "7.3"
-},
-{
-"label": "Marks",
-"value": "1.2"
-},
-{
-"label": "Tackles",
-"value": "1.4"
-},
-{
-"label": "Contested poss %",
-"value": "59.3"
-},
-{
-"label": "Rebound 50s",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "24.0"
-}
-],
-"strengths": [
-"Clean hands",
-"Mobility",
-"Overhead marking",
-"Skills",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Exposure",
-"Production"
-],
-"summary": "Rangy, skilful 196cm tall in the mould of his brother Sam, with reach, clean hands and mobility to play either end. A raw upside pick with very little junior production or exposure.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 48
-}
-},
-{
-"year": 2025,
-"name": "Finnegan Davis",
-"junior": "Western Jets",
-"state": "Vic Metro",
-"position": "DEF",
-"height": 188,
-"dob": "2007-01-21",
-"projection": "Late",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "27.7"
-},
-{
-"label": "Kicks",
-"value": "21.4"
-},
-{
-"label": "Marks",
-"value": "6.0"
-},
-{
-"label": "Tackles",
-"value": "1.6"
-},
-{
-"label": "Rebound 50s",
-"value": "6.4"
-},
-{
-"label": "AFL Fantasy",
-"value": "107.0"
-}
-],
-"strengths": [
-"Accumulation",
-"Consistency",
-"Efficiency",
-"Intercept marking",
-"Run-and-carry",
-"Versatility"
-],
-"improvements": [
-"Durability",
-"Size"
-],
-"summary": "Rebounding half-back who switched to an attacking role in 2025 and racked up 28 disposals (21 kicks) and 6.4 rebound 50s a game, a 107 junior fantasy average. Also can play as a lockdown defender. Durability and size were the flags. Classic fantasy rebounder.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 49
-}
-},
-{
-"year": 2025,
-"name": "Hussien El Achkar",
-"junior": "Calder Cannons",
-"state": "Vic Metro",
-"position": "FWD",
-"height": 171,
-"dob": "2007-04-02",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Below avg",
-"Agility": "Above avg",
-"Endurance": "Below avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "10.5"
-},
-{
-"label": "Marks",
-"value": "2.5"
-},
-{
-"label": "Disposal eff %",
-"value": "59.5"
-},
-{
-"label": "Inside 50s",
-"value": "3.5"
-},
-{
-"label": "Goals",
-"value": "1.5"
-},
-{
-"label": "AFL Fantasy",
-"value": "50.3"
-}
-],
-"strengths": [
-"Forward craft",
-"Goal sense",
-"Ground balls",
-"Physicality",
-"Scoreboard impact",
-"Speed"
-],
-"improvements": [
-"Defensive pressure",
-"Endurance"
-],
-"summary": "Classic crumbing small forward who kicked 47 goals in 26 games for Calder over two years, finding the ball at ground level and scoring from anywhere. Can go goalless at times; defensive pressure and endurance were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 50
-}
-},
-{
-"year": 2025,
-"name": "Koby Evans",
-"junior": "Perth",
-"state": "Western Australia",
-"position": "FWD/MID",
-"height": 188,
-"dob": "2007-09-08",
-"projection": "30-50",
-"statsFrom": "WAFL Colts",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "26.5"
-},
-{
-"label": "Marks",
-"value": "2.0"
-},
-{
-"label": "Tackles",
-"value": "5.0"
-},
-{
-"label": "Inside 50s",
-"value": "2.0"
-},
-{
-"label": "Goals",
-"value": "1.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "83.0"
-}
-],
-"strengths": [
-"Competitiveness",
-"Pressure",
-"Power",
-"Size",
-"Speed",
-"X-factor"
-],
-"improvements": [
-"Consistency",
-"Decision making"
-],
-"summary": "Big, powerful 188cm forward who moved into the midfield in 2025 and won it inside and out (26.5 disposals, 5 tackles in the Colts). Speed and flair, and kicks goals. Consistency and decision-making were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 51
-}
-},
-{
-"year": 2025,
-"name": "Hunter Holmes",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "Wing",
-"height": 188,
-"dob": "2007-02-19",
-"projection": "35-50",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Elite",
-"Strength": "Below avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "14.3"
-},
-{
-"label": "Marks",
-"value": "1.3"
-},
-{
-"label": "Disposal eff %",
-"value": "67.4"
-},
-{
-"label": "Inside 50s",
-"value": "4.0"
-},
-{
-"label": "Clearances",
-"value": "2.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "45.0"
-}
-],
-"strengths": [
-"Clean hands",
-"Outside game",
-"Rate of improvement",
-"Running capacity",
-"Speed",
-"Toughness"
-],
-"improvements": [
-"Composure",
-"Kicking"
-],
-"summary": "Elite-speed wingman with a big engine who links up in transition and also held his own on-ball, winning clearances despite a light frame. Fast improver. Composure and kicking were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 53
-}
-},
-{
-"year": 2025,
-"name": "Matthew LeRay",
-"junior": "Central District",
-"state": "South Australia",
-"position": "Wing",
-"height": 188,
-"dob": "2007-02-22",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Below avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Above avg",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "16.8"
-},
-{
-"label": "Marks",
-"value": "5.8"
-},
-{
-"label": "Disposal eff %",
-"value": "67.2"
-},
-{
-"label": "Tackles",
-"value": "2.0"
-},
-{
-"label": "Inside 50s",
-"value": "3.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "69.3"
-}
-],
-"strengths": [
-"Clean hands",
-"Dual-footed",
-"Leadership",
-"Upside",
-"Versatility",
-"Work rate"
-],
-"improvements": [
-"Decision making",
-"Endurance"
-],
-"summary": "All-Australian wingman who has played all four lines and finished the year in defence; a 188cm utility with clean hands on both sides and a strong work rate. Endurance testing was modest and decision-making needed work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 58
-}
-},
-{
-"year": 2025,
-"name": "Max Kondogiannis",
-"junior": "Oakleigh Chargers",
-"state": "Vic Metro",
-"position": "Tall DEF",
-"height": 190,
-"dob": "2007-11-14",
-"projection": "40-60",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "18.8"
-},
-{
-"label": "Marks",
-"value": "5.0"
-},
-{
-"label": "Disposal eff %",
-"value": "69.3"
-},
-{
-"label": "Tackles",
-"value": "0.8"
-},
-{
-"label": "Rebound 50s",
-"value": "6.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "68.3"
-}
-],
-"strengths": [
-"Aerial ability",
-"Kicking",
-"Intercept marking",
-"Reading the play",
-"Rebounding",
-"Speed"
-],
-"improvements": [
-"Defensive craft",
-"Size"
-],
-"summary": "Roaming third-tall interceptor who reads the play early, flies for marks and then runs and kicks the ball out of defence (6 rebound 50s a game at the carnival). Undersized for a key back and his one-on-one craft needed work.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 56
-}
-},
-{
-"year": 2025,
-"name": "Harry Kyle",
-"junior": "Swans Academy",
-"state": "NSW/ACT",
-"position": "DEF/MID",
-"height": 188,
-"dob": "2007-07-16",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "12.5"
-},
-{
-"label": "Marks",
-"value": "3.0"
-},
-{
-"label": "Disposal eff %",
-"value": "80.0"
-},
-{
-"label": "Inside 50s",
-"value": "1.3"
-},
-{
-"label": "Tackles",
-"value": "1.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "42.3"
-}
-],
-"strengths": [
-"Athleticism",
-"Clean hands",
-"Size",
-"Transition running",
-"Upside",
-"Versatility"
-],
-"improvements": [
-"Consistency",
-"Footy IQ"
-],
-"summary": "Sydney academy athlete with a rugby background who drives the ball forward from half-back or the wing with power and repeat running; best running vertical jump at the combine (98cm). Consistency and footy IQ were the work-ons. Upside more than output.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 57
-}
-},
-{
-"year": 2025,
-"name": "Hugo Mikunda",
-"junior": "Geelong Falcons",
-"state": "Vic Country",
-"position": "MID/FWD",
-"height": 180,
-"dob": "2007-03-13",
-"projection": "35-50",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "13.3"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "71.7"
-},
-{
-"label": "Inside 50s",
-"value": "4.3"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "58.5"
-}
-],
-"strengths": [
-"Agility",
-"Clean hands",
-"Creativity",
-"Football IQ",
-"Impact per possession",
-"Running power"
-],
-"improvements": [
-"Defensive pressure",
-"Scoreboard impact"
-],
-"summary": "Creative, smart small forward-midfielder who sets up goals more than he kicks them, with clean one-touch hands and dangerous delivery inside 50. Quick with good running power. Defensive pressure and his own scoreboard impact were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 60
-}
-},
-{
-"year": 2025,
-"name": "Jai Murray",
-"junior": "Suns Academy",
-"state": "Queensland",
-"position": "MID/DEF",
-"height": 185,
-"dob": "2007-03-09",
-"projection": "25-40",
-"statsFrom": "Coates Talent League",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "23.0"
-},
-{
-"label": "Marks",
-"value": "2.5"
-},
-{
-"label": "Tackles",
-"value": "7.5"
-},
-{
-"label": "Inside 50s",
-"value": "5.5"
-},
-{
-"label": "Clearances",
-"value": "6.0"
-},
-{
-"label": "AFL Fantasy",
-"value": "101.5"
-}
-],
-"strengths": [
-"Ball use",
-"Class",
-"Decision making",
-"Poise",
-"Size",
-"Versatility"
-],
-"improvements": [
-"Contested marking",
-"Speed"
-],
-"summary": "Gold Coast academy playmaker who always seems to have time, moving from half-back and wing into an inside midfield role in the Noah Anderson mould: 23 disposals, 7.5 tackles and 6 clearances a game, a 101.5 junior fantasy average. Not quick.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 61
-}
-},
-{
-"year": 2025,
-"name": "Zane Peucker",
-"junior": "Woodville-West Torrens",
-"state": "South Australia",
-"position": "FWD/MID",
-"height": 179,
-"dob": "2007-12-04",
-"projection": "Late",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Average",
-"Endurance": "Below avg",
-"Speed": "Elite",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Average"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "11.3"
-},
-{
-"label": "Marks",
-"value": "1.8"
-},
-{
-"label": "Disposal eff %",
-"value": "60.0"
-},
-{
-"label": "Inside 50s",
-"value": "2.3"
-},
-{
-"label": "Goals",
-"value": "1.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "44.8"
-}
-],
-"strengths": [
-"Energy",
-"Hurt factor",
-"Kick penetration",
-"Power",
-"Scoreboard impact",
-"Speed"
-],
-"improvements": [
-"Composure",
-"Endurance"
-],
-"summary": "Explosive, compact small forward with elite speed (2.89s 20m in preseason) and X-factor: hunts the loose ball, breaks tackles and makes things happen in chaos. Composure and endurance were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 65
-}
-},
-{
-"year": 2025,
-"name": "Tyan Prindable",
-"junior": "Lions Academy",
-"state": "Queensland",
-"position": "MID/FWD",
-"height": 181,
-"dob": "2007-01-25",
-"projection": "40-60",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Average",
-"Endurance": "Average",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "19.0"
-},
-{
-"label": "Marks",
-"value": "2.0"
-},
-{
-"label": "Disposal eff %",
-"value": "71.9"
-},
-{
-"label": "Tackles",
-"value": "5.7"
-},
-{
-"label": "Clearances",
-"value": "2.7"
-},
-{
-"label": "AFL Fantasy",
-"value": "84.7"
-}
-],
-"strengths": [
-"Clean hands",
-"Consistency",
-"Efficiency",
-"Scoreboard impact",
-"Tackling",
-"Vision"
-],
-"improvements": [
-"Endurance",
-"Flair"
-],
-"summary": "Brisbane academy clearance midfielder who is clean at the stoppage, reads the ruck taps, and tackles hard (about eight a game in the Talent League); held his own at QAFL and VFL level. Average athletically and lacks flair.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 66
-}
-},
-{
-"year": 2025,
-"name": "Noah Roberts-Thomson",
-"junior": "Sturt",
-"state": "South Australia",
-"position": "MID/FWD",
-"height": 181,
-"dob": "2007-03-29",
-"projection": "40-60",
-"statsFrom": "SANFL U18s",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Above avg",
-"Endurance": "Average",
-"Speed": "Above avg",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Average",
-"Consistency": "Above avg",
-"Contested": "Above avg",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "22.9"
-},
-{
-"label": "Marks",
-"value": "4.8"
-},
-{
-"label": "Tackles",
-"value": "4.5"
-},
-{
-"label": "Clearances",
-"value": "5.3"
-},
-{
-"label": "Goals",
-"value": "1.1"
-},
-{
-"label": "AFL Fantasy",
-"value": "98.8"
-}
-],
-"strengths": [
-"Agility",
-"Clean hands",
-"Contested ball",
-"Footy IQ",
-"Running capacity",
-"Scoreboard impact"
-],
-"improvements": [
-"Defensive transition",
-"Impact per possession"
-],
-"summary": "Sturdy, clean ball-winning midfielder who can also hurt teams forward or off half-back with a penetrating left foot. Sixth in both the combine sprint and agility, and averaged 98.8 fantasy points in the SANFL under-18s. Impact per possession and defensive transition were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 67
-}
-},
-{
-"year": 2025,
-"name": "Sam Swadling",
-"junior": "West Perth",
-"state": "Western Australia",
-"position": "MID",
-"height": 189,
-"dob": "2007-01-16",
-"projection": "30-50",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Above avg",
-"Agility": "Average",
-"Endurance": "Above avg",
-"Speed": "Average",
-"Strength": "Average"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Elite",
-"Contested": "Average",
-"Disposal": "Below avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "19.0"
-},
-{
-"label": "Marks",
-"value": "3.8"
-},
-{
-"label": "Disposal eff %",
-"value": "72.4"
-},
-{
-"label": "Clearances",
-"value": "2.8"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "72.0"
-}
-],
-"strengths": [
-"Accumulation",
-"Consistency",
-"Endurance",
-"Scoreboard threat",
-"Size",
-"Two-way running"
-],
-"improvements": [
-"Ball use",
-"Impact per possession"
-],
-"summary": "Arguably the best ball-finder in the draft: a 189cm two-way running midfielder rated elite for consistency who racked up big numbers in the WAFL Colts and can rest forward as a marking target. Ball use and impact per possession were the knocks. Fantasy-friendly accumulator.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 69
-}
-},
-{
-"year": 2025,
-"name": "Avery Thomas",
-"junior": "Tasmania Devils",
-"state": "Tasmania",
-"position": "DEF",
-"height": 185,
-"dob": "2007-09-20",
-"projection": "25-40",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Elite",
-"Agility": "Elite",
-"Endurance": "Average",
-"Speed": "Elite",
-"Strength": "Above avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Above avg",
-"Disposal": "Below avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "10.0"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "80.0"
-},
-{
-"label": "Rebound 50s",
-"value": "3.7"
-},
-{
-"label": "Tackles",
-"value": "2.3"
-},
-{
-"label": "AFL Fantasy",
-"value": "46.0"
-}
-],
-"strengths": [
-"Aerial ability",
-"Defensive effort",
-"Intercepting",
-"Power",
-"Speed",
-"Strength"
-],
-"improvements": [
-"Decision making",
-"Endurance"
-],
-"summary": "Desperate, brave lockdown defender and elite athlete (elite for leap, agility and speed) who competes above his 185cm in the air and rarely gets beaten one-on-one. Decision-making with the ball and endurance were the work-ons. More a defensive role player than a fantasy scorer.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 70
-}
-},
-{
-"year": 2025,
-"name": "Tylah Williams",
-"junior": "Swan Districts",
-"state": "Western Australia",
-"position": "FWD",
-"height": 175,
-"dob": "2007-02-22",
-"projection": "15-30",
-"statsFrom": "AFL U18 Championships",
-"athletic": {
-"Aerial": "Average",
-"Agility": "Elite",
-"Endurance": "Above avg",
-"Speed": "Elite",
-"Strength": "Below avg"
-},
-"onField": {
-"Ceiling": "Above avg",
-"Consistency": "Average",
-"Contested": "Average",
-"Disposal": "Above avg"
-},
-"stats": [
-{
-"label": "Disposals",
-"value": "11.8"
-},
-{
-"label": "Marks",
-"value": "4.0"
-},
-{
-"label": "Disposal eff %",
-"value": "57.4"
-},
-{
-"label": "Inside 50s",
-"value": "3.3"
-},
-{
-"label": "Goals",
-"value": "0.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "52.8"
-}
-],
-"strengths": [
-"Agility",
-"Creativity",
-"Kicking",
-"Running power",
-"Speed",
-"Vertical leap"
-],
-"improvements": [
-"Contested ball",
-"Size"
-],
-"summary": "Elite-speed, elite-agility small forward (second in the combine 20m sprint, fourth in agility) who works up the ground and back with huge running power and creates in transition. Small, and contested ball was the work-on.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 73
-}
-},
-{
-"year": 2025,
-"name": "Charlie Banfield",
-"junior": "Claremont",
-"state": "Western Australia",
-"position": "MID/FWD",
-"height": 192,
-"dob": "2007-07-18",
-"projection": "40-60",
-"stats": [
-{
-"label": "Disposals",
-"value": "14.0"
-},
-{
-"label": "Marks",
-"value": "5.3"
-},
-{
-"label": "Tackles",
-"value": "1.8"
-},
-{
-"label": "Inside 50s",
-"value": "2.3"
-},
-{
-"label": "Goals",
-"value": "1.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "64.0"
-}
-],
-"strengths": [
-"Overhead marking",
-"Size",
-"Versatility",
-"Work rate"
-],
-"improvements": [
-"Kicking polish",
-"Speed"
-],
-"summary": "West Coast father-son prospect (son of Drew): a 192cm utility who moved from wing and forward into the midfield late in the year and averaged 26.8 disposals across four finals, best afield in Claremont's Colts flag. Won the WA state combine 2km. Kicking polish and speed were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 77
-}
-},
-{
-"year": 2025,
-"name": "Kye Fincher",
-"junior": "Sandringham Dragons",
-"state": "Vic Metro",
-"position": "DEF/MID",
-"height": 184,
-"dob": "2007-11-18",
-"projection": "30-45",
-"stats": [
-{
-"label": "Disposals",
-"value": "22.4"
-},
-{
-"label": "Marks",
-"value": "3.9"
-},
-{
-"label": "Tackles",
-"value": "2.3"
-},
-{
-"label": "Clearances",
-"value": "2.7"
-},
-{
-"label": "Rebound 50s",
-"value": "2.7"
-},
-{
-"label": "AFL Fantasy",
-"value": "87.0"
-}
-],
-"strengths": [
-"Aerial ability",
-"Dare",
-"Explosiveness",
-"Versatility"
-],
-"improvements": [
-"Composure",
-"Stoppage craft"
-],
-"summary": "St Kilda Next Generation Academy graduate: a powerful, daring rebound defender who added midfield minutes and made his VFL debut for the Saints' affiliate. Quick and bold by foot. Composure and stoppage craft were the work-ons.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 82
-}
-},
-{
-"year": 2025,
-"name": "Tai Hayes",
-"junior": "Southport VFL",
-"state": "Victoria",
-"position": "Wing",
-"height": 183,
-"dob": "2004-11-19",
-"projection": "Late / rookie",
-"statsFrom": "VFL",
-"stats": [
-{
-"label": "Disposals",
-"value": "15.9"
-},
-{
-"label": "Marks",
-"value": "4.5"
-},
-{
-"label": "Tackles",
-"value": "1.9"
-},
-{
-"label": "Disposal eff %",
-"value": "74.1"
-},
-{
-"label": "Goals",
-"value": "0.4"
-},
-{
-"label": "AFL Fantasy",
-"value": "65.8"
-}
-],
-"strengths": [
-"Kicking",
-"Running power",
-"Scoreboard impact",
-"Two-way work rate"
-],
-"improvements": [
-"Exposure",
-"Size"
-],
-"summary": "Mature-age wingman (nephew of Lenny Hayes) who went from Mornington Peninsula local footy to a QAFL breakout and then the VFL with Southport, where he played every game until an ankle injury. Raking left foot and works hard both ways.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 84
-}
-},
-{
-"year": 2025,
-"name": "Thomas Matthews",
-"junior": "Gippsland Power",
-"state": "Vic Country",
-"position": "FWD",
-"height": 171,
-"dob": "2007-02-28",
-"projection": "Late / rookie",
-"stats": [
-{
-"label": "Disposals",
-"value": "11.0"
-},
-{
-"label": "Marks",
-"value": "1.3"
-},
-{
-"label": "Tackles",
-"value": "4.8"
-},
-{
-"label": "Inside 50s",
-"value": "2.5"
-},
-{
-"label": "Goals",
-"value": "1.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "53.0"
-}
-],
-"strengths": [
-"Defensive pressure",
-"Ground balls",
-"Speed",
-"X-factor"
-],
-"improvements": [
-"Durability",
-"Size"
-],
-"summary": "Livewire 171cm small forward and Gippsland captain whose draft year was wrecked by a preseason PCL injury, playing only four games. Quick, slick at ground level and relentless with his pressure. Size and durability were the concerns.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 89
-}
-},
-{
-"year": 2025,
-"name": "Latrelle Pickett",
-"junior": "Glenelg",
-"state": "South Australia",
-"position": "FWD",
-"height": 182,
-"dob": "2005-12-28",
-"projection": "20-30",
-"stats": [
-{
-"label": "Disposals",
-"value": "11.9"
-},
-{
-"label": "Marks",
-"value": "2.8"
-},
-{
-"label": "Tackles",
-"value": "1.9"
-},
-{
-"label": "Inside 50s",
-"value": "3.1"
-},
-{
-"label": "Goals",
-"value": "1.8"
-},
-{
-"label": "AFL Fantasy",
-"value": "57.3"
-}
-],
-"strengths": [
-"Scoreboard impact",
-"Speed",
-"Vertical leap",
-"X-factor"
-],
-"improvements": [
-"Defensive work rate",
-"Exposure"
-],
-"summary": "Over-age bolter from Port Lincoln (cousin of Kysaiah) who kicked 32 goals in 18 SANFL Reserves games and played three League games for premier Glenelg. Quick, springy and evasive with natural goal sense. Topped SA's state-combine 2km. Defensive work rate was the work-on.",
-"source": {
-"title": "2025 AFL Draft Guide",
-"url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
-"page": 93
-}
-}
+ {
+  "year": 2025,
+  "name": "Beau Addinsall",
+  "junior": "Suns Academy",
+  "state": "Queensland",
+  "position": "MID",
+  "height": 182,
+  "dob": "2007-03-09",
+  "projection": "20-30",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "32.0"
+   },
+   {
+    "label": "Marks",
+    "value": "5.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "3.7"
+   },
+   {
+    "label": "Clearances",
+    "value": "7.7"
+   },
+   {
+    "label": "Goals",
+    "value": "1.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "129.0"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Agility",
+   "Clean hands",
+   "Running power",
+   "Stoppage craft",
+   "Vision"
+  ],
+  "improvements": [
+   "Impact per possession",
+   "Kick-to-handball ratio"
+  ],
+  "summary": "Gold Coast academy ball magnet who averaged 32 disposals and nearly 8 clearances in the Talent League, with a 129 junior fantasy average. Clean at stoppages, covers ground and links up in transition. Needed to hurt more with each touch and kick it more often.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 6
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Daniel Annable",
+  "junior": "Lions Academy",
+  "state": "Queensland",
+  "position": "MID",
+  "height": 184,
+  "dob": "2007-05-04",
+  "projection": "3-6",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Below avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Elite",
+   "Contested": "Elite",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "24.8"
+   },
+   {
+    "label": "Marks",
+    "value": "2.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "67.7"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.3"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "5.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "86.3"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Competitiveness",
+   "Consistency",
+   "Running power",
+   "Stoppage craft",
+   "Work rate"
+  ],
+  "improvements": [
+   "Kicking under pressure",
+   "Flair"
+  ],
+  "summary": "Brisbane academy midfielder rated elite for contested ball and consistency. A clean, one-touch extractor at stoppages who added two-way running and goals, including snaps resting forward. Not quick, and his kicking under pressure and flair needed work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 7
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Harley Barker",
+  "junior": "Sturt",
+  "state": "South Australia",
+  "position": "Wing",
+  "height": 188,
+  "dob": "2007-05-02",
+  "projection": "25-35",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "16.0"
+   },
+   {
+    "label": "Marks",
+    "value": "5.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "73.4"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "72.0"
+   }
+  ],
+  "strengths": [
+   "Kicking",
+   "Outside run",
+   "Overhead marking",
+   "Speed",
+   "Versatility",
+   "Work rate"
+  ],
+  "improvements": [
+   "Contested game",
+   "Ground balls"
+  ],
+  "summary": "Modern athletic wingman with speed (a 2.86s 20m) and an aerobic engine who runs both ways and uses the ball well by foot. Strong overhead on the outside. Contested and ground-ball work were the gaps.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 8
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Sam Cumming",
+  "junior": "North Adelaide",
+  "state": "South Australia",
+  "position": "MID/FWD",
+  "height": 183,
+  "dob": "2007-07-27",
+  "projection": "5-15",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "17.0"
+   },
+   {
+    "label": "Marks",
+    "value": "3.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "76.5"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "70.3"
+   }
+  ],
+  "strengths": [
+   "Competitiveness",
+   "Consistency",
+   "Overhead marking",
+   "Power",
+   "Scoreboard impact",
+   "Work rate"
+  ],
+  "improvements": [
+   "Kicking technique",
+   "Outside game"
+  ],
+  "summary": "Powerful inside midfielder who also goes forward and marks strongly overhead. Rarely had fewer than 20 touches in the SANFL under-18s and was rated elite for ceiling. Kicking technique and his outside game were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 9
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Harry Dean",
+  "junior": "Murray Bushrangers",
+  "state": "Vic Country",
+  "position": "Tall DEF",
+  "height": 194,
+  "dob": "2007-11-13",
+  "projection": "5-10",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "15.3"
+   },
+   {
+    "label": "Marks",
+    "value": "6.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "85.2"
+   },
+   {
+    "label": "Cont. marks",
+    "value": "1.5"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "2.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "64.5"
+   }
+  ],
+  "strengths": [
+   "Athleticism",
+   "Competitiveness",
+   "Distribution",
+   "Intercepting",
+   "Overhead marking",
+   "Reading the play"
+  ],
+  "improvements": [
+   "In-between size",
+   "Versatility"
+  ],
+  "summary": "Elite aerial defender who reads the play early and marks or spoils at the drop zone. Tough one-on-one, and a clean left-foot kick out of defence (85% efficiency). In-between size and versatility were the question marks.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 10
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Lachy Dovaston",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "FWD",
+  "height": 178,
+  "dob": "2007-05-29",
+  "projection": "12-20",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Elite",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "12.8"
+   },
+   {
+    "label": "Marks",
+    "value": "2.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "60.8"
+   },
+   {
+    "label": "Tackles",
+    "value": "3.5"
+   },
+   {
+    "label": "Goals",
+    "value": "2.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "67.3"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Consistency",
+   "Defensive pressure",
+   "Scoreboard impact",
+   "Speed",
+   "Work rate"
+  ],
+  "improvements": [
+   "Goalkicking accuracy",
+   "Size"
+  ],
+  "summary": "Elite-agility small forward who does more than kick goals: he creates turnovers, runs in transition and added midfield and stoppage craft during the year. Small, and his goalkicking accuracy was the main work-on.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 11
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Cooper Duff-Tytler",
+  "junior": "Calder Cannons",
+  "state": "Vic Metro",
+  "position": "RUCK/FWD",
+  "height": 201,
+  "dob": "2007-08-22",
+  "projection": "1-3",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Elite",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "14.5"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "53.4"
+   },
+   {
+    "label": "Hitouts",
+    "value": "14.0"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "77.0"
+   }
+  ],
+  "strengths": [
+   "Athleticism",
+   "Cleanliness",
+   "Follow-up work",
+   "Mobility",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Physicality",
+   "Ruck craft"
+  ],
+  "summary": "Elite-ceiling 201cm ruck-forward with rare agility and mobility for his size. Vic Metro's No.1 ruck but named at centre half-forward in the All-Australian side, and played forward on VFL debut for Essendon. Needs to add strength and refine his ruck craft.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 12
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Louis Emmett",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "RUCK/FWD",
+  "height": 199,
+  "dob": "2007-03-23",
+  "projection": "15-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Elite",
+   "Speed": "Average",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "12.7"
+   },
+   {
+    "label": "Marks",
+    "value": "4.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "73.7"
+   },
+   {
+    "label": "Hitouts",
+    "value": "8.0"
+   },
+   {
+    "label": "Goals",
+    "value": "0.7"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "61.0"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Clean hands",
+   "Mobility",
+   "Running capacity",
+   "Physicality",
+   "Versatility"
+  ],
+  "improvements": [
+   "Consistency",
+   "Contest craft"
+  ],
+  "summary": "Mobile 199cm forward and fourth-midfielder ruck with an elite engine (third in the combine 2km). Strong contested marker with a big leap who links up through the ground. Consistency and contest craft were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 14
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Willem Duursma",
+  "junior": "Gippsland Power",
+  "state": "Vic Country",
+  "position": "UTIL",
+  "height": 193,
+  "dob": "2007-06-21",
+  "projection": "1-3",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "24.3"
+   },
+   {
+    "label": "Marks",
+    "value": "5.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "74.2"
+   },
+   {
+    "label": "Clearances",
+    "value": "2.0"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "3.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "94.5"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Athleticism",
+   "Clean hands",
+   "Ground coverage",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Contested game",
+   "Kicking consistency"
+  ],
+  "summary": "Elite-ceiling 193cm utility from a basketball background with outstanding aerial reach, who dominated in the air in defence then became a mobile marking threat forward (16 goals in 13 games). A 94.5 junior fantasy average at the carnival. Contested work and kicking consistency were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 13
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jacob Farrow",
+  "junior": "West Perth",
+  "state": "Western Australia",
+  "position": "DEF/MID",
+  "height": 187,
+  "dob": "2007-09-21",
+  "projection": "8-15",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "19.0"
+   },
+   {
+    "label": "Marks",
+    "value": "4.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "89.5"
+   },
+   {
+    "label": "Tackles",
+    "value": "3.5"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "4.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "78.0"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Intercept marking",
+   "Kicking",
+   "Power",
+   "Rebounding",
+   "Size"
+  ],
+  "improvements": [
+   "Defensive craft",
+   "Endurance"
+  ],
+  "summary": "Powerful half-back with one of the best long kicks in the draft (compared to Hayden Young's left foot) and 89% efficiency at the carnival. Intercepts, rebounds and takes on the game with speed. Defensive craft and endurance were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 15
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Oliver Greeves",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "MID",
+  "height": 191,
+  "dob": "2007-02-07",
+  "projection": "12-25",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Below avg",
+   "Speed": "Below avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Elite",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "25.0"
+   },
+   {
+    "label": "Marks",
+    "value": "5.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "73.0"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.5"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "92.0"
+   }
+  ],
+  "strengths": [
+   "Class",
+   "Clean hands",
+   "Kicking power",
+   "Scoreboard impact",
+   "Size",
+   "Stoppage craft"
+  ],
+  "improvements": [
+   "Defensive transition",
+   "Speed"
+  ],
+  "summary": "Big-bodied 191cm stoppage midfielder rated elite on contested ball, with clean hands and a powerful kick; 25 disposals and a 92 junior fantasy average for Vic Metro. Also showed outside class and run for Eastern. Below average for speed and endurance.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 16
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Sam Grlj",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "MID/DEF",
+  "height": 182,
+  "dob": "2007-07-26",
+  "projection": "5-12",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Elite",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "17.0"
+   },
+   {
+    "label": "Marks",
+    "value": "2.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "72.1"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.0"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "57.0"
+   }
+  ],
+  "strengths": [
+   "Competitiveness",
+   "Dare",
+   "Evasiveness",
+   "Line-breaking",
+   "Running power",
+   "Speed"
+  ],
+  "improvements": [
+   "Accumulation",
+   "Composure"
+  ],
+  "summary": "Elite-speed, high-ceiling runner who breaks lines from half-back and the midfield with dare and repeat efforts (top 10 in both the combine sprint and 2km). Low accumulator as a junior, and his composure with the ball needed work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 17
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Noah Hibbins-Hargreaves",
+  "junior": "Dandenong Stingrays",
+  "state": "Vic Country",
+  "position": "FWD/MID",
+  "height": 186,
+  "dob": "2007-11-16",
+  "projection": "12-20",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "12.0"
+   },
+   {
+    "label": "Marks",
+    "value": "3.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "83.3"
+   },
+   {
+    "label": "Clearances",
+    "value": "1.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "53.8"
+   }
+  ],
+  "strengths": [
+   "Class",
+   "Decision making",
+   "Finishing",
+   "Overhead marking",
+   "Scoreboard impact",
+   "Versatility"
+  ],
+  "improvements": [
+   "Durability",
+   "Ground balls"
+  ],
+  "summary": "Deadeye forward (82% conversion as a bottom-ager) who is quick on the lead and strong overhead, and added wing and on-ball minutes in his draft year. Elite ceiling. Durability and ground-ball work were the flags.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 18
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jack Ison",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "FWD/MID",
+  "height": 191,
+  "dob": "2007-03-26",
+  "projection": "20-40",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "20.5"
+   },
+   {
+    "label": "Marks",
+    "value": "2.7"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.5"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "4.5"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "88.0"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Decision making",
+   "Kicking",
+   "Poise",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Ground balls",
+   "Work rate"
+  ],
+  "summary": "Carlton academy left-footer: tall, agile midfielder-forward whose kicking inside 50 is a weapon and who has poise in traffic. Can play almost anywhere. Ground-ball work and work rate were the questions.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 19
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Max King",
+  "junior": "Swans Academy",
+  "state": "NSW/ACT",
+  "position": "FWD/MID",
+  "height": 191,
+  "dob": "2007-01-09",
+  "projection": "15-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Elite",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Below avg",
+   "Contested": "Above avg",
+   "Disposal": "Below avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "7.3"
+   },
+   {
+    "label": "Marks",
+    "value": "2.7"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "50.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "1.3"
+   },
+   {
+    "label": "Goals",
+    "value": "0.7"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "34.7"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Athleticism",
+   "Power",
+   "Speed",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Finishing",
+   "Footy IQ"
+  ],
+  "summary": "Sydney academy enigma: a freak 191cm athlete with elite speed (2.83s 20m) and a 98cm running jump who can take a screamer or run the length of the ground. Very raw: low output, poor consistency and ball use, and his finishing and footy IQ needed work. Pure upside, not a fantasy profile yet.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 20
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Josh Lindsay",
+  "junior": "Geelong Falcons",
+  "state": "Vic Country",
+  "position": "DEF/MID",
+  "height": 183,
+  "dob": "2007-04-07",
+  "projection": "5-15",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Elite"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.3"
+   },
+   {
+    "label": "Marks",
+    "value": "3.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "76.4"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "3.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "74.8"
+   }
+  ],
+  "strengths": [
+   "Class",
+   "Decision making",
+   "Efficiency",
+   "Footy IQ",
+   "Kicking",
+   "Vision"
+  ],
+  "improvements": [
+   "Contested game",
+   "Defensive work rate"
+  ],
+  "summary": "Consensus best kick in the draft: a free-roaming half-back with elite vision and decision-making who sets up play with a kick-first game. Teams play for him to get the ball. Contested work and defensive effort were the work-ons. A classic rebounding-defender fantasy type.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 21
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Archie Ludowyke",
+  "junior": "Sandringham Dragons",
+  "state": "Vic Metro",
+  "position": "Key FWD",
+  "height": 197,
+  "dob": "2007-11-19",
+  "projection": "15-25",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Below avg",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "9.3"
+   },
+   {
+    "label": "Marks",
+    "value": "5.3"
+   },
+   {
+    "label": "Cont. marks",
+    "value": "1.3"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "1.7"
+   },
+   {
+    "label": "Goals",
+    "value": "3.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "65.0"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Leading patterns",
+   "Mobility",
+   "Scoreboard impact",
+   "Upside",
+   "Vertical leap"
+  ],
+  "improvements": [
+   "Consistency",
+   "Strength"
+  ],
+  "summary": "Lean, springy 197cm key forward in the Aaron Cadman mould: leads hard, marks at the highest point and kicked over three goals a game. Needed to add strength and become more consistent.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 22
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Mitch Marsh",
+  "junior": "West Adelaide",
+  "state": "South Australia",
+  "position": "Tall FWD",
+  "height": 190,
+  "dob": "2007-02-15",
+  "projection": "8-15",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "8.5"
+   },
+   {
+    "label": "Marks",
+    "value": "6.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "64.7"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.3"
+   },
+   {
+    "label": "Goals",
+    "value": "3.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "67.8"
+   }
+  ],
+  "strengths": [
+   "Athleticism",
+   "Kicking power",
+   "Leading patterns",
+   "Overhead marking",
+   "Running capacity",
+   "Scoreboard impact"
+  ],
+  "improvements": [
+   "Consistency",
+   "Strength"
+  ],
+  "summary": "Athletic, high-marking 190cm forward who topped the national carnival goalkicking (12 in four games) after two a game in the SANFL under-18s. Steady set shot and long kick. Needed to add strength and consistency.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 23
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Zac McCarthy",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "RUCK/FWD",
+  "height": 199,
+  "dob": "2007-10-27",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Below avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "9.8"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "61.5"
+   },
+   {
+    "label": "Hitouts",
+    "value": "4.8"
+   },
+   {
+    "label": "Goals",
+    "value": "1.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "56.3"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Mobility",
+   "Reach",
+   "Scoreboard impact",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Durability",
+   "Strength"
+  ],
+  "summary": "Lightly framed, still-improving 199cm forward who can pinch-hit in the ruck. Big reach overhead and a high-upside long-term type. Needed a lot more strength and to stay on the park.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 24
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Cameron Nairn",
+  "junior": "Central District",
+  "state": "South Australia",
+  "position": "FWD/Wing",
+  "height": 188,
+  "dob": "2007-10-15",
+  "projection": "20-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "10.0"
+   },
+   {
+    "label": "Marks",
+    "value": "5.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "75.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "1.3"
+   },
+   {
+    "label": "Goals",
+    "value": "2.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "60.5"
+   }
+  ],
+  "strengths": [
+   "Kicking",
+   "Leading patterns",
+   "Overhead marking",
+   "Running capacity",
+   "Scoreboard impact",
+   "Versatility"
+  ],
+  "improvements": [
+   "Consistency",
+   "Ground balls"
+  ],
+  "summary": "Medium forward who plays above his height, covers big ground and kicks goals: back-to-back 22-goal SANFL under-18 seasons and a seven-goal haul for SA at the carnival. Clinical by foot. Consistency and ground-ball work were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 25
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Dylan Patterson",
+  "junior": "Suns Academy",
+  "state": "Queensland",
+  "position": "MID/DEF",
+  "height": 183,
+  "dob": "2007-09-01",
+  "projection": "2-5",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Elite",
+   "Endurance": "Average",
+   "Speed": "Elite",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "19.8"
+   },
+   {
+    "label": "Marks",
+    "value": "3.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "73.4"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "5.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "67.8"
+   }
+  ],
+  "strengths": [
+   "Dare",
+   "Hurt factor",
+   "Line-breaking",
+   "Power",
+   "Speed",
+   "Tenacity"
+  ],
+  "improvements": [
+   "Composure",
+   "Endurance"
+  ],
+  "summary": "Gold Coast academy speedster with elite agility and speed: a daring, line-breaking half-back and midfielder who takes the game on and hurts teams with each possession. High risk, high reward. Composure and endurance were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 26
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jevan Phillipou",
+  "junior": "Woodville-West Torrens",
+  "state": "South Australia",
+  "position": "MID/FWD",
+  "height": 183,
+  "dob": "2007-03-30",
+  "projection": "15-25",
+  "statsFrom": "SANFL U18s",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.7"
+   },
+   {
+    "label": "Marks",
+    "value": "4.4"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.9"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.7"
+   },
+   {
+    "label": "Goals",
+    "value": "1.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "91.6"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Dual-footed",
+   "Overhead marking",
+   "Power",
+   "Running capacity",
+   "Scoreboard impact"
+  ],
+  "improvements": [
+   "Composure",
+   "Defensive game"
+  ],
+  "summary": "High-impact midfielder-forward who wins the hard ball, takes big marks for his size and hits the scoreboard; a 91.6 junior fantasy average in the SANFL under-18s. Tested well at the combine (third in the running jump, eighth in agility). Composure and his defensive game needed work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 27
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Sullivan Robey",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "FWD/MID",
+  "height": 192,
+  "dob": "2007-10-04",
+  "projection": "5-10",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Elite"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "19.7"
+   },
+   {
+    "label": "Marks",
+    "value": "6.2"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.7"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "4.7"
+   },
+   {
+    "label": "Goals",
+    "value": "2.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "98.0"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Mobility",
+   "Physicality",
+   "Power",
+   "Scoreboard impact",
+   "Size"
+  ],
+  "improvements": [
+   "Decision making",
+   "Exposure"
+  ],
+  "summary": "Big, powerful 192cm midfielder-forward with elite strength: a lead-up target forward who is also mobile at ground level in the midfield. Kicked goals in eight of nine Talent League games and averaged 98 fantasy points. Rare dual-position profile; decision-making and limited exposure were the flags.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 28
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Aidan Schubert",
+  "junior": "Central District",
+  "state": "South Australia",
+  "position": "RUCK/FWD",
+  "height": 194,
+  "dob": "2007-12-21",
+  "projection": "8-15",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Below avg",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Elite",
+   "Disposal": "Below avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "17.0"
+   },
+   {
+    "label": "Marks",
+    "value": "7.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "58.8"
+   },
+   {
+    "label": "Goals",
+    "value": "2.5"
+   },
+   {
+    "label": "Hitouts",
+    "value": "7.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "94.3"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Competitiveness",
+   "Contested marking",
+   "Mobility",
+   "Reach",
+   "Scoreboard impact"
+  ],
+  "improvements": [
+   "Composure",
+   "Kicking"
+  ],
+  "summary": "Elite contested-marking 194cm forward who doubles as a second ruck; kicked six against Vic Metro and averaged 94 fantasy points at the carnival. Raw and rangy but competitive. Kicking and composure needed a lot of work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 29
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Dyson Sharp",
+  "junior": "Central District",
+  "state": "South Australia",
+  "position": "MID",
+  "height": 187,
+  "dob": "2007-05-23",
+  "projection": "3-10",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Elite"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Elite",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "27.0"
+   },
+   {
+    "label": "Marks",
+    "value": "4.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "79.6"
+   },
+   {
+    "label": "Clearances",
+    "value": "6.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "5.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "106.8"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Competitiveness",
+   "Contested game",
+   "Leadership",
+   "Strength",
+   "Tackling"
+  ],
+  "improvements": [
+   "Kicking",
+   "Outside game"
+  ],
+  "summary": "The best contested-ball winner in the crop: SA's captain dominated the carnival with 27 disposals, 11 contested possessions, 6 clearances and 5 tackles a game (106.8 fantasy). Strong, tough and clean in tight, with SANFL League exposure. Kicking and outside game were the work-ons. A ready-made fantasy accumulator profile.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 30
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Adam Sweid",
+  "junior": "Calder Cannons",
+  "state": "Vic Metro",
+  "position": "MID/FWD",
+  "height": 176,
+  "dob": "2007-09-14",
+  "projection": "20-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "17.0"
+   },
+   {
+    "label": "Marks",
+    "value": "2.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "75.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.8"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "75.8"
+   }
+  ],
+  "strengths": [
+   "Defensive pressure",
+   "Evasiveness",
+   "Resilience",
+   "Scoreboard impact",
+   "Speed",
+   "Work rate"
+  ],
+  "improvements": [
+   "Composure",
+   "Size"
+  ],
+  "summary": "Resilient small midfielder-forward who lost his bottom-age year to a knee reconstruction, then bounced back with a consistent, high-work-rate 2025. Quick, evasive, tackles hard and wins clearances. Small, and composure was the work-on.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 31
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Oskar Taylor",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "DEF",
+  "height": 183,
+  "dob": "2007-08-01",
+  "projection": "12-20",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Elite",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Elite"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "20.5"
+   },
+   {
+    "label": "Marks",
+    "value": "3.9"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.3"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "3.3"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "73.9"
+   }
+  ],
+  "strengths": [
+   "Consistency",
+   "Dare",
+   "Defensive accountability",
+   "Kicking",
+   "Rebounding",
+   "Speed"
+  ],
+  "improvements": [
+   "Contested game",
+   "Strength"
+  ],
+  "summary": "Elite-kicking, elite-speed half-back (fastest 20m sprint at the combine, 2.823s) who takes the kick-ins, carves through teams on the rebound and finishes chains inside 50. Consistent and accountable. Contested work and strength were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 32
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Xavier Taylor",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "Tall DEF",
+  "height": 192,
+  "dob": "2007-01-30",
+  "projection": "5-10",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Elite",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Above avg",
+   "Contested": "Elite",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "15.0"
+   },
+   {
+    "label": "Marks",
+    "value": "4.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "78.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.0"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "3.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "58.5"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Athleticism",
+   "Competitiveness",
+   "Consistency",
+   "Defensive versatility",
+   "Intercepting"
+  ],
+  "improvements": [
+   "Decision making",
+   "Kicking"
+  ],
+  "summary": "Well-rounded 192cm defender who can lock down talls or smalls, then grew into a star interceptor and rebounder. Elite agility, sub-three-second speed and elite contested work. Decision-making and kicking were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 33
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Blake Thredgold",
+  "junior": "Sturt",
+  "state": "South Australia",
+  "position": "Key DEF",
+  "height": 194,
+  "dob": "2007-08-27",
+  "projection": "25-40",
+  "statsFrom": "SANFL U18s",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "11.6"
+   },
+   {
+    "label": "Marks",
+    "value": "5.4"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "78.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.1"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "2.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "52.1"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Athleticism",
+   "Lockdown defence",
+   "One-on-ones",
+   "Reading the play",
+   "Versatility"
+  ],
+  "improvements": [
+   "Decision making",
+   "Production"
+  ],
+  "summary": "Lockdown key defender who thrives on big matchups (held Mitch Marsh goalless in a grand final) and added more intercepting late in the year. Elite in the air and a good athlete. Low ball production and decision-making were the flags.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 34
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Zeke Uwland",
+  "junior": "Suns Academy",
+  "state": "Queensland",
+  "position": "UTIL",
+  "height": 179,
+  "dob": "2007-04-24",
+  "projection": "1-3",
+  "statsFrom": "VFL",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Elite",
+   "Consistency": "Elite",
+   "Contested": "Average",
+   "Disposal": "Elite"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "16.5"
+   },
+   {
+    "label": "Kicks",
+    "value": "11.8"
+   },
+   {
+    "label": "Marks",
+    "value": "4.5"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.8"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "2.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "67.5"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Consistency",
+   "Decision making",
+   "Kicking",
+   "Running capacity",
+   "Versatility"
+  ],
+  "improvements": [
+   "Acceleration",
+   "Durability"
+  ],
+  "summary": "Gold Coast academy all-rounder rated elite for ceiling, consistency and disposal: a smart, hard-running, kick-first player who can play any line and drives transition with lethal foot skills. Already held his own at VFL level. Acceleration and durability were the only real flags.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 35
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Sam Allen",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "Wing",
+  "height": 182,
+  "dob": "2007-01-13",
+  "projection": "Late",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Elite",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "21.3"
+   },
+   {
+    "label": "Marks",
+    "value": "3.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.7"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "4.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "74.0"
+   }
+  ],
+  "strengths": [
+   "Athleticism",
+   "Competitiveness",
+   "Leadership",
+   "Overhead marking",
+   "Running capacity",
+   "Versatility"
+  ],
+  "improvements": [
+   "Midfield craft",
+   "Strength"
+  ],
+  "summary": "Endless-tank wingman with elite endurance who roams to find the ball, marks well overhead and hits the scoreboard; also played half-back and forward. Midfield craft and strength were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 40
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Talor Byrne",
+  "junior": "GWV Rebels",
+  "state": "Vic Country",
+  "position": "MID/FWD",
+  "height": 174,
+  "dob": "2007-11-14",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "10.3"
+   },
+   {
+    "label": "Marks",
+    "value": "4.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "67.7"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.7"
+   },
+   {
+    "label": "Goals",
+    "value": "2.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "60.3"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Evasiveness",
+   "Power",
+   "Pressure",
+   "Speed",
+   "Toughness"
+  ],
+  "improvements": [
+   "Endurance",
+   "Size"
+  ],
+  "summary": "Explosive, tough small forward who can push through the midfield, with clean hands, crumbing smarts and a potent left foot. Small and needed a bigger tank.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 42
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Lachlan Carmichael",
+  "junior": "Swans Academy",
+  "state": "NSW/ACT",
+  "position": "DEF",
+  "height": 184,
+  "dob": "2007-08-27",
+  "projection": "20-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "24.8"
+   },
+   {
+    "label": "Marks",
+    "value": "5.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "81.8"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "4.8"
+   },
+   {
+    "label": "Tackles",
+    "value": "3.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "95.0"
+   }
+  ],
+  "strengths": [
+   "Competitiveness",
+   "Consistency",
+   "Decision making",
+   "Intercepting",
+   "Kicking",
+   "Rebounding"
+  ],
+  "improvements": [
+   "Contested ball",
+   "Midfield craft"
+  ],
+  "summary": "Sydney academy playmaking half-back who takes the kick-ins everywhere he goes, intercepts, and uses it efficiently (82%) by foot; 95 junior fantasy average at the carnival. Contested ball and midfield craft were the work-ons. Rebounding-defender fantasy type.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 43
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Koby Coulson",
+  "junior": "Suns Academy",
+  "state": "Queensland",
+  "position": "MID",
+  "height": 180,
+  "dob": "2007-07-31",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Elite",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "24.3"
+   },
+   {
+    "label": "Marks",
+    "value": "2.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "60.8"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "5.5"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "80.5"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Consistency",
+   "Contested ball",
+   "Tackling",
+   "Toughness",
+   "Work rate"
+  ],
+  "improvements": [
+   "Kicking composure",
+   "Polish"
+  ],
+  "summary": "Gold Coast academy inside midfielder with elite contested work, agility and power: high-production (24 disposals, 5.5 inside 50s) and a dogged two-way competitor. Kicking composure and polish were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 45
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Cody Curtin",
+  "junior": "Claremont",
+  "state": "Western Australia",
+  "position": "Key FWD",
+  "height": 200,
+  "dob": "2007-05-18",
+  "projection": "35-50",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Below avg",
+   "Strength": "Elite"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Average",
+   "Contested": "Elite",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "8.5"
+   },
+   {
+    "label": "Marks",
+    "value": "4.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "70.6"
+   },
+   {
+    "label": "Cont. marks",
+    "value": "1.8"
+   },
+   {
+    "label": "Goals",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "54.8"
+   }
+  ],
+  "strengths": [
+   "Competitiveness",
+   "Contested marking",
+   "Physicality",
+   "Scoreboard impact",
+   "Strength",
+   "Versatility"
+  ],
+  "improvements": [
+   "Running power",
+   "Speed"
+  ],
+  "summary": "Powerful 200cm key forward (brother of Dan Curtin) with elite strength and contested marking who kicked 32.9 in nine WAFL Colts games, including six in the grand final. Vice-like hands. Not quick, and needed more running power.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 46
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jack Dalton",
+  "junior": "Sandringham Dragons",
+  "state": "Vic Metro",
+  "position": "MID",
+  "height": 177,
+  "dob": "2007-04-05",
+  "projection": "30-45",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Average",
+   "Endurance": "Elite",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Elite",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.0"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "69.7"
+   },
+   {
+    "label": "Tackles",
+    "value": "6.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.7"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "88.3"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Competitiveness",
+   "Consistency",
+   "Endurance",
+   "Inside-outside balance",
+   "Work rate"
+  ],
+  "improvements": [
+   "Explosive speed",
+   "Kicking on the run"
+  ],
+  "summary": "Workhorse running machine, arguably the best endurance athlete in the crop, rated elite for consistency. Came back from a long injury to average 28.5 disposals in the Talent League, with a balanced inside-outside game and six tackles a game at the carnival. Lacks explosive speed. Strong fantasy accumulator profile.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 47
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Will Darcy",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "DEF/FWD",
+  "height": 196,
+  "dob": "2007-03-14",
+  "projection": "40-60",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Below avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Below avg",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "7.3"
+   },
+   {
+    "label": "Marks",
+    "value": "1.2"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.4"
+   },
+   {
+    "label": "Contested poss %",
+    "value": "59.3"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "24.0"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Mobility",
+   "Overhead marking",
+   "Skills",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Exposure",
+   "Production"
+  ],
+  "summary": "Rangy, skilful 196cm tall in the mould of his brother Sam, with reach, clean hands and mobility to play either end. A raw upside pick with very little junior production or exposure.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 48
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Finnegan Davis",
+  "junior": "Western Jets",
+  "state": "Vic Metro",
+  "position": "DEF",
+  "height": 188,
+  "dob": "2007-01-21",
+  "projection": "Late",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "27.7"
+   },
+   {
+    "label": "Kicks",
+    "value": "21.4"
+   },
+   {
+    "label": "Marks",
+    "value": "6.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.6"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "6.4"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "107.0"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Consistency",
+   "Efficiency",
+   "Intercept marking",
+   "Run-and-carry",
+   "Versatility"
+  ],
+  "improvements": [
+   "Durability",
+   "Size"
+  ],
+  "summary": "Rebounding half-back who switched to an attacking role in 2025 and racked up 28 disposals (21 kicks) and 6.4 rebound 50s a game, a 107 junior fantasy average. Also can play as a lockdown defender. Durability and size were the flags. Classic fantasy rebounder.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 49
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Hussien El Achkar",
+  "junior": "Calder Cannons",
+  "state": "Vic Metro",
+  "position": "FWD",
+  "height": 171,
+  "dob": "2007-04-02",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Below avg",
+   "Agility": "Above avg",
+   "Endurance": "Below avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "10.5"
+   },
+   {
+    "label": "Marks",
+    "value": "2.5"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "59.5"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.5"
+   },
+   {
+    "label": "Goals",
+    "value": "1.5"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "50.3"
+   }
+  ],
+  "strengths": [
+   "Forward craft",
+   "Goal sense",
+   "Ground balls",
+   "Physicality",
+   "Scoreboard impact",
+   "Speed"
+  ],
+  "improvements": [
+   "Defensive pressure",
+   "Endurance"
+  ],
+  "summary": "Classic crumbing small forward who kicked 47 goals in 26 games for Calder over two years, finding the ball at ground level and scoring from anywhere. Can go goalless at times; defensive pressure and endurance were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 50
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Koby Evans",
+  "junior": "Perth",
+  "state": "Western Australia",
+  "position": "FWD/MID",
+  "height": 188,
+  "dob": "2007-09-08",
+  "projection": "30-50",
+  "statsFrom": "WAFL Colts",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "26.5"
+   },
+   {
+    "label": "Marks",
+    "value": "2.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "5.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.0"
+   },
+   {
+    "label": "Goals",
+    "value": "1.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "83.0"
+   }
+  ],
+  "strengths": [
+   "Competitiveness",
+   "Pressure",
+   "Power",
+   "Size",
+   "Speed",
+   "X-factor"
+  ],
+  "improvements": [
+   "Consistency",
+   "Decision making"
+  ],
+  "summary": "Big, powerful 188cm forward who moved into the midfield in 2025 and won it inside and out (26.5 disposals, 5 tackles in the Colts). Speed and flair, and kicks goals. Consistency and decision-making were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 51
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Hunter Holmes",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "Wing",
+  "height": 188,
+  "dob": "2007-02-19",
+  "projection": "35-50",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Elite",
+   "Strength": "Below avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "14.3"
+   },
+   {
+    "label": "Marks",
+    "value": "1.3"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "67.4"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "4.0"
+   },
+   {
+    "label": "Clearances",
+    "value": "2.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "45.0"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Outside game",
+   "Rate of improvement",
+   "Running capacity",
+   "Speed",
+   "Toughness"
+  ],
+  "improvements": [
+   "Composure",
+   "Kicking"
+  ],
+  "summary": "Elite-speed wingman with a big engine who links up in transition and also held his own on-ball, winning clearances despite a light frame. Fast improver. Composure and kicking were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 53
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Matthew LeRay",
+  "junior": "Central District",
+  "state": "South Australia",
+  "position": "Wing",
+  "height": 188,
+  "dob": "2007-02-22",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Below avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Above avg",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "16.8"
+   },
+   {
+    "label": "Marks",
+    "value": "5.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "67.2"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "69.3"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Dual-footed",
+   "Leadership",
+   "Upside",
+   "Versatility",
+   "Work rate"
+  ],
+  "improvements": [
+   "Decision making",
+   "Endurance"
+  ],
+  "summary": "All-Australian wingman who has played all four lines and finished the year in defence; a 188cm utility with clean hands on both sides and a strong work rate. Endurance testing was modest and decision-making needed work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 58
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Max Kondogiannis",
+  "junior": "Oakleigh Chargers",
+  "state": "Vic Metro",
+  "position": "Tall DEF",
+  "height": 190,
+  "dob": "2007-11-14",
+  "projection": "40-60",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "18.8"
+   },
+   {
+    "label": "Marks",
+    "value": "5.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "69.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "0.8"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "6.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "68.3"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Kicking",
+   "Intercept marking",
+   "Reading the play",
+   "Rebounding",
+   "Speed"
+  ],
+  "improvements": [
+   "Defensive craft",
+   "Size"
+  ],
+  "summary": "Roaming third-tall interceptor who reads the play early, flies for marks and then runs and kicks the ball out of defence (6 rebound 50s a game at the carnival). Undersized for a key back and his one-on-one craft needed work.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 56
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Harry Kyle",
+  "junior": "Swans Academy",
+  "state": "NSW/ACT",
+  "position": "DEF/MID",
+  "height": 188,
+  "dob": "2007-07-16",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "12.5"
+   },
+   {
+    "label": "Marks",
+    "value": "3.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "80.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "1.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "42.3"
+   }
+  ],
+  "strengths": [
+   "Athleticism",
+   "Clean hands",
+   "Size",
+   "Transition running",
+   "Upside",
+   "Versatility"
+  ],
+  "improvements": [
+   "Consistency",
+   "Footy IQ"
+  ],
+  "summary": "Sydney academy athlete with a rugby background who drives the ball forward from half-back or the wing with power and repeat running; best running vertical jump at the combine (98cm). Consistency and footy IQ were the work-ons. Upside more than output.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 57
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Hugo Mikunda",
+  "junior": "Geelong Falcons",
+  "state": "Vic Country",
+  "position": "MID/FWD",
+  "height": 180,
+  "dob": "2007-03-13",
+  "projection": "35-50",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "13.3"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "71.7"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "4.3"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "58.5"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Clean hands",
+   "Creativity",
+   "Football IQ",
+   "Impact per possession",
+   "Running power"
+  ],
+  "improvements": [
+   "Defensive pressure",
+   "Scoreboard impact"
+  ],
+  "summary": "Creative, smart small forward-midfielder who sets up goals more than he kicks them, with clean one-touch hands and dangerous delivery inside 50. Quick with good running power. Defensive pressure and his own scoreboard impact were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 60
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jai Murray",
+  "junior": "Suns Academy",
+  "state": "Queensland",
+  "position": "MID/DEF",
+  "height": 185,
+  "dob": "2007-03-09",
+  "projection": "25-40",
+  "statsFrom": "Coates Talent League",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "23.0"
+   },
+   {
+    "label": "Marks",
+    "value": "2.5"
+   },
+   {
+    "label": "Tackles",
+    "value": "7.5"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "5.5"
+   },
+   {
+    "label": "Clearances",
+    "value": "6.0"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "101.5"
+   }
+  ],
+  "strengths": [
+   "Ball use",
+   "Class",
+   "Decision making",
+   "Poise",
+   "Size",
+   "Versatility"
+  ],
+  "improvements": [
+   "Contested marking",
+   "Speed"
+  ],
+  "summary": "Gold Coast academy playmaker who always seems to have time, moving from half-back and wing into an inside midfield role in the Noah Anderson mould: 23 disposals, 7.5 tackles and 6 clearances a game, a 101.5 junior fantasy average. Not quick.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 61
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Zane Peucker",
+  "junior": "Woodville-West Torrens",
+  "state": "South Australia",
+  "position": "FWD/MID",
+  "height": 179,
+  "dob": "2007-12-04",
+  "projection": "Late",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Average",
+   "Endurance": "Below avg",
+   "Speed": "Elite",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Average"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "11.3"
+   },
+   {
+    "label": "Marks",
+    "value": "1.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "60.0"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "44.8"
+   }
+  ],
+  "strengths": [
+   "Energy",
+   "Hurt factor",
+   "Kick penetration",
+   "Power",
+   "Scoreboard impact",
+   "Speed"
+  ],
+  "improvements": [
+   "Composure",
+   "Endurance"
+  ],
+  "summary": "Explosive, compact small forward with elite speed (2.89s 20m in preseason) and X-factor: hunts the loose ball, breaks tackles and makes things happen in chaos. Composure and endurance were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 65
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Tyan Prindable",
+  "junior": "Lions Academy",
+  "state": "Queensland",
+  "position": "MID/FWD",
+  "height": 181,
+  "dob": "2007-01-25",
+  "projection": "40-60",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Average",
+   "Endurance": "Average",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "19.0"
+   },
+   {
+    "label": "Marks",
+    "value": "2.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "71.9"
+   },
+   {
+    "label": "Tackles",
+    "value": "5.7"
+   },
+   {
+    "label": "Clearances",
+    "value": "2.7"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "84.7"
+   }
+  ],
+  "strengths": [
+   "Clean hands",
+   "Consistency",
+   "Efficiency",
+   "Scoreboard impact",
+   "Tackling",
+   "Vision"
+  ],
+  "improvements": [
+   "Endurance",
+   "Flair"
+  ],
+  "summary": "Brisbane academy clearance midfielder who is clean at the stoppage, reads the ruck taps, and tackles hard (about eight a game in the Talent League); held his own at QAFL and VFL level. Average athletically and lacks flair.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 66
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Noah Roberts-Thomson",
+  "junior": "Sturt",
+  "state": "South Australia",
+  "position": "MID/FWD",
+  "height": 181,
+  "dob": "2007-03-29",
+  "projection": "40-60",
+  "statsFrom": "SANFL U18s",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Above avg",
+   "Endurance": "Average",
+   "Speed": "Above avg",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Average",
+   "Consistency": "Above avg",
+   "Contested": "Above avg",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.9"
+   },
+   {
+    "label": "Marks",
+    "value": "4.8"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.5"
+   },
+   {
+    "label": "Clearances",
+    "value": "5.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.1"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "98.8"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Clean hands",
+   "Contested ball",
+   "Footy IQ",
+   "Running capacity",
+   "Scoreboard impact"
+  ],
+  "improvements": [
+   "Defensive transition",
+   "Impact per possession"
+  ],
+  "summary": "Sturdy, clean ball-winning midfielder who can also hurt teams forward or off half-back with a penetrating left foot. Sixth in both the combine sprint and agility, and averaged 98.8 fantasy points in the SANFL under-18s. Impact per possession and defensive transition were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 67
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Sam Swadling",
+  "junior": "West Perth",
+  "state": "Western Australia",
+  "position": "MID",
+  "height": 189,
+  "dob": "2007-01-16",
+  "projection": "30-50",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Above avg",
+   "Agility": "Average",
+   "Endurance": "Above avg",
+   "Speed": "Average",
+   "Strength": "Average"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Elite",
+   "Contested": "Average",
+   "Disposal": "Below avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "19.0"
+   },
+   {
+    "label": "Marks",
+    "value": "3.8"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "72.4"
+   },
+   {
+    "label": "Clearances",
+    "value": "2.8"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "72.0"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Consistency",
+   "Endurance",
+   "Scoreboard threat",
+   "Size",
+   "Two-way running"
+  ],
+  "improvements": [
+   "Ball use",
+   "Impact per possession"
+  ],
+  "summary": "Arguably the best ball-finder in the draft: a 189cm two-way running midfielder rated elite for consistency who racked up big numbers in the WAFL Colts and can rest forward as a marking target. Ball use and impact per possession were the knocks. Fantasy-friendly accumulator.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 69
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Avery Thomas",
+  "junior": "Tasmania Devils",
+  "state": "Tasmania",
+  "position": "DEF",
+  "height": 185,
+  "dob": "2007-09-20",
+  "projection": "25-40",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Elite",
+   "Agility": "Elite",
+   "Endurance": "Average",
+   "Speed": "Elite",
+   "Strength": "Above avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Above avg",
+   "Disposal": "Below avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "10.0"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "80.0"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "3.7"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.3"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "46.0"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Defensive effort",
+   "Intercepting",
+   "Power",
+   "Speed",
+   "Strength"
+  ],
+  "improvements": [
+   "Decision making",
+   "Endurance"
+  ],
+  "summary": "Desperate, brave lockdown defender and elite athlete (elite for leap, agility and speed) who competes above his 185cm in the air and rarely gets beaten one-on-one. Decision-making with the ball and endurance were the work-ons. More a defensive role player than a fantasy scorer.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 70
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Tylah Williams",
+  "junior": "Swan Districts",
+  "state": "Western Australia",
+  "position": "FWD",
+  "height": 175,
+  "dob": "2007-02-22",
+  "projection": "15-30",
+  "statsFrom": "AFL U18 Championships",
+  "athletic": {
+   "Aerial": "Average",
+   "Agility": "Elite",
+   "Endurance": "Above avg",
+   "Speed": "Elite",
+   "Strength": "Below avg"
+  },
+  "onField": {
+   "Ceiling": "Above avg",
+   "Consistency": "Average",
+   "Contested": "Average",
+   "Disposal": "Above avg"
+  },
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "11.8"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "57.4"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.3"
+   },
+   {
+    "label": "Goals",
+    "value": "0.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "52.8"
+   }
+  ],
+  "strengths": [
+   "Agility",
+   "Creativity",
+   "Kicking",
+   "Running power",
+   "Speed",
+   "Vertical leap"
+  ],
+  "improvements": [
+   "Contested ball",
+   "Size"
+  ],
+  "summary": "Elite-speed, elite-agility small forward (second in the combine 20m sprint, fourth in agility) who works up the ground and back with huge running power and creates in transition. Small, and contested ball was the work-on.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 73
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Charlie Banfield",
+  "junior": "Claremont",
+  "state": "Western Australia",
+  "position": "MID/FWD",
+  "height": 192,
+  "dob": "2007-07-18",
+  "projection": "40-60",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "14.0"
+   },
+   {
+    "label": "Marks",
+    "value": "5.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.8"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.3"
+   },
+   {
+    "label": "Goals",
+    "value": "1.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "64.0"
+   }
+  ],
+  "strengths": [
+   "Overhead marking",
+   "Size",
+   "Versatility",
+   "Work rate"
+  ],
+  "improvements": [
+   "Kicking polish",
+   "Speed"
+  ],
+  "summary": "West Coast father-son prospect (son of Drew): a 192cm utility who moved from wing and forward into the midfield late in the year and averaged 26.8 disposals across four finals, best afield in Claremont's Colts flag. Won the WA state combine 2km. Kicking polish and speed were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 77
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Kye Fincher",
+  "junior": "Sandringham Dragons",
+  "state": "Vic Metro",
+  "position": "DEF/MID",
+  "height": 184,
+  "dob": "2007-11-18",
+  "projection": "30-45",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.4"
+   },
+   {
+    "label": "Marks",
+    "value": "3.9"
+   },
+   {
+    "label": "Tackles",
+    "value": "2.3"
+   },
+   {
+    "label": "Clearances",
+    "value": "2.7"
+   },
+   {
+    "label": "Rebound 50s",
+    "value": "2.7"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "87.0"
+   }
+  ],
+  "strengths": [
+   "Aerial ability",
+   "Dare",
+   "Explosiveness",
+   "Versatility"
+  ],
+  "improvements": [
+   "Composure",
+   "Stoppage craft"
+  ],
+  "summary": "St Kilda Next Generation Academy graduate: a powerful, daring rebound defender who added midfield minutes and made his VFL debut for the Saints' affiliate. Quick and bold by foot. Composure and stoppage craft were the work-ons.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 82
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Tai Hayes",
+  "junior": "Southport VFL",
+  "state": "Victoria",
+  "position": "Wing",
+  "height": 183,
+  "dob": "2004-11-19",
+  "projection": "Late / rookie",
+  "statsFrom": "VFL",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "15.9"
+   },
+   {
+    "label": "Marks",
+    "value": "4.5"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.9"
+   },
+   {
+    "label": "Disposal eff %",
+    "value": "74.1"
+   },
+   {
+    "label": "Goals",
+    "value": "0.4"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "65.8"
+   }
+  ],
+  "strengths": [
+   "Kicking",
+   "Running power",
+   "Scoreboard impact",
+   "Two-way work rate"
+  ],
+  "improvements": [
+   "Exposure",
+   "Size"
+  ],
+  "summary": "Mature-age wingman (nephew of Lenny Hayes) who went from Mornington Peninsula local footy to a QAFL breakout and then the VFL with Southport, where he played every game until an ankle injury. Raking left foot and works hard both ways.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 84
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Thomas Matthews",
+  "junior": "Gippsland Power",
+  "state": "Vic Country",
+  "position": "FWD",
+  "height": 171,
+  "dob": "2007-02-28",
+  "projection": "Late / rookie",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "11.0"
+   },
+   {
+    "label": "Marks",
+    "value": "1.3"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.8"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "2.5"
+   },
+   {
+    "label": "Goals",
+    "value": "1.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "53.0"
+   }
+  ],
+  "strengths": [
+   "Defensive pressure",
+   "Ground balls",
+   "Speed",
+   "X-factor"
+  ],
+  "improvements": [
+   "Durability",
+   "Size"
+  ],
+  "summary": "Livewire 171cm small forward and Gippsland captain whose draft year was wrecked by a preseason PCL injury, playing only four games. Quick, slick at ground level and relentless with his pressure. Size and durability were the concerns.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 89
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Latrelle Pickett",
+  "junior": "Glenelg",
+  "state": "South Australia",
+  "position": "FWD",
+  "height": 182,
+  "dob": "2005-12-28",
+  "projection": "20-30",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "11.9"
+   },
+   {
+    "label": "Marks",
+    "value": "2.8"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.9"
+   },
+   {
+    "label": "Inside 50s",
+    "value": "3.1"
+   },
+   {
+    "label": "Goals",
+    "value": "1.8"
+   },
+   {
+    "label": "AFL Fantasy",
+    "value": "57.3"
+   }
+  ],
+  "strengths": [
+   "Scoreboard impact",
+   "Speed",
+   "Vertical leap",
+   "X-factor"
+  ],
+  "improvements": [
+   "Defensive work rate",
+   "Exposure"
+  ],
+  "summary": "Over-age bolter from Port Lincoln (cousin of Kysaiah) who kicked 32 goals in 18 SANFL Reserves games and played three League games for premier Glenelg. Quick, springy and evasive with natural goal sense. Topped SA's state-combine 2km. Defensive work rate was the work-on.",
+  "source": {
+   "title": "2025 AFL Draft Guide",
+   "url": "https://central.rookieme.com/afl/2025-afl-draft-guide-view/?submissionGuid=ab33cc73-661f-4f3a-bcd8-5a036592e0b8",
+   "page": 93
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Tobyn Murray",
+  "junior": "Geelong",
+  "height": 179,
+  "dob": "2005-05-05",
+  "statsFrom": "2025 VFL (17 games)",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "14.9"
+   },
+   {
+    "label": "Marks",
+    "value": "2.5"
+   },
+   {
+    "label": "Tackles",
+    "value": "1.9"
+   },
+   {
+    "label": "Goals",
+    "value": "1.3"
+   },
+   {
+    "label": "Fantasy",
+    "value": "60"
+   }
+  ],
+  "strengths": [],
+  "improvements": [],
+  "summary": "Geelong VFL midfielder taken after 17 games in 2025; a high-volume Talent League ball-winner two years earlier.",
+  "source": {
+   "title": "2025 draft profile",
+   "url": "https://central.rookieme.com/afl/player/tobyn-murray/"
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Billy Cootee",
+  "junior": "Norwood",
+  "height": 178,
+  "dob": "2002-12-18",
+  "statsFrom": "2025 SANFL League (21 games)",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "22.8"
+   },
+   {
+    "label": "Marks",
+    "value": "3.8"
+   },
+   {
+    "label": "Tackles",
+    "value": "5.0"
+   },
+   {
+    "label": "Goals",
+    "value": "1.1"
+   },
+   {
+    "label": "Fantasy",
+    "value": "97"
+   }
+  ],
+  "strengths": [],
+  "improvements": [],
+  "summary": "Mature-age Norwood midfielder who averaged 23 disposals, 5 tackles and 97 fantasy across 21 SANFL games in 2025.",
+  "source": {
+   "title": "2025 draft profile",
+   "url": "https://central.rookieme.com/afl/player/billy-cootee/"
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Angus Anderson",
+  "junior": "Sturt",
+  "position": "Inside Midfielder",
+  "height": 189,
+  "dob": "2003-05-25",
+  "projection": "Late/Rookie",
+  "statsFrom": "2025 SANFL League (17 games)",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "21.3"
+   },
+   {
+    "label": "Marks",
+    "value": "5.6"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.9"
+   },
+   {
+    "label": "Goals",
+    "value": "0.7"
+   },
+   {
+    "label": "Fantasy",
+    "value": "93"
+   }
+  ],
+  "strengths": [
+   "Contested game",
+   "Clean hands",
+   "Clearances",
+   "Work rate",
+   "Size"
+  ],
+  "improvements": [
+   "Versatility",
+   "Composure"
+  ],
+  "summary": "Big-bodied inside midfielder from Sturt: 21 disposals, 5 tackles and 93 fantasy a game in the 2025 SANFL League, with clean hands and clearance work.",
+  "source": {
+   "title": "2025 draft profile",
+   "url": "https://central.rookieme.com/afl/player/angus-anderson/"
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Ryan Byrnes",
+  "junior": "St Kilda",
+  "height": 181,
+  "dob": "2001-05-03",
+  "projection": "Third round onwards",
+  "statsFrom": "2025 VFL (2 games)",
+  "stats": [
+   {
+    "label": "Disposals",
+    "value": "24.5"
+   },
+   {
+    "label": "Marks",
+    "value": "4.0"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.0"
+   },
+   {
+    "label": "Goals",
+    "value": "0.0"
+   },
+   {
+    "label": "Fantasy",
+    "value": "83"
+   }
+  ],
+  "strengths": [
+   "Accumulation",
+   "Consistency",
+   "Five-step burst",
+   "Work rate",
+   "Dual-sided",
+   "Leadership"
+  ],
+  "improvements": [
+   "Kicking at speed",
+   "Scoreboard impact"
+  ],
+  "summary": "Re-drafted by St Kilda: a tireless accumulator and leader with a five-step burst, though kicking at speed and scoreboard impact are the knocks.",
+  "source": {
+   "title": "2025 draft profile",
+   "url": "https://central.rookieme.com/afl/player/ryan-byrnes/"
+  }
+ },
+ {
+  "year": 2025,
+  "name": "Jake Stringer",
+  "junior": "Greater Western Sydney",
+  "height": 192,
+  "dob": "1994-04-25",
+  "strengths": [],
+  "improvements": [],
+  "summary": "Veteran forward re-drafted at 31 by GWS for his goal-kicking and experience; a short-term points pick, not a prospect.",
+  "source": {
+   "title": "2025 AFL draft (DFS Australia numbers)",
+   "url": "https://dfsaustralia.com/"
+  }
+ }
 ]

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
 import { InfoPopover } from '@/components/InfoPopover';
 import { HighlightsLink, ProfileSheet } from '@/components/ProfileSheet';
-import { draftProfileFor } from '@/lib/draft-profiles';
+import { draftProfileByName, draftProfileFor } from '@/lib/draft-profiles';
 import { YearSelect } from '@/components/YearSelect';
 import { TableSearch } from '@/components/TableSearch';
 import { crystalUnlocked } from '@/lib/crystal-access';
@@ -659,6 +659,11 @@ const FA_CLUB: Record<string, string> = { 'Adelaide Crows': 'ADE', 'Brisbane Lio
   'Gold Coast Suns': 'GCS', 'GWS Giants': 'GWS', Hawthorn: 'HAW', Melbourne: 'MEL', 'North Melbourne': 'NTH', 'Port Adelaide': 'PTA', Richmond: 'RIC', 'St Kilda': 'STK',
   'Sydney Swans': 'SYD', 'West Coast Eagles': 'WCE', 'Western Bulldogs': 'WBD' };
 const FA_ID = new Map((faPlayers as unknown as { players: { id: number; name: string; afl_club: string | null }[] }).players.map((p) => [`${p.name}|${p.afl_club}`, p.id]));
+/** Draft profile button for a free agent, when we have his pre-draft profile. */
+function FAProfile({ p }: { p: { full: string; club: string } }) {
+  const prof = draftProfileByName(p.full);
+  return prof ? <ProfileSheet name={p.full} profile={prof} highlights={prof.year} context={`${prof.projection && /rookie/i.test(prof.projection) ? prof.projection : 'National draft'} · ${prof.year} · now ${p.club}`} /> : null;
+}
 function FAName({ p, size = 16 }: { p: { name: string; full: string; club: string }; size?: number }) {
   const id = FA_ID.get(`${p.name}|${FA_CLUB[p.club] ?? p.club}`);
   const style = { fontWeight: 600, fontSize: size, color: 'inherit' } as const;
@@ -700,6 +705,7 @@ function SecondsPanel({ pos, targets }: { pos: string; targets: Set<string> }) {
                 <div style={{ minWidth: 0 }}>
                   <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
                   <div><FAName p={p} /></div>
+                    <FAProfile p={p} />
                 </div>
                 <div style={{ textAlign: 'right', flex: 'none', color: S2.fg }}>
                   <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{Math.round(p.avg)}</div>
@@ -762,6 +768,7 @@ function FreeAgentsView({ pos }: { pos?: string }) {
                   <div style={{ minWidth: 0 }}>
                     <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
                     <div><FAName p={p} /></div>
+                    <FAProfile p={p} />
                   </div>
                   <div style={{ textAlign: 'right', flex: 'none' }}>
                     <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{fmt(p.proj)}</div>
@@ -795,7 +802,7 @@ function FreeAgentsView({ pos }: { pos?: string }) {
                 <tr key={p.name} data-n={`${p.full} ${p.name}`.toLowerCase()} style={{ background: p.tags.length ? '#f4f9f1' : undefined }}>
                   <td className="mono muted">{p.avg != null ? i + 1 : ''}</td>
                   <td style={{ minWidth: 150 }}>
-                    <FAName p={p} size={14} />
+                    <FAName p={p} size={14} /> <FAProfile p={p} />
                     <div className="muted" style={{ fontSize: 11 }}>{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}{FA_STATUS[p.status] ? ` · ${FA_STATUS[p.status]}` : ''}</div>
                   </td>
                   <td className="mono" style={{ textAlign: 'right' }}>{p.gp}</td>

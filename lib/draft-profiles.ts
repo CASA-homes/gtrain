@@ -37,3 +37,8 @@ const key = (year: number, name: string) => `${year}|${name.toLowerCase().replac
 const INDEX = new Map(DRAFT_PROFILES.map((p) => [key(p.year, p.name), p]));
 export const draftProfileFor = (year: number | null | undefined, name: string | null | undefined) =>
   year && name ? INDEX.get(key(year, name)) ?? null : null;
+
+/** Any profile for this name, newest first: for pages that don't know the draft year (free agents). */
+const BY_NAME = new Map<string, DraftProfile>();
+for (const p of [...DRAFT_PROFILES].sort((a, b) => a.year - b.year)) BY_NAME.set(p.name.toLowerCase().replace(/[^a-z]/g, ''), p);
+export const draftProfileByName = (name: string | null | undefined) => (name ? BY_NAME.get(name.toLowerCase().replace(/[^a-z]/g, '')) ?? null : null);
