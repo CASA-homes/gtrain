@@ -36,7 +36,7 @@ const D = data as unknown as {
 type Past = {
   year: number; pick: number; name: string; club: string; age: number | null; mature: boolean; pre: number; positionOnly: number; now: number;
   games: number; current: { games: number; avg: number } | null; best: number | null; peak: number | null; track: number | null;
-  status: 'Star' | 'On star track' | 'Close' | 'Behind' | 'Yet to debut' | 'Too early'; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
+  status: 'Star' | 'On track' | 'Close' | 'Long shot' | 'Unlikely' | 'Yet to debut' | 'Too early'; why?: string[]; like?: string[]; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
   state?: { league: string; year: number; games: number; fp: number; disposals: number; tackles: number; marks: number; goals: number }[];
 };
 
@@ -192,8 +192,8 @@ function PatternList({ title, rows, good }: { title: string; rows: Pattern[]; go
 }
 
 const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
-  Star: { bg: C.green5, fg: '#fff' }, 'On star track': { bg: C.green4, fg: '#fff' }, Close: { bg: '#d8ecd0', fg: C.ink },
-  Behind: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
+  Star: { bg: C.green5, fg: '#fff' }, 'On track': { bg: C.green4, fg: '#fff' }, Close: { bg: '#d8ecd0', fg: C.ink },
+  'Long shot': { bg: '#f4ead0', fg: C.ink }, Unlikely: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
 };
 
 function Header({ view }: { view: 'next' | 'past' | 'fa' }) {
@@ -245,10 +245,26 @@ function TrackBar({ r, path }: { r: Past; path: Record<string, number> }) {
   return (
     <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 140 }}>
       <span style={{ position: 'relative', height: 10, background: 'var(--line)', borderRadius: 5 }}>
-        <span style={{ position: 'absolute', inset: 0, width: `${(w / 140) * 100}%`, background: (r.track ?? 0) >= 100 ? C.green5 : (r.track ?? 0) >= 88 ? C.green3 : C.yellow, borderRadius: 5 }} />
+        <span style={{ position: 'absolute', inset: 0, width: `${(w / 140) * 100}%`, background: r.status === 'Star' || r.status === 'On track' ? C.green5 : r.status === 'Close' ? C.green3 : C.yellow, borderRadius: 5 }} />
         <span aria-hidden="true" style={{ position: 'absolute', top: -3, bottom: -3, left: `${(100 / 140) * 100}%`, width: 2, background: C.ink, opacity: 0.6 }} />
       </span>
-      <span className="muted" style={{ fontSize: 11 }}>Best {r.best.toFixed(0)} vs star path {ref.toFixed(0)} by year {n}</span>
+      <span className="muted" style={{ fontSize: 11 }}>Best {r.best.toFixed(0)} (games-weighted) vs star path {ref.toFixed(0)} by year {n}</span>
+    </span>
+  );
+}
+
+const ROW_CLASS: Partial<Record<Past['status'], string>> = { Star: 'cb-row-star', 'On track': 'cb-row-track', Close: 'cb-row-close' };
+
+/** Historical players who looked most like him at the same stage; a star marks the ones who went on to a 90+ season. */
+function Like({ r, n = 3 }: { r: Past; n?: number }) {
+  if (!r.like?.length) return null;
+  return (
+    <span style={{ fontSize: 12 }}>
+      {r.like.slice(0, n).map((x, i) => {
+        const made = x.endsWith('*');
+        const nm = x.replace(/\*$/, '').replace(/\+$/, '');
+        return <span key={x}>{i ? ', ' : ''}<span style={made ? { fontWeight: 700 } : undefined}>{made ? nm + ' ★' : nm}</span></span>;
+      })}
     </span>
   );
 }
@@ -313,6 +329,12 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
         </div>
       </div>
       <TrackBar r={r} path={path} />
+      {r.like && r.like.length > 0 && <span style={{ fontSize: 12 }}><span className="muted">Tracking like </span><Like r={r} n={4} /></span>}
+      {r.why && r.why.length > 0 && (
+        <ul style={{ margin: 0, paddingLeft: 16, fontSize: 12, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {r.why.map((w) => <li key={w}>{w}</li>)}
+        </ul>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
         <span style={{ fontSize: 12 }}><span className="muted">Avg </span><Seasons s={r.seasons} /></span>
         <span style={{ fontSize: 12 }}><span className="muted">Centre bounces </span><Cba c={r.cba} /></span>
@@ -331,8 +353,8 @@ function PastView({ year }: { year: number }) {
   const rows = P.filter((r) => r.year === year).sort((a, b) => a.pick - b.pick);
   const count = (s: Past['status']) => rows.filter((r) => r.status === s).length;
   const expected = rows.reduce((t, r) => t + r.pre / 100, 0);
-  const tops = rows.filter((r) => r.status !== 'Star' && (r.status === 'On star track' || r.status === 'Close')).sort((a, b) => b.now - a.now).slice(0, 4);
-  const slow = rows.filter((r) => r.pre >= 25 && (r.status === 'Behind' || r.status === 'Yet to debut')).sort((a, b) => b.pre - a.pre).slice(0, 4);
+  const tops = rows.filter((r) => r.status === 'On track' || r.status === 'Close').sort((a, b) => b.now - a.now).slice(0, 4);
+  const slow = rows.filter((r) => r.pre >= 25 && (r.status === 'Long shot' || r.status === 'Unlikely' || r.status === 'Yet to debut')).sort((a, b) => b.pre - a.pre).slice(0, 4);
   const years = D.past.years.slice().reverse().map((y) => ({ value: String(y), label: `${y} draft` }));
 
   return (
@@ -344,7 +366,10 @@ function PastView({ year }: { year: number }) {
           <b>Draft night</b> is the chance the crystal ball would have given each player before he was picked, worked out without his own draft year in the data.
           <b> Tracking</b> compares his best season so far with the path today’s stars took: eventual {D.meta.hitBar}+ players averaged about
           {' '}{Object.entries(path).slice(0, 4).map(([n, v]) => `${Math.round(v)} in year ${n}`).join(', ')}.
-          <b> Now</b> updates the chance with what he has actually done, using how players at the same stage turned out in 2016–2021.
+          <b> Now</b> is his chance of ever having a {D.meta.hitBar}+ season, and nothing else: a solid 75 player is not “close”. Once he has 10+ AFL games it comes from
+          the 25 players drafted 2016–2021 who looked most like him at the same stage (average, latest season, how many games he actually plays, how often he goes 100+,
+          centre bounces, time stuck in the 2s, role and age) and how many of them got there. Bands: <b>On track</b> 50%+, <b>Close</b> 30–50%, <b>Long shot</b> 10–30%, <b>Unlikely</b> under 10%.
+          Small samples are discounted, so 79 from 6 games counts for a lot less than 79 from 22.
         </p>
       </section>
 
@@ -369,7 +394,7 @@ function PastView({ year }: { year: number }) {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px', fontSize: 13 }}>
           <span>Crystal ball expected <b>{expected.toFixed(1)}</b> stars from this draft</span>
-          {(['Star', 'On star track', 'Close', 'Behind', 'Yet to debut'] as const).map((s) => (
+          {(['Star', 'On track', 'Close', 'Long shot', 'Unlikely', 'Yet to debut'] as const).map((s) => (
             <span key={s}><span className="pill" style={{ background: STATUS[s].bg, color: STATUS[s].fg }}>{s}</span> {count(s)}</span>
           ))}
         </div>
@@ -391,10 +416,10 @@ function PastView({ year }: { year: number }) {
         )}
         <div className="table-box">
           <table className="squad" style={{ minWidth: 1050 }}>
-            <thead><tr><th style={{ width: 46 }}>Pick</th><th style={{ width: 70, color: BURGUNDY }}>G-Train</th><th>Player</th><th style={{ width: 90, textAlign: 'center' }}>Draft night</th><th style={{ width: 80, textAlign: 'center' }}>Now</th><th style={{ width: 120 }}>Status</th><th style={{ width: 170 }}>Tracking</th><th>Seasons</th><th>Centre bounces</th></tr></thead>
+            <thead><tr><th style={{ width: 46 }}>Pick</th><th style={{ width: 70, color: BURGUNDY }}>G-Train</th><th>Player</th><th style={{ width: 90, textAlign: 'center' }}>Draft night</th><th style={{ width: 80, textAlign: 'center' }}>Now</th><th style={{ width: 120 }}>Status</th><th style={{ width: 170 }}>Tracking</th><th style={{ width: 200 }}>Tracks like (★ made it)</th><th>Seasons</th><th>Centre bounces</th></tr></thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.name}>
+                <tr key={r.name} className={ROW_CLASS[r.status]} title={r.why?.join('\n') || undefined}>
                   <td className="mono">{r.pick}</td>
                   <td className="mono"><GPick name={r.name} /></td>
                   <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{r.club}{r.mature ? ' · mature-age' : ''}{r.role === 'Key position' || r.role === 'Small forward' || r.role === 'Ruck' ? ` · ${r.role}` : ''}</div></td>
@@ -402,6 +427,7 @@ function PastView({ year }: { year: number }) {
                   <td style={{ textAlign: 'center' }}><Chance value={r.now} size={15} /></td>
                   <td><span className="pill" style={{ background: STATUS[r.status].bg, color: STATUS[r.status].fg }}>{r.status}</span></td>
                   <td><TrackBar r={r} path={path} /></td>
+                  <td><Like r={r} />{r.why?.[0] && <div className="muted" style={{ fontSize: 11, marginTop: 2, whiteSpace: 'normal', maxWidth: 220 }}>{r.why[0]}</div>}</td>
                   <td><Seasons s={r.seasons} /></td>
                   <td><Cba c={r.cba} /></td>
                 </tr>

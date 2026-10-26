@@ -270,3 +270,11 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .hist-recs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
 .h2h th { text-align: center; font-size: 11px; }
 @media (max-width: 860px) { .hist-grid { grid-template-columns: 1fr; } }
+
+/* Crystal ball: previous drafts, row fill by star chance */
+tr.cb-row-star > td { background: #1f6b3a; color: #fff; }
+tr.cb-row-star [title*="G-Train"] { color: #ffd1dc !important; }
+tr.cb-row-star td, tr.cb-row-star td *:not(.pill) { color: #fff !important; }
+tr.cb-row-star .pill { box-shadow: 0 0 0 1px rgb(255 255 255 / .5); }
+tr.cb-row-track > td { background: #bfe0b0; }
+tr.cb-row-close > td { background: #e3f2dc; }

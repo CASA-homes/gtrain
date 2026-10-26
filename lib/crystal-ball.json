@@ -4302,10 +4302,12 @@
      "games": 21,
      "avg": 95.8
     },
-    "best": 95.8,
+    "best": 84.6,
     "peak": 95.8,
-    "track": 107,
+    "track": 95,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Contested / inside",
@@ -4373,16 +4375,27 @@
     "club": "WBD",
     "pre": 35.1,
     "positionOnly": 43.2,
-    "now": 40.7,
+    "now": 15.1,
     "games": 51,
     "current": {
      "games": 6,
      "avg": 63.5
     },
-    "best": 82.2,
+    "best": 73.5,
     "peak": 82.2,
-    "track": 92,
-    "status": "Close",
+    "track": 82,
+    "status": "Long shot",
+    "why": [
+     "Plays 46% of games (51 from 110 available)"
+    ],
+    "like": [
+     "Patrick Lipinski",
+     "Jack Lukosius",
+     "Liam Henry",
+     "Xavier Duursma",
+     "Elijah Hollands",
+     "Zach Reid"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -4462,10 +4475,12 @@
      "games": 19,
      "avg": 95.6
     },
-    "best": 100.6,
+    "best": 88.0,
     "peak": 100.6,
-    "track": 113,
+    "track": 99,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": 87.0,
     "seasons": [
@@ -4531,10 +4546,12 @@
      "games": 23,
      "avg": 116.6
     },
-    "best": 116.6,
+    "best": 100.7,
     "peak": 116.6,
-    "track": 131,
+    "track": 113,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -4591,16 +4608,27 @@
     "club": "GCS",
     "pre": 16.3,
     "positionOnly": 27.5,
-    "now": 16.2,
+    "now": 30.1,
     "games": 88,
     "current": {
      "games": 23,
      "avg": 72.2
     },
-    "best": 72.2,
+    "best": 67.7,
     "peak": 72.2,
-    "track": 81,
-    "status": "Behind",
+    "track": 76,
+    "status": "Close",
+    "why": [
+     "Rarely goes big: 4 of 88 games at 100+"
+    ],
+    "like": [
+     "Riley Thilthorpe",
+     "Luke Jackson*",
+     "Tristan Xerri*",
+     "Bailey Williams",
+     "Shannon Neale",
+     "Tim English*"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -4675,16 +4703,25 @@
     "club": "ADE",
     "pre": 31.8,
     "positionOnly": 24.8,
-    "now": 23.9,
+    "now": 25.7,
     "games": 95,
     "current": {
      "games": 25,
      "avg": 69.1
     },
-    "best": 71.9,
+    "best": 67.2,
     "peak": 71.9,
-    "track": 81,
-    "status": "Behind",
+    "track": 75,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Zac Bailey*",
+     "Nick Blakey",
+     "Justin McInerney",
+     "Ed Richards*",
+     "Isaac Quaynor",
+     "Ben Ainsworth"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -4761,16 +4798,25 @@
     "club": "HAW",
     "pre": 43.9,
     "positionOnly": 22.7,
-    "now": 65.1,
+    "now": 30.6,
     "games": 92,
     "current": {
      "games": 25,
      "avg": 83.3
     },
-    "best": 83.3,
+    "best": 76.4,
     "peak": 83.3,
-    "track": 93,
+    "track": 86,
     "status": "Close",
+    "why": [],
+    "like": [
+     "Andrew McGrath",
+     "James Rowbottom",
+     "Tom Powell",
+     "Adam Cerra*",
+     "Trent Rivers",
+     "Tarryn Thomas"
+    ],
     "traits": [
      "Consistency",
      "Engine / work rate",
@@ -4855,16 +4901,27 @@
     "club": "FRE",
     "pre": 1.6,
     "positionOnly": 21.0,
-    "now": 1.6,
+    "now": 4.7,
     "games": 97,
     "current": {
      "games": 26,
      "avg": 58.2
     },
-    "best": 58.2,
+    "best": 57.5,
     "peak": 58.2,
-    "track": 65,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 1 of 97 games at 100+"
+    ],
+    "like": [
+     "Charlie Ballard",
+     "Max King",
+     "Jamarra Ugle-Hagan",
+     "Todd Marshall",
+     "Sam De Koning",
+     "Nick Larkey"
+    ],
     "traits": [
      "Aerial / marking",
      "Consistency",
@@ -4928,16 +4985,28 @@
     "club": "RIC",
     "pre": 0.6,
     "positionOnly": 19.5,
-    "now": 0.3,
+    "now": 1.4,
     "games": 22,
     "current": {
      "games": 1,
      "avg": 52.0
     },
-    "best": 39.1,
+    "best": 54.7,
     "peak": 39.1,
-    "track": 44,
-    "status": "Behind",
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 20% of games (22 from 110 available)",
+     "Rarely goes big: 0 of 22 games at 100+"
+    ],
+    "like": [
+     "Denver Grainger-Barras",
+     "Ollie Lord",
+     "Brayden Cook",
+     "Will Hamill",
+     "Jack Carroll",
+     "Hugh Dixon"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -5014,16 +5083,27 @@
     "club": "FRE",
     "pre": 10.5,
     "positionOnly": 18.3,
-    "now": 14.4,
+    "now": 19.7,
     "games": 65,
     "current": {
      "games": 27,
      "avg": 67.4
     },
-    "best": 67.4,
+    "best": 64.6,
     "peak": 67.4,
-    "track": 76,
-    "status": "Behind",
+    "track": 72,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 65 games at 100+"
+    ],
+    "like": [
+     "Chayce Jones",
+     "Tom Sparrow*",
+     "Connor Idun",
+     "Justin McInerney",
+     "Ryan Byrnes",
+     "Josh Daicos*"
+    ],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -5123,10 +5203,12 @@
      "games": 17,
      "avg": 105.4
     },
-    "best": 110.8,
+    "best": 96.4,
     "peak": 110.8,
-    "track": 124,
+    "track": 108,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Footy IQ / vision",
      "Inside-outside balance",
@@ -5191,13 +5273,25 @@
     "club": "PTA",
     "pre": 21.7,
     "positionOnly": 16.3,
-    "now": 2.8,
+    "now": 1.2,
     "games": 30,
     "current": null,
-    "best": 51.2,
+    "best": 53.4,
     "peak": 45.4,
-    "track": 57,
-    "status": "Behind",
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (30 from 110 available)",
+     "Rarely goes big: 0 of 30 games at 100+"
+    ],
+    "like": [
+     "Daniel Venables",
+     "Nathan Murphy",
+     "Luke Edwards",
+     "Myles Poholke",
+     "Sam Sturt",
+     "Francis Evans"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills",
@@ -5275,13 +5369,25 @@
     "club": "ESS",
     "pre": 27.4,
     "positionOnly": 15.5,
-    "now": 36.7,
+    "now": 21.5,
     "games": 64,
     "current": null,
-    "best": 76.5,
+    "best": 69.9,
     "peak": 76.5,
-    "track": 86,
-    "status": "Behind",
+    "track": 78,
+    "status": "Long shot",
+    "why": [
+     "Stuck in the seconds: 17 state-league games v 0 AFL in 2026",
+     "Rarely goes big: 2 of 64 games at 100+"
+    ],
+    "like": [
+     "Jackson Hately",
+     "Harry Schoenberg",
+     "Elijah Hollands",
+     "Lachie Fogarty",
+     "Jack Ross",
+     "Ryan Angwin"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -5381,16 +5487,29 @@
     "club": "WCE",
     "pre": 27.0,
     "positionOnly": 14.8,
-    "now": 1.6,
+    "now": 1.3,
     "games": 39,
     "current": {
      "games": 3,
      "avg": 62.3
     },
-    "best": 42.5,
+    "best": 58.2,
     "peak": 42.5,
-    "track": 48,
-    "status": "Behind",
+    "track": 65,
+    "status": "Unlikely",
+    "why": [
+     "Plays 35% of games (39 from 110 available)",
+     "Stuck in the seconds: 13 state-league games v 3 AFL in 2026",
+     "Rarely goes big: 0 of 39 games at 100+"
+    ],
+    "like": [
+     "Brayden Cook",
+     "Charlie Lazzaro",
+     "Mitch Crowden",
+     "Jack Carroll",
+     "Will Hamill",
+     "Finlay Macrae"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -5478,16 +5597,28 @@
     "club": "GWS",
     "pre": 0.5,
     "positionOnly": 14.2,
-    "now": 1.9,
+    "now": 2.0,
     "games": 32,
     "current": {
      "games": 7,
      "avg": 53.4
     },
-    "best": 53.4,
+    "best": 54.3,
     "peak": 42.8,
-    "track": 60,
-    "status": "Behind",
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 29% of games (32 from 110 available)",
+     "Rarely goes big: 0 of 32 games at 100+"
+    ],
+    "like": [
+     "Lewis Young",
+     "Brandon Zerk-Thatcher",
+     "Jacob Koschitzke",
+     "Hugh Dixon",
+     "Esava Ratugolea",
+     "Harrison Petty"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -5585,16 +5716,25 @@
     "club": "BRL",
     "pre": 23.7,
     "positionOnly": 13.6,
-    "now": 27.9,
+    "now": 34.2,
     "games": 110,
     "current": {
      "games": 27,
      "avg": 80.6
     },
-    "best": 80.6,
+    "best": 74.7,
     "peak": 80.6,
-    "track": 90,
+    "track": 84,
     "status": "Close",
+    "why": [],
+    "like": [
+     "Jack Bowes",
+     "Trent Rivers",
+     "Jordan Clark*",
+     "Lachlan Ash*",
+     "Jack Graham",
+     "Bailey Scott"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Leadership / character",
@@ -5657,16 +5797,27 @@
     "club": "RIC",
     "pre": 11.9,
     "positionOnly": 13.0,
-    "now": 4.1,
+    "now": 1.1,
     "games": 60,
     "current": {
      "games": 18,
      "avg": 57.1
     },
-    "best": 57.1,
+    "best": 56.5,
     "peak": 57.1,
-    "track": 64,
-    "status": "Behind",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 60 games at 100+"
+    ],
+    "like": [
+     "Bobby Hill",
+     "Darcy Fogarty",
+     "Cody Weightman",
+     "Hugo Ralphsmith",
+     "Jackson Mead",
+     "Charlie Spargo"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -5735,16 +5886,28 @@
     "club": "SYD",
     "pre": 12.7,
     "positionOnly": 12.6,
-    "now": 20.1,
+    "now": 15.5,
     "games": 48,
     "current": {
      "games": 20,
      "avg": 67.5
     },
-    "best": 67.5,
+    "best": 63.9,
     "peak": 67.5,
-    "track": 76,
-    "status": "Behind",
+    "track": 72,
+    "status": "Long shot",
+    "why": [
+     "Plays 44% of games (48 from 110 available)",
+     "Rarely goes big: 2 of 48 games at 100+"
+    ],
+    "like": [
+     "Tom Sparrow*",
+     "Jack Ross",
+     "Josh Daicos*",
+     "Chayce Jones",
+     "Tanner Bruhn",
+     "Will Setterfield*"
+    ],
     "traits": [
      "Consistency",
      "Contested / inside",
@@ -5844,16 +6007,25 @@
     "club": "MEL",
     "pre": 0.3,
     "positionOnly": 12.1,
-    "now": 2.7,
+    "now": 8.4,
     "games": 79,
     "current": {
      "games": 22,
      "avg": 63.5
     },
-    "best": 63.5,
+    "best": 61.2,
     "peak": 63.5,
-    "track": 71,
-    "status": "Behind",
+    "track": 69,
+    "status": "Unlikely",
+    "why": [],
+    "like": [
+     "Sam Taylor",
+     "Max King",
+     "Charlie Ballard",
+     "Aaron Naughton",
+     "Cameron Rayner",
+     "Sam De Koning"
+    ],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact",
@@ -5932,16 +6104,27 @@
     "club": "BRL",
     "pre": 2.9,
     "positionOnly": 11.7,
-    "now": 7.3,
+    "now": 8.6,
     "games": 80,
     "current": {
      "games": 27,
      "avg": 67.3
     },
-    "best": 67.3,
+    "best": 64.5,
     "peak": 67.3,
-    "track": 75,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 2 of 80 games at 100+"
+    ],
+    "like": [
+     "Connor Idun",
+     "Isaac Quaynor",
+     "Ben Ainsworth",
+     "Justin McInerney",
+     "Harry Morrison",
+     "Jake Waterman"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -6025,16 +6208,27 @@
     "club": "FRE",
     "pre": 14.6,
     "positionOnly": 11.3,
-    "now": 21.8,
+    "now": 16.1,
     "games": 81,
     "current": {
      "games": 26,
      "avg": 65.0
     },
-    "best": 70.5,
+    "best": 65.7,
     "peak": 70.5,
-    "track": 79,
-    "status": "Behind",
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 3 of 81 games at 100+"
+    ],
+    "like": [
+     "Sam Taylor",
+     "Aaron Naughton",
+     "Chayce Jones",
+     "Tom Sparrow*",
+     "Heath Chapman",
+     "Kysaiah Pickett*"
+    ],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -6115,16 +6309,28 @@
     "club": "NTH",
     "pre": 5.9,
     "positionOnly": 11.0,
-    "now": 3.0,
+    "now": 1.6,
     "games": 18,
     "current": {
      "games": 6,
      "avg": 55.3
     },
-    "best": 55.3,
+    "best": 58.1,
     "peak": 54.5,
-    "track": 62,
-    "status": "Behind",
+    "track": 65,
+    "status": "Unlikely",
+    "why": [
+     "Plays 16% of games (18 from 110 available)",
+     "Stuck in the seconds: 7 state-league games v 6 AFL in 2026"
+    ],
+    "like": [
+     "Jack Payne",
+     "Brandon Zerk-Thatcher",
+     "Jarrod Brander",
+     "Jacob Allison",
+     "Jacob Koschitzke",
+     "Nick Larkey"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -6213,16 +6419,29 @@
     "club": "HAW",
     "pre": 11.5,
     "positionOnly": 10.7,
-    "now": 7.0,
+    "now": 4.6,
     "games": 33,
     "current": {
      "games": 8,
      "avg": 59.4
     },
-    "best": 59.5,
+    "best": 57.2,
     "peak": 59.4,
-    "track": 67,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 30% of games (33 from 110 available)",
+     "Stuck in the seconds: 11 state-league games v 8 AFL in 2026",
+     "Rarely goes big: 1 of 33 games at 100+"
+    ],
+    "like": [
+     "Riley Garcia",
+     "Patrick Naish",
+     "Nathan O'Driscoll",
+     "Charlie Comben",
+     "Dylan Clarke",
+     "Seamus Mitchell"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -6327,13 +6546,17 @@
     "club": "GEE",
     "pre": 6.6,
     "positionOnly": 10.3,
-    "now": 47.1,
+    "now": 15.5,
     "games": 6,
     "current": null,
-    "best": 75.2,
+    "best": 62.8,
     "peak": null,
-    "track": 84,
-    "status": "Behind",
+    "track": 70,
+    "status": "Long shot",
+    "why": [
+     "Plays 5% of games (6 from 110 available)"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -6410,16 +6633,29 @@
     "club": "GEE",
     "pre": 8.2,
     "positionOnly": 10.1,
-    "now": 4.5,
+    "now": 1.6,
     "games": 23,
     "current": {
      "games": 2,
      "avg": 53.5
     },
-    "best": 51.9,
+    "best": 54.7,
     "peak": 51.2,
-    "track": 58,
-    "status": "Behind",
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 21% of games (23 from 110 available)",
+     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026",
+     "Rarely goes big: 1 of 23 games at 100+"
+    ],
+    "like": [
+     "Jacob Allison",
+     "Jacob Koschitzke",
+     "Lewis Young",
+     "Hugh Dixon",
+     "Esava Ratugolea",
+     "Bailey Laurie"
+    ],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -6523,16 +6759,25 @@
     "club": "HAW",
     "pre": 29.2,
     "positionOnly": 9.8,
-    "now": 46.9,
+    "now": 32.6,
     "games": 114,
     "current": {
      "games": 25,
      "avg": 82.8
     },
-    "best": 82.8,
+    "best": 76.1,
     "peak": 82.8,
-    "track": 93,
+    "track": 85,
     "status": "Close",
+    "why": [],
+    "like": [
+     "Trent Rivers",
+     "Lachlan Ash*",
+     "Tom Powell",
+     "James Rowbottom",
+     "Jack Graham",
+     "Adam Cerra*"
+    ],
     "traits": [
      "Accumulator",
      "Athleticism",
@@ -6608,13 +6853,24 @@
     "club": "CAR",
     "pre": 4.4,
     "positionOnly": 9.5,
-    "now": 2.7,
+    "now": 1.3,
     "games": 63,
     "current": null,
-    "best": 50.8,
+    "best": 51.9,
     "peak": 50.8,
-    "track": 57,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 63 games at 100+"
+    ],
+    "like": [
+     "Corey Durdin",
+     "Ned McHenry",
+     "Tyler Brockman",
+     "Lachie Jones",
+     "Maurice Rioli Jr.",
+     "Luke Edwards"
+    ],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -6695,16 +6951,27 @@
     "club": "RIC",
     "pre": 10.4,
     "positionOnly": 9.3,
-    "now": 10.5,
+    "now": 4.9,
     "games": 55,
     "current": {
      "games": 15,
      "avg": 61.1
     },
-    "best": 64.1,
+    "best": 59.3,
     "peak": 61.1,
-    "track": 72,
-    "status": "Behind",
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 1 of 55 games at 100+"
+    ],
+    "like": [
+     "Nathan O'Driscoll",
+     "Curtis Taylor",
+     "Charlie Comben",
+     "Darcy Fogarty",
+     "Riley Garcia",
+     "Mitch Georgiades"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -6810,16 +7077,25 @@
     "club": "RIC",
     "pre": 25.4,
     "positionOnly": 9.1,
-    "now": 26.3,
+    "now": 4.7,
     "games": 61,
     "current": {
      "games": 18,
      "avg": 56.8
     },
-    "best": 79.5,
+    "best": 72.9,
     "peak": 79.5,
-    "track": 89,
-    "status": "Close",
+    "track": 82,
+    "status": "Unlikely",
+    "why": [],
+    "like": [
+     "Liam Henry",
+     "Hunter Clark",
+     "Wil Powell",
+     "Xavier Duursma",
+     "Sam Petrevski-Seton",
+     "Patrick Lipinski"
+    ],
     "traits": [
      "Athleticism",
      "Footy IQ / vision",
@@ -6899,16 +7175,28 @@
     "club": "RIC",
     "pre": 14.8,
     "positionOnly": 8.9,
-    "now": 1.0,
+    "now": 1.2,
     "games": 20,
     "current": {
      "games": 3,
      "avg": 42.0
     },
-    "best": 39.7,
+    "best": 51.5,
     "peak": 39.7,
-    "track": 44,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 18% of games (20 from 110 available)",
+     "Rarely goes big: 0 of 20 games at 100+"
+    ],
+    "like": [
+     "Brayden Cook",
+     "Jack Carroll",
+     "Aiden Bonar",
+     "Will Hamill",
+     "Francis Evans",
+     "Brayden Ainsworth"
+    ],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -7004,16 +7292,27 @@
     "club": "WCE",
     "pre": 6.5,
     "positionOnly": 8.7,
-    "now": 14.0,
+    "now": 15.2,
     "games": 98,
     "current": {
      "games": 23,
      "avg": 54.8
     },
-    "best": 64.1,
+    "best": 61.7,
     "peak": 64.1,
-    "track": 72,
-    "status": "Behind",
+    "track": 69,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 4 of 98 games at 100+"
+    ],
+    "like": [
+     "Archie Perkins",
+     "Cameron Rayner",
+     "Zac Fisher",
+     "Braeden Campbell",
+     "Brent Daniels",
+     "Callum Brown"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -7073,13 +7372,15 @@
     "club": "GEE",
     "pre": 9.2,
     "positionOnly": 8.5,
-    "now": 2.6,
+    "now": 1.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Inside-outside balance",
@@ -7143,16 +7444,27 @@
     "club": "STK",
     "pre": 3.7,
     "positionOnly": 8.3,
-    "now": 19.2,
+    "now": 15.4,
     "games": 92,
     "current": {
      "games": 20,
      "avg": 62.1
     },
-    "best": 73.7,
+    "best": 68.8,
     "peak": 73.7,
-    "track": 83,
-    "status": "Behind",
+    "track": 77,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 4 of 92 games at 100+"
+    ],
+    "like": [
+     "Aaron Naughton",
+     "Sam Taylor",
+     "Heath Chapman",
+     "Sam Powell-Pepper",
+     "Sam Petrevski-Seton",
+     "Zac Fisher"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -7218,16 +7530,25 @@
     "club": "SYD",
     "pre": 23.7,
     "positionOnly": 8.1,
-    "now": 33.1,
+    "now": 22.3,
     "games": 69,
     "current": {
      "games": 21,
      "avg": 66.3
     },
-    "best": 82.7,
+    "best": 74.2,
     "peak": 82.7,
-    "track": 93,
-    "status": "Close",
+    "track": 83,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Xavier Duursma",
+     "Patrick Lipinski",
+     "Jaidyn Stephenson",
+     "Keidean Coleman",
+     "Sam Petrevski-Seton",
+     "Jordan Clark*"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -7333,16 +7654,27 @@
     "club": "NTH",
     "pre": 11.5,
     "positionOnly": 8.0,
-    "now": 12.2,
+    "now": 25.0,
     "games": 98,
     "current": {
      "games": 20,
      "avg": 68.7
     },
-    "best": 71.0,
+    "best": 66.3,
     "peak": 71.0,
-    "track": 80,
-    "status": "Behind",
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 98 games at 100+"
+    ],
+    "like": [
+     "Isaac Quaynor",
+     "Nick Blakey",
+     "Ed Richards*",
+     "Ben Ainsworth",
+     "Zac Bailey*",
+     "Miles Bergman"
+    ],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -7418,16 +7750,25 @@
     "club": "ADE",
     "pre": 14.1,
     "positionOnly": 7.8,
-    "now": 57.3,
+    "now": 24.0,
     "games": 107,
     "current": {
      "games": 22,
      "avg": 66.5
     },
-    "best": 81.4,
+    "best": 75.0,
     "peak": 81.4,
-    "track": 91,
-    "status": "Close",
+    "track": 84,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Sam Berry*",
+     "Brandan Parfitt",
+     "James Rowbottom",
+     "Oliver Florent",
+     "Sam Powell-Pepper",
+     "Jaidyn Stephenson"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -7513,16 +7854,28 @@
     "club": "WCE",
     "pre": 0.4,
     "positionOnly": 7.7,
-    "now": 0.5,
+    "now": 1.4,
     "games": 41,
     "current": {
      "games": 14,
      "avg": 45.8
     },
-    "best": 48.1,
+    "best": 51.8,
     "peak": 48.1,
-    "track": 54,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 37% of games (41 from 110 available)",
+     "Rarely goes big: 0 of 41 games at 100+"
+    ],
+    "like": [
+     "Harrison Petty",
+     "Ben King",
+     "Esava Ratugolea",
+     "Jacob Koschitzke",
+     "Nick Larkey",
+     "Lewis Young"
+    ],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -7616,13 +7969,25 @@
     "club": "NTH",
     "pre": 8.4,
     "positionOnly": 7.5,
-    "now": 1.3,
+    "now": 1.1,
     "games": 16,
     "current": null,
-    "best": 44.9,
+    "best": 49.2,
     "peak": 44.9,
-    "track": 50,
-    "status": "Behind",
+    "track": 55,
+    "status": "Unlikely",
+    "why": [
+     "Plays 15% of games (16 from 110 available)",
+     "Stuck in the seconds: 14 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Hugh Dixon",
+     "Trey Ruscoe",
+     "Mitch Crowden",
+     "Brayden Cook",
+     "Charlie Lazzaro",
+     "Jacob Allison"
+    ],
     "traits": [
      "Aerial / marking",
      "Kicking / skills",
@@ -7713,16 +8078,28 @@
     "club": "MEL",
     "pre": 4.6,
     "positionOnly": 7.4,
-    "now": 3.8,
+    "now": 1.4,
     "games": 48,
     "current": {
      "games": 20,
      "avg": 58.6
     },
-    "best": 58.6,
+    "best": 57.6,
     "peak": 58.6,
-    "track": 66,
-    "status": "Behind",
+    "track": 65,
+    "status": "Unlikely",
+    "why": [
+     "Plays 44% of games (48 from 110 available)",
+     "Rarely goes big: 0 of 48 games at 100+"
+    ],
+    "like": [
+     "Todd Marshall",
+     "Nick Larkey",
+     "Max King",
+     "Jamarra Ugle-Hagan",
+     "Sam De Koning",
+     "Jack Payne"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -7805,16 +8182,29 @@
     "club": "SYD",
     "pre": 6.3,
     "positionOnly": 7.3,
-    "now": 1.9,
+    "now": 1.2,
     "games": 28,
     "current": {
      "games": 5,
      "avg": 37.8
     },
-    "best": 49.4,
+    "best": 51.5,
     "peak": 49.4,
-    "track": 55,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (28 from 110 available)",
+     "Stuck in the seconds: 15 state-league games v 5 AFL in 2026",
+     "Rarely goes big: 0 of 28 games at 100+"
+    ],
+    "like": [
+     "Mitch Crowden",
+     "Trey Ruscoe",
+     "Elliott Himmelberg",
+     "Flynn Perez",
+     "Tom Berry",
+     "Josh Begley"
+    ],
     "traits": [
      "Engine / work rate",
      "Inside-outside balance",
@@ -7912,16 +8302,28 @@
     "club": "BRL",
     "pre": 4.5,
     "positionOnly": 7.1,
-    "now": 2.2,
+    "now": 1.2,
     "games": 22,
     "current": {
      "games": 11,
      "avg": 52.1
     },
-    "best": 52.1,
+    "best": 53.3,
     "peak": 52.1,
-    "track": 58,
-    "status": "Behind",
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 20% of games (22 from 110 available)",
+     "Rarely goes big: 0 of 22 games at 100+"
+    ],
+    "like": [
+     "Conor Stone",
+     "Finn Maginness",
+     "Tom Williamson",
+     "Xavier O'Halloran",
+     "Hugo Ralphsmith",
+     "Rhylee West"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -8023,13 +8425,18 @@
     "club": "GWS",
     "pre": 16.2,
     "positionOnly": 7.0,
-    "now": 0.6,
+    "now": 0.4,
     "games": 7,
     "current": null,
-    "best": 33.7,
+    "best": 45.1,
     "peak": null,
-    "track": 38,
-    "status": "Behind",
+    "track": 50,
+    "status": "Unlikely",
+    "why": [
+     "Plays 6% of games (7 from 110 available)",
+     "Stuck in the seconds: 13 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Intercept / rebound",
@@ -8110,7 +8517,7 @@
     "club": "WBD",
     "pre": 13.9,
     "positionOnly": 6.9,
-    "now": 3.5,
+    "now": 1.1,
     "games": 38,
     "current": {
      "games": 20,
@@ -8119,7 +8526,19 @@
     "best": 54.9,
     "peak": 54.9,
     "track": 62,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Plays 35% of games (38 from 110 available)",
+     "Rarely goes big: 0 of 38 games at 100+"
+    ],
+    "like": [
+     "Hugo Ralphsmith",
+     "Xavier O'Halloran",
+     "Jackson Mead",
+     "Bobby Hill",
+     "Darcy Fogarty",
+     "Jack Petruccelle"
+    ],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -8215,16 +8634,28 @@
     "club": "ADE",
     "pre": 23.8,
     "positionOnly": 6.8,
-    "now": 6.1,
+    "now": 1.2,
     "games": 48,
     "current": {
      "games": 22,
      "avg": 54.2
     },
-    "best": 54.2,
+    "best": 54.4,
     "peak": 54.2,
     "track": 61,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Plays 44% of games (48 from 110 available)",
+     "Rarely goes big: 0 of 48 games at 100+"
+    ],
+    "like": [
+     "Jackson Mead",
+     "Xavier O'Halloran",
+     "Hugo Ralphsmith",
+     "Darcy Fogarty",
+     "Bobby Hill",
+     "Tyler Brockman"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -8307,13 +8738,15 @@
     "club": "COL",
     "pre": 6.4,
     "positionOnly": 6.7,
-    "now": 2.4,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Contested / inside",
@@ -8379,13 +8812,15 @@
     "club": "ESS",
     "pre": 26.9,
     "positionOnly": 6.6,
-    "now": 3.3,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Footy IQ / vision",
@@ -8459,16 +8894,25 @@
     "club": "STK",
     "pre": 2.1,
     "positionOnly": 6.5,
-    "now": 50.9,
+    "now": 28.0,
     "games": 97,
     "current": {
      "games": 23,
      "avg": 83.5
     },
-    "best": 83.5,
+    "best": 76.1,
     "peak": 83.5,
-    "track": 94,
-    "status": "Close",
+    "track": 85,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Andrew McGrath",
+     "James Rowbottom",
+     "Tom Powell",
+     "Adam Cerra*",
+     "Trent Rivers",
+     "Tarryn Thomas"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -8544,13 +8988,15 @@
     "club": "GEE",
     "pre": 5.6,
     "positionOnly": 6.4,
-    "now": 2.4,
+    "now": 1.7,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": 52.0,
     "seasons": [],
@@ -8588,13 +9034,15 @@
     "club": "COL",
     "pre": 16.9,
     "positionOnly": 6.3,
-    "now": 3.0,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Engine / work rate",
@@ -8668,13 +9116,17 @@
     "club": "ESS",
     "pre": 4.8,
     "positionOnly": 6.2,
-    "now": 2.3,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [
+     "30 now: a veteran pick for points, not a future star"
+    ],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -8712,16 +9164,28 @@
     "club": "STK",
     "pre": 1.2,
     "positionOnly": 6.1,
-    "now": 0.5,
+    "now": 1.6,
     "games": 21,
     "current": {
      "games": 13,
      "avg": 37.5
     },
-    "best": 37.5,
+    "best": 44.1,
     "peak": 37.5,
-    "track": 42,
-    "status": "Behind",
+    "track": 49,
+    "status": "Unlikely",
+    "why": [
+     "Plays 19% of games (21 from 110 available)",
+     "Rarely goes big: 0 of 21 games at 100+"
+    ],
+    "like": [
+     "Ben Miller",
+     "Callum Jamieson",
+     "Brayden Crossley",
+     "Caleb Graham",
+     "Samson Ryan",
+     "Francis Evans"
+    ],
     "traits": [
      "Athleticism",
      "Versatility"
@@ -8816,16 +9280,28 @@
     "club": "COL",
     "pre": 7.0,
     "positionOnly": 6.0,
-    "now": 2.5,
+    "now": 1.2,
     "games": 28,
     "current": {
      "games": 12,
      "avg": 52.5
     },
-    "best": 52.5,
+    "best": 53.5,
     "peak": 52.5,
-    "track": 59,
-    "status": "Behind",
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (28 from 110 available)",
+     "Rarely goes big: 0 of 28 games at 100+"
+    ],
+    "like": [
+     "Conor Stone",
+     "Finn Maginness",
+     "Xavier O'Halloran",
+     "Hugo Ralphsmith",
+     "Tom Williamson",
+     "Rhylee West"
+    ],
     "traits": [
      "Accumulator",
      "Athleticism",
@@ -8908,16 +9384,27 @@
     "club": "HAW",
     "pre": 1.9,
     "positionOnly": 6.0,
-    "now": 13.6,
+    "now": 12.6,
     "games": 33,
     "current": {
      "games": 24,
      "avg": 72.1
     },
-    "best": 72.1,
+    "best": 67.8,
     "peak": 72.1,
-    "track": 81,
-    "status": "Behind",
+    "track": 76,
+    "status": "Long shot",
+    "why": [
+     "Plays 30% of games (33 from 110 available)"
+    ],
+    "like": [
+     "Zach Reid",
+     "Sam Taylor",
+     "Jeremy Sharp",
+     "Josh Rotham",
+     "Josh Daicos*",
+     "Elijah Hollands"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -9005,13 +9492,15 @@
     "club": "FRE",
     "pre": 2.7,
     "positionOnly": 5.9,
-    "now": 2.1,
+    "now": 2.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -9054,13 +9543,17 @@
     "club": "PTA",
     "pre": 6.2,
     "positionOnly": 5.8,
-    "now": 0.5,
+    "now": 0.6,
     "games": 9,
     "current": null,
-    "best": 33.3,
+    "best": 43.5,
     "peak": 33.3,
-    "track": 37,
-    "status": "Behind",
+    "track": 49,
+    "status": "Unlikely",
+    "why": [
+     "Plays 8% of games (9 from 110 available)"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -9131,16 +9624,28 @@
     "club": "PTA",
     "pre": 2.2,
     "positionOnly": 5.7,
-    "now": 6.8,
+    "now": 1.8,
     "games": 29,
     "current": {
      "games": 15,
      "avg": 42.7
     },
-    "best": 53.9,
+    "best": 54.9,
     "peak": 53.9,
-    "track": 60,
-    "status": "Behind",
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Plays 26% of games (29 from 110 available)",
+     "Rarely goes big: 0 of 29 games at 100+"
+    ],
+    "like": [
+     "Esava Ratugolea",
+     "Lewis Young",
+     "Jacob Koschitzke",
+     "Hugh Dixon",
+     "Harrison Petty",
+     "Thomson Dow"
+    ],
     "traits": [
      "Leadership / character",
      "Size / strength",
@@ -9236,16 +9741,28 @@
     "club": "WCE",
     "pre": 1.4,
     "positionOnly": 5.7,
-    "now": 1.8,
+    "now": 5.0,
     "games": 54,
     "current": {
      "games": 12,
      "avg": 47.9
     },
-    "best": 47.9,
+    "best": 50.8,
     "peak": 47.9,
-    "track": 54,
-    "status": "Behind",
+    "track": 57,
+    "status": "Unlikely",
+    "why": [
+     "Plays 49% of games (54 from 110 available)",
+     "Rarely goes big: 0 of 54 games at 100+"
+    ],
+    "like": [
+     "Noah Balta",
+     "Oscar Allen",
+     "Harrison Jones",
+     "Ben Miller",
+     "Shannon Neale",
+     "Callum Coleman-Jones"
+    ],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -9339,13 +9856,15 @@
     "club": "SYD",
     "pre": 8.6,
     "positionOnly": 5.6,
-    "now": 2.6,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -9419,13 +9938,25 @@
     "club": "NTH",
     "pre": 5.0,
     "positionOnly": 5.5,
-    "now": 1.1,
+    "now": 1.3,
     "games": 26,
     "current": null,
-    "best": 43.8,
+    "best": 52.2,
     "peak": 43.8,
-    "track": 49,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 24% of games (26 from 110 available)",
+     "Rarely goes big: 0 of 26 games at 100+"
+    ],
+    "like": [
+     "Daniel Venables",
+     "Nathan Murphy",
+     "Luke Edwards",
+     "Aiden Bonar",
+     "Francis Evans",
+     "Sam Sturt"
+    ],
     "traits": [
      "Defensive pressure",
      "Intercept / rebound",
@@ -9517,10 +10048,12 @@
      "games": 23,
      "avg": 90.4
     },
-    "best": 90.4,
+    "best": 81.3,
     "peak": 90.4,
-    "track": 101,
+    "track": 91,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Footy IQ / vision",
@@ -9595,16 +10128,29 @@
     "club": "WBD",
     "pre": 9.7,
     "positionOnly": 5.4,
-    "now": 2.5,
+    "now": 1.1,
     "games": 23,
     "current": {
      "games": 2,
      "avg": 23.5
     },
-    "best": 51.8,
+    "best": 56.6,
     "peak": 51.8,
-    "track": 58,
-    "status": "Behind",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 21% of games (23 from 110 available)",
+     "Stuck in the seconds: 15 state-league games v 2 AFL in 2026",
+     "Rarely goes big: 0 of 23 games at 100+"
+    ],
+    "like": [
+     "Brayden Ham",
+     "Oskar Baker",
+     "Flynn Perez",
+     "Josh Begley",
+     "Jack Mahony",
+     "Ed Phillips"
+    ],
     "traits": [
      "Intercept / rebound",
      "Kicking / skills"
@@ -9703,13 +10249,25 @@
     "club": "WCE",
     "pre": 8.7,
     "positionOnly": 5.3,
-    "now": 2.6,
+    "now": 2.4,
     "games": 21,
     "current": null,
-    "best": 48.4,
+    "best": 51.5,
     "peak": 48.4,
-    "track": 54,
-    "status": "Behind",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 19% of games (21 from 110 available)",
+     "Rarely goes big: 1 of 21 games at 100+"
+    ],
+    "like": [
+     "Brett Bewley",
+     "Zac Langdon",
+     "Matthew Parker",
+     "Jacob Wehr",
+     "Jy Farrar",
+     "Mitch Hannan"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -9786,13 +10344,17 @@
     "club": "GCS",
     "pre": 3.9,
     "positionOnly": 5.3,
-    "now": 24.4,
+    "now": 2.9,
     "games": 15,
     "current": null,
-    "best": 82.9,
+    "best": 60.8,
     "peak": null,
-    "track": 93,
-    "status": "Close",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (15 from 110 available)"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Contested / inside",
@@ -9883,13 +10445,18 @@
     "club": "GEE",
     "pre": 5.8,
     "positionOnly": 5.2,
-    "now": 2.4,
+    "now": 0.5,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 49.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 56,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 110 available)",
+     "Stuck in the seconds: 17 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Kicking / skills",
@@ -9967,13 +10534,26 @@
     "club": "MEL",
     "pre": 3.1,
     "positionOnly": 5.1,
-    "now": 0.4,
+    "now": 1.3,
     "games": 21,
     "current": null,
-    "best": 32.8,
+    "best": 52.6,
     "peak": 32.8,
-    "track": 37,
-    "status": "Behind",
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 19% of games (21 from 110 available)",
+     "Stuck in the seconds: 14 state-league games v 0 AFL in 2026",
+     "Rarely goes big: 0 of 21 games at 100+"
+    ],
+    "like": [
+     "Cameron Polson",
+     "Brayden Ainsworth",
+     "Will Hamill",
+     "Jack Carroll",
+     "Denver Grainger-Barras",
+     "Brayden Cook"
+    ],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -10064,16 +10644,27 @@
     "club": "GWS",
     "pre": 9.7,
     "positionOnly": 60.9,
-    "now": 3.2,
+    "now": 14.4,
     "games": 77,
     "current": {
      "games": 18,
      "avg": 61.3
     },
-    "best": 61.3,
+    "best": 59.4,
     "peak": 61.3,
-    "track": 76,
-    "status": "Behind",
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 77 games at 100+"
+    ],
+    "like": [
+     "Charlie Ballard",
+     "Jamarra Ugle-Hagan",
+     "Max King",
+     "Logan McDonald",
+     "Aaron Naughton",
+     "Sam Taylor"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -10148,10 +10739,12 @@
      "games": 27,
      "avg": 105.6
     },
-    "best": 105.6,
+    "best": 94.0,
     "peak": 105.6,
-    "track": 131,
+    "track": 116,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -10207,10 +10800,12 @@
      "games": 22,
      "avg": 116.2
     },
-    "best": 116.2,
+    "best": 99.9,
     "peak": 116.2,
-    "track": 144,
+    "track": 124,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -10258,16 +10853,27 @@
     "club": "NTH",
     "pre": 54.2,
     "positionOnly": 34.0,
-    "now": 61.4,
+    "now": 27.1,
     "games": 55,
     "current": {
      "games": 16,
      "avg": 71.5
     },
-    "best": 78.2,
+    "best": 71.1,
     "peak": 78.2,
-    "track": 97,
-    "status": "Close",
+    "track": 88,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 55 games at 100+"
+    ],
+    "like": [
+     "Brandan Parfitt",
+     "Josh Ward",
+     "Tanner Bruhn",
+     "Jye Caldwell*",
+     "Andrew McGrath",
+     "Jy Simpkin*"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -10337,16 +10943,29 @@
     "club": "ESS",
     "pre": 32.0,
     "positionOnly": 30.1,
-    "now": 55.4,
+    "now": 2.0,
     "games": 22,
     "current": {
      "games": 6,
      "avg": 79.0
     },
-    "best": 79.0,
+    "best": 65.3,
     "peak": null,
-    "track": 98,
-    "status": "Close",
+    "track": 81,
+    "status": "Unlikely",
+    "why": [
+     "Delisted by Essendon after 2026 (picked up by North). Couldn\u2019t hold a spot over younger players.",
+     "Plays 25% of games (22 from 88 available)",
+     "Stuck in the seconds: 13 state-league games v 6 AFL in 2026"
+    ],
+    "like": [
+     "Jack Ross",
+     "Will Setterfield*",
+     "Xavier O'Neill",
+     "Angus Sheldrick",
+     "Lachie Fogarty",
+     "Lochie O'Brien"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -10435,16 +11054,27 @@
     "club": "GCS",
     "pre": 31.9,
     "positionOnly": 27.1,
-    "now": 23.1,
+    "now": 16.6,
     "games": 83,
     "current": {
      "games": 20,
      "avg": 59.1
     },
-    "best": 67.8,
+    "best": 64.5,
     "peak": 67.8,
-    "track": 84,
-    "status": "Behind",
+    "track": 80,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 4 of 83 games at 100+"
+    ],
+    "like": [
+     "Oliver Florent",
+     "Archie Perkins",
+     "Brady Hough",
+     "Josh Rachele",
+     "Sam Powell-Pepper",
+     "Kysaiah Pickett*"
+    ],
     "traits": [
      "Aerial / marking",
      "Contested / inside",
@@ -10506,16 +11136,27 @@
     "club": "HAW",
     "pre": 21.4,
     "positionOnly": 24.7,
-    "now": 37.9,
+    "now": 22.8,
     "games": 69,
     "current": {
      "games": 23,
      "avg": 73.7
     },
-    "best": 73.7,
+    "best": 68.8,
     "peak": 73.7,
-    "track": 91,
-    "status": "Close",
+    "track": 85,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 3 of 69 games at 100+"
+    ],
+    "like": [
+     "Josh Ward",
+     "Brandan Parfitt",
+     "Tanner Bruhn",
+     "Zac Bailey*",
+     "Jy Simpkin*",
+     "Andrew McGrath"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -10595,16 +11236,28 @@
     "club": "GEE",
     "pre": 44.7,
     "positionOnly": 22.8,
-    "now": 22.1,
+    "now": 21.7,
     "games": 35,
     "current": {
      "games": 9,
      "avg": 66.0
     },
-    "best": 66.0,
+    "best": 60.8,
     "peak": 66.0,
-    "track": 82,
-    "status": "Behind",
+    "track": 75,
+    "status": "Long shot",
+    "why": [
+     "Plays 40% of games (35 from 88 available)",
+     "Rarely goes big: 0 of 35 games at 100+"
+    ],
+    "like": [
+     "Jack Ross",
+     "Lachie Fogarty",
+     "Will Setterfield*",
+     "Will Phillips",
+     "Angus Sheldrick",
+     "Tom Sparrow*"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -10693,16 +11346,27 @@
     "club": "WCE",
     "pre": 15.4,
     "positionOnly": 21.2,
-    "now": 12.7,
+    "now": 16.8,
     "games": 76,
     "current": {
      "games": 13,
      "avg": 56.2
     },
-    "best": 60.1,
+    "best": 58.8,
     "peak": 60.1,
-    "track": 74,
-    "status": "Behind",
+    "track": 73,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 76 games at 100+"
+    ],
+    "like": [
+     "Brent Daniels",
+     "Cameron Rayner",
+     "Paddy Dow",
+     "Brady Hough",
+     "Oliver Florent",
+     "Tom Sparrow*"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -10751,16 +11415,25 @@
     "club": "STK",
     "pre": 4.4,
     "positionOnly": 19.8,
-    "now": 14.2,
+    "now": 11.3,
     "games": 65,
     "current": {
      "games": 21,
      "avg": 67.8
     },
-    "best": 67.8,
+    "best": 64.2,
     "peak": 67.8,
-    "track": 84,
-    "status": "Behind",
+    "track": 80,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Matthew Johnson",
+     "Aaron Naughton",
+     "Sam Taylor",
+     "Mitchito Owens",
+     "Heath Chapman",
+     "Max King"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -10839,16 +11512,25 @@
     "club": "CAR",
     "pre": 17.7,
     "positionOnly": 18.6,
-    "now": 20.1,
+    "now": 17.1,
     "games": 79,
     "current": {
      "games": 14,
      "avg": 75.4
     },
-    "best": 76.2,
+    "best": 70.7,
     "peak": 76.2,
-    "track": 94,
-    "status": "Close",
+    "track": 88,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Trent Rivers",
+     "Nick Blakey",
+     "Hunter Clark",
+     "Darcy Wilmot",
+     "Jase Burgoyne*",
+     "Paul Curtis"
+    ],
     "traits": [
      "Accumulator",
      "Engine / work rate",
@@ -10917,16 +11599,25 @@
     "club": "BRL",
     "pre": 15.9,
     "positionOnly": 17.6,
-    "now": 31.6,
+    "now": 20.8,
     "games": 95,
     "current": {
      "games": 27,
      "avg": 71.4
     },
-    "best": 83.7,
+    "best": 77.2,
     "peak": 83.7,
-    "track": 104,
-    "status": "On star track",
+    "track": 96,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Connor MacDonald",
+     "Darcy Wilmot",
+     "Jarrod Berry",
+     "Trent Rivers",
+     "Hunter Clark",
+     "Nick Blakey"
+    ],
     "traits": [
      "Clean hands",
      "Kicking / skills",
@@ -10986,16 +11677,28 @@
     "club": "WBD",
     "pre": 4.1,
     "positionOnly": 16.7,
-    "now": 1.6,
+    "now": 1.3,
     "games": 15,
     "current": {
      "games": 8,
      "avg": 55.8
     },
-    "best": 55.8,
+    "best": 55.4,
     "peak": 55.8,
     "track": 69,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Plays 17% of games (15 from 88 available)",
+     "Stuck in the seconds: 9 state-league games v 8 AFL in 2026"
+    ],
+    "like": [
+     "Jack Payne",
+     "Mitch Knevitt",
+     "Josh Goater",
+     "Jarrod Brander",
+     "Lewis Young",
+     "Jacob Koschitzke"
+    ],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -11072,16 +11775,28 @@
     "club": "WCE",
     "pre": 10.4,
     "positionOnly": 15.9,
-    "now": 13.4,
+    "now": 1.2,
     "games": 40,
     "current": {
      "games": 6,
      "avg": 45.2
     },
-    "best": 61.0,
+    "best": 59.2,
     "peak": 61.0,
-    "track": 76,
-    "status": "Behind",
+    "track": 73,
+    "status": "Unlikely",
+    "why": [
+     "Plays 45% of games (40 from 88 available)",
+     "Rarely goes big: 0 of 40 games at 100+"
+    ],
+    "like": [
+     "Deven Robertson",
+     "Paddy Dow",
+     "Brent Daniels",
+     "Cameron Rayner",
+     "Callum Brown",
+     "Quinton Narkle"
+    ],
     "traits": [
      "Contested / inside",
      "Engine / work rate",
@@ -11134,16 +11849,28 @@
     "club": "MEL",
     "pre": 0.9,
     "positionOnly": 15.2,
-    "now": 0.3,
+    "now": 1.1,
     "games": 23,
     "current": {
      "games": 16,
      "avg": 40.5
     },
-    "best": 40.5,
+    "best": 45.3,
     "peak": 40.5,
-    "track": 50,
-    "status": "Behind",
+    "track": 56,
+    "status": "Unlikely",
+    "why": [
+     "Plays 26% of games (23 from 88 available)",
+     "Rarely goes big: 0 of 23 games at 100+"
+    ],
+    "like": [
+     "Harrison Petty",
+     "Ollie Lord",
+     "Brandon Zerk-Thatcher",
+     "Brayden Cook",
+     "Sam De Koning",
+     "Rhett Bazzo"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11221,16 +11948,28 @@
     "club": "GWS",
     "pre": 17.1,
     "positionOnly": 14.5,
-    "now": 13.5,
+    "now": 13.1,
     "games": 29,
     "current": {
      "games": 12,
      "avg": 62.3
     },
-    "best": 62.3,
+    "best": 59.4,
     "peak": 62.3,
-    "track": 77,
-    "status": "Behind",
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Plays 33% of games (29 from 88 available)",
+     "Rarely goes big: 0 of 29 games at 100+"
+    ],
+    "like": [
+     "Jack Ross",
+     "Xavier O'Neill",
+     "Angus Sheldrick",
+     "Neil Erasmus",
+     "Tom Sparrow*",
+     "Tyler Sonsie"
+    ],
     "traits": [
      "Aerial / marking",
      "Contested / inside",
@@ -11314,16 +12053,27 @@
     "club": "ADE",
     "pre": 9.7,
     "positionOnly": 13.9,
-    "now": 8.4,
+    "now": 21.2,
     "games": 91,
     "current": {
      "games": 25,
      "avg": 59.4
     },
-    "best": 65.2,
+    "best": 62.5,
     "peak": 65.2,
-    "track": 81,
-    "status": "Behind",
+    "track": 77,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 91 games at 100+"
+    ],
+    "like": [
+     "Kysaiah Pickett*",
+     "Jake Bowey+*",
+     "Gryan Miers*",
+     "Ben Ainsworth",
+     "Isaac Quaynor",
+     "Archie Perkins"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11371,16 +12121,27 @@
     "club": "HAW",
     "pre": 0.6,
     "positionOnly": 13.4,
-    "now": 3.8,
+    "now": 11.6,
     "games": 82,
     "current": {
      "games": 22,
      "avg": 65.4
     },
-    "best": 69.9,
+    "best": 65.3,
     "peak": 69.9,
-    "track": 87,
-    "status": "Behind",
+    "track": 81,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 1 of 82 games at 100+"
+    ],
+    "like": [
+     "Aaron Naughton",
+     "Mitchito Owens",
+     "Charlie Ballard",
+     "Max King",
+     "Sam Taylor",
+     "Matthew Johnson"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11450,16 +12211,28 @@
     "club": "COL",
     "pre": 11.2,
     "positionOnly": 12.9,
-    "now": 20.5,
+    "now": 9.5,
     "games": 34,
     "current": {
      "games": 19,
      "avg": 64.3
     },
-    "best": 64.3,
+    "best": 61.6,
     "peak": 64.3,
-    "track": 80,
-    "status": "Behind",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Plays 39% of games (34 from 88 available)",
+     "Rarely goes big: 0 of 34 games at 100+"
+    ],
+    "like": [
+     "Jack Ross",
+     "Matthew Johnson",
+     "Will Setterfield*",
+     "Shai Bolton",
+     "Jarrod Brander",
+     "Will Phillips"
+    ],
     "traits": [
      "Consistency",
      "Kicking / skills",
@@ -11542,16 +12315,28 @@
     "club": "SYD",
     "pre": 6.0,
     "positionOnly": 12.4,
-    "now": 0.9,
+    "now": 0.8,
     "games": 33,
     "current": {
      "games": 10,
      "avg": 42.0
     },
-    "best": 43.6,
+    "best": 47.8,
     "peak": 43.6,
-    "track": 54,
-    "status": "Behind",
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 38% of games (33 from 88 available)",
+     "Rarely goes big: 0 of 33 games at 100+"
+    ],
+    "like": [
+     "Brayden Cook",
+     "Aiden Bonar",
+     "Luke Edwards",
+     "Kane Farrell",
+     "Charlie Lazzaro",
+     "Darcy Fogarty"
+    ],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -11619,13 +12404,25 @@
     "club": "GWS",
     "pre": 10.2,
     "positionOnly": 12.0,
-    "now": 6.1,
+    "now": 4.4,
     "games": 37,
     "current": null,
-    "best": 60.7,
+    "best": 59.2,
     "peak": 60.7,
-    "track": 75,
-    "status": "Behind",
+    "track": 73,
+    "status": "Unlikely",
+    "why": [
+     "Plays 42% of games (37 from 88 available)",
+     "Rarely goes big: 1 of 37 games at 100+"
+    ],
+    "like": [
+     "Jake Waterman",
+     "Eddie Ford",
+     "Kai Lohmann",
+     "Harry Morrison",
+     "Nik Cox",
+     "Tom Brown"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -11682,16 +12479,28 @@
     "club": "GWS",
     "pre": 7.9,
     "positionOnly": 11.6,
-    "now": 1.5,
+    "now": 1.2,
     "games": 26,
     "current": {
      "games": 15,
      "avg": 45.5
     },
-    "best": 45.5,
+    "best": 48.8,
     "peak": 45.5,
-    "track": 56,
-    "status": "Behind",
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 30% of games (26 from 88 available)",
+     "Rarely goes big: 0 of 26 games at 100+"
+    ],
+    "like": [
+     "Sam De Koning",
+     "Rhett Bazzo",
+     "Todd Marshall",
+     "Blake Howes",
+     "Jacob Koschitzke",
+     "Jack Payne"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11775,13 +12584,17 @@
     "club": "WCE",
     "pre": 6.8,
     "positionOnly": 11.3,
-    "now": 2.5,
+    "now": 8.9,
     "games": 2,
     "current": null,
-    "best": null,
+    "best": 52.1,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 65,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (2 from 88 available)"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11846,13 +12659,18 @@
     "club": "WBD",
     "pre": 32.1,
     "positionOnly": 10.9,
-    "now": 3.5,
+    "now": 1.0,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 51.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 88 available)",
+     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Defensive pressure",
@@ -11922,13 +12740,17 @@
     "club": "ESS",
     "pre": 2.2,
     "positionOnly": 10.6,
-    "now": 1.0,
+    "now": 0.5,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 54.7,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 88 available)"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -11998,13 +12820,15 @@
     "club": "NTH",
     "pre": 7.6,
     "positionOnly": 10.3,
-    "now": 2.5,
+    "now": 1.0,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact",
@@ -12057,13 +12881,15 @@
     "club": "SYD",
     "pre": 6.4,
     "positionOnly": 10.0,
-    "now": 2.4,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": 66.0,
     "seasons": [],
@@ -12121,13 +12947,18 @@
     "club": "COL",
     "pre": 20.1,
     "positionOnly": 9.8,
-    "now": 3.1,
+    "now": 0.9,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 51.0,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 88 available)",
+     "Stuck in the seconds: 18 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -12198,13 +13029,15 @@
     "club": "WCE",
     "pre": 2.5,
     "positionOnly": 9.5,
-    "now": 2.0,
+    "now": 4.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -12258,16 +13091,27 @@
     "club": "CAR",
     "pre": 7.7,
     "positionOnly": 9.3,
-    "now": 7.1,
+    "now": 30.0,
     "games": 62,
     "current": {
      "games": 24,
      "avg": 64.4
     },
-    "best": 64.4,
+    "best": 62.1,
     "peak": 64.4,
-    "track": 80,
-    "status": "Behind",
+    "track": 77,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 62 games at 100+"
+    ],
+    "like": [
+     "Jake Bowey+*",
+     "Ben Ainsworth",
+     "Gryan Miers*",
+     "Curtis Taylor",
+     "Nick Coffield",
+     "Ryan Byrnes"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -12348,13 +13192,15 @@
     "club": "STK",
     "pre": 0.8,
     "positionOnly": 9.1,
-    "now": 0.9,
+    "now": 0.4,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Intercept / rebound",
@@ -12406,13 +13252,18 @@
     "club": "CAR",
     "pre": 11.5,
     "positionOnly": 8.9,
-    "now": 6.0,
+    "now": 1.2,
     "games": 8,
     "current": null,
-    "best": 61.8,
+    "best": 57.6,
     "peak": null,
-    "track": 77,
-    "status": "Behind",
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Plays 9% of games (8 from 88 available)",
+     "Stuck in the seconds: 18 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Engine / work rate",
@@ -12488,13 +13339,17 @@
     "club": "FRE",
     "pre": 0.8,
     "positionOnly": 8.7,
-    "now": 0.9,
+    "now": 1.4,
     "games": 2,
     "current": null,
-    "best": null,
+    "best": 47.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (2 from 88 available)"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -12553,16 +13408,29 @@
     "club": "GWS",
     "pre": 4.9,
     "positionOnly": 8.5,
-    "now": 1.3,
+    "now": 0.9,
     "games": 36,
     "current": {
      "games": 8,
      "avg": 36.5
     },
-    "best": 42.0,
+    "best": 47.5,
     "peak": 42.0,
-    "track": 52,
-    "status": "Behind",
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (36 from 88 available)",
+     "Stuck in the seconds: 9 state-league games v 8 AFL in 2026",
+     "Rarely goes big: 0 of 36 games at 100+"
+    ],
+    "like": [
+     "Campbell Chesser",
+     "Jackson Archer",
+     "Charlie Lazzaro",
+     "Riley Garcia",
+     "Jack Carroll",
+     "Finlay Macrae"
+    ],
     "traits": [],
     "jFP": 43.0,
     "seasons": [
@@ -12645,13 +13513,15 @@
     "club": "STK",
     "pre": 12.6,
     "positionOnly": 8.3,
-    "now": 2.8,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -12715,13 +13585,15 @@
     "club": "PTA",
     "pre": 0.3,
     "positionOnly": 8.1,
-    "now": 0.7,
+    "now": 2.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -12774,16 +13646,28 @@
     "club": "HAW",
     "pre": 11.7,
     "positionOnly": 8.0,
-    "now": 2.7,
+    "now": 1.2,
     "games": 11,
     "current": {
      "games": 1,
      "avg": 60.0
     },
-    "best": null,
+    "best": 56.5,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 12% of games (11 from 88 available)",
+     "Stuck in the seconds: 12 state-league games v 1 AFL in 2026"
+    ],
+    "like": [
+     "Josh Goater",
+     "Rhett Bazzo",
+     "Blake Howes",
+     "Mitch Knevitt",
+     "Josh Morris",
+     "Boyd Woodcock"
+    ],
     "traits": [
      "Clean hands",
      "Footy IQ / vision",
@@ -12867,13 +13751,18 @@
     "club": "MEL",
     "pre": 0.7,
     "positionOnly": 7.8,
-    "now": 0.8,
+    "now": 0.3,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 51.9,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 88 available)",
+     "Stuck in the seconds: 8 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -12943,16 +13832,29 @@
     "club": "WBD",
     "pre": 12.5,
     "positionOnly": 7.7,
-    "now": 4.0,
+    "now": 1.0,
     "games": 28,
     "current": {
      "games": 3,
      "avg": 38.3
     },
-    "best": 53.1,
+    "best": 53.7,
     "peak": 53.1,
     "track": 66,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Plays 32% of games (28 from 88 available)",
+     "Stuck in the seconds: 15 state-league games v 3 AFL in 2026",
+     "Rarely goes big: 0 of 28 games at 100+"
+    ],
+    "like": [
+     "Oskar Baker",
+     "Flynn Perez",
+     "Jaxon Prior",
+     "Harry Sharp",
+     "Tom Berry",
+     "Jack Mahony"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -13034,13 +13936,18 @@
     "club": "SYD",
     "pre": 4.8,
     "positionOnly": 7.5,
-    "now": 2.3,
+    "now": 0.8,
     "games": 3,
     "current": null,
-    "best": null,
+    "best": 54.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (3 from 88 available)",
+     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate"
@@ -13112,13 +14019,25 @@
     "club": "FRE",
     "pre": 5.2,
     "positionOnly": 7.4,
-    "now": 0.7,
+    "now": 3.2,
     "games": 15,
     "current": null,
-    "best": 37.8,
+    "best": 58.3,
     "peak": 37.8,
-    "track": 47,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 17% of games (15 from 88 available)",
+     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Judson Clarke",
+     "Leek Aleer",
+     "Ryan Angwin",
+     "Arthur Jones",
+     "Taj Woewodin",
+     "Brayden Ainsworth"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -13189,13 +14108,15 @@
     "club": "FRE",
     "pre": 1.9,
     "positionOnly": 7.3,
-    "now": 1.9,
+    "now": 1.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Upside",
@@ -13257,16 +14178,28 @@
     "club": "ADE",
     "pre": 5.1,
     "positionOnly": 7.1,
-    "now": 8.9,
+    "now": 3.3,
     "games": 13,
     "current": {
      "games": 3,
      "avg": 73.0
     },
-    "best": 68.1,
+    "best": 61.9,
     "peak": 68.1,
-    "track": 84,
-    "status": "Behind",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [
+     "Plays 15% of games (13 from 88 available)",
+     "Stuck in the seconds: 11 state-league games v 3 AFL in 2026"
+    ],
+    "like": [
+     "Jeremy Sharp",
+     "Lachlan Sholl",
+     "Trent Bianco",
+     "Dylan Stephens",
+     "Brodie Kemp",
+     "Nathan O'Driscoll"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -13348,16 +14281,28 @@
     "club": "STK",
     "pre": 6.1,
     "positionOnly": 7.0,
-    "now": 0.7,
+    "now": 4.8,
     "games": 13,
     "current": {
      "games": 2,
      "avg": 38.5
     },
-    "best": 36.7,
+    "best": 51.7,
     "peak": 36.7,
-    "track": 45,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 15% of games (13 from 88 available)",
+     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026"
+    ],
+    "like": [
+     "Tristan Xerri*",
+     "Callum Jamieson",
+     "Brayden Crossley",
+     "Caleb Graham",
+     "Samson Ryan",
+     "Harrison Jones"
+    ],
     "traits": [
      "Athleticism",
      "Contested / inside",
@@ -13434,13 +14379,15 @@
     "club": "ESS",
     "pre": 4.6,
     "positionOnly": 6.9,
-    "now": 1.9,
+    "now": 4.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -13463,13 +14410,15 @@
     "club": "HAW",
     "pre": 3.3,
     "positionOnly": 6.8,
-    "now": 2.2,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -13527,13 +14476,15 @@
     "club": "CAR",
     "pre": 0.4,
     "positionOnly": 6.7,
-    "now": 0.8,
+    "now": 2.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Kicking / skills",
@@ -13585,16 +14536,25 @@
     "club": "COL",
     "pre": 4.7,
     "positionOnly": 6.6,
-    "now": 33.3,
+    "now": 32.7,
     "games": 51,
     "current": {
      "games": 20,
      "avg": 81.7
     },
-    "best": 81.7,
+    "best": 74.1,
     "peak": 81.7,
-    "track": 101,
-    "status": "On star track",
+    "track": 92,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Nick Hind",
+     "Billy Hartung",
+     "Luke Ryan*",
+     "Bayley Fritsch",
+     "Keidean Coleman",
+     "Lachie Schultz"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -13652,13 +14612,25 @@
     "club": "RIC",
     "pre": 4.6,
     "positionOnly": 6.5,
-    "now": 1.0,
+    "now": 0.7,
     "games": 12,
     "current": null,
-    "best": 42.4,
+    "best": 48.7,
     "peak": 42.4,
-    "track": 53,
-    "status": "Behind",
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 14% of games (12 from 88 available)",
+     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Judson Clarke",
+     "Riley Garcia",
+     "Ryan Angwin",
+     "Trey Ruscoe",
+     "Jackson Mead",
+     "Campbell Chesser"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -13719,16 +14691,28 @@
     "club": "ADE",
     "pre": 19.9,
     "positionOnly": 6.4,
-    "now": 2.3,
+    "now": 3.4,
     "games": 19,
     "current": {
      "games": 7,
      "avg": 47.4
     },
-    "best": 47.4,
+    "best": 51.5,
     "peak": null,
-    "track": 59,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 22% of games (19 from 88 available)",
+     "Stuck in the seconds: 7 state-league games v 7 AFL in 2026"
+    ],
+    "like": [
+     "Harry Sharp",
+     "Flynn Perez",
+     "Conor Stone",
+     "Lachlan Gollant",
+     "Luke Pedlar",
+     "Tom Berry"
+    ],
     "traits": [
      "Contested / inside",
      "Defensive pressure",
@@ -13812,16 +14796,28 @@
     "club": "HAW",
     "pre": 5.9,
     "positionOnly": 6.3,
-    "now": 1.6,
+    "now": 1.2,
     "games": 22,
     "current": {
      "games": 14,
      "avg": 47.4
     },
-    "best": 47.4,
+    "best": 54.5,
     "peak": 47.4,
-    "track": 59,
-    "status": "Behind",
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (22 from 88 available)",
+     "Rarely goes big: 0 of 22 games at 100+"
+    ],
+    "like": [
+     "Corey Warner",
+     "Kane Farrell",
+     "Maurice Rioli Jr.",
+     "Nathan Murphy",
+     "Luke Edwards",
+     "Darcy Fogarty"
+    ],
     "traits": [],
     "jFP": 41.0,
     "seasons": [
@@ -13898,13 +14894,15 @@
     "club": "GEE",
     "pre": 2.3,
     "positionOnly": 6.2,
-    "now": 2.0,
+    "now": 9.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -13947,13 +14945,15 @@
     "club": "PTA",
     "pre": 4.4,
     "positionOnly": 6.1,
-    "now": 2.3,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -14011,13 +15011,15 @@
     "club": "ESS",
     "pre": 5.9,
     "positionOnly": 6.0,
-    "now": 2.0,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Scoreboard impact",
@@ -14069,16 +15071,27 @@
     "club": "RIC",
     "pre": 12.5,
     "positionOnly": 5.9,
-    "now": 2.1,
+    "now": 4.1,
     "games": 44,
     "current": {
      "games": 20,
      "avg": 49.4
     },
-    "best": 49.4,
+    "best": 51.0,
     "peak": 49.4,
-    "track": 61,
-    "status": "Behind",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 44 games at 100+"
+    ],
+    "like": [
+     "Brandon Starcevich",
+     "Jack Petruccelle",
+     "Ned McHenry",
+     "Maurice Rioli Jr.",
+     "Darcy Fogarty",
+     "Tom Williamson"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -14152,16 +15165,28 @@
     "club": "NTH",
     "pre": 6.0,
     "positionOnly": 5.9,
-    "now": 11.9,
+    "now": 10.5,
     "games": 17,
     "current": {
      "games": 7,
      "avg": 71.9
     },
-    "best": 71.9,
+    "best": 62.9,
     "peak": null,
-    "track": 89,
-    "status": "Close",
+    "track": 78,
+    "status": "Long shot",
+    "why": [
+     "Plays 19% of games (17 from 88 available)",
+     "Stuck in the seconds: 11 state-league games v 7 AFL in 2026"
+    ],
+    "like": [
+     "Lochie O'Brien",
+     "Josh Worrell",
+     "Rhylee West",
+     "Brodie Kemp",
+     "Sam Butler",
+     "Andrew McPherson"
+    ],
     "traits": [],
     "jFP": 78.0,
     "seasons": [
@@ -14238,16 +15263,27 @@
     "club": "FRE",
     "pre": 4.2,
     "positionOnly": 5.8,
-    "now": 16.2,
+    "now": 5.2,
     "games": 73,
     "current": {
      "games": 16,
      "avg": 65.1
     },
-    "best": 72.8,
+    "best": 64.4,
     "peak": 72.8,
-    "track": 90,
-    "status": "Close",
+    "track": 80,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 3 of 73 games at 100+"
+    ],
+    "like": [
+     "Nick Hind",
+     "Matt de Boer",
+     "Will Hayes",
+     "Bayley Fritsch",
+     "Lachie Schultz",
+     "Brett Bewley"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -14337,13 +15373,25 @@
     "club": "WCE",
     "pre": 6.3,
     "positionOnly": 5.7,
-    "now": 1.5,
+    "now": 0.9,
     "games": 36,
     "current": null,
-    "best": 46.5,
+    "best": 49.7,
     "peak": 46.5,
-    "track": 58,
-    "status": "Behind",
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (36 from 88 available)",
+     "Rarely goes big: 0 of 36 games at 100+"
+    ],
+    "like": [
+     "Bobby Hill",
+     "Daniel Venables",
+     "Mitch Crowden",
+     "Griffin Logue",
+     "Brayden Cook",
+     "Josh Sinn"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -14397,13 +15445,15 @@
     "club": "PTA",
     "pre": 0.6,
     "positionOnly": 5.6,
-    "now": 0.8,
+    "now": 0.4,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": 30.0,
     "seasons": [],
@@ -14461,16 +15511,25 @@
     "club": "WCE",
     "pre": 65.7,
     "positionOnly": 61.2,
-    "now": 83.5,
+    "now": 57.0,
     "games": 62,
     "current": {
      "games": 23,
      "avg": 78.3
     },
-    "best": 78.3,
+    "best": 72.3,
     "peak": 78.3,
-    "track": 103,
-    "status": "On star track",
+    "track": 95,
+    "status": "On track",
+    "why": [],
+    "like": [
+     "Jake Soligo",
+     "Matt Rowell*",
+     "Finn Callaghan*",
+     "Andrew Brayshaw*",
+     "James Rowbottom",
+     "Tarryn Thomas"
+    ],
     "traits": [
      "Contested / inside",
      "Scoreboard impact",
@@ -14514,16 +15573,27 @@
     "club": "NTH",
     "pre": 67.4,
     "positionOnly": 46.2,
-    "now": 65.5,
+    "now": 33.7,
     "games": 62,
     "current": {
      "games": 23,
      "avg": 75.6
     },
-    "best": 82.3,
+    "best": 73.2,
     "peak": 82.3,
-    "track": 108,
-    "status": "On star track",
+    "track": 96,
+    "status": "Close",
+    "why": [
+     "Has the ceiling: 10 games of 100+"
+    ],
+    "like": [
+     "Jarrod Berry",
+     "Connor MacDonald",
+     "Alex Witherden*",
+     "Andrew McGrath",
+     "Sam Powell-Pepper",
+     "Sam Petrevski-Seton"
+    ],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -14578,16 +15648,27 @@
     "club": "GCS",
     "pre": 4.5,
     "positionOnly": 37.6,
-    "now": 1.0,
+    "now": 0.7,
     "games": 48,
     "current": {
      "games": 18,
      "avg": 46.0
     },
-    "best": 46.0,
+    "best": 48.8,
     "peak": 46.0,
-    "track": 61,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 48 games at 100+"
+    ],
+    "like": [
+     "Jye Amiss",
+     "Ben King",
+     "Sam De Koning",
+     "Charlie Ballard",
+     "Esava Ratugolea",
+     "Sam Taylor"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -14662,16 +15743,27 @@
     "club": "NTH",
     "pre": 23.8,
     "positionOnly": 31.9,
-    "now": 1.6,
+    "now": 0.7,
     "games": 38,
     "current": {
      "games": 15,
      "avg": 36.1
     },
-    "best": 36.4,
+    "best": 43.5,
     "peak": 36.4,
-    "track": 48,
-    "status": "Behind",
+    "track": 57,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 38 games at 100+"
+    ],
+    "like": [
+     "Will Hamill",
+     "Darcy Fogarty",
+     "Campbell Chesser",
+     "Taj Woewodin",
+     "Brandon Starcevich",
+     "Ryan Angwin"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -14745,16 +15837,27 @@
     "club": "HAW",
     "pre": 29.0,
     "positionOnly": 27.8,
-    "now": 25.0,
+    "now": 39.6,
     "games": 66,
     "current": {
      "games": 23,
      "avg": 68.4
     },
-    "best": 68.4,
+    "best": 64.9,
     "peak": 68.4,
-    "track": 90,
+    "track": 86,
     "status": "Close",
+    "why": [
+     "Rarely goes big: 1 of 66 games at 100+"
+    ],
+    "like": [
+     "Archie Perkins",
+     "Connor Rozee*",
+     "Adam Cerra*",
+     "Oliver Florent",
+     "Zac Fisher",
+     "Josh Rachele"
+    ],
     "traits": [
      "Contested / inside",
      "Footy IQ / vision",
@@ -14808,16 +15911,25 @@
     "club": "WBD",
     "pre": 25.3,
     "positionOnly": 24.7,
-    "now": 55.6,
+    "now": 38.1,
     "games": 58,
     "current": {
      "games": 23,
      "avg": 79.0
     },
-    "best": 79.0,
+    "best": 72.8,
     "peak": 79.0,
-    "track": 104,
-    "status": "On star track",
+    "track": 96,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Andrew Brayshaw*",
+     "Finn Callaghan*",
+     "Tarryn Thomas",
+     "Jake Soligo",
+     "Max Holmes*",
+     "Zak Butters*"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -14871,16 +15983,27 @@
     "club": "MEL",
     "pre": 33.5,
     "positionOnly": 22.3,
-    "now": 20.8,
+    "now": 29.6,
     "games": 57,
     "current": {
      "games": 21,
      "avg": 57.3
     },
-    "best": 59.0,
+    "best": 57.8,
     "peak": 59.0,
-    "track": 78,
-    "status": "Behind",
+    "track": 76,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 1 of 57 games at 100+"
+    ],
+    "like": [
+     "Nick Blakey",
+     "Cameron Rayner",
+     "Paul Curtis",
+     "Kysaiah Pickett*",
+     "Brady Hough",
+     "Will Hayward"
+    ],
     "traits": [
      "Defensive pressure",
      "Engine / work rate",
@@ -14933,16 +16056,27 @@
     "club": "ADE",
     "pre": 38.5,
     "positionOnly": 20.3,
-    "now": 32.6,
+    "now": 23.8,
     "games": 50,
     "current": {
      "games": 18,
      "avg": 68.2
     },
-    "best": 68.2,
+    "best": 64.1,
     "peak": 68.2,
-    "track": 90,
-    "status": "Close",
+    "track": 84,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 50 games at 100+"
+    ],
+    "like": [
+     "Matthew Johnson",
+     "Mitchito Owens",
+     "Archie Perkins",
+     "Adam Cerra*",
+     "Heath Chapman",
+     "Sam Darcy"
+    ],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -15007,16 +16141,27 @@
     "club": "GCS",
     "pre": 14.4,
     "positionOnly": 18.7,
-    "now": 3.3,
+    "now": 1.0,
     "games": 40,
     "current": {
      "games": 15,
      "avg": 44.5
     },
-    "best": 44.5,
+    "best": 48.1,
     "peak": 44.5,
-    "track": 59,
-    "status": "Behind",
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 40 games at 100+"
+    ],
+    "like": [
+     "Jack Williams",
+     "Noah Balta",
+     "Harrison Jones",
+     "Brayden Crossley",
+     "Caleb Graham",
+     "Riley Thilthorpe"
+    ],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -15090,16 +16235,27 @@
     "club": "ESS",
     "pre": 3.5,
     "positionOnly": 17.4,
-    "now": 2.9,
+    "now": 17.3,
     "games": 49,
     "current": {
      "games": 22,
      "avg": 59.5
     },
-    "best": 59.5,
+    "best": 58.3,
     "peak": 59.5,
-    "track": 78,
-    "status": "Behind",
+    "track": 77,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 2 of 49 games at 100+"
+    ],
+    "like": [
+     "Jamarra Ugle-Hagan",
+     "Jacob van Rooyen",
+     "Logan McDonald",
+     "Matthew Johnson",
+     "Max King",
+     "Brady Hough"
+    ],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact",
@@ -15152,16 +16308,27 @@
     "club": "GEE",
     "pre": 0.9,
     "positionOnly": 16.2,
-    "now": 2.6,
+    "now": 19.2,
     "games": 51,
     "current": {
      "games": 25,
      "avg": 64.4
     },
-    "best": 64.4,
+    "best": 62.2,
     "peak": 64.4,
-    "track": 85,
-    "status": "Behind",
+    "track": 82,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 51 games at 100+"
+    ],
+    "like": [
+     "Jamarra Ugle-Hagan",
+     "Matthew Johnson",
+     "Jacob van Rooyen",
+     "Jake Bowey+*",
+     "Braeden Campbell",
+     "Ben Ainsworth"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -15214,16 +16381,27 @@
     "club": "GWS",
     "pre": 9.5,
     "positionOnly": 15.2,
-    "now": 8.0,
+    "now": 12.9,
     "games": 16,
     "current": {
      "games": 16,
      "avg": 61.9
     },
-    "best": 61.9,
+    "best": 59.6,
     "peak": 61.9,
-    "track": 82,
-    "status": "Behind",
+    "track": 79,
+    "status": "Long shot",
+    "why": [
+     "Plays 24% of games (16 from 66 available)"
+    ],
+    "like": [
+     "Mitchell Lewis",
+     "Jake Waterman",
+     "Seamus Mitchell",
+     "Shai Bolton",
+     "Jack Scrimshaw",
+     "Dylan Clarke"
+    ],
     "traits": [
      "Athleticism",
      "Contested / inside",
@@ -15275,16 +16453,27 @@
     "club": "MEL",
     "pre": 9.3,
     "positionOnly": 14.3,
-    "now": 12.3,
+    "now": 26.4,
     "games": 43,
     "current": {
      "games": 24,
      "avg": 64.6
     },
-    "best": 64.6,
+    "best": 62.2,
     "peak": 64.6,
-    "track": 85,
-    "status": "Behind",
+    "track": 82,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 43 games at 100+"
+    ],
+    "like": [
+     "Ben Ainsworth",
+     "Braeden Campbell",
+     "Jake Bowey+*",
+     "Nick Coffield",
+     "Callum Brown",
+     "Gryan Miers*"
+    ],
     "traits": [
      "Aerial / marking",
      "Kicking / skills",
@@ -15347,16 +16536,28 @@
     "club": "GCS",
     "pre": 29.7,
     "positionOnly": 13.5,
-    "now": 2.5,
+    "now": 0.7,
     "games": 27,
     "current": {
      "games": 9,
      "avg": 39.3
     },
-    "best": 39.3,
+    "best": 46.7,
     "peak": 39.3,
-    "track": 52,
-    "status": "Behind",
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (27 from 66 available)",
+     "Rarely goes big: 0 of 27 games at 100+"
+    ],
+    "like": [
+     "Will Hamill",
+     "Ryan Angwin",
+     "Campbell Chesser",
+     "Harvey Harrison",
+     "Brandon Starcevich",
+     "Jackson Archer"
+    ],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -15430,16 +16631,27 @@
     "club": "WBD",
     "pre": 1.1,
     "positionOnly": 12.8,
-    "now": 0.3,
+    "now": 0.8,
     "games": 19,
     "current": {
      "games": 17,
      "avg": 37.2
     },
-    "best": 37.2,
+    "best": 56.0,
     "peak": 37.2,
-    "track": 49,
-    "status": "Behind",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Plays 29% of games (19 from 66 available)"
+    ],
+    "like": [
+     "Ollie Lord",
+     "Josh Gibcus",
+     "Sam Taylor",
+     "Brandon Zerk-Thatcher",
+     "Will Hamill",
+     "Ryan Angwin"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -15506,16 +16718,20 @@
     "club": "SYD",
     "pre": 2.1,
     "positionOnly": 12.2,
-    "now": 3.1,
+    "now": 4.0,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 53.3
     },
-    "best": null,
+    "best": 54.5,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 5% of games (3 from 66 available)"
+    ],
+    "like": [],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -15575,16 +16791,21 @@
     "club": "GWS",
     "pre": 4.7,
     "positionOnly": 11.7,
-    "now": 2.7,
+    "now": 1.1,
     "games": 8,
     "current": {
      "games": 5,
      "avg": 49.6
     },
-    "best": 49.6,
+    "best": 52.9,
     "peak": null,
-    "track": 65,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 12% of games (8 from 66 available)",
+     "Stuck in the seconds: 9 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -15651,16 +16872,25 @@
     "club": "STK",
     "pre": 10.7,
     "positionOnly": 11.2,
-    "now": 46.2,
+    "now": 41.1,
     "games": 63,
     "current": {
      "games": 22,
      "avg": 83.0
     },
-    "best": 83.0,
+    "best": 75.5,
     "peak": 83.0,
-    "track": 109,
-    "status": "On star track",
+    "track": 100,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Jarrod Berry",
+     "Connor MacDonald",
+     "Tarryn Thomas",
+     "Sam Petrevski-Seton",
+     "Andrew McGrath",
+     "Andrew Brayshaw*"
+    ],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -15715,16 +16945,21 @@
     "club": "HAW",
     "pre": 0.5,
     "positionOnly": 10.7,
-    "now": 1.0,
+    "now": 0.5,
     "games": 4,
     "current": {
      "games": 4,
      "avg": 40.8
     },
-    "best": null,
+    "best": 50.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Plays 6% of games (4 from 66 available)",
+     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -15784,16 +17019,21 @@
     "club": "NTH",
     "pre": 7.4,
     "positionOnly": 10.3,
-    "now": 4.8,
+    "now": 3.3,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 33.0
     },
-    "best": null,
+    "best": 50.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (2 from 66 available)",
+     "Stuck in the seconds: 15 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Athleticism",
      "Ruck craft",
@@ -15853,16 +17093,21 @@
     "club": "ADE",
     "pre": 5.0,
     "positionOnly": 9.9,
-    "now": 4.1,
+    "now": 1.7,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 53.0
     },
-    "best": null,
+    "best": 54.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (2 from 66 available)",
+     "Stuck in the seconds: 10 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -15921,16 +17166,27 @@
     "club": "NTH",
     "pre": 2.3,
     "positionOnly": 9.5,
-    "now": 1.7,
+    "now": 1.2,
     "games": 18,
     "current": {
      "games": 10,
      "avg": 38.7
     },
-    "best": 42.6,
+    "best": 50.2,
     "peak": 38.7,
-    "track": 56,
-    "status": "Behind",
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (18 from 66 available)"
+    ],
+    "like": [
+     "Ollie Lord",
+     "Miller Bergman",
+     "Josh Gibcus",
+     "Rhett Bazzo",
+     "Sam Taylor",
+     "Ryan Angwin"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -16003,16 +17259,29 @@
     "club": "NTH",
     "pre": 12.5,
     "positionOnly": 9.2,
-    "now": 4.2,
+    "now": 6.1,
     "games": 27,
     "current": {
      "games": 7,
      "avg": 50.9
     },
-    "best": 50.9,
+    "best": 53.1,
     "peak": 48.1,
-    "track": 67,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (27 from 66 available)",
+     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026",
+     "Rarely goes big: 1 of 27 games at 100+"
+    ],
+    "like": [
+     "Elijah Hollands",
+     "Corey Durdin",
+     "Xavier O'Halloran",
+     "Flynn Perez",
+     "Jackson Mead",
+     "Hugo Ralphsmith"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -16085,16 +17354,28 @@
     "club": "SYD",
     "pre": 10.5,
     "positionOnly": 8.9,
-    "now": 4.7,
+    "now": 6.7,
     "games": 28,
     "current": {
      "games": 11,
      "avg": 51.9
     },
-    "best": 51.9,
+    "best": 53.2,
     "peak": 51.9,
-    "track": 68,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 42% of games (28 from 66 available)",
+     "Rarely goes big: 0 of 28 games at 100+"
+    ],
+    "like": [
+     "Hugo Ralphsmith",
+     "Jaxon Prior",
+     "Flynn Perez",
+     "Bailey Scott",
+     "Tyler Brockman",
+     "Xavier O'Halloran"
+    ],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -16168,13 +17449,15 @@
     "club": "COL",
     "pre": 7.2,
     "positionOnly": 8.6,
-    "now": 4.7,
+    "now": 1.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Kicking / skills",
@@ -16228,16 +17511,27 @@
     "club": "GCS",
     "pre": 5.4,
     "positionOnly": 8.3,
-    "now": 11.8,
+    "now": 21.0,
     "games": 37,
     "current": {
      "games": 12,
      "avg": 48.6
     },
-    "best": 58.6,
+    "best": 57.4,
     "peak": 58.6,
-    "track": 77,
-    "status": "Behind",
+    "track": 76,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 1 of 37 games at 100+"
+    ],
+    "like": [
+     "Jack Ross",
+     "Luke Davies-Uniacke*",
+     "Brent Daniels",
+     "Tom Sparrow*",
+     "Wil Powell",
+     "Paddy Dow"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -16301,16 +17595,21 @@
     "club": "ADE",
     "pre": 12.8,
     "positionOnly": 8.1,
-    "now": 5.8,
+    "now": 2.6,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 71.0
     },
-    "best": null,
+    "best": 58.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (2 from 66 available)",
+     "Stuck in the seconds: 13 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Intercept / rebound",
      "Leadership / character",
@@ -16368,13 +17667,25 @@
     "club": "STK",
     "pre": 2.0,
     "positionOnly": 7.9,
-    "now": 0.3,
+    "now": 0.7,
     "games": 15,
     "current": null,
-    "best": 27.2,
+    "best": 42.2,
     "peak": 27.2,
-    "track": 36,
-    "status": "Behind",
+    "track": 56,
+    "status": "Unlikely",
+    "why": [
+     "Plays 23% of games (15 from 66 available)",
+     "Stuck in the seconds: 14 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Arthur Jones",
+     "Fischer McAsey",
+     "Denver Grainger-Barras",
+     "Cameron Polson",
+     "Taj Woewodin",
+     "Judson Clarke"
+    ],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact",
@@ -16440,16 +17751,28 @@
     "club": "CAR",
     "pre": 3.4,
     "positionOnly": 7.6,
-    "now": 1.4,
+    "now": 0.6,
     "games": 13,
     "current": {
      "games": 2,
      "avg": 45.5
     },
-    "best": 41.9,
+    "best": 53.1,
     "peak": 41.9,
-    "track": 55,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 20% of games (13 from 66 available)",
+     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026"
+    ],
+    "like": [
+     "Brayden Cook",
+     "Finlay Macrae",
+     "Charlie Lazzaro",
+     "Judson Clarke",
+     "Sam Butler",
+     "Trey Ruscoe"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -16522,16 +17845,28 @@
     "club": "WCE",
     "pre": 0.5,
     "positionOnly": 7.4,
-    "now": 0.2,
+    "now": 0.7,
     "games": 20,
     "current": {
      "games": 6,
      "avg": 34.2
     },
-    "best": 35.7,
+    "best": 46.1,
     "peak": 35.7,
-    "track": 47,
-    "status": "Behind",
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 30% of games (20 from 66 available)",
+     "Rarely goes big: 0 of 20 games at 100+"
+    ],
+    "like": [
+     "Josh Gibcus",
+     "Ollie Lord",
+     "Brandon Zerk-Thatcher",
+     "Sam Taylor",
+     "Taj Woewodin",
+     "Will Hamill"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -16589,16 +17924,25 @@
     "club": "BRL",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 3.2,
+    "now": 23.8,
     "games": 71,
     "current": {
      "games": 26,
      "avg": 70.5
     },
-    "best": 70.5,
+    "best": 66.8,
     "peak": 70.5,
-    "track": 93,
-    "status": "Close",
+    "track": 88,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Darcy Wilmot",
+     "Connor Rozee*",
+     "Oliver Florent",
+     "Brandan Parfitt",
+     "Andrew McGrath",
+     "Archie Perkins"
+    ],
     "traits": [
      "Aerial / marking",
      "Clean hands",
@@ -16651,16 +17995,28 @@
     "club": "GEE",
     "pre": 3.2,
     "positionOnly": 7.0,
-    "now": 12.8,
+    "now": 22.3,
     "games": 20,
     "current": {
      "games": 20,
      "avg": 56.2
     },
-    "best": 56.2,
+    "best": 55.9,
     "peak": 56.2,
     "track": 74,
-    "status": "Behind",
+    "status": "Long shot",
+    "why": [
+     "Plays 30% of games (20 from 66 available)",
+     "Rarely goes big: 0 of 20 games at 100+"
+    ],
+    "like": [
+     "Oscar Allen",
+     "Riley Thilthorpe",
+     "Jack Williams",
+     "Mac Andrew",
+     "Samson Ryan",
+     "Noah Balta"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -16710,16 +18066,29 @@
     "club": "STK",
     "pre": 8.7,
     "positionOnly": 6.9,
-    "now": 3.0,
+    "now": 1.0,
     "games": 21,
     "current": {
      "games": 7,
      "avg": 48.4
     },
-    "best": 48.4,
+    "best": 51.9,
     "peak": 37.2,
-    "track": 64,
-    "status": "Behind",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 32% of games (21 from 66 available)",
+     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026",
+     "Rarely goes big: 0 of 21 games at 100+"
+    ],
+    "like": [
+     "Liam Henry",
+     "Riley Garcia",
+     "Sam Banks",
+     "Jackson Archer",
+     "Harvey Harrison",
+     "Tyler Sonsie"
+    ],
     "traits": [
      "Intercept / rebound",
      "Speed / agility",
@@ -16791,16 +18160,27 @@
     "club": "CAR",
     "pre": 17.7,
     "positionOnly": 6.7,
-    "now": 27.0,
+    "now": 19.6,
     "games": 21,
     "current": {
      "games": 17,
      "avg": 74.3
     },
-    "best": 74.3,
+    "best": 68.1,
     "peak": 74.3,
-    "track": 98,
-    "status": "Close",
+    "track": 90,
+    "status": "Long shot",
+    "why": [
+     "Plays 32% of games (21 from 66 available)"
+    ],
+    "like": [
+     "Matthew Roberts",
+     "Harry Perryman",
+     "Jase Burgoyne*",
+     "Miles Bergman",
+     "Josh Battle",
+     "Jack Graham"
+    ],
     "traits": [
      "Accumulator",
      "Intercept / rebound",
@@ -16866,13 +18246,17 @@
     "club": "FRE",
     "pre": 6.3,
     "positionOnly": 6.6,
-    "now": 4.5,
+    "now": 6.1,
     "games": 5,
     "current": null,
-    "best": null,
+    "best": 51.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 8% of games (5 from 66 available)"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Kicking / skills",
@@ -16927,16 +18311,27 @@
     "club": "GEE",
     "pre": 5.2,
     "positionOnly": 6.4,
-    "now": 45.0,
+    "now": 7.0,
     "games": 60,
     "current": {
      "games": 25,
      "avg": 75.9
     },
-    "best": 87.0,
+    "best": 78.7,
     "peak": 87.0,
-    "track": 115,
-    "status": "On star track",
+    "track": 104,
+    "status": "Unlikely",
+    "why": [
+     "Has the ceiling: 11 games of 100+"
+    ],
+    "like": [
+     "Matt de Boer",
+     "Nick Hind",
+     "Billy Hartung",
+     "Bayley Fritsch",
+     "Luke Ryan*",
+     "Will Hayes"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -16994,13 +18389,18 @@
     "club": "COL",
     "pre": 15.0,
     "positionOnly": 6.3,
-    "now": 6.2,
+    "now": 1.7,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 51.9,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (1 from 66 available)",
+     "Stuck in the seconds: 12 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Athleticism",
      "Footy IQ / vision",
@@ -17059,13 +18459,24 @@
     "club": "WCE",
     "pre": 6.5,
     "positionOnly": 6.1,
-    "now": 9.1,
+    "now": 13.8,
     "games": 16,
     "current": null,
     "best": 55.0,
     "peak": 55.0,
     "track": 72,
-    "status": "Behind",
+    "status": "Long shot",
+    "why": [
+     "Plays 24% of games (16 from 66 available)"
+    ],
+    "like": [
+     "Xavier O'Neill",
+     "Jye Caldwell*",
+     "Jack Bytel",
+     "Tom Sparrow*",
+     "Brad Scheer",
+     "Ed Phillips"
+    ],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -17123,13 +18534,25 @@
     "club": "ESS",
     "pre": 9.5,
     "positionOnly": 6.0,
-    "now": 1.3,
+    "now": 0.5,
     "games": 12,
     "current": null,
-    "best": 37.8,
+    "best": 44.6,
     "peak": 37.8,
-    "track": 50,
-    "status": "Behind",
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 18% of games (12 from 66 available)",
+     "Stuck in the seconds: 12 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Brayden Cook",
+     "Arthur Jones",
+     "Judson Clarke",
+     "Finlay Macrae",
+     "Charlie Lazzaro",
+     "Maurice Rioli Jr."
+    ],
     "traits": [
      "Athleticism",
      "Footy IQ / vision",
@@ -17191,16 +18614,28 @@
     "club": "RIC",
     "pre": 19.2,
     "positionOnly": 5.9,
-    "now": 52.4,
+    "now": 30.5,
     "games": 24,
     "current": {
      "games": 10,
      "avg": 69.0
     },
-    "best": 73.6,
+    "best": 62.8,
     "peak": 69.0,
-    "track": 97,
+    "track": 83,
     "status": "Close",
+    "why": [
+     "Plays 36% of games (24 from 66 available)",
+     "Rarely goes big: 0 of 24 games at 100+"
+    ],
+    "like": [
+     "Will Phillips",
+     "Tanner Bruhn",
+     "Harry Schoenberg",
+     "James Jordon",
+     "Marcus Windhager",
+     "Deven Robertson"
+    ],
     "traits": [
      "Contested / inside",
      "Defensive pressure",
@@ -17274,13 +18709,15 @@
     "club": "FRE",
     "pre": 0.9,
     "positionOnly": 5.8,
-    "now": 1.2,
+    "now": 2.7,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -17324,13 +18761,15 @@
     "club": "BRL",
     "pre": 4.6,
     "positionOnly": 5.6,
-    "now": 4.0,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -17384,10 +18823,15 @@
      "games": 7,
      "avg": 35.6
     },
-    "best": 35.6,
+    "best": 51.3,
     "peak": null,
-    "track": 47,
-    "status": "Behind",
+    "track": 68,
+    "status": "Unlikely",
+    "why": [
+     "Plays 12% of games (8 from 66 available)",
+     "Stuck in the seconds: 13 state-league games v 7 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -17453,16 +18897,27 @@
     "club": "GWS",
     "pre": 3.4,
     "positionOnly": 5.4,
-    "now": 14.6,
+    "now": 15.3,
     "games": 43,
     "current": {
      "games": 22,
      "avg": 72.6
     },
-    "best": 72.6,
+    "best": 67.9,
     "peak": 72.6,
-    "track": 96,
-    "status": "Close",
+    "track": 89,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 1 of 43 games at 100+"
+    ],
+    "like": [
+     "Jack Bowes",
+     "Keidean Coleman",
+     "Isaac Quaynor",
+     "Darcy Wilmot",
+     "Oliver Florent",
+     "Xavier Duursma"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -17524,16 +18979,25 @@
     "club": "WBD",
     "pre": 4.9,
     "positionOnly": 5.3,
-    "now": 35.6,
+    "now": 34.5,
     "games": 61,
     "current": {
      "games": 25,
      "avg": 76.4
     },
-    "best": 76.4,
+    "best": 71.2,
     "peak": 76.4,
-    "track": 101,
-    "status": "On star track",
+    "track": 94,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Andrew Brayshaw*",
+     "Finn Callaghan*",
+     "Jake Soligo",
+     "Max Holmes*",
+     "Sam Darcy",
+     "Zak Butters*"
+    ],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -17587,16 +19051,21 @@
     "club": "HAW",
     "pre": 9.6,
     "positionOnly": 5.2,
-    "now": 1.6,
+    "now": 0.8,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 40.6
     },
-    "best": 40.6,
+    "best": 49.5,
     "peak": null,
-    "track": 53,
-    "status": "Behind",
+    "track": 65,
+    "status": "Unlikely",
+    "why": [
+     "Plays 8% of games (5 from 66 available)",
+     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -17657,16 +19126,21 @@
     "club": "WBD",
     "pre": 4.2,
     "positionOnly": 5.1,
-    "now": 3.9,
+    "now": 3.1,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 48.0
     },
-    "best": null,
+    "best": 53.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Plays 3% of games (2 from 66 available)",
+     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -17720,16 +19194,21 @@
     "club": "PTA",
     "pre": 1.8,
     "positionOnly": 5.0,
-    "now": 1.9,
+    "now": 0.8,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 51.6
     },
-    "best": 51.6,
+    "best": 53.7,
     "peak": null,
-    "track": 68,
-    "status": "Behind",
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Plays 8% of games (5 from 66 available)",
+     "Stuck in the seconds: 10 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Scoreboard impact"
@@ -17788,16 +19267,27 @@
     "club": "WCE",
     "pre": 6.9,
     "positionOnly": 5.0,
-    "now": 1.3,
+    "now": 1.4,
     "games": 14,
     "current": {
      "games": 8,
      "avg": 39.4
     },
-    "best": 39.4,
+    "best": 47.2,
     "peak": 39.4,
-    "track": 52,
-    "status": "Behind",
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Plays 21% of games (14 from 66 available)"
+    ],
+    "like": [
+     "Brandon Starcevich",
+     "Ryan Angwin",
+     "Harvey Harrison",
+     "Will Hamill",
+     "Darcy Fogarty",
+     "Daniel Venables"
+    ],
     "traits": [
      "Contested / inside",
      "Engine / work rate",
@@ -17861,10 +19351,12 @@
      "games": 23,
      "avg": 90.0
     },
-    "best": 90.0,
+    "best": 81.0,
     "peak": 90.0,
-    "track": 119,
+    "track": 107,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Defensive pressure",
@@ -17927,16 +19419,21 @@
     "club": "BRL",
     "pre": 0.8,
     "positionOnly": 4.8,
-    "now": 2.3,
+    "now": 1.9,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 46.3
     },
-    "best": null,
+    "best": 52.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 69,
+    "status": "Unlikely",
+    "why": [
+     "Plays 5% of games (3 from 66 available)",
+     "Stuck in the seconds: 16 state-league games v 3 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -17996,13 +19493,15 @@
     "club": "PTA",
     "pre": 4.0,
     "positionOnly": 4.7,
-    "now": 3.3,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Leadership / character",
@@ -18054,13 +19553,15 @@
     "club": "SYD",
     "pre": 0.1,
     "positionOnly": 4.6,
-    "now": 0.6,
+    "now": 0.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -18119,10 +19620,12 @@
      "games": 21,
      "avg": 94.7
     },
-    "best": 94.7,
+    "best": 83.8,
     "peak": 94.7,
-    "track": 125,
+    "track": 110,
     "status": "Star",
+    "why": [],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -18175,13 +19678,15 @@
     "club": "WBD",
     "pre": 3.1,
     "positionOnly": 4.5,
-    "now": 3.5,
+    "now": 6.0,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Scoreboard impact",
@@ -18202,16 +19707,29 @@
     "club": "HAW",
     "pre": 0.1,
     "positionOnly": 4.4,
-    "now": 0.4,
+    "now": 0.8,
     "games": 31,
     "current": {
      "games": 5,
      "avg": 50.4
     },
-    "best": 50.4,
+    "best": 53.2,
     "peak": 45.0,
-    "track": 66,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 47% of games (31 from 66 available)",
+     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026",
+     "Rarely goes big: 0 of 31 games at 100+"
+    ],
+    "like": [
+     "Mitch Knevitt",
+     "Rhett Bazzo",
+     "Blake Howes",
+     "Sam De Koning",
+     "Esava Ratugolea",
+     "Jacob Koschitzke"
+    ],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact",
@@ -18284,16 +19802,28 @@
     "club": "PTA",
     "pre": 9.9,
     "positionOnly": 4.4,
-    "now": 3.0,
+    "now": 4.4,
     "games": 11,
     "current": {
      "games": 3,
      "avg": 67.3
     },
-    "best": 47.3,
+    "best": 58.4,
     "peak": null,
-    "track": 62,
-    "status": "Behind",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [
+     "Plays 17% of games (11 from 66 available)",
+     "Stuck in the seconds: 12 state-league games v 3 AFL in 2026"
+    ],
+    "like": [
+     "Jackson Hately",
+     "Josh Sinn",
+     "Atu Bosenavulagi",
+     "Boyd Woodcock",
+     "Neil Erasmus",
+     "Elijah Hollands"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Inside-outside balance",
@@ -18364,16 +19894,21 @@
     "club": "GEE",
     "pre": 11.9,
     "positionOnly": 4.3,
-    "now": 5.7,
+    "now": 2.1,
     "games": 4,
     "current": {
      "games": 2,
      "avg": 58.0
     },
-    "best": null,
+    "best": 55.6,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 73,
+    "status": "Unlikely",
+    "why": [
+     "Plays 6% of games (4 from 66 available)",
+     "Stuck in the seconds: 17 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Consistency",
      "Contested / inside",
@@ -18439,16 +19974,25 @@
     "club": "GWS",
     "pre": 4.1,
     "positionOnly": 4.3,
-    "now": 16.1,
+    "now": 25.8,
     "games": 62,
     "current": {
      "games": 22,
      "avg": 73.2
     },
-    "best": 73.2,
+    "best": 68.3,
     "peak": 73.2,
-    "track": 96,
-    "status": "Close",
+    "track": 90,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Darcy Wilmot",
+     "Sam Powell-Pepper",
+     "Andrew McGrath",
+     "Brandan Parfitt",
+     "Connor MacDonald",
+     "Sam Petrevski-Seton"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -18500,13 +20044,15 @@
     "club": "FRE",
     "pre": 0.7,
     "positionOnly": 4.2,
-    "now": 1.8,
+    "now": 0.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Clean hands",
@@ -18559,16 +20105,27 @@
     "club": "GEE",
     "pre": 3.7,
     "positionOnly": 4.1,
-    "now": 1.7,
+    "now": 1.2,
     "games": 18,
     "current": {
      "games": 16,
      "avg": 45.6
     },
-    "best": 45.6,
+    "best": 50.9,
     "peak": 45.6,
-    "track": 60,
-    "status": "Behind",
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (18 from 66 available)"
+    ],
+    "like": [
+     "Sam Switkowski",
+     "Laitham Vandermeer",
+     "Zac Langdon",
+     "Cedric Cox",
+     "Leek Aleer",
+     "James Rowe"
+    ],
     "traits": [],
     "jFP": 30.6,
     "seasons": [
@@ -18629,13 +20186,18 @@
     "club": "STK",
     "pre": 12.8,
     "positionOnly": 4.1,
-    "now": 5.8,
+    "now": 1.7,
     "games": 7,
     "current": null,
-    "best": null,
+    "best": 56.2,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (7 from 66 available)",
+     "Stuck in the seconds: 11 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Footy IQ / vision",
      "Intercept / rebound",
@@ -18698,16 +20260,25 @@
     "club": "GEE",
     "pre": 5.5,
     "positionOnly": 4.0,
-    "now": 29.5,
+    "now": 33.3,
     "games": 60,
     "current": {
      "games": 24,
      "avg": 81.0
     },
-    "best": 81.0,
+    "best": 74.5,
     "peak": 81.0,
-    "track": 107,
-    "status": "On star track",
+    "track": 98,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Luke Ryan*",
+     "Keidean Coleman",
+     "Jarrod Berry",
+     "Connor MacDonald",
+     "Sam Petrevski-Seton",
+     "Andrew McGrath"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills"
@@ -18758,13 +20329,15 @@
     "club": "BRL",
     "pre": 4.1,
     "positionOnly": 4.0,
-    "now": 3.9,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills",
@@ -18816,16 +20389,27 @@
     "club": "RIC",
     "pre": 67.7,
     "positionOnly": 58.9,
-    "now": 65.5,
+    "now": 39.6,
     "games": 23,
     "current": {
      "games": 12,
      "avg": 63.2
     },
-    "best": 63.2,
+    "best": 59.9,
     "peak": 63.2,
-    "track": 92,
+    "track": 88,
     "status": "Close",
+    "why": [
+     "Rarely goes big: 0 of 23 games at 100+"
+    ],
+    "like": [
+     "Deven Robertson",
+     "James Rowbottom",
+     "Max Holmes*",
+     "Chad Warner*",
+     "Sam Flanders*",
+     "Marcus Windhager"
+    ],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -18862,16 +20446,27 @@
     "club": "NTH",
     "pre": 13.6,
     "positionOnly": 44.8,
-    "now": 62.1,
+    "now": 44.1,
     "games": 41,
     "current": {
      "games": 19,
      "avg": 72.3
     },
-    "best": 72.3,
+    "best": 67.1,
     "peak": 72.3,
-    "track": 106,
-    "status": "On star track",
+    "track": 98,
+    "status": "Close",
+    "why": [
+     "Rarely goes big: 1 of 41 games at 100+"
+    ],
+    "like": [
+     "Bailey Smith*",
+     "Jason Horne-Francis*",
+     "Ben Hobbs",
+     "Harry Schoenberg",
+     "Josh Ward",
+     "Tom Green*"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -18909,16 +20504,25 @@
     "club": "CAR",
     "pre": 38.4,
     "positionOnly": 36.8,
-    "now": 85.6,
+    "now": 61.1,
     "games": 25,
     "current": {
      "games": 25,
      "avg": 82.0
     },
-    "best": 82.0,
+    "best": 75.4,
     "peak": 82.0,
-    "track": 120,
-    "status": "On star track",
+    "track": 110,
+    "status": "On track",
+    "why": [],
+    "like": [
+     "Noah Anderson*",
+     "Sam Berry*",
+     "Caleb Serong*",
+     "Ben Hobbs",
+     "Josh Ward",
+     "Hunter Clark"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -18950,13 +20554,25 @@
     "club": "ADE",
     "pre": 23.4,
     "positionOnly": 31.5,
-    "now": 2.7,
+    "now": 2.2,
     "games": 10,
     "current": null,
-    "best": 29.3,
+    "best": 40.7,
     "peak": 29.3,
-    "track": 43,
-    "status": "Behind",
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 23% of games (10 from 44 available)",
+     "Stuck in the seconds: 11 state-league games v 0 AFL in 2026"
+    ],
+    "like": [
+     "Fischer McAsey",
+     "Arthur Jones",
+     "Finlay Macrae",
+     "Tyler Brockman",
+     "Will Phillips",
+     "Cameron Polson"
+    ],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -19007,16 +20623,25 @@
     "club": "BRL",
     "pre": 35.5,
     "positionOnly": 27.6,
-    "now": 63.7,
+    "now": 36.3,
     "games": 54,
     "current": {
      "games": 27,
      "avg": 77.3
     },
-    "best": 77.3,
+    "best": 72.2,
     "peak": 77.3,
-    "track": 113,
-    "status": "On star track",
+    "track": 105,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Hugh McCluggage*",
+     "Jaidyn Stephenson",
+     "Sam Powell-Pepper",
+     "Jarrod Berry",
+     "Errol Gulden*",
+     "Andrew McGrath"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -19053,16 +20678,27 @@
     "club": "MEL",
     "pre": 53.6,
     "positionOnly": 24.7,
-    "now": 46.5,
+    "now": 24.0,
     "games": 46,
     "current": {
      "games": 24,
      "avg": 64.8
     },
-    "best": 64.8,
+    "best": 62.3,
     "peak": 64.8,
-    "track": 95,
-    "status": "Close",
+    "track": 91,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 1 of 46 games at 100+"
+    ],
+    "like": [
+     "Aaron Naughton",
+     "Jack Lukosius",
+     "Brennan Cox",
+     "Kysaiah Pickett*",
+     "Will Hayward",
+     "Adam Cerra*"
+    ],
     "traits": [
      "Consistency",
      "Contested / inside",
@@ -19111,13 +20747,15 @@
     "club": "RIC",
     "pre": 25.4,
     "positionOnly": 22.5,
-    "now": 10.3,
+    "now": 16.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Footy IQ / vision",
@@ -19152,16 +20790,28 @@
     "club": "STK",
     "pre": 39.4,
     "positionOnly": 20.6,
-    "now": 11.4,
+    "now": 4.5,
     "games": 18,
     "current": {
      "games": 7,
      "avg": 47.1
     },
-    "best": 47.1,
+    "best": 51.3,
     "peak": 45.6,
-    "track": 69,
-    "status": "Behind",
+    "track": 75,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (18 from 44 available)",
+     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026"
+    ],
+    "like": [
+     "Sam Butler",
+     "Maurice Rioli Jr.",
+     "Oliver Henry",
+     "Trey Ruscoe",
+     "Lachie Jones",
+     "Keidean Coleman"
+    ],
     "traits": [
      "Aerial / marking",
      "Defensive pressure",
@@ -19219,16 +20869,27 @@
     "club": "GCS",
     "pre": 19.8,
     "positionOnly": 19.1,
-    "now": 16.3,
+    "now": 18.7,
     "games": 27,
     "current": {
      "games": 23,
      "avg": 57.7
     },
-    "best": 57.7,
+    "best": 57.0,
     "peak": 57.7,
-    "track": 84,
-    "status": "Behind",
+    "track": 83,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 27 games at 100+"
+    ],
+    "like": [
+     "Trent Rivers",
+     "Ben Ainsworth",
+     "Jy Simpkin*",
+     "Brent Daniels",
+     "Nick Coffield",
+     "Sam Flanders*"
+    ],
     "traits": [
      "Engine / work rate",
      "Leadership / character",
@@ -19275,16 +20936,27 @@
     "club": "STK",
     "pre": 0.7,
     "positionOnly": 17.8,
-    "now": 0.5,
+    "now": 1.0,
     "games": 19,
     "current": {
      "games": 9,
      "avg": 37.2
     },
-    "best": 42.1,
+    "best": 47.8,
     "peak": 42.1,
-    "track": 62,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 43% of games (19 from 44 available)"
+    ],
+    "like": [
+     "Max King",
+     "Miller Bergman",
+     "Josh Gibcus",
+     "Rhett Bazzo",
+     "Ben King",
+     "Denver Grainger-Barras"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -19342,16 +21014,27 @@
     "club": "MEL",
     "pre": 18.1,
     "positionOnly": 16.6,
-    "now": 12.0,
+    "now": 4.9,
     "games": 25,
     "current": {
      "games": 7,
      "avg": 54.1
     },
-    "best": 54.1,
+    "best": 54.6,
     "peak": 52.4,
-    "track": 79,
-    "status": "Behind",
+    "track": 80,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 25 games at 100+"
+    ],
+    "like": [
+     "Mitch Georgiades",
+     "Cody Weightman",
+     "Jack Mahony",
+     "Brandon Walker",
+     "Jack Petruccelle",
+     "Oliver Henry"
+    ],
     "traits": [
      "Consistency",
      "Engine / work rate",
@@ -19399,16 +21082,27 @@
     "club": "RIC",
     "pre": 16.5,
     "positionOnly": 15.7,
-    "now": 13.9,
+    "now": 16.6,
     "games": 17,
     "current": {
      "games": 10,
      "avg": 48.6
     },
-    "best": 50.9,
+    "best": 53.1,
     "peak": 48.6,
-    "track": 74,
-    "status": "Behind",
+    "track": 78,
+    "status": "Long shot",
+    "why": [
+     "Plays 39% of games (17 from 44 available)"
+    ],
+    "like": [
+     "Bailey Scott",
+     "Izak Rankine*",
+     "Ben Long",
+     "Neil Erasmus",
+     "Jack Ross",
+     "Luke Davies-Uniacke*"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -19466,16 +21160,27 @@
     "club": "ESS",
     "pre": 22.2,
     "positionOnly": 14.8,
-    "now": 8.1,
+    "now": 9.5,
     "games": 38,
     "current": {
      "games": 15,
      "avg": 41.5
     },
-    "best": 47.0,
+    "best": 49.1,
     "peak": 47.0,
-    "track": 69,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 38 games at 100+"
+    ],
+    "like": [
+     "Paul Curtis",
+     "Nick Blakey",
+     "Jesse Motlop",
+     "Beau McCreery",
+     "Tom McCartin",
+     "Zac Bailey*"
+    ],
     "traits": [
      "Contested / inside",
      "Footy IQ / vision",
@@ -19511,16 +21216,27 @@
     "club": "RIC",
     "pre": 0.9,
     "positionOnly": 14.1,
-    "now": 0.4,
+    "now": 1.3,
     "games": 26,
     "current": {
      "games": 10,
      "avg": 37.0
     },
-    "best": 37.0,
+    "best": 45.0,
     "peak": 37.0,
-    "track": 54,
-    "status": "Behind",
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 26 games at 100+"
+    ],
+    "like": [
+     "Ben King",
+     "Denver Grainger-Barras",
+     "Josh Gibcus",
+     "Max King",
+     "Sam Taylor",
+     "Liam Henry"
+    ],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -19567,16 +21283,27 @@
     "club": "PTA",
     "pre": 7.0,
     "positionOnly": 13.4,
-    "now": 6.2,
+    "now": 13.3,
     "games": 35,
     "current": {
      "games": 23,
      "avg": 53.2
     },
-    "best": 53.2,
+    "best": 53.7,
     "peak": 53.2,
     "track": 78,
-    "status": "Behind",
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 35 games at 100+"
+    ],
+    "like": [
+     "Lochie O'Brien",
+     "Brandon Walker",
+     "Paddy Dow",
+     "Jack Mahony",
+     "Mitch Georgiades",
+     "Ed Richards*"
+    ],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -19624,16 +21351,27 @@
     "club": "WCE",
     "pre": 23.5,
     "positionOnly": 12.8,
-    "now": 10.6,
+    "now": 5.7,
     "games": 25,
     "current": {
      "games": 19,
      "avg": 50.4
     },
-    "best": 50.4,
+    "best": 51.7,
     "peak": 50.4,
-    "track": 74,
-    "status": "Behind",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 25 games at 100+"
+    ],
+    "like": [
+     "Jye Amiss",
+     "Jacob van Rooyen",
+     "Logan McDonald",
+     "Jamarra Ugle-Hagan",
+     "Charlie Ballard",
+     "Harrison Petty"
+    ],
     "traits": [
      "Contested / inside",
      "Kicking / skills",
@@ -19682,16 +21420,27 @@
     "club": "FRE",
     "pre": 16.4,
     "positionOnly": 12.3,
-    "now": 60.6,
+    "now": 37.9,
     "games": 49,
     "current": {
      "games": 25,
      "avg": 78.7
     },
-    "best": 78.7,
+    "best": 73.0,
     "peak": 78.7,
-    "track": 115,
-    "status": "On star track",
+    "track": 107,
+    "status": "Close",
+    "why": [
+     "Rarely goes big: 2 of 49 games at 100+"
+    ],
+    "like": [
+     "Hugh McCluggage*",
+     "Jaidyn Stephenson",
+     "Ben Hobbs",
+     "Jarrod Berry",
+     "Noah Anderson*",
+     "Sam Powell-Pepper"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -19726,16 +21475,21 @@
     "club": "GWS",
     "pre": 17.6,
     "positionOnly": 11.8,
-    "now": 3.1,
+    "now": 1.7,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 37.2
     },
-    "best": 37.2,
+    "best": 48.2,
     "peak": null,
-    "track": 54,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (5 from 44 available)",
+     "Stuck in the seconds: 7 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Leadership / character",
@@ -19787,16 +21541,21 @@
     "club": "GWS",
     "pre": 6.3,
     "positionOnly": 11.3,
-    "now": 2.2,
+    "now": 0.8,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 39.8
     },
-    "best": 39.8,
+    "best": 49.2,
     "peak": null,
-    "track": 58,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (5 from 44 available)",
+     "Stuck in the seconds: 9 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -19848,16 +21607,27 @@
     "club": "WBD",
     "pre": 8.7,
     "positionOnly": 10.9,
-    "now": 9.3,
+    "now": 4.8,
     "games": 31,
     "current": {
      "games": 23,
      "avg": 55.4
     },
-    "best": 55.4,
+    "best": 55.3,
     "peak": 55.4,
     "track": 81,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 31 games at 100+"
+    ],
+    "like": [
+     "Charlie Ballard",
+     "Brennan Cox",
+     "Jacob van Rooyen",
+     "Matthew Johnson",
+     "Jack Lukosius",
+     "Jye Amiss"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -19915,7 +21685,7 @@
     "club": "RIC",
     "pre": 1.0,
     "positionOnly": 10.5,
-    "now": 1.8,
+    "now": 4.8,
     "games": 32,
     "current": {
      "games": 11,
@@ -19924,7 +21694,18 @@
     "best": 55.0,
     "peak": 55.0,
     "track": 80,
-    "status": "Behind",
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 1 of 32 games at 100+"
+    ],
+    "like": [
+     "Charlie Ballard",
+     "Jacob van Rooyen",
+     "Brennan Cox",
+     "Matthew Johnson",
+     "Jye Amiss",
+     "Josh Goater"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -19973,16 +21754,21 @@
     "club": "SYD",
     "pre": 9.0,
     "positionOnly": 10.1,
-    "now": 16.1,
+    "now": 2.8,
     "games": 8,
     "current": {
      "games": 5,
      "avg": 62.6
     },
-    "best": 62.6,
+    "best": 57.9,
     "peak": null,
-    "track": 91,
-    "status": "Close",
+    "track": 85,
+    "status": "Unlikely",
+    "why": [
+     "Plays 18% of games (8 from 44 available)",
+     "Stuck in the seconds: 17 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Footy IQ / vision",
@@ -20038,16 +21824,27 @@
     "club": "RIC",
     "pre": 0.4,
     "positionOnly": 9.8,
-    "now": 0.2,
+    "now": 0.8,
     "games": 12,
     "current": {
      "games": 4,
      "avg": 16.0
     },
-    "best": 32.4,
+    "best": 43.7,
     "peak": 32.4,
-    "track": 47,
-    "status": "Behind",
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (12 from 44 available)"
+    ],
+    "like": [
+     "Fischer McAsey",
+     "Denver Grainger-Barras",
+     "Josh Gibcus",
+     "Arthur Jones",
+     "Cameron Polson",
+     "Rhett Bazzo"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20103,16 +21900,21 @@
     "club": "GWS",
     "pre": 25.0,
     "positionOnly": 9.5,
-    "now": 10.2,
+    "now": 2.4,
     "games": 5,
     "current": {
      "games": 1,
      "avg": 47.0
     },
-    "best": null,
+    "best": 54.1,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 79,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (5 from 44 available)",
+     "Stuck in the seconds: 8 state-league games v 1 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -20167,16 +21969,28 @@
     "club": "BRL",
     "pre": 14.4,
     "positionOnly": 9.2,
-    "now": 3.9,
+    "now": 3.0,
     "games": 13,
     "current": {
      "games": 2,
      "avg": 56.0
     },
-    "best": 41.4,
+    "best": 55.2,
     "peak": 41.4,
-    "track": 60,
-    "status": "Behind",
+    "track": 81,
+    "status": "Unlikely",
+    "why": [
+     "Plays 30% of games (13 from 44 available)",
+     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026"
+    ],
+    "like": [
+     "Tyler Brockman",
+     "Will Phillips",
+     "Finlay Macrae",
+     "Charlie Lazzaro",
+     "Brayden Cook",
+     "Judson Clarke"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -20233,13 +22047,15 @@
     "club": "SYD",
     "pre": 3.0,
     "positionOnly": 9.0,
-    "now": 3.5,
+    "now": 0.7,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20284,16 +22100,21 @@
     "club": "NTH",
     "pre": 0.3,
     "positionOnly": 8.7,
-    "now": 0.6,
+    "now": 0.1,
     "games": 5,
     "current": {
      "games": 3,
      "avg": 31.7
     },
-    "best": null,
+    "best": 48.7,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (5 from 44 available)",
+     "Stuck in the seconds: 15 state-league games v 3 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20348,13 +22169,24 @@
     "club": "RIC",
     "pre": 2.9,
     "positionOnly": 8.5,
-    "now": 1.6,
+    "now": 2.4,
     "games": 11,
     "current": null,
-    "best": 37.5,
+    "best": 44.8,
     "peak": 37.5,
-    "track": 55,
-    "status": "Behind",
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (11 from 44 available)"
+    ],
+    "like": [
+     "Jack Williams",
+     "Brayden Crossley",
+     "Harrison Jones",
+     "Caleb Graham",
+     "Tyler Brockman",
+     "Finlay Macrae"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20406,16 +22238,27 @@
     "club": "WBD",
     "pre": 10.1,
     "positionOnly": 8.3,
-    "now": 14.1,
+    "now": 10.4,
     "games": 10,
     "current": {
      "games": 10,
      "avg": 60.3
     },
-    "best": 60.3,
+    "best": 57.9,
     "peak": 60.3,
-    "track": 88,
-    "status": "Close",
+    "track": 85,
+    "status": "Long shot",
+    "why": [
+     "Plays 23% of games (10 from 44 available)"
+    ],
+    "like": [
+     "Nathan O'Driscoll",
+     "Trent Bianco",
+     "Ryan Byrnes",
+     "Patrick Lipinski",
+     "Callum Brown",
+     "Ben Paton"
+    ],
     "traits": [
      "Aerial / marking",
      "Consistency",
@@ -20467,16 +22310,27 @@
     "club": "WCE",
     "pre": 0.4,
     "positionOnly": 8.0,
-    "now": 0.6,
+    "now": 8.1,
     "games": 32,
     "current": {
      "games": 23,
      "avg": 48.3
     },
-    "best": 48.3,
+    "best": 51.2,
     "peak": 48.3,
-    "track": 71,
-    "status": "Behind",
+    "track": 75,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 32 games at 100+"
+    ],
+    "like": [
+     "Jye Amiss",
+     "Sam Taylor",
+     "Logan McDonald",
+     "Jamarra Ugle-Hagan",
+     "Jacob van Rooyen",
+     "Charlie Ballard"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20524,16 +22378,27 @@
     "club": "WBD",
     "pre": 11.0,
     "positionOnly": 7.9,
-    "now": 4.9,
+    "now": 7.1,
     "games": 24,
     "current": {
      "games": 13,
      "avg": 46.2
     },
-    "best": 46.2,
+    "best": 49.6,
     "peak": 46.2,
-    "track": 67,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 24 games at 100+"
+    ],
+    "like": [
+     "Oliver Henry",
+     "Keidean Coleman",
+     "Sam Butler",
+     "Lachie Jones",
+     "Maurice Rioli Jr.",
+     "Jesse Motlop"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -20589,13 +22454,15 @@
     "club": "STK",
     "pre": 0.6,
     "positionOnly": 7.7,
-    "now": 0.9,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -20639,16 +22506,27 @@
     "club": "PTA",
     "pre": 0.2,
     "positionOnly": 7.5,
-    "now": 0.4,
+    "now": 3.9,
     "games": 27,
     "current": {
      "games": 23,
      "avg": 45.0
     },
-    "best": 45.0,
+    "best": 50.9,
     "peak": 45.0,
-    "track": 66,
-    "status": "Behind",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 27 games at 100+"
+    ],
+    "like": [
+     "Sam Taylor",
+     "Jye Amiss",
+     "Logan McDonald",
+     "Jamarra Ugle-Hagan",
+     "Max King",
+     "Ben King"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20694,13 +22572,15 @@
     "club": "FRE",
     "pre": 0.2,
     "positionOnly": 7.3,
-    "now": 0.5,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20733,16 +22613,21 @@
     "club": "HAW",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 0.8,
+    "now": 0.6,
     "games": 4,
     "current": {
      "games": 4,
      "avg": 71.5
     },
-    "best": null,
+    "best": 60.5,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 88,
+    "status": "Unlikely",
+    "why": [
+     "Plays 9% of games (4 from 44 available)",
+     "Stuck in the seconds: 12 state-league games v 4 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -20793,16 +22678,21 @@
     "club": "GWS",
     "pre": 4.6,
     "positionOnly": 7.0,
-    "now": 3.5,
+    "now": 2.3,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 40.4
     },
-    "best": 40.4,
+    "best": 49.4,
     "peak": null,
-    "track": 59,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (5 from 44 available)",
+     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -20854,13 +22744,15 @@
     "club": "ESS",
     "pre": 6.7,
     "positionOnly": 6.9,
-    "now": 5.1,
+    "now": 2.4,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -20905,16 +22797,27 @@
     "club": "PTA",
     "pre": 4.3,
     "positionOnly": 6.7,
-    "now": 4.1,
+    "now": 8.0,
     "games": 26,
     "current": {
      "games": 12,
      "avg": 49.6
     },
-    "best": 49.6,
+    "best": 51.7,
     "peak": 49.6,
-    "track": 72,
-    "status": "Behind",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 26 games at 100+"
+    ],
+    "like": [
+     "Oliver Henry",
+     "Jack Petruccelle",
+     "Zac Bailey*",
+     "Mitch Georgiades",
+     "Neil Erasmus",
+     "Jack Mahony"
+    ],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -20973,16 +22876,28 @@
     "club": "ESS",
     "pre": 6.8,
     "positionOnly": 6.6,
-    "now": 13.7,
+    "now": 10.9,
     "games": 20,
     "current": {
      "games": 6,
      "avg": 53.8
     },
-    "best": 62.2,
+    "best": 59.6,
     "peak": 62.2,
-    "track": 91,
-    "status": "Close",
+    "track": 87,
+    "status": "Long shot",
+    "why": [
+     "Plays 45% of games (20 from 44 available)",
+     "Rarely goes big: 1 of 20 games at 100+"
+    ],
+    "like": [
+     "Jordan Clark*",
+     "Nathan O'Driscoll",
+     "Patrick Lipinski",
+     "Cody Weightman",
+     "Lachie Fogarty",
+     "Nick Coffield"
+    ],
     "traits": [
      "Aerial / marking",
      "Kicking / skills"
@@ -21037,13 +22952,17 @@
     "club": "CAR",
     "pre": 0.3,
     "positionOnly": 6.5,
-    "now": 0.5,
+    "now": 0.6,
     "games": 6,
     "current": null,
-    "best": 47.0,
+    "best": 51.6,
     "peak": null,
-    "track": 69,
-    "status": "Behind",
+    "track": 75,
+    "status": "Unlikely",
+    "why": [
+     "Plays 14% of games (6 from 44 available)"
+    ],
+    "like": [],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -21084,16 +23003,25 @@
     "club": "SYD",
     "pre": 9.7,
     "positionOnly": 6.3,
-    "now": 37.3,
+    "now": 20.9,
     "games": 36,
     "current": {
      "games": 20,
      "avg": 75.8
     },
-    "best": 75.8,
+    "best": 69.9,
     "peak": 75.8,
-    "track": 111,
-    "status": "On star track",
+    "track": 102,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Tom Stewart*",
+     "Matt de Boer",
+     "Billy Hartung",
+     "Bayley Fritsch",
+     "Will Hayes",
+     "Luke Ryan*"
+    ],
     "traits": [
      "Engine / work rate",
      "Kicking / skills",
@@ -21150,16 +23078,27 @@
     "club": "BRL",
     "pre": 0.7,
     "positionOnly": 6.2,
-    "now": 0.8,
+    "now": 4.1,
     "games": 27,
     "current": {
      "games": 21,
      "avg": 47.5
     },
-    "best": 47.5,
+    "best": 50.6,
     "peak": 47.5,
-    "track": 69,
-    "status": "Behind",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 27 games at 100+"
+    ],
+    "like": [
+     "Jye Amiss",
+     "Logan McDonald",
+     "Sam Taylor",
+     "Jamarra Ugle-Hagan",
+     "Jacob van Rooyen",
+     "Max King"
+    ],
     "traits": [],
     "jFP": 57.0,
     "seasons": [
@@ -21201,13 +23140,15 @@
     "club": "CAR",
     "pre": 4.9,
     "positionOnly": 6.1,
-    "now": 4.4,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Athleticism",
@@ -21252,16 +23193,20 @@
     "club": "GEE",
     "pre": 0.4,
     "positionOnly": 6.0,
-    "now": 0.5,
+    "now": 0.3,
     "games": 8,
     "current": {
      "games": 8,
      "avg": 46.6
     },
-    "best": 46.6,
+    "best": 50.8,
     "peak": 46.6,
-    "track": 68,
-    "status": "Behind",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Plays 18% of games (8 from 44 available)"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Scoreboard impact"
@@ -21310,16 +23255,28 @@
     "club": "STK",
     "pre": 8.7,
     "positionOnly": 5.9,
-    "now": 33.0,
+    "now": 35.4,
     "games": 21,
     "current": {
      "games": 10,
      "avg": 66.3
     },
-    "best": 66.3,
+    "best": 61.3,
     "peak": 66.3,
-    "track": 97,
+    "track": 90,
     "status": "Close",
+    "why": [
+     "Plays 48% of games (21 from 44 available)",
+     "Stuck in the seconds: 11 state-league games v 10 AFL in 2026"
+    ],
+    "like": [
+     "Tom Green*",
+     "Chad Warner*",
+     "Harry Schoenberg",
+     "Ryan Byrnes",
+     "Marcus Windhager",
+     "Max Holmes*"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -21377,16 +23334,27 @@
     "club": "WCE",
     "pre": 5.5,
     "positionOnly": 5.8,
-    "now": 1.8,
+    "now": 4.3,
     "games": 12,
     "current": {
      "games": 4,
      "avg": 47.5
     },
-    "best": 34.9,
+    "best": 52.5,
     "peak": 34.9,
-    "track": 51,
-    "status": "Behind",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (12 from 44 available)"
+    ],
+    "like": [
+     "Cameron Polson",
+     "Arthur Jones",
+     "Darcy Fogarty",
+     "Griffin Logue",
+     "Liam Henry",
+     "Chayce Jones"
+    ],
     "traits": [
      "Engine / work rate",
      "Leadership / character",
@@ -21434,13 +23402,15 @@
     "club": "COL",
     "pre": 0.2,
     "positionOnly": 5.7,
-    "now": 0.5,
+    "now": 0.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -21484,13 +23454,17 @@
     "club": "WCE",
     "pre": 8.3,
     "positionOnly": 5.6,
-    "now": 5.7,
+    "now": 9.2,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 55.1,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 81,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (1 from 44 available)"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -21529,13 +23503,15 @@
     "club": "GCS",
     "pre": 0.2,
     "positionOnly": 5.5,
-    "now": 0.6,
+    "now": 0.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Leadership / character",
@@ -21580,16 +23556,28 @@
     "club": "COL",
     "pre": 0.3,
     "positionOnly": 5.4,
-    "now": 0.2,
+    "now": 0.6,
     "games": 10,
     "current": {
      "games": 9,
      "avg": 37.4
     },
-    "best": 37.4,
+    "best": 51.0,
     "peak": 37.4,
-    "track": 55,
-    "status": "Behind",
+    "track": 75,
+    "status": "Unlikely",
+    "why": [
+     "Plays 23% of games (10 from 44 available)",
+     "Stuck in the seconds: 11 state-league games v 9 AFL in 2026"
+    ],
+    "like": [
+     "Denver Grainger-Barras",
+     "Miller Bergman",
+     "Josh Gibcus",
+     "Max King",
+     "Brayden Cook",
+     "Judson Clarke"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -21647,16 +23635,25 @@
     "club": "WBD",
     "pre": 4.1,
     "positionOnly": 5.4,
-    "now": 14.3,
+    "now": 13.6,
     "games": 37,
     "current": {
      "games": 18,
      "avg": 54.4
     },
-    "best": 66.1,
+    "best": 62.8,
     "peak": 66.1,
-    "track": 97,
-    "status": "Close",
+    "track": 92,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Mitch Hannan",
+     "Brett Bewley",
+     "Will Hayes",
+     "Marty Hore",
+     "Liam Ryan",
+     "Jy Farrar"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -21708,13 +23705,15 @@
     "club": "GEE",
     "pre": 4.0,
     "positionOnly": 5.3,
-    "now": 4.0,
+    "now": 1.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Ruck craft",
@@ -21756,13 +23755,18 @@
     "club": "STK",
     "pre": 3.1,
     "positionOnly": 5.2,
-    "now": 3.5,
+    "now": 1.2,
     "games": 1,
     "current": null,
-    "best": null,
+    "best": 51.3,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 75,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (1 from 44 available)",
+     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -21812,13 +23816,18 @@
     "club": "CAR",
     "pre": 3.8,
     "positionOnly": 5.1,
-    "now": 3.9,
+    "now": 0.6,
     "games": 3,
     "current": null,
-    "best": null,
+    "best": 52.0,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Plays 7% of games (3 from 44 available)",
+     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Engine / work rate",
@@ -21866,13 +23875,15 @@
     "club": "SYD",
     "pre": 0.4,
     "positionOnly": 5.0,
-    "now": 0.7,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Leadership / character",
@@ -21915,16 +23926,27 @@
     "club": "COL",
     "pre": 4.3,
     "positionOnly": 5.0,
-    "now": 1.1,
+    "now": 1.4,
     "games": 12,
     "current": {
      "games": 10,
      "avg": 33.5
     },
-    "best": 33.5,
+    "best": 53.0,
     "peak": 33.5,
-    "track": 49,
-    "status": "Behind",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (12 from 44 available)"
+    ],
+    "like": [
+     "Arthur Jones",
+     "Cameron Polson",
+     "Judson Clarke",
+     "Liam Henry",
+     "Darcy Fogarty",
+     "Griffin Logue"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -21975,13 +23997,15 @@
     "club": "NTH",
     "pre": 11.3,
     "positionOnly": 4.9,
-    "now": 6.6,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Defensive pressure",
@@ -22026,16 +24050,27 @@
     "club": "RIC",
     "pre": 1.5,
     "positionOnly": 4.8,
-    "now": 1.4,
+    "now": 2.1,
     "games": 12,
     "current": {
      "games": 8,
      "avg": 42.5
     },
-    "best": 42.5,
+    "best": 48.8,
     "peak": 42.5,
-    "track": 62,
-    "status": "Behind",
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (12 from 44 available)"
+    ],
+    "like": [
+     "Maurice Rioli Jr.",
+     "Campbell Chesser",
+     "Judson Clarke",
+     "Jaxon Prior",
+     "Lachie Jones",
+     "Brayden Cook"
+    ],
     "traits": [
      "Aerial / marking",
      "Consistency",
@@ -22091,13 +24126,15 @@
     "club": "ADE",
     "pre": 0.4,
     "positionOnly": 4.8,
-    "now": 0.7,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Leadership / character",
@@ -22140,13 +24177,15 @@
     "club": "STK",
     "pre": 2.3,
     "positionOnly": 4.7,
-    "now": 3.1,
+    "now": 0.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -22189,16 +24228,21 @@
     "club": "ESS",
     "pre": 8.4,
     "positionOnly": 4.7,
-    "now": 5.7,
+    "now": 1.3,
     "games": 7,
     "current": {
      "games": 4,
      "avg": 38.0
     },
-    "best": null,
+    "best": 49.3,
     "peak": null,
-    "track": null,
-    "status": "Too early",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 16% of games (7 from 44 available)",
+     "Stuck in the seconds: 9 state-league games v 4 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Footy IQ / vision",
@@ -22252,16 +24296,21 @@
     "club": "WBD",
     "pre": 4.5,
     "positionOnly": 4.6,
-    "now": 2.6,
+    "now": 0.9,
     "games": 8,
     "current": {
      "games": 8,
      "avg": 43.6
     },
-    "best": 43.6,
+    "best": 49.3,
     "peak": 43.6,
-    "track": 64,
-    "status": "Behind",
+    "track": 72,
+    "status": "Unlikely",
+    "why": [
+     "Plays 18% of games (8 from 44 available)",
+     "Stuck in the seconds: 11 state-league games v 8 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -22311,13 +24360,15 @@
     "club": "FRE",
     "pre": 3.5,
     "positionOnly": 4.5,
-    "now": 3.7,
+    "now": 6.0,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -22345,13 +24396,15 @@
     "club": "HAW",
     "pre": 13.5,
     "positionOnly": 4.5,
-    "now": 7.3,
+    "now": 1.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Defensive pressure",
@@ -22395,16 +24448,27 @@
     "club": "WCE",
     "pre": 4.0,
     "positionOnly": 4.4,
-    "now": 5.0,
+    "now": 8.0,
     "games": 29,
     "current": {
      "games": 21,
      "avg": 52.5
     },
-    "best": 52.5,
+    "best": 53.2,
     "peak": 52.5,
-    "track": 77,
-    "status": "Behind",
+    "track": 78,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 29 games at 100+"
+    ],
+    "like": [
+     "Charlie Ballard",
+     "Jacob van Rooyen",
+     "Jye Amiss",
+     "Logan McDonald",
+     "Jamarra Ugle-Hagan",
+     "Matthew Johnson"
+    ],
     "traits": [
      "Engine / work rate",
      "Footy IQ / vision",
@@ -22452,13 +24516,15 @@
     "club": "GEE",
     "pre": 0.5,
     "positionOnly": 4.4,
-    "now": 0.8,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -22501,13 +24567,15 @@
     "club": "NTH",
     "pre": 6.3,
     "positionOnly": 4.3,
-    "now": 4.4,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Leadership / character",
@@ -22550,16 +24618,21 @@
     "club": "MEL",
     "pre": 3.3,
     "positionOnly": 4.3,
-    "now": 0.9,
+    "now": 0.5,
     "games": 6,
     "current": {
      "games": 1,
      "avg": 39.0
     },
-    "best": 30.8,
+    "best": 53.2,
     "peak": null,
-    "track": 45,
-    "status": "Behind",
+    "track": 78,
+    "status": "Unlikely",
+    "why": [
+     "Plays 14% of games (6 from 44 available)",
+     "Stuck in the seconds: 7 state-league games v 1 AFL in 2026"
+    ],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -22610,13 +24683,15 @@
     "club": "GEE",
     "pre": 5.5,
     "positionOnly": 4.2,
-    "now": 4.6,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Kicking / skills",
@@ -22658,16 +24733,28 @@
     "club": "ESS",
     "pre": 9.9,
     "positionOnly": 4.2,
-    "now": 8.9,
+    "now": 6.1,
     "games": 16,
     "current": {
      "games": 7,
      "avg": 54.3
     },
-    "best": 54.3,
+    "best": 54.7,
     "peak": 50.4,
-    "track": 79,
-    "status": "Behind",
+    "track": 80,
+    "status": "Unlikely",
+    "why": [
+     "Plays 36% of games (16 from 44 available)",
+     "Stuck in the seconds: 8 state-league games v 7 AFL in 2026"
+    ],
+    "like": [
+     "Neil Erasmus",
+     "Oliver Henry",
+     "Cody Weightman",
+     "Trey Ruscoe",
+     "Sam Butler",
+     "Jordan Gallucci"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills",
@@ -22724,13 +24811,15 @@
     "club": "GWS",
     "pre": 1.7,
     "positionOnly": 4.1,
-    "now": 2.7,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Clean hands",
@@ -22773,16 +24862,25 @@
     "club": "WCE",
     "pre": 36.5,
     "positionOnly": 58.9,
-    "now": 61.6,
+    "now": 50.6,
     "games": 22,
     "current": {
      "games": 22,
      "avg": 72.1
     },
-    "best": 72.1,
+    "best": 67.5,
     "peak": 72.1,
-    "track": 119,
-    "status": "On star track",
+    "track": 111,
+    "status": "On track",
+    "why": [],
+    "like": [
+     "Connor Rozee*",
+     "Sam Powell-Pepper",
+     "Errol Gulden*",
+     "Bailey Smith*",
+     "Andrew McGrath",
+     "Josh Ward"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -22814,16 +24912,25 @@
     "club": "GCS",
     "pre": 35.9,
     "positionOnly": 44.8,
-    "now": 42.7,
+    "now": 34.7,
     "games": 17,
     "current": {
      "games": 17,
      "avg": 57.6
     },
-    "best": 57.6,
+    "best": 56.8,
     "peak": 57.6,
-    "track": 95,
+    "track": 93,
     "status": "Close",
+    "why": [],
+    "like": [
+     "Charlie Spargo",
+     "Nik Cox",
+     "Lachie Fogarty",
+     "Hunter Clark",
+     "Zak Butters*",
+     "Connor MacDonald"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -22866,16 +24973,27 @@
     "club": "CAR",
     "pre": 5.9,
     "positionOnly": 36.8,
-    "now": 6.6,
+    "now": 11.9,
     "games": 22,
     "current": {
      "games": 22,
      "avg": 49.9
     },
-    "best": 49.9,
+    "best": 51.3,
     "peak": 49.9,
-    "track": 82,
-    "status": "Behind",
+    "track": 84,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 22 games at 100+"
+    ],
+    "like": [
+     "Jack Lukosius",
+     "Aaron Naughton",
+     "Nick Blakey",
+     "Archie Perkins",
+     "Ed Richards*",
+     "Will Hayward"
+    ],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -22907,16 +25025,25 @@
     "club": "WCE",
     "pre": 10.9,
     "positionOnly": 31.5,
-    "now": 15.8,
+    "now": 24.4,
     "games": 16,
     "current": {
      "games": 16,
      "avg": 44.2
     },
-    "best": 44.2,
+    "best": 47.8,
     "peak": 44.2,
-    "track": 73,
-    "status": "Behind",
+    "track": 79,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Brayden Crossley",
+     "Riley Thilthorpe",
+     "Sam Berry*",
+     "Will Phillips",
+     "Zac Fisher",
+     "Tom McCartin"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -22947,16 +25074,20 @@
     "club": "GCS",
     "pre": 36.8,
     "positionOnly": 27.6,
-    "now": 21.4,
+    "now": 7.7,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 31.8
     },
-    "best": 31.8,
+    "best": 46.1,
     "peak": null,
-    "track": 52,
-    "status": "Behind",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 12 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Size / strength",
      "Speed / agility",
@@ -22996,16 +25127,18 @@
     "club": "BRL",
     "pre": 32.9,
     "positionOnly": 24.7,
-    "now": 18.5,
+    "now": 8.8,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 40.7
     },
-    "best": null,
+    "best": 51.1,
     "peak": null,
-    "track": null,
+    "track": 84,
     "status": "Too early",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -23045,16 +25178,25 @@
     "club": "RIC",
     "pre": 16.3,
     "positionOnly": 22.5,
-    "now": 33.9,
+    "now": 39.8,
     "games": 14,
     "current": {
      "games": 14,
      "avg": 58.6
     },
-    "best": 58.6,
+    "best": 57.3,
     "peak": 58.6,
-    "track": 96,
+    "track": 94,
     "status": "Close",
+    "why": [],
+    "like": [
+     "Jason Horne-Francis*",
+     "Noah Anderson*",
+     "Jake Soligo",
+     "Ben Hobbs",
+     "Hunter Clark",
+     "Lachie Fogarty"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -23090,7 +25232,7 @@
     "club": "RIC",
     "pre": 19.6,
     "positionOnly": 20.6,
-    "now": 29.1,
+    "now": 23.9,
     "games": 21,
     "current": {
      "games": 21,
@@ -23099,7 +25241,18 @@
     "best": 55.1,
     "peak": 55.1,
     "track": 91,
-    "status": "Close",
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 21 games at 100+"
+    ],
+    "like": [
+     "Tarryn Thomas",
+     "Paddy Dow",
+     "Noah Answerth",
+     "Connor MacDonald",
+     "Ed Richards*",
+     "Zak Butters*"
+    ],
     "traits": [
      "Engine / work rate",
      "Leadership / character",
@@ -23129,16 +25282,25 @@
     "club": "ESS",
     "pre": 11.8,
     "positionOnly": 19.1,
-    "now": 30.6,
+    "now": 37.2,
     "games": 15,
     "current": {
      "games": 15,
      "avg": 62.0
     },
-    "best": 62.0,
+    "best": 59.6,
     "peak": 62.0,
-    "track": 102,
-    "status": "On star track",
+    "track": 98,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Jason Horne-Francis*",
+     "Ben Hobbs",
+     "Noah Anderson*",
+     "Jake Soligo",
+     "Nasiah Wanganeen-Milera*",
+     "Tim Taranto*"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -23185,10 +25347,19 @@
      "games": 21,
      "avg": 71.9
     },
-    "best": 71.9,
+    "best": 67.2,
     "peak": 71.9,
-    "track": 118,
-    "status": "On star track",
+    "track": 111,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Connor Rozee*",
+     "Sam Powell-Pepper",
+     "Errol Gulden*",
+     "Bailey Smith*",
+     "Andrew McGrath",
+     "Sam Petrevski-Seton"
+    ],
     "traits": [
      "Aerial / marking",
      "Intercept / rebound",
@@ -23230,16 +25401,20 @@
     "club": "MEL",
     "pre": 1.4,
     "positionOnly": 16.6,
-    "now": 1.2,
+    "now": 0.3,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 24.3
     },
-    "best": null,
+    "best": 46.6,
     "peak": null,
-    "track": null,
+    "track": 77,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 16 state-league games v 3 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -23279,16 +25454,25 @@
     "club": "MEL",
     "pre": 10.2,
     "positionOnly": 15.7,
-    "now": 7.5,
+    "now": 13.0,
     "games": 16,
     "current": {
      "games": 16,
      "avg": 33.6
     },
-    "best": 33.6,
+    "best": 40.7,
     "peak": 33.6,
-    "track": 55,
-    "status": "Behind",
+    "track": 67,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Kysaiah Pickett*",
+     "Tanner Bruhn",
+     "Jack Mahony",
+     "Michael Frederick",
+     "Jesse Motlop",
+     "Beau McCreery"
+    ],
     "traits": [
      "Athleticism",
      "Scoreboard impact",
@@ -23329,16 +25513,25 @@
     "club": "ESS",
     "pre": 27.4,
     "positionOnly": 14.8,
-    "now": 55.0,
+    "now": 55.6,
     "games": 15,
     "current": {
      "games": 15,
      "avg": 70.9
     },
-    "best": 70.9,
+    "best": 65.3,
     "peak": 70.9,
-    "track": 117,
-    "status": "On star track",
+    "track": 108,
+    "status": "On track",
+    "why": [],
+    "like": [
+     "Josh Ward",
+     "Tom Powell",
+     "Errol Gulden*",
+     "Caleb Serong*",
+     "Luke Ryan*",
+     "James Worpel*"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -23380,16 +25573,25 @@
     "club": "SYD",
     "pre": 2.2,
     "positionOnly": 14.1,
-    "now": 5.1,
+    "now": 7.6,
     "games": 12,
     "current": {
      "games": 12,
      "avg": 41.5
     },
-    "best": 41.5,
+    "best": 46.9,
     "peak": 41.5,
-    "track": 68,
-    "status": "Behind",
+    "track": 77,
+    "status": "Unlikely",
+    "why": [],
+    "like": [
+     "Jesse Motlop",
+     "Tyler Brockman",
+     "Charlie Lazzaro",
+     "Oliver Henry",
+     "Beau McCreery",
+     "Griffin Logue"
+    ],
     "traits": [
      "Athleticism",
      "Clean hands",
@@ -23431,13 +25633,15 @@
     "club": "GWS",
     "pre": 28.3,
     "positionOnly": 13.4,
-    "now": 16.5,
+    "now": 5.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Consistency",
      "Intercept / rebound",
@@ -23471,16 +25675,20 @@
     "club": "NTH",
     "pre": 16.8,
     "positionOnly": 12.8,
-    "now": 12.4,
+    "now": 4.1,
     "games": 6,
     "current": {
      "games": 6,
      "avg": 38.7
     },
-    "best": 38.7,
+    "best": 48.0,
     "peak": null,
-    "track": 64,
-    "status": "Behind",
+    "track": 79,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 13 state-league games v 6 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Consistency",
      "Defensive pressure",
@@ -23522,16 +25730,18 @@
     "club": "GCS",
     "pre": 20.6,
     "positionOnly": 12.3,
-    "now": 27.5,
+    "now": 13.0,
     "games": 9,
     "current": {
      "games": 9,
      "avg": 52.3
     },
-    "best": 52.3,
+    "best": 53.6,
     "peak": 52.3,
-    "track": 86,
-    "status": "Behind",
+    "track": 88,
+    "status": "Long shot",
+    "why": [],
+    "like": [],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills",
@@ -23572,16 +25782,18 @@
     "club": "GCS",
     "pre": 13.2,
     "positionOnly": 11.8,
-    "now": 30.2,
+    "now": 18.4,
     "games": 9,
     "current": {
      "games": 9,
      "avg": 60.8
     },
-    "best": 60.8,
+    "best": 58.1,
     "peak": 60.8,
-    "track": 100,
-    "status": "On star track",
+    "track": 96,
+    "status": "Long shot",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Clean hands",
@@ -23624,16 +25836,25 @@
     "club": "WCE",
     "pre": 25.1,
     "positionOnly": 11.3,
-    "now": 43.1,
+    "now": 41.7,
     "games": 15,
     "current": {
      "games": 15,
      "avg": 65.9
     },
-    "best": 65.9,
+    "best": 62.1,
     "peak": 65.9,
-    "track": 108,
-    "status": "On star track",
+    "track": 102,
+    "status": "Close",
+    "why": [],
+    "like": [
+     "Andrew Brayshaw*",
+     "Matt Guelfi",
+     "James Rowbottom",
+     "Nasiah Wanganeen-Milera*",
+     "Tim Taranto*",
+     "Jordan Clark*"
+    ],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills"
@@ -23661,16 +25882,20 @@
     "club": "HAW",
     "pre": 6.1,
     "positionOnly": 10.9,
-    "now": 6.0,
+    "now": 2.0,
     "games": 4,
     "current": {
      "games": 4,
      "avg": 47.8
     },
-    "best": null,
+    "best": 52.6,
     "peak": null,
-    "track": null,
+    "track": 87,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 15 state-league games v 4 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -23710,16 +25935,20 @@
     "club": "WBD",
     "pre": 33.6,
     "positionOnly": 10.5,
-    "now": 18.8,
+    "now": 4.8,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 29.5
     },
-    "best": null,
+    "best": 49.9,
     "peak": null,
-    "track": null,
+    "track": 82,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 17 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Consistency",
      "Footy IQ / vision",
@@ -23759,13 +25988,15 @@
     "club": "ADE",
     "pre": 7.5,
     "positionOnly": 10.1,
-    "now": 6.9,
+    "now": 1.9,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -23793,16 +26024,20 @@
     "club": "HAW",
     "pre": 7.8,
     "positionOnly": 9.8,
-    "now": 7.1,
+    "now": 4.8,
     "games": 1,
     "current": {
      "games": 1,
      "avg": 49.0
     },
-    "best": null,
+    "best": 54.3,
     "peak": null,
-    "track": null,
+    "track": 89,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 17 state-league games v 1 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -23841,13 +26076,15 @@
     "club": "GEE",
     "pre": 10.5,
     "positionOnly": 9.5,
-    "now": 8.5,
+    "now": 12.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -23870,13 +26107,15 @@
     "club": "FRE",
     "pre": 23.9,
     "positionOnly": 9.2,
-    "now": 14.6,
+    "now": 20.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Engine / work rate",
@@ -23899,13 +26138,15 @@
     "club": "NTH",
     "pre": 0.1,
     "positionOnly": 9.0,
-    "now": 0.3,
+    "now": 0.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -23928,16 +26169,20 @@
     "club": "WBD",
     "pre": 1.3,
     "positionOnly": 8.7,
-    "now": 2.6,
+    "now": 2.9,
     "games": 7,
     "current": {
      "games": 7,
      "avg": 28.6
     },
-    "best": 28.6,
+    "best": 42.7,
     "peak": null,
-    "track": 47,
-    "status": "Behind",
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 12 state-league games v 7 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -23980,13 +26225,15 @@
     "club": "GCS",
     "pre": 6.8,
     "positionOnly": 8.5,
-    "now": 6.5,
+    "now": 1.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Defensive pressure",
@@ -24020,13 +26267,15 @@
     "club": "WCE",
     "pre": 6.4,
     "positionOnly": 8.3,
-    "now": 6.2,
+    "now": 8.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -24049,13 +26298,15 @@
     "club": "MEL",
     "pre": 6.0,
     "positionOnly": 8.0,
-    "now": 6.0,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": null,
     "seasons": [],
@@ -24083,16 +26334,20 @@
     "club": "RIC",
     "pre": 14.0,
     "positionOnly": 7.9,
-    "now": 10.2,
+    "now": 3.1,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 40.5
     },
-    "best": null,
+    "best": 52.1,
     "peak": null,
-    "track": null,
+    "track": 86,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 10 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Kicking / skills",
@@ -24133,13 +26388,15 @@
     "club": "COL",
     "pre": 22.2,
     "positionOnly": 7.7,
-    "now": 13.9,
+    "now": 4.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Consistency",
@@ -24174,13 +26431,15 @@
     "club": "GEE",
     "pre": 3.4,
     "positionOnly": 7.5,
-    "now": 4.3,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands"
     ],
@@ -24210,16 +26469,20 @@
     "club": "HAW",
     "pre": 9.0,
     "positionOnly": 7.3,
-    "now": 18.6,
+    "now": 4.3,
     "games": 5,
     "current": {
      "games": 5,
      "avg": 54.8
     },
-    "best": 54.8,
+    "best": 54.9,
     "peak": null,
     "track": 90,
-    "status": "Close",
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 11 state-league games v 5 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -24261,13 +26524,15 @@
     "club": "SYD",
     "pre": 4.2,
     "positionOnly": 7.2,
-    "now": 4.8,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -24302,16 +26567,25 @@
     "club": "ESS",
     "pre": 1.2,
     "positionOnly": 7.0,
-    "now": 1.5,
+    "now": 6.9,
     "games": 12,
     "current": {
      "games": 12,
      "avg": 38.2
     },
-    "best": 38.2,
+    "best": 44.9,
     "peak": 38.2,
-    "track": 63,
-    "status": "Behind",
+    "track": 74,
+    "status": "Unlikely",
+    "why": [],
+    "like": [
+     "Ben King",
+     "Josh Gibcus",
+     "Charlie Ballard",
+     "Jesse Motlop",
+     "Tanner Bruhn",
+     "Tyler Brockman"
+    ],
     "traits": [
      "Aerial / marking",
      "Footy IQ / vision",
@@ -24353,16 +26627,20 @@
     "club": "COL",
     "pre": 6.7,
     "positionOnly": 6.9,
-    "now": 25.6,
+    "now": 10.9,
     "games": 9,
     "current": {
      "games": 9,
      "avg": 70.1
     },
-    "best": 70.1,
+    "best": 63.0,
     "peak": 70.1,
-    "track": 115,
-    "status": "On star track",
+    "track": 104,
+    "status": "Long shot",
+    "why": [
+     "Stuck in the seconds: 11 state-league games v 9 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -24403,13 +26681,15 @@
     "club": "BRL",
     "pre": 11.2,
     "positionOnly": 6.7,
-    "now": 8.9,
+    "now": 2.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Defensive pressure",
      "Leadership / character",
@@ -24443,13 +26723,15 @@
     "club": "WCE",
     "pre": 6.5,
     "positionOnly": 6.6,
-    "now": 4.9,
+    "now": 8.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Athleticism",
      "Engine / work rate",
@@ -24472,16 +26754,18 @@
     "club": "FRE",
     "pre": 7.1,
     "positionOnly": 6.5,
-    "now": 6.7,
+    "now": 10.0,
     "games": 1,
     "current": {
      "games": 1,
      "avg": 62.0
     },
-    "best": null,
+    "best": 55.8,
     "peak": null,
-    "track": null,
+    "track": 92,
     "status": "Too early",
+    "why": [],
+    "like": [],
     "traits": [],
     "jFP": 65.7,
     "seasons": [
@@ -24504,16 +26788,20 @@
     "club": "STK",
     "pre": 2.7,
     "positionOnly": 6.3,
-    "now": 3.6,
+    "now": 1.4,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 54.7
     },
-    "best": null,
+    "best": 54.9,
     "peak": null,
-    "track": null,
+    "track": 90,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 11 state-league games v 3 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Engine / work rate",
@@ -24552,16 +26840,25 @@
     "club": "SYD",
     "pre": 4.7,
     "positionOnly": 6.2,
-    "now": 11.1,
+    "now": 8.6,
     "games": 11,
     "current": {
      "games": 11,
      "avg": 50.3
     },
-    "best": 50.3,
+    "best": 52.3,
     "peak": 50.3,
-    "track": 83,
-    "status": "Behind",
+    "track": 86,
+    "status": "Unlikely",
+    "why": [],
+    "like": [
+     "Nick Hind",
+     "Matthew Parker",
+     "Zac Langdon",
+     "James Rowe",
+     "Mitch Hannan",
+     "Tom Highmore"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -24597,16 +26894,20 @@
     "club": "BRL",
     "pre": 0.3,
     "positionOnly": 6.1,
-    "now": 0.5,
+    "now": 0.1,
     "games": 4,
     "current": {
      "games": 4,
      "avg": 25.8
     },
-    "best": null,
+    "best": 45.2,
     "peak": null,
-    "track": null,
+    "track": 74,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Leadership / character",
@@ -24646,13 +26947,15 @@
     "club": "BRL",
     "pre": 6.0,
     "positionOnly": 6.0,
-    "now": 6.0,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Engine / work rate",
      "Kicking / skills",
@@ -24684,16 +26987,27 @@
     "club": "CAR",
     "pre": 11.1,
     "positionOnly": 5.9,
-    "now": 15.9,
+    "now": 17.3,
     "games": 20,
     "current": {
      "games": 20,
      "avg": 46.5
     },
-    "best": 46.5,
+    "best": 49.0,
     "peak": 46.5,
-    "track": 77,
-    "status": "Behind",
+    "track": 81,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 20 games at 100+"
+    ],
+    "like": [
+     "Zac Fisher",
+     "Archie Perkins",
+     "Nick Blakey",
+     "Will Hayward",
+     "Sam Berry*",
+     "Tom McCartin"
+    ],
     "traits": [
      "Clean hands",
      "Defensive pressure",
@@ -24735,13 +27049,15 @@
     "club": "GCS",
     "pre": 12.7,
     "positionOnly": 5.8,
-    "now": 9.6,
+    "now": 2.8,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Consistency",
      "Contested / inside",
@@ -24776,16 +27092,20 @@
     "club": "CAR",
     "pre": 16.3,
     "positionOnly": 5.7,
-    "now": 21.8,
+    "now": 7.1,
     "games": 8,
     "current": {
      "games": 8,
      "avg": 49.4
     },
-    "best": 49.4,
+    "best": 52.2,
     "peak": 49.4,
-    "track": 81,
-    "status": "Behind",
+    "track": 86,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 11 state-league games v 8 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Footy IQ / vision",
      "Kicking / skills",
@@ -24827,13 +27147,15 @@
     "club": "NTH",
     "pre": 5.6,
     "positionOnly": 5.6,
-    "now": 5.8,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -24866,13 +27188,15 @@
     "club": "SYD",
     "pre": 0.5,
     "positionOnly": 5.5,
-    "now": 0.6,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -24895,16 +27219,20 @@
     "club": "ADE",
     "pre": 0.2,
     "positionOnly": 5.4,
-    "now": 0.4,
+    "now": 0.1,
     "games": 2,
     "current": {
      "games": 2,
      "avg": 33.5
     },
-    "best": null,
+    "best": 50.7,
     "peak": null,
-    "track": null,
+    "track": 83,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 13 state-league games v 2 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -24943,13 +27271,15 @@
     "club": "GWS",
     "pre": 4.4,
     "positionOnly": 5.4,
-    "now": 4.9,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Accumulator",
      "Aerial / marking",
@@ -24984,13 +27314,15 @@
     "club": "STK",
     "pre": 4.5,
     "positionOnly": 5.3,
-    "now": 5.0,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Speed / agility",
@@ -25023,16 +27355,20 @@
     "club": "ESS",
     "pre": 4.1,
     "positionOnly": 5.2,
-    "now": 5.0,
+    "now": 2.1,
     "games": 9,
     "current": {
      "games": 9,
      "avg": 37.9
     },
-    "best": 37.9,
+    "best": 45.9,
     "peak": 37.9,
-    "track": 62,
-    "status": "Behind",
+    "track": 76,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 9 state-league games v 9 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Contested / inside",
      "Scoreboard impact",
@@ -25073,16 +27409,20 @@
     "club": "RIC",
     "pre": 3.9,
     "positionOnly": 5.1,
-    "now": 4.6,
+    "now": 1.1,
     "games": 3,
     "current": {
      "games": 3,
      "avg": 37.0
     },
-    "best": null,
+    "best": 50.1,
     "peak": null,
-    "track": null,
+    "track": 82,
     "status": "Too early",
+    "why": [
+     "Stuck in the seconds: 14 state-league games v 3 AFL in 2026"
+    ],
+    "like": [],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -25123,13 +27463,15 @@
     "club": "COL",
     "pre": 2.2,
     "positionOnly": 5.0,
-    "now": 3.3,
+    "now": 2.0,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -25163,13 +27505,15 @@
     "club": "HAW",
     "pre": 3.5,
     "positionOnly": 5.0,
-    "now": 4.3,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Clean hands",
      "Engine / work rate",
@@ -25204,16 +27548,25 @@
     "club": "COL",
     "pre": 2.9,
     "positionOnly": 4.9,
-    "now": 11.6,
+    "now": 12.2,
     "games": 17,
     "current": {
      "games": 17,
      "avg": 57.5
     },
-    "best": 57.5,
+    "best": 56.7,
     "peak": 57.5,
-    "track": 95,
-    "status": "Close",
+    "track": 93,
+    "status": "Long shot",
+    "why": [],
+    "like": [
+     "Mitch Hannan",
+     "Matthew Parker",
+     "Marty Hore",
+     "Liam Ryan",
+     "James Rowe",
+     "Tom Stewart*"
+    ],
     "traits": [
      "Clean hands",
      "Contested / inside",
@@ -25254,16 +27607,27 @@
     "club": "STK",
     "pre": 6.5,
     "positionOnly": 4.8,
-    "now": 23.9,
+    "now": 20.9,
     "games": 90,
     "current": {
      "games": 15,
      "avg": 64.4
     },
-    "best": 67.1,
+    "best": 61.1,
     "peak": 67.1,
-    "track": 110,
-    "status": "On star track",
+    "track": 101,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 0 of 90 games at 100+"
+    ],
+    "like": [
+     "Tom Stewart*",
+     "Marty Hore",
+     "Tom Highmore",
+     "Mitch Hannan",
+     "Billy Hartung",
+     "Matt de Boer"
+    ],
     "traits": [
      "Accumulator",
      "Consistency",
@@ -25341,16 +27705,28 @@
     "club": "GWS",
     "pre": 3.7,
     "positionOnly": 4.8,
-    "now": 33.8,
+    "now": 2.0,
     "games": 250,
     "current": {
      "games": 23,
      "avg": 64.9
     },
-    "best": 80.4,
+    "best": 62.3,
     "peak": 80.4,
-    "track": 132,
-    "status": "On star track",
+    "track": 103,
+    "status": "Unlikely",
+    "why": [
+     "32 now: a veteran pick for points, not a future star",
+     "Rarely goes big: 0 of 250 games at 100+"
+    ],
+    "like": [
+     "Matt de Boer",
+     "Tom Stewart*",
+     "Tim Kelly*",
+     "Nick Hind",
+     "Billy Hartung",
+     "Marty Hore"
+    ],
     "traits": [],
     "jFP": null,
     "seasons": [
@@ -25453,13 +27829,15 @@
     "club": "WBD",
     "pre": 0.9,
     "positionOnly": 4.7,
-    "now": 1.9,
+    "now": 0.5,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
+    "why": [],
+    "like": [],
     "traits": [
      "Aerial / marking",
      "Athleticism",
@@ -25489,12 +27867,7 @@
   "surprises": [
    "Hugo Garcia|2023",
    "Archie Roberts|2023",
-   "Lawson Humphries|2023",
-   "Joel Freijah|2023",
-   "Jase Burgoyne|2021",
-   "Darcy Wilson|2023",
-   "Jaspa Fletcher|2022",
-   "Murphy Reid|2024"
+   "Jase Burgoyne|2021"
   ],
   "breakouts": [
    "Finn O'Sullivan|2024",
