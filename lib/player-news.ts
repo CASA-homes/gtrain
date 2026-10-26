@@ -4,8 +4,32 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'J. Short', tag: 'Role', title: 'Short’s Collingwood move falls over',
+    body: 'Short tried to get to Collingwood in the trade period, but the clubs couldn’t agree on the final day and he’s back at Richmond for the last year of his contract. Fantasy-wise that’s good news: he keeps his spot as the Tigers’ main half-back ball user and kick-in taker, with a new deal to play for.',
+  },
+  {
+    player: 'H. Reid', tag: 'Injury', title: 'Reid: shoulder fixed, but banned for rounds 1–2',
+    body: 'West Coast’s best and fairest winner had a shoulder clean-up after the season and will be ready for pre-season in November. The catch for fantasy: he carries a two-match ban for a dangerous tackle into 2027, so he misses the first two rounds.',
+  },
+  {
+    player: 'L. Whitfield', tag: 'Trade', title: 'Whitfield crosses to Carlton',
+    body: 'GWS’s long-time kick-in and half-back playmaker joins the Blues. Carlton need exactly that kind of ball user off half-back, so his role and kick-ins should carry over. Keep an eye on whether they push him into the midfield.',
+  },
+  {
+    player: 'J. Ridley', tag: 'Trade', title: 'Ridley gets a fresh start at Geelong',
+    body: 'After two injury-hit years at Essendon, Ridley moves to the Cats. At his best he’s an intercepting half-back who scores in the 80s; Geelong’s system has been kind to that type. A cheap bounce-back option if his body holds up.',
+  },
+  {
+    player: 'T. Rivers', tag: 'Trade', title: 'Rivers heads west to the Eagles',
+    body: 'Rivers leaves Melbourne for West Coast, where he should get a bigger midfield share than he did behind the Demons’ stars. More centre bounces would lift him back toward his 2025 scoring.',
+  },
+  {
+    player: 'J. Viney', tag: 'Trade', title: 'Viney joins him at West Coast',
+    body: 'The ex-Demons skipper also lands at the Eagles after barely playing in 2026. Still an elite contested ball winner when fit, but at 32 and coming off a lost year, treat him as a depth piece rather than a starter.',
+  },
+  {
     player: 'Z. Butters', tag: 'Trade', title: 'Butters lands at the Bulldogs',
-    body: 'The biggest fantasy move of the trade period. Butters leaves Port for the Western Bulldogs and walks into one of the best midfields in the comp. Expect plenty of the ball, but less of the centre-bounce monopoly he had at Alberton.',
+    body: 'The biggest fantasy move of the trade period. Butters leaves Port for the Western Bulldogs and walks into one of the best midfields in the comp. Expect plenty of the ball, but less of the centre-bounce monopoly he had at Alberton. He also had a minor ankle clean-up in October and says he’ll be right for round 1.',
   },
   {
     player: 'I. Heeney', tag: 'Off-field', title: 'Pullman Hotel fallout, then a best and fairest',
