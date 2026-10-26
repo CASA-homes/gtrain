@@ -21,7 +21,7 @@ import { C } from '@/lib/ratings';
 type Reason = { label: string; effect: number };
 type Prospect = {
   rank: number; name: string; junior: string; position: string; height: number | null;
-  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean; ceiling?: boolean;
+  jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; jMax?: number | null; j120?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean; ceiling?: boolean;
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
   comps: { name: string; pick: number; year: number; peak: number; now: number | null; jFP: number | null; jT: number | null; jD: number | null; scouts: string[]; workons: string[]; role: string; type?: string }[];
@@ -39,7 +39,7 @@ const D = data as unknown as {
 type Past = {
   year: number; pick: number; name: string; club: string; age: number | null; mature: boolean; pre: number; positionOnly: number; now: number;
   games: number; current: { games: number; avg: number } | null; best: number | null; peak: number | null; track: number | null;
-  status: 'Star' | 'On track' | 'Building' | 'Close' | 'Long shot' | 'Unlikely' | 'Yet to debut' | 'Too early'; why?: string[]; like?: string[]; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
+  status: 'Star' | 'On track' | 'Building' | 'Close' | 'Long shot' | 'Unlikely' | 'Yet to debut' | 'Too early'; why?: string[]; like?: string[]; traits: string[]; jFP: number | null; jMax?: number | null; j120?: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
   state?: { league: string; year: number; games: number; fp: number; disposals: number; tackles: number; marks: number; goals: number }[];
 };
 
@@ -48,6 +48,7 @@ const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 function reasonText(r: Reason, p: Prospect) {
   if (r.label === 'Junior fantasy avg') return `Junior fantasy ${p.jFP?.toFixed(0)}`;
+  if (r.label === 'Big junior games (140+)') return `Best junior game ${p.jMax?.toFixed(0)}`;
   if (r.label === 'Junior tackles') return `${p.jT?.toFixed(1)} tackles a game`;
   if (r.label === 'No junior numbers') return 'Barely played in 2026';
   if (r.label === 'Key position') return 'Key-position role';
@@ -148,7 +149,7 @@ function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; 
         {p.ceiling && <CeilingPill />}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="mono">
-        <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b>{p.jSeason && p.jSeason < 2026 ? <span className="muted"> ({p.jSeason}{p.jSeason <= 2024 ? ' U16, −10%' : ''})</span> : null}</span>
+        <span>Junior fantasy <b>{p.jFP?.toFixed(0) ?? '–'}</b>{p.jMax ? <span className="muted"> · best game <b style={{ color: p.jMax >= 140 ? C.green5 : undefined }}>{p.jMax.toFixed(0)}</b></span> : null}{p.jSeason && p.jSeason < 2026 ? <span className="muted"> ({p.jSeason}{p.jSeason <= 2024 ? ' U16, −10%' : ''})</span> : null}</span>
         <span>Disposals <b>{p.jD?.toFixed(1) ?? '–'}</b></span>
         <span>Tackles <b>{p.jT?.toFixed(1) ?? '–'}</b></span>
       </div>

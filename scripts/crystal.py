@@ -161,6 +161,19 @@ for _y, _v in COMBINE.items():
                 if _t in _ts: _CB.setdefault((int(_y), _ck(_r['name'])), set()).add(_g)
 def combine_flags(year, name): return sorted(_CB.get((year, _ck(name)), set()))
 
+JUNIOR_LEAGUES_X = {'afl', 'vfl', 'sanfl', 'wafl'}
+def junior_games(pid, year):
+    """Per-game junior scoring from DFS (Talent League, SANFL/WAFL under-18s, nationals), draft year and the year before:
+    best single game and how many games went 120+ / 150+. DFS has these from roughly the 2019 draft on, and only once a
+    player is on an AFL list, so draft prospects pick this up after they're drafted."""
+    r = dfs_rec(pid) or {}
+    rs = [c for c in r.get('career', []) if (c.get('league') or '').lower() not in JUNIOR_LEAGUES_X
+          and int(c.get('year') or 0) in (year, year - 1) and int(c.get('gms') or 0) >= 1]
+    if not rs: return None
+    best = max(rs, key=lambda c: float(c.get('maxFP') or 0))
+    return {'max': float(best.get('maxFP') or 0), 'maxYr': int(best['year']), 'g120': sum(int(c.get('gm120') or 0) for c in rs),
+            'gms': sum(int(c.get('gms') or 0) for c in rs)}
+
 players = []
 for d in H:
     k = f"{d['y']}|{d['n']}"
@@ -170,6 +183,8 @@ for d in H:
     st = sorted({SMAP[norm(s)] for s in r['str'] if norm(s) in SMAP})
     im = sorted({IMAP[norm(s)] for s in r['imp'] if norm(s) in IMAP})
     j = junior(r['rows'], d['y'])
+    jg = junior_games(d.get('id'), d['y'])
+    if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120']}
     pk = peak(d.get('h'))
     mature = d['y'] <= 2022
     players.append({'id': d.get('id'), 'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,

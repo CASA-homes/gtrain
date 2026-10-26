@@ -295,6 +295,14 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
             building = True
             why.insert(0, f"Impact well ahead of his scoring: {ge['rp_raw']:.1f} rating points a game (better than {round(pctl * 100)}% of players at his stage)")
         if role_note: why.append(role_note)
+    # Pre-draft ceiling: a junior who had a 140+ game on a sub-95 average (Sheezel 159 on 83). Leads only before his AFL record says much.
+    jj = (byname.get((d['y'], d['n'])) or {}).get('jun') or {}
+    if hit and (jj.get('max') or 0) >= 140 and (jj.get('FP') or 0) < 95:
+        why.append(f"The sign was there: {jj['max']:.0f} best junior game on a {jj['FP']:.0f} average")
+    elif not hit and (jj.get('max') or 0) >= 140 and (jj.get('FP') or 0) < 95:
+        bg = f"Big-game junior: {jj['max']:.0f} best game on a {jj['FP']:.0f} average" + (f" ({jj['g120']} games of 120+)" if (jj.get('g120') or 0) >= 2 else '')
+        if games < 20: why.insert(0 if not ov else 1, bg)
+        else: why.append(bg)
     # Status = chance of ever having a 90+ season
     if hit: status = 'Star'
     elif games == 0 and n_now <= 2: status = 'Yet to debut'
@@ -310,7 +318,7 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
     past.append({'age': age, 'mature': bool(age and age >= 21),'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'],
                  'pre': round(pc * 100, 1), 'positionOnly': round(po * 100, 1), 'now': round(now * 100, 1),
                  'games': games, 'current': cur, 'best': round(fx['best'], 1) if fx['best'] else None, 'peak': round(peak, 1) if peak else None,
-                 'track': track, 'status': status, 'why': why[:3], 'like': like, 'traits': (p or {}).get('str', []), 'jFP': ((p or {}).get('jun') or {}).get('FP'),
+                 'track': track, 'status': status, 'why': why[:3], 'like': like, 'traits': (p or {}).get('str', []), 'jFP': ((p or {}).get('jun') or {}).get('FP'), 'jMax': ((p or {}).get('jun') or {}).get('max'), 'j120': ((p or {}).get('jun') or {}).get('g120'),
                  'seasons': [[y, g, round(a, 1)] for (y, g, a) in h if g > 0], 'role': role_for(d),
                  'cba': {str(d['y'] + k): v for k, v in sorted(cbs.items())}, 'state': state_lines(d.get('id'), d['y'])})
 

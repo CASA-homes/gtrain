@@ -16,7 +16,7 @@ ROLES = ['Key position', 'Ruck', 'Small forward']
 # Roles are a hard fact about how fantasy scores are earned, so let them speak louder than a single scout's trait.
 ROLE_W = {'Key position': 3.0, 'Ruck': 0.0, 'Small forward': 2.0}   # ruck acts through the calibration only: past ruck stars were late picks, so a ruck boost on top of draft slot overshoots for early rucks
 COMBO = ['Combine: top-10 endurance', 'Combine: top-10 speed/jump']
-FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)']
+FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)', 'Big junior games (140+)']
 
 def fv(p, pick):
     j = p.get('jun') or {}
@@ -35,6 +35,10 @@ def fv(p, pick):
     x += [1 if f in p['imp'] else 0 for f in FLAGS]
     # The lift from junior scoring isn't a straight line: 80 v 90 means little, 105+ roughly doubles a pick's star rate.
     x += [max(0, min(fp, 125) - 95) / 10 if has else 0]   # capped: only a handful of juniors ever averaged 115+
+    # Big single games. A junior averaging under 95 who still had a 140+ game (Sheezel 83 avg, 159 best; Berry 79, 149)
+    # became a star well above his draft slot's rate. For 95+ averages the line above already gives the credit.
+    jm = j.get('max') or 0
+    x += [max(0, min(jm, 165) - 140) / 10 if has and fp < 95 else 0]
     return x
 
 X = np.array([fv(p, p['pick']) for p in train]); y = np.array([p['label'] for p in train]); yrs = np.array([p['year'] for p in train])

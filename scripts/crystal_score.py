@@ -2,7 +2,7 @@
 import json, math, re, sys
 import numpy as np
 sys.path.insert(0, 'scripts')
-from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, train, table, players as ALL, dfs_rec  # noqa: E402
+from crystal import GROUPS, IMPS, SMAP, IMAP, norm, junior, train, table, players as ALL, dfs_rec, junior_games, DFS_CACHE  # noqa: E402
 import crystal_model as cm  # noqa: E402  (fits + validates on import)
 
 model = cm.m
@@ -108,8 +108,33 @@ REST = _made_stats([q for q in train if 'Accumulator' not in q['str']])
 ACC['examples'] = [q['name'].replace('+', '') for q in sorted([q for q in train if 'Accumulator' in q['str'] and q['peak'] >= 88], key=lambda q: -q['peak'])][:4]
 print('accumulator ceiling:', ACC, 'vs', REST)
 
+# Big junior games: juniors with per-game data (DFS, ~2019 drafts on) whose average was under 95 but who had a 140+ game.
+_bg = [q for q in train if (q['jun'] or {}).get('max') and 20 < (q['jun']['FP'] or 0) < 95 and q['jun']['max'] >= 140]
+_bg_exp = None
+def big_game_stats():
+    global _bg_exp
+    if _bg_exp is None:
+        pm = cm.LogisticRegression(C=10, max_iter=2000).fit(cm.X[:, :1], cm.y)
+        _bg_exp = sum(float(pm.predict_proba([[-math.log(q['pick'])]])[0, 1]) for q in _bg)
+    hits = [q for q in _bg if q['label']]
+    return len(_bg), len(hits), len(hits) / max(_bg_exp, 1e-9), [f"{q['name']} ({q['jun']['FP']:.0f} avg, {q['jun']['max']:.0f} best)" for q in sorted(hits, key=lambda q: q['pick'])]
+print('big-game juniors:', big_game_stats())
+
+def big_game_line(j):
+    """Note for a junior with a big single game on record, or None."""
+    mx, fp = (j or {}).get('max') or 0, (j or {}).get('FP') or 0
+    if mx < 130: return None
+    n120 = j.get('g120') or 0
+    games = f"best junior game {mx:.0f}" + (f", {n120} games of 120+" if n120 >= 2 else '')
+    if fp < 95 and mx >= 140:
+        n, h, lift, ex = big_game_stats()
+        return {'good': True, 'text': f"Big-game ceiling: {games}, well above his {fp:.0f} average. Juniors averaging under 95 who still had a 140+ game became 90+ players at {lift:.1f}× their draft slots ({h} of {n}: {', '.join(ex)}). A few huge games say the scoring is in him."}
+    return {'good': True, 'text': f"Big-game ceiling: {games}. Goes big when it's on, not just a steady accumulator."}
+
 def why(p, contrib, role):
     lines = []
+    bg = big_game_line(p.get('jun'))
+    if bg: lines.append(bg)
     j = p.get('jun') or {}
     fp, t = j.get('FP'), j.get('T')
     if fp and fp >= 90:
@@ -125,7 +150,7 @@ def why(p, contrib, role):
         h, n = rate_for(lambda q: (q['jun'] or {}).get('T') if q['jun'] and q['jun']['FP'] > 20 else None, lo, 99)
         lines.append({'good': True, 'text': f"{t:.1f} tackles a game. Juniors laying {lo}+ became stars {round(h / n * 100)}% of the time: hunters score, as Warner, Berry and Brayshaw showed."})
     for k, v in contrib:
-        if k in TAB and k not in ('Junior fantasy avg', 'Junior tackles'):
+        if k in TAB and k not in ('Junior fantasy avg', 'Junior tackles', 'Big junior games (140+)'):
             n, hits, rate, lift = TAB[k]
             label = k.replace('needs ', 'work-on: ')
             if v > 0:
@@ -142,6 +167,11 @@ def why(p, contrib, role):
     elif role == 'Ruck': lines.append({'good': True, 'text': 'Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested.'})
     return lines
 
+# DFS ids for prospects (they appear in DFS's player list once they're on an AFL list, i.e. after the draft)
+try:
+    DFS_ID = {norm(p['playerName']): p['playerId'] for p in json.load(open(f'{DFS_CACHE}/names.json'))['players'].values()}
+except Exception:
+    DFS_ID = {}
 pick_model = cm.LogisticRegression(C=10, max_iter=2000).fit(cm.X[:, :1], cm.y)
 out = []
 for rank, name in PH:
@@ -156,6 +186,8 @@ for rank, name in PH:
     if any('volume' in norm(s) or 'production' in norm(s) for s in imps): im = sorted(set(im) | {'needs to win more ball'})
     if any('consisten' in norm(s) for s in imps): im = sorted(set(im) | {'needs consistency'})
     j = junior(rm.get('rows', []), 2026) if rm else None
+    jg = junior_games(DFS_ID.get(norm(name)), 2026) if DFS_ID.get(norm(name)) else None
+    if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120']}
     listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
     role = role_of(listed, ht, strs)
     p = {'name': name, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
@@ -169,7 +201,7 @@ for rank, name in PH:
     contrib = sorted([(k, v) for k, v in eff.items() if abs(v) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
     out.append({'rank': rank, 'name': name, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
-                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'traits': st, 'flags': im,
+                'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'jMax': j and j.get('max'), 'j120': j and j.get('g120'), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],
                 'why': why(p, contrib, role), 'type': TYPE_LABEL[types[0]], 'ceiling': 'Accumulator' in st,
