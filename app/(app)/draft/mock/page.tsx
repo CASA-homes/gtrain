@@ -51,7 +51,7 @@ export default async function MockPage() {
       <MockDraft players={[...rookies, ...released, ...free]} teams={teams} picks={picks} myTeamId={me?.team_id ?? null} />
       <p className="muted" style={{ fontSize: 12, margin: 0 }}>
         How the other clubs pick: a board value for every player, tuned to how the 2026 G-Train draft went (star rookies top 5, key-position talls slide, proven 85+ veterans from
-        about pick 17), leaned by each club’s window and last-draft habits. Your edits are saved on this device only. Rookies are the Crystal Ball’s phantom top 30 until the
+        about pick 17), leaned by each club’s window and last-draft habits. Your edits are saved to your login. Rookies are the Crystal Ball’s phantom top 30 until the
         AFL draft in November. <Link href="/draft">G-Train picks</Link>
       </p>
     </div>

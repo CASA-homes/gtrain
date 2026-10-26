@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { TeamBadge } from '@/components/bits';
+import { clearMockEdits, loadMockEdits, saveMockEdit, saveMockEdits } from '@/app/(app)/draft/mock/actions';
 import { aiPick, effectiveBoard, rng, type Edits, type MockPick, type MockPlayer, type MockTeam } from '@/lib/mock-draft';
 
 const KIND: Record<string, [string, string]> = { Rookie: ['#ece0f8', '#5b2d8e'], Released: ['#f5ecc8', '#6b5310'], 'Free agent': ['#dcefd6', '#1f6b3a'] };
@@ -24,13 +25,23 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
   const [posLine, setPosLine] = useState<'All' | 'DEF' | 'MID' | 'RUC' | 'FWD'>('All');
   const [sortBy, setSortBy] = useState<'avg' | 'rating'>('avg');
   const [menu, setMenu] = useState<number | null>(null);
+  const [synced, setSynced] = useState<boolean | null>(null);   // edits saved to your login (true) or only this browser (false)
   const boardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const st = load<{ asTeam?: number; seed?: number; mine?: Record<number, string> }>(STATE_KEY, {});
     setAsTeam(st.asTeam ?? myTeamId ?? teams[0].id); setSeed(st.seed ?? newSeed()); setMine(st.mine ?? {});
-    setEdits(load<Edits>(EDITS_KEY, { out: [], adj: {} }));
+    const local = load<Edits>(EDITS_KEY, { out: [], adj: {} });
+    setEdits(local);
     setReady(true);
+    // Saved edits live against your login. Anything only in this browser gets moved across once.
+    loadMockEdits().then(async ({ ready: dbReady, edits: remote }) => {
+      if (!dbReady) { setSynced(false); return; }
+      const merged: Edits = { out: [...new Set([...remote.out, ...local.out])], adj: { ...local.adj, ...remote.adj } };
+      const localOnly = local.out.some((k) => !remote.out.includes(k)) || Object.keys(local.adj).some((k) => !(k in remote.adj));
+      if (localOnly) await saveMockEdits(merged);
+      setEdits(merged); setSynced(true);
+    }).catch(() => setSynced(false));
   }, [myTeamId, teams]);
   useEffect(() => { if (ready) save(STATE_KEY, { asTeam, seed, mine }); }, [ready, asTeam, seed, mine]);
   useEffect(() => { if (ready) save(EDITS_KEY, edits); }, [ready, edits]);
@@ -85,8 +96,10 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
   const restart = () => { setSeed(newSeed()); setMine({}); setMenu(null); };
   const edit = (p: MockPlayer, how: 'out' | 'high' | 'low') => {
     setMenu(null);
-    if (how === 'out') setEdits({ ...edits, out: [...new Set([...edits.out, p.key])] });
-    else setEdits({ ...edits, adj: { ...edits.adj, [p.key]: (edits.adj[p.key] ?? 0) + (how === 'high' ? -12 : 12) } });
+    const next: Edits = how === 'out' ? { ...edits, out: [...new Set([...edits.out, p.key])] }
+      : { ...edits, adj: { ...edits.adj, [p.key]: (edits.adj[p.key] ?? 0) + (how === 'high' ? -12 : 12) } };
+    setEdits(next);
+    if (synced) saveMockEdit(p.key, next.out.includes(p.key), next.adj[p.key] ?? 0).then((r) => { if (!r.ok) setSynced(false); });
   };
   const editCount = edits.out.length + Object.keys(edits.adj).length;
 
@@ -100,10 +113,11 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
             {teams.map((t) => <option key={t.id} value={t.id}>{t.name}{t.id === myTeamId ? ' (you)' : ''}</option>)}
           </select>
         </label>
+        <span className="muted" style={{ fontSize: 12 }} title={synced ? 'Your edits are saved to your login and sync across devices' : 'Your edits are saved in this browser only'}>{synced ? '✓ Edits saved to your login' : synced === false ? 'Edits saved in this browser' : ''}</span>
         <span className="muted" style={{ fontSize: 12 }}>Your picks: {myNext.slice(0, 8).map((p) => p.overall).join(', ')}{myNext.length > 8 ? '…' : ''}</span>
         <span style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <button type="button" className="btn" onClick={undo} disabled={!myHaul.length}>Undo my last pick</button>
-          <button type="button" className="btn" onClick={() => setEdits({ out: [], adj: {} })} disabled={!editCount} title="Clear every retired / too high / too low call">Reset my edits{editCount ? ` (${editCount})` : ''}</button>
+          <button type="button" className="btn" onClick={() => { setEdits({ out: [], adj: {} }); if (synced) clearMockEdits(); }} disabled={!editCount} title="Clear every retired / too high / too low call">Reset my edits{editCount ? ` (${editCount})` : ''}</button>
           <button type="button" className="btn dark" onClick={restart}>New mock</button>
         </span>
       </div>
