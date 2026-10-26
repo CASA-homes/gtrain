@@ -108,6 +108,15 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
         </span>
       </div>
 
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', fontSize: 12 }} className="muted">
+        <span>How clubs draft (from 2026 wins and draft habits):</span>
+        {[...teams].sort((a, b) => b.wNow - a.wNow).map((t) => (
+          <span key={t.id} title={`Weighs 2027 points ${Math.round(t.wNow * 100)}%, the future ${Math.round((1 - t.wNow) * 100)}%`}>
+            <b style={{ color: 'var(--ink)' }}>{t.short}</b> {t.window}{t.oneRookieEarly ? ' (+1 rookie)' : ''}
+          </span>
+        ))}
+      </div>
+
       <div className="card" role="status" style={{ padding: '10px 14px', border: 0, background: onClock ? '#1f6b3a' : '#e8eee5', color: onClock ? '#fff' : 'var(--ink)', fontWeight: 600 }}>
         {onClock ? <>On the clock: pick {onClock.overall} (round {onClock.round}), {team(asTeam).name}. Choose from the list.</> : <>Draft complete. {myHaul.length} picks for {team(asTeam).name}.</>}
         {results.some((r) => r.bumped) && <span style={{ fontWeight: 400 }}> One of your earlier choices was taken before your pick after an edit; pick again.</span>}
