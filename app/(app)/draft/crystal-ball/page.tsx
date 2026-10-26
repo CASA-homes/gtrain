@@ -11,6 +11,7 @@ import { lockCrystal, unlockCrystal } from './actions';
 import data from '@/lib/crystal-ball.json';
 import freeAgents from '@/lib/free-agents.json';
 import seconds from '@/lib/fa-seconds.json';
+import faPlayers from '@/lib/free-agent-players.json';
 import { C } from '@/lib/ratings';
 
 // Crystal ball: patterns in pre-draft profiles that led to fantasy stars, applied to the 2026 crop.
@@ -644,6 +645,17 @@ const FAD = freeAgents as unknown as { updated: string; players: FA[] };
 const FA_TAG: Record<string, string> = {
   'Breakout signs': '#e9d7f5', 'Young and rising': '#d8ecd0', 'Finished strong': '#d6e6f5', 'Bigger role': '#f5ecc8', 'Injury discount': '#f3d9d2', 'Proven ceiling': '#f6e1c6',
 };
+// Free agents link to their player profile: Keeper's short name + AFL club -> the site's player id.
+const FA_CLUB: Record<string, string> = { 'Adelaide Crows': 'ADE', 'Brisbane Lions': 'BRL', Carlton: 'CAR', Collingwood: 'COL', Essendon: 'ESS', Fremantle: 'FRE', 'Geelong Cats': 'GEE',
+  'Gold Coast Suns': 'GCS', 'GWS Giants': 'GWS', Hawthorn: 'HAW', Melbourne: 'MEL', 'North Melbourne': 'NTH', 'Port Adelaide': 'PTA', Richmond: 'RIC', 'St Kilda': 'STK',
+  'Sydney Swans': 'SYD', 'West Coast Eagles': 'WCE', 'Western Bulldogs': 'WBD' };
+const FA_ID = new Map((faPlayers as unknown as { players: { id: number; name: string; afl_club: string | null }[] }).players.map((p) => [`${p.name}|${p.afl_club}`, p.id]));
+function FAName({ p, size = 16 }: { p: { name: string; full: string; club: string }; size?: number }) {
+  const id = FA_ID.get(`${p.name}|${FA_CLUB[p.club] ?? p.club}`);
+  const style = { fontWeight: 600, fontSize: size, color: 'inherit' } as const;
+  return id ? <Link href={`/players/${id}`} style={{ ...style, textDecoration: 'underline', textDecorationColor: 'var(--line)', textUnderlineOffset: 3 }}>{p.full}</Link> : <span style={style}>{p.full}</span>;
+}
+
 type Sec = { name: string; full: string; pos: string; club: string; age: number | null; league: string; year: number; g: number; avg: number; max: number; g100: number;
   disp: number; tkl: number; mk: number; gl: number; ho: number; last: number[]; aflG: number; aflAvg: number | null; ruck: boolean; why: string[] };
 const SEC = seconds as unknown as { updated: string; players: Sec[] };
@@ -678,7 +690,7 @@ function SecondsPanel({ pos, targets }: { pos: string; targets: Set<string> }) {
               <div className="row-between" style={{ alignItems: 'flex-start', gap: 8 }}>
                 <div style={{ minWidth: 0 }}>
                   <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
-                  <div style={{ fontWeight: 600, fontSize: 16 }}>{p.full}</div>
+                  <div><FAName p={p} /></div>
                 </div>
                 <div style={{ textAlign: 'right', flex: 'none', color: S2.fg }}>
                   <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{Math.round(p.avg)}</div>
@@ -740,7 +752,7 @@ function FreeAgentsView({ pos }: { pos?: string }) {
                 <div className="row-between" style={{ alignItems: 'flex-start', gap: 8 }}>
                   <div style={{ minWidth: 0 }}>
                     <span className="eyebrow">{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}</span>
-                    <div style={{ fontWeight: 600, fontSize: 16 }}>{p.full}</div>
+                    <div><FAName p={p} /></div>
                   </div>
                   <div style={{ textAlign: 'right', flex: 'none' }}>
                     <div className="mono" style={{ fontWeight: 700, fontSize: 20, lineHeight: 1 }}>{fmt(p.proj)}</div>
@@ -773,7 +785,7 @@ function FreeAgentsView({ pos }: { pos?: string }) {
                 <tr key={p.name} style={{ background: p.tags.length ? '#f4f9f1' : undefined }}>
                   <td className="mono muted">{p.avg != null ? i + 1 : ''}</td>
                   <td style={{ minWidth: 150 }}>
-                    <span style={{ fontWeight: 600 }}>{p.full}</span>
+                    <FAName p={p} size={14} />
                     <div className="muted" style={{ fontSize: 11 }}>{p.pos} · {p.club}{p.age ? ` · ${Math.floor(p.age)}` : ''}{FA_STATUS[p.status] ? ` · ${FA_STATUS[p.status]}` : ''}</div>
                   </td>
                   <td className="mono" style={{ textAlign: 'right' }}>{p.gp}</td>
