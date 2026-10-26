@@ -42,6 +42,7 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
             ))}
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
+            <Link href="/market/planner" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade planner</Link>
             <Link href="/market/desk" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade desk</Link>
             <Link href="/market/new" className="btn" style={{ background: 'var(--cream)', color: 'var(--forest)', border: 0 }}>List a player</Link>
           </div>
