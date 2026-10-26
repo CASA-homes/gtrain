@@ -148,7 +148,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
             <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
           </div>
-          {isMine && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">Set keepers</Link>}
+          {(isMine || me?.is_commish) && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link>}
         </div>
       </header>
 
@@ -227,7 +227,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             ) : (
               <span className="muted" style={{ fontSize: 13 }}>
                 {keepers.length ? 'Player ages arrive with the first stats feed.' : 'No keepers set for 2027 yet.'}
-                {isMine && <> <Link href={`/clubhouse/${a.team.id}/keepers`}>Set keepers</Link></>}
+                {(isMine || me?.is_commish) && <> <Link href={`/clubhouse/${a.team.id}/keepers`}>Set keepers</Link></>}
               </span>
             )}
           </div>

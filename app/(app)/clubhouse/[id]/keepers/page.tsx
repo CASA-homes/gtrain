@@ -20,7 +20,8 @@ export default async function KeepersPage({ params }: { params: Promise<{ id: st
     <div className="wrap" style={{ maxWidth: 900 }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <span className="eyebrow">{a.team.name}</span>
-        <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>Set your 2027 keepers</h1>
+        <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>{me.team_id === a.team.id ? 'Set your 2027 keepers' : `Set ${a.team.name}’s 2027 keepers`}</h1>
+        {me.team_id !== a.team.id && <span className="pill" style={{ alignSelf: 'flex-start', background: '#f4ead0', color: '#17201a', fontSize: 12 }}>Commish edit · only your login can change another club’s keepers</span>}
         <p className="muted" style={{ margin: 0, maxWidth: '65ch' }}>
           Keep up to 17 players, plus an 18th rookie slot for a player with 10 or fewer career AFL games. Players are sorted by league value.
         </p>
