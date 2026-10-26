@@ -258,8 +258,8 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 
 /* 2026 draft results + awards aside */
 .draft-split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
-.draft-split > aside { position: sticky; top: 76px; }
-@media (max-width: 900px) { .draft-split { grid-template-columns: 1fr; } .draft-split > aside { position: static; } }
+.draft-split > aside { position: sticky; top: 76px; max-height: calc(100vh - 92px); overflow-y: auto; overscroll-behavior: contain; padding-right: 4px; }
+@media (max-width: 900px) { .draft-split { grid-template-columns: 1fr; } .draft-split > aside { position: static; max-height: none; overflow: visible; } }
 
 /* League history */
 .hist-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; align-items: start; }
