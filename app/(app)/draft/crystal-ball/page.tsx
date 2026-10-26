@@ -36,7 +36,7 @@ const D = data as unknown as {
 type Past = {
   year: number; pick: number; name: string; club: string; age: number | null; mature: boolean; pre: number; positionOnly: number; now: number;
   games: number; current: { games: number; avg: number } | null; best: number | null; peak: number | null; track: number | null;
-  status: 'Star' | 'On track' | 'Close' | 'Long shot' | 'Unlikely' | 'Yet to debut' | 'Too early'; why?: string[]; like?: string[]; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
+  status: 'Star' | 'On track' | 'Building' | 'Close' | 'Long shot' | 'Unlikely' | 'Yet to debut' | 'Too early'; why?: string[]; like?: string[]; traits: string[]; jFP: number | null; seasons: [number, number, number][]; role: string; cba: Record<string, number>;
   state?: { league: string; year: number; games: number; fp: number; disposals: number; tackles: number; marks: number; goals: number }[];
 };
 
@@ -192,7 +192,7 @@ function PatternList({ title, rows, good }: { title: string; rows: Pattern[]; go
 }
 
 const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
-  Star: { bg: C.green5, fg: '#fff' }, 'On track': { bg: C.green4, fg: '#fff' }, Close: { bg: '#d8ecd0', fg: C.ink },
+  Star: { bg: C.green5, fg: '#fff' }, 'On track': { bg: C.green4, fg: '#fff' }, Building: { bg: '#2f6f8f', fg: '#fff' }, Close: { bg: '#d8ecd0', fg: C.ink },
   'Long shot': { bg: '#f4ead0', fg: C.ink }, Unlikely: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
 };
 
@@ -253,7 +253,7 @@ function TrackBar({ r, path }: { r: Past; path: Record<string, number> }) {
   );
 }
 
-const ROW_CLASS: Partial<Record<Past['status'], string>> = { Star: 'cb-row-star', 'On track': 'cb-row-track', Close: 'cb-row-close' };
+const ROW_CLASS: Partial<Record<Past['status'], string>> = { Star: 'cb-row-star', 'On track': 'cb-row-track', Building: 'cb-row-building', Close: 'cb-row-close' };
 
 /** Historical players who looked most like him at the same stage; a star marks the ones who went on to a 90+ season. */
 function Like({ r, n = 3 }: { r: Past; n?: number }) {
@@ -353,7 +353,7 @@ function PastView({ year }: { year: number }) {
   const rows = P.filter((r) => r.year === year).sort((a, b) => a.pick - b.pick);
   const count = (s: Past['status']) => rows.filter((r) => r.status === s).length;
   const expected = rows.reduce((t, r) => t + r.pre / 100, 0);
-  const tops = rows.filter((r) => r.status === 'On track' || r.status === 'Close').sort((a, b) => b.now - a.now).slice(0, 4);
+  const tops = rows.filter((r) => r.status === 'On track' || r.status === 'Building' || r.status === 'Close').sort((a, b) => b.now - a.now).slice(0, 4);
   const slow = rows.filter((r) => r.pre >= 25 && (r.status === 'Long shot' || r.status === 'Unlikely' || r.status === 'Yet to debut')).sort((a, b) => b.pre - a.pre).slice(0, 4);
   const years = D.past.years.slice().reverse().map((y) => ({ value: String(y), label: `${y} draft` }));
 
@@ -369,6 +369,8 @@ function PastView({ year }: { year: number }) {
           <b> Now</b> is his chance of ever having a {D.meta.hitBar}+ season, and nothing else: a solid 75 player is not “close”. Once he has 10+ AFL games it comes from
           the 25 players drafted 2016–2021 who looked most like him at the same stage (average, latest season, how many games he actually plays, how often he goes 100+,
           centre bounces, time stuck in the 2s, role and age) and how many of them got there. Bands: <b>On track</b> 50%+, <b>Close</b> 30–50%, <b>Long shot</b> 10–30%, <b>Unlikely</b> under 10%.
+          <b> Building</b> is a midfielder by trade who is a regular and having real impact (AFL Player Ratings in the top quarter for his stage)
+          but is being used on a wing, half-back or forward, so the fantasy scores haven’t come yet. Comparables are matched on where he actually plays (heatmap zones and starting positions), not just his numbers.
           Small samples are discounted, so 79 from 6 games counts for a lot less than 79 from 22.
         </p>
       </section>
@@ -394,7 +396,7 @@ function PastView({ year }: { year: number }) {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 20px', fontSize: 13 }}>
           <span>Crystal ball expected <b>{expected.toFixed(1)}</b> stars from this draft</span>
-          {(['Star', 'On track', 'Close', 'Long shot', 'Unlikely', 'Yet to debut'] as const).map((s) => (
+          {(['Star', 'On track', 'Building', 'Close', 'Long shot', 'Unlikely', 'Yet to debut'] as const).map((s) => (
             <span key={s}><span className="pill" style={{ background: STATUS[s].bg, color: STATUS[s].fg }}>{s}</span> {count(s)}</span>
           ))}
         </div>

@@ -61,6 +61,19 @@ def afl_seasons(pid, year, n):
         out.append((k, g, f('FP'), f('timeOnGroundPercentage'), f('pointsPerMinute'), int(f('gm100')), f('centreBounceAttendancePercentage')))
     return out
 
+def rnd(x):
+    r = str(x.get('round') or '0')
+    return int(r) if r.isdigit() else 30   # finals (EF, QF, SF, PF, GF) count as late season
+
+def stuck_late(pid, year, season):
+    """Share of his second-half games (round 12 on) spent in the state league in that season. None if no game logs."""
+    r = dfs_rec(pid)
+    G = [x for x in (r or {}).get('combinedGames', []) if int(x.get('year') or 0) == year + season and rnd(x) >= 12]
+    if not G: return None
+    st = sum(1 for x in G if (x.get('league') or '').lower() in STATE)
+    afl = sum(1 for x in G if x.get('league') == 'AFL')
+    return (st / (st + afl) if st + afl else 0), st, afl
+
 def state_games(pid, year, season):
     r = dfs_rec(pid)
     return sum(int(c.get('gms') or 0) for c in (r or {}).get('career', [])
@@ -68,6 +81,30 @@ def state_games(pid, year, season):
 
 K = 8  # shrink small samples toward a 55 average: 79 from 6 games reads like ~69, 79 from 22 games stays ~73+
 def shrunk(g, fp): return (g * fp + K * 55) / (g + K)
+
+# Game-level detail (from 2017): heatmap zones, starting position, AFL Player Ratings, round.
+POS = {'back': {'FB', 'BPL', 'BPR', 'HBFL', 'HBFR', 'CHB'}, 'wing': {'WL', 'WR'}, 'mid': {'C', 'R', 'RR'},
+       'fwd': {'FF', 'FPL', 'FPR', 'HFFL', 'HFFR', 'CHF'}, 'ruck': {'RK'}}
+_gx = {}
+def game_extra(pid, year, n):
+    """Where he plays, how much impact he has and whether he's picked late in the year, over his latest two seasons."""
+    key = (pid, year, n)
+    if key in _gx: return _gx[key]
+    r = dfs_rec(pid)
+    A = [x for x in (r or {}).get('combinedGames', []) if x.get('league') == 'AFL' and 1 <= int(x['year']) - year <= n]
+    if not A: _gx[key] = None; return None
+    R2 = [x for x in A if int(x['year']) - year >= n - 1] or A
+    L = [x for x in A if int(x['year']) - year == n]
+    f = lambda x, k: float(x.get(k) or 0)
+    z = np.array([sum(f(x, k) for x in R2) for k in ('defensive50', 'defensiveMidfield', 'attackingMidfield', 'attacking50')])
+    z = z / max(z.sum(), 1)
+    sp = {p: sum(1 for x in R2 if x.get('startingPosition') in S) / len(R2) for p, S in POS.items()}
+    rp = [f(x, 'ratingPoints') * 100 / max(f(x, 'timeOnGroundPercentage'), 40) for x in R2]
+    out = {'z': z, 'sp': sp, 'rp': (sum(rp) + 6 * 6) / (len(rp) + 6), 'rp_raw': sum(rp) / len(rp),
+           'late': min(1, sum(1 for x in L if rnd(x) >= 15) / 9) if L else 0,
+           'ho': float(np.mean([f(x, 'hitouts') for x in R2]))}
+    _gx[key] = out
+    return out
 
 def features(pid, year, n, pre_p, role):
     """Everything known by the end of season n. Returns (vector, facts for the reasons line)."""
@@ -83,6 +120,8 @@ def features(pid, year, n, pre_p, role):
     ppm = max((r[4] for r in rows if r[1] >= 5), default=None)
     st = state_games(pid, year, n)
     stuck = st / (st + (last[0][1] if last else 0)) if st else 0
+    sl = stuck_late(pid, year, n)
+    if sl is not None: stuck = sl[0]
     cba = max((r[6] for r in rows if r[1] >= 5), default=0)
     x = [logit(pre_p),
          (best - 70) / 10 if best else -1.5,
@@ -93,6 +132,8 @@ def features(pid, year, n, pre_p, role):
          stuck * 2,
          (cba - 30) / 20,
          1 if role == 'Key position' else 0, 1 if role == 'Small forward' else 0, 1 if role == 'Ruck' else 0]
+    ge = game_extra(pid, year, n)
+    x.append((ge['late'] if ge else 0) * 2)
     facts = {'games': games, 'avail': avail, 'g100': g100, 'stuck': stuck, 'st': st, 'last_g': last[0][1] if last else 0,
              'best': best, 'ppm': ppm, 'tog': max((r[3] for r in rows if r[1] >= 5), default=None)}
     return x, facts
@@ -147,7 +188,7 @@ for n in range(1, 6):
 #     who looked most like him: best average, latest season, games played, 100+ rate, centre bounces, time in the 2s.
 #     His chance = how many of them went on to a 90+ season, smoothed toward the 10% base rate, then calibrated by stage.
 def role_group(role): return 'ruck' if role == 'Ruck' else 'tall' if role in ('Key position', 'Tall utility') else 'mid'
-def comp_vec(d_id, year, n, role, h, dob=None):
+def comp_vec(d_id, year, n, role, h, dob=None, pp=0.1):
     rows = afl_seasons(d_id, year, n)
     games = sum(r[1] for r in rows)
     raw = max([a for (y, g, a) in (h or []) if g >= 8 and y - year <= n], default=None)
@@ -158,22 +199,35 @@ def comp_vec(d_id, year, n, role, h, dob=None):
     st = state_games(d_id, year, n)
     lg = [r for r in rows if r[0] == n]
     stuck = st / (st + (lg[0][1] if lg else 0)) if st else 0
-    rg = role_group(role)
-    return games, np.array([(raw or 55) / 8, lastraw / 8, games / (22 * n) * 3, g100 / max(1, games) * 8, (cba - 30) / 20 * 0.6, stuck * 2,
-                            3 if rg == 'ruck' else 0, 1.5 if rg == 'tall' else 0,
-                            max(0, (year - int(dob[:4]) if dob else 18) + n - 21) * 0.8])   # age this season, beyond 21
+    sl = stuck_late(d_id, year, n)
+    if sl is not None: stuck = sl[0]
+    v = [(raw or 55) / 8, lastraw / 8, games / (22 * n) * 3, g100 / max(1, games) * 8, (cba - 30) / 20 * 0.6, stuck * 2,
+         max(0, (year - int(dob[:4]) if dob else 18) + n - 21) * 0.8]   # age this season, beyond 21
+    e = game_extra(d_id, year, n)
+    if e is None: return games, None
+    early = n <= 2
+    zw = 2 if early else 3                                   # where he plays: heatmap zones + starting spots
+    v += list(e['z'] * zw) + [e['sp']['wing'] * zw * 0.5, e['sp']['back'] * zw * 0.5, e['sp']['fwd'] * zw * 0.5, min(e['ho'], 25) / 8]
+    if early:                                                # first two years: impact, late-season trust and pedigree tell most
+        v += [(e['rp'] - 6) / 2, e['late'], math.log(pp / (1 - pp)) * 0.8]
+    return games, np.array(v)
 pool = {}
 for n in range(1, 6):
     pool[n] = []
     for d in H:
         if not (2016 <= d['y'] <= 2021) or made_by(d, n): continue
-        gm, v = comp_vec(d.get('id'), d['y'], n, role_for(d), d.get('h'), d.get('dob'))
-        if gm >= 10: pool[n].append((d, v, outcome(d)))
+        gm, v = comp_vec(d.get('id'), d['y'], n, role_for(d), d.get('h'), d.get('dob'), hist_pre[(d['y'], d['n'])])
+        if gm >= 10 and v is not None: pool[n].append((d, v, outcome(d)))
 def knn(v, n, excl_year=None, k=25):
     P = [p for p in pool[n] if p[0]['y'] != excl_year]
     ds = np.array([np.linalg.norm(p[1] - v) for p in P]); idx = np.argsort(ds)[:k]
     w = 1 / (0.5 + ds[idx]); y = np.array([P[i][2] for i in idx])
     return (np.sum(w * y) + 0.1 * 2) / (np.sum(w) + 2), [(P[i][0]['n'], P[i][2]) for i in idx]
+# Impact benchmark: AFL Player Ratings per full game for regulars at each stage (history pool)
+rp_pool = {n: sorted(game_extra(d.get('id'), d['y'], n)['rp_raw'] for d, _, _ in pool[n]) for n in pool}
+def rp_pct(x, n):
+    xs = rp_pool[min(n, 5)]
+    return sum(1 for v in xs if v <= x) / len(xs)
 cal = {}
 for n in range(1, 6):
     raw_p = np.array([knn(v, n, excl_year=d['y'])[0] for d, v, _ in pool[n]]); ys = np.array([y for _, _, y in pool[n]])
@@ -202,10 +256,10 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
     ref = path.get(min(n_now, 5))
     track = round(fx['best'] / ref * 100) if (fx['best'] and ref) else None
     model_p = float(upd[nn].predict_proba([x])[0, 1])
-    gm_c, cv = comp_vec(d.get('id'), d['y'], nn, role, h, d.get('dob'))
+    gm_c, cv = comp_vec(d.get('id'), d['y'], nn, role, h, d.get('dob'), pc)
     like = []
     if hit: now = 1.0
-    elif gm_c >= 10:
+    elif gm_c >= 10 and cv is not None:
         cp, cl = comp_chance(cv, nn, d['y'])
         w = min(1.0, gm_c / 30)                     # lean on comparables once there's a real sample
         now = w * cp + (1 - w) * model_p
@@ -225,11 +279,28 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
         if games >= 20 and fx['g100'] <= max(1, games // 20): why.append(f"Rarely goes big: {fx['g100']} of {games} games at 100+")
         if fx['ppm'] and fx['ppm'] >= 1.05 and fx['avail'] >= 0.5: why.append(f"Scores {fx['ppm']:.2f} a minute, star rate if the minutes come")
         if fx['g100'] >= 4 and games and fx['g100'] / games >= 0.15: why.append(f"Has the ceiling: {fx['g100']} games of 100+")
+    # Building: genuine impact and a regular spot, but used in a role that doesn't pay in fantasy (wing, half-back, forward)
+    ge = game_extra(d.get('id'), d['y'], nn)
+    building, role_note = False, None
+    if ge and not hit:
+        sp = ge['sp']; off = sp['wing'] + sp['back'] + sp['fwd']
+        last_cba = cbs_last = cba_by_season(d.get('id'), d['y']).get(nn, 0)
+        pctl = rp_pct(ge['rp_raw'], nn)
+        where = max(('wing', 'back', 'fwd'), key=lambda k: sp[k])
+        label = {'wing': 'a wing', 'back': 'half-back / defence', 'fwd': 'forward'}[where]
+        if off >= 0.4 and last_cba < 30: role_note = f"Mostly starts {('on ' if where == 'wing' else 'at ') + label} ({round(sp[where] * 100)}% of starts), {round(last_cba)}% centre bounces"
+        last_g = fx['last_g']
+        drafted_mid = role in ('Midfielder', 'Unknown', 'Tall utility') and sp['fwd'] < 0.6
+        if pctl >= 0.75 and last_g >= 12 and role_note and drafted_mid and (fx['best'] or 0) < 85 and n_now <= 4 and not (d.get('dob') and d['y'] - int(d['dob'][:4]) >= 21):
+            building = True
+            why.insert(0, f"Impact well ahead of his scoring: {ge['rp_raw']:.1f} rating points a game (better than {round(pctl * 100)}% of players at his stage)")
+        if role_note: why.append(role_note)
     # Status = chance of ever having a 90+ season
     if hit: status = 'Star'
     elif games == 0 and n_now <= 2: status = 'Yet to debut'
     elif n_now <= 1 and games < 5: status = 'Too early'
     elif now >= 0.5: status = 'On track'
+    elif building and now >= 0.15: status = 'Building'
     elif now >= 0.3: status = 'Close'
     elif now >= 0.1: status = 'Long shot'
     else: status = 'Unlikely'
@@ -249,7 +320,7 @@ sur.sort(key=lambda r: -((r['best'] or 0) - 70) / max(r['pre'], 3))
 for r in sur[:12]: print('surprise', r['year'], r['pick'], r['name'], r['pre'], r['status'], r['best'], r['track'])
 for yr in YEARS:
     rs = [r for r in past if r['year'] == yr]
-    print(yr, {s: sum(1 for r in rs if r['status'] == s) for s in ['Star', 'On track', 'Close', 'Long shot', 'Unlikely', 'Yet to debut', 'Too early']})
+    print(yr, {s: sum(1 for r in rs if r['status'] == s) for s in ['Star', 'On track', 'Building', 'Close', 'Long shot', 'Unlikely', 'Yet to debut', 'Too early']})
 
 brk = []
 for r in past:

@@ -278,3 +278,4 @@ tr.cb-row-star td, tr.cb-row-star td *:not(.pill) { color: #fff !important; }
 tr.cb-row-star .pill { box-shadow: 0 0 0 1px rgb(255 255 255 / .5); }
 tr.cb-row-track > td { background: #bfe0b0; }
 tr.cb-row-close > td { background: #e3f2dc; }
+tr.cb-row-building > td { background: #dcebf2; }

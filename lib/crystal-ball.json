@@ -4379,7 +4379,7 @@
     "club": "WBD",
     "pre": 30.3,
     "positionOnly": 43.2,
-    "now": 15.1,
+    "now": 26.3,
     "games": 51,
     "current": {
      "games": 6,
@@ -4390,15 +4390,16 @@
     "track": 82,
     "status": "Long shot",
     "why": [
-     "Plays 46% of games (51 from 110 available)"
+     "Plays 46% of games (51 from 110 available)",
+     "Mostly starts at forward (100% of starts), 11% centre bounces"
     ],
     "like": [
-     "Patrick Lipinski",
+     "Izak Rankine*",
      "Jack Lukosius",
      "Liam Henry",
-     "Xavier Duursma",
-     "Elijah Hollands",
-     "Zach Reid"
+     "Jaidyn Stephenson",
+     "Jack Higgins",
+     "Patrick Lipinski"
     ],
     "traits": [
      "Aerial / marking",
@@ -4612,7 +4613,7 @@
     "club": "GCS",
     "pre": 17.1,
     "positionOnly": 27.5,
-    "now": 30.1,
+    "now": 20.1,
     "games": 88,
     "current": {
      "games": 23,
@@ -4621,17 +4622,18 @@
     "best": 67.7,
     "peak": 72.2,
     "track": 76,
-    "status": "Close",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 4 of 88 games at 100+"
+     "Rarely goes big: 4 of 88 games at 100+",
+     "Mostly starts at half-back / defence (100% of starts), 6% centre bounces"
     ],
     "like": [
-     "Riley Thilthorpe",
-     "Luke Jackson*",
-     "Tristan Xerri*",
-     "Bailey Williams",
-     "Shannon Neale",
-     "Tim English*"
+     "Ed Richards*",
+     "Isaac Quaynor",
+     "Nick Blakey",
+     "Miles Bergman",
+     "Sam Taylor",
+     "Liam Stocker"
     ],
     "traits": [
      "Athleticism",
@@ -4707,7 +4709,7 @@
     "club": "ADE",
     "pre": 24.3,
     "positionOnly": 24.8,
-    "now": 25.7,
+    "now": 35.8,
     "games": 95,
     "current": {
      "games": 25,
@@ -4716,15 +4718,17 @@
     "best": 67.2,
     "peak": 71.9,
     "track": 75,
-    "status": "Long shot",
-    "why": [],
+    "status": "Close",
+    "why": [
+     "Mostly starts at forward (49% of starts), 21% centre bounces"
+    ],
     "like": [
      "Zac Bailey*",
-     "Nick Blakey",
-     "Justin McInerney",
-     "Ed Richards*",
-     "Isaac Quaynor",
-     "Ben Ainsworth"
+     "Ben Ainsworth",
+     "Kysaiah Pickett*",
+     "Brandan Parfitt",
+     "Aaron Naughton",
+     "Izak Rankine*"
     ],
     "traits": [
      "Athleticism",
@@ -4802,7 +4806,7 @@
     "club": "HAW",
     "pre": 41.1,
     "positionOnly": 22.7,
-    "now": 30.6,
+    "now": 33.6,
     "games": 92,
     "current": {
      "games": 25,
@@ -4818,8 +4822,8 @@
      "James Rowbottom",
      "Tom Powell",
      "Adam Cerra*",
-     "Trent Rivers",
-     "Tarryn Thomas"
+     "Tarryn Thomas",
+     "Jack Graham"
     ],
     "traits": [
      "Consistency",
@@ -4905,7 +4909,7 @@
     "club": "FRE",
     "pre": 1.3,
     "positionOnly": 21.0,
-    "now": 4.7,
+    "now": 7.5,
     "games": 97,
     "current": {
      "games": 26,
@@ -4916,15 +4920,16 @@
     "track": 64,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 1 of 97 games at 100+"
+     "Rarely goes big: 1 of 97 games at 100+",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [
-     "Charlie Ballard",
+     "Cody Weightman",
      "Max King",
      "Jamarra Ugle-Hagan",
-     "Todd Marshall",
-     "Sam De Koning",
-     "Nick Larkey"
+     "Will Hayward",
+     "Darcy Fogarty",
+     "Mitch Georgiades"
     ],
     "traits": [
      "Aerial / marking",
@@ -4989,7 +4994,7 @@
     "club": "RIC",
     "pre": 0.7,
     "positionOnly": 19.5,
-    "now": 1.4,
+    "now": 1.1,
     "games": 22,
     "current": {
      "games": 1,
@@ -5001,15 +5006,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 20% of games (22 from 110 available)",
-     "Rarely goes big: 0 of 22 games at 100+"
+     "Rarely goes big: 0 of 22 games at 100+",
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [
-     "Denver Grainger-Barras",
-     "Ollie Lord",
+     "Aiden Bonar",
+     "Atu Bosenavulagi",
+     "Nathan Murphy",
+     "Kyron Hayden",
      "Brayden Cook",
-     "Will Hamill",
-     "Jack Carroll",
-     "Hugh Dixon"
+     "Will Hamill"
     ],
     "traits": [
      "Aerial / marking",
@@ -5087,7 +5093,7 @@
     "club": "FRE",
     "pre": 9.3,
     "positionOnly": 18.3,
-    "now": 19.7,
+    "now": 23.7,
     "games": 65,
     "current": {
      "games": 27,
@@ -5102,11 +5108,11 @@
     ],
     "like": [
      "Chayce Jones",
-     "Tom Sparrow*",
-     "Connor Idun",
-     "Justin McInerney",
      "Ryan Byrnes",
-     "Josh Daicos*"
+     "Josh Daicos*",
+     "Tom Sparrow*",
+     "Justin McInerney",
+     "Kane Farrell"
     ],
     "traits": [
      "Accumulator",
@@ -5277,7 +5283,7 @@
     "club": "PTA",
     "pre": 19.0,
     "positionOnly": 16.3,
-    "now": 1.2,
+    "now": 1.0,
     "games": 30,
     "current": null,
     "best": 53.4,
@@ -5286,15 +5292,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 27% of games (30 from 110 available)",
-     "Rarely goes big: 0 of 30 games at 100+"
+     "Rarely goes big: 0 of 30 games at 100+",
+     "Mostly starts at half-back / defence (70% of starts), 0% centre bounces"
     ],
     "like": [
-     "Daniel Venables",
      "Nathan Murphy",
-     "Luke Edwards",
-     "Myles Poholke",
-     "Sam Sturt",
-     "Francis Evans"
+     "Harrison Petty",
+     "Aiden Bonar",
+     "Lachie Jones",
+     "Ryan Garthwaite",
+     "Cedric Cox"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -5373,7 +5380,7 @@
     "club": "ESS",
     "pre": 23.3,
     "positionOnly": 15.5,
-    "now": 21.5,
+    "now": 16.5,
     "games": 64,
     "current": null,
     "best": 69.9,
@@ -5386,11 +5393,11 @@
     ],
     "like": [
      "Jackson Hately",
-     "Harry Schoenberg",
      "Elijah Hollands",
+     "Harry Schoenberg",
+     "Patrick Lipinski",
      "Lachie Fogarty",
-     "Jack Ross",
-     "Ryan Angwin"
+     "Will Phillips"
     ],
     "traits": [
      "Accumulator",
@@ -5491,7 +5498,7 @@
     "club": "WCE",
     "pre": 24.8,
     "positionOnly": 14.8,
-    "now": 1.3,
+    "now": 1.1,
     "games": 39,
     "current": {
      "games": 3,
@@ -5510,9 +5517,9 @@
      "Brayden Cook",
      "Charlie Lazzaro",
      "Mitch Crowden",
+     "Finlay Macrae",
      "Jack Carroll",
-     "Will Hamill",
-     "Finlay Macrae"
+     "Tyler Brown"
     ],
     "traits": [
      "Engine / work rate",
@@ -5601,7 +5608,7 @@
     "club": "GWS",
     "pre": 0.6,
     "positionOnly": 14.2,
-    "now": 2.0,
+    "now": 1.4,
     "games": 32,
     "current": {
      "games": 7,
@@ -5616,12 +5623,12 @@
      "Rarely goes big: 0 of 32 games at 100+"
     ],
     "like": [
+     "Ben Long",
      "Lewis Young",
+     "Laitham Vandermeer",
      "Brandon Zerk-Thatcher",
-     "Jacob Koschitzke",
-     "Hugh Dixon",
-     "Esava Ratugolea",
-     "Harrison Petty"
+     "Ben Miller",
+     "Quinton Narkle"
     ],
     "traits": [
      "Aerial / marking",
@@ -5720,7 +5727,7 @@
     "club": "BRL",
     "pre": 24.8,
     "positionOnly": 13.6,
-    "now": 34.2,
+    "now": 38.6,
     "games": 110,
     "current": {
      "games": 27,
@@ -5730,14 +5737,16 @@
     "peak": 80.6,
     "track": 84,
     "status": "Close",
-    "why": [],
+    "why": [
+     "Mostly starts at half-back / defence (67% of starts), 0% centre bounces"
+    ],
     "like": [
      "Jack Bowes",
      "Trent Rivers",
-     "Jordan Clark*",
      "Lachlan Ash*",
-     "Jack Graham",
-     "Bailey Scott"
+     "Jordan Clark*",
+     "Jake Bowey+*",
+     "Harry Perryman"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -5801,7 +5810,7 @@
     "club": "RIC",
     "pre": 11.2,
     "positionOnly": 13.0,
-    "now": 1.1,
+    "now": 0.9,
     "games": 60,
     "current": {
      "games": 18,
@@ -5812,15 +5821,16 @@
     "track": 63,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 60 games at 100+"
+     "Rarely goes big: 0 of 60 games at 100+",
+     "Mostly starts at half-back / defence (41% of starts), 0% centre bounces"
     ],
     "like": [
-     "Bobby Hill",
-     "Darcy Fogarty",
-     "Cody Weightman",
-     "Hugo Ralphsmith",
-     "Jackson Mead",
-     "Charlie Spargo"
+     "Noah Balta",
+     "Nick Coffield",
+     "Ben Paton",
+     "Brandon Starcevich",
+     "Jack Payne",
+     "Hugo Ralphsmith"
     ],
     "traits": [
      "Athleticism",
@@ -5890,7 +5900,7 @@
     "club": "SYD",
     "pre": 10.6,
     "positionOnly": 12.6,
-    "now": 15.5,
+    "now": 22.0,
     "games": 48,
     "current": {
      "games": 20,
@@ -5906,11 +5916,11 @@
     ],
     "like": [
      "Tom Sparrow*",
-     "Jack Ross",
-     "Josh Daicos*",
-     "Chayce Jones",
+     "Will Setterfield*",
      "Tanner Bruhn",
-     "Will Setterfield*"
+     "Josh Daicos*",
+     "Harry Schoenberg",
+     "Jack Ross"
     ],
     "traits": [
      "Consistency",
@@ -6011,7 +6021,7 @@
     "club": "MEL",
     "pre": 0.3,
     "positionOnly": 12.1,
-    "now": 8.4,
+    "now": 9.9,
     "games": 79,
     "current": {
      "games": 22,
@@ -6021,14 +6031,16 @@
     "peak": 63.5,
     "track": 69,
     "status": "Unlikely",
-    "why": [],
+    "why": [
+     "Mostly starts at forward (92% of starts), 6% centre bounces"
+    ],
     "like": [
-     "Sam Taylor",
-     "Max King",
-     "Charlie Ballard",
-     "Aaron Naughton",
+     "Will Hayward",
+     "Cody Weightman",
+     "Mitch Georgiades",
      "Cameron Rayner",
-     "Sam De Koning"
+     "Kysaiah Pickett*",
+     "Jack Higgins"
     ],
     "traits": [
      "Aerial / marking",
@@ -6108,7 +6120,7 @@
     "club": "BRL",
     "pre": 3.0,
     "positionOnly": 11.7,
-    "now": 8.6,
+    "now": 23.3,
     "games": 80,
     "current": {
      "games": 27,
@@ -6117,17 +6129,18 @@
     "best": 64.5,
     "peak": 67.3,
     "track": 72,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 2 of 80 games at 100+"
+     "Rarely goes big: 2 of 80 games at 100+",
+     "Mostly starts at forward (62% of starts), 0% centre bounces"
     ],
     "like": [
-     "Connor Idun",
-     "Isaac Quaynor",
      "Ben Ainsworth",
-     "Justin McInerney",
-     "Harry Morrison",
-     "Jake Waterman"
+     "Mitch Georgiades",
+     "Aaron Naughton",
+     "Jack Higgins",
+     "Gryan Miers*",
+     "Will Hayward"
     ],
     "traits": [
      "Aerial / marking",
@@ -6212,7 +6225,7 @@
     "club": "FRE",
     "pre": 12.7,
     "positionOnly": 11.3,
-    "now": 16.1,
+    "now": 18.7,
     "games": 81,
     "current": {
      "games": 26,
@@ -6226,12 +6239,12 @@
      "Rarely goes big: 3 of 81 games at 100+"
     ],
     "like": [
-     "Sam Taylor",
-     "Aaron Naughton",
      "Chayce Jones",
-     "Tom Sparrow*",
-     "Heath Chapman",
-     "Kysaiah Pickett*"
+     "Jack Ross",
+     "Ryan Byrnes",
+     "Josh Daicos*",
+     "Oliver Florent",
+     "Justin McInerney"
     ],
     "traits": [
      "Clean hands",
@@ -6313,7 +6326,7 @@
     "club": "NTH",
     "pre": 4.0,
     "positionOnly": 11.0,
-    "now": 1.5,
+    "now": 1.3,
     "games": 18,
     "current": {
      "games": 6,
@@ -6325,15 +6338,15 @@
     "status": "Unlikely",
     "why": [
      "Plays 16% of games (18 from 110 available)",
-     "Stuck in the seconds: 7 state-league games v 6 AFL in 2026"
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [
      "Jack Payne",
      "Brandon Zerk-Thatcher",
-     "Jarrod Brander",
-     "Jacob Allison",
-     "Jacob Koschitzke",
-     "Nick Larkey"
+     "Luke Foley",
+     "Seamus Mitchell",
+     "Charlie Comben",
+     "Nick Coffield"
     ],
     "traits": [
      "Aerial / marking",
@@ -6423,7 +6436,7 @@
     "club": "HAW",
     "pre": 12.6,
     "positionOnly": 10.7,
-    "now": 4.6,
+    "now": 0.9,
     "games": 33,
     "current": {
      "games": 8,
@@ -6439,12 +6452,12 @@
      "Rarely goes big: 1 of 33 games at 100+"
     ],
     "like": [
+     "Jarrod Brander",
      "Riley Garcia",
+     "Deven Robertson",
      "Patrick Naish",
-     "Nathan O'Driscoll",
-     "Charlie Comben",
-     "Dylan Clarke",
-     "Seamus Mitchell"
+     "Lachie Fogarty",
+     "Dylan Clarke"
     ],
     "traits": [
      "Athleticism",
@@ -6550,7 +6563,7 @@
     "club": "GEE",
     "pre": 8.1,
     "positionOnly": 10.3,
-    "now": 16.1,
+    "now": 17.1,
     "games": 6,
     "current": null,
     "best": 62.8,
@@ -6637,7 +6650,7 @@
     "club": "GEE",
     "pre": 5.9,
     "positionOnly": 10.1,
-    "now": 1.5,
+    "now": 1.0,
     "games": 23,
     "current": {
      "games": 2,
@@ -6653,12 +6666,12 @@
      "Rarely goes big: 1 of 23 games at 100+"
     ],
     "like": [
-     "Jacob Allison",
-     "Jacob Koschitzke",
-     "Lewis Young",
-     "Hugh Dixon",
-     "Esava Ratugolea",
-     "Bailey Laurie"
+     "Bailey Laurie",
+     "Jack Mahony",
+     "Brad Scheer",
+     "Ed Phillips",
+     "Josh Morris",
+     "Jordan Gallucci"
     ],
     "traits": [
      "Accumulator",
@@ -6763,7 +6776,7 @@
     "club": "HAW",
     "pre": 48.3,
     "positionOnly": 9.8,
-    "now": 32.6,
+    "now": 34.4,
     "games": 114,
     "current": {
      "games": 25,
@@ -6775,12 +6788,12 @@
     "status": "Close",
     "why": [],
     "like": [
-     "Trent Rivers",
-     "Lachlan Ash*",
-     "Tom Powell",
-     "James Rowbottom",
      "Jack Graham",
-     "Adam Cerra*"
+     "James Rowbottom",
+     "Tom Powell",
+     "Adam Cerra*",
+     "Andrew McGrath",
+     "Trent Rivers"
     ],
     "traits": [
      "Accumulator",
@@ -6857,7 +6870,7 @@
     "club": "CAR",
     "pre": 3.9,
     "positionOnly": 9.5,
-    "now": 1.3,
+    "now": 0.9,
     "games": 63,
     "current": null,
     "best": 51.9,
@@ -6865,15 +6878,16 @@
     "track": 58,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 63 games at 100+"
+     "Rarely goes big: 0 of 63 games at 100+",
+     "Mostly starts at forward (61% of starts), 0% centre bounces"
     ],
     "like": [
      "Corey Durdin",
+     "Maurice Rioli Jr.",
      "Ned McHenry",
      "Tyler Brockman",
-     "Lachie Jones",
-     "Maurice Rioli Jr.",
-     "Luke Edwards"
+     "Esava Ratugolea",
+     "Ben King"
     ],
     "traits": [
      "Clean hands",
@@ -6955,7 +6969,7 @@
     "club": "RIC",
     "pre": 8.4,
     "positionOnly": 9.3,
-    "now": 4.9,
+    "now": 7.9,
     "games": 55,
     "current": {
      "games": 15,
@@ -6966,15 +6980,16 @@
     "track": 66,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 1 of 55 games at 100+"
+     "Rarely goes big: 1 of 55 games at 100+",
+     "Mostly starts at forward (26% of starts), 0% centre bounces"
     ],
     "like": [
-     "Nathan O'Driscoll",
      "Curtis Taylor",
-     "Charlie Comben",
-     "Darcy Fogarty",
      "Riley Garcia",
-     "Mitch Georgiades"
+     "Nathan O'Driscoll",
+     "Jackson Mead",
+     "Josh Battle",
+     "Ryan Byrnes"
     ],
     "traits": [
      "Clean hands",
@@ -7081,7 +7096,7 @@
     "club": "RIC",
     "pre": 20.6,
     "positionOnly": 9.1,
-    "now": 4.7,
+    "now": 4.0,
     "games": 61,
     "current": {
      "games": 18,
@@ -7091,14 +7106,16 @@
     "peak": 79.5,
     "track": 82,
     "status": "Unlikely",
-    "why": [],
+    "why": [
+     "Mostly starts at half-back / defence (70% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Liam Henry",
      "Hunter Clark",
      "Wil Powell",
-     "Xavier Duursma",
      "Sam Petrevski-Seton",
-     "Patrick Lipinski"
+     "Heath Chapman",
+     "Liam Henry",
+     "Xavier Duursma"
     ],
     "traits": [
      "Athleticism",
@@ -7179,7 +7196,7 @@
     "club": "RIC",
     "pre": 12.9,
     "positionOnly": 8.9,
-    "now": 1.2,
+    "now": 1.0,
     "games": 20,
     "current": {
      "games": 3,
@@ -7191,15 +7208,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 18% of games (20 from 110 available)",
-     "Rarely goes big: 0 of 20 games at 100+"
+     "Rarely goes big: 0 of 20 games at 100+",
+     "Mostly starts on a wing (67% of starts), 0% centre bounces"
     ],
     "like": [
      "Brayden Cook",
      "Jack Carroll",
-     "Aiden Bonar",
-     "Will Hamill",
-     "Francis Evans",
-     "Brayden Ainsworth"
+     "Cameron Polson",
+     "Tyler Brown",
+     "Charlie Lazzaro",
+     "Harry Sharp"
     ],
     "traits": [
      "Clean hands",
@@ -7296,7 +7314,7 @@
     "club": "WCE",
     "pre": 6.0,
     "positionOnly": 8.7,
-    "now": 15.2,
+    "now": 12.6,
     "games": 98,
     "current": {
      "games": 23,
@@ -7307,15 +7325,16 @@
     "track": 69,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 4 of 98 games at 100+"
+     "Rarely goes big: 4 of 98 games at 100+",
+     "Mostly starts at half-back / defence (49% of starts), 12% centre bounces"
     ],
     "like": [
      "Archie Perkins",
-     "Cameron Rayner",
-     "Zac Fisher",
      "Braeden Campbell",
-     "Brent Daniels",
-     "Callum Brown"
+     "Cameron Rayner",
+     "Charlie Ballard",
+     "Tanner Bruhn",
+     "Sam De Koning"
     ],
     "traits": [],
     "jFP": null,
@@ -7376,7 +7395,7 @@
     "club": "GEE",
     "pre": 8.6,
     "positionOnly": 8.5,
-    "now": 1.9,
+    "now": 2.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -7448,7 +7467,7 @@
     "club": "STK",
     "pre": 3.4,
     "positionOnly": 8.3,
-    "now": 15.4,
+    "now": 24.0,
     "games": 92,
     "current": {
      "games": 20,
@@ -7459,15 +7478,16 @@
     "track": 77,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 4 of 92 games at 100+"
+     "Rarely goes big: 4 of 92 games at 100+",
+     "Mostly starts at forward (92% of starts), 5% centre bounces"
     ],
     "like": [
-     "Aaron Naughton",
-     "Sam Taylor",
-     "Heath Chapman",
+     "Jack Higgins",
+     "Zac Fisher",
+     "Kysaiah Pickett*",
      "Sam Powell-Pepper",
-     "Sam Petrevski-Seton",
-     "Zac Fisher"
+     "Aaron Naughton",
+     "Ben Ainsworth"
     ],
     "traits": [
      "Aerial / marking",
@@ -7534,7 +7554,7 @@
     "club": "SYD",
     "pre": 39.0,
     "positionOnly": 8.1,
-    "now": 22.3,
+    "now": 17.8,
     "games": 69,
     "current": {
      "games": 21,
@@ -7544,14 +7564,16 @@
     "peak": 82.7,
     "track": 83,
     "status": "Long shot",
-    "why": [],
+    "why": [
+     "Mostly starts on a wing (56% of starts), 0% centre bounces"
+    ],
     "like": [
      "Xavier Duursma",
      "Patrick Lipinski",
-     "Jaidyn Stephenson",
+     "Jordan Clark*",
      "Keidean Coleman",
      "Sam Petrevski-Seton",
-     "Jordan Clark*"
+     "Miles Bergman"
     ],
     "traits": [
      "Accumulator",
@@ -7658,7 +7680,7 @@
     "club": "NTH",
     "pre": 11.5,
     "positionOnly": 8.0,
-    "now": 25.0,
+    "now": 25.9,
     "games": 98,
     "current": {
      "games": 20,
@@ -7669,15 +7691,16 @@
     "track": 74,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 2 of 98 games at 100+"
+     "Rarely goes big: 2 of 98 games at 100+",
+     "Mostly starts at forward (97% of starts), 7% centre bounces"
     ],
     "like": [
-     "Isaac Quaynor",
-     "Nick Blakey",
-     "Ed Richards*",
+     "Aaron Naughton",
+     "Kysaiah Pickett*",
      "Ben Ainsworth",
-     "Zac Bailey*",
-     "Miles Bergman"
+     "Izak Rankine*",
+     "Jack Higgins",
+     "Zac Bailey*"
     ],
     "traits": [
      "Clean hands",
@@ -7754,7 +7777,7 @@
     "club": "ADE",
     "pre": 11.3,
     "positionOnly": 7.8,
-    "now": 24.0,
+    "now": 27.9,
     "games": 107,
     "current": {
      "games": 22,
@@ -7771,7 +7794,7 @@
      "James Rowbottom",
      "Oliver Florent",
      "Sam Powell-Pepper",
-     "Jaidyn Stephenson"
+     "Tanner Bruhn"
     ],
     "traits": [
      "Accumulator",
@@ -7858,7 +7881,7 @@
     "club": "WCE",
     "pre": 0.4,
     "positionOnly": 7.7,
-    "now": 1.4,
+    "now": 0.9,
     "games": 41,
     "current": {
      "games": 14,
@@ -7870,15 +7893,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 37% of games (41 from 110 available)",
-     "Rarely goes big: 0 of 41 games at 100+"
+     "Rarely goes big: 0 of 41 games at 100+",
+     "Mostly starts at half-back / defence (90% of starts), 0% centre bounces"
     ],
     "like": [
      "Harrison Petty",
-     "Ben King",
-     "Esava Ratugolea",
-     "Jacob Koschitzke",
-     "Nick Larkey",
-     "Lewis Young"
+     "Griffin Logue",
+     "Tom Williamson",
+     "Nathan Murphy",
+     "Lachie Jones",
+     "Ben Long"
     ],
     "traits": [
      "Aerial / marking",
@@ -7973,7 +7997,7 @@
     "club": "NTH",
     "pre": 7.8,
     "positionOnly": 7.5,
-    "now": 1.1,
+    "now": 0.7,
     "games": 16,
     "current": null,
     "best": 49.2,
@@ -7982,15 +8006,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 15% of games (16 from 110 available)",
-     "Stuck in the seconds: 14 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 0 AFL in 2026",
+     "Mostly starts at half-back / defence (44% of starts), 0% centre bounces"
     ],
     "like": [
-     "Hugh Dixon",
+     "Flynn Perez",
      "Trey Ruscoe",
-     "Mitch Crowden",
+     "Will Hamill",
      "Brayden Cook",
-     "Charlie Lazzaro",
-     "Jacob Allison"
+     "Kyron Hayden",
+     "Charlie Lazzaro"
     ],
     "traits": [
      "Aerial / marking",
@@ -8082,7 +8107,7 @@
     "club": "MEL",
     "pre": 4.7,
     "positionOnly": 7.4,
-    "now": 1.4,
+    "now": 0.9,
     "games": 48,
     "current": {
      "games": 20,
@@ -8094,15 +8119,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 44% of games (48 from 110 available)",
-     "Rarely goes big: 0 of 48 games at 100+"
+     "Rarely goes big: 0 of 48 games at 100+",
+     "Mostly starts at half-back / defence (59% of starts), 0% centre bounces"
     ],
     "like": [
-     "Todd Marshall",
-     "Nick Larkey",
-     "Max King",
-     "Jamarra Ugle-Hagan",
-     "Sam De Koning",
-     "Jack Payne"
+     "Ben Paton",
+     "Nick Coffield",
+     "Brandon Starcevich",
+     "Jack Payne",
+     "Noah Balta",
+     "Charlie Comben"
     ],
     "traits": [
      "Aerial / marking",
@@ -8186,7 +8212,7 @@
     "club": "SYD",
     "pre": 6.0,
     "positionOnly": 7.3,
-    "now": 1.2,
+    "now": 0.8,
     "games": 28,
     "current": {
      "games": 5,
@@ -8203,11 +8229,11 @@
     ],
     "like": [
      "Mitch Crowden",
-     "Trey Ruscoe",
-     "Elliott Himmelberg",
-     "Flynn Perez",
-     "Tom Berry",
-     "Josh Begley"
+     "Brayden Cook",
+     "Jack Mahony",
+     "Charlie Lazzaro",
+     "Brayden Ham",
+     "Tom Berry"
     ],
     "traits": [
      "Engine / work rate",
@@ -8306,7 +8332,7 @@
     "club": "BRL",
     "pre": 3.8,
     "positionOnly": 7.1,
-    "now": 1.2,
+    "now": 1.0,
     "games": 22,
     "current": {
      "games": 11,
@@ -8321,12 +8347,12 @@
      "Rarely goes big: 0 of 22 games at 100+"
     ],
     "like": [
-     "Conor Stone",
      "Finn Maginness",
-     "Tom Williamson",
      "Xavier O'Halloran",
      "Hugo Ralphsmith",
-     "Rhylee West"
+     "Jaxon Prior",
+     "Tom Williamson",
+     "Tyler Brockman"
     ],
     "traits": [
      "Accumulator",
@@ -8438,7 +8464,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 6% of games (7 from 110 available)",
-     "Stuck in the seconds: 13 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 13 state-league games v 0 AFL in 2026",
+     "Mostly starts on a wing (29% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -8521,7 +8548,7 @@
     "club": "WBD",
     "pre": 12.6,
     "positionOnly": 6.9,
-    "now": 1.1,
+    "now": 0.7,
     "games": 38,
     "current": {
      "games": 20,
@@ -8533,15 +8560,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 35% of games (38 from 110 available)",
-     "Rarely goes big: 0 of 38 games at 100+"
+     "Rarely goes big: 0 of 38 games at 100+",
+     "Mostly starts at forward (58% of starts), 0% centre bounces"
     ],
     "like": [
-     "Hugo Ralphsmith",
-     "Xavier O'Halloran",
-     "Jackson Mead",
-     "Bobby Hill",
+     "Harrison Jones",
+     "Todd Marshall",
+     "Jack Petruccelle",
      "Darcy Fogarty",
-     "Jack Petruccelle"
+     "Rhylee West",
+     "Bobby Hill"
     ],
     "traits": [
      "Athleticism",
@@ -8638,7 +8666,7 @@
     "club": "ADE",
     "pre": 18.9,
     "positionOnly": 6.8,
-    "now": 1.2,
+    "now": 0.8,
     "games": 48,
     "current": {
      "games": 22,
@@ -8655,10 +8683,10 @@
     "like": [
      "Jackson Mead",
      "Xavier O'Halloran",
-     "Hugo Ralphsmith",
-     "Darcy Fogarty",
-     "Bobby Hill",
-     "Tyler Brockman"
+     "Jack Petruccelle",
+     "Tyler Brockman",
+     "Xavier O'Neill",
+     "Harrison Jones"
     ],
     "traits": [
      "Engine / work rate",
@@ -8742,7 +8770,7 @@
     "club": "COL",
     "pre": 6.1,
     "positionOnly": 6.7,
-    "now": 0.9,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -8816,7 +8844,7 @@
     "club": "ESS",
     "pre": 22.3,
     "positionOnly": 6.6,
-    "now": 1.2,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -8898,7 +8926,7 @@
     "club": "STK",
     "pre": 2.1,
     "positionOnly": 6.5,
-    "now": 28.0,
+    "now": 34.7,
     "games": 97,
     "current": {
      "games": 23,
@@ -8907,13 +8935,13 @@
     "best": 76.1,
     "peak": 83.5,
     "track": 85,
-    "status": "Long shot",
+    "status": "Close",
     "why": [],
     "like": [
      "Andrew McGrath",
+     "Adam Cerra*",
      "James Rowbottom",
      "Tom Powell",
-     "Adam Cerra*",
      "Trent Rivers",
      "Tarryn Thomas"
     ],
@@ -8992,7 +9020,7 @@
     "club": "GEE",
     "pre": 6.6,
     "positionOnly": 6.4,
-    "now": 1.8,
+    "now": 1.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -9038,7 +9066,7 @@
     "club": "COL",
     "pre": 26.1,
     "positionOnly": 6.3,
-    "now": 1.2,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -9120,7 +9148,7 @@
     "club": "ESS",
     "pre": 4.3,
     "positionOnly": 6.2,
-    "now": 1.6,
+    "now": 1.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -9168,7 +9196,7 @@
     "club": "STK",
     "pre": 1.0,
     "positionOnly": 6.1,
-    "now": 1.6,
+    "now": 0.9,
     "games": 21,
     "current": {
      "games": 13,
@@ -9180,15 +9208,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 19% of games (21 from 110 available)",
-     "Rarely goes big: 0 of 21 games at 100+"
+     "Rarely goes big: 0 of 21 games at 100+",
+     "Mostly starts at half-back / defence (52% of starts), 0% centre bounces"
     ],
     "like": [
-     "Ben Miller",
-     "Callum Jamieson",
-     "Brayden Crossley",
-     "Caleb Graham",
-     "Samson Ryan",
-     "Francis Evans"
+     "Kyron Hayden",
+     "Aiden Bonar",
+     "Nathan Murphy",
+     "Will Hamill",
+     "Brayden Cook",
+     "Ben Miller"
     ],
     "traits": [
      "Athleticism",
@@ -9284,7 +9313,7 @@
     "club": "COL",
     "pre": 12.5,
     "positionOnly": 6.0,
-    "now": 1.2,
+    "now": 0.9,
     "games": 28,
     "current": {
      "games": 12,
@@ -9296,14 +9325,15 @@
     "status": "Unlikely",
     "why": [
      "Plays 25% of games (28 from 110 available)",
-     "Rarely goes big: 0 of 28 games at 100+"
+     "Rarely goes big: 0 of 28 games at 100+",
+     "Mostly starts at forward (67% of starts), 0% centre bounces"
     ],
     "like": [
-     "Conor Stone",
-     "Finn Maginness",
      "Xavier O'Halloran",
-     "Hugo Ralphsmith",
-     "Tom Williamson",
+     "Harrison Jones",
+     "Jack Petruccelle",
+     "Todd Marshall",
+     "Tyler Brockman",
      "Rhylee West"
     ],
     "traits": [
@@ -9388,7 +9418,7 @@
     "club": "HAW",
     "pre": 1.8,
     "positionOnly": 6.0,
-    "now": 12.6,
+    "now": 13.6,
     "games": 33,
     "current": {
      "games": 24,
@@ -9399,15 +9429,16 @@
     "track": 76,
     "status": "Long shot",
     "why": [
-     "Plays 30% of games (33 from 110 available)"
+     "Plays 30% of games (33 from 110 available)",
+     "Mostly starts on a wing (92% of starts), 17% centre bounces"
     ],
     "like": [
-     "Zach Reid",
-     "Sam Taylor",
      "Jeremy Sharp",
-     "Josh Rotham",
      "Josh Daicos*",
-     "Elijah Hollands"
+     "Ryan Angwin",
+     "Jack Ross",
+     "Lachlan Sholl",
+     "Lochie O'Brien"
     ],
     "traits": [
      "Aerial / marking",
@@ -9496,7 +9527,7 @@
     "club": "FRE",
     "pre": 2.3,
     "positionOnly": 5.9,
-    "now": 2.1,
+    "now": 2.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -9628,7 +9659,7 @@
     "club": "PTA",
     "pre": 2.8,
     "positionOnly": 5.7,
-    "now": 1.8,
+    "now": 1.4,
     "games": 29,
     "current": {
      "games": 15,
@@ -9640,15 +9671,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 26% of games (29 from 110 available)",
-     "Rarely goes big: 0 of 29 games at 100+"
+     "Rarely goes big: 0 of 29 games at 100+",
+     "Mostly starts at forward (39% of starts), 26% centre bounces"
     ],
     "like": [
      "Esava Ratugolea",
      "Lewis Young",
-     "Jacob Koschitzke",
-     "Hugh Dixon",
-     "Harrison Petty",
-     "Thomson Dow"
+     "Callum Coleman-Jones",
+     "Myles Poholke",
+     "Thomson Dow",
+     "Luke Edwards"
     ],
     "traits": [
      "Leadership / character",
@@ -9745,7 +9777,7 @@
     "club": "WCE",
     "pre": 1.3,
     "positionOnly": 5.7,
-    "now": 5.0,
+    "now": 0.9,
     "games": 54,
     "current": {
      "games": 12,
@@ -9760,12 +9792,12 @@
      "Rarely goes big: 0 of 54 games at 100+"
     ],
     "like": [
-     "Noah Balta",
-     "Oscar Allen",
-     "Harrison Jones",
-     "Ben Miller",
-     "Shannon Neale",
-     "Callum Coleman-Jones"
+     "Tyler Brockman",
+     "Esava Ratugolea",
+     "Xavier O'Halloran",
+     "Ned McHenry",
+     "Jacob Koschitzke",
+     "Corey Durdin"
     ],
     "traits": [
      "Aerial / marking",
@@ -9860,7 +9892,7 @@
     "club": "SYD",
     "pre": 9.2,
     "positionOnly": 5.6,
-    "now": 1.0,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -9942,7 +9974,7 @@
     "club": "NTH",
     "pre": 7.0,
     "positionOnly": 5.5,
-    "now": 1.3,
+    "now": 1.1,
     "games": 26,
     "current": null,
     "best": 52.2,
@@ -9951,15 +9983,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 24% of games (26 from 110 available)",
-     "Rarely goes big: 0 of 26 games at 100+"
+     "Rarely goes big: 0 of 26 games at 100+",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [
-     "Daniel Venables",
      "Nathan Murphy",
-     "Luke Edwards",
      "Aiden Bonar",
-     "Francis Evans",
-     "Sam Sturt"
+     "Harrison Petty",
+     "Ryan Garthwaite",
+     "Lachie Jones",
+     "Ben Miller"
     ],
     "traits": [
      "Defensive pressure",
@@ -10132,7 +10165,7 @@
     "club": "WBD",
     "pre": 9.4,
     "positionOnly": 5.4,
-    "now": 1.1,
+    "now": 0.9,
     "games": 23,
     "current": {
      "games": 2,
@@ -10148,11 +10181,11 @@
      "Rarely goes big: 0 of 23 games at 100+"
     ],
     "like": [
-     "Brayden Ham",
-     "Oskar Baker",
      "Flynn Perez",
-     "Josh Begley",
-     "Jack Mahony",
+     "Andrew McPherson",
+     "Dylan Williams",
+     "Jaxon Prior",
+     "Conor Stone",
      "Ed Phillips"
     ],
     "traits": [
@@ -10253,7 +10286,7 @@
     "club": "WCE",
     "pre": 8.4,
     "positionOnly": 5.3,
-    "now": 2.4,
+    "now": 1.8,
     "games": 21,
     "current": null,
     "best": 51.5,
@@ -10262,14 +10295,15 @@
     "status": "Unlikely",
     "why": [
      "Plays 19% of games (21 from 110 available)",
-     "Rarely goes big: 1 of 21 games at 100+"
+     "Rarely goes big: 1 of 21 games at 100+",
+     "Mostly starts on a wing (24% of starts), 0% centre bounces"
     ],
     "like": [
      "Brett Bewley",
      "Zac Langdon",
      "Matthew Parker",
-     "Jacob Wehr",
      "Jy Farrar",
+     "Jacob Wehr",
      "Mitch Hannan"
     ],
     "traits": [
@@ -10348,7 +10382,7 @@
     "club": "GCS",
     "pre": 3.4,
     "positionOnly": 5.3,
-    "now": 2.8,
+    "now": 3.1,
     "games": 15,
     "current": null,
     "best": 60.8,
@@ -10356,7 +10390,8 @@
     "track": 68,
     "status": "Unlikely",
     "why": [
-     "Plays 3% of games (15 from 110 available)"
+     "Plays 3% of games (15 from 110 available)",
+     "Mostly starts at half-back / defence (67% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -10538,7 +10573,7 @@
     "club": "MEL",
     "pre": 2.8,
     "positionOnly": 5.1,
-    "now": 1.3,
+    "now": 1.0,
     "games": 21,
     "current": null,
     "best": 52.6,
@@ -10551,11 +10586,11 @@
      "Rarely goes big: 0 of 21 games at 100+"
     ],
     "like": [
+     "Denver Grainger-Barras",
      "Cameron Polson",
      "Brayden Ainsworth",
      "Will Hamill",
-     "Jack Carroll",
-     "Denver Grainger-Barras",
+     "Caleb Graham",
      "Brayden Cook"
     ],
     "traits": [
@@ -10648,7 +10683,7 @@
     "club": "GWS",
     "pre": 7.3,
     "positionOnly": 60.9,
-    "now": 14.4,
+    "now": 17.0,
     "games": 77,
     "current": {
      "games": 18,
@@ -10659,15 +10694,16 @@
     "track": 74,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 2 of 77 games at 100+"
+     "Rarely goes big: 2 of 77 games at 100+",
+     "Mostly starts at forward (98% of starts), 0% centre bounces"
     ],
     "like": [
-     "Charlie Ballard",
      "Jamarra Ugle-Hagan",
-     "Max King",
+     "Kysaiah Pickett*",
      "Logan McDonald",
-     "Aaron Naughton",
-     "Sam Taylor"
+     "Max King",
+     "Cody Weightman",
+     "Aaron Naughton"
     ],
     "traits": [
      "Aerial / marking",
@@ -10857,7 +10893,7 @@
     "club": "NTH",
     "pre": 50.0,
     "positionOnly": 34.0,
-    "now": 27.1,
+    "now": 28.8,
     "games": 55,
     "current": {
      "games": 16,
@@ -10875,8 +10911,8 @@
      "Josh Ward",
      "Tanner Bruhn",
      "Jye Caldwell*",
-     "Andrew McGrath",
-     "Jy Simpkin*"
+     "Jy Simpkin*",
+     "Andrew McGrath"
     ],
     "traits": [
      "Clean hands",
@@ -10947,7 +10983,7 @@
     "club": "ESS",
     "pre": 48.1,
     "positionOnly": 30.1,
-    "now": 2.0,
+    "now": 1.9,
     "games": 22,
     "current": {
      "games": 6,
@@ -10964,11 +11000,11 @@
     ],
     "like": [
      "Jack Ross",
+     "Riley Thilthorpe",
      "Will Setterfield*",
      "Xavier O'Neill",
-     "Angus Sheldrick",
      "Lachie Fogarty",
-     "Lochie O'Brien"
+     "Shai Bolton"
     ],
     "traits": [
      "Accumulator",
@@ -11058,7 +11094,7 @@
     "club": "GCS",
     "pre": 24.2,
     "positionOnly": 27.1,
-    "now": 16.6,
+    "now": 13.8,
     "games": 83,
     "current": {
      "games": 20,
@@ -11069,15 +11105,16 @@
     "track": 80,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 4 of 83 games at 100+"
+     "Rarely goes big: 4 of 83 games at 100+",
+     "Mostly starts at forward (70% of starts), 15% centre bounces"
     ],
     "like": [
-     "Oliver Florent",
-     "Archie Perkins",
-     "Brady Hough",
      "Josh Rachele",
+     "Mitchito Owens",
+     "Archie Perkins",
+     "Kysaiah Pickett*",
      "Sam Powell-Pepper",
-     "Kysaiah Pickett*"
+     "Gryan Miers*"
     ],
     "traits": [
      "Aerial / marking",
@@ -11140,7 +11177,7 @@
     "club": "HAW",
     "pre": 16.1,
     "positionOnly": 24.7,
-    "now": 22.8,
+    "now": 24.1,
     "games": 69,
     "current": {
      "games": 23,
@@ -11155,10 +11192,10 @@
     ],
     "like": [
      "Josh Ward",
-     "Brandan Parfitt",
      "Tanner Bruhn",
-     "Zac Bailey*",
      "Jy Simpkin*",
+     "Brandan Parfitt",
+     "Zac Bailey*",
      "Andrew McGrath"
     ],
     "traits": [
@@ -11240,7 +11277,7 @@
     "club": "GEE",
     "pre": 46.2,
     "positionOnly": 22.8,
-    "now": 21.7,
+    "now": 23.3,
     "games": 35,
     "current": {
      "games": 9,
@@ -11256,11 +11293,11 @@
     ],
     "like": [
      "Jack Ross",
-     "Lachie Fogarty",
      "Will Setterfield*",
+     "Tom Sparrow*",
+     "Lachie Fogarty",
      "Will Phillips",
-     "Angus Sheldrick",
-     "Tom Sparrow*"
+     "Angus Sheldrick"
     ],
     "traits": [
      "Accumulator",
@@ -11350,7 +11387,7 @@
     "club": "WCE",
     "pre": 13.4,
     "positionOnly": 21.2,
-    "now": 16.8,
+    "now": 5.0,
     "games": 76,
     "current": {
      "games": 13,
@@ -11359,17 +11396,19 @@
     "best": 58.8,
     "peak": 60.1,
     "track": 73,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 76 games at 100+"
+     "Impact well ahead of his scoring: 10.5 rating points a game (better than 76% of players at his stage)",
+     "Rarely goes big: 0 of 76 games at 100+",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [
-     "Brent Daniels",
-     "Cameron Rayner",
-     "Paddy Dow",
+     "Mac Andrew",
+     "Charlie Ballard",
      "Brady Hough",
-     "Oliver Florent",
-     "Tom Sparrow*"
+     "Brandon Walker",
+     "Noah Balta",
+     "Tom McCartin"
     ],
     "traits": [
      "Clean hands",
@@ -11419,7 +11458,7 @@
     "club": "STK",
     "pre": 4.1,
     "positionOnly": 19.8,
-    "now": 11.3,
+    "now": 22.4,
     "games": 65,
     "current": {
      "games": 21,
@@ -11431,12 +11470,12 @@
     "status": "Long shot",
     "why": [],
     "like": [
-     "Matthew Johnson",
-     "Aaron Naughton",
-     "Sam Taylor",
-     "Mitchito Owens",
-     "Heath Chapman",
-     "Max King"
+     "Archie Perkins",
+     "Lachie Fogarty",
+     "Zac Bailey*",
+     "Tanner Bruhn",
+     "Brandan Parfitt",
+     "Shai Bolton"
     ],
     "traits": [
      "Aerial / marking",
@@ -11516,7 +11555,7 @@
     "club": "CAR",
     "pre": 12.6,
     "positionOnly": 18.6,
-    "now": 17.1,
+    "now": 17.8,
     "games": 79,
     "current": {
      "games": 14,
@@ -11526,14 +11565,17 @@
     "peak": 76.2,
     "track": 88,
     "status": "Long shot",
-    "why": [],
+    "why": [
+     "Stuck in the seconds: 6 state-league games v 14 AFL in 2026",
+     "Mostly starts at half-back / defence (46% of starts), 1% centre bounces"
+    ],
     "like": [
      "Trent Rivers",
      "Nick Blakey",
      "Hunter Clark",
      "Darcy Wilmot",
-     "Jase Burgoyne*",
-     "Paul Curtis"
+     "Keidean Coleman",
+     "Jase Burgoyne*"
     ],
     "traits": [
      "Accumulator",
@@ -11603,7 +11645,7 @@
     "club": "BRL",
     "pre": 11.4,
     "positionOnly": 17.6,
-    "now": 20.8,
+    "now": 21.8,
     "games": 95,
     "current": {
      "games": 27,
@@ -11612,15 +11654,18 @@
     "best": 77.2,
     "peak": 83.7,
     "track": 96,
-    "status": "Long shot",
-    "why": [],
+    "status": "Building",
+    "why": [
+     "Impact well ahead of his scoring: 11.5 rating points a game (better than 84% of players at his stage)",
+     "Mostly starts at half-back / defence (43% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Connor MacDonald",
      "Darcy Wilmot",
-     "Jarrod Berry",
      "Trent Rivers",
+     "Jack Lukosius",
      "Hunter Clark",
-     "Nick Blakey"
+     "Connor MacDonald",
+     "Keidean Coleman"
     ],
     "traits": [
      "Clean hands",
@@ -11681,7 +11726,7 @@
     "club": "WBD",
     "pre": 3.1,
     "positionOnly": 16.7,
-    "now": 1.3,
+    "now": 2.8,
     "games": 15,
     "current": {
      "games": 8,
@@ -11693,15 +11738,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 17% of games (15 from 88 available)",
-     "Stuck in the seconds: 9 state-league games v 8 AFL in 2026"
+     "Stuck in the seconds: 9 state-league games v 8 AFL in 2026",
+     "Mostly starts at half-back / defence (60% of starts), 0% centre bounces"
     ],
     "like": [
+     "Andrew McPherson",
+     "Luke Cleary",
+     "Luke Foley",
+     "Josh Worrell",
      "Jack Payne",
-     "Mitch Knevitt",
-     "Josh Goater",
-     "Jarrod Brander",
-     "Lewis Young",
-     "Jacob Koschitzke"
+     "Dylan Williams"
     ],
     "traits": [
      "Aerial / marking",
@@ -11779,7 +11825,7 @@
     "club": "WCE",
     "pre": 8.6,
     "positionOnly": 15.9,
-    "now": 1.2,
+    "now": 1.3,
     "games": 40,
     "current": {
      "games": 6,
@@ -11796,10 +11842,10 @@
     "like": [
      "Deven Robertson",
      "Paddy Dow",
-     "Brent Daniels",
-     "Cameron Rayner",
      "Callum Brown",
-     "Quinton Narkle"
+     "Quinton Narkle",
+     "Harry Schoenberg",
+     "Cameron Rayner"
     ],
     "traits": [
      "Contested / inside",
@@ -11853,7 +11899,7 @@
     "club": "MEL",
     "pre": 0.8,
     "positionOnly": 15.2,
-    "now": 1.1,
+    "now": 3.8,
     "games": 23,
     "current": {
      "games": 16,
@@ -11865,15 +11911,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 26% of games (23 from 88 available)",
-     "Rarely goes big: 0 of 23 games at 100+"
+     "Rarely goes big: 0 of 23 games at 100+",
+     "Mostly starts at forward (52% of starts), 0% centre bounces"
     ],
     "like": [
-     "Harrison Petty",
+     "Harrison Jones",
+     "Francis Evans",
      "Ollie Lord",
-     "Brandon Zerk-Thatcher",
      "Brayden Cook",
-     "Sam De Koning",
-     "Rhett Bazzo"
+     "Darcy Fogarty",
+     "Harvey Harrison"
     ],
     "traits": [
      "Aerial / marking",
@@ -11952,7 +11999,7 @@
     "club": "GWS",
     "pre": 16.0,
     "positionOnly": 14.5,
-    "now": 13.1,
+    "now": 14.4,
     "games": 29,
     "current": {
      "games": 12,
@@ -11969,10 +12016,10 @@
     "like": [
      "Jack Ross",
      "Xavier O'Neill",
+     "Tom Sparrow*",
      "Angus Sheldrick",
      "Neil Erasmus",
-     "Tom Sparrow*",
-     "Tyler Sonsie"
+     "Will Phillips"
     ],
     "traits": [
      "Aerial / marking",
@@ -12057,7 +12104,7 @@
     "club": "ADE",
     "pre": 12.3,
     "positionOnly": 13.9,
-    "now": 21.2,
+    "now": 5.6,
     "games": 91,
     "current": {
      "games": 25,
@@ -12066,17 +12113,18 @@
     "best": 62.5,
     "peak": 65.2,
     "track": 77,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
-     "Rarely goes big: 2 of 91 games at 100+"
+     "Rarely goes big: 2 of 91 games at 100+",
+     "Mostly starts at half-back / defence (89% of starts), 0% centre bounces"
     ],
     "like": [
-     "Kysaiah Pickett*",
-     "Jake Bowey+*",
-     "Gryan Miers*",
-     "Ben Ainsworth",
+     "Mac Andrew",
+     "Charlie Ballard",
      "Isaac Quaynor",
-     "Archie Perkins"
+     "Brady Hough",
+     "Jake Bowey+*",
+     "Nick Coffield"
     ],
     "traits": [
      "Aerial / marking",
@@ -12125,7 +12173,7 @@
     "club": "HAW",
     "pre": 0.6,
     "positionOnly": 13.4,
-    "now": 11.6,
+    "now": 13.2,
     "games": 82,
     "current": {
      "games": 22,
@@ -12136,15 +12184,16 @@
     "track": 81,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 1 of 82 games at 100+"
+     "Rarely goes big: 1 of 82 games at 100+",
+     "Mostly starts at half-back / defence (60% of starts), 2% centre bounces"
     ],
     "like": [
-     "Aaron Naughton",
-     "Mitchito Owens",
-     "Charlie Ballard",
-     "Max King",
-     "Sam Taylor",
-     "Matthew Johnson"
+     "Jack Bowes",
+     "Bailey Scott",
+     "Miles Bergman",
+     "Jake Bowey+*",
+     "Isaac Quaynor",
+     "Trent Rivers"
     ],
     "traits": [
      "Aerial / marking",
@@ -12215,7 +12264,7 @@
     "club": "COL",
     "pre": 9.9,
     "positionOnly": 12.9,
-    "now": 9.5,
+    "now": 24.2,
     "games": 34,
     "current": {
      "games": 19,
@@ -12224,18 +12273,18 @@
     "best": 61.6,
     "peak": 64.3,
     "track": 76,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
      "Plays 39% of games (34 from 88 available)",
      "Rarely goes big: 0 of 34 games at 100+"
     ],
     "like": [
-     "Jack Ross",
-     "Matthew Johnson",
      "Will Setterfield*",
+     "Jack Ross",
      "Shai Bolton",
-     "Jarrod Brander",
-     "Will Phillips"
+     "Will Phillips",
+     "Tom Sparrow*",
+     "Angus Sheldrick"
     ],
     "traits": [
      "Consistency",
@@ -12319,7 +12368,7 @@
     "club": "SYD",
     "pre": 6.7,
     "positionOnly": 12.4,
-    "now": 0.8,
+    "now": 1.0,
     "games": 33,
     "current": {
      "games": 10,
@@ -12331,15 +12380,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 38% of games (33 from 88 available)",
-     "Rarely goes big: 0 of 33 games at 100+"
+     "Rarely goes big: 0 of 33 games at 100+",
+     "Mostly starts at forward (39% of starts), 0% centre bounces"
     ],
     "like": [
+     "Mitch Crowden",
+     "Darcy Fogarty",
      "Brayden Cook",
-     "Aiden Bonar",
-     "Luke Edwards",
-     "Kane Farrell",
-     "Charlie Lazzaro",
-     "Darcy Fogarty"
+     "Harrison Jones",
+     "Zac Taylor",
+     "Francis Evans"
     ],
     "traits": [
      "Clean hands",
@@ -12408,7 +12458,7 @@
     "club": "GWS",
     "pre": 8.3,
     "positionOnly": 12.0,
-    "now": 4.4,
+    "now": 5.5,
     "games": 37,
     "current": null,
     "best": 59.2,
@@ -12417,15 +12467,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 42% of games (37 from 88 available)",
-     "Rarely goes big: 1 of 37 games at 100+"
+     "Rarely goes big: 1 of 37 games at 100+",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [
+     "Brent Daniels",
+     "Izak Rankine*",
      "Jake Waterman",
-     "Eddie Ford",
-     "Kai Lohmann",
-     "Harry Morrison",
-     "Nik Cox",
-     "Tom Brown"
+     "Jacob van Rooyen",
+     "Cameron Rayner",
+     "Kai Lohmann"
     ],
     "traits": [
      "Accumulator",
@@ -12498,12 +12549,12 @@
      "Rarely goes big: 0 of 26 games at 100+"
     ],
     "like": [
-     "Sam De Koning",
-     "Rhett Bazzo",
+     "Darcy Fogarty",
+     "Harrison Jones",
+     "Mitch Crowden",
      "Todd Marshall",
-     "Blake Howes",
-     "Jacob Koschitzke",
-     "Jack Payne"
+     "Josh Begley",
+     "Jacob Koschitzke"
     ],
     "traits": [
      "Aerial / marking",
@@ -12588,7 +12639,7 @@
     "club": "WCE",
     "pre": 5.9,
     "positionOnly": 11.3,
-    "now": 8.7,
+    "now": 8.8,
     "games": 2,
     "current": null,
     "best": 52.1,
@@ -12663,7 +12714,7 @@
     "club": "WBD",
     "pre": 28.9,
     "positionOnly": 10.9,
-    "now": 1.0,
+    "now": 0.7,
     "games": 1,
     "current": null,
     "best": 51.2,
@@ -12744,7 +12795,7 @@
     "club": "ESS",
     "pre": 1.9,
     "positionOnly": 10.6,
-    "now": 0.4,
+    "now": 0.3,
     "games": 1,
     "current": null,
     "best": 54.7,
@@ -12752,7 +12803,8 @@
     "track": 68,
     "status": "Unlikely",
     "why": [
-     "Plays 1% of games (1 from 88 available)"
+     "Plays 1% of games (1 from 88 available)",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -12824,7 +12876,7 @@
     "club": "NTH",
     "pre": 9.0,
     "positionOnly": 10.3,
-    "now": 1.0,
+    "now": 0.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -12885,7 +12937,7 @@
     "club": "SYD",
     "pre": 6.4,
     "positionOnly": 10.0,
-    "now": 0.9,
+    "now": 0.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -12951,7 +13003,7 @@
     "club": "COL",
     "pre": 19.0,
     "positionOnly": 9.8,
-    "now": 0.9,
+    "now": 0.6,
     "games": 1,
     "current": null,
     "best": 51.0,
@@ -13033,7 +13085,7 @@
     "club": "WCE",
     "pre": 2.0,
     "positionOnly": 9.5,
-    "now": 4.3,
+    "now": 4.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -13095,7 +13147,7 @@
     "club": "CAR",
     "pre": 8.5,
     "positionOnly": 9.3,
-    "now": 30.0,
+    "now": 9.7,
     "games": 62,
     "current": {
      "games": 24,
@@ -13104,17 +13156,18 @@
     "best": 62.1,
     "peak": 64.4,
     "track": 77,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 62 games at 100+"
+     "Rarely goes big: 0 of 62 games at 100+",
+     "Mostly starts at half-back / defence (76% of starts), 2% centre bounces"
     ],
     "like": [
      "Jake Bowey+*",
-     "Ben Ainsworth",
-     "Gryan Miers*",
-     "Curtis Taylor",
      "Nick Coffield",
-     "Ryan Byrnes"
+     "Charlie Ballard",
+     "Isaac Quaynor",
+     "Sam Taylor",
+     "Miles Bergman"
     ],
     "traits": [
      "Aerial / marking",
@@ -13196,7 +13249,7 @@
     "club": "STK",
     "pre": 1.0,
     "positionOnly": 9.1,
-    "now": 0.4,
+    "now": 0.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -13256,7 +13309,7 @@
     "club": "CAR",
     "pre": 12.6,
     "positionOnly": 8.9,
-    "now": 1.2,
+    "now": 0.8,
     "games": 8,
     "current": null,
     "best": 57.6,
@@ -13265,7 +13318,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 9% of games (8 from 88 available)",
-     "Stuck in the seconds: 18 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 18 state-league games v 0 AFL in 2026",
+     "Mostly starts on a wing (60% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -13351,7 +13405,8 @@
     "track": 58,
     "status": "Unlikely",
     "why": [
-     "Plays 2% of games (2 from 88 available)"
+     "Plays 2% of games (2 from 88 available)",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -13412,7 +13467,7 @@
     "club": "GWS",
     "pre": 6.4,
     "positionOnly": 8.5,
-    "now": 0.9,
+    "now": 1.1,
     "games": 36,
     "current": {
      "games": 8,
@@ -13429,11 +13484,11 @@
     ],
     "like": [
      "Campbell Chesser",
-     "Jackson Archer",
-     "Charlie Lazzaro",
-     "Riley Garcia",
      "Jack Carroll",
-     "Finlay Macrae"
+     "Finlay Macrae",
+     "Brayden Cook",
+     "Ryan Angwin",
+     "Charlie Lazzaro"
     ],
     "traits": [],
     "jFP": 43.0,
@@ -13517,7 +13572,7 @@
     "club": "STK",
     "pre": 12.9,
     "positionOnly": 8.3,
-    "now": 1.1,
+    "now": 0.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -13589,7 +13644,7 @@
     "club": "PTA",
     "pre": 0.3,
     "positionOnly": 8.1,
-    "now": 1.9,
+    "now": 2.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -13650,7 +13705,7 @@
     "club": "HAW",
     "pre": 10.5,
     "positionOnly": 8.0,
-    "now": 1.2,
+    "now": 0.8,
     "games": 11,
     "current": {
      "games": 1,
@@ -13665,12 +13720,12 @@
      "Stuck in the seconds: 12 state-league games v 1 AFL in 2026"
     ],
     "like": [
-     "Josh Goater",
-     "Rhett Bazzo",
-     "Blake Howes",
-     "Mitch Knevitt",
+     "James Tunstill",
+     "Harry Sharp",
+     "Conor Stone",
+     "Boyd Woodcock",
      "Josh Morris",
-     "Boyd Woodcock"
+     "Jaxon Prior"
     ],
     "traits": [
      "Clean hands",
@@ -13755,7 +13810,7 @@
     "club": "MEL",
     "pre": 0.8,
     "positionOnly": 7.8,
-    "now": 0.3,
+    "now": 0.2,
     "games": 1,
     "current": null,
     "best": 51.9,
@@ -13764,7 +13819,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 1% of games (1 from 88 available)",
-     "Stuck in the seconds: 8 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 8 state-league games v 0 AFL in 2026",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -13836,7 +13892,7 @@
     "club": "WBD",
     "pre": 9.4,
     "positionOnly": 7.7,
-    "now": 1.0,
+    "now": 1.1,
     "games": 28,
     "current": {
      "games": 3,
@@ -13853,11 +13909,11 @@
     ],
     "like": [
      "Oskar Baker",
-     "Flynn Perez",
      "Jaxon Prior",
+     "Josh Morris",
      "Harry Sharp",
-     "Tom Berry",
-     "Jack Mahony"
+     "James Tunstill",
+     "Conor Stone"
     ],
     "traits": [
      "Accumulator",
@@ -13940,7 +13996,7 @@
     "club": "SYD",
     "pre": 4.4,
     "positionOnly": 7.5,
-    "now": 0.8,
+    "now": 0.5,
     "games": 3,
     "current": null,
     "best": 54.6,
@@ -13949,7 +14005,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 3% of games (3 from 88 available)",
-     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026",
+     "Mostly starts on a wing (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -14023,7 +14080,7 @@
     "club": "FRE",
     "pre": 4.7,
     "positionOnly": 7.4,
-    "now": 3.2,
+    "now": 3.0,
     "games": 15,
     "current": null,
     "best": 58.3,
@@ -14035,12 +14092,12 @@
      "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
     ],
     "like": [
-     "Judson Clarke",
-     "Leek Aleer",
-     "Ryan Angwin",
+     "Callum Jamieson",
+     "Riley Garcia",
      "Arthur Jones",
-     "Taj Woewodin",
-     "Brayden Ainsworth"
+     "Brayden Ham",
+     "Denver Grainger-Barras",
+     "Ryan Angwin"
     ],
     "traits": [],
     "jFP": null,
@@ -14112,7 +14169,7 @@
     "club": "FRE",
     "pre": 2.5,
     "positionOnly": 7.3,
-    "now": 1.5,
+    "now": 1.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -14182,7 +14239,7 @@
     "club": "ADE",
     "pre": 3.7,
     "positionOnly": 7.1,
-    "now": 3.2,
+    "now": 7.6,
     "games": 13,
     "current": {
      "games": 3,
@@ -14193,16 +14250,15 @@
     "track": 77,
     "status": "Unlikely",
     "why": [
-     "Plays 15% of games (13 from 88 available)",
-     "Stuck in the seconds: 11 state-league games v 3 AFL in 2026"
+     "Plays 15% of games (13 from 88 available)"
     ],
     "like": [
-     "Jeremy Sharp",
-     "Lachlan Sholl",
-     "Trent Bianco",
+     "Caleb Poulter",
+     "Willem Drew",
      "Dylan Stephens",
-     "Brodie Kemp",
-     "Nathan O'Driscoll"
+     "Jarrod Brander",
+     "Angus Sheldrick",
+     "Jeremy Sharp"
     ],
     "traits": [
      "Accumulator",
@@ -14285,7 +14341,7 @@
     "club": "STK",
     "pre": 6.8,
     "positionOnly": 7.0,
-    "now": 4.8,
+    "now": 1.3,
     "games": 13,
     "current": {
      "games": 2,
@@ -14297,15 +14353,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 15% of games (13 from 88 available)",
-     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026",
+     "Mostly starts at half-back / defence (38% of starts), 0% centre bounces"
     ],
     "like": [
-     "Tristan Xerri*",
-     "Callum Jamieson",
-     "Brayden Crossley",
-     "Caleb Graham",
-     "Samson Ryan",
-     "Harrison Jones"
+     "Denver Grainger-Barras",
+     "Arthur Jones",
+     "Ryan Angwin",
+     "Reef McInnes",
+     "Riley Garcia",
+     "Taj Woewodin"
     ],
     "traits": [
      "Athleticism",
@@ -14383,7 +14440,7 @@
     "club": "ESS",
     "pre": 4.8,
     "positionOnly": 6.9,
-    "now": 4.9,
+    "now": 5.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -14414,7 +14471,7 @@
     "club": "HAW",
     "pre": 3.0,
     "positionOnly": 6.8,
-    "now": 0.8,
+    "now": 0.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -14540,7 +14597,7 @@
     "club": "COL",
     "pre": 4.2,
     "positionOnly": 6.6,
-    "now": 32.7,
+    "now": 30.5,
     "games": 51,
     "current": {
      "games": 20,
@@ -14550,14 +14607,16 @@
     "peak": 81.7,
     "track": 92,
     "status": "Close",
-    "why": [],
+    "why": [
+     "Mostly starts at forward (79% of starts), 24% centre bounces"
+    ],
     "like": [
      "Nick Hind",
      "Billy Hartung",
-     "Luke Ryan*",
      "Bayley Fritsch",
+     "Lachie Schultz",
      "Keidean Coleman",
-     "Lachie Schultz"
+     "Luke Ryan*"
     ],
     "traits": [],
     "jFP": null,
@@ -14628,12 +14687,12 @@
      "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
     ],
     "like": [
-     "Judson Clarke",
-     "Riley Garcia",
-     "Ryan Angwin",
      "Trey Ruscoe",
-     "Jackson Mead",
-     "Campbell Chesser"
+     "Kyron Hayden",
+     "Jackson Archer",
+     "Atu Bosenavulagi",
+     "Josh Gibcus",
+     "Ryan Angwin"
     ],
     "traits": [],
     "jFP": null,
@@ -14695,7 +14754,7 @@
     "club": "ADE",
     "pre": 20.2,
     "positionOnly": 6.4,
-    "now": 3.4,
+    "now": 3.0,
     "games": 19,
     "current": {
      "games": 7,
@@ -14707,15 +14766,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 22% of games (19 from 88 available)",
-     "Stuck in the seconds: 7 state-league games v 7 AFL in 2026"
+     "Stuck in the seconds: 7 state-league games v 7 AFL in 2026",
+     "Mostly starts at half-back / defence (83% of starts), 0% centre bounces"
     ],
     "like": [
-     "Harry Sharp",
+     "Liam Stocker",
+     "Josh Morris",
+     "Oskar Baker",
      "Flynn Perez",
-     "Conor Stone",
-     "Lachlan Gollant",
-     "Luke Pedlar",
-     "Tom Berry"
+     "James Tunstill",
+     "Blake Howes"
     ],
     "traits": [
      "Contested / inside",
@@ -14800,7 +14860,7 @@
     "club": "HAW",
     "pre": 8.0,
     "positionOnly": 6.3,
-    "now": 1.2,
+    "now": 4.5,
     "games": 22,
     "current": {
      "games": 14,
@@ -14815,12 +14875,12 @@
      "Rarely goes big: 0 of 22 games at 100+"
     ],
     "like": [
-     "Corey Warner",
-     "Kane Farrell",
-     "Maurice Rioli Jr.",
      "Nathan Murphy",
-     "Luke Edwards",
-     "Darcy Fogarty"
+     "Tom Williamson",
+     "Josh Sinn",
+     "Jacob Allison",
+     "Ed Phillips",
+     "Blake Howes"
     ],
     "traits": [],
     "jFP": 41.0,
@@ -14898,7 +14958,7 @@
     "club": "GEE",
     "pre": 3.0,
     "positionOnly": 6.2,
-    "now": 9.5,
+    "now": 9.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -14949,7 +15009,7 @@
     "club": "PTA",
     "pre": 3.9,
     "positionOnly": 6.1,
-    "now": 0.8,
+    "now": 0.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -15015,7 +15075,7 @@
     "club": "ESS",
     "pre": 5.5,
     "positionOnly": 6.0,
-    "now": 0.8,
+    "now": 0.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -15075,7 +15135,7 @@
     "club": "RIC",
     "pre": 13.3,
     "positionOnly": 5.9,
-    "now": 4.1,
+    "now": 4.3,
     "games": 44,
     "current": {
      "games": 20,
@@ -15086,15 +15146,16 @@
     "track": 63,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 44 games at 100+"
+     "Rarely goes big: 0 of 44 games at 100+",
+     "Mostly starts at forward (71% of starts), 0% centre bounces"
     ],
     "like": [
-     "Brandon Starcevich",
      "Jack Petruccelle",
      "Ned McHenry",
-     "Maurice Rioli Jr.",
      "Darcy Fogarty",
-     "Tom Williamson"
+     "Todd Marshall",
+     "Jesse Motlop",
+     "Mitch Crowden"
     ],
     "traits": [
      "Clean hands",
@@ -15169,7 +15230,7 @@
     "club": "NTH",
     "pre": 5.2,
     "positionOnly": 5.9,
-    "now": 10.4,
+    "now": 10.2,
     "games": 17,
     "current": {
      "games": 7,
@@ -15180,16 +15241,15 @@
     "track": 78,
     "status": "Long shot",
     "why": [
-     "Plays 19% of games (17 from 88 available)",
-     "Stuck in the seconds: 11 state-league games v 7 AFL in 2026"
+     "Plays 19% of games (17 from 88 available)"
     ],
     "like": [
      "Lochie O'Brien",
-     "Josh Worrell",
-     "Rhylee West",
-     "Brodie Kemp",
-     "Sam Butler",
-     "Andrew McPherson"
+     "Jarrod Brander",
+     "Jack Scrimshaw",
+     "Dylan Williams",
+     "Riley Thilthorpe",
+     "Ryan Byrnes"
     ],
     "traits": [],
     "jFP": 78.0,
@@ -15267,7 +15327,7 @@
     "club": "FRE",
     "pre": 3.7,
     "positionOnly": 5.8,
-    "now": 5.2,
+    "now": 5.4,
     "games": 73,
     "current": {
      "games": 16,
@@ -15284,9 +15344,9 @@
      "Nick Hind",
      "Matt de Boer",
      "Will Hayes",
-     "Bayley Fritsch",
-     "Lachie Schultz",
-     "Brett Bewley"
+     "Brett Bewley",
+     "Darcy Fort",
+     "Billy Hartung"
     ],
     "traits": [],
     "jFP": null,
@@ -15377,7 +15437,7 @@
     "club": "WCE",
     "pre": 5.2,
     "positionOnly": 5.7,
-    "now": 0.9,
+    "now": 1.1,
     "games": 36,
     "current": null,
     "best": 49.7,
@@ -15386,15 +15446,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 41% of games (36 from 88 available)",
-     "Rarely goes big: 0 of 36 games at 100+"
+     "Rarely goes big: 0 of 36 games at 100+",
+     "Mostly starts at forward (50% of starts), 0% centre bounces"
     ],
     "like": [
-     "Bobby Hill",
-     "Daniel Venables",
      "Mitch Crowden",
-     "Griffin Logue",
+     "Tyler Brockman",
+     "Daniel Venables",
      "Brayden Cook",
-     "Josh Sinn"
+     "Zac Taylor",
+     "Josh Begley"
     ],
     "traits": [
      "Clean hands",
@@ -15449,7 +15510,7 @@
     "club": "PTA",
     "pre": 0.7,
     "positionOnly": 5.6,
-    "now": 0.4,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -15515,7 +15576,7 @@
     "club": "WCE",
     "pre": 57.6,
     "positionOnly": 61.2,
-    "now": 57.0,
+    "now": 57.6,
     "games": 62,
     "current": {
      "games": 23,
@@ -15529,10 +15590,10 @@
     "like": [
      "Jake Soligo",
      "Matt Rowell*",
-     "Finn Callaghan*",
      "Andrew Brayshaw*",
      "James Rowbottom",
-     "Tarryn Thomas"
+     "Finn Callaghan*",
+     "Marcus Windhager"
     ],
     "traits": [
      "Contested / inside",
@@ -15577,7 +15638,7 @@
     "club": "NTH",
     "pre": 81.2,
     "positionOnly": 46.2,
-    "now": 33.7,
+    "now": 29.9,
     "games": 62,
     "current": {
      "games": 23,
@@ -15586,17 +15647,18 @@
     "best": 73.2,
     "peak": 82.3,
     "track": 96,
-    "status": "Close",
+    "status": "Long shot",
     "why": [
-     "Has the ceiling: 10 games of 100+"
+     "Has the ceiling: 10 games of 100+",
+     "Mostly starts at half-back / defence (41% of starts), 9% centre bounces"
     ],
     "like": [
-     "Jarrod Berry",
-     "Connor MacDonald",
      "Alex Witherden*",
      "Andrew McGrath",
-     "Sam Powell-Pepper",
-     "Sam Petrevski-Seton"
+     "Jarrod Berry",
+     "Sam Petrevski-Seton",
+     "Connor MacDonald",
+     "Jack Lukosius"
     ],
     "traits": [
      "Clean hands",
@@ -15652,7 +15714,7 @@
     "club": "GCS",
     "pre": 3.2,
     "positionOnly": 37.6,
-    "now": 0.7,
+    "now": 3.7,
     "games": 48,
     "current": {
      "games": 18,
@@ -15663,15 +15725,16 @@
     "track": 64,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 48 games at 100+"
+     "Rarely goes big: 0 of 48 games at 100+",
+     "Mostly starts at forward (71% of starts), 3% centre bounces"
     ],
     "like": [
      "Jye Amiss",
+     "Bobby Hill",
      "Ben King",
-     "Sam De Koning",
-     "Charlie Ballard",
-     "Esava Ratugolea",
-     "Sam Taylor"
+     "Cody Weightman",
+     "Harrison Jones",
+     "Jesse Motlop"
     ],
     "traits": [
      "Aerial / marking",
@@ -15747,7 +15810,7 @@
     "club": "NTH",
     "pre": 19.2,
     "positionOnly": 31.9,
-    "now": 0.7,
+    "now": 0.8,
     "games": 38,
     "current": {
      "games": 15,
@@ -15761,12 +15824,12 @@
      "Rarely goes big: 0 of 38 games at 100+"
     ],
     "like": [
-     "Will Hamill",
+     "Liam Henry",
+     "Judson Clarke",
+     "Taj Woewodin",
      "Darcy Fogarty",
      "Campbell Chesser",
-     "Taj Woewodin",
-     "Brandon Starcevich",
-     "Ryan Angwin"
+     "Maurice Rioli Jr."
     ],
     "traits": [
      "Aerial / marking",
@@ -15841,7 +15904,7 @@
     "club": "HAW",
     "pre": 24.5,
     "positionOnly": 27.8,
-    "now": 39.6,
+    "now": 39.7,
     "games": 66,
     "current": {
      "games": 23,
@@ -15852,15 +15915,16 @@
     "track": 86,
     "status": "Close",
     "why": [
-     "Rarely goes big: 1 of 66 games at 100+"
+     "Rarely goes big: 1 of 66 games at 100+",
+     "Mostly starts at forward (98% of starts), 17% centre bounces"
     ],
     "like": [
-     "Archie Perkins",
      "Connor Rozee*",
-     "Adam Cerra*",
-     "Oliver Florent",
+     "Archie Perkins",
+     "Josh Rachele",
+     "Brandan Parfitt",
      "Zac Fisher",
-     "Josh Rachele"
+     "Gryan Miers*"
     ],
     "traits": [
      "Contested / inside",
@@ -15915,7 +15979,7 @@
     "club": "WBD",
     "pre": 37.3,
     "positionOnly": 24.7,
-    "now": 38.1,
+    "now": 40.7,
     "games": 58,
     "current": {
      "games": 23,
@@ -15927,12 +15991,12 @@
     "status": "Close",
     "why": [],
     "like": [
-     "Andrew Brayshaw*",
-     "Finn Callaghan*",
      "Tarryn Thomas",
+     "Andrew Brayshaw*",
      "Jake Soligo",
      "Max Holmes*",
-     "Zak Butters*"
+     "Zak Butters*",
+     "Connor MacDonald"
     ],
     "traits": [
      "Accumulator",
@@ -15987,7 +16051,7 @@
     "club": "MEL",
     "pre": 31.7,
     "positionOnly": 22.3,
-    "now": 29.6,
+    "now": 30.6,
     "games": 57,
     "current": {
      "games": 21,
@@ -15996,17 +16060,17 @@
     "best": 57.8,
     "peak": 59.0,
     "track": 76,
-    "status": "Long shot",
+    "status": "Close",
     "why": [
      "Rarely goes big: 1 of 57 games at 100+"
     ],
     "like": [
      "Nick Blakey",
-     "Cameron Rayner",
-     "Paul Curtis",
-     "Kysaiah Pickett*",
-     "Brady Hough",
-     "Will Hayward"
+     "Matthew Johnson",
+     "Zac Bailey*",
+     "Riley Thilthorpe",
+     "Tom Powell",
+     "Adam Cerra*"
     ],
     "traits": [
      "Defensive pressure",
@@ -16060,7 +16124,7 @@
     "club": "ADE",
     "pre": 40.3,
     "positionOnly": 20.3,
-    "now": 23.8,
+    "now": 33.9,
     "games": 50,
     "current": {
      "games": 18,
@@ -16069,17 +16133,19 @@
     "best": 64.1,
     "peak": 68.2,
     "track": 84,
-    "status": "Long shot",
+    "status": "Building",
     "why": [
-     "Rarely goes big: 2 of 50 games at 100+"
+     "Impact well ahead of his scoring: 12.4 rating points a game (better than 91% of players at his stage)",
+     "Rarely goes big: 2 of 50 games at 100+",
+     "Mostly starts on a wing (53% of starts), 22% centre bounces"
     ],
     "like": [
-     "Matthew Johnson",
-     "Mitchito Owens",
-     "Archie Perkins",
+     "Oliver Florent",
      "Adam Cerra*",
-     "Heath Chapman",
-     "Sam Darcy"
+     "Braeden Campbell",
+     "Jack Bowes",
+     "Justin McInerney",
+     "Miles Bergman"
     ],
     "traits": [
      "Aerial / marking",
@@ -16145,7 +16211,7 @@
     "club": "GCS",
     "pre": 10.2,
     "positionOnly": 18.7,
-    "now": 1.0,
+    "now": 3.2,
     "games": 40,
     "current": {
      "games": 15,
@@ -16156,15 +16222,16 @@
     "track": 63,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 40 games at 100+"
+     "Rarely goes big: 0 of 40 games at 100+",
+     "Mostly starts at forward (42% of starts), 6% centre bounces"
     ],
     "like": [
      "Jack Williams",
-     "Noah Balta",
+     "Jesse Motlop",
+     "Tyler Sonsie",
      "Harrison Jones",
-     "Brayden Crossley",
-     "Caleb Graham",
-     "Riley Thilthorpe"
+     "Mitch Crowden",
+     "Kane Farrell"
     ],
     "traits": [
      "Accumulator",
@@ -16239,7 +16306,7 @@
     "club": "ESS",
     "pre": 2.8,
     "positionOnly": 17.4,
-    "now": 17.3,
+    "now": 11.1,
     "games": 49,
     "current": {
      "games": 22,
@@ -16250,15 +16317,16 @@
     "track": 77,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 2 of 49 games at 100+"
+     "Rarely goes big: 2 of 49 games at 100+",
+     "Mostly starts at forward (95% of starts), 2% centre bounces"
     ],
     "like": [
      "Jamarra Ugle-Hagan",
+     "Paul Curtis",
+     "Mitch Georgiades",
      "Jacob van Rooyen",
-     "Logan McDonald",
-     "Matthew Johnson",
-     "Max King",
-     "Brady Hough"
+     "Kysaiah Pickett*",
+     "Will Hayward"
     ],
     "traits": [
      "Aerial / marking",
@@ -16312,7 +16380,7 @@
     "club": "GEE",
     "pre": 0.6,
     "positionOnly": 16.2,
-    "now": 19.2,
+    "now": 24.1,
     "games": 51,
     "current": {
      "games": 25,
@@ -16323,15 +16391,16 @@
     "track": 82,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 51 games at 100+"
+     "Rarely goes big: 0 of 51 games at 100+",
+     "Mostly starts at half-back / defence (98% of starts), 0% centre bounces"
     ],
     "like": [
-     "Jamarra Ugle-Hagan",
-     "Matthew Johnson",
-     "Jacob van Rooyen",
+     "Mac Andrew",
+     "Nick Coffield",
+     "Brady Hough",
+     "Isaac Quaynor",
      "Jake Bowey+*",
-     "Braeden Campbell",
-     "Ben Ainsworth"
+     "Braeden Campbell"
     ],
     "traits": [
      "Aerial / marking",
@@ -16385,7 +16454,7 @@
     "club": "GWS",
     "pre": 9.0,
     "positionOnly": 15.2,
-    "now": 12.8,
+    "now": 7.7,
     "games": 16,
     "current": {
      "games": 16,
@@ -16394,17 +16463,18 @@
     "best": 59.6,
     "peak": 61.9,
     "track": 79,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
-     "Plays 24% of games (16 from 66 available)"
+     "Plays 24% of games (16 from 66 available)",
+     "Mostly starts at forward (88% of starts), 0% centre bounces"
     ],
     "like": [
      "Mitchell Lewis",
+     "Luke Pedlar",
      "Jake Waterman",
-     "Seamus Mitchell",
      "Shai Bolton",
-     "Jack Scrimshaw",
-     "Dylan Clarke"
+     "Curtis Taylor",
+     "Kai Lohmann"
     ],
     "traits": [
      "Athleticism",
@@ -16457,7 +16527,7 @@
     "club": "MEL",
     "pre": 7.9,
     "positionOnly": 14.3,
-    "now": 26.4,
+    "now": 27.6,
     "games": 43,
     "current": {
      "games": 24,
@@ -16468,15 +16538,16 @@
     "track": 82,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 43 games at 100+"
+     "Rarely goes big: 0 of 43 games at 100+",
+     "Mostly starts at forward (30% of starts), 4% centre bounces"
     ],
     "like": [
-     "Ben Ainsworth",
-     "Braeden Campbell",
      "Jake Bowey+*",
-     "Nick Coffield",
-     "Callum Brown",
-     "Gryan Miers*"
+     "Braeden Campbell",
+     "Dylan Stephens",
+     "Ben Ainsworth",
+     "Will Day*",
+     "Matthew Johnson"
     ],
     "traits": [
      "Aerial / marking",
@@ -16540,7 +16611,7 @@
     "club": "GCS",
     "pre": 25.0,
     "positionOnly": 13.5,
-    "now": 0.7,
+    "now": 0.9,
     "games": 27,
     "current": {
      "games": 9,
@@ -16555,12 +16626,12 @@
      "Rarely goes big: 0 of 27 games at 100+"
     ],
     "like": [
-     "Will Hamill",
+     "Liam Henry",
+     "Riley Garcia",
      "Ryan Angwin",
-     "Campbell Chesser",
+     "Harrison Jones",
      "Harvey Harrison",
-     "Brandon Starcevich",
-     "Jackson Archer"
+     "Maurice Rioli Jr."
     ],
     "traits": [
      "Clean hands",
@@ -16635,7 +16706,7 @@
     "club": "WBD",
     "pre": 1.3,
     "positionOnly": 12.8,
-    "now": 0.9,
+    "now": 1.0,
     "games": 19,
     "current": {
      "games": 17,
@@ -16646,15 +16717,16 @@
     "track": 74,
     "status": "Unlikely",
     "why": [
-     "Plays 29% of games (19 from 66 available)"
+     "Plays 29% of games (19 from 66 available)",
+     "Mostly starts at forward (47% of starts), 10% centre bounces"
     ],
     "like": [
+     "Darcy Fogarty",
+     "Harvey Harrison",
      "Ollie Lord",
-     "Josh Gibcus",
-     "Sam Taylor",
-     "Brandon Zerk-Thatcher",
-     "Will Hamill",
-     "Ryan Angwin"
+     "Harrison Jones",
+     "Ryan Angwin",
+     "Sam Butler"
     ],
     "traits": [
      "Aerial / marking",
@@ -16795,7 +16867,7 @@
     "club": "GWS",
     "pre": 4.5,
     "positionOnly": 11.7,
-    "now": 1.1,
+    "now": 0.5,
     "games": 8,
     "current": {
      "games": 5,
@@ -16876,7 +16948,7 @@
     "club": "STK",
     "pre": 9.6,
     "positionOnly": 11.2,
-    "now": 41.1,
+    "now": 37.8,
     "games": 63,
     "current": {
      "games": 22,
@@ -16885,15 +16957,18 @@
     "best": 75.5,
     "peak": 83.0,
     "track": 100,
-    "status": "Close",
-    "why": [],
+    "status": "Building",
+    "why": [
+     "Impact well ahead of his scoring: 11.1 rating points a game (better than 82% of players at his stage)",
+     "Mostly starts on a wing (55% of starts), 16% centre bounces"
+    ],
     "like": [
      "Jarrod Berry",
      "Connor MacDonald",
      "Tarryn Thomas",
      "Sam Petrevski-Seton",
      "Andrew McGrath",
-     "Andrew Brayshaw*"
+     "Patrick Lipinski"
     ],
     "traits": [
      "Athleticism",
@@ -16949,7 +17024,7 @@
     "club": "HAW",
     "pre": 0.7,
     "positionOnly": 10.7,
-    "now": 0.5,
+    "now": 0.6,
     "games": 4,
     "current": {
      "games": 4,
@@ -16961,7 +17036,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 6% of games (4 from 66 available)",
-     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026",
+     "Mostly starts on a wing (25% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -17023,7 +17099,7 @@
     "club": "NTH",
     "pre": 9.9,
     "positionOnly": 10.3,
-    "now": 3.6,
+    "now": 4.1,
     "games": 2,
     "current": {
      "games": 2,
@@ -17097,7 +17173,7 @@
     "club": "ADE",
     "pre": 5.0,
     "positionOnly": 9.9,
-    "now": 1.7,
+    "now": 1.2,
     "games": 2,
     "current": {
      "games": 2,
@@ -17170,7 +17246,7 @@
     "club": "NTH",
     "pre": 3.6,
     "positionOnly": 9.5,
-    "now": 1.4,
+    "now": 1.6,
     "games": 18,
     "current": {
      "games": 10,
@@ -17184,12 +17260,12 @@
      "Plays 27% of games (18 from 66 available)"
     ],
     "like": [
-     "Ollie Lord",
-     "Miller Bergman",
-     "Josh Gibcus",
-     "Rhett Bazzo",
-     "Sam Taylor",
-     "Ryan Angwin"
+     "Campbell Chesser",
+     "Will Hamill",
+     "Caleb Graham",
+     "Ryan Angwin",
+     "Harvey Harrison",
+     "Charlie Lazzaro"
     ],
     "traits": [
      "Aerial / marking",
@@ -17263,7 +17339,7 @@
     "club": "NTH",
     "pre": 10.3,
     "positionOnly": 9.2,
-    "now": 6.1,
+    "now": 0.9,
     "games": 27,
     "current": {
      "games": 7,
@@ -17275,16 +17351,15 @@
     "status": "Unlikely",
     "why": [
      "Plays 41% of games (27 from 66 available)",
-     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026",
      "Rarely goes big: 1 of 27 games at 100+"
     ],
     "like": [
-     "Elijah Hollands",
-     "Corey Durdin",
-     "Xavier O'Halloran",
+     "Tom Brown",
+     "Blake Howes",
+     "Luke Edwards",
      "Flynn Perez",
-     "Jackson Mead",
-     "Hugo Ralphsmith"
+     "Hugo Ralphsmith",
+     "Griffin Logue"
     ],
     "traits": [
      "Accumulator",
@@ -17358,7 +17433,7 @@
     "club": "SYD",
     "pre": 11.3,
     "positionOnly": 8.9,
-    "now": 6.7,
+    "now": 7.2,
     "games": 28,
     "current": {
      "games": 11,
@@ -17370,15 +17445,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 42% of games (28 from 66 available)",
-     "Rarely goes big: 0 of 28 games at 100+"
+     "Rarely goes big: 0 of 28 games at 100+",
+     "Mostly starts at forward (43% of starts), 2% centre bounces"
     ],
     "like": [
-     "Hugo Ralphsmith",
-     "Jaxon Prior",
-     "Flynn Perez",
-     "Bailey Scott",
      "Tyler Brockman",
-     "Xavier O'Halloran"
+     "Jordan Gallucci",
+     "Ned McHenry",
+     "Izak Rankine*",
+     "Bailey Scott",
+     "Todd Marshall"
     ],
     "traits": [
      "Clean hands",
@@ -17453,7 +17529,7 @@
     "club": "COL",
     "pre": 7.1,
     "positionOnly": 8.6,
-    "now": 1.5,
+    "now": 1.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -17515,7 +17591,7 @@
     "club": "GCS",
     "pre": 4.7,
     "positionOnly": 8.3,
-    "now": 21.0,
+    "now": 20.9,
     "games": 37,
     "current": {
      "games": 12,
@@ -17526,15 +17602,16 @@
     "track": 76,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 1 of 37 games at 100+"
+     "Rarely goes big: 1 of 37 games at 100+",
+     "Mostly starts at forward (65% of starts), 19% centre bounces"
     ],
     "like": [
-     "Jack Ross",
-     "Luke Davies-Uniacke*",
+     "Oscar Allen",
      "Brent Daniels",
-     "Tom Sparrow*",
-     "Wil Powell",
-     "Paddy Dow"
+     "Sam Flanders*",
+     "Brennan Cox",
+     "Cameron Rayner",
+     "Riley Thilthorpe"
     ],
     "traits": [
      "Athleticism",
@@ -17599,7 +17676,7 @@
     "club": "ADE",
     "pre": 9.8,
     "positionOnly": 8.1,
-    "now": 2.4,
+    "now": 3.7,
     "games": 2,
     "current": {
      "games": 2,
@@ -17671,7 +17748,7 @@
     "club": "STK",
     "pre": 2.0,
     "positionOnly": 7.9,
-    "now": 0.7,
+    "now": 0.8,
     "games": 15,
     "current": null,
     "best": 42.2,
@@ -17687,8 +17764,8 @@
      "Fischer McAsey",
      "Denver Grainger-Barras",
      "Cameron Polson",
-     "Taj Woewodin",
-     "Judson Clarke"
+     "Judson Clarke",
+     "Taj Woewodin"
     ],
     "traits": [
      "Aerial / marking",
@@ -17755,7 +17832,7 @@
     "club": "CAR",
     "pre": 4.5,
     "positionOnly": 7.6,
-    "now": 0.6,
+    "now": 0.7,
     "games": 13,
     "current": {
      "games": 2,
@@ -17767,15 +17844,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 20% of games (13 from 66 available)",
-     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026"
+     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026",
+     "Mostly starts at forward (36% of starts), 0% centre bounces"
     ],
     "like": [
-     "Brayden Cook",
-     "Finlay Macrae",
+     "Maurice Rioli Jr.",
      "Charlie Lazzaro",
+     "Brayden Cook",
      "Judson Clarke",
-     "Sam Butler",
-     "Trey Ruscoe"
+     "Arthur Jones",
+     "Liam Henry"
     ],
     "traits": [
      "Aerial / marking",
@@ -17849,7 +17927,7 @@
     "club": "WCE",
     "pre": 0.6,
     "positionOnly": 7.4,
-    "now": 0.7,
+    "now": 0.8,
     "games": 20,
     "current": {
      "games": 6,
@@ -17861,15 +17939,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 30% of games (20 from 66 available)",
-     "Rarely goes big: 0 of 20 games at 100+"
+     "Rarely goes big: 0 of 20 games at 100+",
+     "Mostly starts at forward (55% of starts), 9% centre bounces"
     ],
     "like": [
-     "Josh Gibcus",
      "Ollie Lord",
-     "Brandon Zerk-Thatcher",
-     "Sam Taylor",
-     "Taj Woewodin",
-     "Will Hamill"
+     "Darcy Fogarty",
+     "Harvey Harrison",
+     "Cameron Polson",
+     "Harrison Jones",
+     "Maurice Rioli Jr."
     ],
     "traits": [
      "Aerial / marking",
@@ -17928,7 +18007,7 @@
     "club": "BRL",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 23.8,
+    "now": 33.8,
     "games": 71,
     "current": {
      "games": 26,
@@ -17937,15 +18016,17 @@
     "best": 66.8,
     "peak": 70.5,
     "track": 88,
-    "status": "Long shot",
-    "why": [],
+    "status": "Close",
+    "why": [
+     "Mostly starts at forward (92% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Darcy Wilmot",
      "Connor Rozee*",
-     "Oliver Florent",
      "Brandan Parfitt",
-     "Andrew McGrath",
-     "Archie Perkins"
+     "Josh Rachele",
+     "Archie Perkins",
+     "Connor MacDonald",
+     "Zak Butters*"
     ],
     "traits": [
      "Aerial / marking",
@@ -17999,7 +18080,7 @@
     "club": "GEE",
     "pre": 4.7,
     "positionOnly": 7.0,
-    "now": 23.1,
+    "now": 24.6,
     "games": 20,
     "current": {
      "games": 20,
@@ -18014,12 +18095,12 @@
      "Rarely goes big: 0 of 20 games at 100+"
     ],
     "like": [
-     "Oscar Allen",
+     "Luke Davies-Uniacke*",
+     "Jack Ross",
      "Riley Thilthorpe",
-     "Jack Williams",
-     "Mac Andrew",
-     "Samson Ryan",
-     "Noah Balta"
+     "Tom Sparrow*",
+     "Lachie Fogarty",
+     "Oscar Allen"
     ],
     "traits": [
      "Aerial / marking",
@@ -18070,7 +18151,7 @@
     "club": "STK",
     "pre": 7.3,
     "positionOnly": 6.9,
-    "now": 1.0,
+    "now": 1.4,
     "games": 21,
     "current": {
      "games": 7,
@@ -18082,16 +18163,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 32% of games (21 from 66 available)",
-     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026",
-     "Rarely goes big: 0 of 21 games at 100+"
+     "Rarely goes big: 0 of 21 games at 100+",
+     "Mostly starts at half-back / defence (38% of starts), 0% centre bounces"
     ],
     "like": [
-     "Liam Henry",
-     "Riley Garcia",
-     "Sam Banks",
+     "Brandon Starcevich",
+     "Will Hamill",
+     "Lachie Jones",
      "Jackson Archer",
-     "Harvey Harrison",
-     "Tyler Sonsie"
+     "Sam Banks",
+     "Luke Edwards"
     ],
     "traits": [
      "Intercept / rebound",
@@ -18164,7 +18245,7 @@
     "club": "CAR",
     "pre": 15.4,
     "positionOnly": 6.7,
-    "now": 19.3,
+    "now": 18.3,
     "games": 21,
     "current": {
      "games": 17,
@@ -18175,15 +18256,16 @@
     "track": 90,
     "status": "Long shot",
     "why": [
-     "Plays 32% of games (21 from 66 available)"
+     "Plays 32% of games (21 from 66 available)",
+     "Mostly starts at half-back / defence (52% of starts), 0% centre bounces"
     ],
     "like": [
      "Matthew Roberts",
      "Harry Perryman",
-     "Jase Burgoyne*",
-     "Miles Bergman",
      "Josh Battle",
-     "Jack Graham"
+     "Isaac Quaynor",
+     "Keidean Coleman",
+     "Jack Bowes"
     ],
     "traits": [
      "Accumulator",
@@ -18250,7 +18332,7 @@
     "club": "FRE",
     "pre": 5.4,
     "positionOnly": 6.6,
-    "now": 5.8,
+    "now": 5.6,
     "games": 5,
     "current": null,
     "best": 51.2,
@@ -18315,7 +18397,7 @@
     "club": "GEE",
     "pre": 4.6,
     "positionOnly": 6.4,
-    "now": 7.0,
+    "now": 7.3,
     "games": 60,
     "current": {
      "games": 25,
@@ -18326,14 +18408,15 @@
     "track": 104,
     "status": "Unlikely",
     "why": [
-     "Has the ceiling: 11 games of 100+"
+     "Has the ceiling: 11 games of 100+",
+     "Mostly starts at forward (88% of starts), 10% centre bounces"
     ],
     "like": [
      "Matt de Boer",
      "Nick Hind",
      "Billy Hartung",
      "Bayley Fritsch",
-     "Luke Ryan*",
+     "Willie Rioli",
      "Will Hayes"
     ],
     "traits": [],
@@ -18393,7 +18476,7 @@
     "club": "COL",
     "pre": 15.5,
     "positionOnly": 6.3,
-    "now": 1.8,
+    "now": 1.6,
     "games": 1,
     "current": null,
     "best": 51.9,
@@ -18463,7 +18546,7 @@
     "club": "WCE",
     "pre": 7.1,
     "positionOnly": 6.1,
-    "now": 14.0,
+    "now": 16.2,
     "games": 16,
     "current": null,
     "best": 55.0,
@@ -18471,15 +18554,16 @@
     "track": 72,
     "status": "Long shot",
     "why": [
-     "Plays 24% of games (16 from 66 available)"
+     "Plays 24% of games (16 from 66 available)",
+     "Mostly starts on a wing (31% of starts), 0% centre bounces"
     ],
     "like": [
      "Xavier O'Neill",
      "Jye Caldwell*",
-     "Jack Bytel",
      "Tom Sparrow*",
-     "Brad Scheer",
-     "Ed Phillips"
+     "Jack Bytel",
+     "Ed Phillips",
+     "Jack Ross"
     ],
     "traits": [
      "Clean hands",
@@ -18538,7 +18622,7 @@
     "club": "ESS",
     "pre": 9.4,
     "positionOnly": 6.0,
-    "now": 0.5,
+    "now": 0.6,
     "games": 12,
     "current": null,
     "best": 44.6,
@@ -18547,15 +18631,16 @@
     "status": "Unlikely",
     "why": [
      "Plays 18% of games (12 from 66 available)",
-     "Stuck in the seconds: 12 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 12 state-league games v 0 AFL in 2026",
+     "Mostly starts on a wing (33% of starts), 0% centre bounces"
     ],
     "like": [
      "Brayden Cook",
-     "Arthur Jones",
      "Judson Clarke",
+     "Arthur Jones",
      "Finlay Macrae",
      "Charlie Lazzaro",
-     "Maurice Rioli Jr."
+     "Taj Woewodin"
     ],
     "traits": [
      "Athleticism",
@@ -18618,7 +18703,7 @@
     "club": "RIC",
     "pre": 19.0,
     "positionOnly": 5.9,
-    "now": 30.6,
+    "now": 26.8,
     "games": 24,
     "current": {
      "games": 10,
@@ -18627,18 +18712,18 @@
     "best": 62.8,
     "peak": 69.0,
     "track": 83,
-    "status": "Close",
+    "status": "Long shot",
     "why": [
      "Plays 36% of games (24 from 66 available)",
      "Rarely goes big: 0 of 24 games at 100+"
     ],
     "like": [
      "Will Phillips",
+     "Deven Robertson",
      "Tanner Bruhn",
-     "Harry Schoenberg",
      "James Jordon",
      "Marcus Windhager",
-     "Deven Robertson"
+     "James Rowbottom"
     ],
     "traits": [
      "Contested / inside",
@@ -18713,7 +18798,7 @@
     "club": "FRE",
     "pre": 1.2,
     "positionOnly": 5.8,
-    "now": 2.9,
+    "now": 2.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -18833,7 +18918,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 12% of games (8 from 66 available)",
-     "Stuck in the seconds: 13 state-league games v 7 AFL in 2026"
+     "Stuck in the seconds: 13 state-league games v 7 AFL in 2026",
+     "Mostly starts at forward (50% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -18901,7 +18987,7 @@
     "club": "GWS",
     "pre": 4.0,
     "positionOnly": 5.4,
-    "now": 15.3,
+    "now": 18.2,
     "games": 43,
     "current": {
      "games": 22,
@@ -18912,15 +18998,16 @@
     "track": 89,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 1 of 43 games at 100+"
+     "Rarely goes big: 1 of 43 games at 100+",
+     "Mostly starts at half-back / defence (51% of starts), 0% centre bounces"
     ],
     "like": [
-     "Jack Bowes",
-     "Keidean Coleman",
      "Isaac Quaynor",
      "Darcy Wilmot",
-     "Oliver Florent",
-     "Xavier Duursma"
+     "Keidean Coleman",
+     "Jack Bowes",
+     "Harry Perryman",
+     "Matthew Roberts"
     ],
     "traits": [
      "Aerial / marking",
@@ -18983,7 +19070,7 @@
     "club": "WBD",
     "pre": 4.0,
     "positionOnly": 5.3,
-    "now": 34.5,
+    "now": 38.4,
     "games": 61,
     "current": {
      "games": 25,
@@ -18996,11 +19083,11 @@
     "why": [],
     "like": [
      "Andrew Brayshaw*",
-     "Finn Callaghan*",
      "Jake Soligo",
+     "Finn Callaghan*",
      "Max Holmes*",
-     "Sam Darcy",
-     "Zak Butters*"
+     "James Rowbottom",
+     "Connor MacDonald"
     ],
     "traits": [
      "Clean hands",
@@ -19055,7 +19142,7 @@
     "club": "HAW",
     "pre": 12.6,
     "positionOnly": 5.2,
-    "now": 0.9,
+    "now": 0.7,
     "games": 5,
     "current": {
      "games": 5,
@@ -19067,7 +19154,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 8% of games (5 from 66 available)",
-     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026"
+     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026",
+     "Mostly starts at half-back / defence (40% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -19130,7 +19218,7 @@
     "club": "WBD",
     "pre": 3.7,
     "positionOnly": 5.1,
-    "now": 2.9,
+    "now": 2.2,
     "games": 2,
     "current": {
      "games": 2,
@@ -19142,7 +19230,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 3% of games (2 from 66 available)",
-     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 2 AFL in 2026",
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [],
@@ -19198,7 +19287,7 @@
     "club": "PTA",
     "pre": 2.3,
     "positionOnly": 5.0,
-    "now": 0.8,
+    "now": 1.1,
     "games": 5,
     "current": {
      "games": 5,
@@ -19210,7 +19299,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 8% of games (5 from 66 available)",
-     "Stuck in the seconds: 10 state-league games v 5 AFL in 2026"
+     "Stuck in the seconds: 10 state-league games v 5 AFL in 2026",
+     "Mostly starts at forward (40% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -19285,12 +19375,12 @@
      "Plays 21% of games (14 from 66 available)"
     ],
     "like": [
-     "Brandon Starcevich",
-     "Ryan Angwin",
      "Harvey Harrison",
-     "Will Hamill",
      "Darcy Fogarty",
-     "Daniel Venables"
+     "Daniel Venables",
+     "Ryan Angwin",
+     "Sam Butler",
+     "Kane Farrell"
     ],
     "traits": [
      "Contested / inside",
@@ -19423,7 +19513,7 @@
     "club": "BRL",
     "pre": 1.2,
     "positionOnly": 4.8,
-    "now": 2.0,
+    "now": 1.4,
     "games": 3,
     "current": {
      "games": 3,
@@ -19497,7 +19587,7 @@
     "club": "PTA",
     "pre": 3.8,
     "positionOnly": 4.7,
-    "now": 1.1,
+    "now": 1.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -19682,7 +19772,7 @@
     "club": "WBD",
     "pre": 3.8,
     "positionOnly": 4.5,
-    "now": 6.4,
+    "now": 6.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -19711,7 +19801,7 @@
     "club": "HAW",
     "pre": 0.1,
     "positionOnly": 4.4,
-    "now": 0.8,
+    "now": 3.7,
     "games": 31,
     "current": {
      "games": 5,
@@ -19727,12 +19817,12 @@
      "Rarely goes big: 0 of 31 games at 100+"
     ],
     "like": [
-     "Mitch Knevitt",
-     "Rhett Bazzo",
-     "Blake Howes",
-     "Sam De Koning",
-     "Esava Ratugolea",
-     "Jacob Koschitzke"
+     "Corey Durdin",
+     "Liam Henry",
+     "Jack Mahony",
+     "Tyler Brockman",
+     "Harrison Jones",
+     "Bobby Hill"
     ],
     "traits": [
      "Aerial / marking",
@@ -19806,7 +19896,7 @@
     "club": "PTA",
     "pre": 9.4,
     "positionOnly": 4.4,
-    "now": 4.4,
+    "now": 2.4,
     "games": 11,
     "current": {
      "games": 3,
@@ -19823,10 +19913,10 @@
     "like": [
      "Jackson Hately",
      "Josh Sinn",
+     "Mitch Knevitt",
      "Atu Bosenavulagi",
-     "Boyd Woodcock",
-     "Neil Erasmus",
-     "Elijah Hollands"
+     "Xavier O'Halloran",
+     "Hugo Ralphsmith"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -19898,7 +19988,7 @@
     "club": "GEE",
     "pre": 8.8,
     "positionOnly": 4.3,
-    "now": 1.9,
+    "now": 2.2,
     "games": 4,
     "current": {
      "games": 2,
@@ -19978,7 +20068,7 @@
     "club": "GWS",
     "pre": 3.3,
     "positionOnly": 4.3,
-    "now": 25.8,
+    "now": 32.7,
     "games": 62,
     "current": {
      "games": 22,
@@ -19987,15 +20077,18 @@
     "best": 68.3,
     "peak": 73.2,
     "track": 90,
-    "status": "Long shot",
-    "why": [],
+    "status": "Building",
+    "why": [
+     "Impact well ahead of his scoring: 11.8 rating points a game (better than 88% of players at his stage)",
+     "Mostly starts on a wing (65% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Darcy Wilmot",
-     "Sam Powell-Pepper",
      "Andrew McGrath",
-     "Brandan Parfitt",
-     "Connor MacDonald",
-     "Sam Petrevski-Seton"
+     "Oliver Florent",
+     "Sam Powell-Pepper",
+     "Xavier Duursma",
+     "Jack Bowes",
+     "Connor MacDonald"
     ],
     "traits": [
      "Engine / work rate",
@@ -20109,7 +20202,7 @@
     "club": "GEE",
     "pre": 5.2,
     "positionOnly": 4.1,
-    "now": 1.3,
+    "now": 3.5,
     "games": 18,
     "current": {
      "games": 16,
@@ -20120,15 +20213,16 @@
     "track": 67,
     "status": "Unlikely",
     "why": [
-     "Plays 27% of games (18 from 66 available)"
+     "Plays 27% of games (18 from 66 available)",
+     "Mostly starts at forward (72% of starts), 0% centre bounces"
     ],
     "like": [
      "Sam Switkowski",
      "Laitham Vandermeer",
      "Zac Langdon",
-     "Cedric Cox",
-     "Leek Aleer",
-     "James Rowe"
+     "Mitch Hannan",
+     "Ben Long",
+     "Oskar Baker"
     ],
     "traits": [],
     "jFP": 30.6,
@@ -20190,7 +20284,7 @@
     "club": "STK",
     "pre": 10.8,
     "positionOnly": 4.1,
-    "now": 1.6,
+    "now": 1.5,
     "games": 7,
     "current": null,
     "best": 56.2,
@@ -20199,7 +20293,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 11% of games (7 from 66 available)",
-     "Stuck in the seconds: 11 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 11 state-league games v 0 AFL in 2026",
+     "Mostly starts at half-back / defence (67% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -20264,7 +20359,7 @@
     "club": "GEE",
     "pre": 5.1,
     "positionOnly": 4.0,
-    "now": 33.3,
+    "now": 33.2,
     "games": 60,
     "current": {
      "games": 24,
@@ -20273,15 +20368,18 @@
     "best": 74.5,
     "peak": 81.0,
     "track": 98,
-    "status": "Close",
-    "why": [],
+    "status": "Building",
+    "why": [
+     "Impact well ahead of his scoring: 11.7 rating points a game (better than 87% of players at his stage)",
+     "Mostly starts at half-back / defence (47% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Luke Ryan*",
      "Keidean Coleman",
+     "Luke Ryan*",
+     "Jack Lukosius",
+     "Andrew McGrath",
      "Jarrod Berry",
-     "Connor MacDonald",
-     "Sam Petrevski-Seton",
-     "Andrew McGrath"
+     "Sam Petrevski-Seton"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -20333,7 +20431,7 @@
     "club": "BRL",
     "pre": 3.7,
     "positionOnly": 4.0,
-    "now": 1.2,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -20393,7 +20491,7 @@
     "club": "RIC",
     "pre": 60.2,
     "positionOnly": 58.9,
-    "now": 39.1,
+    "now": 53.2,
     "games": 23,
     "current": {
      "games": 12,
@@ -20402,17 +20500,17 @@
     "best": 59.9,
     "peak": 63.2,
     "track": 88,
-    "status": "Close",
+    "status": "On track",
     "why": [
      "Rarely goes big: 0 of 23 games at 100+"
     ],
     "like": [
-     "Deven Robertson",
-     "James Rowbottom",
-     "Max Holmes*",
+     "Jason Horne-Francis*",
      "Chad Warner*",
-     "Sam Flanders*",
-     "Marcus Windhager"
+     "Luke Davies-Uniacke*",
+     "Harry Schoenberg",
+     "Bailey Smith*",
+     "Luke Jackson*"
     ],
     "traits": [
      "Clean hands",
@@ -20450,7 +20548,7 @@
     "club": "NTH",
     "pre": 12.1,
     "positionOnly": 44.8,
-    "now": 44.1,
+    "now": 36.6,
     "games": 41,
     "current": {
      "games": 19,
@@ -20464,12 +20562,12 @@
      "Rarely goes big: 1 of 41 games at 100+"
     ],
     "like": [
-     "Bailey Smith*",
-     "Jason Horne-Francis*",
      "Ben Hobbs",
      "Harry Schoenberg",
-     "Josh Ward",
-     "Tom Green*"
+     "Jake Soligo",
+     "Bailey Smith*",
+     "Tom Green*",
+     "Josh Rachele"
     ],
     "traits": [
      "Aerial / marking",
@@ -20508,7 +20606,7 @@
     "club": "CAR",
     "pre": 45.0,
     "positionOnly": 36.8,
-    "now": 61.3,
+    "now": 60.8,
     "games": 25,
     "current": {
      "games": 25,
@@ -20520,12 +20618,12 @@
     "status": "On track",
     "why": [],
     "like": [
+     "Caleb Serong*",
      "Noah Anderson*",
      "Sam Berry*",
-     "Caleb Serong*",
-     "Ben Hobbs",
      "Josh Ward",
-     "Hunter Clark"
+     "Errol Gulden*",
+     "Ben Hobbs"
     ],
     "traits": [
      "Accumulator",
@@ -20558,7 +20656,7 @@
     "club": "ADE",
     "pre": 18.6,
     "positionOnly": 31.5,
-    "now": 2.2,
+    "now": 2.9,
     "games": 10,
     "current": null,
     "best": 40.7,
@@ -20570,12 +20668,12 @@
      "Stuck in the seconds: 11 state-league games v 0 AFL in 2026"
     ],
     "like": [
-     "Fischer McAsey",
      "Arthur Jones",
+     "Fischer McAsey",
      "Finlay Macrae",
      "Tyler Brockman",
-     "Will Phillips",
-     "Cameron Polson"
+     "Charlie Lazzaro",
+     "Griffin Logue"
     ],
     "traits": [
      "Clean hands",
@@ -20627,7 +20725,7 @@
     "club": "BRL",
     "pre": 44.1,
     "positionOnly": 27.6,
-    "now": 36.3,
+    "now": 47.3,
     "games": 54,
     "current": {
      "games": 27,
@@ -20640,11 +20738,11 @@
     "why": [],
     "like": [
      "Hugh McCluggage*",
+     "Andrew McGrath",
+     "Connor MacDonald",
      "Jaidyn Stephenson",
-     "Sam Powell-Pepper",
-     "Jarrod Berry",
-     "Errol Gulden*",
-     "Andrew McGrath"
+     "Sam Petrevski-Seton",
+     "Ben Hobbs"
     ],
     "traits": [
      "Accumulator",
@@ -20682,7 +20780,7 @@
     "club": "MEL",
     "pre": 67.4,
     "positionOnly": 24.7,
-    "now": 24.0,
+    "now": 45.6,
     "games": 46,
     "current": {
      "games": 24,
@@ -20691,17 +20789,19 @@
     "best": 62.3,
     "peak": 64.8,
     "track": 91,
-    "status": "Long shot",
+    "status": "Building",
     "why": [
-     "Rarely goes big: 1 of 46 games at 100+"
+     "Impact well ahead of his scoring: 12.6 rating points a game (better than 97% of players at his stage)",
+     "Rarely goes big: 1 of 46 games at 100+",
+     "Mostly starts on a wing (35% of starts), 1% centre bounces"
     ],
     "like": [
-     "Aaron Naughton",
-     "Jack Lukosius",
-     "Brennan Cox",
-     "Kysaiah Pickett*",
-     "Will Hayward",
-     "Adam Cerra*"
+     "Andrew Brayshaw*",
+     "Jason Horne-Francis*",
+     "Connor MacDonald",
+     "Andrew McGrath",
+     "Adam Cerra*",
+     "Bailey Smith*"
     ],
     "traits": [
      "Consistency",
@@ -20751,7 +20851,7 @@
     "club": "RIC",
     "pre": 19.2,
     "positionOnly": 22.5,
-    "now": 15.5,
+    "now": 14.5,
     "games": 0,
     "current": null,
     "best": null,
@@ -20794,7 +20894,7 @@
     "club": "STK",
     "pre": 35.5,
     "positionOnly": 20.6,
-    "now": 4.5,
+    "now": 13.0,
     "games": 18,
     "current": {
      "games": 7,
@@ -20803,18 +20903,17 @@
     "best": 51.3,
     "peak": 45.6,
     "track": 75,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Plays 41% of games (18 from 44 available)",
-     "Stuck in the seconds: 9 state-league games v 7 AFL in 2026"
+     "Plays 41% of games (18 from 44 available)"
     ],
     "like": [
-     "Sam Butler",
-     "Maurice Rioli Jr.",
-     "Oliver Henry",
-     "Trey Ruscoe",
-     "Lachie Jones",
-     "Keidean Coleman"
+     "Mac Andrew",
+     "Zac Bailey*",
+     "Braeden Campbell",
+     "Jaxon Prior",
+     "Keidean Coleman",
+     "Lachie Jones"
     ],
     "traits": [
      "Aerial / marking",
@@ -20873,7 +20972,7 @@
     "club": "GCS",
     "pre": 20.3,
     "positionOnly": 19.1,
-    "now": 18.8,
+    "now": 27.8,
     "games": 27,
     "current": {
      "games": 23,
@@ -20884,15 +20983,16 @@
     "track": 83,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 27 games at 100+"
+     "Rarely goes big: 0 of 27 games at 100+",
+     "Mostly starts at forward (63% of starts), 1% centre bounces"
     ],
     "like": [
-     "Trent Rivers",
      "Ben Ainsworth",
-     "Jy Simpkin*",
+     "Riley Thilthorpe",
      "Brent Daniels",
-     "Nick Coffield",
-     "Sam Flanders*"
+     "Jordan Gallucci",
+     "Zak Butters*",
+     "Jy Simpkin*"
     ],
     "traits": [
      "Engine / work rate",
@@ -20940,7 +21040,7 @@
     "club": "STK",
     "pre": 0.7,
     "positionOnly": 17.8,
-    "now": 1.0,
+    "now": 1.6,
     "games": 19,
     "current": {
      "games": 9,
@@ -20951,15 +21051,16 @@
     "track": 70,
     "status": "Unlikely",
     "why": [
-     "Plays 43% of games (19 from 44 available)"
+     "Plays 43% of games (19 from 44 available)",
+     "Mostly starts at half-back / defence (74% of starts), 0% centre bounces"
     ],
     "like": [
-     "Max King",
-     "Miller Bergman",
      "Josh Gibcus",
      "Rhett Bazzo",
-     "Ben King",
-     "Denver Grainger-Barras"
+     "Denver Grainger-Barras",
+     "Jack Williams",
+     "Sam Taylor",
+     "Harrison Jones"
     ],
     "traits": [
      "Aerial / marking",
@@ -21018,7 +21119,7 @@
     "club": "MEL",
     "pre": 17.4,
     "positionOnly": 16.6,
-    "now": 4.9,
+    "now": 13.9,
     "games": 25,
     "current": {
      "games": 7,
@@ -21027,17 +21128,18 @@
     "best": 54.6,
     "peak": 52.4,
     "track": 80,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 25 games at 100+"
+     "Rarely goes big: 0 of 25 games at 100+",
+     "Mostly starts at half-back / defence (36% of starts), 1% centre bounces"
     ],
     "like": [
-     "Mitch Georgiades",
-     "Cody Weightman",
+     "Harry Perryman",
+     "Isaac Quaynor",
      "Jack Mahony",
-     "Brandon Walker",
-     "Jack Petruccelle",
-     "Oliver Henry"
+     "Charlie Spargo",
+     "Nik Cox",
+     "Sam Butler"
     ],
     "traits": [
      "Consistency",
@@ -21086,7 +21188,7 @@
     "club": "RIC",
     "pre": 21.2,
     "positionOnly": 15.7,
-    "now": 17.6,
+    "now": 17.5,
     "games": 17,
     "current": {
      "games": 10,
@@ -21100,12 +21202,12 @@
      "Plays 39% of games (17 from 44 available)"
     ],
     "like": [
-     "Bailey Scott",
      "Izak Rankine*",
-     "Ben Long",
-     "Neil Erasmus",
-     "Jack Ross",
-     "Luke Davies-Uniacke*"
+     "Tanner Bruhn",
+     "Jack Mahony",
+     "Jordan Gallucci",
+     "Luke Davies-Uniacke*",
+     "Keidean Coleman"
     ],
     "traits": [
      "Athleticism",
@@ -21164,7 +21266,7 @@
     "club": "ESS",
     "pre": 17.6,
     "positionOnly": 14.8,
-    "now": 9.5,
+    "now": 15.0,
     "games": 38,
     "current": {
      "games": 15,
@@ -21173,17 +21275,18 @@
     "best": 49.1,
     "peak": 47.0,
     "track": 72,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 38 games at 100+"
+     "Rarely goes big: 0 of 38 games at 100+",
+     "Mostly starts at forward (84% of starts), 8% centre bounces"
     ],
     "like": [
      "Paul Curtis",
      "Nick Blakey",
+     "Corey Durdin",
      "Jesse Motlop",
      "Beau McCreery",
-     "Tom McCartin",
-     "Zac Bailey*"
+     "Ed Richards*"
     ],
     "traits": [
      "Contested / inside",
@@ -21220,7 +21323,7 @@
     "club": "RIC",
     "pre": 0.7,
     "positionOnly": 14.1,
-    "now": 1.3,
+    "now": 2.3,
     "games": 26,
     "current": {
      "games": 10,
@@ -21231,15 +21334,16 @@
     "track": 66,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 26 games at 100+"
+     "Rarely goes big: 0 of 26 games at 100+",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [
      "Ben King",
-     "Denver Grainger-Barras",
-     "Josh Gibcus",
+     "Jack Williams",
+     "Cameron Polson",
+     "Harrison Jones",
      "Max King",
-     "Sam Taylor",
-     "Liam Henry"
+     "Brayden Ham"
     ],
     "traits": [
      "Athleticism",
@@ -21287,7 +21391,7 @@
     "club": "PTA",
     "pre": 6.4,
     "positionOnly": 13.4,
-    "now": 13.3,
+    "now": 15.9,
     "games": 35,
     "current": {
      "games": 23,
@@ -21298,15 +21402,16 @@
     "track": 78,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 35 games at 100+"
+     "Rarely goes big: 0 of 35 games at 100+",
+     "Mostly starts at forward (34% of starts), 0% centre bounces"
     ],
     "like": [
-     "Lochie O'Brien",
-     "Brandon Walker",
-     "Paddy Dow",
-     "Jack Mahony",
      "Mitch Georgiades",
-     "Ed Richards*"
+     "Jack Mahony",
+     "Beau McCreery",
+     "Tom McCartin",
+     "Archie Perkins",
+     "Jy Simpkin*"
     ],
     "traits": [
      "Clean hands",
@@ -21355,7 +21460,7 @@
     "club": "WCE",
     "pre": 20.5,
     "positionOnly": 12.8,
-    "now": 5.7,
+    "now": 15.9,
     "games": 25,
     "current": {
      "games": 19,
@@ -21364,17 +21469,18 @@
     "best": 51.7,
     "peak": 50.4,
     "track": 76,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 25 games at 100+"
+     "Rarely goes big: 0 of 25 games at 100+",
+     "Mostly starts on a wing (64% of starts), 2% centre bounces"
     ],
     "like": [
-     "Jye Amiss",
-     "Jacob van Rooyen",
-     "Logan McDonald",
-     "Jamarra Ugle-Hagan",
-     "Charlie Ballard",
-     "Harrison Petty"
+     "Zac Bailey*",
+     "Lochie O'Brien",
+     "Neil Erasmus",
+     "Mac Andrew",
+     "Nik Cox",
+     "Jack Mahony"
     ],
     "traits": [
      "Contested / inside",
@@ -21424,7 +21530,7 @@
     "club": "FRE",
     "pre": 11.3,
     "positionOnly": 12.3,
-    "now": 37.9,
+    "now": 39.1,
     "games": 49,
     "current": {
      "games": 25,
@@ -21435,15 +21541,16 @@
     "track": 107,
     "status": "Close",
     "why": [
-     "Rarely goes big: 2 of 49 games at 100+"
+     "Rarely goes big: 2 of 49 games at 100+",
+     "Mostly starts at forward (80% of starts), 25% centre bounces"
     ],
     "like": [
-     "Hugh McCluggage*",
-     "Jaidyn Stephenson",
-     "Ben Hobbs",
+     "Sam Powell-Pepper",
      "Jarrod Berry",
-     "Noah Anderson*",
-     "Sam Powell-Pepper"
+     "Errol Gulden*",
+     "Ben Hobbs",
+     "Jaidyn Stephenson",
+     "Brandan Parfitt"
     ],
     "traits": [
      "Engine / work rate",
@@ -21479,7 +21586,7 @@
     "club": "GWS",
     "pre": 18.6,
     "positionOnly": 11.8,
-    "now": 1.8,
+    "now": 1.1,
     "games": 5,
     "current": {
      "games": 5,
@@ -21545,7 +21652,7 @@
     "club": "GWS",
     "pre": 6.2,
     "positionOnly": 11.3,
-    "now": 0.8,
+    "now": 1.0,
     "games": 5,
     "current": {
      "games": 5,
@@ -21611,7 +21718,7 @@
     "club": "WBD",
     "pre": 6.3,
     "positionOnly": 10.9,
-    "now": 4.8,
+    "now": 12.1,
     "games": 31,
     "current": {
      "games": 23,
@@ -21620,17 +21727,18 @@
     "best": 55.3,
     "peak": 55.4,
     "track": 81,
-    "status": "Unlikely",
+    "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 31 games at 100+"
+     "Rarely goes big: 0 of 31 games at 100+",
+     "Mostly starts on a wing (35% of starts), 2% centre bounces"
     ],
     "like": [
-     "Charlie Ballard",
-     "Brennan Cox",
-     "Jacob van Rooyen",
-     "Matthew Johnson",
-     "Jack Lukosius",
-     "Jye Amiss"
+     "Mitch Georgiades",
+     "Jack Mahony",
+     "Sam Flanders*",
+     "Neil Erasmus",
+     "Wil Powell",
+     "Ben Paton"
     ],
     "traits": [
      "Accumulator",
@@ -21689,7 +21797,7 @@
     "club": "RIC",
     "pre": 0.7,
     "positionOnly": 10.5,
-    "now": 4.8,
+    "now": 6.5,
     "games": 32,
     "current": {
      "games": 11,
@@ -21700,15 +21808,16 @@
     "track": 80,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 1 of 32 games at 100+"
+     "Rarely goes big: 1 of 32 games at 100+",
+     "Mostly starts at half-back / defence (41% of starts), 0% centre bounces"
     ],
     "like": [
+     "Brandon Walker",
      "Charlie Ballard",
-     "Jacob van Rooyen",
-     "Brennan Cox",
-     "Matthew Johnson",
-     "Jye Amiss",
-     "Josh Goater"
+     "Harrison Petty",
+     "Marcus Windhager",
+     "Tom McCartin",
+     "Brady Hough"
     ],
     "traits": [
      "Aerial / marking",
@@ -21758,7 +21867,7 @@
     "club": "SYD",
     "pre": 6.7,
     "positionOnly": 10.1,
-    "now": 2.3,
+    "now": 3.7,
     "games": 8,
     "current": {
      "games": 5,
@@ -21828,7 +21937,7 @@
     "club": "RIC",
     "pre": 0.4,
     "positionOnly": 9.8,
-    "now": 0.8,
+    "now": 1.3,
     "games": 12,
     "current": {
      "games": 4,
@@ -21839,15 +21948,16 @@
     "track": 64,
     "status": "Unlikely",
     "why": [
-     "Plays 27% of games (12 from 44 available)"
+     "Plays 27% of games (12 from 44 available)",
+     "Mostly starts at forward (67% of starts), 0% centre bounces"
     ],
     "like": [
      "Fischer McAsey",
-     "Denver Grainger-Barras",
-     "Josh Gibcus",
-     "Arthur Jones",
      "Cameron Polson",
-     "Rhett Bazzo"
+     "Jack Williams",
+     "Rhett Bazzo",
+     "Denver Grainger-Barras",
+     "Josh Gibcus"
     ],
     "traits": [
      "Aerial / marking",
@@ -21904,7 +22014,7 @@
     "club": "GWS",
     "pre": 27.9,
     "positionOnly": 9.5,
-    "now": 2.7,
+    "now": 3.5,
     "games": 5,
     "current": {
      "games": 1,
@@ -21973,7 +22083,7 @@
     "club": "BRL",
     "pre": 14.1,
     "positionOnly": 9.2,
-    "now": 3.0,
+    "now": 4.1,
     "games": 13,
     "current": {
      "games": 2,
@@ -21989,11 +22099,11 @@
     ],
     "like": [
      "Tyler Brockman",
-     "Will Phillips",
      "Finlay Macrae",
-     "Charlie Lazzaro",
+     "Judson Clarke",
      "Brayden Cook",
-     "Judson Clarke"
+     "Will Phillips",
+     "Arthur Jones"
     ],
     "traits": [
      "Accumulator",
@@ -22051,7 +22161,7 @@
     "club": "SYD",
     "pre": 4.3,
     "positionOnly": 9.0,
-    "now": 0.8,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -22104,7 +22214,7 @@
     "club": "NTH",
     "pre": 0.3,
     "positionOnly": 8.7,
-    "now": 0.1,
+    "now": 0.2,
     "games": 5,
     "current": {
      "games": 3,
@@ -22116,7 +22226,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 11% of games (5 from 44 available)",
-     "Stuck in the seconds: 15 state-league games v 3 AFL in 2026"
+     "Stuck in the seconds: 15 state-league games v 3 AFL in 2026",
+     "Mostly starts at forward (40% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -22173,7 +22284,7 @@
     "club": "RIC",
     "pre": 3.1,
     "positionOnly": 8.5,
-    "now": 2.4,
+    "now": 2.8,
     "games": 11,
     "current": null,
     "best": 44.8,
@@ -22184,12 +22295,12 @@
      "Plays 25% of games (11 from 44 available)"
     ],
     "like": [
-     "Jack Williams",
-     "Brayden Crossley",
-     "Harrison Jones",
-     "Caleb Graham",
+     "Brayden Cook",
+     "Arthur Jones",
+     "Finlay Macrae",
      "Tyler Brockman",
-     "Finlay Macrae"
+     "Fischer McAsey",
+     "Denver Grainger-Barras"
     ],
     "traits": [
      "Aerial / marking",
@@ -22242,7 +22353,7 @@
     "club": "WBD",
     "pre": 7.8,
     "positionOnly": 8.3,
-    "now": 10.0,
+    "now": 9.2,
     "games": 10,
     "current": {
      "games": 10,
@@ -22253,15 +22364,17 @@
     "track": 85,
     "status": "Unlikely",
     "why": [
-     "Plays 23% of games (10 from 44 available)"
+     "Plays 23% of games (10 from 44 available)",
+     "Stuck in the seconds: 9 state-league games v 10 AFL in 2026",
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [
-     "Nathan O'Driscoll",
-     "Trent Bianco",
-     "Ryan Byrnes",
-     "Patrick Lipinski",
-     "Callum Brown",
-     "Ben Paton"
+     "Caleb Poulter",
+     "Jackson Hately",
+     "Nick Coffield",
+     "Ben Paton",
+     "Josh Goater",
+     "Brad Scheer"
     ],
     "traits": [
      "Aerial / marking",
@@ -22314,7 +22427,7 @@
     "club": "WCE",
     "pre": 0.3,
     "positionOnly": 8.0,
-    "now": 8.1,
+    "now": 2.4,
     "games": 32,
     "current": {
      "games": 23,
@@ -22325,15 +22438,16 @@
     "track": 75,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 32 games at 100+"
+     "Rarely goes big: 0 of 32 games at 100+",
+     "Mostly starts at forward (97% of starts), 0% centre bounces"
     ],
     "like": [
-     "Jye Amiss",
-     "Sam Taylor",
-     "Logan McDonald",
-     "Jamarra Ugle-Hagan",
      "Jacob van Rooyen",
-     "Charlie Ballard"
+     "Jye Amiss",
+     "Tom McCartin",
+     "Jack Petruccelle",
+     "Bailey Scott",
+     "Harrison Petty"
     ],
     "traits": [
      "Aerial / marking",
@@ -22382,7 +22496,7 @@
     "club": "WBD",
     "pre": 8.0,
     "positionOnly": 7.9,
-    "now": 7.1,
+    "now": 4.9,
     "games": 24,
     "current": {
      "games": 13,
@@ -22396,12 +22510,12 @@
      "Rarely goes big: 0 of 24 games at 100+"
     ],
     "like": [
-     "Oliver Henry",
+     "Logan McDonald",
      "Keidean Coleman",
-     "Sam Butler",
-     "Lachie Jones",
+     "Daniel Venables",
      "Maurice Rioli Jr.",
-     "Jesse Motlop"
+     "Corey Durdin",
+     "Jaxon Prior"
     ],
     "traits": [
      "Engine / work rate",
@@ -22510,7 +22624,7 @@
     "club": "PTA",
     "pre": 0.2,
     "positionOnly": 7.5,
-    "now": 3.9,
+    "now": 2.5,
     "games": 27,
     "current": {
      "games": 23,
@@ -22521,15 +22635,16 @@
     "track": 74,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 27 games at 100+"
+     "Rarely goes big: 0 of 27 games at 100+",
+     "Mostly starts at forward (96% of starts), 5% centre bounces"
     ],
     "like": [
-     "Sam Taylor",
-     "Jye Amiss",
-     "Logan McDonald",
-     "Jamarra Ugle-Hagan",
-     "Max King",
-     "Ben King"
+     "Ben King",
+     "Harrison Petty",
+     "Jacob van Rooyen",
+     "Tom McCartin",
+     "Jack Williams",
+     "Jye Amiss"
     ],
     "traits": [
      "Aerial / marking",
@@ -22576,7 +22691,7 @@
     "club": "FRE",
     "pre": 0.2,
     "positionOnly": 7.3,
-    "now": 1.1,
+    "now": 1.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -22617,7 +22732,7 @@
     "club": "HAW",
     "pre": 0.4,
     "positionOnly": 7.2,
-    "now": 0.5,
+    "now": 1.1,
     "games": 4,
     "current": {
      "games": 4,
@@ -22629,7 +22744,7 @@
     "status": "Unlikely",
     "why": [
      "Plays 9% of games (4 from 44 available)",
-     "Stuck in the seconds: 12 state-league games v 4 AFL in 2026"
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -22682,7 +22797,7 @@
     "club": "GWS",
     "pre": 4.0,
     "positionOnly": 7.0,
-    "now": 2.0,
+    "now": 3.4,
     "games": 5,
     "current": {
      "games": 5,
@@ -22693,8 +22808,7 @@
     "track": 72,
     "status": "Unlikely",
     "why": [
-     "Plays 11% of games (5 from 44 available)",
-     "Stuck in the seconds: 13 state-league games v 5 AFL in 2026"
+     "Plays 11% of games (5 from 44 available)"
     ],
     "like": [],
     "traits": [
@@ -22748,7 +22862,7 @@
     "club": "ESS",
     "pre": 7.1,
     "positionOnly": 6.9,
-    "now": 2.4,
+    "now": 3.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -22801,7 +22915,7 @@
     "club": "PTA",
     "pre": 3.0,
     "positionOnly": 6.7,
-    "now": 7.9,
+    "now": 1.8,
     "games": 26,
     "current": {
      "games": 12,
@@ -22815,12 +22929,12 @@
      "Rarely goes big: 0 of 26 games at 100+"
     ],
     "like": [
-     "Oliver Henry",
      "Jack Petruccelle",
-     "Zac Bailey*",
-     "Mitch Georgiades",
-     "Neil Erasmus",
-     "Jack Mahony"
+     "Bailey Scott",
+     "Tom McCartin",
+     "Logan McDonald",
+     "Beau McCreery",
+     "Brandon Walker"
     ],
     "traits": [
      "Accumulator",
@@ -22880,7 +22994,7 @@
     "club": "ESS",
     "pre": 7.4,
     "positionOnly": 6.6,
-    "now": 10.9,
+    "now": 9.1,
     "games": 20,
     "current": {
      "games": 6,
@@ -22889,18 +23003,19 @@
     "best": 59.6,
     "peak": 62.2,
     "track": 87,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
      "Plays 45% of games (20 from 44 available)",
-     "Rarely goes big: 1 of 20 games at 100+"
+     "Rarely goes big: 1 of 20 games at 100+",
+     "Mostly starts on a wing (50% of starts), 1% centre bounces"
     ],
     "like": [
-     "Jordan Clark*",
-     "Nathan O'Driscoll",
-     "Patrick Lipinski",
-     "Cody Weightman",
-     "Lachie Fogarty",
-     "Nick Coffield"
+     "Wil Powell",
+     "Ben Paton",
+     "Nick Coffield",
+     "Brady Hough",
+     "Josh Goater",
+     "Jackson Hately"
     ],
     "traits": [
      "Aerial / marking",
@@ -22964,7 +23079,8 @@
     "track": 75,
     "status": "Unlikely",
     "why": [
-     "Plays 14% of games (6 from 44 available)"
+     "Plays 14% of games (6 from 44 available)",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -23007,7 +23123,7 @@
     "club": "SYD",
     "pre": 9.2,
     "positionOnly": 6.3,
-    "now": 20.9,
+    "now": 25.8,
     "games": 36,
     "current": {
      "games": 20,
@@ -23021,10 +23137,10 @@
     "like": [
      "Tom Stewart*",
      "Matt de Boer",
-     "Billy Hartung",
      "Bayley Fritsch",
-     "Will Hayes",
-     "Luke Ryan*"
+     "Billy Hartung",
+     "Luke Ryan*",
+     "Will Hayes"
     ],
     "traits": [
      "Engine / work rate",
@@ -23082,7 +23198,7 @@
     "club": "BRL",
     "pre": 0.8,
     "positionOnly": 6.2,
-    "now": 4.1,
+    "now": 2.0,
     "games": 27,
     "current": {
      "games": 21,
@@ -23093,15 +23209,16 @@
     "track": 74,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 27 games at 100+"
+     "Rarely goes big: 0 of 27 games at 100+",
+     "Mostly starts at half-back / defence (56% of starts), 0% centre bounces"
     ],
     "like": [
-     "Jye Amiss",
-     "Logan McDonald",
      "Sam Taylor",
-     "Jamarra Ugle-Hagan",
-     "Jacob van Rooyen",
-     "Max King"
+     "Jack Petruccelle",
+     "Bailey Scott",
+     "Tom McCartin",
+     "Charlie Ballard",
+     "Jye Amiss"
     ],
     "traits": [],
     "jFP": 57.0,
@@ -23144,7 +23261,7 @@
     "club": "CAR",
     "pre": 5.1,
     "positionOnly": 6.1,
-    "now": 0.9,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -23197,7 +23314,7 @@
     "club": "GEE",
     "pre": 0.3,
     "positionOnly": 6.0,
-    "now": 0.2,
+    "now": 0.3,
     "games": 8,
     "current": {
      "games": 8,
@@ -23208,7 +23325,8 @@
     "track": 74,
     "status": "Unlikely",
     "why": [
-     "Plays 18% of games (8 from 44 available)"
+     "Plays 18% of games (8 from 44 available)",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -23259,7 +23377,7 @@
     "club": "STK",
     "pre": 7.9,
     "positionOnly": 5.9,
-    "now": 35.1,
+    "now": 30.6,
     "games": 21,
     "current": {
      "games": 10,
@@ -23270,16 +23388,15 @@
     "track": 90,
     "status": "Close",
     "why": [
-     "Plays 48% of games (21 from 44 available)",
-     "Stuck in the seconds: 11 state-league games v 10 AFL in 2026"
+     "Plays 48% of games (21 from 44 available)"
     ],
     "like": [
      "Tom Green*",
      "Chad Warner*",
-     "Harry Schoenberg",
-     "Ryan Byrnes",
-     "Marcus Windhager",
-     "Max Holmes*"
+     "Jack Bowes",
+     "Jake Soligo",
+     "Deven Robertson",
+     "Harry Schoenberg"
     ],
     "traits": [
      "Clean hands",
@@ -23353,11 +23470,11 @@
     ],
     "like": [
      "Cameron Polson",
-     "Arthur Jones",
      "Darcy Fogarty",
-     "Griffin Logue",
-     "Liam Henry",
-     "Chayce Jones"
+     "Jack Williams",
+     "Brayden Ham",
+     "Arthur Jones",
+     "Denver Grainger-Barras"
     ],
     "traits": [
      "Engine / work rate",
@@ -23458,7 +23575,7 @@
     "club": "WCE",
     "pre": 6.5,
     "positionOnly": 5.6,
-    "now": 8.4,
+    "now": 8.0,
     "games": 1,
     "current": null,
     "best": 55.1,
@@ -23466,7 +23583,8 @@
     "track": 81,
     "status": "Unlikely",
     "why": [
-     "Plays 2% of games (1 from 44 available)"
+     "Plays 2% of games (1 from 44 available)",
+     "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -23507,7 +23625,7 @@
     "club": "GCS",
     "pre": 0.3,
     "positionOnly": 5.5,
-    "now": 0.1,
+    "now": 0.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -23560,7 +23678,7 @@
     "club": "COL",
     "pre": 0.4,
     "positionOnly": 5.4,
-    "now": 0.6,
+    "now": 1.0,
     "games": 10,
     "current": {
      "games": 9,
@@ -23572,15 +23690,15 @@
     "status": "Unlikely",
     "why": [
      "Plays 23% of games (10 from 44 available)",
-     "Stuck in the seconds: 11 state-league games v 9 AFL in 2026"
+     "Mostly starts at forward (40% of starts), 0% centre bounces"
     ],
     "like": [
-     "Denver Grainger-Barras",
-     "Miller Bergman",
+     "Jack Williams",
+     "Cameron Polson",
+     "Harrison Jones",
+     "Ben King",
      "Josh Gibcus",
-     "Max King",
-     "Brayden Cook",
-     "Judson Clarke"
+     "Maurice Rioli Jr."
     ],
     "traits": [
      "Aerial / marking",
@@ -23639,7 +23757,7 @@
     "club": "WBD",
     "pre": 3.6,
     "positionOnly": 5.4,
-    "now": 13.6,
+    "now": 10.0,
     "games": 37,
     "current": {
      "games": 18,
@@ -23652,11 +23770,11 @@
     "why": [],
     "like": [
      "Mitch Hannan",
-     "Brett Bewley",
-     "Will Hayes",
-     "Marty Hore",
      "Liam Ryan",
-     "Jy Farrar"
+     "Brett Bewley",
+     "Tom Highmore",
+     "Will Hayes",
+     "Jacob Wehr"
     ],
     "traits": [],
     "jFP": null,
@@ -23709,7 +23827,7 @@
     "club": "GEE",
     "pre": 3.4,
     "positionOnly": 5.3,
-    "now": 1.6,
+    "now": 2.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -23759,7 +23877,7 @@
     "club": "STK",
     "pre": 2.7,
     "positionOnly": 5.2,
-    "now": 1.0,
+    "now": 1.5,
     "games": 1,
     "current": null,
     "best": 51.3,
@@ -23768,7 +23886,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 2% of games (1 from 44 available)",
-     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 15 state-league games v 0 AFL in 2026",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -23820,7 +23939,7 @@
     "club": "CAR",
     "pre": 3.0,
     "positionOnly": 5.1,
-    "now": 0.5,
+    "now": 0.7,
     "games": 3,
     "current": null,
     "best": 52.0,
@@ -23829,7 +23948,8 @@
     "status": "Unlikely",
     "why": [
      "Plays 7% of games (3 from 44 available)",
-     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026"
+     "Stuck in the seconds: 10 state-league games v 0 AFL in 2026",
+     "Mostly starts on a wing (67% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -23930,7 +24050,7 @@
     "club": "COL",
     "pre": 4.0,
     "positionOnly": 5.0,
-    "now": 1.3,
+    "now": 1.5,
     "games": 12,
     "current": {
      "games": 10,
@@ -23947,9 +24067,9 @@
      "Arthur Jones",
      "Cameron Polson",
      "Judson Clarke",
-     "Liam Henry",
-     "Darcy Fogarty",
-     "Griffin Logue"
+     "Brayden Ham",
+     "Maurice Rioli Jr.",
+     "Darcy Fogarty"
     ],
     "traits": [],
     "jFP": null,
@@ -24001,7 +24121,7 @@
     "club": "NTH",
     "pre": 8.4,
     "positionOnly": 4.9,
-    "now": 1.1,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -24054,7 +24174,7 @@
     "club": "RIC",
     "pre": 2.0,
     "positionOnly": 4.8,
-    "now": 2.1,
+    "now": 1.3,
     "games": 12,
     "current": {
      "games": 8,
@@ -24065,15 +24185,16 @@
     "track": 71,
     "status": "Unlikely",
     "why": [
-     "Plays 27% of games (12 from 44 available)"
+     "Plays 27% of games (12 from 44 available)",
+     "Mostly starts at forward (58% of starts), 0% centre bounces"
     ],
     "like": [
+     "Harrison Jones",
      "Maurice Rioli Jr.",
-     "Campbell Chesser",
-     "Judson Clarke",
-     "Jaxon Prior",
-     "Lachie Jones",
-     "Brayden Cook"
+     "Max King",
+     "Curtis Taylor",
+     "Bailey Scott",
+     "Brayden Ham"
     ],
     "traits": [
      "Aerial / marking",
@@ -24181,7 +24302,7 @@
     "club": "STK",
     "pre": 1.9,
     "positionOnly": 4.7,
-    "now": 0.5,
+    "now": 0.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -24232,7 +24353,7 @@
     "club": "ESS",
     "pre": 10.2,
     "positionOnly": 4.7,
-    "now": 1.4,
+    "now": 2.5,
     "games": 7,
     "current": {
      "games": 4,
@@ -24244,7 +24365,7 @@
     "status": "Unlikely",
     "why": [
      "Plays 16% of games (7 from 44 available)",
-     "Stuck in the seconds: 9 state-league games v 4 AFL in 2026"
+     "Mostly starts at forward (29% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -24300,7 +24421,7 @@
     "club": "WBD",
     "pre": 5.0,
     "positionOnly": 4.6,
-    "now": 1.0,
+    "now": 1.5,
     "games": 8,
     "current": {
      "games": 8,
@@ -24311,8 +24432,7 @@
     "track": 72,
     "status": "Unlikely",
     "why": [
-     "Plays 18% of games (8 from 44 available)",
-     "Stuck in the seconds: 11 state-league games v 8 AFL in 2026"
+     "Plays 18% of games (8 from 44 available)"
     ],
     "like": [],
     "traits": [
@@ -24364,7 +24484,7 @@
     "club": "FRE",
     "pre": 3.1,
     "positionOnly": 4.5,
-    "now": 5.7,
+    "now": 5.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -24400,7 +24520,7 @@
     "club": "HAW",
     "pre": 11.2,
     "positionOnly": 4.5,
-    "now": 1.4,
+    "now": 1.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -24452,7 +24572,7 @@
     "club": "WCE",
     "pre": 3.4,
     "positionOnly": 4.4,
-    "now": 8.0,
+    "now": 6.3,
     "games": 29,
     "current": {
      "games": 21,
@@ -24463,15 +24583,16 @@
     "track": 78,
     "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 29 games at 100+"
+     "Rarely goes big: 0 of 29 games at 100+",
+     "Mostly starts on a wing (34% of starts), 0% centre bounces"
     ],
     "like": [
-     "Charlie Ballard",
-     "Jacob van Rooyen",
-     "Jye Amiss",
-     "Logan McDonald",
-     "Jamarra Ugle-Hagan",
-     "Matthew Johnson"
+     "Jack Petruccelle",
+     "Brandon Walker",
+     "Tom McCartin",
+     "Beau McCreery",
+     "Jake Waterman",
+     "Mitch Georgiades"
     ],
     "traits": [
      "Engine / work rate",
@@ -24520,7 +24641,7 @@
     "club": "GEE",
     "pre": 0.6,
     "positionOnly": 4.4,
-    "now": 0.2,
+    "now": 0.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -24571,7 +24692,7 @@
     "club": "NTH",
     "pre": 6.0,
     "positionOnly": 4.3,
-    "now": 0.9,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -24622,7 +24743,7 @@
     "club": "MEL",
     "pre": 3.0,
     "positionOnly": 4.3,
-    "now": 0.5,
+    "now": 0.7,
     "games": 6,
     "current": {
      "games": 1,
@@ -24687,7 +24808,7 @@
     "club": "GEE",
     "pre": 5.7,
     "positionOnly": 4.2,
-    "now": 0.9,
+    "now": 1.3,
     "games": 0,
     "current": null,
     "best": null,
@@ -24737,7 +24858,7 @@
     "club": "ESS",
     "pre": 7.7,
     "positionOnly": 4.2,
-    "now": 5.9,
+    "now": 2.2,
     "games": 16,
     "current": {
      "games": 7,
@@ -24752,12 +24873,12 @@
      "Stuck in the seconds: 8 state-league games v 7 AFL in 2026"
     ],
     "like": [
-     "Neil Erasmus",
-     "Oliver Henry",
-     "Cody Weightman",
-     "Trey Ruscoe",
+     "Mitch Knevitt",
+     "Josh Goater",
+     "Isaac Quaynor",
      "Sam Butler",
-     "Jordan Gallucci"
+     "Trey Ruscoe",
+     "Miller Bergman"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -24815,7 +24936,7 @@
     "club": "GWS",
     "pre": 1.8,
     "positionOnly": 4.1,
-    "now": 1.1,
+    "now": 1.6,
     "games": 0,
     "current": null,
     "best": null,
@@ -24866,7 +24987,7 @@
     "club": "WCE",
     "pre": 35.0,
     "positionOnly": 58.9,
-    "now": 50.4,
+    "now": 61.0,
     "games": 22,
     "current": {
      "games": 22,
@@ -24878,12 +24999,12 @@
     "status": "On track",
     "why": [],
     "like": [
-     "Connor Rozee*",
-     "Sam Powell-Pepper",
      "Errol Gulden*",
+     "Josh Ward",
+     "Sam Petrevski-Seton",
+     "Connor Rozee*",
      "Bailey Smith*",
-     "Andrew McGrath",
-     "Josh Ward"
+     "Andrew McGrath"
     ],
     "traits": [
      "Aerial / marking",
@@ -24916,7 +25037,7 @@
     "club": "GCS",
     "pre": 34.3,
     "positionOnly": 44.8,
-    "now": 34.1,
+    "now": 40.4,
     "games": 17,
     "current": {
      "games": 17,
@@ -24926,14 +25047,16 @@
     "peak": 57.6,
     "track": 93,
     "status": "Close",
-    "why": [],
+    "why": [
+     "Mostly starts at half-back / defence (29% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Charlie Spargo",
-     "Nik Cox",
-     "Lachie Fogarty",
      "Hunter Clark",
-     "Zak Butters*",
-     "Connor MacDonald"
+     "Hugh McCluggage*",
+     "Connor MacDonald",
+     "Nasiah Wanganeen-Milera*",
+     "Nik Cox",
+     "Zak Butters*"
     ],
     "traits": [
      "Accumulator",
@@ -24977,7 +25100,7 @@
     "club": "CAR",
     "pre": 5.1,
     "positionOnly": 36.8,
-    "now": 11.6,
+    "now": 9.6,
     "games": 22,
     "current": {
      "games": 22,
@@ -24986,17 +25109,18 @@
     "best": 51.3,
     "peak": 49.9,
     "track": 84,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [
-     "Rarely goes big: 0 of 22 games at 100+"
+     "Rarely goes big: 0 of 22 games at 100+",
+     "Mostly starts at half-back / defence (95% of starts), 0% centre bounces"
     ],
     "like": [
-     "Jack Lukosius",
      "Aaron Naughton",
-     "Nick Blakey",
-     "Archie Perkins",
+     "Noah Answerth",
+     "Jack Lukosius",
      "Ed Richards*",
-     "Will Hayward"
+     "Tom Williamson",
+     "Nick Blakey"
     ],
     "traits": [
      "Aerial / marking",
@@ -25029,7 +25153,7 @@
     "club": "WCE",
     "pre": 7.1,
     "positionOnly": 31.5,
-    "now": 20.9,
+    "now": 20.1,
     "games": 16,
     "current": {
      "games": 16,
@@ -25041,12 +25165,12 @@
     "status": "Long shot",
     "why": [],
     "like": [
+     "Beau McCreery",
+     "Jy Simpkin*",
+     "Archie Perkins",
      "Brayden Crossley",
-     "Riley Thilthorpe",
-     "Sam Berry*",
-     "Will Phillips",
-     "Zac Fisher",
-     "Tom McCartin"
+     "Darcy Fogarty",
+     "Griffin Logue"
     ],
     "traits": [
      "Athleticism",
@@ -25078,7 +25202,7 @@
     "club": "GCS",
     "pre": 28.1,
     "positionOnly": 27.6,
-    "now": 6.6,
+    "now": 8.0,
     "games": 5,
     "current": {
      "games": 5,
@@ -25089,7 +25213,7 @@
     "track": 76,
     "status": "Unlikely",
     "why": [
-     "Stuck in the seconds: 12 state-league games v 5 AFL in 2026"
+     "Mostly starts on a wing (20% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -25131,7 +25255,7 @@
     "club": "BRL",
     "pre": 46.9,
     "positionOnly": 24.7,
-    "now": 12.8,
+    "now": 9.2,
     "games": 3,
     "current": {
      "games": 3,
@@ -25182,7 +25306,7 @@
     "club": "RIC",
     "pre": 14.4,
     "positionOnly": 22.5,
-    "now": 38.8,
+    "now": 39.7,
     "games": 14,
     "current": {
      "games": 14,
@@ -25194,11 +25318,11 @@
     "status": "Close",
     "why": [],
     "like": [
-     "Jason Horne-Francis*",
-     "Noah Anderson*",
      "Jake Soligo",
      "Ben Hobbs",
-     "Hunter Clark",
+     "Jarrod Berry",
+     "Ben Ainsworth",
+     "Charlie Spargo",
      "Lachie Fogarty"
     ],
     "traits": [],
@@ -25236,7 +25360,7 @@
     "club": "RIC",
     "pre": 16.9,
     "positionOnly": 20.6,
-    "now": 23.0,
+    "now": 29.0,
     "games": 21,
     "current": {
      "games": 21,
@@ -25247,15 +25371,16 @@
     "track": 91,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 21 games at 100+"
+     "Rarely goes big: 0 of 21 games at 100+",
+     "Mostly starts at half-back / defence (52% of starts), 3% centre bounces"
     ],
     "like": [
-     "Tarryn Thomas",
-     "Paddy Dow",
-     "Noah Answerth",
-     "Connor MacDonald",
+     "Nik Cox",
      "Ed Richards*",
-     "Zak Butters*"
+     "Noah Answerth",
+     "Lochie O'Brien",
+     "Charlie Spargo",
+     "Jack Lukosius"
     ],
     "traits": [
      "Engine / work rate",
@@ -25286,7 +25411,7 @@
     "club": "ESS",
     "pre": 8.6,
     "positionOnly": 19.1,
-    "now": 34.5,
+    "now": 33.1,
     "games": 15,
     "current": {
      "games": 15,
@@ -25298,12 +25423,12 @@
     "status": "Close",
     "why": [],
     "like": [
-     "Jason Horne-Francis*",
-     "Ben Hobbs",
-     "Noah Anderson*",
      "Jake Soligo",
-     "Nasiah Wanganeen-Milera*",
-     "Tim Taranto*"
+     "Jarrod Berry",
+     "James Rowbottom",
+     "Matt Guelfi",
+     "Lachie Fogarty",
+     "Ben Ainsworth"
     ],
     "traits": [
      "Athleticism",
@@ -25345,7 +25470,7 @@
     "club": "ESS",
     "pre": 19.5,
     "positionOnly": 17.8,
-    "now": 44.6,
+    "now": 52.6,
     "games": 21,
     "current": {
      "games": 21,
@@ -25354,15 +25479,17 @@
     "best": 67.2,
     "peak": 71.9,
     "track": 111,
-    "status": "Close",
-    "why": [],
+    "status": "On track",
+    "why": [
+     "Mostly starts at half-back / defence (48% of starts), 0% centre bounces"
+    ],
     "like": [
-     "Connor Rozee*",
-     "Sam Powell-Pepper",
-     "Errol Gulden*",
-     "Bailey Smith*",
+     "Xavier Duursma",
      "Andrew McGrath",
-     "Sam Petrevski-Seton"
+     "Errol Gulden*",
+     "Jordan Clark*",
+     "Sam Petrevski-Seton",
+     "Andrew Brayshaw*"
     ],
     "traits": [
      "Aerial / marking",
@@ -25416,7 +25543,8 @@
     "track": 77,
     "status": "Too early",
     "why": [
-     "Stuck in the seconds: 16 state-league games v 3 AFL in 2026"
+     "Stuck in the seconds: 16 state-league games v 3 AFL in 2026",
+     "Mostly starts at half-back / defence (67% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -25458,7 +25586,7 @@
     "club": "MEL",
     "pre": 8.6,
     "positionOnly": 15.7,
-    "now": 12.7,
+    "now": 11.3,
     "games": 16,
     "current": {
      "games": 16,
@@ -25468,14 +25596,16 @@
     "peak": 33.6,
     "track": 67,
     "status": "Long shot",
-    "why": [],
+    "why": [
+     "Mostly starts at forward (50% of starts), 0% centre bounces"
+    ],
     "like": [
      "Kysaiah Pickett*",
-     "Tanner Bruhn",
      "Jack Mahony",
-     "Michael Frederick",
      "Jesse Motlop",
-     "Beau McCreery"
+     "Sam Berry*",
+     "Beau McCreery",
+     "Darcy Fogarty"
     ],
     "traits": [
      "Athleticism",
@@ -25517,7 +25647,7 @@
     "club": "ESS",
     "pre": 41.0,
     "positionOnly": 14.8,
-    "now": 59.4,
+    "now": 68.4,
     "games": 15,
     "current": {
      "games": 15,
@@ -25530,11 +25660,11 @@
     "why": [],
     "like": [
      "Josh Ward",
-     "Tom Powell",
      "Errol Gulden*",
      "Caleb Serong*",
-     "Luke Ryan*",
-     "James Worpel*"
+     "Sam Petrevski-Seton",
+     "Andrew Brayshaw*",
+     "Andrew McGrath"
     ],
     "traits": [
      "Clean hands",
@@ -25577,7 +25707,7 @@
     "club": "SYD",
     "pre": 1.6,
     "positionOnly": 14.1,
-    "now": 7.4,
+    "now": 5.0,
     "games": 12,
     "current": {
      "games": 12,
@@ -25587,14 +25717,16 @@
     "peak": 41.5,
     "track": 77,
     "status": "Unlikely",
-    "why": [],
+    "why": [
+     "Mostly starts at half-back / defence (42% of starts), 0% centre bounces"
+    ],
     "like": [
+     "Josh Gibcus",
      "Jesse Motlop",
-     "Tyler Brockman",
-     "Charlie Lazzaro",
-     "Oliver Henry",
-     "Beau McCreery",
-     "Griffin Logue"
+     "Charlie Ballard",
+     "Brandon Walker",
+     "Tom McCartin",
+     "Zac Fisher"
     ],
     "traits": [
      "Athleticism",
@@ -25637,7 +25769,7 @@
     "club": "GWS",
     "pre": 27.6,
     "positionOnly": 13.4,
-    "now": 5.3,
+    "now": 4.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -25679,7 +25811,7 @@
     "club": "NTH",
     "pre": 15.6,
     "positionOnly": 12.8,
-    "now": 4.0,
+    "now": 1.9,
     "games": 6,
     "current": {
      "games": 6,
@@ -25734,7 +25866,7 @@
     "club": "GCS",
     "pre": 18.8,
     "positionOnly": 12.3,
-    "now": 12.5,
+    "now": 16.9,
     "games": 9,
     "current": {
      "games": 9,
@@ -25744,7 +25876,9 @@
     "peak": 52.3,
     "track": 88,
     "status": "Long shot",
-    "why": [],
+    "why": [
+     "Mostly starts on a wing (44% of starts), 2% centre bounces"
+    ],
     "like": [],
     "traits": [
      "Footy IQ / vision",
@@ -25786,7 +25920,7 @@
     "club": "GCS",
     "pre": 23.4,
     "positionOnly": 11.8,
-    "now": 26.8,
+    "now": 33.6,
     "games": 9,
     "current": {
      "games": 9,
@@ -25795,7 +25929,7 @@
     "best": 58.1,
     "peak": 60.8,
     "track": 96,
-    "status": "Long shot",
+    "status": "Close",
     "why": [],
     "like": [],
     "traits": [
@@ -25840,7 +25974,7 @@
     "club": "WCE",
     "pre": 22.0,
     "positionOnly": 11.3,
-    "now": 40.2,
+    "now": 45.4,
     "games": 15,
     "current": {
      "games": 15,
@@ -25852,12 +25986,12 @@
     "status": "Close",
     "why": [],
     "like": [
-     "Andrew Brayshaw*",
-     "Matt Guelfi",
+     "Jordan Clark*",
+     "Will Day*",
      "James Rowbottom",
      "Nasiah Wanganeen-Milera*",
-     "Tim Taranto*",
-     "Jordan Clark*"
+     "Jarrod Berry",
+     "Andrew Brayshaw*"
     ],
     "traits": [
      "Footy IQ / vision",
@@ -25886,7 +26020,7 @@
     "club": "HAW",
     "pre": 7.2,
     "positionOnly": 10.9,
-    "now": 2.2,
+    "now": 2.1,
     "games": 4,
     "current": {
      "games": 4,
@@ -25939,7 +26073,7 @@
     "club": "WBD",
     "pre": 39.9,
     "positionOnly": 10.5,
-    "now": 5.8,
+    "now": 5.3,
     "games": 2,
     "current": {
      "games": 2,
@@ -25950,7 +26084,8 @@
     "track": 82,
     "status": "Too early",
     "why": [
-     "Stuck in the seconds: 17 state-league games v 2 AFL in 2026"
+     "Stuck in the seconds: 17 state-league games v 2 AFL in 2026",
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -25992,7 +26127,7 @@
     "club": "ADE",
     "pre": 6.6,
     "positionOnly": 10.1,
-    "now": 1.8,
+    "now": 1.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -26028,7 +26163,7 @@
     "club": "HAW",
     "pre": 5.2,
     "positionOnly": 9.8,
-    "now": 3.5,
+    "now": 3.0,
     "games": 1,
     "current": {
      "games": 1,
@@ -26039,7 +26174,8 @@
     "track": 89,
     "status": "Too early",
     "why": [
-     "Stuck in the seconds: 17 state-league games v 1 AFL in 2026"
+     "Stuck in the seconds: 17 state-league games v 1 AFL in 2026",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -26080,7 +26216,7 @@
     "club": "GEE",
     "pre": 9.9,
     "positionOnly": 9.5,
-    "now": 12.0,
+    "now": 12.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -26111,7 +26247,7 @@
     "club": "FRE",
     "pre": 20.9,
     "positionOnly": 9.2,
-    "now": 19.7,
+    "now": 20.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -26173,7 +26309,7 @@
     "club": "WBD",
     "pre": 1.2,
     "positionOnly": 8.7,
-    "now": 2.8,
+    "now": 1.7,
     "games": 7,
     "current": {
      "games": 7,
@@ -26229,7 +26365,7 @@
     "club": "GCS",
     "pre": 9.8,
     "positionOnly": 8.5,
-    "now": 2.4,
+    "now": 1.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -26271,7 +26407,7 @@
     "club": "WCE",
     "pre": 4.9,
     "positionOnly": 8.3,
-    "now": 7.5,
+    "now": 7.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -26302,7 +26438,7 @@
     "club": "MEL",
     "pre": 5.3,
     "positionOnly": 8.0,
-    "now": 1.5,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -26338,7 +26474,7 @@
     "club": "RIC",
     "pre": 17.2,
     "positionOnly": 7.9,
-    "now": 3.7,
+    "now": 3.2,
     "games": 2,
     "current": {
      "games": 2,
@@ -26392,7 +26528,7 @@
     "club": "COL",
     "pre": 19.7,
     "positionOnly": 7.7,
-    "now": 4.0,
+    "now": 3.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -26435,7 +26571,7 @@
     "club": "GEE",
     "pre": 3.2,
     "positionOnly": 7.5,
-    "now": 1.1,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -26473,7 +26609,7 @@
     "club": "HAW",
     "pre": 13.1,
     "positionOnly": 7.3,
-    "now": 5.8,
+    "now": 6.7,
     "games": 5,
     "current": {
      "games": 5,
@@ -26484,7 +26620,8 @@
     "track": 90,
     "status": "Unlikely",
     "why": [
-     "Stuck in the seconds: 11 state-league games v 5 AFL in 2026"
+     "Stuck in the seconds: 11 state-league games v 5 AFL in 2026",
+     "Mostly starts at forward (60% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -26528,7 +26665,7 @@
     "club": "SYD",
     "pre": 4.0,
     "positionOnly": 7.2,
-    "now": 1.3,
+    "now": 1.0,
     "games": 0,
     "current": null,
     "best": null,
@@ -26571,7 +26708,7 @@
     "club": "ESS",
     "pre": 1.1,
     "positionOnly": 7.0,
-    "now": 6.8,
+    "now": 4.1,
     "games": 12,
     "current": {
      "games": 12,
@@ -26583,12 +26720,12 @@
     "status": "Unlikely",
     "why": [],
     "like": [
-     "Ben King",
      "Josh Gibcus",
+     "Brandon Walker",
      "Charlie Ballard",
+     "Ben King",
      "Jesse Motlop",
-     "Tanner Bruhn",
-     "Tyler Brockman"
+     "Tom McCartin"
     ],
     "traits": [
      "Aerial / marking",
@@ -26631,7 +26768,7 @@
     "club": "COL",
     "pre": 5.6,
     "positionOnly": 6.9,
-    "now": 9.5,
+    "now": 13.9,
     "games": 9,
     "current": {
      "games": 9,
@@ -26640,10 +26777,8 @@
     "best": 63.0,
     "peak": 70.1,
     "track": 104,
-    "status": "Unlikely",
-    "why": [
-     "Stuck in the seconds: 11 state-league games v 9 AFL in 2026"
-    ],
+    "status": "Long shot",
+    "why": [],
     "like": [],
     "traits": [
      "Accumulator",
@@ -26685,7 +26820,7 @@
     "club": "BRL",
     "pre": 16.6,
     "positionOnly": 6.7,
-    "now": 3.5,
+    "now": 2.7,
     "games": 0,
     "current": null,
     "best": null,
@@ -26727,7 +26862,7 @@
     "club": "WCE",
     "pre": 7.0,
     "positionOnly": 6.6,
-    "now": 8.8,
+    "now": 8.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -26768,7 +26903,9 @@
     "peak": null,
     "track": 92,
     "status": "Too early",
-    "why": [],
+    "why": [
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
+    ],
     "like": [],
     "traits": [],
     "jFP": 65.7,
@@ -26792,7 +26929,7 @@
     "club": "STK",
     "pre": 2.6,
     "positionOnly": 6.3,
-    "now": 1.4,
+    "now": 1.0,
     "games": 3,
     "current": {
      "games": 3,
@@ -26844,7 +26981,7 @@
     "club": "SYD",
     "pre": 4.2,
     "positionOnly": 6.2,
-    "now": 8.4,
+    "now": 4.7,
     "games": 11,
     "current": {
      "games": 11,
@@ -26854,14 +26991,16 @@
     "peak": 50.3,
     "track": 86,
     "status": "Unlikely",
-    "why": [],
+    "why": [
+     "Mostly starts at forward (36% of starts), 3% centre bounces"
+    ],
     "like": [
-     "Nick Hind",
      "Matthew Parker",
-     "Zac Langdon",
+     "Nick Hind",
      "James Rowe",
-     "Mitch Hannan",
-     "Tom Highmore"
+     "Zac Langdon",
+     "Jy Simpkin*",
+     "Mitch Hannan"
     ],
     "traits": [],
     "jFP": null,
@@ -26909,7 +27048,8 @@
     "track": 74,
     "status": "Too early",
     "why": [
-     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 4 AFL in 2026",
+     "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -26951,7 +27091,7 @@
     "club": "BRL",
     "pre": 5.5,
     "positionOnly": 6.0,
-    "now": 1.6,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -26991,7 +27131,7 @@
     "club": "CAR",
     "pre": 9.2,
     "positionOnly": 5.9,
-    "now": 16.7,
+    "now": 11.3,
     "games": 20,
     "current": {
      "games": 20,
@@ -27002,15 +27142,16 @@
     "track": 81,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 20 games at 100+"
+     "Rarely goes big: 0 of 20 games at 100+",
+     "Mostly starts at forward (50% of starts), 0% centre bounces"
     ],
     "like": [
      "Zac Fisher",
      "Archie Perkins",
      "Nick Blakey",
      "Will Hayward",
-     "Sam Berry*",
-     "Tom McCartin"
+     "Paul Curtis",
+     "Jy Simpkin*"
     ],
     "traits": [
      "Clean hands",
@@ -27053,7 +27194,7 @@
     "club": "GCS",
     "pre": 17.3,
     "positionOnly": 5.8,
-    "now": 3.6,
+    "now": 2.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -27096,7 +27237,7 @@
     "club": "CAR",
     "pre": 13.0,
     "positionOnly": 5.7,
-    "now": 6.2,
+    "now": 6.5,
     "games": 8,
     "current": {
      "games": 8,
@@ -27106,9 +27247,7 @@
     "peak": 49.4,
     "track": 86,
     "status": "Unlikely",
-    "why": [
-     "Stuck in the seconds: 11 state-league games v 8 AFL in 2026"
-    ],
+    "why": [],
     "like": [],
     "traits": [
      "Footy IQ / vision",
@@ -27151,7 +27290,7 @@
     "club": "NTH",
     "pre": 4.8,
     "positionOnly": 5.6,
-    "now": 1.4,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -27275,7 +27414,7 @@
     "club": "GWS",
     "pre": 4.9,
     "positionOnly": 5.4,
-    "now": 1.4,
+    "now": 1.1,
     "games": 0,
     "current": null,
     "best": null,
@@ -27318,7 +27457,7 @@
     "club": "STK",
     "pre": 3.5,
     "positionOnly": 5.3,
-    "now": 1.1,
+    "now": 0.9,
     "games": 0,
     "current": null,
     "best": null,
@@ -27359,7 +27498,7 @@
     "club": "ESS",
     "pre": 3.8,
     "positionOnly": 5.2,
-    "now": 2.0,
+    "now": 2.4,
     "games": 9,
     "current": {
      "games": 9,
@@ -27369,9 +27508,7 @@
     "peak": 37.9,
     "track": 76,
     "status": "Unlikely",
-    "why": [
-     "Stuck in the seconds: 9 state-league games v 9 AFL in 2026"
-    ],
+    "why": [],
     "like": [],
     "traits": [
      "Contested / inside",
@@ -27413,7 +27550,7 @@
     "club": "RIC",
     "pre": 4.8,
     "positionOnly": 5.1,
-    "now": 1.3,
+    "now": 0.9,
     "games": 3,
     "current": {
      "games": 3,
@@ -27424,7 +27561,8 @@
     "track": 82,
     "status": "Too early",
     "why": [
-     "Stuck in the seconds: 14 state-league games v 3 AFL in 2026"
+     "Stuck in the seconds: 14 state-league games v 3 AFL in 2026",
+     "Mostly starts at forward (67% of starts), 0% centre bounces"
     ],
     "like": [],
     "traits": [
@@ -27467,7 +27605,7 @@
     "club": "COL",
     "pre": 1.7,
     "positionOnly": 5.0,
-    "now": 1.6,
+    "now": 1.2,
     "games": 0,
     "current": null,
     "best": null,
@@ -27509,7 +27647,7 @@
     "club": "HAW",
     "pre": 2.9,
     "positionOnly": 5.0,
-    "now": 1.0,
+    "now": 0.8,
     "games": 0,
     "current": null,
     "best": null,
@@ -27552,7 +27690,7 @@
     "club": "COL",
     "pre": 2.4,
     "positionOnly": 4.9,
-    "now": 11.5,
+    "now": 6.9,
     "games": 17,
     "current": {
      "games": 17,
@@ -27561,14 +27699,14 @@
     "best": 56.7,
     "peak": 57.5,
     "track": 93,
-    "status": "Long shot",
+    "status": "Unlikely",
     "why": [],
     "like": [
      "Mitch Hannan",
-     "Matthew Parker",
-     "Marty Hore",
      "Liam Ryan",
+     "Zac Langdon",
      "James Rowe",
+     "Matthew Parker",
      "Tom Stewart*"
     ],
     "traits": [
@@ -27611,7 +27749,7 @@
     "club": "STK",
     "pre": 5.8,
     "positionOnly": 4.8,
-    "now": 20.2,
+    "now": 16.0,
     "games": 90,
     "current": {
      "games": 15,
@@ -27622,15 +27760,16 @@
     "track": 101,
     "status": "Long shot",
     "why": [
-     "Rarely goes big: 0 of 90 games at 100+"
+     "Rarely goes big: 0 of 90 games at 100+",
+     "Mostly starts at half-back / defence (47% of starts), 0% centre bounces"
     ],
     "like": [
      "Tom Stewart*",
      "Marty Hore",
      "Tom Highmore",
      "Mitch Hannan",
-     "Billy Hartung",
-     "Matt de Boer"
+     "Matt de Boer",
+     "Billy Hartung"
     ],
     "traits": [
      "Accumulator",
@@ -27721,15 +27860,16 @@
     "status": "Unlikely",
     "why": [
      "32 now: a veteran pick for points, not a future star",
-     "Rarely goes big: 0 of 250 games at 100+"
+     "Rarely goes big: 0 of 250 games at 100+",
+     "Mostly starts at forward (100% of starts), 6% centre bounces"
     ],
     "like": [
      "Matt de Boer",
-     "Tom Stewart*",
      "Tim Kelly*",
      "Nick Hind",
-     "Billy Hartung",
-     "Marty Hore"
+     "Tom Stewart*",
+     "Mitch Hannan",
+     "Billy Hartung"
     ],
     "traits": [],
     "jFP": null,
@@ -27833,7 +27973,7 @@
     "club": "WBD",
     "pre": 1.3,
     "positionOnly": 4.7,
-    "now": 0.6,
+    "now": 0.4,
     "games": 0,
     "current": null,
     "best": null,
@@ -27871,7 +28011,8 @@
   "surprises": [
    "Archie Roberts|2023",
    "Hugo Garcia|2023",
-   "Jase Burgoyne|2021"
+   "Jase Burgoyne|2021",
+   "Jacob Farrow|2025"
   ],
   "breakouts": [
    "Finn O'Sullivan|2024",
