@@ -1,0 +1,1879 @@
+{
+ "source": "G-Train 2026 draft (Keeper board, 21 Feb 2026) joined to DFS Australia pre-draft data",
+ "rules": [
+  "Rookies (2025 AFL draftees) dominate the top: 10 of the first 20 picks, and every mid/small top-10 AFL pick went inside G-Train pick 16 (exception: Patterson, AFL 5, at 31).",
+  "Star rookies go top 5: AFL #6 Annable went 1, AFL #2 Uwland 2, AFL #1 Duursma 5.",
+  "Key-position rookies slide hard regardless of AFL pick: Harry Dean (AFL 3) went 103, Xavier Taylor (AFL 11) went 137.",
+  "Late AFL picks (30+) rarely go before G-Train pick 65.",
+  "Non-rookies taken in the top 10 were established-role breakouts: McCarthy (25, 83 from 10 games), Max Hall (23, 66 from 23 games), Draper (ruck, 82 from 5 games), Jack Ross (25, 73).",
+  "Proven vets 30+ start going around pick 17 (Wines 17, Macrae 24, Atkins 26, Parker 28) when they averaged 85+ the year before.",
+  "From pick 40 on, picks are mostly prime-age role players averaging 60-70."
+ ],
+ "rookies": [
+  {
+   "gtrain": 1,
+   "name": "Daniel Annable",
+   "afl": 6
+  },
+  {
+   "gtrain": 2,
+   "name": "Zeke Uwland",
+   "afl": 2
+  },
+  {
+   "gtrain": 4,
+   "name": "Dyson Sharp",
+   "afl": 13
+  },
+  {
+   "gtrain": 5,
+   "name": "Willem Duursma",
+   "afl": 1
+  },
+  {
+   "gtrain": 8,
+   "name": "Jacob Farrow",
+   "afl": 10
+  },
+  {
+   "gtrain": 9,
+   "name": "Josh Lindsay",
+   "afl": 19
+  },
+  {
+   "gtrain": 12,
+   "name": "Sam Cumming",
+   "afl": 7
+  },
+  {
+   "gtrain": 13,
+   "name": "Sam Grlj",
+   "afl": 8
+  },
+  {
+   "gtrain": 14,
+   "name": "Cooper Duff-Tytler",
+   "afl": 4
+  },
+  {
+   "gtrain": 16,
+   "name": "Lachlan Carmichael",
+   "afl": 21
+  },
+  {
+   "gtrain": 21,
+   "name": "Sullivan Robey",
+   "afl": 9
+  },
+  {
+   "gtrain": 31,
+   "name": "Dylan Patterson",
+   "afl": 5
+  },
+  {
+   "gtrain": 69,
+   "name": "Jack Dalton",
+   "afl": 34
+  },
+  {
+   "gtrain": 74,
+   "name": "Sam Swadling",
+   "afl": 37
+  },
+  {
+   "gtrain": 80,
+   "name": "Lachy Dovaston",
+   "afl": 16
+  },
+  {
+   "gtrain": 100,
+   "name": "Beau Addinsall",
+   "afl": 18
+  },
+  {
+   "gtrain": 103,
+   "name": "Harry Dean",
+   "afl": 3
+  },
+  {
+   "gtrain": 106,
+   "name": "Oliver Greeves",
+   "afl": null
+  },
+  {
+   "gtrain": 132,
+   "name": "Jai Murray",
+   "afl": 17
+  },
+  {
+   "gtrain": 136,
+   "name": "Angus Anderson",
+   "afl": 57
+  },
+  {
+   "gtrain": 137,
+   "name": "Xavier Taylor",
+   "afl": 11
+  },
+  {
+   "gtrain": 144,
+   "name": "Tyan Prindable",
+   "afl": 32
+  }
+ ],
+ "teams": {
+  "A Brayshaw Thing": {
+   "picks": 12,
+   "rookies": 0,
+   "vets30": 2,
+   "young": 1,
+   "prime": 9,
+   "earlyRookieShare": 0.0,
+   "medianAge": 27.6
+  },
+  "Bito’s Boys": {
+   "picks": 16,
+   "rookies": 5,
+   "vets30": 3,
+   "young": 3,
+   "prime": 5,
+   "earlyRookieShare": 0.75,
+   "medianAge": 23.4
+  },
+  "Bodega Boys": {
+   "picks": 16,
+   "rookies": 2,
+   "vets30": 5,
+   "young": 3,
+   "prime": 6,
+   "earlyRookieShare": 0.0,
+   "medianAge": 26.6
+  },
+  "Fo’ Sheezel my Neezel": {
+   "picks": 14,
+   "rookies": 3,
+   "vets30": 4,
+   "young": 2,
+   "prime": 5,
+   "earlyRookieShare": 0.5,
+   "medianAge": 26.9
+  },
+  "Muzza's Murabito's": {
+   "picks": 16,
+   "rookies": 0,
+   "vets30": 4,
+   "young": 6,
+   "prime": 6,
+   "earlyRookieShare": 0.0,
+   "medianAge": 23.9
+  },
+  "NSW-ACT Academy": {
+   "picks": 15,
+   "rookies": 0,
+   "vets30": 3,
+   "young": 3,
+   "prime": 9,
+   "earlyRookieShare": 0.0,
+   "medianAge": 26.4
+  },
+  "Pato's Fantasy Team": {
+   "picks": 15,
+   "rookies": 4,
+   "vets30": 1,
+   "young": 3,
+   "prime": 7,
+   "earlyRookieShare": 0.6,
+   "medianAge": 23.1
+  },
+  "Ram Dawgs": {
+   "picks": 15,
+   "rookies": 4,
+   "vets30": 2,
+   "young": 3,
+   "prime": 6,
+   "earlyRookieShare": 0.6,
+   "medianAge": 23.8
+  },
+  "Serong So’Right": {
+   "picks": 14,
+   "rookies": 3,
+   "vets30": 3,
+   "young": 4,
+   "prime": 4,
+   "earlyRookieShare": 1.0,
+   "medianAge": 23.0
+  },
+  "Such Is Fyfe": {
+   "picks": 15,
+   "rookies": 1,
+   "vets30": 0,
+   "young": 3,
+   "prime": 11,
+   "earlyRookieShare": 0.0,
+   "medianAge": 24.1
+  }
+ },
+ "picks": [
+  {
+   "pick": 1,
+   "team": "Ram Dawgs",
+   "name": "Daniel Annable",
+   "kind": "Rookie",
+   "age": 18.9,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 6
+  },
+  {
+   "pick": 2,
+   "team": "Pato's Fantasy Team",
+   "name": "Zeke Uwland",
+   "kind": "Rookie",
+   "age": 18.9,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 2
+  },
+  {
+   "pick": 3,
+   "team": "Pato's Fantasy Team",
+   "name": "Tom McCarthy",
+   "kind": "Prime",
+   "age": 25.7,
+   "a25": 83.5,
+   "g25": 10,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 4,
+   "team": "Bito’s Boys",
+   "name": "Dyson Sharp",
+   "kind": "Rookie",
+   "age": 18.8,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 13
+  },
+  {
+   "pick": 5,
+   "team": "Pato's Fantasy Team",
+   "name": "Willem Duursma",
+   "kind": "Rookie",
+   "age": 18.7,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 1
+  },
+  {
+   "pick": 6,
+   "team": "Bodega Boys",
+   "name": "Max Hall",
+   "kind": "Prime",
+   "age": 23.9,
+   "a25": 66.1,
+   "g25": 23,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 7,
+   "team": "NSW-ACT Academy",
+   "name": "Sam Draper",
+   "kind": "Prime",
+   "age": 27.5,
+   "a25": 82.0,
+   "g25": 5,
+   "a24": 67.0,
+   "afl": null
+  },
+  {
+   "pick": 8,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Jacob Farrow",
+   "kind": "Rookie",
+   "age": 18.5,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 10
+  },
+  {
+   "pick": 9,
+   "team": "Serong So’Right",
+   "name": "Josh Lindsay",
+   "kind": "Rookie",
+   "age": 18.9,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 19
+  },
+  {
+   "pick": 10,
+   "team": "Such Is Fyfe",
+   "name": "Jack Ross",
+   "kind": "Prime",
+   "age": 25.5,
+   "a25": 72.9,
+   "g25": 23,
+   "a24": 63.7,
+   "afl": 43
+  },
+  {
+   "pick": 11,
+   "team": "NSW-ACT Academy",
+   "name": "Harry Rowston",
+   "kind": "Young (<=23)",
+   "age": 21.6,
+   "a25": 51.9,
+   "g25": 10,
+   "a24": null,
+   "afl": 16
+  },
+  {
+   "pick": 12,
+   "team": "Ram Dawgs",
+   "name": "Sam Cumming",
+   "kind": "Rookie",
+   "age": 18.7,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 7
+  },
+  {
+   "pick": 13,
+   "team": "Bito’s Boys",
+   "name": "Sam Grlj",
+   "kind": "Rookie",
+   "age": 18.7,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 8
+  },
+  {
+   "pick": 14,
+   "team": "Pato's Fantasy Team",
+   "name": "Cooper Duff-Tytler",
+   "kind": "Rookie",
+   "age": 18.6,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 4
+  },
+  {
+   "pick": 15,
+   "team": "Muzza's Murabito's",
+   "name": "Kane McAuliffe",
+   "kind": "Young (<=23)",
+   "age": 21.0,
+   "a25": 73.6,
+   "g25": 5,
+   "a24": 39.8,
+   "afl": 40
+  },
+  {
+   "pick": 16,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Lachlan Carmichael",
+   "kind": "Rookie",
+   "age": 18.6,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 21
+  },
+  {
+   "pick": 17,
+   "team": "NSW-ACT Academy",
+   "name": "Ollie Wines",
+   "kind": "Vet 30+",
+   "age": 31.4,
+   "a25": 89.5,
+   "g25": 20,
+   "a24": 90.4,
+   "afl": null
+  },
+  {
+   "pick": 18,
+   "team": "NSW-ACT Academy",
+   "name": "Caleb Daniel",
+   "kind": "Prime",
+   "age": 29.7,
+   "a25": 85.0,
+   "g25": 23,
+   "a24": 52.9,
+   "afl": null
+  },
+  {
+   "pick": 19,
+   "team": "Such Is Fyfe",
+   "name": "James Worpel",
+   "kind": "Prime",
+   "age": 27.2,
+   "a25": 73.0,
+   "g25": 21,
+   "a24": 77.3,
+   "afl": 45
+  },
+  {
+   "pick": 20,
+   "team": "A Brayshaw Thing",
+   "name": "Deven Robertson",
+   "kind": "Prime",
+   "age": 24.7,
+   "a25": 15.5,
+   "g25": 4,
+   "a24": 27.0,
+   "afl": 22
+  },
+  {
+   "pick": 21,
+   "team": "Bito’s Boys",
+   "name": "Sullivan Robey",
+   "kind": "Rookie",
+   "age": 18.4,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 9
+  },
+  {
+   "pick": 22,
+   "team": "Pato's Fantasy Team",
+   "name": "Connor Budarick",
+   "kind": "Prime",
+   "age": 24.9,
+   "a25": 49.3,
+   "g25": 19,
+   "a24": 61.2,
+   "afl": null
+  },
+  {
+   "pick": 23,
+   "team": "NSW-ACT Academy",
+   "name": "Aaron Naughton",
+   "kind": "Prime",
+   "age": 26.3,
+   "a25": 71.8,
+   "g25": 23,
+   "a24": 59.5,
+   "afl": 9
+  },
+  {
+   "pick": 24,
+   "team": "NSW-ACT Academy",
+   "name": "Jack Macrae",
+   "kind": "Vet 30+",
+   "age": 31.6,
+   "a25": 90.9,
+   "g25": 21,
+   "a24": 69.5,
+   "afl": null
+  },
+  {
+   "pick": 25,
+   "team": "Muzza's Murabito's",
+   "name": "Tanner Bruhn",
+   "kind": "Prime",
+   "age": 23.8,
+   "a25": null,
+   "g25": 0,
+   "a24": 69.1,
+   "afl": 12
+  },
+  {
+   "pick": 26,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Tom Atkins",
+   "kind": "Vet 30+",
+   "age": 30.5,
+   "a25": 88.3,
+   "g25": 26,
+   "a24": 70.5,
+   "afl": null
+  },
+  {
+   "pick": 27,
+   "team": "Ram Dawgs",
+   "name": "Aaron Cadman",
+   "kind": "Young (<=23)",
+   "age": 22.0,
+   "a25": 58.6,
+   "g25": 24,
+   "a24": 45.9,
+   "afl": 1
+  },
+  {
+   "pick": 28,
+   "team": "Bodega Boys",
+   "name": "Luke Parker",
+   "kind": "Vet 30+",
+   "age": 33.4,
+   "a25": 86.7,
+   "g25": 22,
+   "a24": 62.7,
+   "afl": null
+  },
+  {
+   "pick": 29,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Harry Himmelberg",
+   "kind": "Prime",
+   "age": 29.8,
+   "a25": 76.7,
+   "g25": 24,
+   "a24": 81.2,
+   "afl": null
+  },
+  {
+   "pick": 30,
+   "team": "Such Is Fyfe",
+   "name": "Matt Flynn",
+   "kind": "Prime",
+   "age": 28.5,
+   "a25": 78.7,
+   "g25": 18,
+   "a24": 61.0,
+   "afl": null
+  },
+  {
+   "pick": 31,
+   "team": "Ram Dawgs",
+   "name": "Dylan Patterson",
+   "kind": "Rookie",
+   "age": 18.5,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 5
+  },
+  {
+   "pick": 32,
+   "team": "Bodega Boys",
+   "name": "Ben Ainsworth",
+   "kind": "Prime",
+   "age": 28.1,
+   "a25": 56.6,
+   "g25": 24,
+   "a24": 65.1,
+   "afl": 4
+  },
+  {
+   "pick": 33,
+   "team": "NSW-ACT Academy",
+   "name": "Angus Clarke",
+   "kind": "Young (<=23)",
+   "age": 19.3,
+   "a25": 62.2,
+   "g25": 14,
+   "a24": null,
+   "afl": 39
+  },
+  {
+   "pick": 34,
+   "team": "Bito’s Boys",
+   "name": "Jarrod Berry",
+   "kind": "Prime",
+   "age": 28.1,
+   "a25": 83.7,
+   "g25": 24,
+   "a24": 85.2,
+   "afl": 17
+  },
+  {
+   "pick": 35,
+   "team": "Muzza's Murabito's",
+   "name": "Jack Crisp",
+   "kind": "Vet 30+",
+   "age": 32.4,
+   "a25": 84.2,
+   "g25": 25,
+   "a24": 83.1,
+   "afl": null
+  },
+  {
+   "pick": 36,
+   "team": "NSW-ACT Academy",
+   "name": "Cam Rayner",
+   "kind": "Prime",
+   "age": 26.4,
+   "a25": 68.9,
+   "g25": 27,
+   "a24": 67.8,
+   "afl": 1
+  },
+  {
+   "pick": 37,
+   "team": "NSW-ACT Academy",
+   "name": "Will Brodie",
+   "kind": "Prime",
+   "age": 27.6,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 9
+  },
+  {
+   "pick": 38,
+   "team": "A Brayshaw Thing",
+   "name": "Bailey Williams",
+   "kind": "Prime",
+   "age": 28.4,
+   "a25": 76.8,
+   "g25": 23,
+   "a24": 75.7,
+   "afl": null
+  },
+  {
+   "pick": 39,
+   "team": "Ram Dawgs",
+   "name": "Liam Reidy",
+   "kind": "Prime",
+   "age": 25.7,
+   "a25": 37.0,
+   "g25": 1,
+   "a24": 51.5,
+   "afl": null
+  },
+  {
+   "pick": 40,
+   "team": "Such Is Fyfe",
+   "name": "Tyler Sonsie",
+   "kind": "Prime",
+   "age": 23.2,
+   "a25": 57.6,
+   "g25": 16,
+   "a24": 44.7,
+   "afl": 28
+  },
+  {
+   "pick": 41,
+   "team": "Ram Dawgs",
+   "name": "Changkuoth Jiath",
+   "kind": "Prime",
+   "age": 26.7,
+   "a25": 48.1,
+   "g25": 20,
+   "a24": 47.9,
+   "afl": null
+  },
+  {
+   "pick": 42,
+   "team": "Pato's Fantasy Team",
+   "name": "Nick Bryan",
+   "kind": "Prime",
+   "age": 24.4,
+   "a25": 57.8,
+   "g25": 4,
+   "a24": 71.4,
+   "afl": 38
+  },
+  {
+   "pick": 43,
+   "team": "Muzza's Murabito's",
+   "name": "Massimo D'Ambrosio",
+   "kind": "Young (<=23)",
+   "age": 22.7,
+   "a25": 68.7,
+   "g25": 26,
+   "a24": 79.0,
+   "afl": null
+  },
+  {
+   "pick": 44,
+   "team": "Such Is Fyfe",
+   "name": "Willem Drew",
+   "kind": "Prime",
+   "age": 27.4,
+   "a25": 75.1,
+   "g25": 23,
+   "a24": 83.8,
+   "afl": 33
+  },
+  {
+   "pick": 45,
+   "team": "Muzza's Murabito's",
+   "name": "Jake Lloyd",
+   "kind": "Vet 30+",
+   "age": 32.5,
+   "a25": 84.1,
+   "g25": 22,
+   "a24": 79.2,
+   "afl": null
+  },
+  {
+   "pick": 46,
+   "team": "Serong So’Right",
+   "name": "Elijah Hewett",
+   "kind": "Young (<=23)",
+   "age": 21.8,
+   "a25": 61.0,
+   "g25": 20,
+   "a24": null,
+   "afl": 14
+  },
+  {
+   "pick": 47,
+   "team": "Such Is Fyfe",
+   "name": "Lachie Jaques",
+   "kind": "Young (<=23)",
+   "age": 19.7,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 29
+  },
+  {
+   "pick": 48,
+   "team": "A Brayshaw Thing",
+   "name": "Conor Nash",
+   "kind": "Prime",
+   "age": 27.7,
+   "a25": 74.0,
+   "g25": 22,
+   "a24": 74.3,
+   "afl": null
+  },
+  {
+   "pick": 49,
+   "team": "Such Is Fyfe",
+   "name": "Oscar Allen",
+   "kind": "Prime",
+   "age": 27.0,
+   "a25": 49.8,
+   "g25": 12,
+   "a24": 56.5,
+   "afl": 21
+  },
+  {
+   "pick": 50,
+   "team": "Such Is Fyfe",
+   "name": "Ryan Angwin",
+   "kind": "Prime",
+   "age": 23.2,
+   "a25": 69.2,
+   "g25": 10,
+   "a24": 56.0,
+   "afl": 18
+  },
+  {
+   "pick": 51,
+   "team": "Ram Dawgs",
+   "name": "Mitch Georgiades",
+   "kind": "Prime",
+   "age": 24.5,
+   "a25": 69.3,
+   "g25": 23,
+   "a24": 63.0,
+   "afl": 18
+  },
+  {
+   "pick": 52,
+   "team": "Pato's Fantasy Team",
+   "name": "Caiden Cleary",
+   "kind": "Young (<=23)",
+   "age": 21.0,
+   "a25": 47.2,
+   "g25": 12,
+   "a24": 28.0,
+   "afl": 24
+  },
+  {
+   "pick": 53,
+   "team": "Such Is Fyfe",
+   "name": "Josh Treacy",
+   "kind": "Prime",
+   "age": 23.6,
+   "a25": 63.8,
+   "g25": 24,
+   "a24": 75.8,
+   "afl": null
+  },
+  {
+   "pick": 54,
+   "team": "Bito’s Boys",
+   "name": "Josh Gibcus",
+   "kind": "Young (<=23)",
+   "age": 22.9,
+   "a25": 25.0,
+   "g25": 1,
+   "a24": 25.5,
+   "afl": 9
+  },
+  {
+   "pick": 55,
+   "team": "Muzza's Murabito's",
+   "name": "Jake Riccardi",
+   "kind": "Prime",
+   "age": 26.3,
+   "a25": 69.2,
+   "g25": 20,
+   "a24": 59.7,
+   "afl": 51
+  },
+  {
+   "pick": 56,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Riley Bice",
+   "kind": "Prime",
+   "age": 25.5,
+   "a25": 56.7,
+   "g25": 16,
+   "a24": null,
+   "afl": 41
+  },
+  {
+   "pick": 57,
+   "team": "Bodega Boys",
+   "name": "Jake Waterman",
+   "kind": "Prime",
+   "age": 27.8,
+   "a25": 60.9,
+   "g25": 8,
+   "a24": 76.5,
+   "afl": 77
+  },
+  {
+   "pick": 58,
+   "team": "Bodega Boys",
+   "name": "Scott Pendlebury",
+   "kind": "Vet 30+",
+   "age": 38.2,
+   "a25": 82.5,
+   "g25": 22,
+   "a24": 79.2,
+   "afl": null
+  },
+  {
+   "pick": 59,
+   "team": "Pato's Fantasy Team",
+   "name": "Luke Nankervis",
+   "kind": "Young (<=23)",
+   "age": 22.8,
+   "a25": 45.1,
+   "g25": 7,
+   "a24": 64.5,
+   "afl": null
+  },
+  {
+   "pick": 60,
+   "team": "Serong So’Right",
+   "name": "Jarman Impey",
+   "kind": "Vet 30+",
+   "age": 30.7,
+   "a25": 76.7,
+   "g25": 24,
+   "a24": 76.5,
+   "afl": null
+  },
+  {
+   "pick": 61,
+   "team": "Ram Dawgs",
+   "name": "Steele Sidebottom",
+   "kind": "Vet 30+",
+   "age": 35.2,
+   "a25": 84.8,
+   "g25": 23,
+   "a24": 73.0,
+   "afl": null
+  },
+  {
+   "pick": 62,
+   "team": "Pato's Fantasy Team",
+   "name": "Stephen Coniglio",
+   "kind": "Vet 30+",
+   "age": 32.2,
+   "a25": 60.4,
+   "g25": 10,
+   "a24": 71.5,
+   "afl": null
+  },
+  {
+   "pick": 63,
+   "team": "Such Is Fyfe",
+   "name": "Zach Guthrie",
+   "kind": "Prime",
+   "age": 27.7,
+   "a25": 75.0,
+   "g25": 26,
+   "a24": 77.2,
+   "afl": null
+  },
+  {
+   "pick": 64,
+   "team": "Muzza's Murabito's",
+   "name": "Wil Powell",
+   "kind": "Prime",
+   "age": 26.6,
+   "a25": 66.4,
+   "g25": 25,
+   "a24": 74.7,
+   "afl": 19
+  },
+  {
+   "pick": 65,
+   "team": "Muzza's Murabito's",
+   "name": "Matthew Johnson",
+   "kind": "Young (<=23)",
+   "age": 23.0,
+   "a25": 70.5,
+   "g25": 18,
+   "a24": 62.0,
+   "afl": 21
+  },
+  {
+   "pick": 66,
+   "team": "Bodega Boys",
+   "name": "Shannon Neale",
+   "kind": "Prime",
+   "age": 23.7,
+   "a25": 57.8,
+   "g25": 25,
+   "a24": 55.5,
+   "afl": 33
+  },
+  {
+   "pick": 67,
+   "team": "Bodega Boys",
+   "name": "Tom Sparrow",
+   "kind": "Prime",
+   "age": 25.8,
+   "a25": 61.1,
+   "g25": 22,
+   "a24": 64.9,
+   "afl": 27
+  },
+  {
+   "pick": 68,
+   "team": "Bodega Boys",
+   "name": "Sam Marshall",
+   "kind": "Young (<=23)",
+   "age": 20.2,
+   "a25": 41.4,
+   "g25": 11,
+   "a24": null,
+   "afl": 25
+  },
+  {
+   "pick": 69,
+   "team": "Serong So’Right",
+   "name": "Jack Dalton",
+   "kind": "Rookie",
+   "age": 18.9,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 34
+  },
+  {
+   "pick": 70,
+   "team": "Such Is Fyfe",
+   "name": "Brad Hill",
+   "kind": "?",
+   "age": null,
+   "a25": null,
+   "g25": null,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 71,
+   "team": "NSW-ACT Academy",
+   "name": "Joe Richards",
+   "kind": "Prime",
+   "age": 26.3,
+   "a25": 65.3,
+   "g25": 22,
+   "a24": 50.9,
+   "afl": 48
+  },
+  {
+   "pick": 72,
+   "team": "Pato's Fantasy Team",
+   "name": "Sam Davidson",
+   "kind": "Prime",
+   "age": 24.2,
+   "a25": 66.1,
+   "g25": 19,
+   "a24": null,
+   "afl": 51
+  },
+  {
+   "pick": 73,
+   "team": "Muzza's Murabito's",
+   "name": "Sam Clohesy",
+   "kind": "Prime",
+   "age": 23.2,
+   "a25": 62.1,
+   "g25": 14,
+   "a24": 65.8,
+   "afl": null
+  },
+  {
+   "pick": 74,
+   "team": "Bito’s Boys",
+   "name": "Sam Swadling",
+   "kind": "Rookie",
+   "age": 19.2,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 37
+  },
+  {
+   "pick": 75,
+   "team": "Muzza's Murabito's",
+   "name": "Peter Wright",
+   "kind": "Prime",
+   "age": 29.5,
+   "a25": 73.9,
+   "g25": 19,
+   "a24": 64.4,
+   "afl": null
+  },
+  {
+   "pick": 76,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Daniel Rioli",
+   "kind": "Prime",
+   "age": 28.9,
+   "a25": 69.2,
+   "g25": 20,
+   "a24": 83.5,
+   "afl": null
+  },
+  {
+   "pick": 77,
+   "team": "Bodega Boys",
+   "name": "Nick Vlastuin",
+   "kind": "Vet 30+",
+   "age": 31.9,
+   "a25": 77.3,
+   "g25": 22,
+   "a24": 81.5,
+   "afl": null
+  },
+  {
+   "pick": 78,
+   "team": "A Brayshaw Thing",
+   "name": "Jai Culley",
+   "kind": "Prime",
+   "age": 23.1,
+   "a25": 59.8,
+   "g25": 4,
+   "a24": 40.3,
+   "afl": null
+  },
+  {
+   "pick": 79,
+   "team": "Serong So’Right",
+   "name": "Jamarra Ugle-Hagan",
+   "kind": "Prime",
+   "age": 23.9,
+   "a25": null,
+   "g25": 0,
+   "a24": 60.4,
+   "afl": 1
+  },
+  {
+   "pick": 80,
+   "team": "Pato's Fantasy Team",
+   "name": "Lachy Dovaston",
+   "kind": "Rookie",
+   "age": 18.8,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 16
+  },
+  {
+   "pick": 81,
+   "team": "Ram Dawgs",
+   "name": "Will Hayward",
+   "kind": "Prime",
+   "age": 27.4,
+   "a25": 55.8,
+   "g25": 21,
+   "a24": 64.8,
+   "afl": 21
+  },
+  {
+   "pick": 82,
+   "team": "Pato's Fantasy Team",
+   "name": "Lachlan McAndrew",
+   "kind": "Prime",
+   "age": 25.8,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 83,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Jesse Hogan",
+   "kind": "Vet 30+",
+   "age": 31.1,
+   "a25": 64.6,
+   "g25": 16,
+   "a24": 77.8,
+   "afl": null
+  },
+  {
+   "pick": 84,
+   "team": "Bito’s Boys",
+   "name": "Finlay Macrae",
+   "kind": "Prime",
+   "age": 24.0,
+   "a25": null,
+   "g25": 0,
+   "a24": 39.9,
+   "afl": 19
+  },
+  {
+   "pick": 85,
+   "team": "Muzza's Murabito's",
+   "name": "Jack Martin",
+   "kind": "Vet 30+",
+   "age": 31.2,
+   "a25": 64.8,
+   "g25": 13,
+   "a24": 31.0,
+   "afl": null
+  },
+  {
+   "pick": 86,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Jack Bowes",
+   "kind": "Prime",
+   "age": 28.2,
+   "a25": 58.9,
+   "g25": 21,
+   "a24": 77.5,
+   "afl": 10
+  },
+  {
+   "pick": 87,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Ethan Read",
+   "kind": "Young (<=23)",
+   "age": 20.7,
+   "a25": 41.7,
+   "g25": 21,
+   "a24": 20.5,
+   "afl": 9
+  },
+  {
+   "pick": 88,
+   "team": "A Brayshaw Thing",
+   "name": "Connor Idun",
+   "kind": "Prime",
+   "age": 25.7,
+   "a25": 70.8,
+   "g25": 24,
+   "a24": 72.6,
+   "afl": 61
+  },
+  {
+   "pick": 89,
+   "team": "Serong So’Right",
+   "name": "Dante Visentini",
+   "kind": "Prime",
+   "age": 23.1,
+   "a25": 53.9,
+   "g25": 8,
+   "a24": 54.7,
+   "afl": 56
+  },
+  {
+   "pick": 90,
+   "team": "Bito’s Boys",
+   "name": "Jamie Elliott",
+   "kind": "Vet 30+",
+   "age": 33.6,
+   "a25": 70.2,
+   "g25": 25,
+   "a24": 64.2,
+   "afl": null
+  },
+  {
+   "pick": 91,
+   "team": "Ram Dawgs",
+   "name": "Elijah Tsatas",
+   "kind": "Young (<=23)",
+   "age": 21.4,
+   "a25": 49.8,
+   "g25": 5,
+   "a24": 36.7,
+   "afl": 5
+  },
+  {
+   "pick": 92,
+   "team": "Pato's Fantasy Team",
+   "name": "Luke Pedlar",
+   "kind": "Prime",
+   "age": 23.8,
+   "a25": 45.0,
+   "g25": 9,
+   "a24": 24.8,
+   "afl": 11
+  },
+  {
+   "pick": 93,
+   "team": "NSW-ACT Academy",
+   "name": "Sam Butler",
+   "kind": "Prime",
+   "age": 23.1,
+   "a25": 59.5,
+   "g25": 6,
+   "a24": 27.0,
+   "afl": 23
+  },
+  {
+   "pick": 94,
+   "team": "Bito’s Boys",
+   "name": "Luke Trainor",
+   "kind": "Young (<=23)",
+   "age": 19.9,
+   "a25": 55.0,
+   "g25": 21,
+   "a24": null,
+   "afl": 21
+  },
+  {
+   "pick": 95,
+   "team": "Muzza's Murabito's",
+   "name": "Alex Neal-Bullen",
+   "kind": "Vet 30+",
+   "age": 30.2,
+   "a25": 70.3,
+   "g25": 25,
+   "a24": 79.0,
+   "afl": null
+  },
+  {
+   "pick": 96,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Jaeger O'Meara",
+   "kind": "Vet 30+",
+   "age": 32.1,
+   "a25": 61.1,
+   "g25": 14,
+   "a24": 62.0,
+   "afl": null
+  },
+  {
+   "pick": 97,
+   "team": "Bodega Boys",
+   "name": "Harvey Thomas",
+   "kind": "Young (<=23)",
+   "age": 20.6,
+   "a25": 51.6,
+   "g25": 18,
+   "a24": 46.3,
+   "afl": 59
+  },
+  {
+   "pick": 98,
+   "team": "A Brayshaw Thing",
+   "name": "Mitch Lewis",
+   "kind": "Prime",
+   "age": 27.4,
+   "a25": 44.8,
+   "g25": 8,
+   "a24": 43.8,
+   "afl": 76
+  },
+  {
+   "pick": 99,
+   "team": "Serong So’Right",
+   "name": "Patrick Lipinski",
+   "kind": "Prime",
+   "age": 27.7,
+   "a25": 66.3,
+   "g25": 23,
+   "a24": 68.7,
+   "afl": 28
+  },
+  {
+   "pick": 100,
+   "team": "Such Is Fyfe",
+   "name": "Beau Addinsall",
+   "kind": "Rookie",
+   "age": 19.0,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 18
+  },
+  {
+   "pick": 101,
+   "team": "Ram Dawgs",
+   "name": "Blake Acres",
+   "kind": "Vet 30+",
+   "age": 30.4,
+   "a25": 73.7,
+   "g25": 19,
+   "a24": 88.2,
+   "afl": null
+  },
+  {
+   "pick": 102,
+   "team": "Pato's Fantasy Team",
+   "name": "Jai Serong",
+   "kind": "Prime",
+   "age": 23.1,
+   "a25": null,
+   "g25": 0,
+   "a24": 37.6,
+   "afl": 53
+  },
+  {
+   "pick": 103,
+   "team": "Ram Dawgs",
+   "name": "Harry Dean",
+   "kind": "Rookie",
+   "age": 18.3,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 3
+  },
+  {
+   "pick": 104,
+   "team": "Such Is Fyfe",
+   "name": "Joe Berry",
+   "kind": "Young (<=23)",
+   "age": 19.9,
+   "a25": 39.6,
+   "g25": 12,
+   "a24": null,
+   "afl": 15
+  },
+  {
+   "pick": 105,
+   "team": "Muzza's Murabito's",
+   "name": "Christian Moraes",
+   "kind": "Young (<=23)",
+   "age": 19.3,
+   "a25": 47.4,
+   "g25": 14,
+   "a24": null,
+   "afl": 38
+  },
+  {
+   "pick": 106,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Oliver Greeves",
+   "kind": "Rookie",
+   "age": 19.1,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 107,
+   "team": "Bodega Boys",
+   "name": "Zac Williams",
+   "kind": "Vet 30+",
+   "age": 31.5,
+   "a25": 61.3,
+   "g25": 19,
+   "a24": 59.6,
+   "afl": null
+  },
+  {
+   "pick": 108,
+   "team": "A Brayshaw Thing",
+   "name": "Clay Hall",
+   "kind": "Young (<=23)",
+   "age": 20.8,
+   "a25": 55.0,
+   "g25": 13,
+   "a24": 33.0,
+   "afl": 38
+  },
+  {
+   "pick": 109,
+   "team": "Serong So’Right",
+   "name": "Zak Johnson",
+   "kind": "Young (<=23)",
+   "age": 19.2,
+   "a25": 50.4,
+   "g25": 9,
+   "a24": null,
+   "afl": 70
+  },
+  {
+   "pick": 110,
+   "team": "Such Is Fyfe",
+   "name": "Sam Berry",
+   "kind": "Prime",
+   "age": 24.1,
+   "a25": 59.6,
+   "g25": 19,
+   "a24": 58.9,
+   "afl": 28
+  },
+  {
+   "pick": 111,
+   "team": "NSW-ACT Academy",
+   "name": "Nate Caddy",
+   "kind": "Young (<=23)",
+   "age": 20.7,
+   "a25": 53.5,
+   "g25": 17,
+   "a24": 53.1,
+   "afl": 10
+  },
+  {
+   "pick": 112,
+   "team": "Pato's Fantasy Team",
+   "name": "Nick Watson",
+   "kind": "Young (<=23)",
+   "age": 21.1,
+   "a25": 49.5,
+   "g25": 25,
+   "a24": 57.1,
+   "afl": 5
+  },
+  {
+   "pick": 113,
+   "team": "NSW-ACT Academy",
+   "name": "Sean Darcy",
+   "kind": "Prime",
+   "age": 27.7,
+   "a25": 65.4,
+   "g25": 17,
+   "a24": 77.8,
+   "afl": 38
+  },
+  {
+   "pick": 114,
+   "team": "Bito’s Boys",
+   "name": "Wayne Milera",
+   "kind": "Prime",
+   "age": 28.5,
+   "a25": 72.1,
+   "g25": 24,
+   "a24": 62.3,
+   "afl": null
+  },
+  {
+   "pick": 115,
+   "team": "Muzza's Murabito's",
+   "name": "Hugh Boxshall",
+   "kind": "Young (<=23)",
+   "age": 19.7,
+   "a25": 54.9,
+   "g25": 11,
+   "a24": null,
+   "afl": 45
+  },
+  {
+   "pick": 116,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "James Leake",
+   "kind": "Young (<=23)",
+   "age": 20.4,
+   "a25": 31.7,
+   "g25": 3,
+   "a24": null,
+   "afl": 17
+  },
+  {
+   "pick": 117,
+   "team": "NSW-ACT Academy",
+   "name": "Xavier O'Halloran",
+   "kind": "Prime",
+   "age": 25.7,
+   "a25": 57.2,
+   "g25": 23,
+   "a24": 46.6,
+   "afl": 22
+  },
+  {
+   "pick": 118,
+   "team": "A Brayshaw Thing",
+   "name": "Mason Wood",
+   "kind": "Vet 30+",
+   "age": 32.5,
+   "a25": 68.7,
+   "g25": 21,
+   "a24": 82.6,
+   "afl": null
+  },
+  {
+   "pick": 119,
+   "team": "Serong So’Right",
+   "name": "Josh Battle",
+   "kind": "Prime",
+   "age": 27.5,
+   "a25": 69.6,
+   "g25": 26,
+   "a24": 73.7,
+   "afl": 39
+  },
+  {
+   "pick": 120,
+   "team": "Such Is Fyfe",
+   "name": "Brady Hough",
+   "kind": "Young (<=23)",
+   "age": 23.0,
+   "a25": 64.1,
+   "g25": 22,
+   "a24": 58.5,
+   "afl": 31
+  },
+  {
+   "pick": 121,
+   "team": "Ram Dawgs",
+   "name": "Harry Morrison",
+   "kind": "Prime",
+   "age": 27.3,
+   "a25": 70.9,
+   "g25": 20,
+   "a24": 61.2,
+   "afl": 74
+  },
+  {
+   "pick": 122,
+   "team": "Bodega Boys",
+   "name": "Rhys Stanley",
+   "kind": "Vet 30+",
+   "age": 35.2,
+   "a25": 62.8,
+   "g25": 19,
+   "a24": 67.0,
+   "afl": null
+  },
+  {
+   "pick": 123,
+   "team": "Bito’s Boys",
+   "name": "Logan Morris",
+   "kind": "Young (<=23)",
+   "age": 20.8,
+   "a25": 56.8,
+   "g25": 26,
+   "a24": 42.8,
+   "afl": 31
+  },
+  {
+   "pick": 124,
+   "team": "Bito’s Boys",
+   "name": "Will Setterfield",
+   "kind": "Prime",
+   "age": 28.1,
+   "a25": 95.9,
+   "g25": 13,
+   "a24": 99.0,
+   "afl": 5
+  },
+  {
+   "pick": 125,
+   "team": "Muzza's Murabito's",
+   "name": "Campbell Chesser",
+   "kind": "Young (<=23)",
+   "age": 22.9,
+   "a25": 64.5,
+   "g25": 4,
+   "a24": 40.7,
+   "afl": 14
+  },
+  {
+   "pick": 126,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Mark Blicavs",
+   "kind": "Vet 30+",
+   "age": 35.0,
+   "a25": 73.8,
+   "g25": 25,
+   "a24": 68.1,
+   "afl": null
+  },
+  {
+   "pick": 127,
+   "team": "Bodega Boys",
+   "name": "Lachlan Blakiston",
+   "kind": "Prime",
+   "age": 27.5,
+   "a25": 38.0,
+   "g25": 11,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 128,
+   "team": "A Brayshaw Thing",
+   "name": "Isaac Cumming",
+   "kind": "Prime",
+   "age": 27.6,
+   "a25": 60.5,
+   "g25": 24,
+   "a24": 64.7,
+   "afl": 20
+  },
+  {
+   "pick": 129,
+   "team": "Serong So’Right",
+   "name": "Connor O'Sullivan",
+   "kind": "Young (<=23)",
+   "age": 20.8,
+   "a25": 55.8,
+   "g25": 25,
+   "a24": 40.0,
+   "afl": 11
+  },
+  {
+   "pick": 130,
+   "team": "Such Is Fyfe",
+   "name": "Harry Schoenberg",
+   "kind": "Prime",
+   "age": 25.1,
+   "a25": 23.0,
+   "g25": 1,
+   "a24": 41.8,
+   "afl": 24
+  },
+  {
+   "pick": 131,
+   "team": "Ram Dawgs",
+   "name": "Nathan O'Driscoll",
+   "kind": "Prime",
+   "age": 23.8,
+   "a25": 62.7,
+   "g25": 14,
+   "a24": 50.5,
+   "afl": 27
+  },
+  {
+   "pick": 132,
+   "team": "Bodega Boys",
+   "name": "Jai Murray",
+   "kind": "Rookie",
+   "age": 19.0,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 17
+  },
+  {
+   "pick": 133,
+   "team": "Bodega Boys",
+   "name": "Joe Fonti",
+   "kind": "Young (<=23)",
+   "age": 21.2,
+   "a25": 49.6,
+   "g25": 17,
+   "a24": 38.2,
+   "afl": 44
+  },
+  {
+   "pick": 134,
+   "team": "Bito’s Boys",
+   "name": "Marc Pittonet",
+   "kind": "Prime",
+   "age": 29.7,
+   "a25": 70.3,
+   "g25": 7,
+   "a24": 68.4,
+   "afl": null
+  },
+  {
+   "pick": 135,
+   "team": "Muzza's Murabito's",
+   "name": "Archie Perkins",
+   "kind": "Prime",
+   "age": 24.0,
+   "a25": 57.0,
+   "g25": 21,
+   "a24": 65.2,
+   "afl": 9
+  },
+  {
+   "pick": 136,
+   "team": "Serong So’Right",
+   "name": "Angus Anderson",
+   "kind": "Rookie",
+   "age": 22.8,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 57
+  },
+  {
+   "pick": 137,
+   "team": "Bodega Boys",
+   "name": "Xavier Taylor",
+   "kind": "Rookie",
+   "age": 19.2,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 11
+  },
+  {
+   "pick": 138,
+   "team": "A Brayshaw Thing",
+   "name": "Jacob Wehr",
+   "kind": "Prime",
+   "age": 27.7,
+   "a25": 52.3,
+   "g25": 14,
+   "a24": 54.3,
+   "afl": 59
+  },
+  {
+   "pick": 139,
+   "team": "Serong So’Right",
+   "name": "Patrick Dangerfield",
+   "kind": "Vet 30+",
+   "age": 35.9,
+   "a25": 65.6,
+   "g25": 23,
+   "a24": 78.4,
+   "afl": null
+  },
+  {
+   "pick": 140,
+   "team": "Such Is Fyfe",
+   "name": "James Harmes",
+   "kind": "?",
+   "age": null,
+   "a25": null,
+   "g25": null,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 141,
+   "team": "Ram Dawgs",
+   "name": "Mac Andrew",
+   "kind": "Young (<=23)",
+   "age": 22.2,
+   "a25": 56.2,
+   "g25": 24,
+   "a24": 64.2,
+   "afl": 5
+  },
+  {
+   "pick": 144,
+   "team": "Bito’s Boys",
+   "name": "Tyan Prindable",
+   "kind": "Rookie",
+   "age": 19.2,
+   "a25": null,
+   "g25": 0,
+   "a24": null,
+   "afl": 32
+  },
+  {
+   "pick": 146,
+   "team": "Serong So’Right",
+   "name": "Henry Hustwaite",
+   "kind": "Young (<=23)",
+   "age": 21.7,
+   "a25": 51.5,
+   "g25": 4,
+   "a24": 22.8,
+   "afl": 37
+  },
+  {
+   "pick": 148,
+   "team": "A Brayshaw Thing",
+   "name": "Dion Prestia",
+   "kind": "Vet 30+",
+   "age": 33.4,
+   "a25": 78.8,
+   "g25": 12,
+   "a24": 72.4,
+   "afl": null
+  },
+  {
+   "pick": 149,
+   "team": "Serong So’Right",
+   "name": "Jack Gunston",
+   "kind": "Vet 30+",
+   "age": 34.4,
+   "a25": 75.4,
+   "g25": 23,
+   "a24": 51.6,
+   "afl": null
+  },
+  {
+   "pick": 153,
+   "team": "Bito’s Boys",
+   "name": "Daniel McStay",
+   "kind": "Vet 30+",
+   "age": 30.7,
+   "a25": 56.6,
+   "g25": 18,
+   "a24": 56.2,
+   "afl": null
+  },
+  {
+   "pick": 154,
+   "team": "Bito’s Boys",
+   "name": "Mason Cox",
+   "kind": "Vet 30+",
+   "age": 35.0,
+   "a25": 43.2,
+   "g25": 10,
+   "a24": 50.4,
+   "afl": null
+  },
+  {
+   "pick": 156,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Nick Madden",
+   "kind": "?",
+   "age": null,
+   "a25": null,
+   "g25": null,
+   "a24": null,
+   "afl": null
+  },
+  {
+   "pick": 157,
+   "team": "NSW-ACT Academy",
+   "name": "Darcy Fort",
+   "kind": "Vet 30+",
+   "age": 32.6,
+   "a25": 73.2,
+   "g25": 21,
+   "a24": 68.7,
+   "afl": 65
+  },
+  {
+   "pick": 158,
+   "team": "A Brayshaw Thing",
+   "name": "Peter Ladhams",
+   "kind": "Prime",
+   "age": 28.2,
+   "a25": 50.9,
+   "g25": 10,
+   "a24": 37.0,
+   "afl": null
+  },
+  {
+   "pick": 159,
+   "team": "Fo’ Sheezel my Neezel",
+   "name": "Sam De Koning",
+   "kind": "Prime",
+   "age": 25.1,
+   "a25": 56.3,
+   "g25": 23,
+   "a24": 55.0,
+   "afl": 19
+  }
+ ]
+}
