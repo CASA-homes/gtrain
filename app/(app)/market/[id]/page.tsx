@@ -33,7 +33,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
 
   return (
     <div className="wrap" style={{ maxWidth: 980 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Market</Link> / {p.name}</span>
+      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / {p.name}</span>
       <article className="card" style={{ overflow: 'hidden', borderRadius: 16 }}>
         <div style={{ padding: '20px 22px', display: 'flex', flexWrap: 'wrap', gap: '18px 28px', justifyContent: 'space-between', borderBottom: '1px solid var(--line)' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>

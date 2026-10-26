@@ -70,7 +70,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
 
   return (
     <div className="wrap" style={{ maxWidth: 1180 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Market</Link> / <Link href="/market/desk">Trade desk</Link> / {desk.title}</span>
+      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / <Link href="/market/desk">Trade desk</Link> / {desk.title}</span>
 
       <header className="card" style={{ padding: '20px 22px', display: 'flex', flexWrap: 'wrap', gap: 18, justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center', minWidth: 0 }}>

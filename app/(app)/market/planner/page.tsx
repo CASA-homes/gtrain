@@ -48,7 +48,7 @@ export default async function PlannerPage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="wrap" style={{ maxWidth: 1240 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Market</Link> / Trade planner</span>
+      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / Trade planner</span>
       <div>
         <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Trade planner</h1>
         <p className="muted" style={{ margin: '4px 0 0', maxWidth: '78ch' }}>

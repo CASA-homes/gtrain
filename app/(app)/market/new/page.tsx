@@ -12,7 +12,7 @@ export default async function NewListing({ searchParams }: { searchParams: Promi
   return (
     <div className="wrap" style={{ maxWidth: 720 }}>
       <div>
-        <span className="eyebrow">Market</span>
+        <span className="eyebrow">Trademarket</span>
         <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>List a player</h1>
         <p className="muted" style={{ margin: 0 }}>Other coaches can offer, comment or bid. Nothing moves until you accept and the commish approves.</p>
       </div>

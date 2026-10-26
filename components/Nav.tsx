@@ -19,7 +19,7 @@ const Icon = ({ name }: { name: string }) => (
 const LINKS = [
   { href: '/clubhouse', label: 'Clubhouse', icon: 'clubhouse' },
   { href: '/players', label: 'Players', icon: 'players' },
-  { href: '/market', label: 'Market', icon: 'market' },
+  { href: '/market', label: 'Trademarket', icon: 'market' },
   { href: '/league', label: 'League', icon: 'league' },
   { href: '/rankings', label: 'Rankings', icon: 'rankings' },
   { href: '/draft', label: 'Draft', icon: 'draft' },

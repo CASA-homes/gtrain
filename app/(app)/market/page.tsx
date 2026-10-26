@@ -32,8 +32,8 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
       <div style={{ background: 'var(--forest)', color: 'var(--cream)', padding: '28px max(16px, 2vw) 24px' }}>
         <div style={{ maxWidth: 1360, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>G-Train / Market</span>
-            <h1 style={{ font: '600 40px/1 var(--font)', letterSpacing: '-.035em' }}>Market</h1>
+            <span style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>G-Train / Trademarket</span>
+            <h1 style={{ font: '600 40px/1 var(--font)', letterSpacing: '-.035em' }}>Trademarket</h1>
             <span style={{ color: '#a9b5aa' }}>No trade deadline. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
           </div>
           <div className="kpis">

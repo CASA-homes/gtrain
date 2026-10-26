@@ -51,7 +51,7 @@ export default async function DeskList({ searchParams }: { searchParams: Promise
 
   return (
     <div className="wrap" style={{ maxWidth: 1180 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Market</Link> / Trade desk</span>
+      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / Trade desk</span>
       <div>
         <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Trade desk</h1>
         <p className="muted" style={{ margin: '4px 0 0', maxWidth: '72ch' }}>
