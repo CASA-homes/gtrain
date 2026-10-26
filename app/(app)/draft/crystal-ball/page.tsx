@@ -314,6 +314,12 @@ function Seconds({ r }: { r: Past }) {
   );
 }
 
+/** The scouts' pre-draft profile (Rookie Me guide, plus ESPN's phantom for 2020), when we have one. */
+function PastProfile({ r }: { r: Past }) {
+  const prof = draftProfileFor(r.year, r.name.replace('+', ''));
+  return prof ? <ProfileSheet name={r.name.replace('+', '')} profile={prof} highlights={r.year} context={`Pick ${r.pick} · ${r.club} · ${r.year} draft`} /> : null;
+}
+
 function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
   const st = STATUS[r.status];
   return (
@@ -321,7 +327,7 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
           <span className="eyebrow">{r.year} draft · pick {r.pick}<GPick name={r.name} prefix=" · G-Train " /> · {r.club}{r.role && r.role !== 'Midfielder' && r.role !== 'Unknown' ? ` · ${r.role}` : ''}</span>
-          <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{r.name}</h3>
+          <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0' }}>{r.name.replace('+', '')}</h3>
           <span className="pill" style={{ background: st.bg, color: st.fg, marginTop: 4, display: 'inline-block' }}>{r.status}</span>
         </div>
         <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
@@ -331,6 +337,7 @@ function PastCard({ r, path }: { r: Past; path: Record<string, number> }) {
           <Chance value={r.now} size={18} width={72} />
         </div>
       </div>
+      <PastProfile r={r} />
       <TrackBar r={r} path={path} />
       {r.like && r.like.length > 0 && <span style={{ fontSize: 12 }}><span className="muted">Tracking like </span><Like r={r} n={4} /></span>}
       {r.why && r.why.length > 0 && (
@@ -382,7 +389,7 @@ function PastView({ year }: { year: number }) {
         {surprises.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
       </Drop>
 
-      <Drop title="Breakout watch: moving into the middle" count={breakouts.length} blurb="Centre-bounce attendance is the best early sign of a fantasy breakout. These 2021–25 draftees (not yet stars, rucks left out) jumped into the centre square in 2026.">
+      <Drop title="Breakout watch: moving into the middle" count={breakouts.length} blurb="Centre-bounce attendance is the best early sign of a fantasy breakout. These 2020–25 draftees (not yet stars, rucks left out) jumped into the centre square in 2026.">
         {breakouts.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
       </Drop>
 
@@ -427,7 +434,8 @@ function PastView({ year }: { year: number }) {
                 <tr key={r.name} className={ROW_CLASS[r.status]} title={r.why?.join('\n') || undefined}>
                   <td className="mono">{r.pick}</td>
                   <td className="mono"><GPick name={r.name} /></td>
-                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{r.club}{r.mature ? ' · mature-age' : ''}{r.role === 'Key position' || r.role === 'Small forward' || r.role === 'Ruck' ? ` · ${r.role}` : ''}</div></td>
+                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{r.name.replace('+', '')}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{r.club}{r.mature ? ' · mature-age' : ''}{r.role === 'Key position' || r.role === 'Small forward' || r.role === 'Ruck' ? ` · ${r.role}` : ''}</div>
+                    <PastProfile r={r} /></td>
                   <td style={{ textAlign: 'center' }}><Chance value={r.pre} size={15} /></td>
                   <td style={{ textAlign: 'center' }}><Chance value={r.now} size={15} /></td>
                   <td><span className="pill" style={{ background: STATUS[r.status].bg, color: STATUS[r.status].fg }}>{r.status}</span></td>

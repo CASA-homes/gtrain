@@ -46,7 +46,7 @@ export function DraftProfileCard({ d, compact = false }: { d: DraftProfile; comp
         {!compact && ratings('On field', d.onField)}
       </div>
       <span className="muted" style={{ fontSize: 12 }}>
-        Source: <a href={d.source.url} target="_blank" rel="noreferrer">{d.source.title}</a>{d.source.page ? `, page ${d.source.page}` : ''} (Rookie Me Central). Summary is our own read of the source.
+        Source: <a href={d.source.url} target="_blank" rel="noreferrer">{d.source.title}</a>{d.source.page ? `, page ${d.source.page}` : ''} ({d.source.url.includes('espn.com') ? 'ESPN' : 'Rookie Me Central'}){d.year === 2020 && !d.source.url.includes('espn.com') ? <>, with the scouting read from <a href="https://www.espn.com/afl/story/_/id/30478295/afl-draft-2020-phantom-draft-chris-doerre-espn-full-final-phantom-draft" target="_blank" rel="noreferrer">ESPN’s 2020 phantom draft</a></> : null}. Summary is our own read of the source.
       </span>
     </div>
   );

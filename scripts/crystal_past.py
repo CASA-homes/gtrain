@@ -1,4 +1,4 @@
-# Crystal ball, previous drafts (2021–2025): pre-draft chance (out-of-sample), how each player is tracking,
+# Crystal ball, previous drafts (2020–2025): pre-draft chance (out-of-sample), how each player is tracking,
 # an updated chance given what he's done so far, and the biggest surprises. Adds a "past" block to lib/crystal-ball.json.
 # Run after crystal_score.py.
 import json, math, sys
@@ -8,7 +8,7 @@ sys.path.insert(0, 'scripts')
 from crystal import players, train, H, HIT, dfs_rec  # noqa: E402
 import crystal_model as cm  # noqa: E402
 
-YEARS = [2021, 2022, 2023, 2024, 2025]
+YEARS = [2020, 2021, 2022, 2023, 2024, 2025]
 NOW = 2026
 byname = {(p['year'], p['name']): p for p in players}
 
@@ -138,7 +138,7 @@ def features(pid, year, n, pre_p, role):
              'best': best, 'ppm': ppm, 'tog': max((r[3] for r in rows if r[1] >= 5), default=None)}
     return x, facts
 
-# 1) Pre-draft chance for everyone in 2021–2025, from a model fitted without that draft year.
+# 1) Pre-draft chance for everyone in 2020–2025, from a model fitted without that draft year.
 pre = {}
 for yr in YEARS:
     tr = [p for p in train if p['year'] != yr]
@@ -237,7 +237,7 @@ def comp_chance(v, n, year):
     r, c = knn(v, n, excl_year=year)
     return float(cal[n].predict_proba([[math.log(r / (1 - r))]])[0, 1]), c
 
-# 4) Score each 2021–2025 draftee.
+# 4) Score each 2020–2025 draftee.
 past = []
 for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p'])):
     pc, po = pre[(d['y'], d['n'])]

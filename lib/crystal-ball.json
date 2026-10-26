@@ -4281,6 +4281,7 @@
  },
  "past": {
   "years": [
+   2020,
    2021,
    2022,
    2023,
@@ -4295,6 +4296,6532 @@
    "5": 89.2
   },
   "players": [
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 1,
+    "name": "Jamarra Ugle-Hagan",
+    "club": "WBD",
+    "pre": 20.3,
+    "positionOnly": 68.2,
+    "now": 0.8,
+    "games": 69,
+    "current": {
+     "games": 3,
+     "avg": 36.3
+    },
+    "best": 58.9,
+    "peak": 60.4,
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 1 of 69 games at 100+",
+     "Mostly starts at forward (95% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Max King",
+     "Darcy Fogarty",
+     "Todd Marshall",
+     "Bobby Hill",
+     "Cody Weightman",
+     "Nick Larkey"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Defensive pressure",
+     "Upside",
+     "X-factor / hurt"
+    ],
+    "jFP": 65.0,
+    "seasons": [
+     [
+      2021,
+      5,
+      42.0
+     ],
+     [
+      2022,
+      16,
+      46.4
+     ],
+     [
+      2023,
+      23,
+      60.0
+     ],
+     [
+      2024,
+      22,
+      60.4
+     ],
+     [
+      2026,
+      3,
+      36.3
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 70.8,
+      "disposals": 13.5,
+      "tackles": 1.6,
+      "marks": 4.6,
+      "goals": 2.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 5,
+      "fp": 57.2,
+      "disposals": 10.6,
+      "tackles": 1.2,
+      "marks": 4.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 7,
+      "fp": 53.7,
+      "disposals": 8.3,
+      "tackles": 2.4,
+      "marks": 2.9,
+      "goals": 1.9
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 2,
+    "name": "Riley Thilthorpe",
+    "club": "ADE",
+    "pre": 24.5,
+    "positionOnly": 52.7,
+    "now": 27.3,
+    "games": 100,
+    "current": {
+     "games": 22,
+     "avg": 71.6
+    },
+    "best": 76.3,
+    "peak": 83.2,
+    "track": 86,
+    "status": "Long shot",
+    "why": [
+     "Mostly starts at forward (97% of starts), 14% centre bounces"
+    ],
+    "like": [
+     "Izak Rankine*",
+     "Jack Lukosius",
+     "Connor MacDonald",
+     "Jack Graham",
+     "Jaidyn Stephenson",
+     "Tarryn Thomas"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Engine / work rate",
+     "Versatility"
+    ],
+    "jFP": 32.0,
+    "seasons": [
+     [
+      2021,
+      14,
+      51.2
+     ],
+     [
+      2022,
+      11,
+      57.3
+     ],
+     [
+      2023,
+      21,
+      52.9
+     ],
+     [
+      2024,
+      7,
+      68.3
+     ],
+     [
+      2025,
+      25,
+      83.2
+     ],
+     [
+      2026,
+      22,
+      71.6
+     ]
+    ],
+    "role": "Ruck",
+    "cba": {
+     "2021": 7.0,
+     "2022": 12.0,
+     "2023": 16.0,
+     "2024": 8.0,
+     "2025": 14.0,
+     "2026": 13.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 62.5,
+      "disposals": 8.5,
+      "tackles": 2.0,
+      "marks": 4.0,
+      "goals": 2.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 5,
+      "fp": 81.4,
+      "disposals": 12.8,
+      "tackles": 3.2,
+      "marks": 5.0,
+      "goals": 2.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 52.7,
+      "disposals": 11.3,
+      "tackles": 3.3,
+      "marks": 3.0,
+      "goals": 0.7
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 3,
+    "name": "Will Phillips",
+    "club": "NTH",
+    "pre": 51.9,
+    "positionOnly": 43.2,
+    "now": 9.3,
+    "games": 48,
+    "current": null,
+    "best": 62.9,
+    "peak": 66.8,
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 44% of games (48 from 110 available)",
+     "Stuck in the seconds: 12 state-league games v 7 AFL in 2025",
+     "Rarely goes big: 0 of 48 games at 100+"
+    ],
+    "like": [
+     "Harry Schoenberg",
+     "Lachie Fogarty",
+     "Will Setterfield*",
+     "Tyler Sonsie",
+     "Angus Sheldrick",
+     "Deven Robertson"
+    ],
+    "traits": [
+     "Accumulator",
+     "Clean hands",
+     "Consistency",
+     "Contested / inside",
+     "Defensive pressure",
+     "Size / strength",
+     "Speed / agility"
+    ],
+    "jFP": 82.0,
+    "seasons": [
+     [
+      2021,
+      14,
+      43.9
+     ],
+     [
+      2023,
+      16,
+      66.8
+     ],
+     [
+      2024,
+      11,
+      59.4
+     ],
+     [
+      2025,
+      7,
+      59.1
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 26.0,
+     "2023": 61.0,
+     "2024": 58.0,
+     "2025": 52.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 66.8,
+      "disposals": 16.6,
+      "tackles": 3.9,
+      "marks": 3.1,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 106.7,
+      "disposals": 23.8,
+      "tackles": 9.7,
+      "marks": 3.3,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 84.4,
+      "disposals": 23.3,
+      "tackles": 6.2,
+      "marks": 2.2,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 94.8,
+      "disposals": 24.6,
+      "tackles": 7.3,
+      "marks": 2.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 51.3,
+      "disposals": 15.0,
+      "tackles": 3.3,
+      "marks": 1.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 94.3,
+      "disposals": 27.0,
+      "tackles": 5.3,
+      "marks": 2.3,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 4,
+    "name": "Logan McDonald",
+    "club": "SYD",
+    "pre": 7.4,
+    "positionOnly": 36.7,
+    "now": 1.2,
+    "games": 93,
+    "current": {
+     "games": 23,
+     "avg": 59.5
+    },
+    "best": 56.4,
+    "peak": 59.5,
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 93 games at 100+",
+     "Mostly starts at forward (96% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Jordan Gallucci",
+     "Jacob Koschitzke",
+     "Lachlan Gollant",
+     "Josh Begley",
+     "Ned McHenry",
+     "Boyd Woodcock"
+    ],
+    "traits": [
+     "Engine / work rate",
+     "Kicking / skills",
+     "Scoreboard impact",
+     "Size / strength"
+    ],
+    "jFP": 51.0,
+    "seasons": [
+     [
+      2021,
+      7,
+      43.4
+     ],
+     [
+      2022,
+      17,
+      46.6
+     ],
+     [
+      2023,
+      20,
+      55.0
+     ],
+     [
+      2024,
+      26,
+      56.9
+     ],
+     [
+      2026,
+      23,
+      59.5
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 58.5,
+      "disposals": 9.0,
+      "tackles": 2.0,
+      "marks": 5.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 5,
+      "fp": 93.0,
+      "disposals": 15.6,
+      "tackles": 2.2,
+      "marks": 8.6,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 6,
+      "fp": 73.5,
+      "disposals": 12.3,
+      "tackles": 1.5,
+      "marks": 7.3,
+      "goals": 2.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 5,
+    "name": "Braeden Campbell",
+    "club": "SYD",
+    "pre": 49.1,
+    "positionOnly": 32.0,
+    "now": 7.1,
+    "games": 99,
+    "current": {
+     "games": 8,
+     "avg": 67.4
+    },
+    "best": 63.3,
+    "peak": 67.4,
+    "track": 71,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 1 of 99 games at 100+",
+     "Mostly starts at forward (30% of starts), 4% centre bounces"
+    ],
+    "like": [
+     "Gryan Miers*",
+     "Zac Fisher",
+     "Cameron Rayner",
+     "Callum Brown",
+     "Curtis Taylor",
+     "Will Hayward"
+    ],
+    "traits": [
+     "Footy IQ / vision",
+     "Inside-outside balance",
+     "Kicking / skills",
+     "Scoreboard impact",
+     "Speed / agility",
+     "X-factor / hurt"
+    ],
+    "jFP": 80.0,
+    "seasons": [
+     [
+      2021,
+      8,
+      52.5
+     ],
+     [
+      2022,
+      14,
+      42.9
+     ],
+     [
+      2023,
+      23,
+      66.2
+     ],
+     [
+      2024,
+      23,
+      47.3
+     ],
+     [
+      2025,
+      23,
+      56.6
+     ],
+     [
+      2026,
+      8,
+      67.4
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 2.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 4.0,
+     "2026": 7.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 100.0,
+      "disposals": 21.0,
+      "tackles": 3.0,
+      "marks": 5.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 112.5,
+      "disposals": 24.5,
+      "tackles": 8.0,
+      "marks": 5.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 78.1,
+      "disposals": 19.1,
+      "tackles": 4.8,
+      "marks": 3.1,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 2,
+      "fp": 89.5,
+      "disposals": 20.0,
+      "tackles": 5.0,
+      "marks": 4.5,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 6,
+    "name": "Denver Grainger-Barras",
+    "club": "HAW",
+    "pre": 2.3,
+    "positionOnly": 28.4,
+    "now": 1.2,
+    "games": 28,
+    "current": null,
+    "best": 48.5,
+    "peak": 33.5,
+    "track": 54,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (28 from 110 available)",
+     "Rarely goes big: 0 of 28 games at 100+",
+     "Mostly starts at half-back / defence (54% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Taj Woewodin",
+     "Cameron Polson",
+     "Will Hamill",
+     "Caleb Graham",
+     "Oscar Adams",
+     "Aiden Bonar"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Footy IQ / vision",
+     "Intercept / rebound",
+     "Speed / agility"
+    ],
+    "jFP": 56.0,
+    "seasons": [
+     [
+      2021,
+      5,
+      38.2
+     ],
+     [
+      2022,
+      16,
+      33.5
+     ],
+     [
+      2023,
+      7,
+      25.9
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 43.4,
+      "disposals": 8.4,
+      "tackles": 0.6,
+      "marks": 4.0,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 43.9,
+      "disposals": 10.2,
+      "tackles": 1.0,
+      "marks": 4.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 14,
+      "fp": 59.3,
+      "disposals": 12.5,
+      "tackles": 1.3,
+      "marks": 6.1,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 42.0,
+      "disposals": 10.1,
+      "tackles": 1.0,
+      "marks": 4.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 1,
+      "fp": 52.0,
+      "disposals": 12.0,
+      "tackles": 1.0,
+      "marks": 6.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 7,
+    "name": "Elijah Hollands",
+    "club": "GCS",
+    "pre": 44.7,
+    "positionOnly": 25.5,
+    "now": 7.7,
+    "games": 47,
+    "current": {
+     "games": 6,
+     "avg": 56.8
+    },
+    "best": 69.4,
+    "peak": 74.6,
+    "track": 78,
+    "status": "Unlikely",
+    "why": [
+     "Plays 37% of games (47 from 110 available)",
+     "Mostly starts at forward (74% of starts), 1% centre bounces"
+    ],
+    "like": [
+     "Jackson Hately",
+     "Ben Hobbs",
+     "Lachie Fogarty",
+     "Harry Schoenberg",
+     "Patrick Lipinski",
+     "Lachlan Sholl"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Defensive pressure",
+     "Intercept / rebound",
+     "Kicking / skills",
+     "Scoreboard impact"
+    ],
+    "jFP": 78.0,
+    "seasons": [
+     [
+      2022,
+      5,
+      73.2
+     ],
+     [
+      2023,
+      9,
+      51.1
+     ],
+     [
+      2024,
+      22,
+      74.6
+     ],
+     [
+      2025,
+      5,
+      67.4
+     ],
+     [
+      2026,
+      6,
+      56.8
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 18.0,
+     "2025": 1.0,
+     "2026": 3.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 83.7,
+      "disposals": 21.0,
+      "tackles": 4.0,
+      "marks": 5.0,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 79.3,
+      "disposals": 21.2,
+      "tackles": 4.1,
+      "marks": 3.1,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 85.2,
+      "disposals": 22.0,
+      "tackles": 3.5,
+      "marks": 4.6,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 72.3,
+      "disposals": 17.7,
+      "tackles": 4.0,
+      "marks": 3.0,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 8,
+    "name": "Nik Cox",
+    "club": "ESS",
+    "pre": 16.2,
+    "positionOnly": 23.2,
+    "now": 0.9,
+    "games": 59,
+    "current": {
+     "games": 8,
+     "avg": 44.2
+    },
+    "best": 55.8,
+    "peak": 56.1,
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 46% of games (59 from 110 available)",
+     "Rarely goes big: 1 of 59 games at 100+",
+     "Mostly starts on a wing (40% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Jaxon Prior",
+     "Noah Answerth",
+     "Ed Phillips",
+     "Jack Mahony",
+     "Jordan Gallucci",
+     "Jacob Allison"
+    ],
+    "traits": [],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      20,
+      56.1
+     ],
+     [
+      2022,
+      5,
+      47.8
+     ],
+     [
+      2023,
+      6,
+      44.2
+     ],
+     [
+      2024,
+      20,
+      52.9
+     ],
+     [
+      2026,
+      8,
+      44.2
+     ]
+    ],
+    "role": "Unknown",
+    "cba": {
+     "2021": 4.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 72.9,
+      "disposals": 13.1,
+      "tackles": 2.1,
+      "marks": 5.5,
+      "goals": 2.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 42.0,
+      "disposals": 11.5,
+      "tackles": 2.0,
+      "marks": 1.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 61.2,
+      "disposals": 15.0,
+      "tackles": 1.8,
+      "marks": 4.7,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 9,
+    "name": "Archie Perkins",
+    "club": "ESS",
+    "pre": 9.6,
+    "positionOnly": 21.3,
+    "now": 18.4,
+    "games": 116,
+    "current": {
+     "games": 16,
+     "avg": 61.0
+    },
+    "best": 64.1,
+    "peak": 67.3,
+    "track": 72,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 4 of 116 games at 100+",
+     "Mostly starts at forward (33% of starts), 18% centre bounces"
+    ],
+    "like": [
+     "Cameron Rayner",
+     "Sam Powell-Pepper",
+     "Zac Fisher",
+     "Brady Hough",
+     "Gryan Miers*",
+     "Callum Brown"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Scoreboard impact",
+     "Upside"
+    ],
+    "jFP": 71.0,
+    "seasons": [
+     [
+      2021,
+      20,
+      48.8
+     ],
+     [
+      2022,
+      18,
+      59.5
+     ],
+     [
+      2023,
+      23,
+      67.3
+     ],
+     [
+      2024,
+      18,
+      65.2
+     ],
+     [
+      2025,
+      21,
+      57.0
+     ],
+     [
+      2026,
+      16,
+      61.0
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 9.0,
+     "2022": 20.0,
+     "2023": 23.0,
+     "2024": 34.0,
+     "2025": 18.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 91.0,
+      "disposals": 24.6,
+      "tackles": 5.3,
+      "marks": 3.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 1,
+      "fp": 83.0,
+      "disposals": 21.0,
+      "tackles": 3.0,
+      "marks": 6.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 98.5,
+      "disposals": 27.0,
+      "tackles": 3.5,
+      "marks": 4.5,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 72.0,
+      "disposals": 15.0,
+      "tackles": 6.0,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 10,
+    "name": "Zach Reid",
+    "club": "ESS",
+    "pre": 4.1,
+    "positionOnly": 19.7,
+    "now": 16.2,
+    "games": 42,
+    "current": {
+     "games": 23,
+     "avg": 59.3
+    },
+    "best": 66.3,
+    "peak": 75.4,
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Plays 17% of games (42 from 110 available)",
+     "Rarely goes big: 1 of 42 games at 100+",
+     "Mostly starts at half-back / defence (100% of starts), 1% centre bounces"
+    ],
+    "like": [
+     "Josh Rotham",
+     "Jordan Ridley",
+     "Josh Worrell",
+     "Liam Stocker",
+     "Jack Scrimshaw",
+     "Isaac Cumming*"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Upside"
+    ],
+    "jFP": 46.0,
+    "seasons": [
+     [
+      2021,
+      1,
+      51.0
+     ],
+     [
+      2022,
+      7,
+      40.1
+     ],
+     [
+      2024,
+      1,
+      17.0
+     ],
+     [
+      2025,
+      10,
+      75.4
+     ],
+     [
+      2026,
+      23,
+      59.3
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2022": 0.0,
+     "2025": 1.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 70.5,
+      "disposals": 17.3,
+      "tackles": 1.5,
+      "marks": 6.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 36.5,
+      "disposals": 9.0,
+      "tackles": 1.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 12,
+      "fp": 53.0,
+      "disposals": 11.7,
+      "tackles": 1.6,
+      "marks": 5.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 74.3,
+      "disposals": 17.7,
+      "tackles": 1.3,
+      "marks": 7.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 11,
+    "name": "Luke Pedlar",
+    "club": "ADE",
+    "pre": 26.9,
+    "positionOnly": 18.3,
+    "now": 0.9,
+    "games": 47,
+    "current": {
+     "games": 10,
+     "avg": 47.3
+    },
+    "best": 57.3,
+    "peak": 58.2,
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 34% of games (47 from 110 available)",
+     "Rarely goes big: 0 of 47 games at 100+"
+    ],
+    "like": [
+     "Rhylee West",
+     "Ned McHenry",
+     "Callum Brown",
+     "Xavier O'Halloran",
+     "Finn Maginness",
+     "Jesse Motlop"
+    ],
+    "traits": [
+     "Contested / inside",
+     "Defensive pressure",
+     "Engine / work rate",
+     "Leadership / character",
+     "Scoreboard impact",
+     "Size / strength"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      2,
+      33.0
+     ],
+     [
+      2022,
+      1,
+      27.0
+     ],
+     [
+      2023,
+      21,
+      58.2
+     ],
+     [
+      2024,
+      4,
+      24.8
+     ],
+     [
+      2025,
+      9,
+      45.0
+     ],
+     [
+      2026,
+      10,
+      47.3
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2023": 13.0,
+     "2025": 1.0,
+     "2026": 2.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 59.0,
+      "disposals": 9.5,
+      "tackles": 6.5,
+      "marks": 1.5,
+      "goals": 1.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 78.2,
+      "disposals": 17.0,
+      "tackles": 3.4,
+      "marks": 4.3,
+      "goals": 1.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 70.6,
+      "disposals": 16.8,
+      "tackles": 4.4,
+      "marks": 3.5,
+      "goals": 0.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 69.1,
+      "disposals": 13.9,
+      "tackles": 4.1,
+      "marks": 4.1,
+      "goals": 1.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 10,
+      "fp": 51.6,
+      "disposals": 12.3,
+      "tackles": 3.0,
+      "marks": 2.7,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 12,
+    "name": "Tanner Bruhn",
+    "club": "GWS",
+    "pre": 46.7,
+    "positionOnly": 17.1,
+    "now": 25.8,
+    "games": 88,
+    "current": {
+     "games": 23,
+     "avg": 81.1
+    },
+    "best": 66.0,
+    "peak": 81.1,
+    "track": 74,
+    "status": "Long shot",
+    "why": [
+     "Rarely goes big: 4 of 88 games at 100+"
+    ],
+    "like": [
+     "Tom Sparrow*",
+     "Will Setterfield*",
+     "Angus Sheldrick",
+     "Neil Erasmus",
+     "Harry Schoenberg",
+     "Sam Powell-Pepper"
+    ],
+    "traits": [
+     "Contested / inside",
+     "Defensive pressure",
+     "Footy IQ / vision",
+     "Scoreboard impact",
+     "Upside"
+    ],
+    "jFP": 85.0,
+    "seasons": [
+     [
+      2021,
+      13,
+      35.3
+     ],
+     [
+      2022,
+      16,
+      53.2
+     ],
+     [
+      2023,
+      19,
+      70.7
+     ],
+     [
+      2024,
+      17,
+      69.1
+     ],
+     [
+      2026,
+      23,
+      81.1
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 11.0,
+     "2022": 27.0,
+     "2023": 49.0,
+     "2024": 57.0,
+     "2026": 14.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 1,
+      "fp": 128.0,
+      "disposals": 35.0,
+      "tackles": 6.0,
+      "marks": 3.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 111.0,
+      "disposals": 36.0,
+      "tackles": 3.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 95.5,
+      "disposals": 28.5,
+      "tackles": 4.0,
+      "marks": 3.5,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 82.1,
+      "disposals": 20.5,
+      "tackles": 3.4,
+      "marks": 3.0,
+      "goals": 1.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 13,
+    "name": "Tom Powell",
+    "club": "NTH",
+    "pre": 8.7,
+    "positionOnly": 16.1,
+    "now": 31.4,
+    "games": 99,
+    "current": {
+     "games": 8,
+     "avg": 71.2
+    },
+    "best": 78.7,
+    "peak": 86.9,
+    "track": 88,
+    "status": "Close",
+    "why": [
+     "Has the ceiling: 15 games of 100+"
+    ],
+    "like": [
+     "Adam Cerra*",
+     "Josh Ward",
+     "Marcus Windhager",
+     "Andrew McGrath",
+     "James Rowbottom",
+     "Connor MacDonald"
+    ],
+    "traits": [
+     "Accumulator",
+     "Clean hands",
+     "Consistency",
+     "Contested / inside"
+    ],
+    "jFP": 0.0,
+    "seasons": [
+     [
+      2021,
+      13,
+      68.2
+     ],
+     [
+      2022,
+      18,
+      55.4
+     ],
+     [
+      2023,
+      14,
+      57.4
+     ],
+     [
+      2024,
+      23,
+      78.7
+     ],
+     [
+      2025,
+      23,
+      86.9
+     ],
+     [
+      2026,
+      8,
+      71.2
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 30.0,
+     "2022": 16.0,
+     "2023": 24.0,
+     "2024": 50.0,
+     "2025": 47.0,
+     "2026": 9.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 77.2,
+      "disposals": 20.0,
+      "tackles": 4.3,
+      "marks": 3.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 39.0,
+      "disposals": 11.5,
+      "tackles": 1.0,
+      "marks": 2.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 80.7,
+      "disposals": 24.6,
+      "tackles": 5.7,
+      "marks": 1.7,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 14,
+    "name": "Heath Chapman",
+    "club": "FRE",
+    "pre": 1.6,
+    "positionOnly": 15.2,
+    "now": 1.0,
+    "games": 91,
+    "current": {
+     "games": 26,
+     "avg": 61.7
+    },
+    "best": 65.7,
+    "peak": 70.8,
+    "track": 74,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 2 of 91 games at 100+",
+     "Mostly starts at half-back / defence (85% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Wil Powell",
+     "Charlie Ballard",
+     "Nick Coffield",
+     "Sam Banks",
+     "Hunter Clark",
+     "Brandon Starcevich"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Footy IQ / vision"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      6,
+      55.3
+     ],
+     [
+      2022,
+      17,
+      70.8
+     ],
+     [
+      2023,
+      3,
+      60.3
+     ],
+     [
+      2024,
+      16,
+      65.6
+     ],
+     [
+      2025,
+      23,
+      53.9
+     ],
+     [
+      2026,
+      26,
+      61.7
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 82.0,
+      "disposals": 20.0,
+      "tackles": 1.3,
+      "marks": 7.0,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 41.5,
+      "disposals": 10.0,
+      "tackles": 4.5,
+      "marks": 1.5,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 93.0,
+      "disposals": 23.0,
+      "tackles": 5.0,
+      "marks": 4.0,
+      "goals": 1.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 15,
+    "name": "Conor Stone",
+    "club": "GWS",
+    "pre": 11.4,
+    "positionOnly": 14.3,
+    "now": 0.8,
+    "games": 29,
+    "current": {
+     "games": 10,
+     "avg": 47.6
+    },
+    "best": 53.1,
+    "peak": 47.6,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 17% of games (29 from 110 available)",
+     "Stuck in the seconds: 7 state-league games v 7 AFL in 2025",
+     "Rarely goes big: 0 of 29 games at 100+"
+    ],
+    "like": [
+     "Jaxon Prior",
+     "Jacob Allison",
+     "Andrew McPherson",
+     "Ed Phillips",
+     "Trent Bianco",
+     "Flynn Perez"
+    ],
+    "traits": [
+     "Athleticism",
+     "Engine / work rate",
+     "Scoreboard impact"
+    ],
+    "jFP": 49.0,
+    "seasons": [
+     [
+      2021,
+      4,
+      40.8
+     ],
+     [
+      2022,
+      1,
+      36.0
+     ],
+     [
+      2023,
+      3,
+      17.7
+     ],
+     [
+      2024,
+      4,
+      15.5
+     ],
+     [
+      2025,
+      7,
+      50.9
+     ],
+     [
+      2026,
+      10,
+      47.6
+     ]
+    ],
+    "role": "Forward",
+    "cba": {
+     "2025": 0.0,
+     "2026": 6.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 8,
+      "fp": 88.8,
+      "disposals": 21.9,
+      "tackles": 2.5,
+      "marks": 6.1,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 80.0,
+      "disposals": 19.3,
+      "tackles": 2.3,
+      "marks": 6.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 15,
+      "fp": 84.2,
+      "disposals": 20.0,
+      "tackles": 2.7,
+      "marks": 5.5,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 57.2,
+      "disposals": 13.4,
+      "tackles": 2.4,
+      "marks": 2.8,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 60.0,
+      "disposals": 15.7,
+      "tackles": 2.0,
+      "marks": 4.7,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 4,
+      "fp": 53.8,
+      "disposals": 13.0,
+      "tackles": 2.5,
+      "marks": 3.0,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 16,
+    "name": "Lachie Jones",
+    "club": "PTA",
+    "pre": 9.9,
+    "positionOnly": 13.6,
+    "now": 1.1,
+    "games": 93,
+    "current": {
+     "games": 20,
+     "avg": 53.2
+    },
+    "best": 52.9,
+    "peak": 53.2,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 93 games at 100+",
+     "Mostly starts at half-back / defence (79% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Harrison Petty",
+     "Rhett Bazzo",
+     "Nathan Murphy",
+     "Griffin Logue",
+     "Josh Sinn",
+     "Tom Williamson"
+    ],
+    "traits": [],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      6,
+      50.0
+     ],
+     [
+      2022,
+      13,
+      43.6
+     ],
+     [
+      2023,
+      15,
+      44.5
+     ],
+     [
+      2024,
+      21,
+      43.6
+     ],
+     [
+      2025,
+      18,
+      43.1
+     ],
+     [
+      2026,
+      20,
+      53.2
+     ]
+    ],
+    "role": "Unknown",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 1.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 82.0,
+      "disposals": 16.0,
+      "tackles": 8.0,
+      "marks": 5.5,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 55.0,
+      "disposals": 15.1,
+      "tackles": 2.5,
+      "marks": 4.0,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 78.7,
+      "disposals": 18.7,
+      "tackles": 5.0,
+      "marks": 4.7,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 2,
+      "fp": 49.5,
+      "disposals": 13.5,
+      "tackles": 2.5,
+      "marks": 3.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 17,
+    "name": "Oliver Henry",
+    "club": "COL",
+    "pre": 4.3,
+    "positionOnly": 13.0,
+    "now": 1.2,
+    "games": 107,
+    "current": {
+     "games": 24,
+     "avg": 59.9
+    },
+    "best": 55.6,
+    "peak": 59.9,
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 107 games at 100+",
+     "Mostly starts at forward (55% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Ben King",
+     "Ned McHenry",
+     "Jesse Motlop",
+     "Jacob Koschitzke",
+     "Michael Frederick",
+     "Oscar Allen"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Footy IQ / vision",
+     "Intercept / rebound",
+     "Scoreboard impact",
+     "Versatility"
+    ],
+    "jFP": 52.0,
+    "seasons": [
+     [
+      2021,
+      10,
+      46.2
+     ],
+     [
+      2022,
+      13,
+      49.7
+     ],
+     [
+      2023,
+      22,
+      55.9
+     ],
+     [
+      2024,
+      23,
+      47.5
+     ],
+     [
+      2025,
+      15,
+      41.0
+     ],
+     [
+      2026,
+      24,
+      59.9
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 1,
+      "fp": 90.0,
+      "disposals": 13.0,
+      "tackles": 3.0,
+      "marks": 4.0,
+      "goals": 5.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 78.0,
+      "disposals": 15.8,
+      "tackles": 3.0,
+      "marks": 4.0,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 69.0,
+      "disposals": 12.1,
+      "tackles": 1.6,
+      "marks": 4.3,
+      "goals": 2.9
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 5,
+      "fp": 79.6,
+      "disposals": 14.0,
+      "tackles": 1.8,
+      "marks": 7.4,
+      "goals": 2.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 18,
+    "name": "Ryan Angwin",
+    "club": "GWS",
+    "pre": 7.6,
+    "positionOnly": 12.4,
+    "now": 8.5,
+    "games": 50,
+    "current": {
+     "games": 20,
+     "avg": 62.2
+    },
+    "best": 62.9,
+    "peak": 69.2,
+    "track": 70,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (50 from 110 available)",
+     "Rarely goes big: 0 of 50 games at 100+",
+     "Mostly starts on a wing (79% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Lochie O'Brien",
+     "Kane Farrell",
+     "Ryan Byrnes",
+     "Josh Daicos*",
+     "Lachlan Sholl",
+     "Jai Serong"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Engine / work rate",
+     "Footy IQ / vision",
+     "Leadership / character",
+     "Upside"
+    ],
+    "jFP": 43.0,
+    "seasons": [
+     [
+      2022,
+      1,
+      11.0
+     ],
+     [
+      2023,
+      15,
+      38.9
+     ],
+     [
+      2024,
+      4,
+      56.0
+     ],
+     [
+      2025,
+      10,
+      69.2
+     ],
+     [
+      2026,
+      20,
+      62.2
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2023": 0.0,
+     "2025": 0.0,
+     "2026": 8.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 64.2,
+      "disposals": 17.7,
+      "tackles": 3.7,
+      "marks": 2.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 66.2,
+      "disposals": 17.0,
+      "tackles": 2.8,
+      "marks": 3.5,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 61.0,
+      "disposals": 13.6,
+      "tackles": 4.8,
+      "marks": 2.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 9,
+      "fp": 55.3,
+      "disposals": 14.8,
+      "tackles": 3.1,
+      "marks": 1.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 10,
+      "fp": 59.3,
+      "disposals": 15.4,
+      "tackles": 2.9,
+      "marks": 3.1,
+      "goals": 0.1
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 19,
+    "name": "Finlay Macrae",
+    "club": "COL",
+    "pre": 14.3,
+    "positionOnly": 11.8,
+    "now": 1.1,
+    "games": 21,
+    "current": null,
+    "best": 54.1,
+    "peak": 42.9,
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 19% of games (21 from 110 available)",
+     "Stuck in the seconds: 6 state-league games v 0 AFL in 2025",
+     "Rarely goes big: 0 of 21 games at 100+"
+    ],
+    "like": [
+     "Tyler Brown",
+     "Jack Bytel",
+     "Mitch Crowden",
+     "Corey Warner",
+     "Hugh Dixon",
+     "Campbell Chesser"
+    ],
+    "traits": [
+     "Accumulator",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Versatility"
+    ],
+    "jFP": 67.0,
+    "seasons": [
+     [
+      2021,
+      9,
+      42.9
+     ],
+     [
+      2022,
+      2,
+      22.5
+     ],
+     [
+      2023,
+      1,
+      47.0
+     ],
+     [
+      2024,
+      9,
+      39.9
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 32.0,
+     "2024": 21.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 84.0,
+      "disposals": 24.9,
+      "tackles": 3.7,
+      "marks": 1.8,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 11,
+      "fp": 101.2,
+      "disposals": 27.4,
+      "tackles": 6.2,
+      "marks": 2.3,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 94.1,
+      "disposals": 25.6,
+      "tackles": 5.8,
+      "marks": 1.8,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 91.8,
+      "disposals": 23.7,
+      "tackles": 5.8,
+      "marks": 2.4,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 4,
+      "fp": 93.5,
+      "disposals": 25.8,
+      "tackles": 5.3,
+      "marks": 3.0,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 20,
+    "name": "Max Holmes",
+    "club": "GEE",
+    "pre": 1.9,
+    "positionOnly": 11.3,
+    "now": 100.0,
+    "games": 119,
+    "current": {
+     "games": 20,
+     "avg": 97.0
+    },
+    "best": 91.5,
+    "peak": 102.7,
+    "track": 102,
+    "status": "Star",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Clean hands",
+     "Engine / work rate",
+     "Speed / agility",
+     "Upside"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      9,
+      54.9
+     ],
+     [
+      2022,
+      18,
+      63.5
+     ],
+     [
+      2023,
+      21,
+      75.9
+     ],
+     [
+      2024,
+      25,
+      94.3
+     ],
+     [
+      2025,
+      26,
+      102.7
+     ],
+     [
+      2026,
+      20,
+      97.0
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 17.0,
+     "2022": 16.0,
+     "2023": 28.0,
+     "2024": 32.0,
+     "2025": 66.0,
+     "2026": 45.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 86.0,
+      "disposals": 21.0,
+      "tackles": 10.0,
+      "marks": 1.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 5,
+      "fp": 74.2,
+      "disposals": 20.8,
+      "tackles": 3.0,
+      "marks": 3.0,
+      "goals": 0.2
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 21,
+    "name": "Jake Bowey+",
+    "club": "MEL",
+    "pre": 23.7,
+    "positionOnly": 10.9,
+    "now": 100.0,
+    "games": 100,
+    "current": {
+     "games": 16,
+     "avg": 90.0
+    },
+    "best": 78.3,
+    "peak": 90.0,
+    "track": 88,
+    "status": "Star",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Leadership / character",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": 66.0,
+    "seasons": [
+     [
+      2021,
+      7,
+      52.6
+     ],
+     [
+      2022,
+      17,
+      63.3
+     ],
+     [
+      2023,
+      23,
+      62.7
+     ],
+     [
+      2024,
+      14,
+      62.5
+     ],
+     [
+      2025,
+      23,
+      86.4
+     ],
+     [
+      2026,
+      16,
+      90.0
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 69.5,
+      "disposals": 19.0,
+      "tackles": 2.5,
+      "marks": 2.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 1,
+      "fp": 126.0,
+      "disposals": 27.0,
+      "tackles": 5.0,
+      "marks": 12.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 92.2,
+      "disposals": 23.3,
+      "tackles": 3.0,
+      "marks": 4.8,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 83.2,
+      "disposals": 21.9,
+      "tackles": 2.6,
+      "marks": 5.3,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 22,
+    "name": "Bailey Laurie",
+    "club": "MEL",
+    "pre": 11.6,
+    "positionOnly": 10.5,
+    "now": 0.6,
+    "games": 29,
+    "current": {
+     "games": 17,
+     "avg": 52.1
+    },
+    "best": 50.2,
+    "peak": 52.1,
+    "track": 56,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (29 from 110 available)",
+     "Stuck in the seconds: 18 state-league games v 1 AFL in 2025",
+     "Rarely goes big: 0 of 29 games at 100+"
+    ],
+    "like": [
+     "Brad Scheer",
+     "Josh Morris",
+     "Ed Phillips",
+     "Boyd Woodcock",
+     "Lachlan Gollant",
+     "Jacob Allison"
+    ],
+    "traits": [
+     "Engine / work rate",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Speed / agility"
+    ],
+    "jFP": 62.0,
+    "seasons": [
+     [
+      2023,
+      5,
+      23.6
+     ],
+     [
+      2024,
+      6,
+      35.8
+     ],
+     [
+      2025,
+      1,
+      12.0
+     ],
+     [
+      2026,
+      17,
+      52.1
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2023": 0.0,
+     "2024": 11.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 75.3,
+      "disposals": 19.0,
+      "tackles": 3.7,
+      "marks": 2.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 98.4,
+      "disposals": 24.2,
+      "tackles": 6.0,
+      "marks": 2.9,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 99.6,
+      "disposals": 23.7,
+      "tackles": 6.8,
+      "marks": 3.7,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 86.3,
+      "disposals": 23.0,
+      "tackles": 4.2,
+      "marks": 3.1,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 19,
+      "fp": 68.5,
+      "disposals": 16.4,
+      "tackles": 3.7,
+      "marks": 2.5,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 2,
+      "fp": 52.5,
+      "disposals": 11.5,
+      "tackles": 3.0,
+      "marks": 4.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 23,
+    "name": "Reef McInnes",
+    "club": "COL",
+    "pre": 1.4,
+    "positionOnly": 10.1,
+    "now": 1.2,
+    "games": 22,
+    "current": null,
+    "best": 49.4,
+    "peak": 32.6,
+    "track": 55,
+    "status": "Unlikely",
+    "why": [
+     "Plays 20% of games (22 from 110 available)",
+     "Rarely goes big: 0 of 22 games at 100+",
+     "Mostly starts at forward (33% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Fischer McAsey",
+     "Atu Bosenavulagi",
+     "Francis Evans",
+     "Josh Gibcus",
+     "Daniel Venables",
+     "Cameron Polson"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Clean hands",
+     "Contested / inside",
+     "Size / strength",
+     "Speed / agility",
+     "Versatility"
+    ],
+    "jFP": 61.0,
+    "seasons": [
+     [
+      2022,
+      5,
+      37.2
+     ],
+     [
+      2023,
+      5,
+      20.6
+     ],
+     [
+      2024,
+      9,
+      32.6
+     ],
+     [
+      2025,
+      3,
+      34.3
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 35.5,
+      "disposals": 8.0,
+      "tackles": 0.5,
+      "marks": 4.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 61.9,
+      "disposals": 14.7,
+      "tackles": 3.2,
+      "marks": 2.9,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 68.6,
+      "disposals": 12.3,
+      "tackles": 3.3,
+      "marks": 3.5,
+      "goals": 2.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 68.3,
+      "disposals": 13.7,
+      "tackles": 5.0,
+      "marks": 3.3,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 6,
+      "fp": 62.2,
+      "disposals": 13.6,
+      "tackles": 5.0,
+      "marks": 2.3,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 24,
+    "name": "Blake Coleman",
+    "club": "BRL",
+    "pre": 16.4,
+    "positionOnly": 9.7,
+    "now": 1.0,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Clean hands",
+     "Defensive pressure",
+     "Footy IQ / vision",
+     "Scoreboard impact"
+    ],
+    "jFP": 41.0,
+    "seasons": [],
+    "role": "Midfielder",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 43.1,
+      "disposals": 8.6,
+      "tackles": 1.3,
+      "marks": 2.5,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 44.2,
+      "disposals": 9.3,
+      "tackles": 1.9,
+      "marks": 2.5,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 20,
+      "fp": 55.2,
+      "disposals": 11.5,
+      "tackles": 2.5,
+      "marks": 3.0,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 20,
+      "fp": 54.5,
+      "disposals": 11.3,
+      "tackles": 2.2,
+      "marks": 3.2,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 10,
+      "fp": 62.9,
+      "disposals": 13.8,
+      "tackles": 3.8,
+      "marks": 3.1,
+      "goals": 0.6
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 25,
+    "name": "Brayden Cook",
+    "club": "ADE",
+    "pre": 4.5,
+    "positionOnly": 9.4,
+    "now": 1.0,
+    "games": 54,
+    "current": {
+     "games": 24,
+     "avg": 68.2
+    },
+    "best": 55.9,
+    "peak": 68.2,
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 27% of games (54 from 110 available)",
+     "Stuck in the seconds: 16 state-league games v 3 AFL in 2025",
+     "Rarely goes big: 0 of 54 games at 100+"
+    ],
+    "like": [
+     "Corey Warner",
+     "Judson Clarke",
+     "Mitch Crowden",
+     "Campbell Chesser",
+     "Miller Bergman",
+     "Tyler Brown"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Scoreboard impact",
+     "Versatility",
+     "X-factor / hurt"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      3,
+      44.3
+     ],
+     [
+      2022,
+      8,
+      41.6
+     ],
+     [
+      2023,
+      1,
+      63.0
+     ],
+     [
+      2024,
+      15,
+      41.5
+     ],
+     [
+      2025,
+      3,
+      30.0
+     ],
+     [
+      2026,
+      24,
+      68.2
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 0.0,
+     "2024": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 16,
+      "fp": 64.6,
+      "disposals": 13.0,
+      "tackles": 2.2,
+      "marks": 3.8,
+      "goals": 1.7
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 43.0,
+      "disposals": 11.6,
+      "tackles": 1.0,
+      "marks": 2.7,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 19,
+      "fp": 73.3,
+      "disposals": 16.3,
+      "tackles": 3.0,
+      "marks": 4.3,
+      "goals": 1.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 14,
+      "fp": 56.9,
+      "disposals": 14.3,
+      "tackles": 2.6,
+      "marks": 2.9,
+      "goals": 0.4
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 13,
+      "fp": 50.2,
+      "disposals": 11.6,
+      "tackles": 1.7,
+      "marks": 2.8,
+      "goals": 0.7
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 26,
+    "name": "Matthew McLeod-Allison",
+    "club": "STK",
+    "pre": 6.9,
+    "positionOnly": 9.1,
+    "now": 0.8,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [],
+    "jFP": null,
+    "seasons": [],
+    "role": "Unknown",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 53.8,
+      "disposals": 10.9,
+      "tackles": 1.5,
+      "marks": 4.6,
+      "goals": 1.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 46.9,
+      "disposals": 10.5,
+      "tackles": 1.4,
+      "marks": 3.4,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 51.2,
+      "disposals": 11.0,
+      "tackles": 2.4,
+      "marks": 3.5,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 4,
+      "fp": 47.2,
+      "disposals": 11.1,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 46.1,
+      "disposals": 11.1,
+      "tackles": 1.4,
+      "marks": 3.4,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 9,
+      "fp": 44.1,
+      "disposals": 10.6,
+      "tackles": 2.1,
+      "marks": 3.1,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 27,
+    "name": "Nathan O'Driscoll",
+    "club": "FRE",
+    "pre": 12.3,
+    "positionOnly": 8.8,
+    "now": 11.9,
+    "games": 55,
+    "current": {
+     "games": 17,
+     "avg": 64.1
+    },
+    "best": 59.9,
+    "peak": 64.1,
+    "track": 67,
+    "status": "Long shot",
+    "why": [
+     "Plays 35% of games (55 from 110 available)",
+     "Rarely goes big: 1 of 55 games at 100+",
+     "Mostly starts on a wing (56% of starts), 9% centre bounces"
+    ],
+    "like": [
+     "Kane Farrell",
+     "Ryan Byrnes",
+     "Curtis Taylor",
+     "Tyler Sonsie",
+     "Jake Waterman",
+     "Harry Morrison"
+    ],
+    "traits": [
+     "Accumulator",
+     "Aerial / marking",
+     "Athleticism",
+     "Contested / inside",
+     "Defensive pressure",
+     "Engine / work rate",
+     "Versatility"
+    ],
+    "jFP": 57.0,
+    "seasons": [
+     [
+      2022,
+      12,
+      59.5
+     ],
+     [
+      2023,
+      10,
+      56.5
+     ],
+     [
+      2024,
+      2,
+      50.5
+     ],
+     [
+      2025,
+      14,
+      62.7
+     ],
+     [
+      2026,
+      17,
+      64.1
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 3.0,
+     "2023": 0.0,
+     "2025": 9.0,
+     "2026": 3.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 74.8,
+      "disposals": 20.0,
+      "tackles": 3.6,
+      "marks": 2.2,
+      "goals": 0.8
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 12,
+      "fp": 73.8,
+      "disposals": 20.4,
+      "tackles": 3.4,
+      "marks": 3.3,
+      "goals": 0.5
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 11,
+      "fp": 56.6,
+      "disposals": 15.2,
+      "tackles": 2.0,
+      "marks": 3.5,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 3,
+      "fp": 60.3,
+      "disposals": 17.3,
+      "tackles": 1.0,
+      "marks": 3.7,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 28,
+    "name": "Sam Berry",
+    "club": "ADE",
+    "pre": 14.6,
+    "positionOnly": 8.5,
+    "now": 100.0,
+    "games": 100,
+    "current": {
+     "games": 24,
+     "avg": 90.3
+    },
+    "best": 75.3,
+    "peak": 90.3,
+    "track": 84,
+    "status": "Star",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Consistency",
+     "Contested / inside",
+     "Defensive pressure",
+     "Engine / work rate",
+     "Speed / agility"
+    ],
+    "jFP": 79.0,
+    "seasons": [
+     [
+      2021,
+      17,
+      42.6
+     ],
+     [
+      2022,
+      18,
+      84.3
+     ],
+     [
+      2023,
+      4,
+      49.2
+     ],
+     [
+      2024,
+      18,
+      58.9
+     ],
+     [
+      2025,
+      19,
+      59.6
+     ],
+     [
+      2026,
+      24,
+      90.3
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 16.0,
+     "2022": 66.0,
+     "2024": 47.0,
+     "2025": 55.0,
+     "2026": 70.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 103.0,
+      "disposals": 24.0,
+      "tackles": 4.5,
+      "marks": 5.0,
+      "goals": 2.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 80.5,
+      "disposals": 19.5,
+      "tackles": 9.5,
+      "marks": 1.0,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 92.7,
+      "disposals": 21.4,
+      "tackles": 7.5,
+      "marks": 3.6,
+      "goals": 0.3
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 2,
+      "fp": 115.0,
+      "disposals": 27.0,
+      "tackles": 8.0,
+      "marks": 4.0,
+      "goals": 1.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 4,
+      "fp": 89.8,
+      "disposals": 15.3,
+      "tackles": 11.8,
+      "marks": 2.5,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 29,
+    "name": "Seamus Mitchell",
+    "club": "HAW",
+    "pre": 9.1,
+    "positionOnly": 8.3,
+    "now": 0.9,
+    "games": 28,
+    "current": null,
+    "best": 60.0,
+    "peak": 62.9,
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 25% of games (28 from 110 available)",
+     "Stuck in the seconds: 14 state-league games v 4 AFL in 2025",
+     "Rarely goes big: 0 of 28 games at 100+"
+    ],
+    "like": [
+     "Jarrod Brander",
+     "Patrick Naish",
+     "Trent Bianco",
+     "Luke Foley",
+     "Jaxon Prior",
+     "Dylan Clarke"
+    ],
+    "traits": [
+     "Athleticism",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Speed / agility",
+     "Upside"
+    ],
+    "jFP": 49.0,
+    "seasons": [
+     [
+      2023,
+      14,
+      62.9
+     ],
+     [
+      2024,
+      10,
+      34.8
+     ],
+     [
+      2025,
+      4,
+      30.8
+     ]
+    ],
+    "role": "Small forward",
+    "cba": {
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 7,
+      "fp": 66.4,
+      "disposals": 18.2,
+      "tackles": 1.0,
+      "marks": 6.3,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 94.6,
+      "disposals": 23.8,
+      "tackles": 3.0,
+      "marks": 7.3,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 99.3,
+      "disposals": 25.1,
+      "tackles": 2.5,
+      "marks": 7.5,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 3,
+      "fp": 76.3,
+      "disposals": 20.7,
+      "tackles": 1.3,
+      "marks": 6.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 7,
+      "fp": 54.7,
+      "disposals": 14.3,
+      "tackles": 1.3,
+      "marks": 4.4,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 2,
+      "fp": 34.5,
+      "disposals": 7.0,
+      "tackles": 3.5,
+      "marks": 2.0,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 30,
+    "name": "Caleb Poulter",
+    "club": "COL",
+    "pre": 10.4,
+    "positionOnly": 8.0,
+    "now": 1.1,
+    "games": 35,
+    "current": null,
+    "best": 59.9,
+    "peak": 63.5,
+    "track": 67,
+    "status": "Unlikely",
+    "why": [
+     "Plays 32% of games (35 from 110 available)",
+     "Stuck in the seconds: 14 state-league games v 7 AFL in 2025"
+    ],
+    "like": [
+     "Dylan Stephens",
+     "Jordan Gallucci",
+     "Rhylee West",
+     "Callum Brown",
+     "Lachlan Gollant",
+     "Jarrod Cameron"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Defensive pressure",
+     "Kicking / skills",
+     "Scoreboard impact",
+     "Versatility"
+    ],
+    "jFP": 0.0,
+    "seasons": [
+     [
+      2021,
+      11,
+      63.5
+     ],
+     [
+      2022,
+      1,
+      49.0
+     ],
+     [
+      2023,
+      9,
+      56.7
+     ],
+     [
+      2024,
+      7,
+      62.7
+     ],
+     [
+      2025,
+      7,
+      44.7
+     ]
+    ],
+    "role": "Tall utility",
+    "cba": {
+     "2021": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 85.1,
+      "disposals": 16.9,
+      "tackles": 2.9,
+      "marks": 5.4,
+      "goals": 2.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 78.0,
+      "disposals": 20.2,
+      "tackles": 2.7,
+      "marks": 4.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 77.7,
+      "disposals": 18.0,
+      "tackles": 3.0,
+      "marks": 5.2,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 80.5,
+      "disposals": 21.4,
+      "tackles": 2.3,
+      "marks": 5.1,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 74.0,
+      "disposals": 19.0,
+      "tackles": 2.7,
+      "marks": 3.7,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 31,
+    "name": "Liam McMahon",
+    "club": "COL",
+    "pre": 1.3,
+    "positionOnly": 7.8,
+    "now": 0.2,
+    "games": 7,
+    "current": null,
+    "best": 45.8,
+    "peak": null,
+    "track": 51,
+    "status": "Unlikely",
+    "why": [
+     "Plays 6% of games (7 from 110 available)",
+     "Mostly starts at forward (86% of starts), 0% centre bounces"
+    ],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Footy IQ / vision",
+     "Upside"
+    ],
+    "jFP": 43.0,
+    "seasons": [
+     [
+      2025,
+      7,
+      35.3
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2025": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 14,
+      "fp": 48.6,
+      "disposals": 7.3,
+      "tackles": 1.2,
+      "marks": 3.5,
+      "goals": 2.2
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 13,
+      "fp": 61.6,
+      "disposals": 8.9,
+      "tackles": 1.2,
+      "marks": 4.3,
+      "goals": 3.3
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 64.6,
+      "disposals": 9.9,
+      "tackles": 1.5,
+      "marks": 5.0,
+      "goals": 2.8
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 60.9,
+      "disposals": 12.0,
+      "tackles": 1.5,
+      "marks": 5.8,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 19,
+      "fp": 59.7,
+      "disposals": 15.4,
+      "tackles": 0.9,
+      "marks": 5.1,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 7,
+      "fp": 37.6,
+      "disposals": 6.5,
+      "tackles": 1.7,
+      "marks": 2.0,
+      "goals": 1.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 32,
+    "name": "Errol Gulden",
+    "club": "SYD",
+    "pre": 23.5,
+    "positionOnly": 7.6,
+    "now": 100.0,
+    "games": 116,
+    "current": {
+     "games": 13,
+     "avg": 115.1
+    },
+    "best": 97.9,
+    "peak": 115.1,
+    "track": 110,
+    "status": "Star",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Footy IQ / vision",
+     "Speed / agility",
+     "Versatility",
+     "X-factor / hurt"
+    ],
+    "jFP": 125.0,
+    "seasons": [
+     [
+      2021,
+      18,
+      71.7
+     ],
+     [
+      2022,
+      25,
+      82.6
+     ],
+     [
+      2023,
+      24,
+      112.2
+     ],
+     [
+      2024,
+      26,
+      106.8
+     ],
+     [
+      2025,
+      10,
+      102.3
+     ],
+     [
+      2026,
+      13,
+      115.1
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 6.0,
+     "2022": 10.0,
+     "2023": 36.0,
+     "2024": 36.0,
+     "2025": 19.0,
+     "2026": 53.0
+    },
+    "state": []
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 33,
+    "name": "Shannon Neale",
+    "club": "GEE",
+    "pre": 1.3,
+    "positionOnly": 7.4,
+    "now": 0.8,
+    "games": 70,
+    "current": {
+     "games": 25,
+     "avg": 65.0
+    },
+    "best": 57.1,
+    "peak": 65.0,
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 41% of games (70 from 110 available)",
+     "Rarely goes big: 2 of 70 games at 100+",
+     "Mostly starts at forward (92% of starts), 8% centre bounces"
+    ],
+    "like": [
+     "Darcy Fogarty",
+     "Nick Larkey",
+     "Mitchell Lewis",
+     "Todd Marshall",
+     "Arthur Jones",
+     "Cody Weightman"
+    ],
+    "traits": [
+     "Athleticism",
+     "Engine / work rate",
+     "Ruck craft",
+     "Upside"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2022,
+      2,
+      32.0
+     ],
+     [
+      2023,
+      3,
+      48.0
+     ],
+     [
+      2024,
+      15,
+      55.5
+     ],
+     [
+      2025,
+      25,
+      57.8
+     ],
+     [
+      2026,
+      25,
+      65.0
+     ]
+    ],
+    "role": "Ruck",
+    "cba": {
+     "2024": 6.0,
+     "2025": 8.0,
+     "2026": 6.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 5,
+      "fp": 75.2,
+      "disposals": 12.4,
+      "tackles": 1.2,
+      "marks": 6.2,
+      "goals": 2.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 73.5,
+      "disposals": 11.9,
+      "tackles": 1.8,
+      "marks": 5.5,
+      "goals": 2.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 61.7,
+      "disposals": 8.8,
+      "tackles": 1.7,
+      "marks": 4.5,
+      "goals": 2.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 6,
+      "fp": 48.2,
+      "disposals": 8.0,
+      "tackles": 1.8,
+      "marks": 3.7,
+      "goals": 1.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 34,
+    "name": "Fraser Rosman",
+    "club": "MEL",
+    "pre": 4.1,
+    "positionOnly": 7.2,
+    "now": 0.7,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Engine / work rate",
+     "Scoreboard impact",
+     "Speed / agility",
+     "Upside",
+     "X-factor / hurt"
+    ],
+    "jFP": 45.0,
+    "seasons": [],
+    "role": "Tall utility",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 11,
+      "fp": 43.5,
+      "disposals": 9.1,
+      "tackles": 2.4,
+      "marks": 3.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 15,
+      "fp": 72.5,
+      "disposals": 17.6,
+      "tackles": 2.3,
+      "marks": 4.8,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 68.3,
+      "disposals": 16.1,
+      "tackles": 2.9,
+      "marks": 5.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 17,
+      "fp": 80.3,
+      "disposals": 19.1,
+      "tackles": 3.1,
+      "marks": 5.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 44.9,
+      "disposals": 11.2,
+      "tackles": 1.1,
+      "marks": 3.9,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 9,
+      "fp": 42.4,
+      "disposals": 9.9,
+      "tackles": 1.9,
+      "marks": 2.6,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 35,
+    "name": "Connor Downie",
+    "club": "HAW",
+    "pre": 10.7,
+    "positionOnly": 7.0,
+    "now": 0.7,
+    "games": 1,
+    "current": null,
+    "best": 52.9,
+    "peak": null,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 1% of games (1 from 110 available)"
+    ],
+    "like": [],
+    "traits": [
+     "Kicking / skills",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": 67.0,
+    "seasons": [
+     [
+      2021,
+      1,
+      36.0
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 19,
+      "fp": 66.0,
+      "disposals": 15.8,
+      "tackles": 2.7,
+      "marks": 4.2,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 56.2,
+      "disposals": 12.6,
+      "tackles": 1.4,
+      "marks": 5.2,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 64.8,
+      "disposals": 16.9,
+      "tackles": 2.3,
+      "marks": 3.5,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 62.7,
+      "disposals": 17.5,
+      "tackles": 1.7,
+      "marks": 3.4,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 5,
+      "fp": 55.4,
+      "disposals": 13.0,
+      "tackles": 1.2,
+      "marks": 4.0,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 9,
+      "fp": 56.2,
+      "disposals": 15.3,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.1
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 36,
+    "name": "Charlie Lazzaro",
+    "club": "NTH",
+    "pre": 17.4,
+    "positionOnly": 6.8,
+    "now": 1.0,
+    "games": 34,
+    "current": null,
+    "best": 48.2,
+    "peak": 42.7,
+    "track": 54,
+    "status": "Unlikely",
+    "why": [
+     "Plays 31% of games (34 from 110 available)",
+     "Stuck in the seconds: 18 state-league games v 0 AFL in 2025",
+     "Rarely goes big: 0 of 34 games at 100+"
+    ],
+    "like": [
+     "Mitch Crowden",
+     "Tyler Brown",
+     "Corey Warner",
+     "Campbell Chesser",
+     "Jack Bytel",
+     "Hugh Dixon"
+    ],
+    "traits": [
+     "Contested / inside",
+     "Defensive pressure",
+     "Engine / work rate",
+     "Leadership / character",
+     "Speed / agility"
+    ],
+    "jFP": 81.0,
+    "seasons": [
+     [
+      2021,
+      10,
+      42.7
+     ],
+     [
+      2022,
+      9,
+      36.2
+     ],
+     [
+      2023,
+      6,
+      33.3
+     ],
+     [
+      2024,
+      9,
+      41.8
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 3.0,
+     "2022": 1.0,
+     "2023": 22.0,
+     "2024": 14.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 19,
+      "fp": 94.0,
+      "disposals": 23.6,
+      "tackles": 6.8,
+      "marks": 2.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 98.7,
+      "disposals": 27.1,
+      "tackles": 5.5,
+      "marks": 3.4,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 10,
+      "fp": 105.7,
+      "disposals": 26.8,
+      "tackles": 6.0,
+      "marks": 4.3,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 99.8,
+      "disposals": 26.6,
+      "tackles": 6.1,
+      "marks": 3.3,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 8,
+      "fp": 79.4,
+      "disposals": 18.4,
+      "tackles": 5.0,
+      "marks": 4.4,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 4,
+      "fp": 90.8,
+      "disposals": 20.6,
+      "tackles": 7.0,
+      "marks": 3.5,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 37,
+    "name": "Corey Durdin",
+    "club": "CAR",
+    "pre": 7.0,
+    "positionOnly": 6.7,
+    "now": 1.0,
+    "games": 87,
+    "current": {
+     "games": 23,
+     "avg": 51.2
+    },
+    "best": 51.8,
+    "peak": 51.2,
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 87 games at 100+"
+    ],
+    "like": [
+     "Jesse Motlop",
+     "Ned McHenry",
+     "Jack Williams",
+     "Ben King",
+     "Elliott Himmelberg",
+     "Daniel Venables"
+    ],
+    "traits": [
+     "Footy IQ / vision",
+     "Leadership / character",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": 37.0,
+    "seasons": [
+     [
+      2021,
+      2,
+      24.5
+     ],
+     [
+      2022,
+      21,
+      41.8
+     ],
+     [
+      2023,
+      11,
+      49.5
+     ],
+     [
+      2024,
+      14,
+      30.0
+     ],
+     [
+      2025,
+      16,
+      40.5
+     ],
+     [
+      2026,
+      23,
+      51.2
+     ]
+    ],
+    "role": "Small forward",
+    "cba": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 1.0,
+     "2025": 0.0,
+     "2026": 1.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 86.3,
+      "disposals": 15.0,
+      "tackles": 7.7,
+      "marks": 3.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 50.3,
+      "disposals": 9.6,
+      "tackles": 2.7,
+      "marks": 3.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 39.5,
+      "disposals": 5.5,
+      "tackles": 6.0,
+      "marks": 0.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 50.1,
+      "disposals": 8.6,
+      "tackles": 4.0,
+      "marks": 2.9,
+      "goals": 0.6
+     }
+    ]
+   },
+   {
+    "age": 21,
+    "mature": true,
+    "year": 2020,
+    "pick": 38,
+    "name": "James Rowe",
+    "club": "ADE",
+    "pre": 6.9,
+    "positionOnly": 6.5,
+    "now": 1.3,
+    "games": 34,
+    "current": null,
+    "best": 54.8,
+    "peak": 54.6,
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 31% of games (34 from 110 available)",
+     "Stuck in the seconds: 18 state-league games v 0 AFL in 2025",
+     "Rarely goes big: 0 of 34 games at 100+"
+    ],
+    "like": [
+     "Matthew Parker",
+     "Zac Langdon",
+     "Brayden Ham",
+     "Oskar Baker",
+     "Jy Farrar",
+     "Jordan Gallucci"
+    ],
+    "traits": [],
+    "jFP": 61.1,
+    "seasons": [
+     [
+      2021,
+      18,
+      53.3
+     ],
+     [
+      2022,
+      16,
+      54.6
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 67.2,
+      "disposals": 16.8,
+      "tackles": 2.8,
+      "marks": 3.3,
+      "goals": 0.9
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 18,
+      "fp": 88.6,
+      "disposals": 25.2,
+      "tackles": 2.4,
+      "marks": 4.5,
+      "goals": 0.8
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 95.3,
+      "disposals": 22.6,
+      "tackles": 4.1,
+      "marks": 4.7,
+      "goals": 1.1
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 102.8,
+      "disposals": 23.6,
+      "tackles": 6.1,
+      "marks": 4.9,
+      "goals": 0.9
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 4,
+      "fp": 76.0,
+      "disposals": 19.3,
+      "tackles": 3.3,
+      "marks": 2.8,
+      "goals": 1.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 91.7,
+      "disposals": 23.7,
+      "tackles": 2.7,
+      "marks": 6.0,
+      "goals": 0.7
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 39,
+    "name": "Josh Eyre",
+    "club": "ESS",
+    "pre": 5.0,
+    "positionOnly": 6.4,
+    "now": 1.8,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [],
+    "jFP": null,
+    "seasons": [],
+    "role": "Unknown",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 41.2,
+      "disposals": 7.8,
+      "tackles": 1.5,
+      "marks": 3.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 9,
+      "fp": 45.3,
+      "disposals": 10.1,
+      "tackles": 1.2,
+      "marks": 4.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 37.6,
+      "disposals": 9.1,
+      "tackles": 1.3,
+      "marks": 2.7,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 30.1,
+      "disposals": 6.8,
+      "tackles": 1.3,
+      "marks": 2.1,
+      "goals": 0.1
+     }
+    ]
+   },
+   {
+    "age": 20,
+    "mature": false,
+    "year": 2020,
+    "pick": 40,
+    "name": "Samson Ryan",
+    "club": "RIC",
+    "pre": 6.4,
+    "positionOnly": 6.2,
+    "now": 1.3,
+    "games": 31,
+    "current": {
+     "games": 6,
+     "avg": 43.0
+    },
+    "best": 52.4,
+    "peak": 46.6,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 23% of games (31 from 110 available)",
+     "Stuck in the seconds: 6 state-league games v 2 AFL in 2025",
+     "Rarely goes big: 0 of 31 games at 100+"
+    ],
+    "like": [
+     "Brayden Ham",
+     "Callum Jamieson",
+     "Hugh Dixon",
+     "Brayden Crossley",
+     "Mitch Crowden",
+     "Corey Warner"
+    ],
+    "traits": [
+     "Athleticism",
+     "Ruck craft",
+     "Upside"
+    ],
+    "jFP": 72.0,
+    "seasons": [
+     [
+      2021,
+      1,
+      -2.0
+     ],
+     [
+      2023,
+      14,
+      46.6
+     ],
+     [
+      2024,
+      8,
+      35.5
+     ],
+     [
+      2025,
+      2,
+      42.0
+     ],
+     [
+      2026,
+      6,
+      43.0
+     ]
+    ],
+    "role": "Ruck",
+    "cba": {
+     "2023": 29.0,
+     "2024": 23.0,
+     "2026": 48.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 13,
+      "fp": 74.2,
+      "disposals": 13.6,
+      "tackles": 1.3,
+      "marks": 3.1,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 6,
+      "fp": 67.2,
+      "disposals": 12.3,
+      "tackles": 1.2,
+      "marks": 5.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 72.0,
+      "disposals": 9.5,
+      "tackles": 1.8,
+      "marks": 3.6,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 79.5,
+      "disposals": 11.8,
+      "tackles": 3.0,
+      "marks": 4.2,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 15,
+      "fp": 80.8,
+      "disposals": 13.0,
+      "tackles": 1.5,
+      "marks": 4.4,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 9,
+      "fp": 75.0,
+      "disposals": 11.2,
+      "tackles": 2.2,
+      "marks": 4.3,
+      "goals": 1.9
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 41,
+    "name": "Jack Carroll",
+    "club": "CAR",
+    "pre": 1.9,
+    "positionOnly": 6.1,
+    "now": 1.0,
+    "games": 36,
+    "current": {
+     "games": 12,
+     "avg": 66.4
+    },
+    "best": 54.1,
+    "peak": 66.4,
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Plays 22% of games (36 from 110 available)",
+     "Stuck in the seconds: 12 state-league games v 3 AFL in 2025",
+     "Rarely goes big: 0 of 36 games at 100+"
+    ],
+    "like": [
+     "Tyler Brown",
+     "Judson Clarke",
+     "Jack Bytel",
+     "Mitch Crowden",
+     "Campbell Chesser",
+     "Hugh Dixon"
+    ],
+    "traits": [
+     "Athleticism",
+     "Clean hands",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Upside",
+     "Versatility"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2022,
+      5,
+      52.6
+     ],
+     [
+      2023,
+      1,
+      13.0
+     ],
+     [
+      2024,
+      15,
+      40.1
+     ],
+     [
+      2025,
+      3,
+      21.0
+     ],
+     [
+      2026,
+      12,
+      66.4
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 7.0,
+     "2024": 22.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 9,
+      "fp": 88.7,
+      "disposals": 26.3,
+      "tackles": 1.7,
+      "marks": 4.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 81.4,
+      "disposals": 21.6,
+      "tackles": 4.7,
+      "marks": 3.2,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 8,
+      "fp": 93.2,
+      "disposals": 27.0,
+      "tackles": 3.1,
+      "marks": 4.0,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 12,
+      "fp": 83.6,
+      "disposals": 23.1,
+      "tackles": 2.9,
+      "marks": 4.8,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 11,
+      "fp": 75.0,
+      "disposals": 22.1,
+      "tackles": 2.2,
+      "marks": 3.2,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 6,
+      "fp": 55.8,
+      "disposals": 13.7,
+      "tackles": 3.2,
+      "marks": 3.7,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 42,
+    "name": "Phoenix Spicer",
+    "club": "NTH",
+    "pre": 2.8,
+    "positionOnly": 6.0,
+    "now": 0.6,
+    "games": 12,
+    "current": null,
+    "best": 51.2,
+    "peak": null,
+    "track": 57,
+    "status": "Unlikely",
+    "why": [
+     "Plays 11% of games (12 from 110 available)",
+     "Mostly starts at forward (58% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Lachlan Gollant",
+     "Boyd Woodcock",
+     "Jordan Gallucci",
+     "Brad Scheer",
+     "Josh Morris",
+     "Josh Begley"
+    ],
+    "traits": [
+     "Clean hands",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      1,
+      21.0
+     ],
+     [
+      2022,
+      5,
+      27.0
+     ],
+     [
+      2023,
+      6,
+      35.8
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 0.0,
+     "2023": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 5,
+      "fp": 49.6,
+      "disposals": 8.4,
+      "tackles": 3.2,
+      "marks": 3.0,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 13,
+      "fp": 47.3,
+      "disposals": 9.7,
+      "tackles": 2.3,
+      "marks": 2.6,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 13,
+      "fp": 48.2,
+      "disposals": 10.9,
+      "tackles": 3.5,
+      "marks": 1.6,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 6,
+      "fp": 45.7,
+      "disposals": 9.9,
+      "tackles": 2.7,
+      "marks": 1.7,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 3,
+      "fp": 25.3,
+      "disposals": 8.0,
+      "tackles": 0.3,
+      "marks": 1.3,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 43,
+    "name": "Harry Sharp",
+    "club": "BRL",
+    "pre": 8.1,
+    "positionOnly": 5.9,
+    "now": 1.3,
+    "games": 57,
+    "current": {
+     "games": 24,
+     "avg": 56.2
+    },
+    "best": 56.2,
+    "peak": 56.2,
+    "track": 63,
+    "status": "Unlikely",
+    "why": [
+     "Plays 30% of games (57 from 110 available)",
+     "Rarely goes big: 0 of 57 games at 100+"
+    ],
+    "like": [
+     "Francis Evans",
+     "Atu Bosenavulagi",
+     "Judson Clarke",
+     "Cameron Polson",
+     "Daniel Venables",
+     "Brayden Ainsworth"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Engine / work rate",
+     "Speed / agility",
+     "Upside"
+    ],
+    "jFP": 59.0,
+    "seasons": [
+     [
+      2021,
+      2,
+      31.0
+     ],
+     [
+      2022,
+      4,
+      23.8
+     ],
+     [
+      2023,
+      3,
+      59.3
+     ],
+     [
+      2024,
+      6,
+      45.7
+     ],
+     [
+      2025,
+      18,
+      30.6
+     ],
+     [
+      2026,
+      24,
+      56.2
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 3,
+      "fp": 81.7,
+      "disposals": 16.0,
+      "tackles": 3.7,
+      "marks": 4.0,
+      "goals": 2.7
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 16,
+      "fp": 88.8,
+      "disposals": 19.3,
+      "tackles": 2.7,
+      "marks": 6.4,
+      "goals": 1.3
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 18,
+      "fp": 82.2,
+      "disposals": 19.9,
+      "tackles": 2.3,
+      "marks": 5.2,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 63.7,
+      "disposals": 16.5,
+      "tackles": 2.2,
+      "marks": 3.4,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 4,
+      "fp": 53.8,
+      "disposals": 12.1,
+      "tackles": 3.3,
+      "marks": 3.0,
+      "goals": 0.3
+     }
+    ]
+   },
+   {
+    "age": 19,
+    "mature": false,
+    "year": 2020,
+    "pick": 44,
+    "name": "Beau McCreery",
+    "club": "COL",
+    "pre": 4.6,
+    "positionOnly": 5.7,
+    "now": 1.0,
+    "games": 117,
+    "current": {
+     "games": 23,
+     "avg": 63.3
+    },
+    "best": 54.3,
+    "peak": 63.3,
+    "track": 61,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 117 games at 100+",
+     "Mostly starts at forward (75% of starts), 16% centre bounces"
+    ],
+    "like": [
+     "Charlie Spargo",
+     "Michael Frederick",
+     "Bobby Hill",
+     "Jack Petruccelle",
+     "Harrison Jones",
+     "Brent Daniels"
+    ],
+    "traits": [],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      12,
+      41.3
+     ],
+     [
+      2022,
+      21,
+      48.3
+     ],
+     [
+      2023,
+      25,
+      52.1
+     ],
+     [
+      2024,
+      17,
+      53.1
+     ],
+     [
+      2025,
+      19,
+      54.0
+     ],
+     [
+      2026,
+      23,
+      63.3
+     ]
+    ],
+    "role": "Unknown",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 1.0,
+     "2024": 10.0,
+     "2025": 16.0,
+     "2026": 21.0
+    },
+    "state": []
+   },
+   {
+    "age": 22,
+    "mature": true,
+    "year": 2020,
+    "pick": 45,
+    "name": "Tom Highmore",
+    "club": "STK",
+    "pre": 7.1,
+    "positionOnly": 5.6,
+    "now": 1.2,
+    "games": 15,
+    "current": null,
+    "best": 58.7,
+    "peak": 61.2,
+    "track": 66,
+    "status": "Unlikely",
+    "why": [
+     "Plays 14% of games (15 from 110 available)",
+     "Stuck in the seconds: 7 state-league games v 0 AFL in 2025",
+     "Mostly starts at half-back / defence (53% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Marty Hore",
+     "Jy Farrar",
+     "Matthew Parker",
+     "Jarrod Garlett",
+     "Zac Langdon",
+     "Luke Foley"
+    ],
+    "traits": [
+     "Aerial / marking",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Leadership / character",
+     "Size / strength"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      12,
+      61.2
+     ],
+     [
+      2022,
+      3,
+      57.7
+     ]
+    ],
+    "role": "Defender",
+    "cba": {
+     "2021": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 6,
+      "fp": 61.7,
+      "disposals": 14.1,
+      "tackles": 1.8,
+      "marks": 5.5,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 63.1,
+      "disposals": 17.1,
+      "tackles": 2.0,
+      "marks": 3.9,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 80.8,
+      "disposals": 18.8,
+      "tackles": 2.2,
+      "marks": 7.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 16,
+      "fp": 88.7,
+      "disposals": 22.3,
+      "tackles": 2.6,
+      "marks": 6.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 11,
+      "fp": 98.1,
+      "disposals": 23.1,
+      "tackles": 3.2,
+      "marks": 8.4,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 2,
+      "fp": 109.5,
+      "disposals": 24.5,
+      "tackles": 2.5,
+      "marks": 11.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 46,
+    "name": "Tyler Brockman",
+    "club": "HAW",
+    "pre": 12.2,
+    "positionOnly": 5.5,
+    "now": 0.7,
+    "games": 56,
+    "current": null,
+    "best": 52.7,
+    "peak": 51.5,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Rarely goes big: 0 of 56 games at 100+",
+     "Mostly starts at forward (40% of starts), 12% centre bounces"
+    ],
+    "like": [
+     "Xavier O'Halloran",
+     "Jack Williams",
+     "Zac Taylor",
+     "Jack Petruccelle",
+     "Ned McHenry",
+     "Jesse Motlop"
+    ],
+    "traits": [
+     "Defensive pressure",
+     "Kicking / skills",
+     "Speed / agility",
+     "X-factor / hurt"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      11,
+      42.6
+     ],
+     [
+      2023,
+      15,
+      51.5
+     ],
+     [
+      2024,
+      10,
+      35.3
+     ],
+     [
+      2025,
+      20,
+      49.3
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 0.0,
+     "2023": 0.0,
+     "2024": 8.0,
+     "2025": 12.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 2,
+      "fp": 59.0,
+      "disposals": 15.0,
+      "tackles": 2.0,
+      "marks": 3.0,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 82.3,
+      "disposals": 18.3,
+      "tackles": 5.0,
+      "marks": 4.0,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 53.0,
+      "disposals": 12.0,
+      "tackles": 0.5,
+      "marks": 2.5,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 5.0,
+      "disposals": 0.0,
+      "tackles": 1.0,
+      "marks": 0.0,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 6,
+      "fp": 59.5,
+      "disposals": 11.7,
+      "tackles": 3.0,
+      "marks": 3.8,
+      "goals": 1.2
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 47,
+    "name": "Nick Stevens",
+    "club": "GEE",
+    "pre": 14.0,
+    "positionOnly": 5.4,
+    "now": 0.9,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Footy IQ / vision",
+     "Intercept / rebound",
+     "Kicking / skills"
+    ],
+    "jFP": 58.0,
+    "seasons": [],
+    "role": "Midfielder",
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 59.5,
+      "disposals": 12.5,
+      "tackles": 2.0,
+      "marks": 3.5,
+      "goals": 1.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 21,
+      "fp": 55.0,
+      "disposals": 14.6,
+      "tackles": 1.8,
+      "marks": 3.1,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 48.0,
+      "disposals": 12.6,
+      "tackles": 1.4,
+      "marks": 3.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 59.1,
+      "disposals": 14.8,
+      "tackles": 4.0,
+      "marks": 1.6,
+      "goals": 0.3
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 13,
+      "fp": 79.2,
+      "disposals": 20.8,
+      "tackles": 2.1,
+      "marks": 4.8,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 77.0,
+      "disposals": 17.3,
+      "tackles": 3.3,
+      "marks": 4.9,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 48,
+    "name": "Henry Smith",
+    "club": "BRL",
+    "pre": 3.2,
+    "positionOnly": 5.3,
+    "now": 1.0,
+    "games": 6,
+    "current": null,
+    "best": 52.4,
+    "peak": null,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 5% of games (6 from 110 available)",
+     "Stuck in the seconds: 9 state-league games v 2 AFL in 2025"
+    ],
+    "like": [],
+    "traits": [
+     "Aerial / marking",
+     "Size / strength",
+     "Upside"
+    ],
+    "jFP": 0.0,
+    "seasons": [
+     [
+      2024,
+      4,
+      37.5
+     ],
+     [
+      2025,
+      2,
+      42.0
+     ]
+    ],
+    "role": "Ruck",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 84.5,
+      "disposals": 9.8,
+      "tackles": 4.0,
+      "marks": 4.5,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 9,
+      "fp": 87.2,
+      "disposals": 15.8,
+      "tackles": 3.1,
+      "marks": 3.8,
+      "goals": 1.1
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 14,
+      "fp": 96.5,
+      "disposals": 15.9,
+      "tackles": 3.5,
+      "marks": 4.9,
+      "goals": 1.2
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 66.3,
+      "disposals": 12.2,
+      "tackles": 3.4,
+      "marks": 3.3,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 20,
+      "fp": 62.0,
+      "disposals": 11.0,
+      "tackles": 3.0,
+      "marks": 3.5,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 49.1,
+      "disposals": 9.0,
+      "tackles": 2.3,
+      "marks": 2.3,
+      "goals": 1.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 49,
+    "name": "Ollie Lord",
+    "club": "PTA",
+    "pre": 0.4,
+    "positionOnly": 5.2,
+    "now": 1.5,
+    "games": 35,
+    "current": {
+     "games": 1,
+     "avg": 38.0
+    },
+    "best": 45.9,
+    "peak": 37.2,
+    "track": 51,
+    "status": "Unlikely",
+    "why": [
+     "Plays 31% of games (35 from 110 available)",
+     "Rarely goes big: 0 of 35 games at 100+",
+     "Mostly starts at forward (90% of starts), 5% centre bounces"
+    ],
+    "like": [
+     "Francis Evans",
+     "Daniel Venables",
+     "Sam Sturt",
+     "Elliott Himmelberg",
+     "Atu Bosenavulagi",
+     "Judson Clarke"
+    ],
+    "traits": [
+     "Athleticism"
+    ],
+    "jFP": 25.0,
+    "seasons": [
+     [
+      2023,
+      13,
+      37.2
+     ],
+     [
+      2024,
+      6,
+      33.7
+     ],
+     [
+      2025,
+      15,
+      29.4
+     ],
+     [
+      2026,
+      1,
+      38.0
+     ]
+    ],
+    "role": "Key position",
+    "cba": {
+     "2023": 5.0,
+     "2024": 3.0,
+     "2025": 5.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 52.5,
+      "disposals": 7.0,
+      "tackles": 1.0,
+      "marks": 5.0,
+      "goals": 2.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 4,
+      "fp": 59.0,
+      "disposals": 9.3,
+      "tackles": 1.8,
+      "marks": 3.3,
+      "goals": 2.8
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 6,
+      "fp": 44.3,
+      "disposals": 8.5,
+      "tackles": 1.0,
+      "marks": 3.3,
+      "goals": 1.5
+     },
+     {
+      "league": "SANFL",
+      "year": 2023,
+      "games": 8,
+      "fp": 43.9,
+      "disposals": 8.7,
+      "tackles": 2.5,
+      "marks": 2.4,
+      "goals": 0.9
+     },
+     {
+      "league": "SANFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 54.9,
+      "disposals": 11.7,
+      "tackles": 2.1,
+      "marks": 3.8,
+      "goals": 0.6
+     },
+     {
+      "league": "SANFL",
+      "year": 2021,
+      "games": 14,
+      "fp": 40.6,
+      "disposals": 8.7,
+      "tackles": 2.1,
+      "marks": 2.1,
+      "goals": 0.7
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 50,
+    "name": "Brandon Walker",
+    "club": "FRE",
+    "pre": 2.1,
+    "positionOnly": 5.1,
+    "now": 1.1,
+    "games": 68,
+    "current": {
+     "games": 2,
+     "avg": 34.5
+    },
+    "best": 55.1,
+    "peak": 55.1,
+    "track": 62,
+    "status": "Unlikely",
+    "why": [
+     "Stuck in the seconds: 7 state-league games v 2 AFL in 2025",
+     "Rarely goes big: 0 of 68 games at 100+",
+     "Mostly starts at half-back / defence (90% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Andrew McPherson",
+     "Flynn Perez",
+     "Jaxon Prior",
+     "Noah Answerth",
+     "Luke Cleary",
+     "Jack Mahony"
+    ],
+    "traits": [
+     "Athleticism",
+     "Clean hands",
+     "Intercept / rebound",
+     "Speed / agility"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      10,
+      44.8
+     ],
+     [
+      2022,
+      21,
+      52.4
+     ],
+     [
+      2023,
+      14,
+      38.6
+     ],
+     [
+      2024,
+      19,
+      55.1
+     ],
+     [
+      2025,
+      2,
+      34.0
+     ],
+     [
+      2026,
+      2,
+      34.5
+     ]
+    ],
+    "role": "Defender",
+    "cba": {
+     "2021": 0.0,
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 64.3,
+      "disposals": 15.1,
+      "tackles": 3.3,
+      "marks": 3.7,
+      "goals": 0.1
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 1,
+      "fp": 69.0,
+      "disposals": 14.0,
+      "tackles": 5.0,
+      "marks": 4.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 51,
+    "name": "Maurice Rioli Jr.",
+    "club": "RIC",
+    "pre": 4.1,
+    "positionOnly": 5.0,
+    "now": 0.9,
+    "games": 59,
+    "current": {
+     "games": 10,
+     "avg": 34.2
+    },
+    "best": 51.6,
+    "peak": 48.6,
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 45% of games (59 from 110 available)",
+     "Rarely goes big: 0 of 59 games at 100+",
+     "Mostly starts at forward (68% of starts), 2% centre bounces"
+    ],
+    "like": [
+     "Ned McHenry",
+     "Jesse Motlop",
+     "Elliott Himmelberg",
+     "Jack Williams",
+     "Daniel Venables",
+     "Esava Ratugolea"
+    ],
+    "traits": [],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      2,
+      27.0
+     ],
+     [
+      2022,
+      15,
+      42.7
+     ],
+     [
+      2023,
+      10,
+      29.7
+     ],
+     [
+      2024,
+      9,
+      48.6
+     ],
+     [
+      2025,
+      13,
+      41.5
+     ],
+     [
+      2026,
+      10,
+      34.2
+     ]
+    ],
+    "role": "Unknown",
+    "cba": {
+     "2022": 0.0,
+     "2023": 0.0,
+     "2024": 0.0,
+     "2025": 2.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 4,
+      "fp": 51.5,
+      "disposals": 10.3,
+      "tackles": 4.3,
+      "marks": 2.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 7,
+      "fp": 60.3,
+      "disposals": 13.8,
+      "tackles": 4.3,
+      "marks": 1.9,
+      "goals": 0.9
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 3,
+      "fp": 56.3,
+      "disposals": 10.7,
+      "tackles": 5.7,
+      "marks": 2.7,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 65.6,
+      "disposals": 13.0,
+      "tackles": 7.4,
+      "marks": 1.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 9,
+      "fp": 62.8,
+      "disposals": 14.7,
+      "tackles": 4.2,
+      "marks": 2.1,
+      "goals": 0.7
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 10,
+      "fp": 58.1,
+      "disposals": 11.4,
+      "tackles": 6.4,
+      "marks": 1.5,
+      "goals": 0.4
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 52,
+    "name": "Luke Edwards",
+    "club": "WCE",
+    "pre": 5.6,
+    "positionOnly": 4.9,
+    "now": 1.0,
+    "games": 36,
+    "current": null,
+    "best": 53.9,
+    "peak": 47.1,
+    "track": 60,
+    "status": "Unlikely",
+    "why": [
+     "Plays 33% of games (36 from 110 available)",
+     "Rarely goes big: 0 of 36 games at 100+",
+     "Mostly starts at forward (50% of starts), 0% centre bounces"
+    ],
+    "like": [
+     "Myles Poholke",
+     "Daniel Venables",
+     "Jesse Motlop",
+     "Ned McHenry",
+     "Cedric Cox",
+     "Elliott Himmelberg"
+    ],
+    "traits": [
+     "Contested / inside",
+     "Footy IQ / vision",
+     "Inside-outside balance",
+     "Versatility"
+    ],
+    "jFP": 69.0,
+    "seasons": [
+     [
+      2021,
+      7,
+      52.7
+     ],
+     [
+      2022,
+      3,
+      45.7
+     ],
+     [
+      2023,
+      14,
+      47.1
+     ],
+     [
+      2024,
+      12,
+      44.9
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2021": 1.0,
+     "2023": 12.0,
+     "2024": 6.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 4,
+      "fp": 55.2,
+      "disposals": 12.1,
+      "tackles": 4.5,
+      "marks": 2.8,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 78.0,
+      "disposals": 19.5,
+      "tackles": 5.0,
+      "marks": 2.5,
+      "goals": 0.5
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 1,
+      "fp": 62.0,
+      "disposals": 15.0,
+      "tackles": 7.0,
+      "marks": 0.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 53,
+    "name": "Cody Brand",
+    "club": "ESS",
+    "pre": 0.3,
+    "positionOnly": 4.9,
+    "now": 0.8,
+    "games": 0,
+    "current": null,
+    "best": null,
+    "peak": null,
+    "track": null,
+    "status": "Unlikely",
+    "why": [],
+    "like": [],
+    "traits": [
+     "Aerial / marking",
+     "Athleticism",
+     "Kicking / skills",
+     "Leadership / character",
+     "Upside",
+     "Versatility"
+    ],
+    "jFP": 34.0,
+    "seasons": [],
+    "role": "Key position",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 17,
+      "fp": 46.6,
+      "disposals": 11.6,
+      "tackles": 1.8,
+      "marks": 3.6,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 7,
+      "fp": 49.1,
+      "disposals": 12.6,
+      "tackles": 1.1,
+      "marks": 4.0,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 54,
+    "name": "Joel Western",
+    "club": "FRE",
+    "pre": 8.0,
+    "positionOnly": 4.8,
+    "now": 0.4,
+    "games": 4,
+    "current": null,
+    "best": 45.1,
+    "peak": null,
+    "track": 51,
+    "status": "Unlikely",
+    "why": [
+     "Plays 4% of games (4 from 110 available)",
+     "Stuck in the seconds: 14 state-league games v 0 AFL in 2025"
+    ],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Engine / work rate",
+     "Footy IQ / vision",
+     "Kicking / skills",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      4,
+      25.2
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {},
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 14,
+      "fp": 48.1,
+      "disposals": 13.2,
+      "tackles": 1.9,
+      "marks": 2.1,
+      "goals": 0.3
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 63.4,
+      "disposals": 16.6,
+      "tackles": 2.9,
+      "marks": 3.6,
+      "goals": 0.0
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 65.3,
+      "disposals": 18.0,
+      "tackles": 1.7,
+      "marks": 3.7,
+      "goals": 0.4
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 11,
+      "fp": 52.6,
+      "disposals": 12.7,
+      "tackles": 1.7,
+      "marks": 2.1,
+      "goals": 1.0
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 55,
+    "name": "Dominic Bedendo",
+    "club": "WBD",
+    "pre": 1.5,
+    "positionOnly": 4.7,
+    "now": 0.5,
+    "games": 2,
+    "current": null,
+    "best": 52.3,
+    "peak": null,
+    "track": 59,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (2 from 110 available)",
+     "Stuck in the seconds: 17 state-league games v 0 AFL in 2025"
+    ],
+    "like": [],
+    "traits": [
+     "Athleticism",
+     "Engine / work rate",
+     "Upside"
+    ],
+    "jFP": 48.0,
+    "seasons": [
+     [
+      2022,
+      2,
+      41.5
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {},
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2026,
+      "games": 18,
+      "fp": 79.5,
+      "disposals": 15.4,
+      "tackles": 3.8,
+      "marks": 4.1,
+      "goals": 2.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 64.4,
+      "disposals": 15.4,
+      "tackles": 2.3,
+      "marks": 2.9,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 50.8,
+      "disposals": 10.2,
+      "tackles": 1.7,
+      "marks": 3.3,
+      "goals": 1.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 2,
+      "fp": 37.0,
+      "disposals": 10.5,
+      "tackles": 0.5,
+      "marks": 2.0,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 11,
+      "fp": 62.9,
+      "disposals": 13.6,
+      "tackles": 2.3,
+      "marks": 4.6,
+      "goals": 0.6
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 10,
+      "fp": 54.4,
+      "disposals": 10.6,
+      "tackles": 1.6,
+      "marks": 3.8,
+      "goals": 1.3
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 56,
+    "name": "Eddie Ford",
+    "club": "NTH",
+    "pre": 2.2,
+    "positionOnly": 4.6,
+    "now": 0.8,
+    "games": 38,
+    "current": null,
+    "best": 56.7,
+    "peak": 57.6,
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 35% of games (38 from 110 available)",
+     "Stuck in the seconds: 12 state-league games v 0 AFL in 2025",
+     "Rarely goes big: 0 of 38 games at 100+"
+    ],
+    "like": [
+     "Jordan Gallucci",
+     "Boyd Woodcock",
+     "Brad Scheer",
+     "Lachlan Gollant",
+     "Josh Morris",
+     "Jarrod Cameron"
+    ],
+    "traits": [
+     "Athleticism",
+     "Clean hands",
+     "Scoreboard impact",
+     "Upside",
+     "X-factor / hurt"
+    ],
+    "jFP": 56.0,
+    "seasons": [
+     [
+      2021,
+      4,
+      50.2
+     ],
+     [
+      2022,
+      2,
+      30.5
+     ],
+     [
+      2023,
+      14,
+      57.6
+     ],
+     [
+      2024,
+      18,
+      53.7
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2023": 0.0,
+     "2024": 0.0
+    },
+    "state": [
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 12,
+      "fp": 68.8,
+      "disposals": 17.4,
+      "tackles": 1.5,
+      "marks": 5.6,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 2,
+      "fp": 80.5,
+      "disposals": 20.5,
+      "tackles": 2.0,
+      "marks": 5.5,
+      "goals": 1.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 57.5,
+      "disposals": 15.1,
+      "tackles": 1.0,
+      "marks": 4.0,
+      "goals": 0.8
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 9,
+      "fp": 62.9,
+      "disposals": 12.6,
+      "tackles": 1.9,
+      "marks": 4.9,
+      "goals": 1.7
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 7,
+      "fp": 63.7,
+      "disposals": 14.3,
+      "tackles": 2.4,
+      "marks": 4.4,
+      "goals": 0.9
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 57,
+    "name": "Isiah Winder",
+    "club": "WCE",
+    "pre": 2.6,
+    "positionOnly": 4.5,
+    "now": 0.4,
+    "games": 6,
+    "current": null,
+    "best": 51.8,
+    "peak": null,
+    "track": 58,
+    "status": "Unlikely",
+    "why": [
+     "Plays 5% of games (6 from 110 available)",
+     "Stuck in the seconds: 19 state-league games v 0 AFL in 2025"
+    ],
+    "like": [],
+    "traits": [
+     "Footy IQ / vision",
+     "Scoreboard impact",
+     "Speed / agility"
+    ],
+    "jFP": null,
+    "seasons": [
+     [
+      2021,
+      1,
+      26.0
+     ],
+     [
+      2022,
+      5,
+      41.0
+     ]
+    ],
+    "role": "Midfielder",
+    "cba": {
+     "2022": 0.0
+    },
+    "state": [
+     {
+      "league": "WAFL",
+      "year": 2025,
+      "games": 19,
+      "fp": 85.6,
+      "disposals": 22.5,
+      "tackles": 4.1,
+      "marks": 3.1,
+      "goals": 0.9
+     },
+     {
+      "league": "WAFL",
+      "year": 2024,
+      "games": 18,
+      "fp": 97.4,
+      "disposals": 26.0,
+      "tackles": 4.0,
+      "marks": 4.9,
+      "goals": 0.9
+     },
+     {
+      "league": "WAFL",
+      "year": 2023,
+      "games": 6,
+      "fp": 97.5,
+      "disposals": 24.9,
+      "tackles": 2.7,
+      "marks": 6.3,
+      "goals": 0.8
+     },
+     {
+      "league": "WAFL",
+      "year": 2022,
+      "games": 12,
+      "fp": 67.4,
+      "disposals": 17.9,
+      "tackles": 2.8,
+      "marks": 3.5,
+      "goals": 0.5
+     }
+    ]
+   },
+   {
+    "age": 18,
+    "mature": false,
+    "year": 2020,
+    "pick": 58,
+    "name": "Cameron Fleeton",
+    "club": "GWS",
+    "pre": 5.4,
+    "positionOnly": 4.5,
+    "now": 0.6,
+    "games": 2,
+    "current": null,
+    "best": 51.2,
+    "peak": null,
+    "track": 57,
+    "status": "Unlikely",
+    "why": [
+     "Plays 2% of games (2 from 110 available)",
+     "Stuck in the seconds: 17 state-league games v 0 AFL in 2025",
+     "Mostly starts at half-back / defence (50% of starts), 0% centre bounces"
+    ],
+    "like": [],
+    "traits": [
+     "Aerial / marking",
+     "Footy IQ / vision",
+     "Intercept / rebound",
+     "Leadership / character"
+    ],
+    "jFP": 61.0,
+    "seasons": [
+     [
+      2023,
+      2,
+      36.0
+     ]
+    ],
+    "role": "Defender",
+    "cba": {},
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 3,
+      "fp": 39.7,
+      "disposals": 10.4,
+      "tackles": 1.3,
+      "marks": 2.7,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2025,
+      "games": 17,
+      "fp": 46.9,
+      "disposals": 10.6,
+      "tackles": 1.2,
+      "marks": 5.0,
+      "goals": 0.0
+     },
+     {
+      "league": "SANFL",
+      "year": 2024,
+      "games": 17,
+      "fp": 45.5,
+      "disposals": 10.8,
+      "tackles": 2.1,
+      "marks": 3.8,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 15,
+      "fp": 89.9,
+      "disposals": 22.6,
+      "tackles": 2.1,
+      "marks": 8.1,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 18,
+      "fp": 52.5,
+      "disposals": 12.2,
+      "tackles": 2.2,
+      "marks": 4.5,
+      "goals": 0.1
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 8,
+      "fp": 41.0,
+      "disposals": 9.7,
+      "tackles": 2.5,
+      "marks": 2.9,
+      "goals": 0.0
+     }
+    ]
+   },
+   {
+    "age": 22,
+    "mature": true,
+    "year": 2020,
+    "pick": 59,
+    "name": "Jacob Wehr",
+    "club": "GWS",
+    "pre": 3.7,
+    "positionOnly": 4.4,
+    "now": 1.4,
+    "games": 56,
+    "current": {
+     "games": 17,
+     "avg": 52.5
+    },
+    "best": 57.2,
+    "peak": 58.9,
+    "track": 64,
+    "status": "Unlikely",
+    "why": [
+     "Plays 35% of games (56 from 110 available)",
+     "Stuck in the seconds: 8 state-league games v 14 AFL in 2025",
+     "Rarely goes big: 0 of 56 games at 100+"
+    ],
+    "like": [
+     "Jy Farrar",
+     "Zac Langdon",
+     "Marty Hore",
+     "Brett Bewley",
+     "Matthew Parker",
+     "Jarrod Garlett"
+    ],
+    "traits": [],
+    "jFP": null,
+    "seasons": [
+     [
+      2022,
+      10,
+      58.9
+     ],
+     [
+      2023,
+      4,
+      28.8
+     ],
+     [
+      2024,
+      11,
+      54.3
+     ],
+     [
+      2025,
+      14,
+      52.3
+     ],
+     [
+      2026,
+      17,
+      52.5
+     ]
+    ],
+    "role": "Unknown",
+    "cba": {
+     "2022": 0.0,
+     "2024": 0.0,
+     "2025": 0.0,
+     "2026": 0.0
+    },
+    "state": [
+     {
+      "league": "SANFL",
+      "year": 2026,
+      "games": 2,
+      "fp": 82.0,
+      "disposals": 18.5,
+      "tackles": 2.5,
+      "marks": 6.5,
+      "goals": 0.0
+     },
+     {
+      "league": "VFL",
+      "year": 2025,
+      "games": 8,
+      "fp": 89.1,
+      "disposals": 22.8,
+      "tackles": 4.3,
+      "marks": 4.4,
+      "goals": 0.5
+     },
+     {
+      "league": "VFL",
+      "year": 2024,
+      "games": 9,
+      "fp": 79.4,
+      "disposals": 19.7,
+      "tackles": 2.1,
+      "marks": 5.9,
+      "goals": 0.4
+     },
+     {
+      "league": "VFL",
+      "year": 2023,
+      "games": 5,
+      "fp": 58.2,
+      "disposals": 15.2,
+      "tackles": 1.6,
+      "marks": 3.8,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2022,
+      "games": 6,
+      "fp": 86.3,
+      "disposals": 20.9,
+      "tackles": 2.0,
+      "marks": 7.0,
+      "goals": 0.2
+     },
+     {
+      "league": "VFL",
+      "year": 2021,
+      "games": 9,
+      "fp": 72.9,
+      "disposals": 18.5,
+      "tackles": 1.8,
+      "marks": 5.1,
+      "goals": 0.0
+     }
+    ]
+   },
    {
     "age": 18,
     "mature": false,
@@ -28013,8 +34540,10 @@
    }
   ],
   "surprises": [
+   "Max Holmes|2020",
    "Hugo Garcia|2023",
    "Archie Roberts|2023",
+   "Sam Berry|2020",
    "Jacob Farrow|2025"
   ],
   "breakouts": [
