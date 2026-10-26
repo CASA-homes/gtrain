@@ -18,6 +18,7 @@ export interface MockPlayer {
   name: string;
   kind: Kind;
   pos: string;            // DEF/MID etc, or the prospect's role
+  lines: string[];        // DEF / MID / RUC / FWD, for filtering
   age: number | null;     // in 2027
   club: string | null;    // AFL club code, or junior club for rookies
   from: string | null;    // G-Train club that released him
@@ -80,4 +81,15 @@ export function aiPick(team: MockTeam, pool: MockPlayer[], taken: MockPlayer[], 
     if (s > bestScore) { bestScore = s; best = p; }
   }
   return best;
+}
+
+/** Lines for a draft prospect from his profile position, e.g. "MID/FWD", "Key DEF", "Wing/MID". */
+export function prospectLines(position: string, role: string): string[] {
+  const s = (position || '').toUpperCase(), out = new Set<string>();
+  if (s.includes('DEF')) out.add('DEF');
+  if (s.includes('MID') || s.includes('WING')) out.add('MID');
+  if (s.includes('FWD')) out.add('FWD');
+  if (s.includes('RUC') || role === 'Ruck') out.add('RUC');
+  if (!out.size) { if (/utility/i.test(position)) { out.add('DEF'); out.add('FWD'); } else out.add('MID'); }
+  return [...out];
 }

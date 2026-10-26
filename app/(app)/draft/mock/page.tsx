@@ -5,7 +5,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { age, type PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { windowFor } from '@/lib/trade-plan';
-import { playerBoard, rookieBoard, teamLean, type MockPick, type MockPlayer, type MockTeam } from '@/lib/mock-draft';
+import { playerBoard, prospectLines, rookieBoard, teamLean, type MockPick, type MockPlayer, type MockTeam } from '@/lib/mock-draft';
 import cb from '@/lib/crystal-ball.json';
 
 export const metadata = { title: '2027 mock draft' };
@@ -19,14 +19,14 @@ export default async function MockPage() {
   const asMock = (p: PlayerRow, kind: 'Released' | 'Free agent'): MockPlayer => {
     const s26 = season(p, 2026), s25 = season(p, 2025);
     const base = { a26: s26 && s26[1] ? s26[2] : p.games ? p.average : null, g26: s26?.[1] ?? p.games ?? 0, a25: s25 && s25[1] ? s25[2] : null, g25: s25?.[1] ?? 0, age: age(p.birth_date, START_2027) };
-    return { key: `p:${p.id}`, id: p.id, name: p.full_name ?? p.name, kind, pos: p.positions.join('/'), club: p.afl_club, from: kind === 'Released' ? teamName(p.team_id) : null,
+    return { key: `p:${p.id}`, id: p.id, name: p.full_name ?? p.name, kind, pos: p.positions.join('/'), lines: [...p.positions], club: p.afl_club, from: kind === 'Released' ? teamName(p.team_id) : null,
       ...base, ruck: p.positions.includes('RUC'), board: Math.round(playerBoard(base) * 10) / 10 };
   };
   const released = league.players.filter((p) => !p.is_keeper && !p.is_rookie_keeper && !p.list_status).map((p) => asMock(p, 'Released'));
   const free = league.freeAgents.filter((p) => !p.list_status).map((p) => asMock(p, 'Free agent'));
   type Prospect = { rank: number; name: string; role: string; chance: number; junior: string; position: string };
   const rookies: MockPlayer[] = (cb as unknown as { prospects: Prospect[] }).prospects.map((p) => ({
-    key: `r:${p.name}`, id: null, name: p.name, kind: 'Rookie', pos: p.role === 'Midfielder' ? p.position || 'MID' : p.role, age: 18, club: p.junior, from: null,
+    key: `r:${p.name}`, id: null, name: p.name, kind: 'Rookie', pos: p.position || p.role, lines: prospectLines(p.position, p.role), age: 18, club: p.junior, from: null,
     a26: null, g26: 0, a25: null, g25: 0, rank: p.rank, chance: p.chance, ruck: p.role === 'Ruck', board: Math.round(rookieBoard(p.rank, p.role, p.chance) * 10) / 10,
   }));
 

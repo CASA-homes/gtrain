@@ -21,6 +21,8 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
   const [edits, setEdits] = useState<Edits>({ out: [], adj: {} });
   const [q, setQ] = useState('');
   const [kind, setKind] = useState<'All' | 'Rookie' | 'Released' | 'Free agent'>('All');
+  const [posLine, setPosLine] = useState<'All' | 'DEF' | 'MID' | 'RUC' | 'FWD'>('All');
+  const [sortBy, setSortBy] = useState<'avg' | 'rating'>('avg');
   const [menu, setMenu] = useState<number | null>(null);
   const boardRef = useRef<HTMLDivElement>(null);
 
@@ -72,8 +74,11 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
   const myHaul = results.filter((r) => r.mine);
   const myNext = picks.filter((p) => p.teamId === asTeam);
   const list = pool
-    .filter((p) => (kind === 'All' || p.kind === kind) && (!q || p.name.toLowerCase().includes(q.toLowerCase())))
-    .sort((a, b) => effectiveBoard(b, edits) - effectiveBoard(a, edits)).slice(0, 120);
+    .filter((p) => (kind === 'All' || p.kind === kind) && (posLine === 'All' || p.lines.includes(posLine)) && (!q || p.name.toLowerCase().includes(q.toLowerCase())))
+    .sort((a, b) => sortBy === 'avg'
+      ? (b.a26 ?? -1) - (a.a26 ?? -1) || effectiveBoard(b, edits) - effectiveBoard(a, edits)   // no 2026 average (rookies) goes last, best-rated first
+      : effectiveBoard(b, edits) - effectiveBoard(a, edits))
+    .slice(0, 150);
 
   const draft = (p: MockPlayer) => { if (onClock) setMine({ ...mine, [onClock.overall]: p.key }); setQ(''); };
   const undo = () => { const last = [...myHaul].pop(); if (!last) return; const m = { ...mine }; delete m[last.pick.overall]; setMine(m); };
@@ -154,7 +159,18 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             <input className="input" type="search" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} style={{ flex: '1 1 140px', minHeight: 32, fontSize: 13 }} aria-label="Search available players" />
             <select className="input" value={kind} onChange={(e) => setKind(e.target.value as typeof kind)} style={{ minHeight: 32, fontSize: 13 }} aria-label="Player type">
-              {['All', 'Rookie', 'Released', 'Free agent'].map((k) => <option key={k}>{k}</option>)}
+              {['All', 'Rookie', 'Released', 'Free agent'].map((k) => <option key={k} value={k}>{k === 'All' ? 'All types' : k}</option>)}
+            </select>
+          </div>
+          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', alignItems: 'center' }}>
+            <span className="own-toggle" role="tablist" aria-label="Position" style={{ flex: '1 1 auto' }}>
+              {(['All', 'DEF', 'MID', 'RUC', 'FWD'] as const).map((l) => (
+                <a key={l} role="tab" aria-selected={posLine === l} className={posLine === l ? 'on' : undefined} onClick={() => setPosLine(l)} style={{ cursor: 'pointer' }}>{l}</a>
+              ))}
+            </span>
+            <select className="input" value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} style={{ minHeight: 32, fontSize: 13 }} aria-label="Sort by">
+              <option value="avg">Sort: ’26 average</option>
+              <option value="rating">Sort: board rating</option>
             </select>
           </div>
           <div className="mock-avail">
@@ -164,7 +180,7 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
                   <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.id ? <Link href={`/players/${p.id}`} style={{ color: 'inherit' }}>{p.name}</Link> : p.name}</span>
                   <span className="muted" style={{ fontSize: 11 }}><Chip k={p.kind} /> {line(p)}</span>
                 </span>
-                <span className="mono" title="Board rating" style={{ fontSize: 12 }}>{Math.round(effectiveBoard(p, edits))}</span>
+                <span className="mono" title={sortBy === 'avg' ? '2026 average' : 'Board rating'} style={{ fontSize: 12, fontWeight: 600 }}>{sortBy === 'avg' ? (p.a26 != null ? Math.round(p.a26) : '–') : Math.round(effectiveBoard(p, edits))}</span>
                 {onClock ? <button type="button" className="btn green" onClick={() => draft(p)} style={{ minHeight: 28, padding: '0 10px' }}>Draft</button> : <span />}
               </div>
             ))}
