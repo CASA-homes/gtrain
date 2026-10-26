@@ -9,6 +9,7 @@ import { best22, LINES } from '@/lib/ratings';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 import { postNews, rsvp } from './actions';
+import { LeagueHistory } from '@/components/LeagueHistory';
 
 export default async function LeaguePage() {
   const [league, me] = await Promise.all([getLeague(), getMe()]);
@@ -212,6 +213,7 @@ export default async function LeaguePage() {
           </section>
         </div>
       </div>
+      <LeagueHistory teams={league.teams} myTeamName={league.teams.find((t) => t.id === me?.team_id)?.name ?? null} />
     </div>
   );
 }

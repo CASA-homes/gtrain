@@ -14,6 +14,8 @@ import { coreAge, strengthByYear, windowFor } from '@/lib/window';
 import { draftOutlook, squadSummary } from '@/lib/verdict';
 import { VerdictTabs } from '@/components/VerdictTabs';
 import { WindowChart } from '@/components/WindowChart';
+import { ClubGames } from '@/components/ClubGames';
+import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
@@ -48,6 +50,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
   const isMine = me?.team_id === a.team.id;
+  const gq = await (await createClient()).from('club_games').select('season, player_name, games').eq('team_id', a.team.id);
+  const gamesReady = !gq.error;
+  const games = clubGames(a.team.name, gq.data ?? []);
 
   const supabase = await createClient();
   const { data: listings } = await supabase
@@ -291,6 +296,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             })}
           </div>
         </section>
+        <ClubGames rows={games} teamId={a.team.id} editable={isMine || !!me?.is_commish} tableReady={gamesReady}
+          current={a.players.map((p) => nameKey(p.full_name ?? p.name))}
+          links={Object.fromEntries([...league.freeAgents, ...league.players].flatMap((p) => { const v = { id: p.id, afl_club: p.afl_club, photo_path: p.photo_path, dfs_id: p.dfs_id }; return [[nameKey(p.name), v], [nameKey(p.full_name ?? p.name), v]]; }))} />
       </ClubhouseSplit>
     </div>
   );

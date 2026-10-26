@@ -5,6 +5,8 @@ import { getLeague, getMe, type Pick } from '@/lib/data';
 import { pickValue } from '@/lib/picks';
 import { C } from '@/lib/ratings';
 import { GTRAIN_DRAFTS } from '@/lib/gtrain-draft';
+import { draftAwards } from '@/lib/draft-awards';
+import { Face } from '@/components/TradeHighlights';
 
 const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
 
@@ -145,8 +147,10 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
   for (const p of league.players) { playerByName.set(norm(p.full_name ?? p.name), p); if (!playerByName.has(norm(p.name))) playerByName.set(norm(p.name), p); }
   const picks = [...GTRAIN_DRAFTS[2026]].sort((a, b) => a.pick - b.pick);
   const rounds = Array.from(new Set(picks.map((p) => Math.ceil(p.pick / 10))));
+  const awards = draftAwards([...league.players, ...league.freeAgents], league.ratings);
   return (
-    <section style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 820 }}>
+    <div className="draft-split">
+    <section style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
         <h2 className="h2">2026 draft day</h2>
         <span className="muted" style={{ fontSize: 12 }}>21 Feb 2026 · {picks.length} selections · gaps are passed picks</span>
@@ -190,5 +194,30 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
         </table>
       </div>
     </section>
+    <aside style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
+      <div className="row-between" style={{ gap: 6 }}>
+        <h2 className="h2">Draft day, one season on</h2>
+      </div>
+      <span className="muted" style={{ fontSize: 12, marginTop: -4 }}>Judged on 2026 output, age and long-term rating.</span>
+      {awards.map((a) => {
+        const t = teamByName.get(norm(a.team));
+        const mine = t && t.id === myTeam;
+        return (
+          <div key={a.key} className="card" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 6, ...(mine ? { borderColor: 'var(--ink)' } : {}) }}>
+            <span style={{ font: '600 11px var(--font)', textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--muted, #777)' }}>{a.title}</span>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+              <Face p={a.player} label={a.player.name} size={44} />
+              <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                <Link href={`/players/${a.player.id}`} style={{ font: '700 15px var(--font)', color: 'inherit', textDecoration: 'none' }}>{a.player.full_name ?? a.player.name}</Link>
+                <span className="muted" style={{ fontSize: 12 }}>G-Train pick {a.pick} · {t ? <Link href={`/clubhouse/${t.id}`} style={{ color: 'inherit' }}>{a.team}</Link> : a.team}</span>
+                <span className="mono" style={{ fontSize: 12 }}>{a.line}</span>
+              </div>
+            </div>
+            <span style={{ fontSize: 13, lineHeight: 1.4 }}>{a.why}</span>
+          </div>
+        );
+      })}
+    </aside>
+    </div>
   );
 }

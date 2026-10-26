@@ -248,3 +248,21 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   .ph-name { font-size: 34px; }
   .ph-bio { max-width: 640px; }
 }
+
+/* Clubhouse: games for the club */
+.cg-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) repeat(5, 28px) 40px; gap: 6px; align-items: center; padding: 7px 12px; border-top: 1px solid var(--line); font-size: 13px; }
+.cg-head { border-top: 0; font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--sunk); }
+.cg-yr { text-align: center; font-size: 12px; }
+.cg-tot { text-align: right; font-weight: 700; }
+@media (max-width: 420px) { .cg-row { grid-template-columns: 18px minmax(0, 1fr) repeat(5, 24px) 34px; gap: 4px; padding: 7px 10px; } }
+
+/* 2026 draft results + awards aside */
+.draft-split { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
+.draft-split > aside { position: sticky; top: 76px; }
+@media (max-width: 900px) { .draft-split { grid-template-columns: 1fr; } .draft-split > aside { position: static; } }
+
+/* League history */
+.hist-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.hist-recs { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.h2h th { text-align: center; font-size: 11px; }
+@media (max-width: 860px) { .hist-grid { grid-template-columns: 1fr; } }
