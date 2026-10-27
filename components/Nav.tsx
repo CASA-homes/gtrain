@@ -24,7 +24,7 @@ const LINKS = [
   { href: '/league', label: 'League', icon: 'league' },
   { href: '/rankings', label: 'Rankings', icon: 'rankings' },
   { href: '/draft', label: 'Draft', icon: 'draft' },
-  { href: '/live', label: 'Live', icon: 'live' },
+  { href: '/live', label: 'Live Matchups', icon: 'live' },
 ];
 
 export function Nav({ myTeamId, shortCode }: { myTeamId: number; shortCode: string }) {

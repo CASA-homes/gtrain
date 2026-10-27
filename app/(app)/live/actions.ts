@@ -1,56 +1,82 @@
 'use server';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { COMP, SLOTS, type Lineup, type Slot } from '@/lib/aflw';
+import { COMP, PICKS_PER_TEAM, liveRound, onClock, slotFor, type GamePick, type GameRow } from '@/lib/aflw';
 
-export interface Mini { ready: boolean; lineups: Record<number, Lineup>; matchups: { home: number; away: number }[] }
+type Res = { ok: boolean; error?: string; id?: number };
+const toGame = (r: { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; draft_order: number[]; created_by: string; created_at: string; finished_at: string | null }): GameRow =>
+  ({ id: r.id, round: r.round, kind: r.kind, name: r.name, status: r.status, order: r.draft_order, created_by: r.created_by, created_at: r.created_at, finished_at: r.finished_at });
+const COLS = 'id, round, kind, name, status, draft_order, created_by, created_at, finished_at';
 
-/** Every club's 11 and the matchups for a round. ready=false if the tables haven't been created yet. */
-export async function loadMini(round: number): Promise<Mini> {
+/** Every game in the competition, newest first, with its picks. ready=false until the tables exist. */
+export async function listGames(): Promise<{ ready: boolean; games: (GameRow & { picks: GamePick[] })[] }> {
   const supabase = await createClient();
-  const [l, m] = await Promise.all([
-    supabase.from('mini_lineups').select('team_id, players').eq('comp', COMP).eq('round', round),
-    supabase.from('mini_matchups').select('home_team_id, away_team_id').eq('comp', COMP).eq('round', round),
+  const g = await supabase.from('mini_games').select(COLS).eq('comp', COMP).order('created_at', { ascending: false }).limit(60);
+  if (g.error) return { ready: false, games: [] };
+  const ids = (g.data ?? []).map((x) => x.id);
+  const p = ids.length ? await supabase.from('mini_picks').select('game_id, pick_no, team_id, player_id, player_name, slot, picked_at').in('game_id', ids).order('pick_no') : { data: [] };
+  return { ready: true, games: (g.data ?? []).map((x) => ({ ...toGame(x), picks: (p.data ?? []).filter((y) => y.game_id === x.id) as GamePick[] })) };
+}
+
+export async function loadGame(id: number): Promise<{ game: GameRow | null; picks: GamePick[] }> {
+  const supabase = await createClient();
+  const [g, p] = await Promise.all([
+    supabase.from('mini_games').select(COLS).eq('id', id).maybeSingle(),
+    supabase.from('mini_picks').select('pick_no, team_id, player_id, player_name, slot, picked_at').eq('game_id', id).order('pick_no'),
   ]);
-  if (l.error || m.error) return { ready: false, lineups: {}, matchups: [] };
-  return {
-    ready: true,
-    lineups: Object.fromEntries((l.data ?? []).map((r) => [r.team_id, r.players as Lineup])),
-    matchups: (m.data ?? []).map((r) => ({ home: r.home_team_id, away: r.away_team_id })),
-  };
+  return { game: g.data ? toGame(g.data) : null, picks: (p.data ?? []) as GamePick[] };
 }
 
-function clean(l: Lineup): Lineup {
-  const out: Lineup = {};
-  const seen = new Set<number>();   // a player fills one slot only
-  for (const s of Object.keys(SLOTS) as Slot[]) {
-    const ids = [...new Set((l[s] ?? []).map(Number).filter((x) => Number.isInteger(x) && x > 0 && !seen.has(x)))].slice(0, SLOTS[s]);
-    ids.forEach((x) => seen.add(x));
-    if (ids.length) out[s] = ids;
-  }
-  return out;
-}
-
-/** Commish only: set (or clear) one club's 11 for a round. */
-export async function saveLineup(round: number, teamId: number, lineup: Lineup): Promise<{ ok: boolean; error?: string }> {
+/** Start a new game: these clubs, in a random draft order. */
+export async function createGame(round: number, kind: string, name: string, teamIds: number[]): Promise<Res> {
   const me = await getMe();
-  if (!me?.is_commish) return { ok: false, error: 'Only the commish can pick teams.' };
+  if (!me) return { ok: false, error: 'Sign in first.' };
+  if (kind !== 'snake11') return { ok: false, error: 'That game type isn’t built yet.' };
+  const ids = [...new Set(teamIds.map(Number))].filter((x) => Number.isInteger(x) && x > 0);
+  if (ids.length < 2 || ids.length > 10) return { ok: false, error: 'Pick between 2 and 10 clubs.' };
+  const order = [...ids];
+  for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
   const supabase = await createClient();
-  const players = clean(lineup);
-  const res = Object.keys(players).length
-    ? await supabase.from('mini_lineups').upsert({ comp: COMP, round, team_id: teamId, players, updated_at: new Date().toISOString() }, { onConflict: 'comp,round,team_id' })
-    : await supabase.from('mini_lineups').delete().eq('comp', COMP).eq('round', round).eq('team_id', teamId);
+  const res = await supabase.from('mini_games').insert({ comp: COMP, round, kind, name: name.trim().slice(0, 60) || `Round ${round} draft`, draft_order: order }).select('id').single();
+  return res.error ? { ok: false, error: res.error.message } : { ok: true, id: res.data.id };
+}
+
+/** Next pick. The club on the clock picks for itself; the game's creator and the commish can pick for anyone. */
+export async function makePick(gameId: number, playerId: number): Promise<Res> {
+  const me = await getMe();
+  if (!me) return { ok: false, error: 'Sign in first.' };
+  const { game, picks } = await loadGame(gameId);
+  if (!game || game.status !== 'drafting') return { ok: false, error: 'The draft is closed.' };
+  const k = picks.length;
+  if (k >= game.order.length * PICKS_PER_TEAM) return { ok: false, error: 'The draft is finished.' };
+  const team = onClock(game.order, k);
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (team !== me.team_id && !me.is_commish && game.created_by !== user?.id) return { ok: false, error: 'It’s not your pick yet.' };
+  if (picks.some((p) => p.player_id === playerId)) return { ok: false, error: 'Already taken.' };
+  const data = await liveRound(game.round);
+  const pl = data.players.find((p) => p.id === playerId);
+  if (!pl) return { ok: false, error: 'That player isn’t playing this round.' };
+  const slot = slotFor(pl.pos, picks.filter((p) => p.team_id === team));
+  if (!slot) return { ok: false, error: `No ${pl.pos.join('/')} spot left in that team.` };
+  const res = await supabase.from('mini_picks').insert({ game_id: gameId, pick_no: k, team_id: team, player_id: playerId, player_name: pl.name, slot });
   return res.error ? { ok: false, error: res.error.message } : { ok: true };
 }
 
-/** Commish only: add or remove a matchup. */
-export async function saveMatchup(round: number, home: number, away: number, remove = false): Promise<{ ok: boolean; error?: string }> {
-  const me = await getMe();
-  if (!me?.is_commish) return { ok: false, error: 'Only the commish can set matchups.' };
-  if (home === away) return { ok: false, error: 'Pick two different clubs.' };
+/** Creator or commish: take back the last pick. */
+export async function undoPick(gameId: number): Promise<Res> {
   const supabase = await createClient();
-  const res = remove
-    ? await supabase.from('mini_matchups').delete().eq('comp', COMP).eq('round', round).eq('home_team_id', home)
-    : await supabase.from('mini_matchups').upsert({ comp: COMP, round, home_team_id: home, away_team_id: away }, { onConflict: 'comp,round,home_team_id' });
-  return res.error ? { ok: false, error: res.error.message } : { ok: true };
+  const last = await supabase.from('mini_picks').select('pick_no').eq('game_id', gameId).order('pick_no', { ascending: false }).limit(1).maybeSingle();
+  if (!last.data) return { ok: true };
+  const res = await supabase.from('mini_picks').delete().eq('game_id', gameId).eq('pick_no', last.data.pick_no).select('pick_no');
+  if (res.error) return { ok: false, error: res.error.message };
+  return res.data?.length ? { ok: true } : { ok: false, error: 'Only the game’s creator or the commish can undo.' };
+}
+
+/** Creator or commish: delete the game. */
+export async function deleteGame(gameId: number): Promise<Res> {
+  const supabase = await createClient();
+  const res = await supabase.from('mini_games').delete().eq('id', gameId).select('id');
+  if (res.error) return { ok: false, error: res.error.message };
+  return res.data?.length ? { ok: true } : { ok: false, error: 'Only the game’s creator or the commish can delete it.' };
 }
