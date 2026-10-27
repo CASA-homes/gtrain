@@ -312,3 +312,6 @@ tr.cb-row-building > td { background: #dcebf2; }
   .mini-sides > div + div { border-left: 0; border-top: 6px solid var(--bg); }
   .live-games { grid-template-columns: 1fr; }
 }
+.h2h { display: flex; flex-direction: column; }
+.h2h-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: center; gap: 10px; padding: 8px 14px; border-top: 1px solid var(--line-soft); font-size: 13.5px; }
+@media (max-width: 700px) { .h2h-row { gap: 6px; padding: 8px 10px; font-size: 12.5px; } }

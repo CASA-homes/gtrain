@@ -22,9 +22,9 @@ export function LiveBoard({ initial, teams, mini, myTeamId, isCommish }: { initi
   const router = useRouter();
   const [data, setData] = useState(initial);
   const [updated, setUpdated] = useState(new Date(initial.fetchedAt));
-  const [tab, setTab] = useState<'mini' | 'games'>('mini');
   const [lineups, setLineups] = useState<Record<number, Lineup>>(mini.lineups);
   const [matchups, setMatchups] = useState(mini.matchups);
+  const [tab, setTab] = useState<'mini' | 'matchup' | 'games'>(mini.matchups.some((m) => m.home === myTeamId || m.away === myTeamId) ? 'matchup' : 'mini');
 
   // Poll while the round isn't finished
   useEffect(() => {
@@ -65,6 +65,7 @@ export function LiveBoard({ initial, teams, mini, myTeamId, isCommish }: { initi
         </select>
         <div role="tablist" style={{ display: 'flex', gap: 4 }}>
           <button role="tab" aria-selected={tab === 'mini'} className={`btn${tab === 'mini' ? ' dark' : ''}`} onClick={() => setTab('mini')}>Mini game</button>
+          <button role="tab" aria-selected={tab === 'matchup'} className={`btn${tab === 'matchup' ? ' dark' : ''}`} onClick={() => setTab('matchup')}>Matchup</button>
           <button role="tab" aria-selected={tab === 'games'} className={`btn${tab === 'games' ? ' dark' : ''}`} onClick={() => setTab('games')}>All games</button>
         </div>
         <span className="muted" style={{ fontSize: 12, marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
@@ -73,11 +74,80 @@ export function LiveBoard({ initial, teams, mini, myTeamId, isCommish }: { initi
         </span>
       </div>
 
-      {tab === 'mini'
+      {tab === 'matchup'
+        ? <HeadToHead matchups={matchups} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teams={teams} teamName={teamName} myTeamId={myTeamId} />
+        : tab === 'mini'
         ? <MiniGame round={data.round} ready={mini.ready} teams={teams} teamName={teamName} lineups={lineups} setLineups={setLineups}
             matchups={matchups} setMatchups={setMatchups} byId={byId} gameBySquad={gameBySquad} players={data.players}
             ownerOf={ownerOf} myTeamId={myTeamId} isCommish={isCommish} />
         : <Games data={data} ownerOf={ownerOf} teams={teams} />}
+    </div>
+  );
+}
+
+/* ---------- head to head ---------- */
+
+function HeadToHead({ matchups, lineups, byId, gameBySquad, teams, teamName, myTeamId }: {
+  matchups: { home: number; away: number }[]; lineups: Record<number, Lineup>; byId: Map<number, LPlayer>; gameBySquad: Map<number, LGame>;
+  teams: TeamRow[]; teamName: (id: number) => string; myTeamId: number;
+}) {
+  const inMatch = teams.filter((t) => matchups.some((m) => m.home === t.id || m.away === t.id));
+  const [view, setView] = useState(inMatch.some((t) => t.id === myTeamId) ? myTeamId : inMatch[0]?.id ?? myTeamId);
+  const m = matchups.find((x) => x.home === view || x.away === view);
+  if (!m) return <div className="card" style={{ padding: 18 }}>You’re not in a matchup this round. Check the Mini game tab for the others.</div>;
+  const me = view, opp = m.home === view ? m.away : m.home;
+  const a = totals(lineups[me], byId, gameBySquad), b = totals(lineups[opp], byId, gameBySquad);
+  const done = a.left === 0 && b.left === 0 && a.score + b.score > 0;
+  const share = a.proj + b.proj > 0 ? a.proj / (a.proj + b.proj) : 0.5;
+  const cell = (id: number | undefined, right: boolean, other: number | null) => {
+    const p = byId.get(id ?? -1); const g = p ? gameBySquad.get(p.squadId) : undefined;
+    const win = p?.score != null && other != null && p.score > other;
+    const name = <span style={{ minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: right ? 'flex-end' : 'flex-start', textAlign: right ? 'right' : 'left' }}>
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '100%' }}>{p?.name ?? <span className="muted">Empty</span>}</span>
+      {p && <span className="muted" style={{ fontSize: 11 }}>{p.squad} · {isLive(g) ? <b style={{ color: 'var(--g5)' }}>{gameLabel(g)}</b> : gameLabel(g)}</span>}
+    </span>;
+    const sc = <span className="mono" style={{ fontWeight: 700, fontSize: 16, minWidth: 30, textAlign: 'center', color: win ? 'var(--g5)' : undefined }}>
+      {p?.score != null ? p.score : <span className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p?.avg != null ? `~${Math.round(p.avg)}` : '–'}</span>}
+    </span>;
+    return right ? <>{sc}{name}</> : <>{name}{sc}</>;
+  };
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {inMatch.length > 2 && (
+        <label style={{ display: 'flex', gap: 8, alignItems: 'center', fontSize: 13 }}><span className="muted">Viewing</span>
+          <select value={view} onChange={(e) => setView(Number(e.target.value))} style={{ minHeight: 32, borderRadius: 8, border: '1px solid var(--line)', padding: '0 8px', background: 'var(--surface)' }}>
+            {inMatch.map((t) => <option key={t.id} value={t.id}>{t.name}{t.id === myTeamId ? ' (you)' : ''}</option>)}
+          </select>
+        </label>
+      )}
+      <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <div className="mini-head">
+          <TeamTotal name={teamName(me)} t={a} win={done && a.score > b.score} />
+          <span className="muted mono" style={{ fontSize: 12 }}>v</span>
+          <TeamTotal name={teamName(opp)} t={b} win={done && b.score > a.score} right />
+        </div>
+        <div style={{ padding: '10px 16px 4px', display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div style={{ display: 'flex', height: 8, borderRadius: 99, overflow: 'hidden', background: 'var(--line)' }}>
+            <span style={{ width: `${share * 100}%`, background: 'var(--g5)' }} /><span style={{ flex: 1, background: 'var(--fwd)' }} />
+          </div>
+          <span className="muted" style={{ fontSize: 11, textAlign: 'center' }}>
+            {done ? (a.score === b.score ? 'Draw' : `${teamName(a.score > b.score ? me : opp)} by ${Math.abs(a.score - b.score)}`)
+              : `On projections: ${teamName(a.proj >= b.proj ? me : opp)} by ${Math.abs(a.proj - b.proj)}`}
+          </span>
+        </div>
+        <div className="h2h">
+          {SLOT_ORDER.flatMap((s) => Array.from({ length: SLOTS[s] }, (_, i) => {
+            const pa = byId.get(lineups[me]?.[s]?.[i] ?? -1), pb = byId.get(lineups[opp]?.[s]?.[i] ?? -1);
+            return (
+              <div key={s + i} className="h2h-row">
+                {cell(lineups[me]?.[s]?.[i], false, pb?.score ?? null)}
+                <span className="pill" style={{ background: SLOT_COLOR[s], color: '#fff', justifySelf: 'center' }}>{s}</span>
+                {cell(lineups[opp]?.[s]?.[i], true, pa?.score ?? null)}
+              </div>
+            );
+          }))}
+        </div>
+      </div>
     </div>
   );
 }
