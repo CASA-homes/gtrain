@@ -10,6 +10,7 @@ const ICONS: Record<string, React.ReactNode> = {
   league: <><path d="M7.5 3.5v17M16.5 3.5v17" /><path d="M7.5 7.5h9M7.5 12h9M7.5 16.5h9" /></>,
   rankings: <><path d="M4 20.5h16" /><path d="M9 20.5V9.5h6v11" /><path d="M4.5 20.5v-6h4.5M15 20.5v-8h4.5v8" /><path d="m12 3.6.8 1.6 1.7.2-1.3 1.2.3 1.7-1.5-.8-1.5.8.3-1.7-1.3-1.2 1.7-.2Z" /></>,
   draft: <><path d="M9.5 6.5h10M9.5 12h10M9.5 17.5h10" /><circle cx="5" cy="6.5" r="1.1" /><circle cx="5" cy="12" r="1.1" /><circle cx="5" cy="17.5" r="1.1" /></>,
+  live: <><circle cx="12" cy="12" r="2.2" /><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M5 5a10 10 0 0 0 0 14M19 5a10 10 0 0 1 0 14" /></>,
   signout: <><path d="M14 4.5H6.5v15H14" /><path d="M10.5 12h10M17 8.5l3.5 3.5-3.5 3.5" /></>,
 };
 const Icon = ({ name }: { name: string }) => (
@@ -23,6 +24,7 @@ const LINKS = [
   { href: '/league', label: 'League', icon: 'league' },
   { href: '/rankings', label: 'Rankings', icon: 'rankings' },
   { href: '/draft', label: 'Draft', icon: 'draft' },
+  { href: '/live', label: 'Live', icon: 'live' },
 ];
 
 export function Nav({ myTeamId, shortCode }: { myTeamId: number; shortCode: string }) {
