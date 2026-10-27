@@ -1,12 +1,12 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import { getMe } from '@/lib/data';
+import { getCoach } from '@/lib/data';
 import { MANUAL_SEASONS } from '@/lib/club-games';
 
 /** Save a season's games for a club from pasted lines like "Bailey Smith, 22" or "B. Smith 22". */
 export async function saveClubGames(teamId: number, form: FormData) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me || (me.team_id !== teamId && !me.is_commish)) return { error: 'Only this club (or the commish) can edit its history.' };
   const season = Number(form.get('season'));
   if (!(MANUAL_SEASONS as readonly number[]).includes(season)) return { error: 'Pick a season from 2022 to 2025.' };
@@ -29,7 +29,7 @@ export async function saveClubGames(teamId: number, form: FormData) {
 }
 
 export async function deleteClubGame(teamId: number, season: number, playerName: string) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me || (me.team_id !== teamId && !me.is_commish)) return { error: 'Not your club.' };
   const supabase = await createClient();
   const { error } = await supabase.from('club_games').delete().match({ team_id: teamId, season, player_name: playerName });

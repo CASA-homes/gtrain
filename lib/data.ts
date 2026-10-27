@@ -20,14 +20,23 @@ export interface Team {
   id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null;
 }
 export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean }
-export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null }
+export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null; is_guest?: boolean }
 
 export const getMe = cache(async (): Promise<Me | null> => {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return null;
   const { data } = await supabase.from('members').select('*').eq('user_id', user.id).maybeSingle();
-  return data as Me | null;
+  if (!data) return null;
+  // Guests (no G-Train club) sign in with a guest club so they can play the Live Matchups mini games.
+  const t = await supabase.from('teams').select('is_guest').eq('id', data.team_id).maybeSingle();
+  return { ...(data as Me), is_guest: !t.error && !!t.data?.is_guest };
+});
+
+/** The signed-in coach, or null for guests: league actions (trades, keepers, news) use this so guests can only look. */
+export const getCoach = cache(async (): Promise<Me | null> => {
+  const me = await getMe();
+  return me && !me.is_guest ? me : null;
 });
 
 export interface TeamAnalysis {
@@ -64,7 +73,8 @@ export interface League {
 export const getLeague = cache(async (): Promise<League> => {
   const supabase = await createClient();
   const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
-    supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override').order('id'),
+    supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override,is_guest').order('id').then((r) =>
+      r.error ? supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override').order('id') : { ...r, data: (r.data ?? []).filter((t) => !t.is_guest) }),
     supabase.from('squad').select(`
       team_id, is_keeper, is_rookie_keeper, lineup,
       players!inner ( id, name, full_name, positions, afl_club, birth_date, draft_pick, draft_year, dfs_id, height_cm, debut_year, career_games, hist, photo_path, list_status,

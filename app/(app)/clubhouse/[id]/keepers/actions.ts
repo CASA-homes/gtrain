@@ -1,10 +1,10 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import { getMe } from '@/lib/data';
+import { getCoach } from '@/lib/data';
 
 export async function saveKeepers(teamId: number, keeperIds: number[], rookieId: number | null) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me || (me.team_id !== teamId && !me.is_commish)) return { error: 'You can only set keepers for your own club.' };
   if (keeperIds.length > 17) return { error: 'Keeper limit is 17, plus one rookie.' };
 

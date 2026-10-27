@@ -1,10 +1,10 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import { getMe } from '@/lib/data';
+import { getCoach } from '@/lib/data';
 
 export async function postNews(form: FormData) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me?.is_commish) return;
   const supabase = await createClient();
   const when = String(form.get('happens_at') || '');

@@ -3,5 +3,5 @@ import { getMe } from '@/lib/data';
 
 export default async function MyClubhouse() {
   const me = await getMe();
-  redirect(me ? `/clubhouse/${me.team_id}` : '/');
+  redirect(!me ? '/' : me.is_guest ? '/league' : `/clubhouse/${me.team_id}`);
 }

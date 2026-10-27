@@ -9,7 +9,7 @@ const HUES = ['#1f6b3a', '#3f7fb5', '#7a5fc0', '#c48a1f', '#d0583f', '#4f9a5f', 
 const fmt = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
 
 /** League chat. New messages arrive live through Supabase Realtime. */
-export function Chat({ initial, teams, myTeamId }: { initial: Msg[]; teams: TeamLite[]; myTeamId: number }) {
+export function Chat({ initial, teams, myTeamId, readOnly = false }: { initial: Msg[]; teams: TeamLite[]; myTeamId: number; readOnly?: boolean }) {
   const [msgs, setMsgs] = useState(initial);
   const [body, setBody] = useState('');
   const [err, setErr] = useState<string | null>(null);
@@ -61,11 +61,11 @@ export function Chat({ initial, teams, myTeamId }: { initial: Msg[]; teams: Team
           );
         })}
       </div>
-      <form onSubmit={send} style={{ display: 'flex', gap: 8, padding: '12px 18px', borderTop: '1px solid var(--line)' }}>
+      {!readOnly && <form onSubmit={send} style={{ display: 'flex', gap: 8, padding: '12px 18px', borderTop: '1px solid var(--line)' }}>
         <label htmlFor="chat-body" className="sr-only">Message the league</label>
         <input id="chat-body" className="input" style={{ flex: '1 1 auto' }} value={body} onChange={(e) => setBody(e.target.value)} placeholder="Say something to the league" maxLength={2000} />
         <button type="submit" className="btn dark">Send</button>
-      </form>
+      </form>}
       {err && <div role="alert" style={{ padding: '0 18px 12px', color: 'var(--red-fg)', fontSize: 13 }}>{err}</div>}
     </div>
   );

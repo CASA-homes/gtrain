@@ -1,13 +1,13 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
-import { getMe } from '@/lib/data';
+import { getCoach } from '@/lib/data';
 import type { Line, Slot } from '@/lib/ratings';
 
 const LIMIT: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 4 };
 
 export async function saveLineup(teamId: number, entries: { id: number; slot: Slot | null }[]) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me || me.team_id !== teamId) return { error: 'You can only set the lineup for your own club.' };
 
   const supabase = await createClient();
@@ -36,7 +36,7 @@ export async function saveLineup(teamId: number, entries: { id: number; slot: Sl
 }
 
 export async function resetLineup(teamId: number) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me || me.team_id !== teamId) return { error: 'You can only set the lineup for your own club.' };
   const supabase = await createClient();
   const r = await supabase.from('squad').update({ lineup: null }).eq('team_id', teamId);
@@ -46,7 +46,7 @@ export async function resetLineup(teamId: number) {
 }
 
 export async function setStatusOverride(teamId: number, status: string | null) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me?.is_commish) return { error: 'Only the commissioner can set a team’s status.' };
   const supabase = await createClient();
   const r = await supabase.from('teams').update({ status_override: status }).eq('id', teamId);

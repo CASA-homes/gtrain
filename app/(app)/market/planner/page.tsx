@@ -14,6 +14,7 @@ export default async function PlannerPage({ searchParams }: { searchParams: Prom
   const sp = await searchParams;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   if (!me) redirect('/');
+  if (me.is_guest) redirect('/market');
 
   const teams: PTeam[] = league.teams.map((t) => {
     const a = league.byTeam.get(t.id)!;

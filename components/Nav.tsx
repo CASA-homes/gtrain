@@ -27,7 +27,7 @@ const LINKS = [
   { href: '/live', label: 'Live Matchups', icon: 'live' },
 ];
 
-export function Nav({ myTeamId, shortCode }: { myTeamId: number; shortCode: string }) {
+export function Nav({ myTeamId, shortCode, guest = false }: { myTeamId: number; shortCode: string; guest?: boolean }) {
   const path = usePathname();
   return (
     <nav className="nav" aria-label="G-Train">
@@ -43,8 +43,8 @@ export function Nav({ myTeamId, shortCode }: { myTeamId: number; shortCode: stri
             </Link>
           ))}
         </div>
-        <Link href={`/clubhouse/${myTeamId}`} className="nav-me" aria-label="My club">
-          <span>{shortCode}</span><em>My club</em>
+        <Link href={guest ? '/live' : `/clubhouse/${myTeamId}`} className="nav-me" aria-label={guest ? 'Guest' : 'My club'}>
+          <span>{shortCode}</span><em>{guest ? 'Guest' : 'My club'}</em>
         </Link>
         <form action="/auth/signout" method="post" className="nav-out">
           <button type="submit" aria-label="Sign out" title="Sign out"><Icon name="signout" /><span className="nav-label">Sign out</span></button>

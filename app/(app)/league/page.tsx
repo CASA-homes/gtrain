@@ -190,7 +190,7 @@ export default async function LeaguePage() {
           </section>
           <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <h2 className="h2" style={{ fontSize: 20 }}>Chat</h2>
-            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} />}
+            {me && <Chat initial={(chat ?? []).reverse()} teams={league.teams} myTeamId={me.team_id} readOnly={!!me.is_guest} />}
           </section>
         </div>
 

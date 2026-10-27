@@ -1,7 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { getMe } from '@/lib/data';
+import { getCoach } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 
 const back = (id: string, error?: string) => {
@@ -12,7 +12,7 @@ const back = (id: string, error?: string) => {
 };
 
 export async function openDesk(form: FormData) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const title = String(form.get('title') || '').trim();
   const details = String(form.get('details') || '').trim() || null;
@@ -29,7 +29,7 @@ export async function openDesk(form: FormData) {
  * The database checks ownership and that your team is on one side of the move.
  */
 export async function addItem(deskId: string, form: FormData) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const [kind, raw] = String(form.get('asset') || '').split(':');
   const from = Number(form.get('from'));
@@ -51,7 +51,7 @@ export async function removeItem(deskId: string, itemId: string) {
 }
 
 export async function joinDesk(deskId: string) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const supabase = await createClient();
   const { error } = await supabase.from('desk_teams').insert({ desk_id: deskId, team_id: me.team_id });
@@ -59,7 +59,7 @@ export async function joinDesk(deskId: string) {
 }
 
 export async function leaveDesk(deskId: string) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const supabase = await createClient();
   const { error } = await supabase.from('desk_teams').delete().eq('desk_id', deskId).eq('team_id', me.team_id);
@@ -67,7 +67,7 @@ export async function leaveDesk(deskId: string) {
 }
 
 export async function setAccepted(deskId: string, accepted: boolean) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const supabase = await createClient();
   const { error } = await supabase.from('desk_teams')
@@ -77,7 +77,7 @@ export async function setAccepted(deskId: string, accepted: boolean) {
 }
 
 export async function deskComment(deskId: string, form: FormData) {
-  const me = await getMe();
+  const me = await getCoach();
   const body = String(form.get('body') || '').trim();
   if (!me || !body) return;
   const supabase = await createClient();
@@ -86,7 +86,7 @@ export async function deskComment(deskId: string, form: FormData) {
 }
 
 export async function voteLopsided(deskId: string) {
-  const me = await getMe();
+  const me = await getCoach();
   if (!me) return;
   const supabase = await createClient();
   const { error } = await supabase.from('desk_votes').insert({ desk_id: deskId, team_id: me.team_id });
