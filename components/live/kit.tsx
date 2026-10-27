@@ -84,10 +84,16 @@ const SECTIONS = [
   { href: '/live/matchups', label: 'Matchups' },
   { href: '/live/scores', label: 'Live scores' },
 ];
-export function Shell({ title, sub, right, children }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode }) {
+export function Shell({ title, sub, right, children, compact }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
   const path = usePathname();
+  const [navh, setNavh] = useState(56);
+  useEffect(() => {
+    const nav = document.querySelector('.nav') as HTMLElement | null;
+    const f = () => setNavh(nav?.offsetHeight ?? 56);
+    f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f);
+  }, []);
   return (
-    <div className="rh">
+    <div className={`rh ${compact ? 'compact' : ''}`} style={cssVar('--navh', `${navh}px`)}>
       <nav className="rh-sub" aria-label="Live Matchups">
         {SECTIONS.map((s) => <Link key={s.href} href={s.href} aria-current={(s.href === '/live' ? path === '/live' : path.startsWith(s.href)) ? 'page' : undefined}>{s.label}</Link>)}
       </nav>
@@ -155,25 +161,25 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
   return (
     <section className="rh-card rh-h2h">
       <div className="rh-h2h-top">
-        <div style={{ minWidth: 0 }}>
-          <span className="rh-dim">{teamName(me)}{me === myTeamId ? ' · you' : ''}</span>
-          <div className="rh-big">{a.score}<span className="rh-vs">vs {b.score}</span></div>
-          <div className={`rh-delta ${up ? 'up' : 'down'}`}>
-            {a.score + b.score === 0 ? <>Projected {signed(pm)}</> : <>{signed(margin)} {done ? 'final' : 'now'} · {signed(pm)} projected</>}
-          </div>
+        <div className="rh-side">
+          <span className="rh-side-n">{teamName(me)}{me === myTeamId && <em>you</em>}</span>
+          <b className={`rh-big ${up ? 'up' : ''}`}>{a.score}</b>
         </div>
-        <div style={{ textAlign: 'right', minWidth: 0 }}>
-          <span className="rh-dim">{teamName(opp)}</span>
-          <div className="rh-dim" style={{ fontSize: 12, marginTop: 6 }}>{a.left + b.left > 0 ? `${a.left} v ${b.left} still to play` : 'All games done'}</div>
-          <div className="rh-winbar" title="Share of projected points"><span style={{ width: `${share * 100}%` }} className={up ? 'up' : 'down'} /></div>
-          <div className="rh-dim" style={{ fontSize: 11 }}>{Math.round(share * 100)}% of projected points</div>
+        <div className="rh-mid">
+          <span className={`rh-delta ${up ? 'up' : 'down'}`}>{a.score + b.score === 0 ? signed(pm) : signed(margin)}</span>
+          <span className="rh-dim">{a.score + b.score === 0 ? 'projected' : done ? 'final' : `proj ${signed(pm)}`}</span>
+          <div className="rh-winbar" title={`${Math.round(share * 100)}% of projected points`}><span style={{ width: `${share * 100}%` }} className={up ? 'up' : 'down'} /></div>
+          <span className="rh-dim">{a.left + b.left > 0 ? `${a.left} v ${b.left} to play` : 'all done'}</span>
+        </div>
+        <div className="rh-side r">
+          <span className="rh-side-n">{teamName(opp)}</span>
+          <b className={`rh-big ${!up ? 'down' : 'dim'}`}>{b.score}</b>
         </div>
       </div>
       <MarginChart id={`${gameId}-${me}-${opp}`} margin={a.score + b.score === 0 ? pm : margin} live={liveNow} />
       <div className="rh-rows">
         {SLOT_ORDER.map((s) => (
           <Fragment key={s}>
-            <div className="rh-line" style={cssVar('--c', SLOT_HUE[s])}>{SLOT_NAME[s]}</div>
             {Array.from({ length: SLOTS[s] }, (_, i) => {
               const pa = byId.get(lineups[me]?.[s]?.[i] ?? -1), pb = byId.get(lineups[opp]?.[s]?.[i] ?? -1);
               const sa = pa?.score ?? null, sb = pb?.score ?? null;
@@ -279,34 +285,23 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
   return (
     <div className="rh-draft">
       <div className={`rh-clock ${mine ? 'mine' : ''} ${done ? 'done' : ''}`} aria-live="polite">
-        <div style={{ minWidth: 0 }}>
-          <span className="rh-clock-k">{done ? 'Draft complete' : mine ? 'You’re on the clock' : 'On the clock'}</span>
-          <div className="rh-clock-team">{done ? `${total} picks in` : teamName(clockTeam!)}</div>
-          <span className="rh-dim">
-            {done ? 'Teams are locked. Scores go live with the first bounce.' : <>Pick {k + 1} of {total} · round {Math.floor(k / n) + 1} · <span className="rh-mono">{clock}</span>{!mine && nextMine != null && <> · you’re up {nextMine - k === 1 ? 'next' : `in ${nextMine - k}`}</>}</>}
-          </span>
-        </div>
-        {last && (
-          <div className="rh-clock-last">
-            <span className="rh-dim" style={{ fontSize: 11 }}>Last pick · #{last.pick_no + 1}</span>
-            <b>{last.player_name}</b>
-            <span className="rh-dim" style={{ fontSize: 12 }}>{last.slot} · {teamName(last.team_id)}</span>
-          </div>
-        )}
+        <span className="rh-clock-k">{done ? 'Draft complete' : mine ? 'Your pick' : 'On the clock'}</span>
+        <b className="rh-clock-team">{done ? `${total} picks in` : teamName(clockTeam!)}</b>
+        {!done && <span className="rh-dim rh-clock-meta">#{k + 1}/{total} · <span className="rh-mono">{clock}</span>{!mine && nextMine != null && <> · you {nextMine - k === 1 ? 'next' : `in ${nextMine - k}`}</>}</span>}
+        {last && <span className="rh-clock-last"><span className="rh-dim">Last</span> <b>{last.player_name}</b> <span className="rh-dim">→ {teamName(last.team_id)}</span></span>}
       </div>
 
       <div className="rh-dgrid">
         <aside className="rh-dleft">
-          <div className="rh-card" style={{ gap: 12 }}>
+          <div className="rh-card rh-field-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-              <span className="rh-k">{view === myTeamId ? 'Your team' : 'Team'}</span>
+              <span className="rh-k">{view === myTeamId ? 'Your team' : 'Team'} · {viewPicks.length}/11</span>
               <select value={view} onChange={(e) => setView(Number(e.target.value))} className="rh-select sm">
                 {game.order.map((t) => <option key={t} value={t}>{teamName(t)}{t === myTeamId ? ' (you)' : ''}</option>)}
               </select>
             </div>
             <Oval picks={viewPicks} byId={byId} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }} className="rh-dim">
-              <span>{viewPicks.length}/11</span>
+            <div className="rh-dim hide-sm rh-avgtot">
               <span>Avg total <b style={{ color: 'var(--rh-text)' }}>{Math.round(viewPicks.reduce((s, p) => s + (byId.get(p.player_id)?.avg ?? 0), 0))}</b></span>
             </div>
           </div>
@@ -376,12 +371,6 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
 
       <Board order={game.order} picks={picks} k={done ? -1 : k} teamName={teamName} myTeamId={myTeamId} />
 
-      {inGame && (
-        <div className={`rh-strip ${mine ? 'mine' : ''}`} aria-label="Your team so far">
-          <b>{mine ? 'Your pick' : 'Your team'}</b>
-          {SLOT_ORDER.map((s) => { const c = picksOf(myTeamId).filter((p) => p.slot === s).length; return <span key={s} className={c >= SLOTS[s] ? 'full' : ''} style={cssVar('--c', SLOT_HUE[s])}>{s} {c}/{SLOTS[s]}</span>; })}
-        </div>
-      )}
     </div>
   );
 }
@@ -453,19 +442,20 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
   const [opp, setOpp] = useState(others[0]);
   useEffect(() => { if (game.status === 'done') setTab('live'); }, [game.status]);
   return (
-    <Shell title={game.name} sub={<>{data.name} · {game.order.length} clubs · snake draft</>}
-      right={<LiveChip live={game.status === 'drafting' || liveNow} text={game.status === 'drafting' ? 'Drafting' : liveNow ? 'Live' : data.status === 'completed' ? 'Final' : 'Pre-game'} />}>
-      <div className="rh-seg big" role="tablist">
-        <button role="tab" aria-selected={tab === 'live'} className={tab === 'live' ? 'on' : ''} onClick={() => setTab('live')}>Matchup</button>
-        <button role="tab" aria-selected={tab === 'draft'} className={tab === 'draft' ? 'on' : ''} onClick={() => setTab('draft')}>Draft</button>
-      </div>
+    <Shell compact title={game.name} sub={<>{data.name} · {game.order.length} clubs</>}
+      right={<div className="rh-headright">
+        <div className="rh-seg" role="tablist">
+          <button role="tab" aria-selected={tab === 'live'} className={tab === 'live' ? 'on' : ''} onClick={() => setTab('live')}>Matchup</button>
+          <button role="tab" aria-selected={tab === 'draft'} className={tab === 'draft' ? 'on' : ''} onClick={() => setTab('draft')}>Draft</button>
+        </div>
+        <LiveChip live={game.status === 'drafting' || liveNow} text={game.status === 'drafting' ? 'Drafting' : liveNow ? 'Live' : data.status === 'completed' ? 'Final' : 'Pre-game'} />
+      </div>}>
       {tab === 'draft'
         ? <DraftRoom game={game} picks={picks} refresh={refresh} players={data.players} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
         : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its 11.</Empty>
         : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {game.order.length > 2 && <Leaderboard order={game.order} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} selected={opp} onPick={(t) => t !== me && setOpp(t)} />}
-            {game.order.length > 2 && <span className="rh-dim" style={{ fontSize: 12 }}>Tap a club to see your matchup against them.</span>}
             <HeadToHead gameId={game.id} me={me} opp={opp} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} />
           </div>
         )}
