@@ -5,12 +5,27 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { PICKS_PER_TEAM, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
+import { CLUBS } from '@/lib/clubs';
 
 export type TeamRow = { id: number; name: string; short_code: string };
 export const SLOT_ORDER = Object.keys(SLOTS) as Slot[];
 const SLOT_NAME: Record<Slot, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards' };
 const PERTH = 'Australia/Perth';
 const cssVar = (name: string, value: string) => ({ [name]: value }) as React.CSSProperties;
+// AFLW Fantasy squad codes that differ from the men's codes in lib/clubs
+const SQUAD_CODE: Record<string, string> = { BL: 'BRL', GC: 'GCS', NM: 'NTH', PA: 'PTA', WB: 'WBD' };
+/** Headshot in a small circle with a club-colour ring (same look as the men's side). Falls back to initials. */
+export function Face({ p, size = 30 }: { p: { id: number; name: string; squad: string }; size?: number }) {
+  const [bad, setBad] = useState(false);
+  const c = CLUBS[SQUAD_CODE[p.squad] ?? p.squad];
+  const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#2a302d';
+  return (
+    <span className="rh-face" style={{ width: size, height: size, background: ring }} aria-hidden="true">
+      <span>{bad ? p.name.split(' ').map((w) => w[0]).slice(0, 2).join('') : <img src={`https://fantasy.afl.com.au/media/aflw_fantasy/players/${p.id}_100.webp`} alt="" loading="lazy" onError={() => setBad(true)}
+        ref={(el) => { if (el && el.complete && el.naturalWidth === 0) setBad(true); }} />}</span>
+    </span>
+  );
+}
 const SLOT_HUE: Record<Slot, string> = { DEF: '#5aa9ff', MID: '#f5c242', RUC: '#b48cff', FWD: '#ff7a59' };
 
 export const isLive = (g?: LGame) => !!g && g.status !== 'scheduled' && g.status !== 'completed';
@@ -57,6 +72,22 @@ export function useGame(initial: { game: GameRow; picks: GamePick[] }) {
     return () => clearInterval(id);
   }, [game.status, refresh]);
   return { game, picks, refresh };
+}
+
+/** One player's projected final: her score if done, score plus average for what's left if live, else her average. */
+export function projOf(p: LPlayer | undefined, g?: LGame, mult = 1): number | null {
+  if (!p) return null;
+  if (g?.status === 'completed') return (p.score ?? 0) * mult;
+  if (isLive(g)) { const done = Math.min(1, ((g!.period ?? 1) - 1 + Math.min(1, (g!.periodSeconds ?? 0) / 1080)) / 4); return Math.round(((p.score ?? 0) + (p.avg ?? 0) * (1 - done)) * mult); }
+  return p.avg != null ? Math.round(p.avg * mult) : null;
+}
+/** PROJ (faint) and SCORE (green) side by side; mirrored on the right. */
+export function Nums({ proj, score, right }: { proj: number | null; score: number | null; right?: boolean }) {
+  const pj = <span className="rh-proj">{proj ?? ''}</span>, sc = <span className={`rh-score ${score == null ? 'none' : ''}`}>{score ?? '–'}</span>;
+  return right ? <>{sc}{pj}</> : <>{pj}{sc}</>;
+}
+export function NumsHead() {
+  return <div className="rh-row rh-row-head"><span /><span>PROJ</span><span>SCORE</span><span /><span>SCORE</span><span>PROJ</span><span /></div>;
 }
 
 export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBySquad: Map<number, LGame>) {
@@ -178,6 +209,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
       </div>
       <MarginChart id={`${gameId}-${me}-${opp}`} margin={a.score + b.score === 0 ? pm : margin} live={liveNow} />
       <div className="rh-rows">
+        <NumsHead />
         {SLOT_ORDER.map((s) => (
           <Fragment key={s}>
             {Array.from({ length: SLOTS[s] }, (_, i) => {
@@ -186,12 +218,15 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
               const cell = (p: LPlayer | undefined, sc: number | null, other: number | null, right: boolean) => {
                 const g = p ? gameBySquad.get(p.squadId) : undefined;
                 const name = (
-                  <span className={`rh-pl ${right ? 'r' : ''}`}>
-                    <span className="rh-pl-n">{p?.name ?? '—'}</span>
-                    {p && <span className="rh-pl-m">{p.squad} · <span className={isLive(g) ? 'rh-on' : ''}>{gameLabel(g)}</span></span>}
+                  <span className={`rh-who ${right ? 'r' : ''}`}>
+                    {p && <Face p={p} size={28} />}
+                    <span className={`rh-pl ${right ? 'r' : ''}`}>
+                      <span className="rh-pl-n">{p?.name ?? '—'}</span>
+                      {p && <span className="rh-pl-m">{p.squad} · <span className={isLive(g) ? 'rh-on' : ''}>{gameLabel(g)}</span></span>}
+                    </span>
                   </span>
                 );
-                const num = <span className={`rh-pts ${sc == null ? 'pre' : other != null && sc > other ? 'up' : other != null && sc < other ? 'dn' : ''}`}>{sc ?? (p?.avg != null ? `~${Math.round(p.avg)}` : '')}</span>;
+                const num = <Nums proj={projOf(p, g)} score={sc} right={right} />;
                 return right ? <>{num}{name}</> : <>{name}{num}</>;
               };
               return (
@@ -322,10 +357,10 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
               const ok = canPick && fits(p, clockTeam);
               return (
                 <div key={p.id} className="rh-lrow">
-                  <span className="rh-pl">
+                  <span className="rh-who"><Face p={p} size={34} /><span className="rh-pl">
                     <span className="rh-pl-n">{p.name}</span>
                     <span className="rh-pl-m">{p.squad} · {p.pos.map((x) => <b key={x} style={{ color: SLOT_HUE[x as Slot] }}>{x} </b>)}{p.status === 'uncertain' && <em className="rh-doubt">doubt</em>}</span>
-                  </span>
+                  </span></span>
                   <span className="rh-num">{p.avg?.toFixed(0) ?? '–'}</span>
                   <span className="rh-num hide-sm rh-dim">{p.l3?.toFixed(0) ?? '–'}</span>
                   <span className="rh-num hide-sm rh-dim">{p.hi ?? '–'}</span>
@@ -387,7 +422,7 @@ export function Oval({ picks, byId }: { picks: GamePick[]; byId: Map<number, LPl
             {Array.from({ length: SLOTS[s] }, (_, i) => {
               const p = got[i];
               return p
-                ? <span key={i} className="rh-ps on" style={cssVar('--c', SLOT_HUE[s])}><b>{surname(p.player_name)}</b><em>{byId.get(p.player_id)?.avg?.toFixed(0) ?? ''}</em></span>
+                ? <span key={i} className="rh-ps on" style={cssVar('--c', SLOT_HUE[s])}>{byId.get(p.player_id) && <Face p={byId.get(p.player_id)!} size={24} />}<b>{surname(p.player_name)}</b><em>{byId.get(p.player_id)?.avg?.toFixed(0) ?? ''}</em></span>
                 : <span key={i} className="rh-ps" style={cssVar('--c', SLOT_HUE[s])}>{s}</span>;
             })}
           </div>
@@ -493,7 +528,7 @@ export function ScoresBoard({ initial }: { initial: LRound }) {
                 <div key={String(sid)} className="rh-game-team">
                   <div className={`rh-game-score ${lead ? 'lead' : ''}`}><span>{abbr as string}</span><b>{(sc as number | null) ?? ''}</b></div>
                   <div className="rh-game-top">
-                    {top(sid as number).map((p) => <span key={p.id}><span className="rh-ellip">{p.name}</span><b className={p.score != null && p.score >= 100 ? 'rh-up' : ''}>{p.score ?? <span className="rh-dim">{p.avg?.toFixed(0)}</span>}</b></span>)}
+                    {top(sid as number).map((p) => <span key={p.id}><span className="rh-who"><Face p={p} size={24} /><span className="rh-ellip">{p.name}</span></span><b className={p.score != null && p.score >= 100 ? 'rh-up' : ''}>{p.score ?? <span className="rh-dim">{p.avg?.toFixed(0)}</span>}</b></span>)}
                   </div>
                 </div>
               ))}

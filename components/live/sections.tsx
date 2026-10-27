@@ -213,7 +213,7 @@ function PrizePanel({ prize, setPrize, clubs }: { prize: Prize; setPrize: (p: Pr
           </div>
           {prize.entry > 0 && (
             <>
-              <div className="rh-pool">
+              <div className="rh-potbox">
                 <span className="rh-k">Prize pool</span>
                 <b>${pool}</b>
                 <span className="rh-dim">{clubs} club{clubs === 1 ? '' : 's'} × ${prize.entry}</span>

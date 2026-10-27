@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation';
 import { CAP_PICKS, lockedIds, priceOf, type CapEntry, type GameRow, type LGame, type LPlayer, type LRound } from '@/lib/aflw';
 import { deleteGame, loadEntries, saveEntry } from '@/app/(app)/live/actions';
-import { Empty, LiveChip, MarginChart, PrizeStrip, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
+import { Empty, Face, LiveChip, MarginChart, Nums, NumsHead, PrizeStrip, Shell, projOf, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
 const HUE: Record<string, string> = { DEF: '#5aa9ff', MID: '#f5c242', RUC: '#b48cff', FWD: '#ff7a59' };
 const signed = (x: number) => (x > 0 ? `+${x}` : `${x}`);
@@ -111,7 +111,7 @@ function Picker({ game, round, byId, saved, budget, onSaved }: { game: GameRow; 
             return (
               <div key={p.id} className={`cap-slot ${cap === p.id ? 'capt' : ''}`}>
                 <button className={`cap-c ${cap === p.id ? 'on' : ''}`} disabled={lk} onClick={() => setCap(cap === p.id ? null : p.id)} title="Captain scores double">C</button>
-                <span className="cap-slot-n">{p.name}</span>
+                <span className="cap-slot-n"><Face p={p} size={22} />{p.name}</span>
                 <span className="rh-dim cap-slot-m">{p.squad} · {p.pos.join('/')} · ${priceOf(p)}k{lk ? ' · 🔒' : ''}</span>
                 {!lk && <button className="cap-x" onClick={() => remove(p.id)} aria-label={`Remove ${p.name}`}>×</button>}
               </div>
@@ -138,7 +138,7 @@ function Picker({ game, round, byId, saved, budget, onSaved }: { game: GameRow; 
             const afford = price <= left, full = sel.length >= CAP_PICKS;
             return (
               <div key={p.id} className={`rh-lrow cap-row ${on ? 'picked' : ''}`}>
-                <span className="rh-pl"><span className="rh-pl-n">{p.name}</span><span className="rh-pl-m">{p.squad} · {p.pos.map((x) => <b key={x} style={{ color: HUE[x] }}>{x} </b>)}{p.status === 'uncertain' && <em className="rh-doubt">doubt</em>}</span></span>
+                <span className="rh-who"><Face p={p} size={34} /><span className="rh-pl"><span className="rh-pl-n">{p.name}</span><span className="rh-pl-m">{p.squad} · {p.pos.map((x) => <b key={x} style={{ color: HUE[x] }}>{x} </b>)}{p.status === 'uncertain' && <em className="rh-doubt">doubt</em>}</span></span></span>
                 <span className="rh-num">{p.avg?.toFixed(0) ?? '–'}</span>
                 <span className="rh-num rh-dim hide-sm">{p.l3?.toFixed(0) ?? '–'}</span>
                 <span className="rh-num">${price}k</span>
@@ -190,13 +190,14 @@ function CapBoard({ game, entries, byId, gameBySquad, teamName, myTeamId, liveNo
           </div>
           <MarginChart id={`cap-${game.id}-${me}-${opp}`} margin={A.score - B.score} live={liveNow} />
           <div className="rh-rows">
+            <NumsHead />
             {Array.from({ length: CAP_PICKS }, (_, i) => {
               const pa = byId.get(A.e?.players[i] ?? -1), pb = byId.get(B.e?.players[i] ?? -1);
               const cell = (p: LPlayer | undefined, e: CapEntry | undefined, right: boolean, hiddenIdx: boolean) => {
                 const g = p ? gameBySquad.get(p.squadId) : undefined, c = !!p && e?.captain === p.id;
                 const sc = p?.score != null ? p.score * (c ? 2 : 1) : null;
-                const name = <span className={`rh-pl ${right ? 'r' : ''}`}><span className="rh-pl-n">{p ? <>{c && <b className="cap-cb">C</b>}{p.name}</> : hiddenIdx ? <span className="rh-dim">Hidden till bounce</span> : '—'}</span>{p && <span className="rh-pl-m">{p.squad} · <span className={isLive(g) ? 'rh-on' : ''}>{gameLabel(g)}</span></span>}</span>;
-                const num = <span className={`rh-pts ${sc == null ? 'pre' : ''}`}>{sc ?? (p?.avg != null ? `~${Math.round(p.avg * (c ? 2 : 1))}` : '')}</span>;
+                const name = <span className={`rh-who ${right ? 'r' : ''}`}>{p && <Face p={p} size={28} />}<span className={`rh-pl ${right ? 'r' : ''}`}><span className="rh-pl-n">{p ? <>{c && <b className="cap-cb">C</b>}{p.name}</> : hiddenIdx ? <span className="rh-dim">Hidden till bounce</span> : '—'}</span>{p && <span className="rh-pl-m">{p.squad} · <span className={isLive(g) ? 'rh-on' : ''}>{gameLabel(g)}</span></span>}</span></span>;
+                const num = <Nums proj={projOf(p, g, c ? 2 : 1)} score={sc} right={right} />;
                 return right ? <>{num}{name}</> : <>{name}{num}</>;
               };
               return (
