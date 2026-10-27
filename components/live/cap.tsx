@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation';
 import { CAP_PICKS, lockedIds, priceOf, type CapEntry, type GameRow, type LGame, type LPlayer, type LRound } from '@/lib/aflw';
 import { deleteGame, loadEntries, saveEntry } from '@/app/(app)/live/actions';
-import { Empty, LiveChip, MarginChart, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
+import { Empty, LiveChip, MarginChart, PrizeStrip, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
 const HUE: Record<string, string> = { DEF: '#5aa9ff', MID: '#f5c242', RUC: '#b48cff', FWD: '#ff7a59' };
 const signed = (x: number) => (x > 0 ? `+${x}` : `${x}`);
@@ -49,6 +49,8 @@ export function CapGame({ initialRound, game, initialEntries, ready, teams, myTe
         </div>
         <LiveChip live={status === 'Live' || status === 'Picks open'} text={status} />
       </div>}>
+      <PrizeStrip prize={game.prize} clubs={game.order.length} final={scopeGames.every((g) => g.status === 'completed')} teamName={teamName} myTeamId={myTeamId}
+        standings={[...game.order].sort((x, y) => capTotals(entries.find((e) => e.team_id === y), byId, gameBySquad).score - capTotals(entries.find((e) => e.team_id === x), byId, gameBySquad).score)} />
       {!ready && <Empty>Run supabase/migrations/0011_salary_cap.sql in the Supabase SQL editor to switch salary-cap games on.</Empty>}
       {tab === 'pick' && inGame
         ? <Picker game={game} round={data} byId={byId} saved={mineSaved} budget={budget} onSaved={refresh} />

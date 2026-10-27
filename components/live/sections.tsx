@@ -2,7 +2,7 @@
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CAP_BUDGETS, GAME_KINDS, PICKS_PER_TEAM, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/aflw';
+import { CAP_BUDGETS, GAME_KINDS, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, PICKS_PER_TEAM, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/aflw';
 import { createGame } from '@/app/(app)/live/actions';
 import { Empty, HeadToHead, LiveChip, Shell, gameLabel, isLive, totals, useRound, type TeamRow } from './kit';
 
@@ -92,6 +92,7 @@ export function GamesList({ round, roundName, games, ready, teams, myTeamId }: {
           <LiveChip live={s.live} text={s.text} />
         </div>
         <div className="rh-clubs">{g.order.map((t) => <span key={t} className={t === myTeamId ? 'me' : ''}>{teamName(t)}</span>)}</div>
+        {g.prize?.on && <span className="rh-prizechip">🏆 {g.prize.entry ? `$${g.prize.entry * g.order.length} pool` : 'Prize'}{g.prize.extras.length ? ` · ${g.prize.extras[0]}` : ''}</span>}
       </Link>
     );
   };
@@ -118,12 +119,14 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
   const [sel, setSel] = useState<number[]>([myTeamId]);
   const [budget, setBudget] = useState(350);
   const [matchId, setMatchId] = useState<number | null>(null);
+  const [prize, setPrize] = useState<Prize>({ on: false, entry: 10, split: 'wta', extras: [] });
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
   const k = GAME_KINDS.find((x) => x.kind === kind)!;
   const toggle = (id: number) => setSel((s) => s.includes(id) ? s.filter((x) => x !== id) : s.length >= 10 ? s : [...s, id]);
   return (
     <Shell title="New game" sub="Pick a format, the clubs, and go">
+      <div className="rh-newgrid">
       <section className="rh-card rh-form">
         <label className="rh-field"><span className="rh-k">Game type</span>
           <select className="rh-select" value={kind} onChange={(e) => setKind(e.target.value)}>
@@ -170,14 +173,79 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
           <button className="rh-btn go lg" disabled={pending || sel.length < 2 || !k.ready}
-            onClick={() => start(async () => { const r = await createGame(round, kind, name, sel, { budget, matchId: round === current ? matchId : null }); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
+            onClick={() => start(async () => { const r = await createGame(round, kind, name, sel, { budget, matchId: round === current ? matchId : null, prize }); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
             {kind === 'cap5' ? 'Create game' : <>Randomise order &amp; start draft</>}
           </button>
           <span className="rh-dim">{kind === 'cap5' ? `Everyone picks 5 under $${budget}k` : `${sel.length * PICKS_PER_TEAM} picks · order drawn at random`}</span>
           {err && <span className="rh-down">{err}</span>}
         </div>
       </section>
+      <PrizePanel prize={prize} setPrize={setPrize} clubs={sel.length} />
+      </div>
     </Shell>
+  );
+}
+
+const PRIZE_IDEAS = ['Last place buys the first round', 'Winner picks next week’s game', 'Loser wears the jersey of the winner’s choice', 'Bragging rights'];
+
+/** Prizes & winnings: toggle on, set a cost per club (or none), how the pool is split, and any other prizes. */
+function PrizePanel({ prize, setPrize, clubs }: { prize: Prize; setPrize: (p: Prize) => void; clubs: number }) {
+  const set = (patch: Partial<Prize>) => setPrize({ ...prize, ...patch });
+  const pool = prize.entry * clubs;
+  const pay = payouts(prize, clubs);
+  const custom = !PRIZE_AMOUNTS.includes(prize.entry) && prize.entry !== 0;
+  return (
+    <aside className={`rh-card rh-prize ${prize.on ? 'on' : ''}`}>
+      <label className="rh-prize-head">
+        <span><span className="rh-k">Prizes &amp; winnings</span><b>{prize.on ? 'Playing for something' : 'Just for bragging rights'}</b></span>
+        <span className="rh-toggle"><input type="checkbox" checked={prize.on} onChange={(e) => set({ on: e.target.checked })} /><span /></span>
+      </label>
+      {prize.on && (
+        <>
+          <div className="rh-field">
+            <span className="rh-k">Cost per club</span>
+            <div className="rh-amounts">
+              <button className={prize.entry === 0 ? 'on' : ''} onClick={() => set({ entry: 0 })}>None</button>
+              {PRIZE_AMOUNTS.map((a) => <button key={a} className={prize.entry === a ? 'on' : ''} onClick={() => set({ entry: a })}>${a}</button>)}
+              <label className={`rh-amount-custom ${custom ? 'on' : ''}`}>$<input inputMode="numeric" value={custom ? prize.entry : ''} placeholder="Other"
+                onChange={(e) => set({ entry: Math.max(0, Math.min(1000, Number(e.target.value.replace(/\D/g, '')) || 0)) })} /></label>
+            </div>
+          </div>
+          {prize.entry > 0 && (
+            <>
+              <div className="rh-pool">
+                <span className="rh-k">Prize pool</span>
+                <b>${pool}</b>
+                <span className="rh-dim">{clubs} club{clubs === 1 ? '' : 's'} × ${prize.entry}</span>
+              </div>
+              <div className="rh-field">
+                <span className="rh-k">Payout</span>
+                <div className="rh-seg">
+                  {Object.entries(PRIZE_SPLITS).map(([k, v]) => <button key={k} className={prize.split === k ? 'on' : ''} disabled={v.pct.length >= Math.max(2, clubs)} onClick={() => set({ split: k })}>{v.label}</button>)}
+                </div>
+                <div className="rh-payouts">{pay.map((x, i) => <span key={i}><em>{['1st', '2nd', '3rd'][i]}</em><b>${x}</b></span>)}</div>
+              </div>
+            </>
+          )}
+          <div className="rh-field">
+            <span className="rh-k">Other prizes</span>
+            {prize.extras.map((x, i) => (
+              <div key={i} className="rh-extra">
+                <input className="rh-input" value={x} maxLength={80} onChange={(e) => set({ extras: prize.extras.map((y, j) => j === i ? e.target.value : y) })} placeholder="e.g. Loser shouts the pub" />
+                <button className="cap-x" onClick={() => set({ extras: prize.extras.filter((_, j) => j !== i) })} aria-label="Remove prize">×</button>
+              </div>
+            ))}
+            {prize.extras.length < 5 && (
+              <div className="rh-amounts">
+                <button onClick={() => set({ extras: [...prize.extras, ''] })}>+ Add a prize</button>
+                {PRIZE_IDEAS.filter((x) => !prize.extras.includes(x)).slice(0, 3).map((x) => <button key={x} className="idea" onClick={() => set({ extras: [...prize.extras, x] })}>{x}</button>)}
+              </div>
+            )}
+          </div>
+          <span className="rh-dim" style={{ fontSize: 11.5 }}>The site keeps score of who’s owed what. Money is settled between you.</span>
+        </>
+      )}
+    </aside>
   );
 }
 

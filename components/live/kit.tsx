@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { PICKS_PER_TEAM, SLOTS, lineupsFromPicks, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
+import { PICKS_PER_TEAM, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
 
 export type TeamRow = { id: number; name: string; short_code: string };
@@ -450,6 +450,8 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
         </div>
         <LiveChip live={game.status === 'drafting' || liveNow} text={game.status === 'drafting' ? 'Drafting' : liveNow ? 'Live' : data.status === 'completed' ? 'Final' : 'Pre-game'} />
       </div>}>
+      <PrizeStrip prize={game.prize} clubs={game.order.length} final={game.status === 'done' && data.games.every((g) => g.status === 'completed')} teamName={teamName} myTeamId={myTeamId}
+        standings={[...game.order].sort((x, y) => totals(lineups[y], byId, gameBySquad).score - totals(lineups[x], byId, gameBySquad).score)} />
       {tab === 'draft'
         ? <DraftRoom game={game} picks={picks} refresh={refresh} players={data.players} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
         : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its 11.</Empty>
@@ -500,5 +502,29 @@ export function ScoresBoard({ initial }: { initial: LRound }) {
         })}
       </div>
     </Shell>
+  );
+}
+
+/* ---------------- prize strip ---------------- */
+
+/** The game's prize, and once it's final, who won what. `standings` = club ids best first. */
+export function PrizeStrip({ prize, clubs, standings, final, teamName, myTeamId }: { prize: Prize | null; clubs: number; standings: number[]; final: boolean; teamName: (id: number) => string; myTeamId: number }) {
+  if (!prize?.on) return null;
+  const pay = payouts(prize, clubs);
+  const place = ['1st', '2nd', '3rd'];
+  const last = standings[standings.length - 1];
+  return (
+    <section className={`rh-card rh-prizestrip ${final ? 'final' : ''}`}>
+      <span className="rh-prizestrip-pool">🏆 {prize.entry ? <><b>${prize.entry * clubs}</b> <span className="rh-dim">pool · ${prize.entry} a club</span></> : <b>Prizes</b>}</span>
+      <div className="rh-prizestrip-list">
+        {pay.map((x, i) => (
+          <span key={i} className={final && standings[i] === myTeamId ? 'me' : ''}>
+            <em>{place[i]}</em> <b>${x}</b>{final && standings[i] != null && <> · {teamName(standings[i])}</>}
+          </span>
+        ))}
+        {prize.extras.map((x, i) => <span key={`x${i}`}>{x}{final && /last|loser/i.test(x) && last != null && <> · <b>{teamName(last)}</b></>}</span>)}
+      </div>
+      {final && pay.length > 0 && standings[0] != null && <span className={`rh-prizestrip-win ${standings[0] === myTeamId ? 'me' : ''}`}>{standings[0] === myTeamId ? `You win $${pay[0]}` : `${teamName(standings[0])} wins $${pay[0]}`}</span>}
+    </section>
   );
 }

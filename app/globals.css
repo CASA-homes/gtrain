@@ -549,6 +549,45 @@ body:has(.rh) { background: #000; }
 .cap-row.picked { background: rgba(0,200,5,.05); }
 .cap-cb { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: var(--rh-up); color: #000; font: 700 9.5px var(--font); margin-right: 5px; vertical-align: 1px; }
 
+/* prizes */
+.rh-newgrid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; align-items: start; max-width: 1240px; }
+.rh-newgrid .rh-form { max-width: none; }
+.rh-prize { gap: 16px; padding: 20px; position: sticky; top: calc(var(--navh, 56px) + 10px); transition: border-color .2s; }
+.rh-prize.on { border-color: rgba(0,200,5,.45); background: linear-gradient(180deg, rgba(0,200,5,.06), transparent 40%), var(--rh-1); }
+.rh-prize-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; cursor: pointer; }
+.rh-prize-head > span:first-child { display: flex; flex-direction: column; gap: 2px; }
+.rh-prize-head b { font: 600 15px var(--font); }
+.rh-amounts { display: flex; flex-wrap: wrap; gap: 6px; }
+.rh-amounts button, .rh-amount-custom { border: 1px solid var(--rh-line); background: var(--rh-2); color: var(--rh-text); border-radius: 99px; padding: 7px 14px; font: 600 13px var(--font); }
+.rh-amounts button.on, .rh-amount-custom.on { background: var(--rh-up); border-color: var(--rh-up); color: #000; }
+.rh-amounts button.idea { font-weight: 500; color: var(--rh-dim); font-size: 12px; padding: 6px 12px; }
+.rh-amounts button.idea:hover { color: var(--rh-text); }
+.rh-amount-custom { display: inline-flex; align-items: center; gap: 2px; padding: 0 12px; }
+.rh-amount-custom input { width: 54px; min-height: 32px; border: 0; background: transparent; color: inherit; font: inherit; outline: none; }
+.rh-amount-custom input::placeholder { color: var(--rh-dim); }
+.rh-pool { display: flex; flex-direction: column; gap: 2px; padding: 14px 16px; border-radius: 14px; background: var(--rh-2); }
+.rh-pool b { font: 500 40px/1.05 var(--font); letter-spacing: -.04em; color: var(--rh-up); }
+.rh-pool .rh-dim { font-size: 12.5px; }
+.rh-payouts { display: flex; gap: 8px; flex-wrap: wrap; }
+.rh-payouts span { display: flex; flex-direction: column; padding: 8px 12px; border-radius: 12px; background: var(--rh-2); min-width: 70px; }
+.rh-payouts em { font: 600 10.5px var(--font); font-style: normal; text-transform: uppercase; letter-spacing: .06em; color: var(--rh-dim); }
+.rh-payouts b { font: 600 18px var(--font); }
+.rh-seg button:disabled { opacity: .35; cursor: not-allowed; }
+.rh-extra { display: flex; gap: 6px; align-items: center; }
+.rh-extra .rh-input { min-height: 38px; font-size: 13px; }
+.rh-prizechip { align-self: flex-start; font: 600 12px var(--font); color: var(--rh-up); background: var(--rh-up-soft); padding: 4px 10px; border-radius: 99px; }
+.rh-prizestrip { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 10px 16px; }
+.rh-prizestrip.final { border-color: rgba(0,200,5,.45); }
+.rh-prizestrip-pool b { font: 600 17px var(--font); color: var(--rh-up); }
+.rh-prizestrip-pool .rh-dim { font-size: 12px; }
+.rh-prizestrip-list { display: flex; flex-wrap: wrap; gap: 6px; font-size: 12.5px; }
+.rh-prizestrip-list span { padding: 4px 10px; border-radius: 99px; background: var(--rh-2); color: var(--rh-dim); }
+.rh-prizestrip-list span b { color: var(--rh-text); }
+.rh-prizestrip-list span.me { color: var(--rh-up); box-shadow: inset 0 0 0 1px var(--rh-up); }
+.rh-prizestrip-list em { font-style: normal; font-weight: 600; }
+.rh-prizestrip-win { margin-left: auto; font: 600 14px var(--font); }
+.rh-prizestrip-win.me { color: var(--rh-up); }
+
 /* live scores */
 .rh-games { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
 .rh-game { gap: 12px; }
@@ -564,6 +603,7 @@ body:has(.rh) { background: #000; }
 .rh-game-top b { font-weight: 600; }
 
 @media (max-width: 1180px) {
+  .rh-newgrid { grid-template-columns: minmax(0, 1fr) 320px; }
   .rh-dgrid { grid-template-columns: 260px minmax(0, 1fr); }
   .rh-dright { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
 }
@@ -606,6 +646,9 @@ body:has(.rh) { background: #000; }
   .rh-headright .rh-chip { display: none; }
   .rh-sub a { padding: 9px 11px; font-size: 13px; }
   .cap { grid-template-columns: minmax(0, 1fr); }
+  .rh-newgrid { grid-template-columns: minmax(0, 1fr); }
+  .rh-prize { position: static; }
+  .rh-prizestrip-win { margin-left: 0; width: 100%; }
   .rh-pool-ctl { padding: 10px; gap: 8px; }
   .rh-pool-ctl .rh-input { flex-basis: 100%; min-height: 40px; }
   .cap-five { top: var(--navh, 56px); z-index: 5; padding: 10px; gap: 8px; box-shadow: 0 -8px 0 #000; }

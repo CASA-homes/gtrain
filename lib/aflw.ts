@@ -68,7 +68,7 @@ export function onClock(order: number[], k: number) {
 }
 export const PICKS_PER_TEAM = 11;
 export interface GamePick { pick_no: number; team_id: number; player_id: number; player_name: string; slot: Slot; picked_at: string }
-export interface GameRow { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; order: number[]; created_by: string; created_at: string; finished_at: string | null; budget: number | null; match_id: number | null }
+export interface GameRow { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; order: number[]; created_by: string; created_at: string; finished_at: string | null; budget: number | null; match_id: number | null; prize: Prize | null }
 /** Which slot a player takes for a club: the first of his positions that still has room. */
 export function slotFor(pos: string[], picks: { slot: Slot }[]): Slot | null {
   for (const s of pos) if (s in SLOTS && picks.filter((p) => p.slot === s).length < SLOTS[s as Slot]) return s as Slot;
@@ -108,4 +108,23 @@ export function capScore(e: { players: number[]; captain: number | null }, byId:
     if (p.score == null) { proj += (p.avg ?? 0) * mult; left++; } else proj += p.score * mult;
   }
   return { score, proj: Math.round(proj), left };
+}
+
+/* ---------- prizes ---------- */
+export const PRIZE_SPLITS: Record<string, { label: string; pct: number[] }> = {
+  wta: { label: 'Winner takes all', pct: [100] },
+  '70-30': { label: '70 / 30', pct: [70, 30] },
+  '60-30-10': { label: '60 / 30 / 10', pct: [60, 30, 10] },
+};
+export const PRIZE_AMOUNTS = [5, 10, 20, 50];
+export interface Prize { on: boolean; entry: number; split: string; extras: string[] }
+/** Cash for each place: the pool split by percentage, rounded to the dollar (any rounding remainder goes to 1st). */
+export function payouts(p: Prize | null | undefined, clubs: number): number[] {
+  if (!p?.on || !p.entry) return [];
+  const pool = p.entry * clubs;
+  const pct = (PRIZE_SPLITS[p.split] ?? PRIZE_SPLITS.wta).pct.slice(0, Math.max(1, clubs - 1));
+  const tot = pct.reduce((a, b) => a + b, 0);
+  const out = pct.map((x) => Math.floor((pool * x) / tot));
+  out[0] += pool - out.reduce((a, b) => a + b, 0);
+  return out;
 }
