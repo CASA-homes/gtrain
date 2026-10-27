@@ -8,5 +8,5 @@ export const dynamic = 'force-dynamic';
 export default async function NewGamePage() {
   const { me, teams, data, error } = await loadLive();
   if (!data) return <FeedDown error={error} />;
-  return <NewGame rounds={data.rounds} current={data.round} teams={teams} myTeamId={me.team_id} />;
+  return <NewGame rounds={data.rounds} current={data.round} games={data.games} teams={teams} myTeamId={me.team_id} />;
 }

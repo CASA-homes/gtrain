@@ -2,7 +2,7 @@
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { GAME_KINDS, PICKS_PER_TEAM, lineupsFromPicks, onClock, type GamePick, type GameRow, type LRound } from '@/lib/aflw';
+import { CAP_BUDGETS, GAME_KINDS, PICKS_PER_TEAM, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/aflw';
 import { createGame } from '@/app/(app)/live/actions';
 import { Empty, HeadToHead, LiveChip, Shell, gameLabel, isLive, totals, useRound, type TeamRow } from './kit';
 
@@ -16,7 +16,9 @@ function rival(g: Game, me: number, scoreOf: (t: number) => number) {
   return others.sort((a, b) => scoreOf(b) - scoreOf(a))[0];
 }
 
+const kindLabel = (g: Game) => g.kind === 'cap5' ? `salary cap $${g.budget ?? 350}k` : 'snake draft';
 function statusOf(g: Game, teamName: (id: number) => string, myTeamId: number) {
+  if (g.kind === 'cap5') return { live: true, text: 'Salary cap', sub: `${g.order.length} clubs · pick 5` };
   if (g.status === 'drafting') {
     const k = g.picks.length, t = onClock(g.order, k);
     return { live: true, text: t === myTeamId ? 'Your pick' : `Drafting · ${teamName(t)}`, sub: `Pick ${k + 1} of ${g.order.length * PICKS_PER_TEAM}` };
@@ -30,8 +32,8 @@ export function Hub({ initial, games, ready, teams, myTeamId }: { initial: LRoun
   const { data, byId, gameBySquad, liveNow } = useRound(initial);
   const teamName = useNames(teams);
   const mine = games.filter((g) => g.round === data.round && g.order.includes(myTeamId));
-  const myTurn = mine.find((g) => g.status === 'drafting' && onClock(g.order, g.picks.length) === myTeamId);
-  const margins = mine.filter((g) => g.status === 'done').map((g) => {
+  const myTurn = mine.find((g) => g.kind === 'snake11' && g.status === 'drafting' && onClock(g.order, g.picks.length) === myTeamId);
+  const margins = mine.filter((g) => g.kind === 'snake11' && g.status === 'done').map((g) => {
     const l = lineupsFromPicks(g.picks);
     const sc = (t: number) => totals(l[t], byId, gameBySquad);
     const opp = rival(g, myTeamId, (t) => sc(t).score);
@@ -54,7 +56,7 @@ export function Hub({ initial, games, ready, teams, myTeamId }: { initial: LRoun
         <Link href="/live/new" className="rh-tile">
           <span className="rh-k">New game</span>
           <b className="rh-tile-big">+</b>
-          <span className="rh-dim">Snake draft 2–10 clubs for the round</span>
+          <span className="rh-dim">Snake draft or salary cap, round or single match</span>
         </Link>
         <Link href="/live/matchups" className="rh-tile">
           <span className="rh-k">Matchups</span>
@@ -85,7 +87,7 @@ export function GamesList({ round, roundName, games, ready, teams, myTeamId }: {
         <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'flex-start' }}>
           <div style={{ minWidth: 0 }}>
             <b className="rh-gname">{g.name}</b>
-            <div className="rh-dim" style={{ fontSize: 12 }}>Round {g.round} · snake draft · {s.sub}</div>
+            <div className="rh-dim" style={{ fontSize: 12 }}>Round {g.round} · {kindLabel(g)} · {s.sub}</div>
           </div>
           <LiveChip live={s.live} text={s.text} />
         </div>
@@ -108,12 +110,14 @@ export function GamesList({ round, roundName, games, ready, teams, myTeamId }: {
 
 /* ---------------- new game ---------------- */
 
-export function NewGame({ rounds, current, teams, myTeamId }: { rounds: { n: number; name: string; status: string }[]; current: number; teams: TeamRow[]; myTeamId: number }) {
+export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: { n: number; name: string; status: string }[]; current: number; games: LGame[]; teams: TeamRow[]; myTeamId: number }) {
   const router = useRouter();
   const [kind, setKind] = useState('snake11');
   const [round, setRound] = useState(current);
   const [name, setName] = useState('');
   const [sel, setSel] = useState<number[]>([myTeamId]);
+  const [budget, setBudget] = useState(350);
+  const [matchId, setMatchId] = useState<number | null>(null);
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
   const k = GAME_KINDS.find((x) => x.kind === kind)!;
@@ -134,9 +138,24 @@ export function NewGame({ rounds, current, teams, myTeamId }: { rounds: { n: num
             </select>
           </label>
           <label className="rh-field"><span className="rh-k">Name</span>
-            <input className="rh-input" value={name} onChange={(e) => setName(e.target.value)} placeholder={`Round ${round} draft`} maxLength={60} />
+            <input className="rh-input" value={name} onChange={(e) => setName(e.target.value)} placeholder={kind === 'cap5' ? `Round ${round} salary cap` : `Round ${round} draft`} maxLength={60} />
           </label>
         </div>
+        {kind === 'cap5' && (
+          <div className="rh-form-2">
+            <label className="rh-field"><span className="rh-k">Budget</span>
+              <select className="rh-select" value={budget} onChange={(e) => setBudget(Number(e.target.value))}>
+                {CAP_BUDGETS.map((b) => <option key={b} value={b}>${b}k{b === 300 ? ' · tight' : b === 400 ? ' · forgiving' : ''}</option>)}
+              </select>
+            </label>
+            <label className="rh-field"><span className="rh-k">Games</span>
+              <select className="rh-select" value={matchId ?? ''} onChange={(e) => setMatchId(e.target.value ? Number(e.target.value) : null)} disabled={round !== current}>
+                <option value="">Whole round</option>
+                {round === current && games.map((g) => <option key={g.id} value={g.id}>{g.home} v {g.away} · {new Date(g.date).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Perth' })}</option>)}
+              </select>
+            </label>
+          </div>
+        )}
         <div className="rh-field"><span className="rh-k">Clubs · {sel.length} of 2–10</span>
           <div className="rh-pickclubs">
             {teams.map((t) => {
@@ -151,10 +170,10 @@ export function NewGame({ rounds, current, teams, myTeamId }: { rounds: { n: num
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
           <button className="rh-btn go lg" disabled={pending || sel.length < 2 || !k.ready}
-            onClick={() => start(async () => { const r = await createGame(round, kind, name, sel); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
-            Randomise order &amp; start draft
+            onClick={() => start(async () => { const r = await createGame(round, kind, name, sel, { budget, matchId: round === current ? matchId : null }); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
+            {kind === 'cap5' ? 'Create game' : <>Randomise order &amp; start draft</>}
           </button>
-          <span className="rh-dim">{sel.length * PICKS_PER_TEAM} picks · order drawn at random</span>
+          <span className="rh-dim">{kind === 'cap5' ? `Everyone picks 5 under $${budget}k` : `${sel.length * PICKS_PER_TEAM} picks · order drawn at random`}</span>
           {err && <span className="rh-down">{err}</span>}
         </div>
       </section>
@@ -172,6 +191,11 @@ export function MyMatchups({ initial, games, teams, myTeamId }: { initial: LRoun
     <Shell title="Matchups" sub={<>{data.name} · you v your opponent in each game</>} right={<LiveChip live={liveNow} text={liveNow ? 'Live' : data.status === 'completed' ? 'Final' : 'Pre-game'} />}>
       {mine.length === 0 && <Empty>No games this weekend. <Link href="/live/new" className="rh-link">Start one</Link>.</Empty>}
       {mine.map((g) => {
+        if (g.kind === 'cap5') return (
+          <Link key={g.id} href={`/live/g/${g.id}`} className="rh-card rh-gcard">
+            <b className="rh-gname">{g.name}</b><span className="rh-dim">Salary cap · ${g.budget ?? 350}k · {g.order.length} clubs. Tap for your 5 and the leaderboard.</span>
+          </Link>
+        );
         if (g.status === 'drafting') return (
           <Link key={g.id} href={`/live/g/${g.id}`} className="rh-card rh-gcard">
             <b className="rh-gname">{g.name}</b><span className="rh-dim">Still drafting. Tap to join the draft room.</span>

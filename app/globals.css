@@ -343,7 +343,7 @@ body:has(.rh) { background: #000; }
 .rh-select.sm { min-height: 32px; width: auto; max-width: 180px; padding: 0 10px; font-size: 12.5px; border-radius: 99px; }
 .rh-select option { background: #111; }
 .rh-input:focus, .rh-select:focus { outline: 1px solid var(--rh-up); }
-.rh-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 99px; background: var(--rh-2); align-self: flex-start; }
+.rh-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 99px; background: var(--rh-2); align-self: flex-start; max-width: 100%; overflow-x: auto; scrollbar-width: none; flex: none; }
 .rh-seg button { border: 0; background: transparent; color: var(--rh-dim); padding: 6px 14px; border-radius: 99px; font: 600 12.5px var(--font); }
 .rh-seg button.on { background: var(--rh-text); color: #000; }
 .rh-seg.big button { padding: 9px 22px; font-size: 14px; }
@@ -526,6 +526,29 @@ body:has(.rh) { background: #000; }
 .rh-avgtot { display: flex; justify-content: flex-end; font-size: 12px; }
 .rh-field-card .rh-select.sm { max-width: 150px; }
 
+/* salary cap */
+.cap { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 14px; align-items: start; }
+.cap > *, .rh-dgrid > * { min-width: 0; }
+.cap-five { position: sticky; top: calc(var(--navh, 56px) + 10px); gap: 12px; }
+.cap-budget { display: flex; flex-direction: column; gap: 6px; }
+.cap-left { display: block; font: 500 34px/1.05 var(--font); letter-spacing: -.04em; color: var(--rh-up); }
+.cap-bar { height: 4px; border-radius: 99px; background: var(--rh-3); overflow: hidden; }
+.cap-bar span { display: block; height: 100%; background: var(--rh-up); transition: width .4s ease; }
+.cap-bar span.over { background: var(--rh-down); }
+.cap-slots { display: flex; flex-direction: column; gap: 6px; }
+.cap-slot { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr) 22px; grid-template-rows: auto auto; column-gap: 10px; align-items: center; padding: 8px 10px; border-radius: 12px; background: var(--rh-2); animation: rhpop .3s cubic-bezier(.2,1.5,.4,1); }
+.cap-slot.empty { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1px dashed #2c3330; background: transparent; color: #4a524e; font: 600 11px var(--font); letter-spacing: .06em; text-transform: uppercase; animation: none; }
+.cap-slot.capt { box-shadow: inset 0 0 0 1px var(--rh-up); }
+.cap-c { grid-row: 1 / span 2; width: 28px; height: 28px; border-radius: 50%; border: 1px solid #39403c; background: transparent; color: var(--rh-dim); font: 700 12px var(--font); }
+.cap-c.on { background: var(--rh-up); border-color: var(--rh-up); color: #000; }
+.cap-slot-n { font: 600 13.5px var(--font); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cap-slot-m { font-size: 11px; grid-column: 2; }
+.cap-x { grid-column: 3; grid-row: 1 / span 2; border: 0; background: transparent; color: var(--rh-dim); font-size: 18px; line-height: 1; }
+.cap-x:hover { color: var(--rh-down); }
+.cap-row { grid-template-columns: minmax(0, 1fr) 40px 38px 56px 104px; }
+.cap-row.picked { background: rgba(0,200,5,.05); }
+.cap-cb { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 50%; background: var(--rh-up); color: #000; font: 700 9.5px var(--font); margin-right: 5px; vertical-align: 1px; }
+
 /* live scores */
 .rh-games { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
 .rh-game { gap: 12px; }
@@ -582,4 +605,17 @@ body:has(.rh) { background: #000; }
   .rh.compact .rh-title { font-size: 18px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .rh-headright .rh-chip { display: none; }
   .rh-sub a { padding: 9px 11px; font-size: 13px; }
+  .cap { grid-template-columns: minmax(0, 1fr); }
+  .rh-pool-ctl { padding: 10px; gap: 8px; }
+  .rh-pool-ctl .rh-input { flex-basis: 100%; min-height: 40px; }
+  .cap-five { top: var(--navh, 56px); z-index: 5; padding: 10px; gap: 8px; box-shadow: 0 -8px 0 #000; }
+  .cap-budget { flex-direction: row; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .cap-budget > div:first-child { display: flex; align-items: baseline; gap: 8px; }
+  .cap-left { font-size: 24px; }
+  .cap-bar { flex: 1 1 100px; }
+  .cap-budget > .rh-dim { width: 100%; }
+  .cap-slots { flex-direction: row; overflow-x: auto; scrollbar-width: none; }
+  .cap-slot { flex: 0 0 150px; padding: 6px 8px; }
+  .cap-slot.empty { flex: 0 0 90px; min-height: 40px; }
+  .cap-row { grid-template-columns: minmax(0, 1fr) 34px 52px 96px; }
 }

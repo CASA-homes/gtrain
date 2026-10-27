@@ -68,7 +68,7 @@ export function onClock(order: number[], k: number) {
 }
 export const PICKS_PER_TEAM = 11;
 export interface GamePick { pick_no: number; team_id: number; player_id: number; player_name: string; slot: Slot; picked_at: string }
-export interface GameRow { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; order: number[]; created_by: string; created_at: string; finished_at: string | null }
+export interface GameRow { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; order: number[]; created_by: string; created_at: string; finished_at: string | null; budget: number | null; match_id: number | null }
 /** Which slot a player takes for a club: the first of his positions that still has room. */
 export function slotFor(pos: string[], picks: { slot: Slot }[]): Slot | null {
   for (const s of pos) if (s in SLOTS && picks.filter((p) => p.slot === s).length < SLOTS[s as Slot]) return s as Slot;
@@ -82,7 +82,30 @@ export function lineupsFromPicks(picks: GamePick[]): Record<number, Lineup> {
 /** Game types for the New Game menu. Only the snake draft is built; the rest are placeholders. */
 export const GAME_KINDS = [
   { kind: 'snake11', label: 'Snake draft · 11-a-side', blurb: '2–10 clubs draft 3 DEF, 4 MID, 1 RUC, 3 FWD for the round. Highest score wins.', ready: true },
-  { kind: 'tbd1', label: 'Salary cap (coming soon)', blurb: 'TBD', ready: false },
+  { kind: 'cap5', label: 'Salary cap · pick 5', blurb: 'Any 5 players under a budget, priced off their average. Captain scores double. Players lock at their first bounce.', ready: true },
+  { kind: 'tbd1', label: 'One-match duel (coming soon)', blurb: 'TBD', ready: false },
   { kind: 'tbd2', label: 'Season-long league (coming soon)', blurb: 'TBD', ready: false },
   { kind: 'tbd3', label: 'Captain’s pick (coming soon)', blurb: 'TBD', ready: false },
 ];
+
+/* ---------- Salary Cap 5 ---------- */
+export const CAP_PICKS = 5;
+export const CAP_BUDGETS = [300, 350, 400];
+/** Price in $k: the season average, rounded (a 100-average player costs $100k), with a $15k floor. */
+export function priceOf(p: { avg: number | null; l3?: number | null }) { return Math.max(15, Math.round(p.avg ?? p.l3 ?? 25)); }
+export interface CapEntry { team_id: number; players: number[]; hidden: number; captain: number | null; cost: number | null; updated_at: string }
+/** A player's game has started (or finished) — they're locked. */
+export function lockedIds(round: LRound): Set<number> {
+  const started = new Set(round.games.filter((g) => g.status !== 'scheduled').flatMap((g) => [g.homeId, g.awayId]));
+  return new Set(round.players.filter((p) => started.has(p.squadId)).map((p) => p.id));
+}
+export function capScore(e: { players: number[]; captain: number | null }, byId: Map<number, LPlayer>) {
+  let score = 0, proj = 0, left = 0;
+  for (const id of e.players) {
+    const p = byId.get(id); if (!p) continue;
+    const mult = id === e.captain ? 2 : 1;
+    score += (p.score ?? 0) * mult;
+    if (p.score == null) { proj += (p.avg ?? 0) * mult; left++; } else proj += p.score * mult;
+  }
+  return { score, proj: Math.round(proj), left };
+}

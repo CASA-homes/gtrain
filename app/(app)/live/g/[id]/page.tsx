@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation';
+import { CapGame } from '@/components/live/cap';
 import { GameRoom } from '@/components/live/kit';
 import { createClient } from '@/lib/supabase/server';
-import { loadGame } from '../../actions';
+import { loadEntries, loadGame } from '../../actions';
 import { FeedDown } from '../../FeedDown';
 import { loadLive } from '../../load';
 
@@ -16,5 +17,10 @@ export default async function GamePage({ params }: { params: Promise<{ id: strin
   if (!data) return <FeedDown error={error} />;
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  return <GameRoom initialRound={data} initialGame={game} initialPicks={picks} teams={teams} myTeamId={me.team_id} canManage={me.is_commish || game.created_by === user?.id} />;
+  const canManage = me.is_commish || game.created_by === user?.id;
+  if (game.kind === 'cap5') {
+    const { ready, entries } = await loadEntries(game.id);
+    return <CapGame initialRound={data} game={game} initialEntries={entries} ready={ready} teams={teams} myTeamId={me.team_id} canManage={canManage} />;
+  }
+  return <GameRoom initialRound={data} initialGame={game} initialPicks={picks} teams={teams} myTeamId={me.team_id} canManage={canManage} />;
 }
