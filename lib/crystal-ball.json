@@ -28043,8 +28043,9 @@
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
+    "status": "Sidelined",
     "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (21%)",
      "Big-game junior: 144 best game on a 90 average (5 games of 120+)"
     ],
     "like": [],
@@ -28093,8 +28094,10 @@
     "best": 51.3,
     "peak": 45.6,
     "track": 75,
-    "status": "Long shot",
+    "status": "Blocked",
     "why": [
+     "Blocked, not stalled: 89 avg in 9 VFL games v 7 AFL; STK has 4 established mids (Garcia, Wanganeen-Milera, Macrae, Hall)",
+     "Second year stuck in the seconds: history is harsh here (1 of 115 became stars), so the clock is ticking. A trade could change that.",
      "Plays 41% of games (18 from 44 available)"
     ],
     "like": [
@@ -28326,6 +28329,7 @@
     "track": 80,
     "status": "Long shot",
     "why": [
+     "Only 9 games all year: too little to judge, so his chance leans on his draft-night rating (18%)",
      "Rarely goes big: 0 of 25 games at 100+",
      "Mostly starts at half-back / defence (36% of starts), 1% centre bounces"
     ],
@@ -29170,6 +29174,7 @@
     "track": 64,
     "status": "Unlikely",
     "why": [
+     "Only 8 games all year: too little to judge, so his chance leans on his draft-night rating (0%)",
      "Plays 27% of games (12 from 44 available)",
      "Mostly starts at forward (67% of starts), 0% centre bounces"
     ],
@@ -29238,7 +29243,7 @@
     "club": "GWS",
     "pre": 23.5,
     "positionOnly": 9.5,
-    "now": 3.1,
+    "now": 13.5,
     "games": 5,
     "current": {
      "games": 1,
@@ -29247,8 +29252,9 @@
     "best": 54.1,
     "peak": null,
     "track": 79,
-    "status": "Unlikely",
+    "status": "Sidelined",
     "why": [
+     "Only 9 games all year: too little to judge, so his chance leans on his draft-night rating (23%)",
      "Plays 11% of games (5 from 44 available)",
      "Stuck in the seconds: 8 state-league games v 1 AFL in 2026"
     ],
@@ -29318,10 +29324,11 @@
     "best": 55.2,
     "peak": 41.4,
     "track": 81,
-    "status": "Unlikely",
+    "status": "Blocked",
     "why": [
-     "Plays 30% of games (13 from 44 available)",
-     "Stuck in the seconds: 16 state-league games v 2 AFL in 2026"
+     "Blocked, not stalled: 91 avg in 16 VFL games v 2 AFL; BRL has 4 established mids (Neale, Dunkley, Ashcroft, McCluggage)",
+     "Second year stuck in the seconds: history is harsh here (1 of 115 became stars), so the clock is ticking. A trade could change that.",
+     "Plays 30% of games (13 from 44 available)"
     ],
     "like": [
      "Tyler Brockman",
@@ -29516,7 +29523,7 @@
     "club": "RIC",
     "pre": 2.8,
     "positionOnly": 8.5,
-    "now": 1.4,
+    "now": 1.7,
     "games": 11,
     "current": null,
     "best": 44.8,
@@ -29524,6 +29531,7 @@
     "track": 66,
     "status": "Unlikely",
     "why": [
+     "Only 2 games all year: too little to judge, so his chance leans on his draft-night rating (3%)",
      "Plays 25% of games (11 from 44 available)"
     ],
     "like": [
@@ -29942,7 +29950,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (0%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -30336,6 +30346,7 @@
     "track": 75,
     "status": "Unlikely",
     "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (0%)",
      "Plays 14% of games (6 from 44 available)",
      "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
@@ -30653,8 +30664,10 @@
     "best": 61.3,
     "peak": 66.3,
     "track": 90,
-    "status": "Close",
+    "status": "Blocked",
     "why": [
+     "Blocked, not stalled: 90 avg in 11 VFL games v 10 AFL; STK has 4 established mids (Garcia, Wanganeen-Milera, Macrae, Hall)",
+     "Second year stuck in the seconds: history is harsh here (1 of 115 became stars), so the clock is ticking. A trade could change that.",
      "Plays 48% of games (21 from 44 available)"
     ],
     "like": [
@@ -30735,6 +30748,7 @@
     "track": 77,
     "status": "Unlikely",
     "why": [
+     "Only 4 games all year: too little to judge, so his chance leans on his draft-night rating (4%)",
      "Plays 27% of games (12 from 44 available)"
     ],
     "like": [
@@ -30856,6 +30870,7 @@
     "track": 81,
     "status": "Unlikely",
     "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (8%)",
      "Plays 2% of games (1 from 44 available)",
      "Mostly starts at half-back / defence (100% of starts), 0% centre bounces"
     ],
@@ -31115,7 +31130,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 8 games all year: too little to judge, so his chance leans on his draft-night rating (4%)"
+    ],
     "like": [],
     "traits": [
      "Athleticism",
@@ -31293,7 +31310,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 7 games all year: too little to judge, so his chance leans on his draft-night rating (0%)"
+    ],
     "like": [],
     "traits": [
      "Athleticism",
@@ -31412,14 +31431,16 @@
     "club": "NTH",
     "pre": 10.4,
     "positionOnly": 4.9,
-    "now": 1.8,
+    "now": 6.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 7 games all year: too little to judge, so his chance leans on his draft-night rating (10%)"
+    ],
     "like": [],
     "traits": [
      "Contested / inside",
@@ -31546,14 +31567,16 @@
     "club": "ADE",
     "pre": 0.4,
     "positionOnly": 4.8,
-    "now": 0.2,
+    "now": 0.3,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 9 games all year: too little to judge, so his chance leans on his draft-night rating (0%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -31794,7 +31817,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (3%)"
+    ],
     "like": [],
     "traits": [],
     "jFP": null,
@@ -32056,7 +32081,7 @@
     "club": "MEL",
     "pre": 3.2,
     "positionOnly": 4.3,
-    "now": 0.7,
+    "now": 1.9,
     "games": 6,
     "current": {
      "games": 1,
@@ -32067,6 +32092,7 @@
     "track": 78,
     "status": "Unlikely",
     "why": [
+     "Only 8 games all year: too little to judge, so his chance leans on his draft-night rating (3%)",
      "Plays 14% of games (6 from 44 available)",
      "Stuck in the seconds: 7 state-league games v 1 AFL in 2026"
     ],
@@ -32123,14 +32149,16 @@
     "club": "GEE",
     "pre": 5.3,
     "positionOnly": 4.2,
-    "now": 1.3,
+    "now": 3.2,
     "games": 0,
     "current": null,
     "best": null,
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 6 games all year: too little to judge, so his chance leans on his draft-night rating (5%)"
+    ],
     "like": [],
     "traits": [
      "Engine / work rate",
@@ -32262,7 +32290,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "Only 3 games all year: too little to judge, so his chance leans on his draft-night rating (2%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -32531,7 +32561,7 @@
     "club": "GCS",
     "pre": 32.6,
     "positionOnly": 27.6,
-    "now": 9.0,
+    "now": 23.1,
     "games": 5,
     "current": {
      "games": 5,
@@ -32540,8 +32570,10 @@
     "best": 46.1,
     "peak": null,
     "track": 76,
-    "status": "Unlikely",
+    "status": "Blocked",
     "why": [
+     "Blocked, not stalled: 76 avg in 12 VFL games v 5 AFL; GCS has 4 established mids (Anderson, Rowell, Petracca, Miller)",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate.",
      "Mostly starts on a wing (20% of starts), 0% centre bounces"
     ],
     "like": [],
@@ -32586,7 +32618,7 @@
     "club": "BRL",
     "pre": 46.6,
     "positionOnly": 24.7,
-    "now": 9.1,
+    "now": 35.0,
     "games": 3,
     "current": {
      "games": 3,
@@ -32595,8 +32627,12 @@
     "best": 51.1,
     "peak": null,
     "track": 84,
-    "status": "Too early",
-    "why": [],
+    "status": "Blocked",
+    "why": [
+     "Only 7 games all year: too little to judge, so his chance leans on his draft-night rating (47%)",
+     "Blocked, not stalled: 115 avg in 4 VFL games v 3 AFL; BRL has 4 established mids (Neale, Dunkley, Ashcroft, McCluggage)",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate."
+    ],
     "like": [],
     "traits": [
      "Clean hands",
@@ -33228,8 +33264,10 @@
     "best": 53.6,
     "peak": 52.3,
     "track": 88,
-    "status": "Long shot",
+    "status": "Blocked",
     "why": [
+     "Blocked, not stalled: 102 avg in 6 VFL games v 9 AFL; GCS has 4 established mids (Anderson, Rowell, Petracca, Miller)",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate.",
      "Mostly starts on a wing (44% of starts), 2% centre bounces"
     ],
     "like": [],
@@ -33284,8 +33322,11 @@
     "best": 58.1,
     "peak": 60.8,
     "track": 96,
-    "status": "Close",
-    "why": [],
+    "status": "Blocked",
+    "why": [
+     "Blocked, not stalled: 78 avg in 7 VFL games v 9 AFL; GCS has 4 established mids (Anderson, Rowell, Petracca, Miller)",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate."
+    ],
     "like": [],
     "traits": [
      "Accumulator",
@@ -33379,7 +33420,7 @@
     "club": "HAW",
     "pre": 9.3,
     "positionOnly": 10.9,
-    "now": 2.5,
+    "now": 6.8,
     "games": 4,
     "current": {
      "games": 4,
@@ -33591,7 +33632,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (10%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -33623,8 +33666,10 @@
     "best": null,
     "peak": null,
     "track": null,
-    "status": "Yet to debut",
-    "why": [],
+    "status": "Sidelined",
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (24%)"
+    ],
     "like": [],
     "traits": [
      "Defensive pressure",
@@ -33657,7 +33702,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (0%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -33792,7 +33839,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (5%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -33997,7 +34046,7 @@
     "club": "HAW",
     "pre": 13.3,
     "positionOnly": 7.3,
-    "now": 6.8,
+    "now": 10.2,
     "games": 5,
     "current": {
      "games": 5,
@@ -34006,9 +34055,10 @@
     "best": 54.9,
     "peak": null,
     "track": 90,
-    "status": "Unlikely",
+    "status": "Blocked",
     "why": [
-     "Stuck in the seconds: 11 state-league games v 5 AFL in 2026",
+     "Blocked, not stalled: 89 avg in 11 VFL games v 5 AFL; HAW has 5 established mids (Newcombe, Nash, Day, Ward)",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate.",
      "Mostly starts at forward (60% of starts), 0% centre bounces"
     ],
     "like": [],
@@ -34171,8 +34221,11 @@
     "best": 63.0,
     "peak": 70.1,
     "track": 104,
-    "status": "Long shot",
-    "why": [],
+    "status": "Blocked",
+    "why": [
+     "Blocked, not stalled: 93 avg in 11 VFL games v 9 AFL",
+     "Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate."
+    ],
     "like": [],
     "traits": [
      "Accumulator",
@@ -34267,7 +34320,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (6%)"
+    ],
     "like": [],
     "traits": [
      "Athleticism",
@@ -34304,6 +34359,7 @@
     "track": 92,
     "status": "Too early",
     "why": [
+     "Only 1 games all year: too little to judge, so his chance leans on his draft-night rating (7%)",
      "Mostly starts at forward (100% of starts), 0% centre bounces"
     ],
     "like": [],
@@ -34756,7 +34812,9 @@
     "peak": null,
     "track": null,
     "status": "Yet to debut",
-    "why": [],
+    "why": [
+     "No games all year: too little to judge, so his chance leans on his draft-night rating (1%)"
+    ],
     "like": [],
     "traits": [
      "Aerial / marking",
@@ -34881,7 +34939,7 @@
     "club": "STK",
     "pre": 4.2,
     "positionOnly": 5.3,
-    "now": 1.0,
+    "now": 3.6,
     "games": 0,
     "current": null,
     "best": null,

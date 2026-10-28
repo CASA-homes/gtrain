@@ -43,6 +43,18 @@ def season_avgs(h, year):
     """{season number: avg} for seasons with 5+ games (season 1 = first year after the draft)."""
     return {y - year: a for (y, g, a) in (h or []) if g >= 5}
 
+# Established midfielders per club in 2026: 40%+ of centre bounces over 10+ games, rucks (8+ hitouts) excluded.
+def _club_mids():
+    out = {}
+    try:
+        for x in json.load(open('data/dfs-2026.json')):
+            b = x.get('box') or {}
+            if (b.get('gm') or 0) >= 10 and (b.get('cba') or 0) >= 40 and (b.get('ho') or 0) < 8:
+                out.setdefault(x.get('dfs_team'), []).append((b['cba'], x['full']))
+    except FileNotFoundError: pass
+    return {k: [n for _, n in sorted(v, reverse=True)] for k, v in out.items()}
+CLUB_MIDS = _club_mids()
+
 # Commissioner overrides for things the stats can't see yet (delistings, retirements). Delisted = near-zero.
 OVERRIDES = {
     'Elijah Tsatas': ('delisted', 'Delisted by Essendon after 2026 (picked up by North). Couldn’t hold a spot over younger players.'),
@@ -303,8 +315,34 @@ for d in sorted([d for d in H if d['y'] in YEARS], key=lambda d: (d['y'], d['p']
         bg = f"Big-game junior: {jj['max']:.0f} best game on a {jj['FP']:.0f} average" + (f" ({jj['g120']} games of 120+)" if (jj.get('g120') or 0) >= 2 else '')
         if games < 20: why.insert(0 if not ov else 1, bg)
         else: why.append(bg)
+    # Blocked, not stalled. Tested on the 2016-23 drafts: first-year players who spent the year mostly in the seconds
+    # became stars 20% of the time (4 of 20) if they scored 75+ there, and never (0 of 84) if they didn't, against 14% the
+    # draft-night model expected. So a productive first-year player keeps most of his draft-night chance until he gets a
+    # run; by year two, still stuck in the seconds is close to fatal (1 of 115), so the allowance stops there.
+    st_now = [x for x in state_lines(d.get('id'), d['y']) if x['year'] == NOW]
+    st_g = sum(x['games'] for x in st_now)
+    st_fp = (sum(x['fp'] * x['games'] for x in st_now) / st_g) if st_g else 0
+    afl_g = cur['games'] if cur else 0
+    blocked = not hit and n_now <= 2 and st_g >= 4 and st_fp >= 75 and afl_g < 12 and not ov
+    thin = not hit and n_now <= 2 and afl_g + st_g < 10 and not ov          # barely played all year (injury or not picked)
+    if (blocked and n_now == 1) or (thin and n_now <= 2):
+        w = min(1.0, afl_g / 20)                                              # trust the AFL evidence as it builds
+        anchor = pc * (0.85 if n_now == 1 else 0.6)
+        now = max(now, w * now + (1 - w) * anchor)
+    blocked = blocked and (pc >= 0.10 or now >= 0.10)                         # label only real potential being held back
+    if blocked:
+        why = [x for x in why if not x.startswith('Stuck in the seconds')]
+        mids = CLUB_MIDS.get(d['c'], [])
+        lg = st_now[0]['league'] if st_now else 'state league'
+        why.insert(0 if not ov else 1, f"Blocked, not stalled: {st_fp:.0f} avg in {st_g} {lg} games v {afl_g} AFL" + (f"; {d['c']} has {len(mids)} established mids ({', '.join(m.split()[-1] for m in mids[:4])})" if len(mids) >= 4 else ''))
+        why.insert(1 if not ov else 2, 'Potential intact, but probably not soon: needs midfield minutes, an injury ahead of him or a move. First-years who scored 75+ in the seconds still became stars at their draft-night rate.' if n_now == 1
+                   else 'Second year stuck in the seconds: history is harsh here (1 of 115 became stars), so the clock is ticking. A trade could change that.')
+    if thin:
+        why.insert(0, (f"Only {afl_g + st_g} games all year" if afl_g + st_g else 'No games all year') + f": too little to judge, so his chance leans on his draft-night rating ({pc * 100:.0f}%)")
     # Status = chance of ever having a 90+ season
     if hit: status = 'Star'
+    elif blocked and now < 0.5: status = 'Blocked'
+    elif thin and pc >= 0.2 and now < 0.5: status = 'Sidelined'
     elif games == 0 and n_now <= 2: status = 'Yet to debut'
     elif n_now <= 1 and games < 5: status = 'Too early'
     elif now >= 0.5: status = 'On track'
