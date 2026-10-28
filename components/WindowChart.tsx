@@ -74,7 +74,7 @@ export function WindowChart({ points }: { points: WindowPoint[] }) {
       {points.map((p) => {
         const x = xOf(p.year), y = yOf(p.rank);
         if (p.flag) return <circle key={p.year} cx={x} cy={y} r={5} fill="#d4a62a" stroke="#151a16" strokeWidth={2}><title>{`${p.year}: premiers`}</title></circle>;
-        if (p.kind === 'proj') return <circle key={p.year} cx={x} cy={y} r={3.5} fill="#151a16" stroke="#f4f2ea" strokeWidth={1.5}><title>{`${p.year}: projected ~${Math.round(p.rank)}`}</title></circle>;
+        if (p.kind === 'proj') return <circle key={p.year} cx={x} cy={y} r={3.5} fill="#151a16" stroke="#f4f2ea" strokeWidth={1.5}><title>{`${p.year}: projected ~${Math.round(p.rank)} · core age ${p.coreAge ?? '–'}`}</title></circle>;
         if (p.year === NOW_YEAR) return <g key={p.year}><circle cx={x} cy={y} r={7} fill="none" stroke="#f4f2ea" strokeOpacity={0.35} /><circle cx={x} cy={y} r={4.5} fill="#f4f2ea"><title>{`${p.year}: ${p.rank}`}</title></circle></g>;
         return <circle key={p.year} cx={x} cy={y} r={3.5} fill="#f4f2ea" fillOpacity={p.kind === 'est' ? 0.45 : 1}><title>{`${p.year}: ${p.kind === 'est' ? '~' : ''}${p.rank}`}</title></circle>;
       })}

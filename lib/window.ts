@@ -4,7 +4,7 @@ import { projected2027 } from '@/lib/projection';
 import { FINISHES } from '@/lib/window-history';
 
 export type Phase = 'Rebuild' | 'Mid table' | 'Entering window' | 'Prime window' | 'Closing window';
-export interface WindowPoint { year: number; rank: number; kind: 'actual' | 'est' | 'proj'; flag: boolean; phase: Phase; lo: number; hi: number }
+export interface WindowPoint { year: number; rank: number; kind: 'actual' | 'est' | 'proj'; flag: boolean; phase: Phase; lo: number; hi: number; coreAge?: number }
 
 export const FIRST_YEAR = 2022;
 export const NOW_YEAR = 2026;
@@ -140,5 +140,5 @@ export function windowFor(opts: {
   for (const p of pts) if (p.kind === 'proj') { const s = SPREAD[p.year] ?? 2; p.lo = Math.max(1, p.rank - s); p.hi = Math.min(10, p.rank + s); }
   const phases = phasesFor(pts.map((p) => p.rank), pts.map((p) => p.flag), pts.map((p) => opts.coreAge + (p.year - NOW_YEAR)));
   const pin = WINDOW_PIN[opts.teamName] ?? {};
-  return pts.map((p, i) => ({ ...p, phase: pin[p.year] ?? phases[i] }));
+  return pts.map((p, i) => ({ ...p, phase: pin[p.year] ?? phases[i], coreAge: Math.round((opts.coreAge + (p.year - NOW_YEAR)) * 10) / 10 }));
 }
