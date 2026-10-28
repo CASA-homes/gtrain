@@ -225,6 +225,6 @@ function Chip({ k }: { k: string }) {
   return <span style={{ background: bg, color: fg, borderRadius: 6, padding: '0 5px', fontSize: 10, fontWeight: 600 }}>{k === 'Free agent' ? 'FA' : k === 'Released' ? 'REL' : 'ROOKIE'}</span>;
 }
 function line(p: MockPlayer) {
-  if (p.kind === 'Rookie') return `${p.pos} · phantom #${p.rank} · ${Math.round(p.chance ?? 0)}% star`;
+  if (p.kind === 'Rookie') return `${p.pos} · AFL #${p.rank}${p.club ? ` · ${p.club}` : ''}`;
   return `${p.pos} · ${p.age ?? '–'} · ’26 ${p.a26 != null ? Math.round(p.a26) : '–'} (${p.g26}g)${p.from ? ` · from ${p.from}` : p.club ? ` · ${p.club}` : ''}`;
 }

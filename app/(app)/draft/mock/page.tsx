@@ -6,6 +6,8 @@ import { age, type PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { nowFut, ONE_ROOKIE_EARLY, prospectLines, rookieFuture, windowLabel, wNowFor, type MockPick, type MockPlayer, type MockTeam } from '@/lib/mock-draft';
 import cb from '@/lib/crystal-ball.json';
+import { projectedAflPicks } from '@/lib/afl-landing-2026';
+import { DRAFT_2026_DONE } from '@/lib/phantom-2026';
 
 export const metadata = { title: '2027 mock draft' };
 const START_2027 = new Date(2027, 2, 1);
@@ -24,11 +26,16 @@ export default async function MockPage() {
   };
   const released = league.players.filter((p) => !p.is_keeper && !p.is_rookie_keeper && !p.list_status).map((p) => asMock(p, 'Released'));
   const free = league.freeAgents.filter((p) => !p.list_status).map((p) => asMock(p, 'Free agent'));
-  type Prospect = { rank: number; name: string; role: string; chance: number; junior: string; position: string };
-  const rookies: MockPlayer[] = (cb as unknown as { prospects: Prospect[] }).prospects.map((p) => ({
-    key: `r:${p.name}`, id: null, name: p.name, kind: 'Rookie', pos: p.position || p.role, lines: prospectLines(p.position, p.role), age: 18, club: p.junior, from: null,
-    a26: null, g26: 0, a25: null, g25: 0, rank: p.rank, chance: p.chance, ruck: p.role === 'Ruck', now: 0, fut: Math.round(rookieFuture(p.rank, p.role, p.chance) * 10) / 10, board: Math.round(rookieFuture(p.rank, p.role, p.chance) * 5) / 10,
-  }));
+  type Prospect = { rank: number; slot?: number; name: string; role: string; chance: number; junior: string; position: string; club?: string | null };
+  const prospects = (cb as unknown as { prospects: Prospect[] }).prospects;
+  // Rookies are valued on where they land in the real AFL draft (projected until it's run), because that's what G-Train follows.
+  const landing = projectedAflPicks(prospects);
+  const rookies: MockPlayer[] = prospects.map((p) => {
+    const l = DRAFT_2026_DONE ? { pick: p.rank, club: p.club ?? undefined } : landing.get(p.name)!;
+    const fut = rookieFuture(l.pick, p.role, p.chance);
+    return { key: `r:${p.name}`, id: null, name: p.name, kind: 'Rookie', pos: p.position || p.role, lines: prospectLines(p.position, p.role), age: 18, club: l.club ?? null, from: null,
+      a26: null, g26: 0, a25: null, g25: 0, rank: l.pick, chance: p.chance, ruck: p.role === 'Ruck', now: 0, fut: Math.round(fut * 10) / 10, board: Math.round(fut * 5) / 10 };
+  });
 
   const wins = new Map(league.ladder.filter((l) => l.season === 2026).map((l) => [l.team_id, l.wins]));
   const teams: MockTeam[] = league.teams.map((t) => {
@@ -51,8 +58,8 @@ export default async function MockPage() {
       <MockDraft players={[...rookies, ...released, ...free]} teams={teams} picks={picks} myTeamId={me?.team_id ?? null} />
       <p className="muted" style={{ fontSize: 12, margin: 0 }}>
         How the other clubs pick: a board value for every player, tuned to how the 2026 G-Train draft went (star rookies top 5, key-position talls slide, proven 85+ veterans from
-        about pick 17), leaned by each club’s window and last-draft habits. Your edits are saved to your login. Rookies are the Crystal Ball’s phantom top 30 until the
-        AFL draft in November. <Link href="/draft">G-Train picks</Link>
+        about pick 17), leaned by each club’s window and last-draft habits. Your edits are saved to your login. Rookies are valued on their projected AFL pick (fixed spots like Mellody to West Coast at 3, then the consensus board) until the
+        AFL draft in November, then on their real pick. <Link href="/draft">G-Train picks</Link>
       </p>
     </div>
   );

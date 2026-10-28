@@ -1,7 +1,7 @@
 // Mock draft engine. Runs entirely in the browser.
 //
 // Board value (one scale for everyone, tuned to how the 2026 G-Train draft actually went):
-//   Rookies    100 for the top prospect, about -3.2 per phantom rank. Key-position talls slide hard (Harry Dean went 103),
+//   Rookies    100 for the top prospect, about -3.2 per projected AFL pick (lib/afl-landing-2026.ts). Key-position talls slide hard (Harry Dean went 103),
 //              rucks and tall utilities a little. Star chance nudges it.
 //   Everyone   established output: 2026 average with a small-sample pull toward 55, plus 2025 at half weight;
 //   else       older players discounted; 24-and-unders who played real games get an upside bump.
@@ -24,7 +24,7 @@ export interface MockPlayer {
   from: string | null;    // G-Train club that released him
   a26: number | null; g26: number;
   a25: number | null; g25: number;
-  rank?: number;          // phantom rank (rookies)
+  rank?: number;          // projected (or actual) AFL pick (rookies)
   chance?: number;        // crystal-ball star chance (rookies)
   ruck: boolean;
   board: number;          // neutral board value (half now, half future), for display
