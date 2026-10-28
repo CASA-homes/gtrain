@@ -47,6 +47,7 @@ export function DraftProfileCard({ d, compact = false }: { d: DraftProfile; comp
         {!compact && ratings('Athletic', d.athletic)}
         {!compact && ratings('On field', d.onField)}
       </div>}
+      {d.boards && <Boards b={d.boards} />}
       {d.games && <GameByGame g={d.games} compact={compact} />}
       {d.zh && <ZeroHanger z={d.zh} />}
       <span className="muted" style={{ fontSize: 12 }}>
@@ -78,6 +79,21 @@ function GameByGame({ g, compact }: { g: NonNullable<DraftProfile['games']>; com
         </div>
       ))}
       <span className="muted" style={{ fontSize: 11 }}>From the <a href="https://www.afl.com.au/" target="_blank" rel="noreferrer">AFL match centre</a> (Talent League and U18 Championships). WAFL Colts, SANFL U18 and school games aren’t included.</span>
+    </div>
+  );
+}
+
+function Boards({ b }: { b: NonNullable<DraftProfile['boards']> }) {
+  const tiles: [string, string, boolean?][] = [['Consensus', `#${b.consensus}`, true], ['Cal Twomey (Oct)', `#${b.twomey.rank}`], ['Rookie Me (Aug)', b.rookieme.rank ? `#${b.rookieme.rank}` : `Outside top ${b.rookieme.of}`], ['Zero Hanger', b.zh ? `#${b.zh}` : '–']];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid var(--line, #e3dccb)', paddingTop: 12 }}>
+      <span className="eyebrow">Draft boards</span>
+      <div className="tiles" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))' }}>
+        {tiles.map(([k, v, hi]) => <div key={k} className="tile" style={{ minWidth: 0, ...(hi ? { background: '#151a16', color: '#fff' } : {}) }}><span className="eyebrow" style={hi ? { color: '#cfd8cc' } : undefined}>{k}</span><b>{v}</b></div>)}
+      </div>
+      <span className="eyebrow" style={{ marginTop: 4 }}>Cal Twomey’s read</span>
+      <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55, maxWidth: '70ch' }}>{b.twomey.note}</p>
+      <span className="muted" style={{ fontSize: 12 }}>Sources: <a href={b.twomey.url} target="_blank" rel="noreferrer">Cal Twomey’s Phantom Form Guide</a> (AFL.com.au, {b.twomey.date}) and <a href={b.rookieme.url} target="_blank" rel="noreferrer">Rookie Me’s Power Rankings</a> ({b.rookieme.date}). Consensus weights Twomey 40%, Rookie Me 35%, Zero Hanger 25%. Notes are our own read.</span>
     </div>
   );
 }

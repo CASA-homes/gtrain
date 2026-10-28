@@ -197,7 +197,10 @@ for rank, name in PH:
     listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
     role = role_of(listed, ht, strs)
     p = {'name': name, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
-    x = np.array(cm.fv(p, rank))
+    # Before the draft the pick slot is the consensus of Twomey / Rookie Me / Zero Hanger; after it, the real pick.
+    brd = (prof or {}).get('boards') or {}
+    slot = rank if DRAFTED else brd.get('consensus', rank)
+    x = np.array(cm.fv(p, slot))
     prob = cm.prob(model, x, role)
     prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL)
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
@@ -206,7 +209,7 @@ for rank, name in PH:
     eff['Junior fantasy avg'] = eff.pop('Low junior numbers', 0) + eff.pop('Big junior numbers (95+)', 0)
     contrib = sorted([(k, v) for k, v in eff.items() if abs(v) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
-    out.append({'rank': rank, 'name': name, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
+    out.append({'rank': rank, 'name': name, 'slot': slot, 'boards': {'tw': (brd.get('twomey') or {}).get('rank'), 'rm': (brd.get('rookieme') or {}).get('rank'), 'zh': brd.get('zh')}, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,
                 'jFP': j and j['FP'], 'jD': j and j['D'], 'jT': j and j['T'], 'jSeason': j and j.get('season'), 'jMax': (j and j.get('max')) or (jg and jg['max']), 'j120': (j and j.get('g120')) or (jg and jg['g120']), 'traits': st, 'flags': im,
                 'chance': round(prob * 100, 1), 'relevant': round(prob_rel * 100, 1), 'positionOnly': round(pos_only * 100, 1),
                 'reasons': [{'label': k, 'effect': round(v, 2)} for k, v in contrib[:5]],

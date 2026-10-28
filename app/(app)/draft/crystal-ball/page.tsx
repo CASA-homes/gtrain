@@ -20,7 +20,7 @@ import { C } from '@/lib/ratings';
 
 type Reason = { label: string; effect: number };
 type Prospect = {
-  rank: number; name: string; junior: string; position: string; height: number | null;
+  rank: number; slot?: number; boards?: { tw?: number | null; rm?: number | null; zh?: number | null }; name: string; junior: string; position: string; height: number | null;
   jFP: number | null; jD: number | null; jT: number | null; jSeason?: number | null; jMax?: number | null; j120?: number | null; traits: string[]; flags: string[]; type?: string; club?: string | null; drafted?: boolean; ceiling?: boolean;
   chance: number; relevant: number; positionOnly: number; role: string; reasons: Reason[];
   why: { good: boolean; text: string }[];
@@ -126,7 +126,7 @@ function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; 
     <article className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 92px', alignItems: 'start', gap: 10 }}>
         <div style={{ minWidth: 0 }}>
-          <span className="eyebrow">{p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · {p.type || p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
+          <span className="eyebrow">{p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Consensus #${p.slot ?? p.rank}`} · {p.type || p.position || '–'}{p.height ? ` · ${p.height}cm` : ''}</span>
           <h3 style={{ font: '600 20px var(--font)', letterSpacing: '-.02em', margin: '2px 0 0', display: 'flex', alignItems: 'center', gap: 8 }}>
             {p.name}
             {info && <InfoPopover title={p.name}><WhyDetails p={p} /></InfoPopover>}
@@ -462,12 +462,12 @@ function CrystalBallView() {
   const P = D.prospects;
   const likely = [...P].sort((a, b) => b.chance - a.chance).slice(0, 4);
   const likelyNames = new Set(likely.map((p) => p.name));
-  const sleepers = [...P].filter((p) => p.rank >= 12 && !likelyNames.has(p.name)).sort((a, b) => (b.chance - b.positionOnly) - (a.chance - a.positionOnly)).slice(0, 4);
+  const sleepers = [...P].filter((p) => (p.slot ?? p.rank) >= 12 && !likelyNames.has(p.name)).sort((a, b) => (b.chance - b.positionOnly) - (a.chance - a.positionOnly)).slice(0, 4);
   const shown = new Set([...likely, ...sleepers].map((p) => p.name));
   const relevant = [...P].filter((p) => !shown.has(p.name) && p.relevant >= 40).sort((a, b) => b.relevant - a.relevant).slice(0, 4);
   relevant.forEach((p) => shown.add(p.name));
-  const relValue = [...P].filter((p) => !shown.has(p.name) && p.rank >= 15 && p.relevant >= 20).sort((a, b) => b.relevant - a.relevant).slice(0, 4);
-  const caution = [...P].filter((p) => p.rank <= 15 && p.positionOnly - p.chance >= 8).sort((a, b) => (b.positionOnly - b.chance) - (a.positionOnly - a.chance)).slice(0, 4);
+  const relValue = [...P].filter((p) => !shown.has(p.name) && (p.slot ?? p.rank) >= 15 && p.relevant >= 20).sort((a, b) => b.relevant - a.relevant).slice(0, 4);
+  const caution = [...P].filter((p) => (p.slot ?? p.rank) <= 15 && p.positionOnly - p.chance >= 8).sort((a, b) => (b.positionOnly - b.chance) - (a.positionOnly - a.chance)).slice(0, 4);
   const boosts = D.patterns.filter((r) => r.lift >= 1.2 && r.n >= 10).sort((a, b) => b.lift - a.lift);
   const drags = D.patterns.filter((r) => r.lift <= 0.8 && r.n >= 10).sort((a, b) => a.lift - b.lift);
   const accum = D.patterns.find((r) => r.label === 'Accumulator');
@@ -568,14 +568,14 @@ function CrystalBallView() {
         <h2 className="h2">All 2026 prospects</h2>
         <div className="table-box">
           <table className="squad" style={{ minWidth: 760 }}>
-            <thead><tr><th style={{ width: 56 }}>Rank</th><th>Prospect</th><th style={{ width: 80, textAlign: 'center' }}>Star 90+</th><th style={{ width: 90, textAlign: 'center' }}>Relevant 80+</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
+            <thead><tr><th style={{ width: 56 }}>Board</th><th>Prospect</th><th style={{ width: 80, textAlign: 'center' }}>Star 90+</th><th style={{ width: 90, textAlign: 'center' }}>Relevant 80+</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
             <tbody>
               {[...P].sort((a, b) => b.chance - a.chance).map((p) => (
                 <tr key={p.name}>
-                  <td className="mono">{p.rank}</td>
+                  <td className="mono" title="Consensus of Twomey, Rookie Me and Zero Hanger">{p.drafted ? p.rank : (p.slot ?? p.rank)}{!p.drafted && p.boards && <div className="muted" style={{ fontSize: 10, lineHeight: 1.3, whiteSpace: 'nowrap' }}>CT {p.boards.tw ?? '–'} · RM {p.boards.rm ?? '–'} · ZH {p.boards.zh ?? '–'}</div>}</td>
                   <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</div>
                     {(() => { const prof = draftProfileFor(2026, p.name); return prof
-                      ? <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Phantom #${p.rank}`} · 2026 draft`} />
+                      ? <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Consensus #${p.slot ?? p.rank}`} · 2026 draft`} />
                       : <span className="muted" style={{ fontWeight: 400, fontSize: 12 }}>Profile coming</span>; })()}
                   </td>
                   <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={16} /></td>
@@ -589,7 +589,7 @@ function CrystalBallView() {
           </table>
         </div>
         <span className="muted" style={{ fontSize: 12 }}>
-          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is Cal Twomey’s phantom order.
+          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is a consensus board: Cal Twomey’s October Phantom Form Guide (40%), Rookie Me’s August Power Rankings (35%) and Zero Hanger’s big board (25%). CT / RM / ZH under each rank show the three boards.
         </span>
       </section>
 

@@ -32,6 +32,8 @@ export interface DraftProfile {
   source: { title: string; url: string; page?: number };
   // 2026: Zero Hanger's read (big-board rank, mock pick, profile) — our own summary of it
   zh?: { rank?: number; range?: string; mock?: string; landing?: string[]; strengths?: string[]; note?: string; url: string; source: string };
+  // 2026: the three boards side by side. Twomey's note is our own short read of his October Phantom Form Guide.
+  boards?: { twomey: { rank: number; note: string; url: string; date: string }; rookieme: { rank: number | null; url: string; date: string; of: number }; zh: number | null; consensus: number; score: number };
   // 2026: every junior game's AFL Fantasy score (AFL match centre, Talent League + U18 champs 2025–26)
   games?: { max: number; g120: number; g150: number; n: number; seasons: { label: string; n: number; avg: number; best: number; scores: number[] }[] };
 }
