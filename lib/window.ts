@@ -53,9 +53,12 @@ export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings:
   return out;
 }
 
-/** Average age (now) of a team's six best players on 2027 projections: the stars whose age sets when a window closes. */
+/** Average age (now) of a team's six best scorers among its keepers: the stars whose age sets when a window closes. */
 export function coreAge(teamId: number, players: PlayerRow[]): number {
-  const core = players.filter((p) => p.team_id === teamId).sort((a, b) => projected2027(b) - projected2027(a)).slice(0, 6);
+  const mine = players.filter((p) => p.team_id === teamId);
+  const kept = mine.filter((p) => p.is_keeper || p.is_rookie_keeper);
+  // The stars are who's actually scoring now (2026 average), from the keepers once they're set.
+  const core = (kept.length ? kept : mine).sort((a, b) => (b.average ?? 0) - (a.average ?? 0)).slice(0, 6);
   const ages = core.map((p) => age(p.birth_date)).filter((x): x is number => x != null);
   return ages.length ? ages.reduce((s2, x) => s2 + x, 0) / ages.length : 26;
 }
