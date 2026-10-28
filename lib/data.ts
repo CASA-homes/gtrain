@@ -1,3 +1,4 @@
+import { positionsFor } from '@/lib/position-overrides';
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import freeAgentData from '@/lib/free-agent-players.json';
@@ -95,7 +96,7 @@ export const getLeague = cache(async (): Promise<League> => {
   const players: PlayerRow[] = ((squadQ.data ?? []) as unknown as SquadRow[]).map((s) => {
     const cur = s.players.player_seasons.find((x) => x.season === CURRENT_SEASON);
     return {
-      id: s.players.id, name: s.players.name, positions: s.players.positions, afl_club: s.players.afl_club,
+      id: s.players.id, name: s.players.name, positions: positionsFor(s.players.full_name, s.players.positions), afl_club: s.players.afl_club,
       birth_date: s.players.birth_date, draft_pick: s.players.draft_pick, draft_year: s.players.draft_year,
       full_name: s.players.full_name, dfs_id: s.players.dfs_id, height_cm: s.players.height_cm,
       debut_year: s.players.debut_year, career_games: s.players.career_games, hist: s.players.hist, photo_path: s.players.photo_path, list_status: s.players.list_status, box: cur?.box ?? null, games_log: cur?.games_log ?? null, lineup: s.lineup ?? null,
