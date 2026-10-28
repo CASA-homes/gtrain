@@ -108,17 +108,7 @@ export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Ph
 }
 
 /** Commish calls: set a club's phase for particular seasons when the numbers can't see what's coming. */
-export const WINDOW_PIN: Record<string, Record<number, Phase>> = {
-  'A Brayshaw Thing': { 2025: 'Mid table', 2026: 'Mid table', 2027: 'Rebuild', 2028: 'Rebuild', 2029: 'Rebuild', 2030: 'Mid table' },
-  'NSW-ACT Academy': { 2026: 'Mid table', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
-  'Fo’ Sheezel my Neezel': { 2026: 'Rebuild', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
-  "Muzza's Murabito's": { 2027: 'Prime window', 2028: 'Prime window', 2029: 'Closing window', 2030: 'Closing window' },
-  // Smith, Anderson and Rankine turn 30 and English, Dunkley and Whitfield are 33+ (or retired) by 2029–30.
-  'Bodega Boys': { 2027: 'Prime window', 2028: 'Prime window', 2029: 'Closing window', 2030: 'Closing window' },
-  'Bito’s Boys': { 2026: 'Rebuild', 2027: 'Rebuild', 2028: 'Mid table', 2029: 'Mid table', 2030: 'Entering window' },
-  // Kept senior scorers (Miller, Greene, Impey), so the window closes over two years, then mid table before a rebuild.
-  'Serong So’Right': { 2027: 'Closing window', 2028: 'Closing window', 2029: 'Mid table', 2030: 'Rebuild' },
-};
+export const WINDOW_PIN: Record<string, Record<number, Phase>> = {};
 
 const SPREAD: Record<number, number> = { 2027: 0.8, 2028: 1.5, 2029: 2.2, 2030: 2.8 };
 
