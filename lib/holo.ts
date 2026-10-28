@@ -1,6 +1,6 @@
 // Holo profile pictures: players who get the shiny treatment, with their artwork background and cut-out photo.
 // Geelong's artwork is placeholder dot-style patterning in club colours; swap in licensed Indigenous artwork before rolling out widely.
-export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade' | 'gcs' | 'col' | 'brl' | 'stk';
+export type HoloPalette = 'geelong' | 'gws' | 'wce' | 'ade' | 'gcs' | 'col' | 'brl' | 'stk' | 'crown';
 export interface Holo { art: string; photo: string; palette: HoloPalette }
 export const HOLO: Record<string, Holo> = {
   'L. Humphries': { art: '/holo/geelong-swans.svg', photo: '/players/lawson-humphries.png', palette: 'geelong' },
@@ -9,6 +9,7 @@ export const HOLO: Record<string, Holo> = {
   'I. Rankine': { art: '/holo/ade-feathers.svg', photo: '/players/izak-rankine.png', palette: 'ade' },
   'N. Anderson': { art: '/holo/gcs-sunrise.svg', photo: '/players/noah-anderson.png', palette: 'gcs' },
   'J. Daicos': { art: '/holo/col-magpie.jpg', photo: '/players/josh-daicos.png', palette: 'col' },
+  'B. Smith': { art: '/holo/gee-topscorer.svg', photo: 'https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/1006130.png', palette: 'crown' },
   'D. Wilmot': { art: '/holo/brl-kickin.svg', photo: 'https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/1017067.png', palette: 'brl' },
   'D. Wilson': { art: '/holo/stk-breakout.svg', photo: 'https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/1027875.png', palette: 'stk' },
 };
@@ -41,6 +42,15 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .45) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(242 169 0 / .4) 10px 11px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 222 120 / .95)'],
     glare: 'rgb(127 168 232 / .25)', sheen: 'rgb(242 169 0 / .5)', base: '#00204d', shadow: 'rgb(0 32 77 / .38)',
+  },
+  crown: {
+    frame: 'conic-gradient(from 210deg, #fff6d6, #e8b84a, #ffffff, #8fb0ff, #fff3c4, #c9962e, #ffffff, #b7f0ff, #e8b84a, #fff6d6)',
+    edge: 'linear-gradient(115deg, transparent 22%, rgb(255 255 255 / 1) 40%, rgb(255 214 120 / .95) 50%, rgb(180 220 255 / .9) 56%, rgb(255 255 255 / 1) 62%, transparent 78%)',
+    sweep: 'linear-gradient(120deg, transparent 15%, #e8b84a 26%, #ffffff 34%, #ff9ad5 40%, #8fe3ff 46%, #fff3c4 52%, #b59bff 58%, #ffffff 66%, #e8b84a 72%, transparent 84%)',
+    foil: 'linear-gradient(60deg, transparent 18%, #fff3c4 30%, #ffffff 38%, #8fe3ff 44%, #ff9ad5 50%, #ffffff 56%, #e8b84a 64%, transparent 80%)',
+    lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 4px, rgb(255 255 255 / .5) 4px 5px, rgb(255 255 255 / 0) 5px 8px, rgb(232 184 74 / .5) 8px 9px)',
+    glint: ['rgb(255 255 255 / 1)', 'rgb(255 226 140 / 1)'],
+    glare: 'rgb(255 226 140 / .3)', sheen: 'rgb(255 214 120 / .65)', base: '#040915', shadow: 'rgb(232 184 74 / .55)', dim: 0.55,
   },
   brl: {
     frame: 'linear-gradient(135deg, #fff6dc 0%, #f7c04a 16%, #6d0f2b 36%, #ffe6a3 50%, #0a4ea3 66%, #cfe0ff 80%, #f7c04a 100%)',
