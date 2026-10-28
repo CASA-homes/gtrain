@@ -73,25 +73,26 @@ export function coreAge(teamId: number, players: PlayerRow[]): number {
 export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Phase[] {
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
-  const YOUNG = 22.5, OLD = 28.5;
+  const YOUNG = 22.5, OLD = 28.5, VERY_OLD = 29.5;
   const out: Phase[] = [];
-  let state: Phase = s[0] <= 3.5 ? 'Prime window' : s[0] >= 7.5 ? 'Rebuild' : 'Mid table';
+  let state: Phase = s[0] <= 4.5 ? 'Prime window' : s[0] >= 8 ? 'Rebuild' : 'Mid table';
   let run = 0;
   for (let i = 0; i < ranks.length; i++) {
     const x = s[i], ahead = s[i + 1] ?? x, a = ages[i];
     if (i > 0) {
       const was = state;
       if (state === 'Prime window') {
-        if (ahead >= x + 1.5 || (a >= OLD && ahead > x + 0.5) || x > 5) state = 'Closing window';
+        // Out of the top half, a big fall coming, or a core getting old: the window starts to close.
+        if (x > 5 || (ahead >= 6 && ahead >= x + 1.5) || (a >= OLD && ahead > x + 0.5) || a >= VERY_OLD) state = 'Closing window';
       } else if (state === 'Closing window') {
-        // Still in the top three with a core that isn't old: the window reopens. Otherwise one more year at most.
+        // Back in the top three with a core that isn't old: the window reopens. Otherwise one more year at most.
         if (x <= 3 && a < OLD) state = 'Prime window';
         else if (run >= 2 || x > 4.5) state = x >= 8.5 ? 'Rebuild' : 'Mid table';
       } else if (state === 'Mid table') {
-        if (ahead <= 4.5 && ahead <= x - 0.5 && a >= YOUNG) state = 'Entering window';
-        else if (x >= 7.5 || (x >= 6 && ahead >= x + 1)) state = 'Rebuild';
+        if (x <= 5 && ahead <= x + 0.25 && a >= YOUNG) state = 'Entering window';   // breaking into the top four and holding
+        else if (x >= 8) state = 'Rebuild';
       } else if (state === 'Rebuild') {
-        if (x <= 6.5 || (x <= 7.5 && ahead <= x - 1)) state = 'Mid table';
+        if (x <= 7.25) state = 'Mid table';
       } else if (state === 'Entering window') {
         state = x <= 5.5 ? 'Prime window' : 'Mid table';                 // entering lasts one season
       }
