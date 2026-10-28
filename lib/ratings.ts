@@ -1,4 +1,5 @@
 import { bounceBack } from '@/lib/injury';
+import JUNIOR_FP from '@/lib/junior-fp.json';
 // League maths: colour bands, Best 22, 1–20 ratings, value scores and team status.
 // Every number on the site comes from these functions so the rules live in one place.
 
@@ -335,6 +336,8 @@ const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x
  *     plus the jump from last season. This is the main driver.
  *   - Draft pedigree adds to it: top 5 picks ≈ 4.5★, 6–10 ≈ 4★, 11–20 ≈ 3.5★, 21–40 ≈ 3★.
  *     It counts for less the more games he plays, and fades each year he stays on the fringe.
+ *   Pedigree floor for 22 and under who haven't had a full go (injured or out of the side): 4★ for top-12 picks with
+ *   100+ junior numbers, top-40 picks with 115+ or top-5 picks; 3.5★ for top-20 picks, 95+ juniors, a 130+ junior game or a 100+ AFL game.
  * Prime (24–27): current ability, with a little extra if he's still climbing.
  * 28+: current ability less an age drop (29 −0.5, 30–32 −1, 33+ −1.5).
  */
@@ -358,7 +361,7 @@ export function projectedPeak(p: Pick<PlayerRow, 'birth_date' | 'hist' | 'averag
   return (base + momentum) * Math.min(1.15, growth);
 }
 
-export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average' | 'games_log'>, lineBonus = 0): number | null {
+export function potential(p: Pick<PlayerRow, 'full_name' | 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average' | 'games_log'>, lineBonus = 0): number | null {
   const a = age(p.birth_date);
   if (a == null) return null;
   const hist = (p.hist ?? []).filter((h) => h[1] > 0);
@@ -397,7 +400,19 @@ export function potential(p: Pick<PlayerRow, 'birth_date' | 'draft_pick' | 'draf
     let P = S + (1 - wS) * Math.max(0, D - S);
     if (a <= 21) P += 0.25;
     const pk = projectedPeak(p);
-    return halfStar(Math.max(P, C, pk ? abilityStars(pk + lineBonus) : 0));
+    // Pedigree floor (22 and under who haven't had a full go yet: under 40 career games or under 12 this year).
+    // Stars are about who could become a great scorer; a quiet, injury-hit or out-of-the-side start doesn't take that away.
+    //   4★   top-12 pick with a 100+ junior average, a top-40 pick with 115+, or a top-5 pick
+    //   3.5★ top-20 pick, a 95+ junior average, a 130+ junior game (from an 80+ average), or a 100+ AFL game this year
+    const [jfp, jmax] = (JUNIOR_FP as Record<string, number[]>)[p.full_name ?? ''] ?? [0, 0];
+    const pick = p.draft_pick ?? 99;
+    const thisYr = hist.find((h) => h[0] === SEASON_NOW)?.[1] ?? 0;
+    const spike = (p.games_log ?? []).some((g) => (g[1] ?? 0) >= 100);
+    const underused = cg < 40 || thisYr < 12;
+    const floor = a > 22 || !underused ? 0
+      : (pick <= 12 && jfp >= 100) || (pick <= 40 && jfp >= 115) || pick <= 5 ? 4
+      : pick <= 20 || jfp >= 95 || (jmax >= 130 && jfp >= 80) || spike ? 3.5 : 0;
+    return halfStar(Math.max(P, C, floor, pk ? abilityStars(pk + lineBonus) : 0));
   }
   if (a <= 27) {
     const slope = full.length >= 2 ? full[full.length - 1][2] - full[full.length - 2][2] : 0;
