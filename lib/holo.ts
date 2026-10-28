@@ -47,7 +47,7 @@ export const HOLO_FOIL: Record<HoloPalette, { frame: string; sweep: string; edge
     foil: 'linear-gradient(60deg, transparent 20%, #f7c04a 32%, #ffffff 40%, #8fb4ff 48%, #ffffff 56%, #6d0f2b 66%, transparent 80%)',
     lines: 'repeating-linear-gradient(55deg, rgb(255 255 255 / 0) 0 6px, rgb(255 255 255 / .4) 6px 7px, rgb(255 255 255 / 0) 7px 10px, rgb(247 192 74 / .45) 10px 11px)',
     glint: ['rgb(255 255 255 / .95)', 'rgb(255 214 120 / .95)'],
-    glare: 'rgb(247 192 74 / .25)', sheen: 'rgb(247 192 74 / .55)', base: '#3a0a1c', shadow: 'rgb(58 10 28 / .45)', dim: 0.8,
+    glare: 'rgb(247 192 74 / .22)', sheen: 'rgb(247 192 74 / .5)', base: '#1c040c', shadow: 'rgb(58 10 28 / .45)', dim: 0.5,
   },
   stk: {
     frame: 'linear-gradient(135deg, #ffffff 0%, #ff2a33 16%, #111111 34%, #ffffff 48%, #ff2a33 62%, #0b0b0c 78%, #ffd6d8 100%)',
