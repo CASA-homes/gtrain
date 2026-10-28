@@ -76,7 +76,7 @@ export function coreAge(teamId: number, players: PlayerRow[]): number {
 export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Phase[] {
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
-  const YOUNG = 22.5, OLD = 28.5, VERY_OLD = 29.5;
+  const YOUNG = 22.5, OLD = 28.5, VERY_OLD = 31;
   const out: Phase[] = [];
   let state: Phase = s[0] <= 4.5 ? 'Prime window' : s[0] >= 8 ? 'Rebuild' : 'Mid table';
   let run = 0;
