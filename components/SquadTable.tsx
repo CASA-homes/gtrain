@@ -12,6 +12,7 @@ export interface SquadPlayer {
   last5: (number | null)[]; games: number | null; tons: number; form: Form;
   valueStars: number; potential: number | null; is_keeper: boolean; status: string | null;
   slot: Slot | null;
+  pos?: number | null;          // spot within the line (0 = top)
   photo_path: string | null; dfs_id: string | null;
   age: number | null; prevAvg: number | null; delta: number | null; trend: -2 | -1 | 0 | 1 | 2 | null;
 }
@@ -45,50 +46,97 @@ function Delta({ p }: { p: SquadPlayer }) {
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const SLOT_COUNT: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 4 };
+// Cells shown per group. The bench gets one spare spot so there's always somewhere to move a player while you shuffle.
+const CELLS: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 5 };
+const SLOTS: Slot[] = [...LINES, 'BENCH'];
 
 /** Can this player fill this slot? Bench and the extended squad take anyone. */
-const fits = (p: SquadPlayer, s: Slot | null) => s == null || s === 'BENCH' || p.positions.includes(s);
+const fits = (p: SquadPlayer, s: Slot | 'EXT') => s === 'EXT' || s === 'BENCH' || p.positions.includes(s);
+
+type Board = { cells: Record<Slot, (number | null)[]>; ext: number[] };
+type Loc = { slot: Slot | 'EXT'; i: number };   // ext i = -1 is the empty "move off the 22" row
+type SortKey = 'avg' | 'apps' | 'ability' | 'pot';
+const SORTS: Record<SortKey, (p: SquadPlayer) => number> = {
+  avg: (p) => p.average ?? -1, apps: (p) => p.games ?? -1, ability: (p) => p.valueStars, pot: (p) => p.potential ?? -1,
+};
+
+/** Lay the squad out on the board: each player in his saved spot, gaps kept, overflow to the extended squad. */
+function initBoard(players: SquadPlayer[]): Board {
+  const cells = Object.fromEntries(SLOTS.map((s) => [s, Array(CELLS[s]).fill(null)])) as Board['cells'];
+  const ext: number[] = [];
+  for (const s of SLOTS) {
+    const xs = players.filter((p) => p.slot === s).sort((a, b) => (a.pos ?? 99) - (b.pos ?? 99) || (b.average ?? 0) - (a.average ?? 0));
+    for (const p of xs) {
+      const arr = cells[s];
+      const at = p.pos != null && p.pos < arr.length && arr[p.pos] == null ? p.pos : arr.indexOf(null);
+      if (at < 0) ext.push(p.id); else arr[at] = p.id;
+    }
+  }
+  ext.push(...players.filter((p) => !p.slot).sort((a, b) => (b.average ?? 0) - (a.average ?? 0)).map((p) => p.id));
+  return { cells, ext };
+}
+const key = (b: Board) => JSON.stringify(b.cells) + '|' + [...b.ext].sort().join(',');
 
 /**
- * Starting 22 + extended squad. The owner can swap players by dragging one row onto another,
- * or by tapping the swap icon on two rows. Changes save in one go.
+ * Starting 22 + extended squad. The owner moves players by dragging a row onto another row or onto an empty spot,
+ * or by tapping ⇅ on a player and then tapping where he goes. Lines can have gaps. Changes save in one go.
+ * Clicking Avg / Apps / Current ability / Pot. sorts within each line (click again to go back to the coach's order).
  */
 export function SquadTable({ players, teamId, editable, saved, onToggle }: {
   players: SquadPlayer[]; teamId: number; editable: boolean; saved: boolean; onToggle?: (open: boolean) => void;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [slots, setSlots] = useState<Map<number, Slot | null>>(() => new Map(players.map((p) => [p.id, p.slot])));
+  const start0 = useMemo(() => initBoard(players), [players]);
+  const [board, setBoard] = useState<Board>(start0);
   const [picked, setPicked] = useState<number | null>(null);
   const [dragId, setDragId] = useState<number | null>(null);
-  const [overId, setOverId] = useState<number | null>(null);
+  const [over, setOver] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortKey | null>(null);
   const [msg, setMsg] = useState<{ text: string; bad?: boolean } | null>(null);
   const [pending, start] = useTransition();
-  const dirty = players.some((p) => slots.get(p.id) !== p.slot);
+  const dirty = key(board) !== key(start0);
   const byId = useMemo(() => new Map(players.map((p) => [p.id, p])), [players]);
 
-  function swap(a: number, b: number) {
-    if (a === b) return;
-    const pa = byId.get(a)!, pb = byId.get(b)!;
-    const sa = slots.get(a) ?? null, sb = slots.get(b) ?? null;
-    if (!fits(pa, sb)) return setMsg({ text: `${pa.name} can’t play ${sb}.`, bad: true });
-    if (!fits(pb, sa)) return setMsg({ text: `${pb.name} can’t play ${sa}.`, bad: true });
-    const next = new Map(slots);
-    next.set(a, sb); next.set(b, sa);
-    setSlots(next);
-    setMsg({ text: `${pa.name} ⇄ ${pb.name}` });
+  function locOf(b: Board, id: number): Loc {
+    for (const s of SLOTS) { const i = b.cells[s].indexOf(id); if (i >= 0) return { slot: s, i }; }
+    return { slot: 'EXT', i: b.ext.indexOf(id) };
+  }
+  const at = (b: Board, l: Loc) => (l.slot === 'EXT' ? (l.i >= 0 ? b.ext[l.i] ?? null : null) : b.cells[l.slot][l.i]);
+
+  /** Move a player to a spot. If someone's there they trade places (if he can play the other spot). */
+  function move(id: number, to: Loc) {
+    const p = byId.get(id)!;
+    const from = locOf(board, id);
+    if (from.slot === to.slot && from.i === to.i) return;
+    const other = at(board, to);
+    if (!fits(p, to.slot)) return setMsg({ text: `${p.name} can’t play ${to.slot}.`, bad: true });
+    if (other != null && !fits(byId.get(other)!, from.slot)) return setMsg({ text: `${byId.get(other)!.name} can’t play ${from.slot}.`, bad: true });
+    const cells = Object.fromEntries(SLOTS.map((s) => [s, [...board.cells[s]]])) as Board['cells'];
+    let ext = [...board.ext];
+    // take him out
+    if (from.slot === 'EXT') ext[from.i] = other ?? -1; else cells[from.slot][from.i] = other;
+    // put him in
+    if (to.slot === 'EXT') { if (to.i >= 0 && other != null) ext[to.i] = id; else ext.push(id); } else cells[to.slot][to.i] = id;
+    ext = ext.filter((x) => x !== -1);
+    setBoard({ cells, ext });
+    setMsg({ text: other != null ? `${p.name} ⇄ ${byId.get(other)!.name}` : `${p.name} → ${to.slot === 'EXT' ? 'extended squad' : to.slot === 'BENCH' ? 'bench' : to.slot}` });
   }
 
-  function tapSwap(id: number) {
-    if (picked == null) { setPicked(id); setMsg({ text: `Pick who swaps with ${byId.get(id)!.name}` }); return; }
+  function tap(id: number | null, to: Loc) {
+    if (picked == null) { if (id != null) { setPicked(id); setMsg({ text: `Now tap where ${byId.get(id)!.name} goes` }); } return; }
     if (picked === id) { setPicked(null); setMsg(null); return; }
-    swap(picked, id);
+    move(picked, to);
     setPicked(null);
   }
 
   function save() {
+    if (board.cells.BENCH.filter((x) => x != null).length > SLOT_COUNT.BENCH) return setMsg({ text: `The bench holds ${SLOT_COUNT.BENCH}. Move one to the extended squad first.`, bad: true });
+    const entries: { id: number; slot: Slot | null; pos: number | null }[] = [];
+    for (const s of SLOTS) board.cells[s].forEach((id, i) => { if (id != null) entries.push({ id, slot: s, pos: i }); });
+    for (const id of board.ext) entries.push({ id, slot: null, pos: null });
     start(async () => {
-      const res = await saveLineup(teamId, [...slots].map(([id, slot]) => ({ id, slot })));
+      const res = await saveLineup(teamId, entries);
       if ('error' in res && res.error) setMsg({ text: res.error, bad: true });
       else { setMsg({ text: 'Lineup saved' }); router.refresh(); }
     });
@@ -101,20 +149,43 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
     });
   }
 
-  const sortAvg = (xs: SquadPlayer[]) => [...xs].sort((a, b) => (b.average ?? 0) - (a.average ?? 0));
-  const inSlot = (s: Slot | null) => sortAvg(players.filter((p) => (slots.get(p.id) ?? null) === s));
+  type Row = { id: number | null; loc: Loc; spare?: boolean };
+  /** Rows for a group, in the coach's order (gaps where he left them) or sorted with gaps at the bottom. */
+  const rowsFor = (s: Slot | 'EXT'): Row[] => {
+    const raw: Row[] = s === 'EXT'
+      ? [...board.ext.map((id, i) => ({ id, loc: { slot: 'EXT' as const, i } })), ...(editable ? [{ id: null, loc: { slot: 'EXT' as const, i: -1 } }] : [])]
+      : board.cells[s].map((id, i) => ({ id, loc: { slot: s, i }, spare: s === 'BENCH' && i === SLOT_COUNT.BENCH }));
+    const shown = s === 'BENCH' && !editable ? raw.filter((r) => !r.spare) : raw;
+    if (!sortBy) return shown;
+    const f = SORTS[sortBy];
+    return [...shown.filter((r) => r.id != null).sort((a, b) => f(byId.get(b.id!)!) - f(byId.get(a.id!)!)), ...shown.filter((r) => r.id == null)];
+  };
+  const count = (s: Slot | 'EXT') => (s === 'EXT' ? board.ext.length : board.cells[s].filter((x) => x != null).length);
   const blocks = [
     {
       title: 'Starting 22',
       sub: saved ? 'Set by the coach' : '5 DEF · 7 MID · 1 RUC · 5 FWD · 4 bench, auto-picked on 2026 average',
       groups: [
-        ...LINES.map((l) => ({ key: l, name: LINE_NAMES[l], colour: C[l], players: inSlot(l), need: SLOT_COUNT[l] })),
-        { key: 'BENCH', name: 'Bench', colour: C.muted, players: inSlot('BENCH'), need: SLOT_COUNT.BENCH },
+        ...LINES.map((l) => ({ key: l as Slot | 'EXT', name: LINE_NAMES[l], colour: C[l], need: SLOT_COUNT[l] })),
+        { key: 'BENCH' as Slot | 'EXT', name: 'Bench', colour: C.muted, need: SLOT_COUNT.BENCH },
       ],
     },
-    { title: 'Extended squad', sub: `${inSlot(null).length} not selected`, groups: [{ key: 'EXT', name: 'Not selected', colour: C.muted, players: inSlot(null), need: 0 }] },
+    { title: 'Extended squad', sub: `${board.ext.length} not selected`, groups: [{ key: 'EXT' as Slot | 'EXT', name: 'Not selected', colour: C.muted, need: 0 }] },
   ];
   const cols = (open ? 13 : 9) + (editable ? 1 : 0);
+  const SortHead = ({ k, label, title, style }: { k: SortKey; label: string; title?: string; style: React.CSSProperties }) => (
+    <th style={style} title={title} aria-sort={sortBy === k ? 'descending' : undefined}>
+      <button type="button" onClick={() => setSortBy(sortBy === k ? null : k)} title={sortBy === k ? 'Back to the coach’s order' : `Sort each line by ${label}`}
+        style={{ all: 'unset', cursor: 'pointer', fontWeight: sortBy === k ? 800 : undefined, textDecoration: sortBy === k ? 'underline' : undefined, textUnderlineOffset: 3 }}>
+        {label}{sortBy === k ? ' ↓' : ''}
+      </button>
+    </th>
+  );
+  const dropProps = (r: Row) => editable ? {
+    onDragOver: (e: React.DragEvent) => { e.preventDefault(); const k = `${r.loc.slot}:${r.loc.i}`; if (over !== k) setOver(k); },
+    onDragLeave: () => setOver((o) => (o === `${r.loc.slot}:${r.loc.i}` ? null : o)),
+    onDrop: (e: React.DragEvent) => { e.preventDefault(); const from = Number(e.dataTransfer.getData('text/plain')) || dragId; if (from) move(from, r.loc); setDragId(null); setOver(null); },
+  } : {};
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
@@ -123,7 +194,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
         {editable && saved && !dirty && <button type="button" className="btn" onClick={reset} disabled={pending}>Auto-pick</button>}
         {editable && dirty && (
           <>
-            <button type="button" className="btn" onClick={() => { setSlots(new Map(players.map((p) => [p.id, p.slot]))); setPicked(null); setMsg(null); }} disabled={pending}>Undo</button>
+            <button type="button" className="btn" onClick={() => { setBoard(start0); setPicked(null); setMsg(null); }} disabled={pending}>Undo</button>
             <button type="button" className="btn dark" onClick={save} disabled={pending}>{pending ? 'Saving…' : 'Save lineup'}</button>
           </>
         )}
@@ -144,20 +215,20 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
             <table className="squad" style={{ minWidth: open ? 930 : 610 }}>
               <thead>
                 <tr>
-                  {editable && <th style={{ width: 34 }}><span className="sr-only">Swap</span></th>}
+                  {editable && <th style={{ width: 34 }}><span className="sr-only">Move</span></th>}
                   <th style={{ width: 82 }}>Pos</th>
                   <th style={{ width: 40 }}><span className="sr-only">Player photo</span></th>
                   <th>Player</th>
-                  <th style={{ width: 54, textAlign: 'center' }}>Avg</th>
+                  <SortHead k="avg" label="Avg" style={{ width: 54, textAlign: 'center' }} />
                   {open && <th style={{ width: 176, textAlign: 'center' }}>Last 5</th>}
                   {open && <th style={{ width: 40, textAlign: 'center' }}>Age</th>}
                   {open && <th style={{ width: 48, textAlign: 'center' }} title="Change on last year's average">± ’25</th>}
                   {open && <th style={{ width: 50, textAlign: 'center' }} title="General trend of his average over recent seasons">Trend</th>}
                   <th style={{ width: 40, textAlign: 'center' }}>Form</th>
-                  <th style={{ width: 38, textAlign: 'center' }}>Apps</th>
+                  <SortHead k="apps" label="Apps" style={{ width: 44, textAlign: 'center' }} />
                   <th style={{ width: 38, textAlign: 'center' }} title="100+ scores in the last 5">100s</th>
-                  <th style={{ width: 96 }}>Current ability</th>
-                  <th style={{ width: 78 }}>Pot.</th>
+                  <SortHead k="ability" label="Current ability" style={{ width: 110 }} />
+                  <SortHead k="pot" label="Pot." style={{ width: 78 }} />
                 </tr>
               </thead>
               {b.groups.map((g) => (
@@ -166,39 +237,55 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                     <td colSpan={cols}>
                       <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <span className="dot" style={{ background: g.colour }} />{g.name}
-                        <span className="muted" style={{ fontWeight: 400 }}>{g.need && g.players.length !== g.need ? `${g.players.length} of ${g.need}` : g.players.length}</span>
+                        <span className="muted" style={{ fontWeight: 400 }}>{g.need ? `${count(g.key)} of ${g.need}` : count(g.key)}</span>
+                        {g.key === 'BENCH' && count('BENCH') > SLOT_COUNT.BENCH && <span style={{ fontWeight: 400, fontSize: 12, color: C.redFg }}>One too many: move one off before saving</span>}
                       </span>
                     </td>
                   </tr>
-                  {g.players.map((p) => {
-                    const isPicked = picked === p.id;
+                  {rowsFor(g.key).map((r) => {
+                    const k = `${r.loc.slot}:${r.loc.i}`;
                     const pickedP = picked != null ? byId.get(picked)! : null;
+                    if (r.id == null) {
+                      const ok = !pickedP || fits(pickedP, r.loc.slot);
+                      return (
+                        <tr key={k} {...dropProps(r)} className="empty-slot"
+                          style={{ outline: over === k ? `2px dashed ${C.green4}` : undefined, outlineOffset: -2, background: over === k ? '#eef5ea' : undefined, opacity: ok ? 1 : 0.45 }}>
+                          {editable && <td style={{ paddingLeft: 6, paddingRight: 0 }}>
+                            {pickedP && ok && <button type="button" onClick={() => tap(null, r.loc)} aria-label={`Move ${pickedP.name} here`} title="Move here"
+                              style={{ width: 26, height: 26, borderRadius: 8, border: `1px solid ${C.green5}`, background: '#fff', color: C.green5, cursor: 'pointer', padding: 0, fontWeight: 700 }}>+</button>}
+                          </td>}
+                          <td colSpan={cols - (editable ? 1 : 0)} className="muted" style={{ fontSize: 13, fontStyle: 'italic', borderTop: '1px dashed var(--line)' }}>
+                            {r.loc.slot === 'EXT' ? 'Drop here to take a player off the 22' : r.spare ? 'Spare bench spot: park a player here while you shuffle' : `Empty ${r.loc.slot === 'BENCH' ? 'bench' : r.loc.slot} spot`}
+                          </td>
+                        </tr>
+                      );
+                    }
+                    const p = byId.get(r.id)!;
+                    const isPicked = picked === p.id;
                     // While a player is picked, dim the rows he can't swap with.
-                    const blocked = pickedP && !isPicked && !(fits(pickedP, slots.get(p.id) ?? null) && fits(p, slots.get(pickedP.id) ?? null));
-                    const moved = slots.get(p.id) !== p.slot;
+                    const blocked = pickedP && !isPicked && !(fits(pickedP, r.loc.slot) && fits(p, locOf(board, pickedP.id).slot));
+                    const moved = (() => { const l0 = locOf(start0, p.id); return l0.slot !== r.loc.slot || (r.loc.slot !== 'EXT' && l0.i !== r.loc.i); })();
                     return (
                       <tr
                         key={p.id}
                         draggable={editable}
                         onDragStart={editable ? (e) => { setDragId(p.id); e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(p.id)); } : undefined}
-                        onDragEnd={editable ? () => { setDragId(null); setOverId(null); } : undefined}
-                        onDragOver={editable ? (e) => { e.preventDefault(); if (overId !== p.id) setOverId(p.id); } : undefined}
-                        onDragLeave={editable ? () => setOverId((o) => (o === p.id ? null : o)) : undefined}
-                        onDrop={editable ? (e) => { e.preventDefault(); const from = Number(e.dataTransfer.getData('text/plain')) || dragId; if (from) swap(from, p.id); setDragId(null); setOverId(null); } : undefined}
+                        onDragEnd={editable ? () => { setDragId(null); setOver(null); } : undefined}
+                        {...dropProps(r)}
                         style={{
-                          background: isPicked ? '#e3efdc' : overId === p.id && dragId !== p.id ? '#eef5ea' : moved ? '#f8f6e8' : undefined,
+                          background: isPicked ? '#e3efdc' : over === k && dragId !== p.id ? '#eef5ea' : moved ? '#f8f6e8' : undefined,
                           opacity: blocked || dragId === p.id ? 0.45 : 1,
                           cursor: editable ? 'grab' : undefined,
-                          outline: overId === p.id && dragId !== p.id ? `2px dashed ${C.green4}` : undefined,
+                          outline: over === k && dragId !== p.id ? `2px dashed ${C.green4}` : undefined,
                           outlineOffset: -2,
                         }}
                       >
                         {editable && (
                           <td style={{ paddingLeft: 6, paddingRight: 0 }}>
                             <button
-                              type="button" onClick={() => tapSwap(p.id)} disabled={!!blocked}
-                              aria-pressed={isPicked} aria-label={isPicked ? `Cancel swap for ${p.name}` : pickedP ? `Swap ${pickedP.name} with ${p.name}` : `Swap ${p.name}`}
-                              title={isPicked ? 'Cancel' : pickedP ? `Swap with ${pickedP.name}` : 'Swap'}
+                              type="button" onClick={() => tap(p.id, r.loc)} disabled={!!blocked}
+                              aria-pressed={isPicked} aria-label={isPicked ? `Cancel move for ${p.name}` : pickedP ? `Swap ${pickedP.name} with ${p.name}` : `Move ${p.name}`}
+                              title={isPicked ? 'Cancel' : pickedP ? `Swap with ${pickedP.name}` : 'Move'}
                               style={{ width: 26, height: 26, borderRadius: 8, border: `1px solid ${isPicked ? C.green5 : 'var(--line)'}`, background: isPicked ? C.green5 : '#fff', color: isPicked ? '#fff' : C.muted, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', padding: 0 }}
                             >
                               <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -240,7 +327,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
         </section>
       ))}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 18px', alignItems: 'center', fontSize: 12 }} className="muted">
-        {editable && <span>Drag a player onto another, or tap <b style={{ fontWeight: 600 }}>⇅</b> on two players, to swap them.</span>}
+        {editable && <span>Drag a player onto another player or an empty spot, or tap <b style={{ fontWeight: 600 }}>⇅</b> then tap where he goes. Click Avg, Apps, Current ability or Pot. to sort each line.</span>}
         {open && (
           <>
             <span className="eyebrow">Trend</span>

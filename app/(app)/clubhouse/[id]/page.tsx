@@ -61,15 +61,16 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   // Which slot each player is in: the coach's saved lineup, or the auto-picked Best 22.
   const slotOf = new Map<number, Slot | null>();
-  for (const l of LINES) for (const p of a.lineup.lines[l]) slotOf.set(p.id, l);
-  for (const p of a.lineup.bench) slotOf.set(p.id, 'BENCH');
+  const posOf = new Map<number, number>();
+  for (const l of LINES) a.lineup.lines[l].forEach((p, i) => { slotOf.set(p.id, l); posOf.set(p.id, a.lineupSaved ? (p.lineup_pos ?? i) : i); });
+  a.lineup.bench.forEach((p, i) => { slotOf.set(p.id, 'BENCH'); posOf.set(p.id, a.lineupSaved ? (p.lineup_pos ?? i) : i); });
   const rows: SquadPlayer[] = a.players.map((p: PlayerRow) => {
     const r = league.ratings.get(p.id)!;
     return {
       id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, last5: p.last5,
       games: p.games, tons: played(p.last5).filter((s) => s >= 100).length, form: form(p),
       valueStars: r.valueStars, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
-      slot: slotOf.get(p.id) ?? null, photo_path: p.photo_path, dfs_id: p.dfs_id,
+      slot: slotOf.get(p.id) ?? null, pos: posOf.get(p.id) ?? null, photo_path: p.photo_path, dfs_id: p.dfs_id,
       ...trendOf(p),
     };
   });

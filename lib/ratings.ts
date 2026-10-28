@@ -32,6 +32,7 @@ export interface PlayerRow {
   photo_path: string | null;
   list_status: string | null;   // Retired / Delisted / long-term injury: out of 2027 projections
   lineup: Slot | null;
+  lineup_pos?: number | null;   // spot within the line (0 = top), when the coach has ordered it
 }
 
 /** One 2026 game from DFS: [round, AFL Fantasy points, time on ground %, kick-ins]. */
@@ -454,7 +455,7 @@ export function best22(players: PlayerRow[]): Best22 {
 /** The coach's saved lineup, or null if they haven't set a complete one. */
 export function savedLineup(players: PlayerRow[]): Best22 | null {
   if (!players.some((p) => p.lineup)) return null;
-  const by = (s: Slot) => players.filter((p) => p.lineup === s).sort((a, b) => (b.average ?? 0) - (a.average ?? 0));
+  const by = (s: Slot) => players.filter((p) => p.lineup === s).sort((a, b) => (a.lineup_pos ?? 99) - (b.lineup_pos ?? 99) || (b.average ?? 0) - (a.average ?? 0));
   const lines = { DEF: by('DEF'), MID: by('MID'), RUC: by('RUC'), FWD: by('FWD') };
   const extended = players.filter((p) => !p.lineup).sort((a, b) => (b.average ?? 0) - (a.average ?? 0));
   return { lines, bench: by('BENCH'), extended };
