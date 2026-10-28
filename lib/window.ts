@@ -113,6 +113,9 @@ export const WINDOW_PIN: Record<string, Record<number, Phase>> = {
   'NSW-ACT Academy': { 2026: 'Mid table', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
   'Fo’ Sheezel my Neezel': { 2026: 'Rebuild', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
   "Muzza's Murabito's": { 2027: 'Prime window', 2028: 'Prime window', 2029: 'Closing window', 2030: 'Closing window' },
+  // Smith, Anderson and Rankine turn 30 and English, Dunkley and Whitfield are 33+ (or retired) by 2029–30.
+  'Bodega Boys': { 2027: 'Prime window', 2028: 'Prime window', 2029: 'Closing window', 2030: 'Closing window' },
+  'Bito’s Boys': { 2026: 'Rebuild', 2027: 'Rebuild', 2028: 'Mid table', 2029: 'Mid table', 2030: 'Entering window' },
   // Kept senior scorers (Miller, Greene, Impey), so the window closes over two years, then mid table before a rebuild.
   'Serong So’Right': { 2027: 'Closing window', 2028: 'Closing window', 2029: 'Mid table', 2030: 'Rebuild' },
 };

@@ -5,7 +5,7 @@
 export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
   'Bodega Boys': {
     headline: 'Premiers through the injuries, keeper dilemma ahead',
-    body: 'A season that should have fallen apart. English, Butters and Tom Green all lost big chunks of the year, and Heeney was hampered by a groin injury. Instead Bodega traded their way to the flag on the back of Bailey Smith, Rankine and Max Hall, taken at pick 6, then beat Serong by 61 in the decider. The core is strong and stable, with prime-age premiums and a deep layer of kids already scoring, like Garcia, Darcy Wilson, Humphries and Fonti. The dilemma is that a lot of the top scoring still comes from older players, who will have to make way for the youth at some point. A contender for 2027 and beyond.',
+    body: 'A season that should have fallen apart. English, Butters and Tom Green all lost big chunks of the year, and Heeney was hampered by a groin injury. Instead Bodega traded their way to the flag on the back of Bailey Smith, Rankine and Max Hall, taken at pick 6, then beat Serong by 61 in the decider. The core is strong and stable, with prime-age premiums and a deep layer of kids already scoring, like Garcia, Darcy Wilson, Humphries and Fonti. The dilemma is that a lot of the top scoring still comes from older players. By 2029–30 Smith, Anderson and Rankine are turning 30, and English, Dunkley and Whitfield are 33+ or retired, so the window starts closing then. To hold it open they need a younger quality ruck, a star defender and a third young midfielder behind Garcia and Wilson. A contender for 2027 and 2028.',
   },
 
   'Serong So’Right': {
@@ -39,7 +39,7 @@ export const TEAM_NOTES: Record<string, { headline: string; body: string }> = {
   },
   'Bito’s Boys': {
     headline: 'Elite kids, and veterans he won’t let go',
-    body: 'They finished 5–16 and ninth in 2026, but the young end of this list is as good as anyone’s. Ryley Sanders (81 at 21) is a genuine midfield talent. Sam Lalor was a No.1 pick, and Sullivan Robey and Dyson Sharp were first-rounders, and Logan Morris, Lachie Evans and Sam Swadling add depth. Pick 2 in 2027 adds another blue-chipper, with 12 and 22 behind it. The problem is the other end. Neale is 33 and now at Collingwood, Cripps is 31, de Goey 30, and Noble and Milera 29. They’re still scoring, and that’s exactly why they should have been moved for picks by now. Holding them only keeps Bito’s stuck in the middle. Cash in the veterans and this is a top-four side by the time the kids peak.',
+    body: 'They finished 5–16 and ninth in 2026, but the young end of this list is as good as anyone’s. Ryley Sanders (81 at 21) is a genuine midfield talent. Sam Lalor was a No.1 pick, and Sullivan Robey and Dyson Sharp were first-rounders, and Logan Morris, Lachie Evans and Sam Swadling add depth. Pick 2 in 2027 adds another blue-chipper, with 12 and 22 behind it. The problem is the other end. Neale is 33 and now at Collingwood, Cripps is 31, de Goey 30, and Noble and Milera 29. They’re still scoring, and that’s exactly why they should have been moved for picks by now. Holding them only keeps Bito’s stuck in the middle. Cash in the veterans and this is a mid-table side by 2028–29 and entering the window in 2030, as the kids peak.',
   },
 
   'Ram Dawgs': {
