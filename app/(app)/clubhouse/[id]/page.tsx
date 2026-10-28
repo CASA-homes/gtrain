@@ -97,7 +97,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   // Verdict tabs: squad summary and a mock of the 2027 redraft guided by every club's 2027 window phase.
   const summary = squadSummary(a.players, league.ratings);
-  const phases = new Map(teamIds.map((id) => [id, (id === a.team.id ? windowPts : windowOf(id)).find((p) => p.year === CURRENT_SEASON + 1)?.phase ?? 'Mid rebuild']));
+  const phases = new Map(teamIds.map((id) => [id, (id === a.team.id ? windowPts : windowOf(id)).find((p) => p.year === CURRENT_SEASON + 1)?.phase ?? 'Mid table']));
   const kept = new Set([...lists.values()].flatMap((l) => l.keepers));
   const outlook = draftOutlook(a.team.id,
     league.picks.filter((p) => p.year === CURRENT_SEASON + 1 && p.overall != null).map((p) => ({ overall: p.overall!, round: p.round, owner_team_id: p.owner_team_id })),

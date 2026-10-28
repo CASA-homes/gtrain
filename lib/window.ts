@@ -3,7 +3,7 @@ import { age, curve, type PlayerRow, type Ratings } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { FINISHES } from '@/lib/window-history';
 
-export type Phase = 'Early rebuild' | 'Mid rebuild' | 'Entering window' | 'Prime window' | 'Leaving window';
+export type Phase = 'Rebuild' | 'Mid table' | 'Entering window' | 'Prime window' | 'Closing window';
 export interface WindowPoint { year: number; rank: number; kind: 'actual' | 'est' | 'proj'; flag: boolean; phase: Phase; lo: number; hi: number }
 
 export const FIRST_YEAR = 2022;
@@ -61,49 +61,60 @@ export function coreAge(teamId: number, players: PlayerRow[]): number {
 }
 
 /**
- * Phases follow the list lifecycle in order: prime → leaving → early rebuild → mid rebuild → entering → prime.
- * Each season is read off a smoothed ladder position (so one odd year doesn't flip the phase), a club can only
- * move one step along that cycle at a time, and a lone season between two of the same phase is folded in.
+ * Phases follow the list lifecycle in order: prime → closing (1–2 years) → mid table → rebuild → mid table →
+ * entering (1 year) → prime. Each season is read off a smoothed ladder position (so one odd year doesn't flip it),
+ * and a club only moves one step along the cycle at a time.
+ *   Prime    top-3ish and holding.
+ *   Closing  the decline from a window: one year, or two if the list still has the senior scorers to contend.
+ *   Mid table the landing spot after a window, and the first step up out of a rebuild.
+ *   Rebuild  bottom of the ladder, building through the draft. One phase, however early or late in it.
+ *   Entering one season only: the year a rising list breaks into the top four, then it's prime (or back to mid table).
  */
 export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Phase[] {
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
   const YOUNG = 22.5, OLD = 28.5;
-  // Entering needs a list on the rise with a core old enough to win but young enough to stay together.
-  const readyAge = (a: number) => a >= YOUNG && a <= 27;
   const out: Phase[] = [];
-  let state: Phase = s[0] <= 4.5 ? (ages[0] < YOUNG ? 'Entering window' : 'Prime window') : s[0] >= 7.5 ? 'Early rebuild' : 'Mid rebuild';
+  let state: Phase = s[0] <= 3.5 ? 'Prime window' : s[0] >= 7.5 ? 'Rebuild' : 'Mid table';
   let run = 0;
   for (let i = 0; i < ranks.length; i++) {
     const x = s[i], ahead = s[i + 1] ?? x, a = ages[i];
     if (i > 0) {
       const was = state;
       if (state === 'Prime window') {
-        // Leaving is a fast decline: a sharp drop coming, an old core starting to slide, or already out of the top half.
-        if (ahead >= x + 1.5 || (a >= OLD && ahead > x + 0.5) || (x > 5 && ahead > 5)) state = 'Leaving window';
-      } else if (state === 'Leaving window') {
-        if (x <= 3 && a < OLD) state = 'Prime window'; else if (x >= 7 || run >= 2) state = 'Early rebuild';
-      } else if (state === 'Early rebuild') {
-        if ((x <= 7.5 && ahead <= x + 0.25) || (a <= 24 && ahead <= x - 1)) state = 'Mid rebuild';
-      } else if (state === 'Mid rebuild') {
-        if (x >= 7 && ahead >= x + 0.75) state = 'Early rebuild';            // going backwards: back into the rebuild
-        else if (x <= 6.5 && (ahead <= x - 0.5 || x <= 5) && readyAge(a)) state = 'Entering window';
+        if (ahead >= x + 1.5 || (a >= OLD && ahead > x + 0.5) || x > 5) state = 'Closing window';
+      } else if (state === 'Closing window') {
+        // Still in the top three with a core that isn't old: the window reopens. Otherwise one more year at most.
+        if (x <= 3 && a < OLD) state = 'Prime window';
+        else if (run >= 2 || x > 4.5) state = x >= 8.5 ? 'Rebuild' : 'Mid table';
+      } else if (state === 'Mid table') {
+        if (ahead <= 4.5 && ahead <= x - 0.5 && a >= YOUNG) state = 'Entering window';
+        else if (x >= 7.5 || (x >= 6 && ahead >= x + 1)) state = 'Rebuild';
+      } else if (state === 'Rebuild') {
+        if (x <= 6.5 || (x <= 7.5 && ahead <= x - 1)) state = 'Mid table';
       } else if (state === 'Entering window') {
-        if (x <= 4 && a >= YOUNG) state = 'Prime window'; else if (x >= 7) state = 'Mid rebuild';
+        state = x <= 5.5 ? 'Prime window' : 'Mid table';                 // entering lasts one season
       }
       run = state === was ? run + 1 : 1;
     } else run = 1;
-    // A flag is a flag, but a premiership won by a very young core is the start of a window, not its peak.
-    if (flags[i]) { state = a < YOUNG ? 'Entering window' : 'Prime window'; run = 1; }
+    if (flags[i]) { state = 'Prime window'; run = 1; }
     out.push(state);
   }
-  for (let i = 1; i < out.length - 1; i++) if (out[i - 1] === out[i + 1] && out[i] !== out[i - 1] && !flags[i]) out[i] = out[i - 1];
+  // Fold a lone season between two of the same phase (not the one-year phases, which are meant to be short).
+  for (let i = 1; i < out.length - 1; i++) {
+    if (out[i - 1] === out[i + 1] && out[i] !== out[i - 1] && !flags[i] && out[i] !== 'Entering window' && out[i] !== 'Closing window') out[i] = out[i - 1];
+  }
   return out;
 }
 
 /** Commish calls: set a club's phase for particular seasons when the numbers can't see what's coming. */
 export const WINDOW_PIN: Record<string, Record<number, Phase>> = {
-  'A Brayshaw Thing': { 2029: 'Mid rebuild', 2030: 'Entering window' },
+  'A Brayshaw Thing': { 2025: 'Mid table', 2026: 'Mid table', 2027: 'Rebuild', 2028: 'Rebuild', 2029: 'Rebuild', 2030: 'Mid table' },
+  'NSW-ACT Academy': { 2026: 'Mid table', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
+  'Fo’ Sheezel my Neezel': { 2026: 'Rebuild', 2027: 'Mid table', 2028: 'Entering window', 2029: 'Prime window', 2030: 'Prime window' },
+  "Muzza's Murabito's": { 2027: 'Prime window', 2028: 'Prime window', 2029: 'Closing window', 2030: 'Closing window' },
+  // Kept senior scorers (Miller, Greene, Impey), so the window closes over two years, then mid table before a rebuild.
+  'Serong So’Right': { 2027: 'Closing window', 2028: 'Closing window', 2029: 'Mid table', 2030: 'Rebuild' },
 };
 
 const SPREAD: Record<number, number> = { 2027: 0.8, 2028: 1.5, 2029: 2.2, 2030: 2.8 };

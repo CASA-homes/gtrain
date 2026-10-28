@@ -61,7 +61,7 @@ export function squadSummary(players: PlayerRow[], ratings: Map<number, Ratings>
 // ---------- Draft outlook ----------
 interface Prospect { name: string; chance: number; relevant: number; type?: string; position?: string; rank: number }
 const ROOKIES = ([...(crystal as { prospects: Prospect[] }).prospects]).sort((a, b) => b.chance - a.chance);
-const YOUTH_FIRST: Phase[] = ['Early rebuild', 'Mid rebuild', 'Entering window', 'Leaving window'];
+const YOUTH_FIRST: Phase[] = ['Rebuild', 'Mid table', 'Entering window', 'Closing window'];
 
 export interface DraftLine { pick: number; round: number; rookie: string | null; rookieType: string | null; vet: string | null; vetProj: number | null; call: 'rookie' | 'vet' }
 export interface Outlook { phase: Phase; strategy: string; lines: DraftLine[]; later: number[] }
@@ -78,7 +78,7 @@ export function draftOutlook(teamId: number, picks: { overall: number; round: nu
   const vets = [...pool].sort((a, b) => projected2027(b) - projected2027(a));
   const mine: DraftLine[] = [];
   for (const pk of order) {
-    const youth = YOUTH_FIRST.includes(phases.get(pk.owner_team_id) ?? 'Mid rebuild');
+    const youth = YOUTH_FIRST.includes(phases.get(pk.owner_team_id) ?? 'Mid table');
     const takeRookie = rookies.length > 0 && (youth || (vets.length > 0 && rookies[0].chance >= 45));
     if (pk.owner_team_id === teamId && mine.length < 3) {
       mine.push({ pick: pk.overall, round: pk.round, rookie: rookies[0]?.name ?? null, rookieType: rookies[0]?.type ?? null,
@@ -86,14 +86,14 @@ export function draftOutlook(teamId: number, picks: { overall: number; round: nu
     }
     if (takeRookie) rookies.shift(); else vets.shift();
   }
-  const phase = phases.get(teamId) ?? 'Mid rebuild';
+  const phase = phases.get(teamId) ?? 'Mid table';
   const first = mine[0]?.pick;
   const strategy =
     phase === 'Prime window' ? `In the window, so picks are for points now.${first && first >= 8 ? ' Late in the order: weigh the best rookie left against a dropped proven scorer who helps this year.' : ' Take the best player who helps win in 2027, rookie or not.'}`
     : phase === 'Entering window' ? 'On the way up: mix it. A rookie who can play in a year or two, or a ready-made scorer to push into the top four.'
-    : phase === 'Leaving window' ? 'The window is closing: restock young talent now rather than chase one more year.'
-    : phase === 'Mid rebuild' ? 'Mid rebuild: go young and talented. Best rookie available, and let the points come later.'
-    : 'Early rebuild: pure upside. Take the highest-ceiling rookie on the board with every early pick.';
+    : phase === 'Closing window' ? 'The window is closing: squeeze one more push out of the seniors, but start restocking young talent with the early picks.'
+    : phase === 'Mid table' ? 'Mid table: go young and talented. Best rookie available, plus a scorer only if he’s young enough to be there when the window opens.'
+    : 'Rebuild: pure upside. Take the highest-ceiling rookie on the board with every early pick.';
   const later = order.filter((p) => p.owner_team_id === teamId).slice(3).map((p) => p.overall);
   return { phase, strategy, lines: mine, later };
 }
