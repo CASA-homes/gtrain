@@ -9,6 +9,8 @@ export const HOLO: Record<string, Holo> = {
   'I. Rankine': { art: '/holo/ade-feathers.svg', photo: '/players/izak-rankine.png', palette: 'ade' },
   'N. Anderson': { art: '/holo/gcs-sunrise.svg', photo: '/players/noah-anderson.png', palette: 'gcs' },
   'J. Daicos': { art: '/holo/col-magpie.jpg', photo: '/players/josh-daicos.png', palette: 'col' },
+  'D. Wilmot': { art: '/holo/brl-kickin.svg', photo: 'https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/1017067.png', palette: 'brl' },
+  'D. Wilson': { art: '/holo/stk-breakout.svg', photo: 'https://s.afl.com.au/staticfile/AFL%20Tenant/AFL/Players/ChampIDImages/AFL/2026014/1027875.png', palette: 'stk' },
 };
 
 /** Foil colours per palette: the frame, the always-on sweep, the mouse-following foil, the glints and the glare. */
