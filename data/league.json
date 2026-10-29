@@ -311,9 +311,9 @@
    "Predicted ladder ($5 entry in fines, closest wins $25 fines credit)",
    "Side bets (single pint unless stated)"
   ],
-  "squad_breakdown": "18 starters, 4 emergencies, 11 bench",
+  "squad_breakdown": "18 starters, 5 emergencies (one per line + utility), 10 bench",
   "finals": "6 teams, 3 weeks",
-  "captains": "Captain + vice-captain, both 2x",
+  "captains": "Captain 2x; vice-captain 2x only if captain does not count",
   "emergency_loophole": false
  },
  "bodega_boys_picks": {
