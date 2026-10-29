@@ -7,9 +7,13 @@ from sklearn.metrics import roc_auc_score
 
 H = json.load(open('lib/draft-history.json'))
 RM = json.load(open('data/rm-structured.json'))
+# Gaps filled from other scouting (2016 power rankings, 2019 rankings, missing 2022/2023 profiles), tagged in our own words.
+for _k, _v in json.load(open('data/rm-extra.json')).items():
+    if not (RM.get(_k) or {}).get('str'): RM[_k] = _v
 HIT = 90.0      # "star" for fantasy: a season averaging 90+ (8+ games)
 ELITE = 100.0
 REL = 80.0      # "fantasy relevant": a season averaging 80+
+NOW_SEASON = 2026
 
 GROUPS = {
   'Accumulator': ['accumulation', 'production', 'ball winning', 'accumulator'],
@@ -188,10 +192,17 @@ for d in H:
     if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120']}
     pk = peak(d.get('h'))
     mature = d['y'] <= 2022
+    # How sure is a 'not a star (yet)' label? Stars usually arrive by year 4–6, so a recent draftee who hasn't hit is
+    # only a weak negative. Recent drafts also count a little more (the game has shifted towards classy ball users),
+    # but not double: the newest classes haven't had time to show who becomes a star.
+    yrs_in = NOW_SEASON - d['y']
+    certainty = min(1.0, yrs_in / 7)
+    recency = 1.25 if d['y'] >= 2020 else 1.0
     players.append({'id': d.get('id'), 'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,
                     'rawstr': r['str'], 'rawimp': r['imp'], 'jun': j, 'range': range_mid(r['range']), 'peak': pk,
-                    'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature, 'rel': pk >= REL, 'rel_label': (1 if pk >= REL else (0 if mature else None)),
-                    'label': (1 if pk >= HIT else (0 if mature else None))})
+                    'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature, 'rel': pk >= REL, 'rel_label': (1 if pk >= REL else (0 if d['y'] <= 2024 else None)),
+                    'label': (1 if pk >= HIT else (0 if d['y'] <= 2024 else None)),
+                    'w': recency * (1.0 if pk >= HIT else certainty), 'w_rel': recency * (1.0 if pk >= REL else min(1.0, yrs_in / 5))})
 
 train = [p for p in players if p['label'] is not None]
 print('profiles matched', len(players), 'trainable', len(train), 'hits', sum(p['label'] for p in train), 'elite', sum(p['elite'] for p in train))

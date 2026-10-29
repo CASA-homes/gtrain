@@ -131,6 +131,14 @@ def big_game_line(j):
         return {'good': True, 'text': f"Big-game ceiling: {games}, well above his {fp:.0f} average. Juniors averaging under 95 who still had a 140+ game became 90+ players at {lift:.1f}× their draft slots ({h} of {n}: {', '.join(ex)}). A few huge games say the scoring is in him."}
     return {'good': True, 'text': f"Big-game ceiling: {games}. Goes big when it's on, not just a steady accumulator."}
 
+# Rucks take time: how many AFL seasons after the draft before the rucks who made it first averaged 90+.
+def _first_hit_season(q):
+    yrs = sorted(y for (y, g, a) in (next((d.get('h') for d in HIST if d['y'] == q['year'] and d['n'] == q['name']), None) or []) if g >= 8 and a >= 90)
+    return (yrs[0] - q['year']) if yrs else None
+RUCK_TIME = sorted(((_first_hit_season(q), q['name'].replace('+', '')) for q in train if q.get('role') == 'Ruck' and q['label']), key=lambda t: t[0] or 99)
+RUCK_TIME = [t for t in RUCK_TIME if t[0]]
+print('ruck time to first 90+ season:', RUCK_TIME)
+
 def why(p, contrib, role):
     lines = []
     bg = big_game_line(p.get('jun'))
@@ -164,7 +172,15 @@ def why(p, contrib, role):
     if role == 'Key position': lines.append({'good': False, 'text': 'Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers.'})
     elif role == 'Small forward': lines.append({'good': False, 'text': 'Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield.'})
     elif role == 'Tall utility': lines.append({'good': False, 'text': 'Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75–90 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star.'})
-    elif role == 'Ruck': lines.append({'good': True, 'text': 'Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested.'})
+    elif role == 'Ruck':
+        yrs = [t[0] for t in RUCK_TIME]
+        wait = f" But it takes time: the rucks who made it first averaged 90+ in year {min(yrs)}–{max(yrs)} after the draft (typically year {sorted(yrs)[len(yrs) // 2]}; {', '.join(f'{n} {y}' for y, n in RUCK_TIME)}). Expect little before then." if yrs else ''
+        lines.append({'good': True, 'text': 'Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested.' + wait})
+    flags = dict(zip(cm.PROFILES, cm.profile_flags(p)))
+    if flags.get('Class + production'): lines.append({'good': True, 'text': 'Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft).'})
+    if flags.get('Pure runner / athlete'): lines.append({'good': False, 'text': 'Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s).'})
+    if flags.get('Accumulator without class'): lines.append({'good': False, 'text': 'Accumulator without a class or contested tag. Volume alone hasn’t translated: none of the 2016–24 accumulators sold only on ball-winning became stars (Robertson, Schoenberg, Rowston).'})
+    if flags.get('Tall (192cm+, not a ruck)') and role not in ('Key position', 'Ruck'): lines.append({'good': False, 'text': '192cm or taller. No non-ruck tall drafted 2016–24 has had a 90+ season so far (0 of 90+).'})
     return lines
 
 AFL_JG = json.load(open('data/junior-games-2026.json'))['players']
@@ -201,8 +217,9 @@ for rank, name in PH:
     brd = (prof or {}).get('boards') or {}
     slot = rank if DRAFTED else brd.get('consensus', rank)
     x = np.array(cm.fv(p, slot))
-    prob = cm.prob(model, x, role)
-    prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL)
+    off = cm.prior_offset(p)
+    prob = cm.prob(model, x, role, offset=off)
+    prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL, offset=off)
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     eff = {FEATS[i]: float(model.coef_[0][i] * x[i]) for i in range(1, len(FEATS))}
     # One junior-scoring line on the page: the low-output penalty and the big-numbers boost are two halves of the same thing
@@ -269,7 +286,7 @@ late_hits = [p for p in train if p['label'] and p['pick'] >= 20]
 meta = {'relBar': 80, 'aucRel': round(cm.roc_auc_score(cm.yr_, cm.pred_r), 3), 'hitBar': 90, 'trainN': len(train), 'trainHits': int(sum(p['label'] for p in train)), 'years': '2016–2025',
         'auc': round(cm.roc_auc_score(cm.y, cm.pred), 3), 'aucPositionOnly': round(cm.roc_auc_score(cm.y, cm.predp), 3),
         'aucLate': round(cm.roc_auc_score(cm.y[cm.late], cm.pred[cm.late]), 3), 'aucLatePositionOnly': round(cm.roc_auc_score(cm.y[cm.late], cm.predp[cm.late]), 3),
-        'accumulator': {'acc': ACC, 'rest': REST},
+        'accumulator': {'acc': ACC, 'rest': REST}, 'ruckTime': [{'name': n, 'years': y} for y, n in RUCK_TIME], 'neutral': sorted(cm.NEUTRAL), 'priors': cm.PRIOR,
         'lateHits': [{'name': p['name'].replace('+', ''), 'pick': p['pick'], 'year': p['year'], 'peak': round(p['peak'], 1)} for p in sorted(late_hits, key=lambda p: -p['peak'])]}
 json.dump({'meta': meta, 'patterns': pat, 'numbers': num, 'validation': val, 'prospects': out,
            'coef': {k: round(float(v), 2) for k, v in zip(FEATS, model.coef_[0])}, 'roleCal': cm.ROLE_CAL}, open('lib/crystal-ball.json', 'w'), indent=1)

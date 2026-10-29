@@ -16,7 +16,28 @@ ROLES = ['Key position', 'Ruck', 'Small forward']
 # Roles are a hard fact about how fantasy scores are earned, so let them speak louder than a single scout's trait.
 ROLE_W = {'Key position': 3.0, 'Ruck': 0.0, 'Small forward': 2.0}   # ruck acts through the calibration only: past ruck stars were late picks, so a ruck boost on top of draft slot overshoots for early rucks
 COMBO = ['Combine: top-10 endurance', 'Combine: top-10 speed/jump']
-FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)', 'Big junior games (140+)']
+# Profile types from the 2016–2024 draft review (see crystal-ball page): what the scouts sold him on, as a whole.
+PROFILES = ['Class + production', 'Pure runner / athlete', 'Accumulator without class', 'Tall (192cm+, not a ruck)']
+FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)', 'Big junior games (140+)'] + PROFILES
+CLASS = {'Kicking / skills', 'Footy IQ / vision', 'Clean hands'}
+# The draft review set a direction for each profile. If the fitted model disagrees once everything else is in (the signal
+# is mixed or already carried by other features), that profile is made neutral rather than allowed to flip.
+EXPECT = {'Class + production': 1, 'Pure runner / athlete': -1, 'Accumulator without class': -1, 'Tall (192cm+, not a ruck)': -1}
+NEUTRAL = set()
+# Where the fitted model goes neutral, the commish's call from the draft review still applies as a small, fixed nudge
+# (log-odds). Kept separate from the fit so it's visible and easy to change.
+PRIOR = {'Class + production': 0.3, 'Pure runner / athlete': -0.5, 'Accumulator without class': -0.5}
+def prior_offset(p):
+    return sum(PRIOR.get(n, 0) * v for n, v in zip(PROFILES, profile_flags(p)) if n in NEUTRAL)
+
+def profile_flags(p):
+    st = set(p.get('str') or []); j = p.get('jun') or {}
+    classy = bool(st & CLASS); contested = 'Contested / inside' in st
+    production = 'Accumulator' in st or (j.get('FP') or 0) >= 100 or (j.get('D') or 0) >= 25
+    runner = bool(st & {'Engine / work rate', 'Speed / agility', 'Athleticism'}) and not (classy or contested or 'Accumulator' in st)
+    acc_no_class = 'Accumulator' in st and not (classy or contested)
+    tall = (p.get('ht') or 0) >= 192 and p.get('role') != 'Ruck'
+    return [1 if classy and production else 0, 1 if runner else 0, 1 if acc_no_class else 0, 1 if tall else 0]
 
 def fv(p, pick):
     j = p.get('jun') or {}
@@ -39,23 +60,37 @@ def fv(p, pick):
     # became a star well above his draft slot's rate. For 95+ averages the line above already gives the credit.
     jm = j.get('max') or 0
     x += [max(0, min(jm, 165) - 140) / 10 if has and fp < 95 else 0]
+    x += [0 if n in NEUTRAL else v for n, v in zip(PROFILES, profile_flags(p))]
     return x
 
-X = np.array([fv(p, p['pick']) for p in train]); y = np.array([p['label'] for p in train]); yrs = np.array([p['year'] for p in train])
+y = np.array([p['label'] for p in train]); yrs = np.array([p['year'] for p in train])
+W = np.array([p['w'] for p in train])
+for _ in range(len(EXPECT)):
+    X = np.array([fv(p, p['pick']) for p in train])
+    _c = dict(zip(FEATS, LogisticRegression(C=0.35, max_iter=2000).fit(X, y, sample_weight=W).coef_[0]))
+    bad = [k for k, sgn in EXPECT.items() if k not in NEUTRAL and _c[k] * sgn < 0]
+    if not bad: break
+    NEUTRAL.update(bad)
+print('profiles made neutral (signal mixed once other features are in):', sorted(NEUTRAL))
+# Validation only scores drafts old enough to have a settled answer (2021 and earlier); recent ones still train, lightly.
+settled = yrs <= 2021
 C = 0.35
 # Leave-one-draft-year-out validation, against draft position alone
 pred, predp = np.zeros(len(y)), np.zeros(len(y))
 for yr in sorted(set(yrs)):
     tr, te = yrs != yr, yrs == yr
     if y[tr].sum() == 0: continue
-    m = LogisticRegression(C=C, max_iter=2000).fit(X[tr], y[tr]); pred[te] = m.predict_proba(X[te])[:, 1]
-    mp = LogisticRegression(C=10, max_iter=2000).fit(X[tr][:, :1], y[tr]); predp[te] = mp.predict_proba(X[te][:, :1])[:, 1]
-print('LOYO AUC full model', round(roc_auc_score(y, pred), 3), '| draft position only', round(roc_auc_score(y, predp), 3))
+    m = LogisticRegression(C=C, max_iter=2000).fit(X[tr], y[tr], sample_weight=W[tr]); pred[te] = m.predict_proba(X[te])[:, 1]
+    mp = LogisticRegression(C=10, max_iter=2000).fit(X[tr][:, :1], y[tr], sample_weight=W[tr]); predp[te] = mp.predict_proba(X[te][:, :1])[:, 1]
+_off = np.array([prior_offset(p) for p in train])
+_pa = 1 / (1 + (1 - pred) / np.maximum(pred, 1e-9) * np.exp(-_off))
+print('with review priors: LOYO AUC', round(roc_auc_score(y[settled], _pa[settled]), 3))
+print('LOYO AUC (settled drafts 2016-21) full model', round(roc_auc_score(y[settled], pred[settled]), 3), '| draft position only', round(roc_auc_score(y[settled], predp[settled]), 3))
 # Late-pick check: among picks 15+, does the model rank the hits higher?
-late = np.array([p['pick'] >= 15 for p in train])
+late = np.array([p['pick'] >= 15 for p in train]) & settled
 print('picks 15+: AUC full', round(roc_auc_score(y[late], pred[late]), 3), 'vs position only', round(roc_auc_score(y[late], predp[late]), 3), 'hits', int(y[late].sum()), 'of', int(late.sum()))
 
-m = LogisticRegression(C=C, max_iter=2000).fit(X, y)
+m = LogisticRegression(C=C, max_iter=2000).fit(X, y, sample_weight=W)
 coef = dict(zip(FEATS, m.coef_[0]))
 print('\ncoefficients (log-odds per unit / per trait):')
 for k, v in sorted(coef.items(), key=lambda kv: -kv[1]): print(f'  {k:32s} {v:+.2f}')
@@ -77,31 +112,31 @@ json.dump(train, open(os.path.join(os.environ.get('CRYSTAL_TMP', '/tmp'), 'train
 
 # Second bar: "fantasy relevant" (an 80+ season), same features.
 train_rel = [p for p in __import__('crystal').players if p['rel_label'] is not None]
-Xr = np.array([fv(p, p['pick']) for p in train_rel]); yr_ = np.array([p['rel_label'] for p in train_rel]); yrs_r = np.array([p['year'] for p in train_rel])
+Xr = np.array([fv(p, p['pick']) for p in train_rel]); yr_ = np.array([p['rel_label'] for p in train_rel]); yrs_r = np.array([p['year'] for p in train_rel]); Wr = np.array([p['w_rel'] for p in train_rel])
 pred_r = np.zeros(len(yr_))
 for yr in sorted(set(yrs_r)):
     tr, te = yrs_r != yr, yrs_r == yr
-    mm = LogisticRegression(C=C, max_iter=2000).fit(Xr[tr], yr_[tr]); pred_r[te] = mm.predict_proba(Xr[te])[:, 1]
-m_rel = LogisticRegression(C=C, max_iter=2000).fit(Xr, yr_)
+    mm = LogisticRegression(C=C, max_iter=2000).fit(Xr[tr], yr_[tr], sample_weight=Wr[tr]); pred_r[te] = mm.predict_proba(Xr[te])[:, 1]
+m_rel = LogisticRegression(C=C, max_iter=2000).fit(Xr, yr_, sample_weight=Wr)
 print('\n80+ model: n', len(yr_), 'hits', int(yr_.sum()), 'LOYO AUC', round(roc_auc_score(yr_, pred_r), 3))
 for p, pr in zip(train_rel, pred_r): p['oos_rel'] = float(pr)
 
 # Role calibration: scale the odds so each role's predicted stars (out-of-sample) match how many it actually produced.
 # Key-position players taken early almost never become fantasy stars, which a shared draft-position slope can't see.
-def _cal(rows, preds, label):
+def _cal(rows, preds, label, wkey='w'):
     out = {}
     for r in ROLES + ['Tall utility', 'Midfielder', 'Defender', 'Forward']:
         idx = [i for i, p in enumerate(rows) if p.get('role') == r]
         if len(idx) < 5: continue
-        hits = sum(rows[i][label] for i in idx); exp = sum(preds[i] for i in idx)
+        hits = sum(rows[i][label] * rows[i][wkey] for i in idx); exp = sum(preds[i] * rows[i][wkey] for i in idx)
         out[r] = round(min(3.0, max(0.15, (hits + 0.5) / (exp + 0.5))), 3)
     return out
 ROLE_CAL = _cal(train, pred, 'label')
-ROLE_CAL_REL = _cal(train_rel, pred_r, 'rel_label')
+ROLE_CAL_REL = _cal(train_rel, pred_r, 'rel_label', 'w_rel')
 print('role calibration (90+):', ROLE_CAL, '| (80+):', ROLE_CAL_REL)
 
-def prob(model, x, role, cal=None):
+def prob(model, x, role, cal=None, offset=0.0):
     cal = ROLE_CAL if cal is None else cal
     p = float(model.predict_proba([x])[0, 1]); f = cal.get(role, 1.0)
-    o = p / (1 - p) * f
+    o = p / (1 - p) * f * math.exp(offset)
     return o / (1 + o)

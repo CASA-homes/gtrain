@@ -29,7 +29,8 @@ type Prospect = {
 type Pattern = { kind: 'strength' | 'workon'; label: string; n: number; hits: number; rate: number; lift: number };
 type Bucket = { label: string; n: number; hits: number; rate: number; lift: number };
 const D = data as unknown as {
-  meta: { hitBar: number; relBar: number; aucRel: number; trainN: number; trainHits: number; years: string; auc: number; aucPositionOnly: number; aucLate: number; aucLatePositionOnly: number; lateHits: { name: string; pick: number; year: number; peak: number }[];
+  // ruckTime: rucks who made it and the season (after the draft) they first averaged 90+
+  meta: { hitBar: number; relBar: number; aucRel: number; trainN: number; trainHits: number; years: string; auc: number; aucPositionOnly: number; aucLate: number; aucLatePositionOnly: number; ruckTime?: { name: string; years: number }[]; lateHits: { name: string; pick: number; year: number; peak: number }[];
     accumulator?: { acc: { made: number; rel: number; medPeak: number | null; examples: string[] }; rest: { made: number; rel: number; medPeak: number | null } } };
   patterns: Pattern[]; numbers: Record<string, Bucket[]>;
   validation: { name: string; year: number; pick: number; peak: number; chance: number; positionOnly: number; jFP: number | null; traits: string[] }[];
@@ -157,6 +158,31 @@ function ProspectCard({ p, note, info = false, focus = 'star' }: { p: Prospect; 
         Profile looks like: {p.comps.map((c, i) => <span key={c.name}>{i ? ', ' : ''}<b style={{ color: C.ink, fontWeight: 600 }}>{c.name}</b> (#{c.pick}, ’{String(c.year).slice(2)})</span>)}
       </span>
     </article>
+  );
+}
+
+/** Compact side panel: one line per player, tap to open his full card. */
+function Panel({ title, blurb, rows, focus = 'star' }: { title: string; blurb: string; rows: Prospect[]; focus?: 'star' | 'relevant' }) {
+  return (
+    <section className="card cb-panel">
+      <div style={{ padding: '10px 12px 6px' }}>
+        <h3 style={{ font: '600 15px var(--font)', margin: 0, letterSpacing: '-.01em' }}>{title}</h3>
+        <span className="muted" style={{ fontSize: 11 }}>{blurb}</span>
+      </div>
+      {rows.map((p) => (
+        <details key={p.name} className="cb-item">
+          <summary>
+            <span style={{ minWidth: 0 }}>
+              <b style={{ fontWeight: 600 }}>{p.name}</b>
+              <span className="muted" style={{ fontSize: 11, marginLeft: 6 }}>{p.drafted ? `Pick ${p.rank}` : `Board #${p.slot ?? p.rank}`} · {p.type || p.position || '–'}</span>
+            </span>
+            <Chance value={focus === 'relevant' ? p.relevant : p.chance} size={13} width={48} />
+            <span className="cb-caret" aria-hidden="true">▾</span>
+          </summary>
+          <div style={{ padding: '0 8px 10px' }}><ProspectCard p={p} info focus={focus} /></div>
+        </details>
+      ))}
+    </section>
   );
 }
 
@@ -474,68 +500,68 @@ function CrystalBallView() {
   const fp110 = D.numbers.juniorFantasy.find((b) => b.label === '110+');
   const acc = D.meta.accumulator;
 
+  const ranked = [...P].sort((a, b) => b.chance - a.chance);
+  const ruck = D.meta.ruckTime ?? [];
   return (
-    <div className="wrap">
+    <div className="wrap" style={{ maxWidth: 1480 }}>
       <Header view="next" />
 
-      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '78ch' }}>
-          We read the Rookie Me pre-draft profile of {D.meta.trainN} national draft picks from {D.meta.years}: the scouts’ strengths and work-ons, plus their junior numbers.
-          Then we checked who went on to post a <b>{D.meta.hitBar}+ AFL Fantasy season</b>. {D.meta.trainHits} did, about {pct(base)} of picks.
-          The chance on each card is our model’s read of the same signals, scored on drafts it never saw. It also knows each player’s role (key-position players and small forwards rarely become fantasy stars; listed rucks often do) and who finished top 10 at the combine. A second bar shows the chance of being <b>fantasy relevant</b>: an {D.meta.relBar}+ season.
-        </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 22px', fontSize: 13 }}>
-          <span>Picks out stars better than draft slot alone: <b>{D.meta.auc}</b> vs {D.meta.aucPositionOnly} (AUC)</span>
-          <span>For picks 15+: <b>{D.meta.aucLate}</b> vs {D.meta.aucLatePositionOnly}</span>
-        </div>
-        <span className="muted" style={{ fontSize: 12 }}>It’s a nudge, not a guarantee. Most late-pick stars still look ordinary on paper, and the 2026 traits come from Rookie Me’s rankings write-ups because full draft profiles aren’t out yet.</span>
+      <section className="card" style={{ padding: '12px 16px', display: 'flex', flexWrap: 'wrap', gap: '6px 22px', alignItems: 'baseline', fontSize: 13 }}>
+        <span style={{ maxWidth: '86ch', lineHeight: 1.5 }}>
+          Trained on {D.meta.trainN} national draft picks from 2016–2024: the scouts’ strengths and work-ons, junior numbers, role and combine results, against who went on to a <b>{D.meta.hitBar}+ AFL Fantasy season</b>.
+          Recent drafts count a little more (the game now rewards classy ball users), but a recent pick who hasn’t hit yet only counts as a weak “no”, because stars usually arrive in years 4–6.
+        </span>
+        <span>Picks stars better than draft slot alone: <b>{D.meta.auc}</b> vs {D.meta.aucPositionOnly} (AUC) · picks 15+: <b>{D.meta.aucLate}</b> vs {D.meta.aucLatePositionOnly}</span>
       </section>
 
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">Likely stars</h2>
-        <span className="muted" style={{ fontSize: 13 }}>Top-end prospects whose profiles look like Ashcroft, Smith and Brayshaw before they were drafted.</span>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-          {likely.map((p) => <ProspectCard key={p.name} p={p} info />)}
-        </div>
-      </section>
-
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">Diamonds in the rough: later picks with a star profile</h2>
-        <span className="muted" style={{ fontSize: 13 }}>Ranked 12th or lower, but their traits and junior numbers say more than their draft range does.</span>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-          {sleepers.map((p) => <ProspectCard key={p.name} p={p} info />)}
-        </div>
-      </section>
-
-      {relevant.length > 0 && (
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Fantasy relevant: likely 80+ scorers</h2>
-          <span className="muted" style={{ fontSize: 13 }}>Not quite star profiles, but the best bets for a regular 80+ season: keepers who hold a spot in your 18. The box shows the 80+ chance.</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-            {relevant.map((p) => <ProspectCard key={p.name} p={p} info focus="relevant" />)}
+      <div className="cb-layout">
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
+          <div className="row-between" style={{ alignItems: 'baseline' }}>
+            <h2 className="h2">All 2026 prospects, by star chance</h2>
+            <span className="muted" style={{ fontSize: 12 }}>Board = consensus rank (Twomey 40%, Rookie Me 35%, Zero Hanger 25%)</span>
           </div>
-        </section>
-      )}
-
-      {relValue.length > 0 && (
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Late value: picks 15+ who should hold a spot</h2>
-          <span className="muted" style={{ fontSize: 13 }}>Ranked 15th or lower with a real shot at 80+. The cheap end of the draft where keepers are found. The box shows the 80+ chance.</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-            {relValue.map((p) => <ProspectCard key={p.name} p={p} info focus="relevant" />)}
+          <div className="table-box">
+            <table className="squad cb-table">
+              <thead><tr><th style={{ width: 28 }}>#</th><th>Prospect</th><th style={{ width: 62, textAlign: 'center' }}>Star 90+</th><th style={{ width: 52, textAlign: 'center' }}>80+</th><th style={{ width: 52, textAlign: 'center' }} title="Star chance from draft slot alone">Slot</th><th style={{ width: 46, textAlign: 'center' }}>Jr FP</th><th>Why</th></tr></thead>
+              <tbody>
+                {ranked.map((p, i) => (
+                  <tr key={p.name}>
+                    <td className="mono muted">{i + 1}</td>
+                    <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>{p.name}<InfoPopover title={p.name}><WhyDetails p={p} /></InfoPopover></span>
+                      <div className="muted" style={{ fontWeight: 400, fontSize: 11 }}>
+                        {p.drafted ? `Pick ${p.rank}` : `Board #${p.slot ?? p.rank}`} · {p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}
+                        {(() => { const prof = draftProfileFor(2026, p.name); return prof ? <> · <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Consensus #${p.slot ?? p.rank}`} · 2026 draft`} /></> : null; })()}
+                      </div>
+                    </td>
+                    <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={14} /></td>
+                    <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
+                    <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
+                    <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
+                    <td style={{ fontSize: 11, lineHeight: 1.35 }}>{p.ceiling && <><CeilingPill small />{' '}</>}{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          <span className="muted" style={{ fontSize: 11 }}>
+            Tap ⓘ for the full read on a player. Sources: Rookie Me Central draft profiles and rankings (2016–2026), Matt Balmer’s 2016 power rankings, AFL.com.au Phantom Form Guides, combine results; AFL careers from DFS Australia.
+          </span>
         </section>
-      )}
 
-      {caution.length > 0 && (
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Great player, harder fantasy path</h2>
-          <span className="muted" style={{ fontSize: 13 }}>High picks whose profile looks less like a fantasy scorer: talls, low junior output, or not enough football this year to judge.</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-            {caution.map((p) => <ProspectCard key={p.name} p={p} />)}
-          </div>
-        </section>
-      )}
+        <aside className="cb-side">
+          <Panel title="Likely stars" blurb="Top-end profiles that look like Ashcroft, Smith and Brayshaw did." rows={likely} />
+          <Panel title="Roughies: later picks with a star profile" blurb="Board 12th or lower, but the profile says more than the draft range." rows={sleepers} />
+          {relevant.length > 0 && <Panel title="Fantasy relevant: likely 80+" blurb="Best bets for a regular 80+ season." rows={relevant} focus="relevant" />}
+          {relValue.length > 0 && <Panel title="Late value (board 15+)" blurb="Cheap end of the draft with a real shot at 80+." rows={relValue} focus="relevant" />}
+          {caution.length > 0 && <Panel title="Great player, harder fantasy path" blurb="High picks whose profile looks less like a fantasy scorer." rows={caution} />}
+          {ruck.length > 0 && (
+            <div className="card" style={{ padding: '10px 12px', fontSize: 12, lineHeight: 1.45 }}>
+              <b>Rucks are the exception to “talls don’t score”, but they take time.</b> The rucks who became 90+ players first got there {Math.min(...ruck.map((r) => r.years))}–{Math.max(...ruck.map((r) => r.years))} seasons after their draft: {ruck.map((r) => `${r.name} (year ${r.years})`).join(', ')}.
+            </div>
+          )}
+        </aside>
+      </div>
 
       <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 16 }}>
         <h2 className="h2">The patterns</h2>
@@ -554,44 +580,15 @@ function CrystalBallView() {
           <Bars title="Where they were picked" rows={D.numbers.pick} />
         </div>
         <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6, fontSize: 14, maxWidth: '80ch' }}>
-          <li><b>Role first.</b> None of the 56 key-position defenders and forwards drafted since 2016 has had a 90+ fantasy season. Listed rucks did: 6 of 34 (English, Xerri, Darcy, Meek, Briggs, Jackson). Small forwards are rare too unless they move into the midfield.</li>
-          <li><b>Elite engines win.</b> A top-10 2km or yo-yo at the combine meant more stars than the draft order expected (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash); top-10 sprint and jump results meant fewer.</li>
-          <li><b>Hunters find a way in; accumulators score once they’re in.</b> “Tackling / defensive pressure” and 6+ junior tackles a game were the best signals of who makes it (Warner, Berry, Worpel, Brayshaw). Accumulators make it a little less often, but the ones who do score big: Daicos, Ashcroft, Warner, Burgoyne.</li>
-          <li><b>Outside mids who need to “win more contested ball” do fine.</b> Gulden, Lachie Ash, Wanganeen-Milera and Callaghan all carried that note; the inside game came later.</li>
-          <li><b>“Needs consistency” and “needs to win more ball” are red flags.</b> Almost none of those players became fantasy stars.</li>
-          <li><b>Talls, “aerial” and “versatility” profiles</b> make good footballers, but rarely big fantasy scorers early.</li>
+          <li><b>Talls don’t become fantasy stars.</b> Not one non-ruck player 192cm+ drafted 2016–24 has had a 90+ season. Rucks are the exception, but they take five to seven seasons.</li>
+          <li><b>The game has shifted to class.</b> In the 2016–19 drafts, contested midfielders with skill were the star factory (Smith, Brayshaw, Serong, Flanders). Since 2020 the stars have come from classy, smart ball users, often flagged for a lacking inside game: Nick Daicos, Gulden, Wanganeen-Milera, Sheezel, Holmes.</li>
+          <li><b>Class plus production is the modern star profile.</b> A skilled ball user who also piles up the ball as a junior (Daicos, Will Ashcroft, Jagga and Levi Ashcroft). It gets a small boost.</li>
+          <li><b>Pure runners and accumulators without class don’t translate.</b> Sold only on running or athleticism, or only on ball-winning volume, almost none became stars (Hollands, Ginbey, Robertson, Schoenberg). Both get a small penalty.</li>
+          <li><b>Hunters and big juniors still count.</b> Tackling, 6+ junior tackles and a 105+ junior fantasy average remain strong signals.</li>
+          <li><b>Mixed signals are left neutral.</b> “Speed as a weakness” and “kicking knocks” helped in some drafts and hurt in others, so they don’t move the number.</li>
         </ul>
       </section>
 
-
-      <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <h2 className="h2">All 2026 prospects</h2>
-        <div className="table-box">
-          <table className="squad" style={{ minWidth: 760 }}>
-            <thead><tr><th style={{ width: 56 }}>Board</th><th>Prospect</th><th style={{ width: 80, textAlign: 'center' }}>Star 90+</th><th style={{ width: 90, textAlign: 'center' }}>Relevant 80+</th><th style={{ width: 80, textAlign: 'center' }}>Slot alone</th><th style={{ width: 90, textAlign: 'center' }}>Jr fantasy</th><th>Why</th></tr></thead>
-            <tbody>
-              {[...P].sort((a, b) => b.chance - a.chance).map((p) => (
-                <tr key={p.name}>
-                  <td className="mono" title="Consensus of Twomey, Rookie Me and Zero Hanger">{p.drafted ? p.rank : (p.slot ?? p.rank)}{!p.drafted && p.boards && <div className="muted" style={{ fontSize: 10, lineHeight: 1.3, whiteSpace: 'nowrap' }}>CT {p.boards.tw ?? '–'} · RM {p.boards.rm ?? '–'} · ZH {p.boards.zh ?? '–'}</div>}</td>
-                  <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>{p.name}<div className="muted" style={{ fontWeight: 400, fontSize: 12 }}>{p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}</div>
-                    {(() => { const prof = draftProfileFor(2026, p.name); return prof
-                      ? <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Consensus #${p.slot ?? p.rank}`} · 2026 draft`} />
-                      : <span className="muted" style={{ fontWeight: 400, fontSize: 12 }}>Profile coming</span>; })()}
-                  </td>
-                  <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={16} /></td>
-                  <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
-                  <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
-                  <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
-                  <td style={{ fontSize: 12 }}>{p.ceiling && <><CeilingPill small />{' '}</>}{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <span className="muted" style={{ fontSize: 12 }}>
-          Sources: Rookie Me Central draft profiles (2016–2025) and 2026 rankings, combine results and player stat pages; AFL careers from DFS Australia. Draft slot for 2026 is a consensus board: Cal Twomey’s October Phantom Form Guide (40%), Rookie Me’s August Power Rankings (35%) and Zero Hanger’s big board (25%). CT / RM / ZH under each rank show the three boards.
-        </span>
-      </section>
 
       <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <h2 className="h2">Would it have called them?</h2>
