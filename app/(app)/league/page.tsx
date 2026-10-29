@@ -43,8 +43,12 @@ export default async function LeaguePage() {
         </div>
         <div className="kpis">
           <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}</b></div>
-          <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>Grand final</span><b>{latest?.gf_winner_score}–{latest?.gf_loser_score}</b></div>
-          <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>League medal</span><b>{latest?.medal ?? '–'}</b></div>
+          <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} wooden spoon</span><b>{latest?.spoon_id ? name(latest.spoon_id) : '–'}</b></div>
+          <nav className="kpi league-links" style={{ borderColor: '#333b35' }} aria-label="League">
+            <Link href="/league/settings">League settings <span aria-hidden>→</span></Link>
+            <Link href="#history">League history <span aria-hidden>→</span></Link>
+            <Link href="/league/bets">League bets <span aria-hidden>→</span></Link>
+          </nav>
         </div>
       </header>
 
@@ -213,6 +217,7 @@ export default async function LeaguePage() {
           </section>
         </div>
       </div>
+      <div id="history" style={{ scrollMarginTop: 72 }} />
       <LeagueHistory teams={league.teams} myTeamName={league.teams.find((t) => t.id === me?.team_id)?.name ?? null} />
     </div>
   );

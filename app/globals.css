@@ -51,6 +51,10 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .kpi { display: flex; flex-direction: column; padding: 0 22px; border-left: 1px solid #d3dbcc; }
 .kpi:first-child { padding-left: 0; border-left: 0; }
 .kpi b { font: 600 22px var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.league-links { justify-content: center; gap: 3px; }
+.league-links a { color: #dfe5dc; font-size: 13px; font-weight: 500; text-decoration: none; white-space: nowrap; }
+.league-links a span { color: #9ccb84; margin-left: 2px; }
+.league-links a:hover { color: #fff; }
 .tiles { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .tile { background: var(--surface); padding: 12px 14px; display: flex; flex-direction: column; gap: 1px; }
 .tile b { font: 600 20px var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
