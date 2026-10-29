@@ -14,9 +14,9 @@ export default function LeagueSettingsPage() {
         <Group title="Scoring & lineups" rows={[
           ['Scoring', LEAGUE.league.scoring],
           ['On field', <>18: 5 DEF · 7 MID · 1 RUC · 5 FWD</>],
-          ['Bench', 'One emergency per line (DEF, MID, RUC, FWD) plus a utility'],
+          ['Bench', 'One emergency per line (DEF, MID, RUC, FWD) plus a utility, who can only cover the positions he holds'],
           ['Captain', <>Captain scores double. If the captain plays under {C.emergency_tog_threshold} time on ground, the vice-captain scores double instead and the captain counts as normal{soon}</>],
-          ['Emergencies', <>If a starter plays under {C.emergency_tog_threshold} time on ground, the emergency in that line (or the utility) comes on, but only if he scored more. Dual-position emergencies can cover either line</>],
+          ['Emergencies', <>If a starter plays under {C.emergency_tog_threshold} time on ground, the emergency for that line comes on, but only if he scored more. Dual-position emergencies can cover either line. The utility is the last-chance cover: if the line emergency can’t help (say your Sunday defender is a late out and your DEF emergency already played and scored poorly), the utility comes on instead, as long as he holds that position (DEF, DEF/MID etc.). He can only cover one starter</>],
           ['Lockout', `${C.lockout}: each player locks when his game starts`],
           ['Lineups set on', <>G-Train clubhouse{soon}</>],
           ['Positions', C.positions],
