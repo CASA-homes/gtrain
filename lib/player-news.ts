@@ -5,6 +5,18 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'J. Cameron', tag: 'Injury', date: '2026-10-29', title: 'Cameron’s arm still in a splint',
+    body: 'Cameron had more surgery on the forearm he broke in last year’s grand final, and he admits he might have retired if he’d sat out 2026. The arm is in a splint until a 12-week review, so his pre-season will be interrupted. Hold off counting on a full-strength start.',
+  },
+  {
+    player: 'T. Greene', tag: 'Trade', date: '2026-10-29', title: 'Greene joins Geelong as a free agent',
+    body: 'Greene has left GWS and signed with Geelong as an unrestricted free agent, reuniting with Jeremy Cameron in the Cats’ forward line. Fantasy-wise expect a forward-first role in a deep side, so his midfield minutes and scoring ceiling may shrink.',
+  },
+  {
+    player: 'B. Maynard', tag: 'Injury', date: '2026-10-29', title: 'Maynard: shoulder rebuilt, back in the new year',
+    body: 'Collingwood’s Maynard had a shoulder reconstruction after the season and isn’t expected back in full training until the new year. A shortened pre-season makes him a slow-start risk for round 1.',
+  },
+  {
     player: 'J. Short', tag: 'Role', title: 'Short’s Collingwood move falls over',
     body: 'Short tried to get to Collingwood in the trade period, but the clubs couldn’t agree on the final day and he’s back at Richmond for the last year of his contract. Fantasy-wise that’s good news: he keeps his spot as the Tigers’ main half-back ball user and kick-in taker, with a new deal to play for.',
   },
@@ -61,15 +73,7 @@ export const PLAYER_NEWS: PlayerStory[] = [
     body: 'Moves from GWS to Richmond, where he should be the No.1 ruck from day one. A full-time ruck role could push his scoring up.',
   },
   {
-    player: 'K. Coleman', tag: 'Trade', title: 'Coleman crosses to Essendon',
-    body: 'Leaves the Lions for a bigger role at the Bombers. A clean run at half-back should lift his scoring.',
-  },
-  {
     player: 'C. Mills', tag: 'Injury', title: 'Mills out with an ACL',
     body: 'A ruptured ACL likely rules him out for all of 2027. A huge blow for A Brayshaw Thing, who gave up Max Holmes to get him.',
-  },
-  {
-    player: 'T. Liberatore', tag: 'Retired', title: 'Libba calls it a day',
-    body: 'One of the great tacklers retires. Serong lose a reliable midfield scorer from their keeper list.',
   },
 ];
