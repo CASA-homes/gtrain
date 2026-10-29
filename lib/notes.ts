@@ -20,7 +20,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'The jump from 64 to 83 came from St Kilda trusting him with midfield minutes in patches (16% of centre bounces, up from almost none). That’s the whole story with Wilson: he’s a half-back-flanker scorer who turns into a ball magnet when he goes on-ball. If the Saints make the move permanent, this is a 95–100 player within two years. If they don’t, he’s a high-80s keeper. Either way the arrow is pointing up.',
   },
   'K. Coleman|ESS': {
-    delta: 16,
+    delta: 10,
     outlook: 'Keidean Coleman swaps Brisbane for Essendon, and he’ll play off half-back, where he’s always scored best. The Bombers’ back half needs a kicker, so he should take the kick-ins and run the rebound chain rather than share it with a stacked Lions defence. That’s a low-80s player when he’s on the park. The catch is the body: he managed one game in each of 2024 and 2025. Buy the upside, but keep a backup.',
   },
   'L. Ash|GWS': {
