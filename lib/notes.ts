@@ -20,8 +20,8 @@ export const NOTES: Record<string, Note> = {
     outlook: 'The jump from 64 to 83 came from St Kilda trusting him with midfield minutes in patches (16% of centre bounces, up from almost none). That’s the whole story with Wilson: he’s a half-back-flanker scorer who turns into a ball magnet when he goes on-ball. If the Saints make the move permanent, this is a 95–100 player within two years. If they don’t, he’s a high-80s keeper. Either way the arrow is pointing up.',
   },
   'K. Coleman|ESS': {
-    delta: 8,
-    outlook: 'Keidean Coleman swaps Brisbane for Essendon, and that should mean more of the ball. The Bombers’ back half needs a kicker, and he’ll likely take the kick-ins and run the rebound chain rather than share it with a stacked Lions defence. That’s a 10–15 point bump on paper. The catch is the body: he managed one game in each of 2024 and 2025. Buy the upside, but keep a backup.',
+    delta: 16,
+    outlook: 'Keidean Coleman swaps Brisbane for Essendon, and he’ll play off half-back, where he’s always scored best. The Bombers’ back half needs a kicker, so he should take the kick-ins and run the rebound chain rather than share it with a stacked Lions defence. That’s a low-80s player when he’s on the park. The catch is the body: he managed one game in each of 2024 and 2025. Buy the upside, but keep a backup.',
   },
   'L. Ash|GWS': {
     delta: 3,
@@ -62,7 +62,8 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Four straight seasons at 100+, now in red, white and blue. The one worry is crowding: the Dogs already have Bontempelli and Sanders at the centre bounces (Liberatore has retired, which helps), and Butters lived on 81% at Port. He’s too good to drop below 95, but his ceiling might be tighter in 2027 than it was at Alberton.',
   },
   'L. Whitfield|CAR': {
-    outlook: 'He’s 32, and he’s just moved from GWS to Carlton for one more crack. He’s been 96–110 for four years as the kick-in king, and Carlton will use him the same way. Expect another 95-ish year, but the drop is coming, so treat him as a 2027 asset rather than a long-term keeper.',
+    delta: 12,
+    outlook: 'He’s 32, and he’s just moved from GWS to Carlton for one more crack. He’s been 96–110 for four years as the kick-in king, and Carlton will make him their No.1 man off half-back, so the commish’s call is the same output: another high-90s year. The drop is coming eventually, so treat him as a 2027–28 asset rather than a long-term keeper.',
   },
   'Z. Merrett|HAW': {
     delta: -4,
@@ -85,8 +86,8 @@ export const NOTES: Record<string, Note> = {
     outlook: 'He’s gone from Brisbane to St Kilda after only 13 games in two years. He’ll get a much clearer path at the Saints. At 20 he’s a genuine unknown, but the move suggests the Saints see a role for him.',
   },
   'R. Marshall|GEE': {
-    delta: 6,
-    outlook: 'He’s a 201cm ruck, not a forward: a three-time Silk–Miller medallist who started on St Kilda’s rookie list and built himself into one of the most mobile big men in the game. He averaged 106–117 from 2023 to 2025 when he was St Kilda’s No.1 ruck. That ended when the Saints brought in Tom De Koning. Marshall’s ruck-contest share fell to 50% and his average to 83, and he asked to be traded. Geelong gave up their first-round pick (No.14) to get him, but he’ll share the ruck with 21-year-old Mitchell Edwards rather than own it outright. If he gets back above 65–70% of ruck contests he’s a 95+ ruck again. Split it evenly and he’s mid-80s. He turns 31 next month, so it’s a two-year window.',
+    delta: 24,
+    outlook: 'He’s a 201cm ruck, not a forward: a three-time Silk–Miller medallist who averaged 106–117 from 2023 to 2025 as St Kilda’s No.1 ruck. His 2026 dip to 83 came from sharing the ruck with Tom De Koning (about 50% of contests), not from losing it. Geelong paid pick 14 for him to be their main man, and the commish’s call is that he’ll be the dominant ruck there, so expect him back in the high 90s to 100. He turns 31 next month, so it’s a two-to-three-year window.',
   },
   'J. Ridley|GEE': {
     outlook: 'Seven games in 2026 at 57, and he’s now gone from Essendon to Geelong. He was an 81–88 rebounder at his best, but the body has been the issue for three years. A cheap punt for the bench.',
