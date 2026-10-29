@@ -5,6 +5,7 @@ import { getLeague, getMe, FREE_AGENTS_UPDATED } from '@/lib/data';
 import { age, C, form, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 import { ATTRS } from '@/lib/scouting';
 import { CLUBS } from '@/lib/clubs';
+import { positions2025 } from '@/lib/positions-2025';
 
 type SP = { q?: string; line?: string; team?: string; sort?: string; f1?: string; m1?: string; f2?: string; m2?: string; agemin?: string; agemax?: string; avgmax?: string; mine?: string;
   own?: string; club?: string; status?: string; period?: string; yr?: string };
@@ -67,6 +68,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
   // Season toggle: 2025 swaps the average and games played for last year's numbers (positions stay current).
   const y25 = sp.yr === '2025';
   const h25 = (p: PlayerRow) => (p.hist ?? []).find((h) => h[0] === 2025) ?? null;
+  // 2025 mode uses the positions Champion Data set for 2025 (falls back to current for players who weren't listed).
+  const posOf = (p: PlayerRow): Line[] => (y25 ? positions2025(p.full_name, p.afl_club) ?? p.positions : p.positions);
   // Average over the chosen window: the season, or the last N games he actually played.
   const periodAvg = (p: PlayerRow): number | null => {
     if (y25) { const h = h25(p); return h && h[1] > 0 ? Math.round(h[2] * 10) / 10 : null; }
@@ -85,7 +88,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     : own === 'watch' ? [...league.players, ...league.freeAgents].filter((p) => watch.ids.has(p.id)) : [...league.players, ...league.freeAgents];
   const rows = pool
     .filter((p) => (!q || p.name.toLowerCase().includes(q) || (p.full_name ?? '').toLowerCase().includes(q))
-      && (!line || p.positions.includes(line))
+      && (!line || posOf(p).includes(line))
       && (!team || own === 'free' || p.team_id === team)
       && (!club || p.afl_club === club)
       && (!status || (status === 'injured' ? INJURED.includes(p.status ?? '') : !INJURED.includes(p.status ?? '') && p.status !== 'SUSP'))
@@ -210,7 +213,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           </nav>
         </details>
       </form>
-      {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages and games played. Positions, owners, ratings and value are still current (2026).</p>}
+      {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages, games played and AFL Fantasy positions. Owners, ratings and value are still current (2026).</p>}
       <p className="muted" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
       {own === 'watch' && rows.length === 0 && (
@@ -233,7 +236,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               return (
                 <tr key={p.id}>
                   <td className="mono muted">{i + 1}</td>
-                  <td><PosDots positions={p.positions} /></td>
+                  <td><PosDots positions={posOf(p)} /></td>
                   <td><ClubDot code={p.afl_club} /></td>
                   <td style={{ whiteSpace: 'nowrap' }}>
                     <Link href={`/players/${p.id}`}>{p.name}</Link>{(p.is_keeper || p.is_rookie_keeper) && <span className="keeper-tag">K</span>}{watch.ids.has(p.id) && <span title="On your watchlist" aria-label="On your watchlist" style={{ color: '#e2b100', marginLeft: 4 }}>★</span>}
