@@ -7,7 +7,7 @@ import { ATTRS } from '@/lib/scouting';
 import { CLUBS } from '@/lib/clubs';
 
 type SP = { q?: string; line?: string; team?: string; sort?: string; f1?: string; m1?: string; f2?: string; m2?: string; agemin?: string; agemax?: string; avgmax?: string; mine?: string;
-  own?: string; club?: string; status?: string; period?: string };
+  own?: string; club?: string; status?: string; period?: string; yr?: string };
 
 const INJURED = ['SHORT', 'LONG', 'SEASON', 'TEST', 'INJ'];
 const PERIODS = [['season', 'Season average'], ['l10', 'Last 10 games'], ['l5', 'Last 5 games'], ['l3', 'Last 3 games'], ['l1', 'Last game']] as const;
@@ -64,8 +64,12 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
   const club = sp.club && CLUBS[sp.club] ? sp.club : null;
   const status = sp.status === 'playing' || sp.status === 'injured' ? sp.status : null;
   const period = PERIODS.some(([k]) => k === sp.period) ? sp.period! : 'season';
+  // Season toggle: 2025 swaps the average and games played for last year's numbers (positions stay current).
+  const y25 = sp.yr === '2025';
+  const h25 = (p: PlayerRow) => (p.hist ?? []).find((h) => h[0] === 2025) ?? null;
   // Average over the chosen window: the season, or the last N games he actually played.
   const periodAvg = (p: PlayerRow): number | null => {
+    if (y25) { const h = h25(p); return h && h[1] > 0 ? Math.round(h[2] * 10) / 10 : null; }
     if (period === 'season') return p.average;
     const n = Number(period.slice(1));
     const xs = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
@@ -73,6 +77,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     return last.length ? Math.round((last.reduce((t, x) => t + x, 0) / last.length) * 10) / 10 : null;
   };
   const lastScore = (p: PlayerRow): number | null => {
+    if (y25) return null;
     const xs = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
     return xs.length ? xs[xs.length - 1] : null;
   };
@@ -113,8 +118,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     </th>
   );
   const active = (preset: Record<string, string>) => Object.entries(preset).every(([k, v]) => sp[k as keyof SP] === v);
-  const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'owned' ? { own } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
-  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'owned' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}) }).toString()}`;
+  const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'owned' ? { own } : {}), ...(y25 ? { yr: '2025' } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
+  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'owned' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}), ...(y25 ? { yr: '2025' } : {}) }).toString()}`;
   const activeFilters = [line, club, status, team && own !== 'free' ? 'team' : null, sp.mine, period !== 'season' ? period : null, sp.agemin, sp.agemax, sp.avgmax, ...filters.map((f) => f[0])].filter(Boolean).length;
   const periodLabel = PERIODS.find(([k]) => k === period)![1];
   const groups = ['Rating', 'Fantasy profile', 'Game attributes'] as const;
@@ -141,6 +146,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
 
       <form className="card players-filter" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
         {own !== 'owned' && <input type="hidden" name="own" value={own} />}
+        {y25 && <input type="hidden" name="yr" value="2025" />}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input name="q" defaultValue={sp.q} placeholder="Search a player" className="input" style={{ flex: 1, minWidth: 0 }} aria-label="Search a player" />
           <button type="submit" className="btn dark">Go</button>
@@ -150,6 +156,14 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
             <span className="btn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4" /></svg>
               Filters{activeFilters ? ` · ${activeFilters}` : ''}
+            </span>
+            <span className="own-toggle" role="tablist" aria-label="Season">
+              {(['2026', '2025'] as const).map((y) => {
+                const u = new URLSearchParams();
+                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
+                if (y === '2025') u.set('yr', '2025');
+                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={(y === '2025') === y25} className={(y === '2025') === y25 ? 'on' : undefined}>{y}</Link>;
+              })}
             </span>
             <span className="own-toggle" role="tablist" aria-label="Ownership">
               {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
@@ -163,7 +177,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
             {sel('line', 'Position', sp.line ?? '', <><option value="">All positions</option>{LINES.map((l) => <option key={l}>{l}</option>)}</>)}
             {sel('club', 'AFL club', club ?? '', <><option value="">All clubs</option>{Object.entries(CLUBS).sort((a, b) => a[1].name.localeCompare(b[1].name)).map(([k, c]) => <option key={k} value={k}>{c.name}</option>)}</>)}
             {sel('status', 'Status', status ?? '', <><option value="">All statuses</option><option value="playing">Playing</option><option value="injured">Injured</option></>)}
-            {sel('period', 'Stats from', period, <>{PERIODS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</>)}
+            {!y25 && sel('period', 'Stats from', period, <>{PERIODS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</>)}
             {own !== 'free' && sel('team', 'G-Train team', sp.team ?? '', <><option value="">All teams</option>{league.teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</>)}
             {own !== 'free' && sel('mine', 'My list', sp.mine ?? '', <><option value="">Include mine</option><option value="not">Not on my list</option></>)}
             {sel('sort', 'Sort by', sort, statOptions(false))}
@@ -196,6 +210,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           </nav>
         </details>
       </form>
+      {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages and games played. Positions, owners, ratings and value are still current (2026).</p>}
       <p className="muted" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
       {own === 'watch' && rows.length === 0 && (
@@ -206,7 +221,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           <thead>
             <tr>
               <th style={{ width: 40 }}>#</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>{own === 'free' ? 'Owned' : 'Owner'}</th>
-              <th style={{ width: 44, textAlign: 'center' }}>Age</th><SortTh k="avg" title={`${periodLabel} · sort`} style={{ width: 60, textAlign: 'center' }}>{period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</SortTh><SortTh k="last" style={{ width: 54, textAlign: 'center' }}>Last</SortTh><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>Apps</th>
+              <th style={{ width: 44, textAlign: 'center' }}>Age</th><SortTh k="avg" title={`${periodLabel} · sort`} style={{ width: 60, textAlign: 'center' }}>{y25 ? "'25 Avg" : period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</SortTh><SortTh k="last" style={{ width: 54, textAlign: 'center' }}>Last</SortTh><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>{y25 ? "'25 Apps" : 'Apps'}</th>
               {extra.map((k) => <th key={k} style={{ width: 150 }}>{label(k)}</th>)}
               <SortTh k="value" style={{ width: 60, textAlign: 'center' }}>Value</SortTh><SortTh k="value" style={{ width: 110 }}>Ability</SortTh><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
             </tr>
@@ -232,7 +247,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                   <td style={{ textAlign: 'center' }}><AvgChip value={periodAvg(p)} /></td>
                   <td style={{ textAlign: 'center' }} className="mono">{lastScore(p) ?? '–'}</td>
                   <td style={{ textAlign: 'center' }}><FormArrow form={form(p)} /></td>
-                  <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
+                  <td style={{ textAlign: 'center' }}>{y25 ? (h25(p)?.[1] || '–') : (p.games ?? '–')}</td>
                   {extra.map((k) => {
                     const v = stat(p, k);
                     return (
