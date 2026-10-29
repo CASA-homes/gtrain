@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 interface Msg { id: string; team_id: number; body: string; pinned: boolean; created_at: string }
-interface TeamLite { id: number; name: string; short_code: string }
+interface TeamLite { id: number; name: string; short_code: string; logo_url?: string | null }
 
 const HUES = ['#1f6b3a', '#3f7fb5', '#7a5fc0', '#c48a1f', '#d0583f', '#4f9a5f', '#151a16', '#8a6a12', '#2a3a2f', '#7a1d12'];
 const fmt = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' });
@@ -52,7 +52,10 @@ export function Chat({ initial, teams, myTeamId, readOnly = false }: { initial: 
           const t = team(m.team_id);
           return (
             <div key={m.id} style={{ display: 'grid', gridTemplateColumns: '34px minmax(0, 1fr)', gap: 12, padding: '10px 18px' }}>
-              <span style={{ width: 34, height: 34, borderRadius: '50%', background: HUES[(m.team_id - 1) % HUES.length], color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', font: '600 12px var(--font)' }}>{t?.short_code}</span>
+              {t?.logo_url
+                // eslint-disable-next-line @next/next/no-img-element
+                ? <img src={t.logo_url} alt={t.short_code} style={{ width: 34, height: 34, borderRadius: '50%', objectFit: 'cover', flex: 'none' }} />
+                : <span style={{ width: 34, height: 34, borderRadius: '50%', background: HUES[(m.team_id - 1) % HUES.length], color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', font: '600 12px var(--font)' }}>{t?.short_code}</span>}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                 <span className="muted" style={{ fontSize: 12 }}><b style={{ color: 'var(--ink)', fontSize: 13 }}>{t?.name}</b> · {fmt(m.created_at)}</span>
                 <span style={{ overflowWrap: 'anywhere' }}>{m.body}</span>

@@ -88,7 +88,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
                         <td className="mono muted">R{r}</td>
                         <td style={{ whiteSpace: 'nowrap' }}>
                           <Link href={`/clubhouse/${owner.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: mine ? 700 : 600, color: 'inherit', textDecoration: 'none' }}>
-                            <TeamBadge code={owner.short_code} size={22} />{owner.name}
+                            <TeamBadge code={owner.short_code} logo={owner.logo_url} size={22} />{owner.name}
                           </Link>
                           <div className="muted" style={{ fontSize: 11, marginLeft: 30 }}>{owner.coach_name}</div>
                         </td>
@@ -112,7 +112,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
             {capital.map(({ t, p27, p28, points }) => (
               <div key={t.id} className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10, outline: t.id === me?.team_id ? `2px solid ${C.green5}` : undefined }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                  <TeamBadge code={t.short_code} size={32} />
+                  <TeamBadge code={t.short_code} logo={t.logo_url} size={32} />
                   <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                     <Link href={`/clubhouse/${t.id}`} style={{ fontWeight: 600, color: 'inherit', textDecoration: 'none' }}>{t.name}</Link>
                     <span className="muted" style={{ fontSize: 12 }}>{t.coach_name}</span>
@@ -181,7 +181,7 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
                     <td style={{ whiteSpace: 'nowrap' }}>
                       {t ? (
                         <Link href={`/clubhouse/${t.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontWeight: mine ? 700 : 500, color: 'inherit', textDecoration: 'none' }}>
-                          <TeamBadge code={t.short_code} size={20} /><span className="draft-team">{t.name}</span>
+                          <TeamBadge code={t.short_code} logo={t.logo_url} size={20} /><span className="draft-team">{t.name}</span>
                         </Link>
                       ) : p.team}
                     </td>

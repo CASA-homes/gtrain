@@ -148,7 +148,7 @@ function Side({ title, team, autoWindow, onWindow, chosen, pool, onAdd, onRemove
     <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div className="row-between" style={{ alignItems: 'center', gap: 8 }}>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
-          <TeamBadge code={team.short} size={28} />
+          <TeamBadge code={team.short} logo={team.logo} size={28} />
           <b style={{ fontWeight: 600 }}>{title}</b>
         </span>
         <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
@@ -183,7 +183,7 @@ function Result({ r, label }: { r: SideResult; label: string }) {
   return (
     <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
       <div className="row-between" style={{ alignItems: 'center' }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}><TeamBadge code={r.team.short} size={26} /><b>{label}</b></span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}><TeamBadge code={r.team.short} logo={r.team.logo} size={26} /><b>{label}</b></span>
         <span className="muted" style={{ fontSize: 12 }}>{r.team.window} · weighs now {Math.round(r.team.wNow * 100)}%</span>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 8 }}>

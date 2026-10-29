@@ -31,7 +31,7 @@ export interface MockPlayer {
   now: number;            // 2027 points value
   fut: number;            // long-term value
 }
-export interface MockTeam { id: number; name: string; short: string; window: string; wNow: number; hasGunRuck: boolean; oneRookieEarly?: boolean }
+export interface MockTeam { id: number; name: string; short: string; logo?: string | null; window: string; wNow: number; hasGunRuck: boolean; oneRookieEarly?: boolean }
 export interface MockPick { overall: number; round: number; teamId: number }
 export interface Edits { out: string[]; adj: Record<string, number> }
 

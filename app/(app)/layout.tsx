@@ -11,7 +11,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const mine = teams.find((t) => t.id === me.team_id);
   return (
     <>
-      <Nav myTeamId={me.team_id} shortCode={me.is_guest ? 'G' : mine?.short_code ?? '?'} guest={!!me.is_guest} />
+      <Nav myTeamId={me.team_id} shortCode={me.is_guest ? 'G' : mine?.short_code ?? '?'} guest={!!me.is_guest} logo={mine?.logo_url ?? null} />
       <main className="page">{children}</main>
     </>
   );

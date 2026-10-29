@@ -41,7 +41,7 @@ export default async function MockPage() {
   const teams: MockTeam[] = league.teams.map((t) => {
     const gunRuck = league.players.some((p) => p.team_id === t.id && (p.is_keeper || p.is_rookie_keeper) && p.positions.includes('RUC') && projected2027(p) >= 85);
     const w = wNowFor(t.name, wins.get(t.id) ?? null);
-    return { id: t.id, name: t.name, short: t.short_code, wNow: w, window: windowLabel(w), hasGunRuck: gunRuck, oneRookieEarly: ONE_ROOKIE_EARLY.has(t.name) };
+    return { id: t.id, name: t.name, short: t.short_code, logo: t.logo_url ?? null, wNow: w, window: windowLabel(w), hasGunRuck: gunRuck, oneRookieEarly: ONE_ROOKIE_EARLY.has(t.name) };
   });
   const picks: MockPick[] = league.picks.filter((p) => p.year === 2027 && p.overall != null)
     .sort((a, b) => a.overall! - b.overall!).map((p) => ({ overall: p.overall!, round: p.round, teamId: p.owner_team_id }));

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { ClubLogoEditor } from '@/components/ClubLogoEditor';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
 import { StatusOverride } from './StatusOverride';
 import { TEAM_NOTES } from '@/lib/team-notes';
@@ -130,7 +131,10 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         <StadiumArt className="club-head-art" />
         <div className="club-head-body">
           <div className="club-head-id">
-            <TeamBadge code={a.team.short_code} />
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none' }}>
+              <TeamBadge code={a.team.short_code} logo={a.team.logo_url} />
+              {(isMine || me?.is_commish) && <ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} />}
+            </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
                 <h1 className="club-head-name">{a.team.name}</h1>

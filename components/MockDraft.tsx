@@ -146,7 +146,7 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
               return (
                 <div key={pick.overall} className={`mock-row${m ? ' mine' : ''}`}>
                   <span className="mono muted" style={{ fontSize: 12 }}>{pick.overall}</span>
-                  <TeamBadge code={t.short} size={22} />
+                  <TeamBadge code={t.short} logo={t.logo} size={22} />
                   <span style={{ minWidth: 0, display: 'flex', flexDirection: 'column' }}>
                     <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {player?.id ? <Link href={`/players/${player.id}`} style={{ color: 'inherit' }}>{player.name}</Link> : player?.name}
@@ -169,7 +169,7 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
                 </div>
               );
             })}
-            {onClock && <div className="mock-row clock"><span className="mono" style={{ fontSize: 12 }}>{onClock.overall}</span><TeamBadge code={team(asTeam).short} size={22} /><b>Your pick…</b><span /></div>}
+            {onClock && <div className="mock-row clock"><span className="mono" style={{ fontSize: 12 }}>{onClock.overall}</span><TeamBadge code={team(asTeam).short} logo={team(asTeam).logo} size={22} /><b>Your pick…</b><span /></div>}
           </div>
         </section>
 

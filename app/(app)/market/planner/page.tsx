@@ -19,7 +19,7 @@ export default async function PlannerPage({ searchParams }: { searchParams: Prom
   const teams: PTeam[] = league.teams.map((t) => {
     const a = league.byTeam.get(t.id)!;
     const w = windowFor(a.projection.rank, a.future.rank);
-    return { id: t.id, name: t.name, short: t.short_code, projRank: a.projection.rank, futRank: a.future.rank, status: a.status, ...w };
+    return { id: t.id, name: t.name, short: t.short_code, logo: t.logo_url ?? null, projRank: a.projection.rank, futRank: a.future.rank, status: a.status, ...w };
   });
 
   const assets: PAsset[] = [

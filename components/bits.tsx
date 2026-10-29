@@ -122,7 +122,11 @@ export function StepBar({ steps, active, colours }: { steps: { name: string; sub
   );
 }
 
-export function TeamBadge({ code, size = 52, dark = true }: { code: string; size?: number; dark?: boolean }) {
+export function TeamBadge({ code, size = 52, dark = true, logo }: { code: string; size?: number; dark?: boolean; logo?: string | null }) {
+  if (logo) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={logo} alt={code} width={size} height={size} style={{ width: size, height: size, borderRadius: size * 0.27, flex: 'none', objectFit: 'cover', background: 'var(--ink)' }} />;
+  }
   return (
     <div style={{
       width: size, height: size, borderRadius: size * 0.27, flex: 'none',

@@ -18,7 +18,7 @@ const FA_ROWS = (freeAgentData as unknown as { updated: string; players: FARow[]
 export const FREE_AGENTS_UPDATED = (freeAgentData as unknown as { updated: string }).updated;
 
 export interface Team {
-  id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null;
+  id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null; logo_url?: string | null;
 }
 export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean }
 export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null; is_guest?: boolean }
@@ -70,12 +70,21 @@ export interface League {
   ladder: { season: number; team_id: number; rank: number; wins: number; losses: number; draws: number; points: number; pts_for: number; pts_against: number }[];
 }
 
+/** Teams without guest clubs. Tries the newest columns first (logo 0016, guests 0013) and falls back if a migration hasn't run. */
+async function loadTeams(supabase: Awaited<ReturnType<typeof createClient>>): Promise<{ data: Team[] | null; error: unknown }> {
+  for (const cols of ['id,name,coach_name,short_code,keeper_id,status_override,is_guest,logo_url', 'id,name,coach_name,short_code,keeper_id,status_override,is_guest']) {
+    const r = await supabase.from('teams').select(cols).order('id');
+    if (!r.error) return { data: ((r.data ?? []) as unknown as (Team & { is_guest?: boolean })[]).filter((t) => !t.is_guest), error: null };
+  }
+  const r = await supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override').order('id');
+  return { data: (r.data ?? null) as Team[] | null, error: r.error };
+}
+
 /** Everything the clubhouse, player and league pages need, in one round trip per table. */
 export const getLeague = cache(async (): Promise<League> => {
   const supabase = await createClient();
   const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
-    supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override,is_guest').order('id').then((r) =>
-      r.error ? supabase.from('teams').select('id,name,coach_name,short_code,keeper_id,status_override').order('id') : { ...r, data: (r.data ?? []).filter((t) => !t.is_guest) }),
+    loadTeams(supabase),
     (() => {
       const sel = (pos: boolean) => supabase.from('squad').select(`
       team_id, is_keeper, is_rookie_keeper, lineup${pos ? ', lineup_pos' : ''},

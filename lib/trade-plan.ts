@@ -25,7 +25,7 @@ export interface PAsset {
   dfs: string | null;
   young: boolean;         // counts toward the future core (24 or under)
 }
-export interface PTeam { id: number; name: string; short: string; projRank: number; futRank: number; status: string; window: string; wNow: number; blurb: string }
+export interface PTeam { id: number; name: string; short: string; logo?: string | null; projRank: number; futRank: number; status: string; window: string; wNow: number; blurb: string }
 
 const FUTURE_CORE = 6;
 const FUTURE_PICKS = 2;

@@ -74,7 +74,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
 
       <header className="card" style={{ padding: '20px 22px', display: 'flex', flexWrap: 'wrap', gap: 18, justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'center', minWidth: 0 }}>
-          <TeamBadge code={team(desk.team_id).short_code} size={46} />
+          <TeamBadge code={team(desk.team_id).short_code} logo={team(desk.team_id).logo_url} size={46} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
             <span className="eyebrow">{team(desk.team_id).name} wants</span>
             <h1 style={{ font: '600 28px/1.1 var(--font)', letterSpacing: '-.025em' }}>{desk.title}</h1>
@@ -140,7 +140,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
                 <div key={tid} className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10, outline: isMe ? `2px solid ${C.green5}` : undefined }}>
                   <div className="row-between" style={{ alignItems: 'center' }}>
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
-                      <TeamBadge code={t.short_code} size={30} />
+                      <TeamBadge code={t.short_code} logo={t.logo_url} size={30} />
                       <span style={{ display: 'flex', flexDirection: 'column' }}>
                         <b style={{ fontWeight: 600 }}>{t.name}</b>
                         <span className="muted" style={{ fontSize: 11 }}>{t.coach_name}{tid === desk.team_id ? ' · opened the desk' : ''}</span>

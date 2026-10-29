@@ -38,7 +38,7 @@ export default async function DeskList({ searchParams }: { searchParams: Promise
           <span style={{ display: 'inline-flex', gap: 4 }}>
             {parts.map((p) => (
               <span key={p.team_id} title={`${team(p.team_id).name}${p.accepted ? ' · accepted' : ''}`} style={{ position: 'relative' }}>
-                <TeamBadge code={team(p.team_id).short_code} size={24} />
+                <TeamBadge code={team(p.team_id).short_code} logo={team(p.team_id).logo_url} size={24} />
                 {p.accepted && <span aria-hidden="true" style={{ position: 'absolute', right: -3, bottom: -3, width: 11, height: 11, borderRadius: 99, background: C.green5, border: '2px solid #fff' }} />}
               </span>
             ))}
