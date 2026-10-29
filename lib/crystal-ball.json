@@ -1710,9 +1710,28 @@
      "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75\u201390 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
     }
    ],
-   "type": "key position player",
+   "type": "midfielder",
    "ceiling": false,
    "comps": [
+    {
+     "name": "Jordan Ridley",
+     "pick": 22,
+     "year": 2016,
+     "peak": 88.4,
+     "now": 57.0,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "decision making",
+      "marking"
+     ],
+     "workons": [
+      "strength"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    },
     {
      "name": "Jack Lukosius",
      "pick": 2,
@@ -1735,25 +1754,6 @@
      ],
      "role": "Key position",
      "type": "key position player"
-    },
-    {
-     "name": "Jordan Ridley",
-     "pick": 22,
-     "year": 2016,
-     "peak": 88.4,
-     "now": 57.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "decision making",
-      "marking"
-     ],
-     "workons": [
-      "strength"
-     ],
-     "role": "Defender",
-     "type": "half-back"
     }
    ]
   },

@@ -64,7 +64,7 @@ def prospect_type(pos, role):
     p = (pos or '').lower()
     if role == 'Ruck': return ['Ruck']
     if role == 'Key position': return ['Key', 'Half-back']
-    if role == 'Tall utility': return ['Wing', 'Midfielder', 'Half-back'] if 'wing' in p else ['Key', 'Midfielder', 'Half-back']
+    if role == 'Tall utility': return ['Wing', 'Midfielder', 'Half-back'] if 'wing' in p else ['Midfielder', 'Half-back', 'Key']
     if 'small fwd' in p and 'mid' in p: return ['Mid-forward', 'Forward']
     if role == 'Small forward' or p.startswith('small'): return ['Forward', 'Mid-forward']
     if p.startswith('def') or 'mid/def' in p: return ['Half-back', 'Wing', 'Midfielder']
