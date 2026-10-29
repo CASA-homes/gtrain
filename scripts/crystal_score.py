@@ -220,6 +220,11 @@ for rank, name in PH:
     off = cm.prior_offset(p)
     prob = cm.prob(model, x, role, offset=off)
     prob_rel = cm.prob(cm.m_rel, x, role, cm.ROLE_CAL_REL, offset=off)
+    # Top-5 picks who aren't dedicated key-position players became stars at close to their slot rate, so don't let the
+    # profile pull one far below it: at least 80% of what the slot alone says.
+    if slot <= 5 and role != 'Key position':
+        pos_only_ = float(pick_model.predict_proba([x[:1]])[0, 1])
+        prob = max(prob, 0.8 * pos_only_)
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     eff = {FEATS[i]: float(model.coef_[0][i] * x[i]) for i in range(1, len(FEATS))}
     # One junior-scoring line on the page: the low-output penalty and the big-numbers boost are two halves of the same thing

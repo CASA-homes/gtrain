@@ -36,7 +36,8 @@ def profile_flags(p):
     production = 'Accumulator' in st or (j.get('FP') or 0) >= 100 or (j.get('D') or 0) >= 25
     runner = bool(st & {'Engine / work rate', 'Speed / agility', 'Athleticism'}) and not (classy or contested or 'Accumulator' in st)
     acc_no_class = 'Accumulator' in st and not (classy or contested)
-    tall = (p.get('ht') or 0) >= 192 and p.get('role') != 'Ruck'
+    # Tall utilities who can play midfield / half-back aren't dedicated key-position players: no extra tall penalty.
+    tall = (p.get('ht') or 0) >= 192 and p.get('role') not in ('Ruck', 'Tall utility')
     return [1 if classy and production else 0, 1 if runner else 0, 1 if acc_no_class else 0, 1 if tall else 0]
 
 def fv(p, pick):
@@ -132,6 +133,9 @@ def _cal(rows, preds, label, wkey='w'):
         out[r] = round(min(3.0, max(0.15, (hits + 0.5) / (exp + 0.5))), 3)
     return out
 ROLE_CAL = _cal(train, pred, 'label')
+# Commish call: a tall utility who plays all over the ground is an unknown, not a write-off. Soften the tall-utility
+# calibration (history is mostly third talls and swingmen) so a genuine midfield/half-back tall isn't buried.
+ROLE_CAL['Tall utility'] = max(ROLE_CAL.get('Tall utility', 1.0), 0.6)
 ROLE_CAL_REL = _cal(train_rel, pred_r, 'rel_label', 'w_rel')
 print('role calibration (90+):', ROLE_CAL, '| (80+):', ROLE_CAL_REL)
 
