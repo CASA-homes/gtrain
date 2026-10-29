@@ -1,6 +1,7 @@
-// Short stories on G-Train-rostered players with big recent news. Newest first. Update as news breaks.
+// Short stories on G-Train-rostered players with big recent news. Newest first.
+// Updated by a daily scheduled news run: new stories go on top with a `date` (YYYY-MM-DD), the list is capped at 18.
 // `player` matches players.name; the photo and G-Train owner are looked up from it.
-export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Injury' | 'Retired' | 'Role'; title: string; body: string }
+export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Injury' | 'Retired' | 'Role'; title: string; body: string; date?: string }
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
