@@ -4,7 +4,8 @@
 //   1. Each player's 2027 average = 2026 average (small samples pulled toward 55) × age curve + hand-noted adjustments.
 //      Retired, delisted and long-term injured players project to zero.
 //   2. Each team keeps 17 + a rookie. Teams that have set keepers use them; everyone else keeps their best 18 projected.
-//   3. Everyone else goes back in the pool and the 2027 draft is simulated in real pick order, best available each time.
+//   3. Everyone else goes back in the pool and the 2027 draft is simulated in real pick order; each pick takes the
+//      player who adds most to that team's starting 18 (positional need), not just the best average left.
 //   4. Teams are ranked on a position-valid starting 18 (5 DEF / 7 MID / 1 RUC / 5 FWD) from that projected list.
 //
 // Future build: each player's score blends projected scoring with potential stars, weighted by how many prime
@@ -114,10 +115,24 @@ export function simulate2027(
   const keptAll = new Set([...keptIds.values()].flat());
   const pool = players.filter((p) => !keptAll.has(p.id) && proj.get(p.id)! > 0).sort((x, y) => proj.get(y.id)! - proj.get(x.id)!);
   const drafted = new Map<number, { pick: number; playerId: number }[]>(teamIds.map((t) => [t, []]));
+  // Each pick takes the player who adds the most to that team's starting 18 (from the best 40 left), so a team
+  // short of forwards drafts forwards instead of a fifth spare midfielder.
+  const s18 = (list: PlayerRow[]) => starting18(list.map((p) => ({ id: p.id, positions: p.positions, score: proj.get(p.id)! })));
   for (const pk of [...picks].sort((x, y) => x.overall - y.overall)) {
-    const next = pool.shift();
-    if (!next) break;
-    squads.get(pk.owner_team_id)?.push(next);
+    if (!pool.length) break;
+    const squad = squads.get(pk.owner_team_id);
+    let best = 0;
+    if (squad) {
+      const now = s18(squad);
+      let gain = -1;
+      pool.slice(0, 40).forEach((c, i) => {
+        // Tiny tie-break toward the better player so a full side still takes the best available.
+        const g = s18([...squad, c]) - now + proj.get(c.id)! * 0.01;
+        if (g > gain) { gain = g; best = i; }
+      });
+    }
+    const [next] = pool.splice(best, 1);
+    squad?.push(next);
     drafted.get(pk.owner_team_id)?.push({ pick: pk.overall, playerId: next.id });
   }
   const scores = teamIds.map((t) => ({
