@@ -1,6 +1,6 @@
 import LEAGUE from '@/data/league.json';
 import { Group, SubHead } from '@/components/LeagueSubpage';
-import { getLeague, getMe } from '@/lib/data';
+import { getMe } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 import { logBet, settleBet } from './actions';
 
@@ -9,33 +9,49 @@ export const dynamic = 'force-dynamic';
 
 const C = LEAGUE.charter;
 const SEASONS = [2027, 2026];
+const NICKS = ['Alex', 'Fyfey', 'Healz', 'Jr', 'Pato', 'Rammy', 'Sancho', 'Shaggy', 'Zac'];
 
-type Bet = { id: number; season: number; title: string; team_a: number; team_b: number | null; stake: string; status: 'open' | 'settled' | 'void'; winner_id: number | null; created_by: number; created_at: string };
+type Bet = { id: number; season: number; category: string; subject: string; line: number | null; kind: 'over_under' | 'yes_no' | 'versus'; side_a_label: string; side_b_label: string; side_a: string[]; side_b: string[]; stake: string; result: 'a' | 'b' | 'push' | 'void' | null; actual: string | null; note: string | null; created_by: number };
+
+function Side({ label, who, won, lost }: { label: string; who: string[]; won: boolean; lost: boolean }) {
+  return (
+    <div className={`bet-side${won ? ' won' : ''}${lost ? ' lost' : ''}`}>
+      <span className="bet-side-k">{label}{won ? ' ✓' : ''}</span>
+      <span>{who.length ? who.join(', ') : '–'}</span>
+    </div>
+  );
+}
 
 export default async function LeagueBetsPage() {
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
+  const me = await getMe();
   const supabase = await createClient();
-  const q = await supabase.from('side_bets').select('*').order('created_at', { ascending: false });
+  const q = await supabase.from('side_bets').select('*').order('id');
   const ready = !q.error;
   const bets = (q.data ?? []) as Bet[];
-  const name = (id: number | null) => (id ? league.teams.find((t) => t.id === id)?.name ?? '–' : 'The field');
   const coach = me && !me.is_guest;
-  const canSettle = (b: Bet) => !!me && (me.is_commish || [b.team_a, b.team_b].includes(me.team_id));
+  const canSettle = (b: Bet) => !!me && (me.is_commish || b.created_by === me.team_id);
 
   return (
-    <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <SubHead eyebrow="Bets" title="League bets" sub="Side bets, side games and the fines kitty · a single pint unless stated" />
+    <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+      <SubHead eyebrow="Bets" title="League bets" sub="Charter section 5 · all bets are a single pint unless stated" />
+      <datalist id="nicks">{NICKS.map((n) => <option key={n} value={n} />)}</datalist>
 
       {coach && ready && (
         <form action={logBet} className="bet-form">
           <b style={{ fontSize: 15 }}>Log a side bet</b>
-          <input name="title" required minLength={3} maxLength={200} placeholder="e.g. Bodega finish above Muzza on the ladder" />
-          <select name="opponent" defaultValue="">
-            <option value="">Against… (or the whole league)</option>
-            {league.teams.filter((t) => t.id !== me!.team_id).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+          <select name="kind" defaultValue="over_under" aria-label="Type">
+            <option value="over_under">Over / under</option>
+            <option value="yes_no">Yes / no</option>
+            <option value="versus">Coach v coach</option>
           </select>
+          <input name="category" list="cats" placeholder="Category (e.g. Fantasy points)" />
+          <datalist id="cats">{['Fantasy points', 'Games played', 'Ladder position', 'To make finals', 'Other'].map((c) => <option key={c} value={c} />)}</datalist>
+          <input name="subject" required minLength={2} maxLength={160} placeholder="Player or question (e.g. Max Hall)" />
+          <input name="line" type="number" step="0.1" placeholder="Line (e.g. 80.5)" />
+          <input name="side_a" required list="nicks" placeholder="Over / Yes / coach A (e.g. Fyfey, Pato)" />
+          <input name="side_b" list="nicks" placeholder="Under / No / coach B" />
           <input name="stake" maxLength={80} placeholder="Stake (default: a pint)" />
-          <select name="season" defaultValue="2027">{SEASONS.map((s) => <option key={s} value={s}>{s}</option>)}</select>
+          <select name="season" defaultValue="2027" aria-label="Season">{SEASONS.map((s) => <option key={s} value={s}>{s}</option>)}</select>
           <button className="btn dark" type="submit">Add bet</button>
         </form>
       )}
@@ -43,35 +59,45 @@ export default async function LeagueBetsPage() {
 
       {SEASONS.map((season) => {
         const list = bets.filter((b) => b.season === season);
+        const cats = [...new Set(list.map((b) => b.category))];
+        const open = list.filter((b) => !b.result).length;
         return (
-          <section key={season} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <h2 className="h2" style={{ fontSize: 20 }}>{season} side bets <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>{list.length ? `${list.filter((b) => b.status === 'open').length} open · ${list.length} total` : ''}</span></h2>
-            {list.length === 0 ? (
-              <p className="muted" style={{ margin: 0, fontSize: 14 }}>{season === 2026 ? 'No 2026 side bets were recorded on the site. Tell the commish any that are still owed and they can go up here.' : 'No bets yet. Get one on the board.'}</p>
-            ) : (
-              <div className="bet-list">
-                {list.map((b) => (
-                  <article key={b.id} className={`bet-card ${b.status}`}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
-                      <b>{b.title}</b>
-                      <span className="bet-status">{b.status === 'open' ? 'Open' : b.status === 'void' ? 'Void' : `${name(b.winner_id)} won`}</span>
-                    </div>
-                    <span className="muted" style={{ fontSize: 13 }}>{name(b.team_a)} v {name(b.team_b)} · {b.stake}</span>
-                    {canSettle(b) && (
-                      <form action={settleBet} className="bet-actions">
-                        <input type="hidden" name="id" value={b.id} />
-                        {b.status === 'open' ? <>
-                          <button name="how" value={b.team_a}>{name(b.team_a)} won</button>
-                          {b.team_b && <button name="how" value={b.team_b}>{name(b.team_b)} won</button>}
-                          <button name="how" value="void">Void</button>
-                        </> : <button name="how" value="reopen">Reopen</button>}
-                        {(me!.is_commish || b.created_by === me!.team_id) && <button name="how" value="delete" className="danger">Delete</button>}
-                      </form>
-                    )}
-                  </article>
-                ))}
+          <section key={season} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <h2 className="h2" style={{ fontSize: 22 }}>{season} side bets <span className="muted" style={{ fontSize: 14, fontWeight: 500 }}>{list.length ? `${list.length} bets · ${open} open` : ''}</span></h2>
+            {list.length === 0 && <p className="muted" style={{ margin: 0, fontSize: 14 }}>No bets yet. Get one on the board.</p>}
+            {cats.map((cat) => (
+              <div key={cat} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <span className="eyebrow">{cat}</span>
+                <div className="bet-list">
+                  {list.filter((b) => b.category === cat).map((b) => (
+                    <article key={b.id} className={`bet-card ${b.result ? 'done' : 'open'}`}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
+                        <b>{b.subject}{b.line != null && <span className="bet-line"> {Number(b.line)}</span>}</b>
+                        <span className={`bet-status ${b.result ?? 'open'}`}>{!b.result ? 'Open' : b.result === 'void' ? 'Void' : b.result === 'push' ? 'Push' : `${b.result === 'a' ? b.side_a_label : b.side_b_label} wins`}</span>
+                      </div>
+                      <div className="bet-sides">
+                        <Side label={b.side_a_label} who={b.side_a} won={b.result === 'a'} lost={b.result === 'b'} />
+                        <Side label={b.side_b_label} who={b.side_b} won={b.result === 'b'} lost={b.result === 'a'} />
+                      </div>
+                      <span className="muted" style={{ fontSize: 12 }}>{b.stake}{b.actual ? ` · actual: ${b.actual}` : ''}</span>
+                      {b.note && <span style={{ fontSize: 12, color: '#a87a22' }}>{b.note}</span>}
+                      {canSettle(b) && (
+                        <form action={settleBet} className="bet-actions">
+                          <input type="hidden" name="id" value={b.id} />
+                          {!b.result ? <>
+                            <button name="how" value="a">{b.side_a_label} won</button>
+                            <button name="how" value="b">{b.side_b_label} won</button>
+                            <button name="how" value="push">Push</button>
+                            <button name="how" value="void">Void</button>
+                          </> : <button name="how" value="reopen">Reopen</button>}
+                          <button name="how" value="delete" className="danger">Delete</button>
+                        </form>
+                      )}
+                    </article>
+                  ))}
+                </div>
               </div>
-            )}
+            ))}
           </section>
         );
       })}
