@@ -736,3 +736,8 @@ body:has(.rh) { background: #000; }
 .bet-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .bet-actions button { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
 .bet-actions button.danger { color: #c8352b; }
+
+/* Players table: click a column header to sort */
+.th-sort { color: inherit; font-weight: inherit; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.th-sort:hover { text-decoration: underline; text-underline-offset: 3px; }
+.th-sort.on { font-weight: 800; color: var(--ink); }

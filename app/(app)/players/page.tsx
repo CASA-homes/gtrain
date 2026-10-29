@@ -19,7 +19,8 @@ const PROFILE = [
 ] as const;
 const STATS: { key: string; label: string; group: 'Rating' | 'Fantasy profile' | 'Game attributes' }[] = [
   { key: 'avg', label: 'Average (chosen period)', group: 'Rating' },
-  { key: 'value', label: 'Value (0–100)', group: 'Rating' },
+  { key: 'last', label: 'Last score', group: 'Rating' },
+  { key: 'value', label: 'Value / current ability (0–100)', group: 'Rating' },
   { key: 'potential', label: 'Potential stars', group: 'Rating' },
   { key: 'age', label: 'Age (youngest first)', group: 'Rating' },
   ...PROFILE.map(([key, label]) => ({ key, label, group: 'Fantasy profile' as const })),
@@ -53,6 +54,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     if (key === 'value') return r.value;
     if (key === 'avg') return periodAvg(p);
     if (key === 'potential') return r.potential;
+    if (key === 'last') return lastScore(p);
     if (key === 'age') return age(p.birth_date);
     if (key.startsWith('a_')) return league.attrs.get(p.id)?.find((x) => x.key === key.slice(2))?.value ?? null;
     return (r as unknown as Record<string, number>)[key] ?? null;
@@ -69,6 +71,10 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     const xs = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
     const last = xs.slice(-n);
     return last.length ? Math.round((last.reduce((t, x) => t + x, 0) / last.length) * 10) / 10 : null;
+  };
+  const lastScore = (p: PlayerRow): number | null => {
+    const xs = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
+    return xs.length ? xs[xs.length - 1] : null;
   };
   const pool = own === 'owned' ? league.players : own === 'free' ? league.freeAgents
     : own === 'watch' ? [...league.players, ...league.freeAgents].filter((p) => watch.ids.has(p.id)) : [...league.players, ...league.freeAgents];
@@ -93,7 +99,19 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     });
 
   // Extra columns: the sort stat and any filtered stats, as bars.
-  const extra = [...new Set([sort, ...filters.map((f) => f[0])])].filter((k) => k !== 'value' && k !== 'potential' && k !== 'age' && k !== 'avg');
+  const extra = [...new Set([sort, ...filters.map((f) => f[0])])].filter((k) => k !== 'value' && k !== 'potential' && k !== 'age' && k !== 'avg' && k !== 'last');
+  // Clickable column headers: same filters, new sort.
+  const sortHref = (k: string) => {
+    const u = new URLSearchParams();
+    for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'sort') u.set(key, String(v));
+    u.set('sort', k);
+    return `/players?${u.toString()}`;
+  };
+  const SortTh = ({ k, children, title, style }: { k: string; children: React.ReactNode; title?: string; style?: React.CSSProperties }) => (
+    <th style={style} title={title ?? `Sort by ${label(k).toLowerCase()}`} aria-sort={sort === k ? 'descending' : undefined}>
+      <Link href={sortHref(k)} scroll={false} className={`th-sort${sort === k ? ' on' : ''}`}>{children}{sort === k ? ' ↓' : ''}</Link>
+    </th>
+  );
   const active = (preset: Record<string, string>) => Object.entries(preset).every(([k, v]) => sp[k as keyof SP] === v);
   const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'owned' ? { own } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
   const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'owned' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}) }).toString()}`;
@@ -184,13 +202,13 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           <div className="card muted" style={{ padding: 16 }}>Your watchlist is empty. Tap the grey star above a player’s name on his profile to add him.</div>
         )}
         <div className="table-box">
-        <table className="squad" style={{ minWidth: 760 + extra.length * 150 }}>
+        <table className="squad" style={{ minWidth: 920 + extra.length * 150 }}>
           <thead>
             <tr>
               <th style={{ width: 40 }}>#</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>{own === 'free' ? 'Owned' : 'Owner'}</th>
-              <th style={{ width: 44, textAlign: 'center' }}>Age</th><th style={{ width: 60, textAlign: 'center' }} title={periodLabel}>{period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</th><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>Apps</th>
+              <th style={{ width: 44, textAlign: 'center' }}>Age</th><SortTh k="avg" title={`${periodLabel} · sort`} style={{ width: 60, textAlign: 'center' }}>{period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</SortTh><SortTh k="last" style={{ width: 54, textAlign: 'center' }}>Last</SortTh><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>Apps</th>
               {extra.map((k) => <th key={k} style={{ width: 150 }}>{label(k)}</th>)}
-              <th style={{ width: 60, textAlign: 'center' }}>Value</th><th style={{ width: 110 }}>Current ability</th>
+              <SortTh k="value" style={{ width: 60, textAlign: 'center' }}>Value</SortTh><SortTh k="value" style={{ width: 110 }}>Ability</SortTh><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
             </tr>
           </thead>
           <tbody>
@@ -212,6 +230,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                   </td>
                   <td style={{ textAlign: 'center' }} className="mono">{age(p.birth_date) ?? '–'}</td>
                   <td style={{ textAlign: 'center' }}><AvgChip value={periodAvg(p)} /></td>
+                  <td style={{ textAlign: 'center' }} className="mono">{lastScore(p) ?? '–'}</td>
                   <td style={{ textAlign: 'center' }}><FormArrow form={form(p)} /></td>
                   <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
                   {extra.map((k) => {
@@ -227,6 +246,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                   })}
                   <td style={{ textAlign: 'center' }} className="mono">{r.value}</td>
                   <td><Stars value={r.valueStars} label="Current ability" /></td>
+                  <td><Stars value={r.potential} colour={C.green5} label="Potential" /></td>
                 </tr>
               );
             })}
