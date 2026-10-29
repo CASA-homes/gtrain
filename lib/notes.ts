@@ -24,7 +24,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Keidean Coleman swaps Brisbane for Essendon, and he’ll play off half-back, where he’s always scored best. The Bombers’ back half needs a kicker, so he should take the kick-ins and run the rebound chain rather than share it with a stacked Lions defence. That’s a low-80s player when he’s on the park. The catch is the body: he managed one game in each of 2024 and 2025. Buy the upside, but keep a backup.',
   },
   'L. Ash|GWS': {
-    delta: 3,
+    delta: 6,
     outlook: 'Ash went from 76 to 100 to 103 over the last three years, and the main man he shared the GWS back half with, Lachie Whitfield, has just been traded to Carlton. That leaves Ash as the undisputed kick-in taker and the first look out of defence. He should keep dominating, and there’s a case he goes up again in 2027.',
   },
   'B. Hill|STK': {
@@ -40,7 +40,8 @@ export const NOTES: Record<string, Note> = {
 
   // ---------------------------------------------------------------- off-field
   'L. Cowan|CAR': {
-    outlook: 'Starts 2027 serving a two-match AFL ban (a strike under the illicit drugs policy), so pencil him in from Round 3. On the field he’s a steady low-60s half-back with 24 games last year, which makes him a bench option rather than a starter. Off the field, maybe don’t make him the designated driver for the end-of-season trip.',
+    delta: -2,
+    outlook: 'Starts 2027 serving a two-match AFL ban (a strike under the illicit drugs policy), so pencil him in from Round 3. On the field he’s a steady low-60s half-back with 24 games last year, which makes him a bench option rather than a starter. Off the field, maybe don’t make him the designated driver for the end-of-season trip. Lachie Whitfield’s arrival also means less of the Carlton half-back ball comes his way.',
   },
   'N. Blakey|NTH': {
     delta: 4,
@@ -53,6 +54,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Caught up in the Swans’ team-hotel suspension along with four teammates, so his 2026 ended before the finals. On-field he’s been remarkably steady: 88 to 93 four years running with around 60% of centre bounces. A safe low-90s mid who won’t win you a week but won’t lose you one either.',
   },
   'R. Bice|SYD': {
+    delta: 4,
     outlook: 'He jumped from 57 to 76 in his second season before he was one of the five Swans stood down after the team-hotel breach. With Blakey now gone to North, the half-back role Bice has been covering should get bigger. There’s upside if Sydney hand him Blakey’s rebound minutes.',
   },
 
@@ -96,6 +98,7 @@ export const NOTES: Record<string, Note> = {
     outlook: 'He’s gone from Geelong to Essendon. Nine games at 70 last year, and he’s been hard to rely on for years. Bench cover only.',
   },
   'N. O\'Driscoll|RIC': {
+    delta: 4,
     outlook: 'He’s moved from Fremantle to Richmond, where midfield minutes are there for the taking. He’s been a low-60s half-back for four years. The move is his best chance yet at a bigger role.',
   },
   'K. Briggs|RIC': {
@@ -152,47 +155,57 @@ export const NOTES: Record<string, Note> = {
     outlook: 'Pick 2 in 2024. He jumped from 54 to 72 in his second year and got 68% of centre bounces. North’s midfield runs through Sheezel, but O’Sullivan is the clear No.2. Another 10-point jump makes him a genuine starter.',
   },
   'L. Ashcroft|BRL': {
-    outlook: 'Pick 5 in 2024. He’s played all 54 games of his career and gone from 72 to 77, mostly on a wing and half-back. Like his brother Will, he could take off once the Lions move him on-ball.',
+    delta: 4,
+    outlook: 'Pick 5 in 2024. He’s played all 54 games of his career and gone from 72 to 77, mostly on a wing and half-back. Like his brother Will, he could take off once the Lions move him on-ball. Lachie Neale’s move to Collingwood also frees up midfield minutes at Brisbane, which helps his case.',
   },
   'L. Humphries|GEE': {
-    outlook: 'A late pick who has outscored most of his draft class. He went from 70 to 81 in 2026 off half-back at 23, which is well above where defenders his age usually sit. Geelong use him as a ball-user off the back flank, and that role suits fantasy scoring. Trending towards 90.',
+    delta: -2,
+    outlook: 'A late pick who has outscored most of his draft class. He went from 70 to 81 in 2026 off half-back at 23, which is well above where defenders his age usually sit. Geelong use him as a ball-user off the back flank, and that role suits fantasy scoring. Trending towards 90. Jordan Ridley’s arrival from Essendon adds competition for the Geelong half-back ball, so expect a small dip.',
   },
   'J. Fonti|GWS': {
+    delta: 4,
     outlook: 'Averaged 38, then 50, then 73 across his first three seasons, which is as steep a curve as anyone on a list. He’s a 21-year-old defender who’s only now getting full games (82% time on ground). With Whitfield gone from the GWS back half, there are more kicks out of defence going begging. A 3-star player today with 4.5-star upside.',
   },
   'M. Herbert|WCE': {
-    outlook: 'A mature-age rookie who arrived at 23 and averaged 76 over 10 games, including 104 and 118 in his last two. That’s an eye-catching start, but it’s a small sample. Rookie keeper slot material: cheap to hold and could be a genuine find.',
+    delta: -2,
+    outlook: 'A mature-age rookie who arrived at 23 and averaged 76 over 10 games, including 104 and 118 in his last two. That’s an eye-catching start, but it’s a small sample. Rookie keeper slot material: cheap to hold and could be a genuine find. Rivers and Viney arriving from Melbourne adds midfield bodies at West Coast, which makes his path to minutes a bit harder.',
   },
   'G. Hewett|CAR': {
     outlook: 'Back-to-back years in the 90s (99, then 90) as Carlton’s stoppage worker. He turns 31 in December, though, and midfielders his age tend to fade fast. His current value is a 4-star season, but he’s a 3-star keep from here.',
   },
   'J. Dunkley|BRL': {
-    outlook: 'A 103–108 player for three years before dipping to 94 in 2026. He’s 29 and Brisbane’s midfield is deep, so the 2026 drop might be the start of a gentle slide rather than a blip. Still a 4-star keeper for the next season or two.',
+    delta: 3,
+    outlook: 'A 103–108 player for three years before dipping to 94 in 2026. He’s 29 and Brisbane’s midfield is deep, so the 2026 drop might be the start of a gentle slide rather than a blip. Still a 4-star keeper for the next season or two. With Neale now gone to Collingwood, though, there’s more midfield ball to go around, which should slow that slide.',
   },
   'O. Wines|PTA': {
-    outlook: 'He’s 32 and averaged 78 in 2026, down from 90. His time on ground dropped to 65%, which is the giveaway. 2027 might be his last season. Keep him only if your mid-bench is empty.',
+    delta: 2,
+    outlook: 'He’s 32 and averaged 78 in 2026, down from 90. His time on ground dropped to 65%, which is the giveaway. 2027 might be his last season. Keep him only if your mid-bench is empty. Butters’ exit does free up some Port midfield minutes, which should soften the drop.',
   },
   'E. Tsatas|ESS': {
     outlook: 'Delisted by Essendon after the 2026 season. That’s a brutal end for pick 5 in 2022. When he played in 2026 he averaged 79 with 59% of centre bounces, so the talent was never the question; the body was. He has no AFL club right now, so he’s worth nothing for 2027 unless someone picks him up. Keep an eye on the rookie lists.',
   },
 
   'A. Cadman|GWS': {
-    outlook: 'The No.1 pick in 2022, but he’s a key forward, and in fantasy terms that shows: 61 average with almost no midfield time. He’s a better real-life player than a fantasy one. Don’t let the draft number fool you.',
+    delta: 4,
+    outlook: 'The No.1 pick in 2022, but he’s a key forward, and in fantasy terms that shows: 61 average with almost no midfield time. He’s a better real-life player than a fantasy one. Don’t let the draft number fool you. With Toby Greene (Geelong) and Jesse Hogan (Collingwood) both gone, though, he becomes the Giants’ main target up forward, which should lift him a few points.',
   },
   'G. Wardlaw|NTH': {
     outlook: 'Pick 4 in 2022. When fit, he’s a tackling-heavy inside mid (5.4 tackles a game). But at 61% time on ground and 72 average, North are still managing his minutes. With a full load, he’s an 85+ player.',
   },
   'C. McKercher|NTH': {
-    outlook: 'Pick 2 in 2023. He started hot at 82 but has drifted to 78, then 76, as a half-back. He’s a steady 76–82 defender rather than the star the draft number suggested, unless North move him into the midfield.',
+    delta: -3,
+    outlook: 'Pick 2 in 2023. He started hot at 82 but has drifted to 78, then 76, as a half-back. He’s a steady 76–82 defender rather than the star the draft number suggested, unless North move him into the midfield. Nick Blakey’s arrival from Sydney makes that harder: Blakey will take a lot of North’s half-back ball.',
   },
   'Z. Uwland|GCS': {
     outlook: 'Pick 2 in 2025. He averaged 58 as a first-year defender, about what you’d expect. Bodhi Uwland’s 12.2 rating points a game off the same Suns half-back line show what that role can become. Give it two years.',
   },
   'J. Farrow|ESS': {
-    outlook: 'Pick 10 in 2025. He averaged 72 as a first-year, 17 points above the norm, and played all 21 games. He’s a ball-user off the half-back, a role that scores well. One to hold.',
+    delta: -2,
+    outlook: 'Pick 10 in 2025. He averaged 72 as a first-year, 17 points above the norm, and played all 21 games. He’s a ball-user off the half-back, a role that scores well. One to hold. Keidean Coleman’s arrival from Brisbane means he’ll share the kick-ins and rebound, so expect a small dip.',
   },
   'S. Robey|ESS': {
-    outlook: 'Pick 9 in 2025. He averaged 62 in his first year, but the underlying numbers are better: 33% of centre bounces, 7.3 contested possessions and 3.7 clearances in limited time. He’s an inside-mid prospect at an Essendon side that’s rebuilding its midfield.',
+    delta: 3,
+    outlook: 'Pick 9 in 2025. He averaged 62 in his first year, but the underlying numbers are better: 33% of centre bounces, 7.3 contested possessions and 3.7 clearances in limited time. He’s an inside-mid prospect at an Essendon side that’s rebuilding its midfield. Zach Merrett’s move to Hawthorn opens up even more Essendon midfield time for him.',
   },
   'T. Travaglia|STK': {
     outlook: 'Pick 8 in 2024, but he’s managed only 18 games across two years at 46–47. St Kilda’s midfield is crowded with Flanders, Wanganeen-Milera and now Wilson pushing in. He needs a role first.',
@@ -221,6 +234,182 @@ export const NOTES: Record<string, Note> = {
   },
   'T. Sonsie|RIC': {
     outlook: 'Delisted by Richmond. He showed flashes as a ball-winning forward, but he has no AFL club for 2027 right now. Watch the rookie and pre-season supplemental lists.',
+  },
+  'C. Idun|GWS': {
+    delta: 2,
+    outlook: 'Lachie Whitfield’s move to Carlton opens up kicks out of the GWS back half. Idun is more stopper than rebounder, but he should see a few more of them. A small bump.',
+  },
+  'B. Daniels|GWS': {
+    delta: 3,
+    outlook: 'Greene’s exit leaves a spot in the GWS forward-half rotation, and Daniels is one of the obvious players to fill it once he’s back from injury.',
+  },
+  'P. Gothard|GWS': {
+    delta: 2,
+    outlook: 'Greene and Hogan leaving GWS frees up forward-line minutes, and Gothard is in line for some of them after his injury.',
+  },
+  'N. Madden|GWS': {
+    delta: 8,
+    outlook: 'Kieren Briggs has left for Richmond, so the GWS ruck job is Madden’s to lose. More hit-outs and more time on ground should push him well past last year’s numbers if he holds the spot.',
+  },
+  'J. Riccardi|GWS': {
+    delta: 3,
+    outlook: 'With Briggs, Greene and Hogan gone, Riccardi’s ruck-forward role gets a bigger share at GWS. Still a depth piece, but a busier one.',
+  },
+  'W. Ashcroft|BRL': {
+    delta: 3,
+    outlook: 'Lachie Neale has gone to Collingwood, so the Brisbane midfield is now Ashcroft’s to run. Expect even more centre bounces and a bit more ball.',
+  },
+  'H. McCluggage|BRL': {
+    delta: 3,
+    outlook: 'Neale’s move to Collingwood frees up a Brisbane midfield spot, and McCluggage should spend more time on-ball as a result.',
+  },
+  'J. Berry|BRL': {
+    delta: 3,
+    outlook: 'With Neale gone to Collingwood, Berry is one of the Brisbane mids who should pick up extra centre-bounce minutes.',
+  },
+  'D. Wilmot|BRL': {
+    delta: 2,
+    outlook: 'Keidean Coleman’s exit to Essendon leaves more of the Brisbane rebound and kick-ins for Wilmot. A small bump on top of his normal output.',
+  },
+  'J. Fletcher|BRL': {
+    delta: 2,
+    outlook: 'Coleman’s move to Essendon frees up a half-back spot at Brisbane, and Fletcher is in line to take it.',
+  },
+  'J. Horne-Francis|PTA': {
+    delta: 4,
+    outlook: 'Zak Butters has left for the Western Bulldogs, so Horne-Francis becomes Port’s No.1 midfielder. More centre bounces and more of the ball once he’s back from injury.',
+  },
+  'W. Drew|PTA': {
+    delta: 3,
+    outlook: 'Butters’ exit opens up midfield minutes at Port, and Drew is one of the main players in line for them.',
+  },
+  'J. Burgoyne|PTA': {
+    delta: 2,
+    outlook: 'With Butters gone to the Bulldogs, Burgoyne is likely to spend more time through the midfield as well as off half-back.',
+  },
+  'C. Rozee|PTA': {
+    delta: 2,
+    outlook: 'Butters’ exit leaves Port short of midfield class, so Rozee should get more on-ball time once he’s back from injury.',
+  },
+  'W. Setterfield|ESS': {
+    delta: 3,
+    outlook: 'Zach Merrett has gone to Hawthorn, leaving a big hole in the Essendon midfield. Setterfield should pick up a lot of those touches.',
+  },
+  'J. Caldwell|ESS': {
+    delta: 3,
+    outlook: 'Merrett’s move to Hawthorn frees up midfield minutes at Essendon, and Caldwell is one of the inside mids who should benefit.',
+  },
+  'S. Durham|ESS': {
+    delta: 2,
+    outlook: 'With Merrett gone, Essendon need more midfield ball-winning, and Durham should spend more time on-ball once he’s back from injury.',
+  },
+  'X. Duursma|ESS': {
+    delta: 2,
+    outlook: 'Merrett’s exit opens up midfield minutes at Essendon that Duursma could step into.',
+  },
+  'D. Sharp|ESS': {
+    delta: 2,
+    outlook: 'With Merrett gone to Hawthorn, Sharp should get more midfield time at Essendon.',
+  },
+  'A. Roberts|ESS': {
+    delta: -2,
+    outlook: 'Keidean Coleman’s arrival from Brisbane means another kick-in and rebound option in the Essendon back half. Roberts stays a big scorer, but he’ll share a bit more of the ball.',
+  },
+  'J. Bowey|MEL': {
+    delta: 2,
+    outlook: 'Trent Rivers has gone to West Coast, which leaves more of the Melbourne half-back ball for Bowey.',
+  },
+  'C. Windsor|MEL': {
+    delta: 2,
+    outlook: 'Rivers and Viney have both left Melbourne, which opens up half-back and midfield minutes for Windsor.',
+  },
+  'J. Fitzgerald|MEL': {
+    delta: 2,
+    outlook: 'Viney and Rivers leaving Melbourne frees up midfield time, and Fitzgerald is one of the mids in line for it.',
+  },
+  'H. Langford|MEL': {
+    delta: 2,
+    outlook: 'With Viney and Rivers gone to West Coast, Langford should see more midfield minutes at Melbourne.',
+  },
+  'T. Sparrow|MEL': {
+    delta: 2,
+    outlook: 'With Viney and Rivers gone to West Coast, Sparrow’s spot in the Melbourne midfield rotation gets more secure.',
+  },
+  'M. Roberts|SYD': {
+    delta: 3,
+    outlook: 'Nick Blakey has gone to North Melbourne, which leaves a big gap in the Sydney rebound game. Roberts is in line to fill it.',
+  },
+  'J. Serong|SYD': {
+    delta: 2,
+    outlook: 'Blakey’s move to North opens up half-back ball at Sydney, and Serong should pick up some of it.',
+  },
+  'T. De Koning|STK': {
+    delta: 12,
+    outlook: 'Rowan Marshall has gone to Geelong, so De Koning should be St Kilda’s No.1 ruck after sharing the job for a year. On full ruck minutes, expect a big jump on last year’s split-role numbers.',
+  },
+  'J. Newcombe|HAW': {
+    delta: -3,
+    outlook: 'Zach Merrett’s arrival from Essendon means more competition for the ball in the Hawthorn midfield. Newcombe is still a key part of it, but expect a small dip.',
+  },
+  'W. Day|HAW': {
+    delta: -2,
+    outlook: 'Merrett’s arrival at Hawthorn crowds the midfield, so Day’s centre-bounce share could shrink.',
+  },
+  'J. Ward|HAW': {
+    delta: -2,
+    outlook: 'With Merrett now at Hawthorn, Ward’s path to more midfield time gets tougher.',
+  },
+  'C. Mackenzie|HAW': {
+    delta: -2,
+    outlook: 'Merrett joining Hawthorn adds another proven ball-winner ahead of Mackenzie in the midfield rotation.',
+  },
+  'E. Richards|WBD': {
+    delta: -2,
+    outlook: 'Zak Butters’ arrival from Port means the Bulldogs’ centre bounces get shared more. Richards should still score well, just a touch less.',
+  },
+  'M. Kennedy|WBD': {
+    delta: -2,
+    outlook: 'Butters joining the Bulldogs adds another star mid, which squeezes Kennedy’s share of the inside work.',
+  },
+  'R. Sanders|WBD': {
+    delta: -2,
+    outlook: 'Butters’ arrival makes the Bulldogs midfield even more crowded, which may slow Sanders’ move into a bigger on-ball role.',
+  },
+  'J. Freijah|WBD': {
+    delta: -2,
+    outlook: 'With Butters now at the Bulldogs, Freijah’s midfield minutes are likely to shrink.',
+  },
+  'O. Florent|CAR': {
+    delta: -2,
+    outlook: 'Lachie Whitfield’s arrival gives Carlton a new No.1 kick-in taker, so Florent shares more of the half-back ball.',
+  },
+  'B. Wilson|CAR': {
+    delta: -2,
+    outlook: 'Whitfield joining Carlton means less of the rebound work going Wilson’s way.',
+  },
+  'H. Davis|WCE': {
+    delta: -1,
+    outlook: 'Rivers and Viney arriving at West Coast adds midfield bodies ahead of Davis.',
+  },
+  'M. Blicavs|GEE': {
+    delta: -4,
+    outlook: 'Rowan Marshall’s arrival as Geelong’s main ruck means Blicavs’ ruck minutes all but dry up.',
+  },
+  'T. Bruhn|GEE': {
+    delta: -1,
+    outlook: 'Jordan Ridley’s arrival adds another half-back option at Geelong, so Bruhn shares a little more of the ball.',
+  },
+  'S. Mannagh|GEE': {
+    delta: -2,
+    outlook: 'Toby Greene joining Geelong adds a star forward ahead of Mannagh in the pecking order.',
+  },
+  'G. Miers|GEE': {
+    delta: -2,
+    outlook: 'Greene’s arrival at Geelong means more competition for the forward-line ball Miers lives on.',
+  },
+  'D. McStay|COL': {
+    delta: -2,
+    outlook: 'Jesse Hogan’s arrival from GWS adds a key forward at Collingwood, so McStay’s share of the marks drops.',
   },
 };
 
