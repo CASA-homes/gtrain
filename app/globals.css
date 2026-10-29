@@ -693,7 +693,7 @@ body:has(.rh) { background: #000; }
 /* Crystal ball: table left, compact expandable panels right */
 .cb-layout { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(300px, 1fr); gap: 16px; align-items: start; }
 .cb-side { display: flex; flex-direction: column; gap: 10px; position: sticky; top: 64px; max-height: calc(100vh - 76px); overflow-y: auto; min-width: 0; }
-.cb-panel { padding: 0; overflow: hidden; }
+.cb-panel { padding: 0; overflow: hidden; flex-shrink: 0; }
 .cb-item { border-top: 1px solid var(--line); }
 .cb-item > summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto 14px; gap: 8px; align-items: center; padding: 6px 12px; font-size: 13px; }
 .cb-item > summary::-webkit-details-marker { display: none; }
