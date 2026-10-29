@@ -713,3 +713,19 @@ body:has(.rh) { background: #000; }
   .cb-layout { grid-template-columns: 1fr; }
   .cb-side { position: static; max-height: none; overflow: visible; }
 }
+
+/* League bets */
+.bet-form { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; }
+.bet-form b { flex-basis: 100%; }
+.bet-form input, .bet-form select { min-height: 38px; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; font: inherit; font-size: 14px; background: #fff; }
+.bet-form input[name='title'] { flex: 2 1 260px; }
+.bet-form select[name='opponent'], .bet-form input[name='stake'] { flex: 1 1 170px; }
+.bet-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.bet-card { display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+.bet-card.settled { background: #f4f7f1; }
+.bet-card.void { opacity: .6; }
+.bet-status { font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; color: #1f6b3a; white-space: nowrap; }
+.bet-card.open .bet-status { color: #a87a22; }
+.bet-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.bet-actions button { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 4px 10px; font-size: 12px; cursor: pointer; }
+.bet-actions button.danger { color: #c8352b; }
