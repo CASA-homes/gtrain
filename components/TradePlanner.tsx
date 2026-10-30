@@ -114,7 +114,7 @@ export function TradePlanner({ myTeamId, teams, assets, initialPartner, initialG
         <summary style={{ cursor: 'pointer', fontWeight: 600 }}>How it’s judged</summary>
         <ul style={{ margin: '8px 0 0', paddingLeft: 18, lineHeight: 1.6 }}>
           <li><b>Now</b>: change to the team’s position-valid 2027 best 18 (projected 2027 averages, ruck at half weight), in points a round. A player who doesn’t crack their 18 adds nothing here.</li>
-          <li><b>Future</b>: change to their young core, the best six players aged 23 or under on future-build scores plus their best two 2027 picks as prospects.</li>
+          <li><b>Future</b>: change to their young core, the best eight players aged 23 or under on future-build scores plus their best two 2027 picks as prospects.</li>
           <li><b>Window</b>: from each team’s 2027 projection rank and future rank. A contender weighs now about 70–80%, a side entering contention about half and half, a rebuild mostly future. The headline number is that weighted change.</li>
           <li><b>Market points</b> are shown as the neutral scale the rest of the site uses, but the call is made on fit, not points.</li>
         </ul>

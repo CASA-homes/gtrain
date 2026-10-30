@@ -33,7 +33,7 @@ export function projected2027(p: PlayerRow): number {
 /** Future build only counts kept players this age or younger (current age)... */
 export const FUTURE_MAX_AGE = 23;
 /** ...and ranks each team on its best this-many of them, so quality beats quantity. */
-export const FUTURE_CORE = 6;
+export const FUTURE_CORE = 8;
 /** A team's best two 2027 picks count as incoming prospects in its future build. */
 export const FUTURE_PICKS = 2;
 /** Future score of the prospect a 2027 pick brings in: pick 1 ≈ 115, falling ~4.5% a pick (pick 10 ≈ 77, pick 20 ≈ 49). */

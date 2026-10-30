@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ClubDot, Cup, RankBar, Stars } from '@/components/bits';
 import { getLeague } from '@/lib/data';
-import { FUTURE_MAX_AGE, futureScore } from '@/lib/projection';
+import { FUTURE_CORE, FUTURE_MAX_AGE, futureScore } from '@/lib/projection';
 import { age, C, LINES } from '@/lib/ratings';
 
 const STATUS_COLOUR = { 'Strong contender': C.green5, 'Top 4 contender': C.green4, 'Mid-table': C.green2, Rebuilding: C.yellow } as const;
@@ -40,7 +40,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
       <div className="wrap">
         <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <span className="eyebrow">Each team’s best six: kept players aged 23 or under, plus its top 2027 picks</span>
+            <span className="eyebrow">Each team’s best eight: kept players aged 23 or under, plus its top 2027 picks</span>
             <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Future build</h1>
           </div>
           {tabs}
@@ -54,7 +54,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
               {rows.map((a) => {
                 const top = a.players.filter((p) => a.projection.keepers.includes(p.id) && (age(p.birth_date) ?? 99) <= FUTURE_MAX_AGE)
                   .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0, league.ratings.get(p.id)?.lineEdge ?? 0) }))
-                  .sort((x, y) => y.f - x.f).slice(0, 6);
+                  .sort((x, y) => y.f - x.f).slice(0, FUTURE_CORE);
                 return (
                   <tr key={a.team.id}>
                     <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{a.future.rank}</td>
@@ -67,7 +67,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
                             <span className="muted">2027</span>
                           </span>
                         )}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, max-content)', gridAutoFlow: 'column', gridTemplateRows: 'repeat(3, auto)', gap: '2px 18px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, max-content)', gridAutoFlow: 'column', gridTemplateRows: 'repeat(4, auto)', gap: '2px 18px' }}>
                           {top.map(({ p }) => (
                           <Link key={p.id} href={`/players/${p.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'inherit', textDecoration: 'none', fontSize: 12, whiteSpace: 'nowrap' }}>
                             <ClubDot code={p.afl_club} size={12} /><span style={{ fontWeight: 600 }}>{p.name}</span>
@@ -97,8 +97,8 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           </table>
         </div>
         <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-          Only kept players aged 23 or under count (a club’s set keepers, or its best 18 projected if it hasn’t set them), plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best six, so quality beats quantity. A player’s future score is his projected peak (2027 projection plus some growth, scaled by potential) times how many prime years he has left, so youngsters already scoring rate ahead of raw ones.
-          Avg age and avg potential are across that best six. The line bars rank each line’s future strength against the league, with the ruck at half weight.
+          Only kept players aged 23 or under count (a club’s set keepers, or its best 18 projected if it hasn’t set them), plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best eight, so quality beats quantity. A player’s future score is his projected peak (2027 projection plus some growth, scaled by potential) times how many prime years he has left, so youngsters already scoring rate ahead of raw ones.
+          Avg age and avg potential are across that best eight. The line bars rank each line’s future strength against the league, with the ruck at half weight.
         </p>
       </div>
     );
