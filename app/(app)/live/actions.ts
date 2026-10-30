@@ -1,7 +1,7 @@
 'use server';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CAP_BUDGETS, CAP_PICKS, COMP, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow } from '@/lib/aflw';
+import { CAP_BUDGETS, CAP_PICKS, COMP, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/aflw';
 
 type Res = { ok: boolean; error?: string; id?: number };
 type RawGame = { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; draft_order: number[]; created_by: string; created_at: string; finished_at: string | null; budget?: number | null; match_id?: number | null; prize?: Prize | null };
@@ -46,19 +46,23 @@ export async function loadGame(id: number): Promise<{ game: GameRow | null; pick
 export async function createGame(round: number, kind: string, name: string, teamIds: number[], opts: { budget?: number; matchId?: number | null; prize?: Prize | null } = {}): Promise<Res> {
   const me = await getMe();
   if (!me) return { ok: false, error: 'Sign in first.' };
-  if (kind !== 'snake11' && kind !== 'cap5') return { ok: false, error: 'That game type isn’t built yet.' };
+  if (kind !== 'snake11' && kind !== 'cap5' && kind !== 'duel5') return { ok: false, error: 'That game type isn’t built yet.' };
+  if (kind === 'duel5' && new Set(teamIds).size !== 2) return { ok: false, error: 'A duel is exactly 2 clubs.' };
+  if (kind === 'duel5' && !opts.matchId) return { ok: false, error: 'Pick the match for the duel.' };
   const ids = [...new Set(teamIds.map(Number))].filter((x) => Number.isInteger(x) && x > 0);
   if (ids.length < 2 || ids.length > 10) return { ok: false, error: 'Pick between 2 and 10 clubs.' };
   const order = [...ids];
   for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
   const supabase = await createClient();
-  const row: Record<string, unknown> = { comp: COMP, round, kind, name: name.trim().slice(0, 60) || (kind === 'cap5' ? `Round ${round} salary cap` : `Round ${round} draft`), draft_order: order };
+  const row: Record<string, unknown> = { comp: COMP, round, kind, name: name.trim().slice(0, 60) || (kind === 'cap5' ? `Round ${round} salary cap` : kind === 'duel5' ? `Round ${round} duel` : `Round ${round} draft`), draft_order: order };
+  if (kind === 'duel5') row.match_id = Number(opts.matchId);
   if (kind === 'cap5') { row.budget = CAP_BUDGETS.includes(Number(opts.budget)) ? Number(opts.budget) : 350; row.match_id = opts.matchId ? Number(opts.matchId) : null; }
   const prize = cleanPrize(opts.prize);
   if (prize) row.prize = prize;
   const res = await supabase.from('mini_games').insert(row).select('id').single();
   if (res.error && prize && /prize/i.test(res.error.message)) return { ok: false, error: 'Prizes need supabase/migrations/0012_game_prizes.sql run first.' };
   if (res.error && kind === 'cap5' && /column|check/i.test(res.error.message)) return { ok: false, error: 'Salary cap needs supabase/migrations/0011_salary_cap.sql run first.' };
+  if (res.error && kind === 'duel5' && /check/i.test(res.error.message)) return { ok: false, error: 'Duels need supabase/migrations/0017_duel.sql run first.' };
   return res.error ? { ok: false, error: res.error.message } : { ok: true, id: res.data.id };
 }
 
@@ -69,7 +73,7 @@ export async function makePick(gameId: number, playerId: number): Promise<Res> {
   const { game, picks } = await loadGame(gameId);
   if (!game || game.status !== 'drafting') return { ok: false, error: 'The draft is closed.' };
   const k = picks.length;
-  if (k >= game.order.length * PICKS_PER_TEAM) return { ok: false, error: 'The draft is finished.' };
+  if (k >= game.order.length * picksPerTeam(game.kind)) return { ok: false, error: 'The draft is finished.' };
   const team = onClock(game.order, k);
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
@@ -78,8 +82,18 @@ export async function makePick(gameId: number, playerId: number): Promise<Res> {
   const data = await liveRound(game.round);
   const pl = data.players.find((p) => p.id === playerId);
   if (!pl) return { ok: false, error: 'That player isn’t playing this round.' };
-  const slot = slotFor(pl.pos, picks.filter((p) => p.team_id === team));
-  if (!slot) return { ok: false, error: `No ${pl.pos.join('/')} spot left in that team.` };
+  let slot: Slot | null;
+  if (game.kind === 'duel5') {
+    const match = data.games.find((g) => g.id === game.match_id);
+    const squadOf = new Map(data.players.map((p) => [p.id, p.squadId]));
+    const mineSq = picks.filter((p) => p.team_id === team).map((p) => squadOf.get(p.player_id) ?? 0);
+    if (!match || (pl.squadId !== match.homeId && pl.squadId !== match.awayId)) return { ok: false, error: 'She’s not playing in this match.' };
+    if (!duelFits(pl.squadId, mineSq, match)) return { ok: false, error: `You need at least 2 from each side: take a ${pl.squadId === match.homeId ? match.away : match.home} player.` };
+    slot = (['DEF', 'MID', 'RUC', 'FWD'] as Slot[]).find((x) => pl.pos.includes(x)) ?? 'MID';
+  } else {
+    slot = slotFor(pl.pos, picks.filter((p) => p.team_id === team));
+    if (!slot) return { ok: false, error: `No ${pl.pos.join('/')} spot left in that team.` };
+  }
   const res = await supabase.from('mini_picks').insert({ game_id: gameId, pick_no: k, team_id: team, player_id: playerId, player_name: pl.name, slot });
   return res.error ? { ok: false, error: res.error.message } : { ok: true };
 }

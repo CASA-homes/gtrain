@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { PICKS_PER_TEAM, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
+import { duelFits, picksPerTeam, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
 import { CLUBS } from '@/lib/clubs';
 
@@ -180,9 +180,11 @@ export function MarginChart({ id, margin, live }: { id: string; margin: number; 
 
 /* ---------------- head to head ---------------- */
 
-export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamName, myTeamId, liveNow }: {
+export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamName, myTeamId, liveNow, flat }: {
   gameId: number; me: number; opp: number; lineups: Record<number, Lineup>; byId: Map<number, LPlayer>; gameBySquad: Map<number, LGame>;
   teamName: (id: number) => string; myTeamId: number; liveNow: boolean;
+  /** Duel: each club's players in pick order, no position lines. */
+  flat?: { me: number[]; opp: number[] };
 }) {
   const a = totals(lineups[me], byId, gameBySquad), b = totals(lineups[opp], byId, gameBySquad);
   const done = a.left === 0 && b.left === 0 && a.score + b.score > 0;
@@ -210,7 +212,25 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
       <MarginChart id={`${gameId}-${me}-${opp}`} margin={a.score + b.score === 0 ? pm : margin} live={liveNow} />
       <div className="rh-rows">
         <NumsHead />
-        {SLOT_ORDER.map((s) => (
+        {flat && Array.from({ length: Math.max(flat.me.length, flat.opp.length) }, (_, i) => {
+          const pa = byId.get(flat.me[i] ?? -1), pb = byId.get(flat.opp[i] ?? -1);
+          const cell = (p: LPlayer | undefined, right: boolean) => {
+            const g = p ? gameBySquad.get(p.squadId) : undefined;
+            const name = (
+              <span className={`rh-who ${right ? 'r' : ''}`}>
+                {p && <Face p={p} size={28} />}
+                <span className={`rh-pl ${right ? 'r' : ''}`}>
+                  <span className="rh-pl-n">{p?.name ?? '—'}</span>
+                  {p && <span className="rh-pl-m">{p.squad} · {p.pos.join('/')}</span>}
+                </span>
+              </span>
+            );
+            const num = <Nums proj={projOf(p, g)} score={p?.score ?? null} right={right} />;
+            return right ? <>{num}{name}</> : <>{name}{num}</>;
+          };
+          return <div key={i} className="rh-row">{cell(pa, false)}<span className="rh-slot" style={cssVar('--c', '#8fd18f')}>{i + 1}</span>{cell(pb, true)}</div>;
+        })}
+        {!flat && SLOT_ORDER.map((s) => (
           <Fragment key={s}>
             {Array.from({ length: SLOTS[s] }, (_, i) => {
               const pa = byId.get(lineups[me]?.[s]?.[i] ?? -1), pb = byId.get(lineups[opp]?.[s]?.[i] ?? -1);
@@ -275,11 +295,13 @@ function useClock(since: string) {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 }
 
-export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, canManage }: {
-  game: GameRow; picks: GamePick[]; refresh: () => Promise<void>; players: LPlayer[]; teamName: (id: number) => string; myTeamId: number; canManage: boolean;
+export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRound = [], teamName, myTeamId, canManage }: {
+  game: GameRow; picks: GamePick[]; refresh: () => Promise<void>; players: LPlayer[]; gamesOfRound?: LGame[]; teamName: (id: number) => string; myTeamId: number; canManage: boolean;
 }) {
   const router = useRouter();
-  const n = game.order.length, total = n * PICKS_PER_TEAM, k = picks.length;
+  const per = picksPerTeam(game.kind), duel = game.kind === 'duel5';
+  const n = game.order.length, total = n * per, k = picks.length;
+  const match = duel ? gamesOfRound.find((g) => g.id === game.match_id) ?? null : null;
   const done = game.status === 'done' || k >= total;
   const clockTeam = done ? null : onClock(game.order, k);
   const mine = clockTeam === myTeamId;
@@ -288,6 +310,9 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
   const [view, setView] = useState(inGame ? myTeamId : game.order[0]);
   const [q, setQ] = useState('');
   const [pos, setPos] = useState<Slot | 'ALL'>('ALL');
+  const [side, setSide] = useState<number | 'ALL'>('ALL');
+  // A duel only uses the two sides in its match.
+  const players = useMemo(() => (match ? allPlayers.filter((p) => p.squadId === match.homeId || p.squadId === match.awayId) : allPlayers), [allPlayers, match]);
   const [onlyFit, setOnlyFit] = useState(true);
   const [limit, setLimit] = useState(40);
   const [pending, start] = useTransition();
@@ -297,10 +322,14 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
   const byId = useMemo(() => new Map(players.map((p) => [p.id, p])), [players]);
   const taken = useMemo(() => new Set(picks.map((p) => p.player_id)), [picks]);
   const picksOf = (t: number) => picks.filter((p) => p.team_id === t);
-  const fits = (p: LPlayer, t: number | null) => t != null && slotFor(p.pos, picksOf(t)) != null;
+  const squadOfPick = (pk: GamePick) => byId.get(pk.player_id)?.squadId ?? 0;
+  const fits = (p: LPlayer, t: number | null) => t != null && (duel
+    ? duelFits(p.squadId, picksOf(t).map(squadOfPick), match)
+    : slotFor(p.pos, picksOf(t)) != null);
   const pool = players
     .filter((p) => !taken.has(p.id) && p.status !== 'injured')
     .filter((p) => pos === 'ALL' || p.pos.includes(pos))
+    .filter((p) => side === 'ALL' || p.squadId === side)
     .filter((p) => !q || p.name.toLowerCase().includes(q.toLowerCase()) || p.squad.toLowerCase() === q.toLowerCase())
     .filter((p) => !onlyFit || !clockTeam || fits(p, clockTeam))
     .sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
@@ -330,12 +359,22 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
         <aside className="rh-dleft">
           <div className="rh-card rh-field-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-              <span className="rh-k">{view === myTeamId ? 'Your team' : 'Team'} · {viewPicks.length}/11</span>
+              <span className="rh-k">{view === myTeamId ? 'Your team' : 'Team'} · {viewPicks.length}/{per}</span>
               <select value={view} onChange={(e) => setView(Number(e.target.value))} className="rh-select sm">
                 {game.order.map((t) => <option key={t} value={t}>{teamName(t)}{t === myTeamId ? ' (you)' : ''}</option>)}
               </select>
             </div>
-            <Oval picks={viewPicks} byId={byId} />
+            {duel && match ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
+                {Array.from({ length: per }, (_, i) => {
+                  const pk = viewPicks[i]; const pl = pk ? byId.get(pk.player_id) : undefined;
+                  return <div key={i} className="rh-feed">{pl ? <><Face p={pl} size={24} /><b>{pl.name}</b><span className="rh-dim">{pl.squad} · {pl.avg?.toFixed(0) ?? ''}</span></> : <span className="rh-dim">Pick {i + 1}</span>}</div>;
+                })}
+                <span className="rh-dim" style={{ fontSize: 12 }}>
+                  {match.home} {viewPicks.filter((pk) => squadOfPick(pk) === match.homeId).length} · {match.away} {viewPicks.filter((pk) => squadOfPick(pk) === match.awayId).length} · need 2+ from each
+                </span>
+              </div>
+            ) : <Oval picks={viewPicks} byId={byId} />}
             <div className="rh-dim hide-sm rh-avgtot">
               <span>Avg total <b style={{ color: 'var(--rh-text)' }}>{Math.round(viewPicks.reduce((s, p) => s + (byId.get(p.player_id)?.avg ?? 0), 0))}</b></span>
             </div>
@@ -345,10 +384,16 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
         <section className="rh-card rh-pool">
           <div className="rh-pool-ctl">
             <input value={q} onChange={(e) => { setQ(e.target.value); setLimit(40); }} placeholder="Search players or clubs" className="rh-input" aria-label="Search players" />
-            <div className="rh-seg">
-              {(['ALL', ...SLOT_ORDER] as (Slot | 'ALL')[]).map((s) => <button key={s} className={pos === s ? 'on' : ''} onClick={() => { setPos(s); setLimit(40); }}>{s === 'ALL' ? 'All' : s}</button>)}
-            </div>
-            {!done && <label className="rh-toggle"><input type="checkbox" checked={onlyFit} onChange={(e) => setOnlyFit(e.target.checked)} /><span />Only open spots</label>}
+            {duel && match ? (
+              <div className="rh-seg">
+                {([['ALL', 'Both sides'], [match.homeId, match.home], [match.awayId, match.away]] as [number | 'ALL', string][]).map(([v, l]) => <button key={String(v)} className={side === v ? 'on' : ''} onClick={() => { setSide(v); setLimit(40); }}>{l}</button>)}
+              </div>
+            ) : (
+              <div className="rh-seg">
+                {(['ALL', ...SLOT_ORDER] as (Slot | 'ALL')[]).map((s) => <button key={s} className={pos === s ? 'on' : ''} onClick={() => { setPos(s); setLimit(40); }}>{s === 'ALL' ? 'All' : s}</button>)}
+              </div>
+            )}
+            {!done && <label className="rh-toggle"><input type="checkbox" checked={onlyFit} onChange={(e) => setOnlyFit(e.target.checked)} /><span />{duel ? 'Only legal picks' : 'Only open spots'}</label>}
           </div>
           {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`}>{msg.text}</div>}
           <div className="rh-list">
@@ -404,7 +449,7 @@ export function DraftRoom({ game, picks, refresh, players, teamName, myTeamId, c
         </aside>
       </div>
 
-      <Board order={game.order} picks={picks} k={done ? -1 : k} teamName={teamName} myTeamId={myTeamId} />
+      <Board order={game.order} picks={picks} k={done ? -1 : k} per={per} teamName={teamName} myTeamId={myTeamId} />
 
     </div>
   );
@@ -432,7 +477,7 @@ export function Oval({ picks, byId }: { picks: GamePick[]; byId: Map<number, LPl
   );
 }
 
-function Board({ order, picks, k, teamName, myTeamId }: { order: number[]; picks: GamePick[]; k: number; teamName: (id: number) => string; myTeamId: number }) {
+function Board({ order, picks, k, per, teamName, myTeamId }: { order: number[]; picks: GamePick[]; k: number; per: number; teamName: (id: number) => string; myTeamId: number }) {
   const n = order.length;
   const at = new Map(picks.map((p) => [p.pick_no, p]));
   return (
@@ -442,7 +487,7 @@ function Board({ order, picks, k, teamName, myTeamId }: { order: number[]; picks
         <div className="rh-board" style={{ gridTemplateColumns: `30px repeat(${n}, minmax(100px, 1fr))` }}>
           <span />
           {order.map((t) => <span key={t} className={`rh-bh ${t === myTeamId ? 'me' : ''}`}>{teamName(t)}</span>)}
-          {Array.from({ length: PICKS_PER_TEAM }, (_, r) => (
+          {Array.from({ length: per }, (_, r) => (
             <Fragment key={r}>
               <span className="rh-br">{r + 1}</span>
               {order.map((t, i) => {
@@ -477,7 +522,7 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
   const [opp, setOpp] = useState(others[0]);
   useEffect(() => { if (game.status === 'done') setTab('live'); }, [game.status]);
   return (
-    <Shell compact title={game.name} sub={<>{data.name} · {game.order.length} clubs</>}
+    <Shell compact title={game.name} sub={<>{data.name} · {game.kind === 'duel5' ? (() => { const m = data.games.find((g) => g.id === game.match_id); return m ? `Duel · ${m.home} v ${m.away}` : 'Duel'; })() : `${game.order.length} clubs`}</>}
       right={<div className="rh-headright">
         <div className="rh-seg" role="tablist">
           <button role="tab" aria-selected={tab === 'live'} className={tab === 'live' ? 'on' : ''} onClick={() => setTab('live')}>Matchup</button>
@@ -488,12 +533,13 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
       <PrizeStrip prize={game.prize} clubs={game.order.length} final={game.status === 'done' && data.games.every((g) => g.status === 'completed')} teamName={teamName} myTeamId={myTeamId}
         standings={[...game.order].sort((x, y) => totals(lineups[y], byId, gameBySquad).score - totals(lineups[x], byId, gameBySquad).score)} />
       {tab === 'draft'
-        ? <DraftRoom game={game} picks={picks} refresh={refresh} players={data.players} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
-        : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its 11.</Empty>
+        ? <DraftRoom game={game} picks={picks} refresh={refresh} players={data.players} gamesOfRound={data.games} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
+        : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its {picksPerTeam(game.kind)}.</Empty>
         : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {game.order.length > 2 && <Leaderboard order={game.order} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} selected={opp} onPick={(t) => t !== me && setOpp(t)} />}
-            <HeadToHead gameId={game.id} me={me} opp={opp} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} />
+            <HeadToHead gameId={game.id} me={me} opp={opp} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow}
+              flat={game.kind === 'duel5' ? { me: picks.filter((p) => p.team_id === me).map((p) => p.player_id), opp: picks.filter((p) => p.team_id === opp).map((p) => p.player_id) } : undefined} />
           </div>
         )}
     </Shell>

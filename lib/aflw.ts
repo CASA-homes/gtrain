@@ -67,6 +67,19 @@ export function onClock(order: number[], k: number) {
   return r % 2 === 0 ? order[i] : order[n - 1 - i];
 }
 export const PICKS_PER_TEAM = 11;
+/** Picks each club makes: 11 in the snake draft, 5 in a one-match duel. */
+export const picksPerTeam = (kind: string) => (kind === 'duel5' ? 5 : PICKS_PER_TEAM);
+/** One-match duel: each club needs at least this many players from each side of the match. */
+export const DUEL_MIN_SIDE = 2;
+/** Can this club still take a player from squad `squadId` and finish with 2+ from each side? */
+export function duelFits(squadId: number, teamSquads: number[], match: { homeId: number; awayId: number } | null | undefined): boolean {
+  if (!match || (squadId !== match.homeId && squadId !== match.awayId)) return false;
+  const after = [...teamSquads, squadId];
+  const left = 5 - after.length;
+  if (left < 0) return false;
+  const need = Math.max(0, DUEL_MIN_SIDE - after.filter((x) => x === match.homeId).length) + Math.max(0, DUEL_MIN_SIDE - after.filter((x) => x === match.awayId).length);
+  return need <= left;
+}
 export interface GamePick { pick_no: number; team_id: number; player_id: number; player_name: string; slot: Slot; picked_at: string }
 export interface GameRow { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; order: number[]; created_by: string; created_at: string; finished_at: string | null; budget: number | null; match_id: number | null; prize: Prize | null }
 /** Which slot a player takes for a club: the first of his positions that still has room. */
@@ -83,7 +96,7 @@ export function lineupsFromPicks(picks: GamePick[]): Record<number, Lineup> {
 export const GAME_KINDS = [
   { kind: 'snake11', label: 'Snake draft · 11-a-side', blurb: '2–10 clubs draft 3 DEF, 4 MID, 1 RUC, 3 FWD for the round. Highest score wins.', ready: true },
   { kind: 'cap5', label: 'Salary cap · pick 5', blurb: 'Any 5 players under a budget, priced off their average. Captain scores double. Players lock at their first bounce.', ready: true },
-  { kind: 'tbd1', label: 'One-match duel (coming soon)', blurb: 'TBD', ready: false },
+  { kind: 'duel5', label: 'One-match duel · 5 v 5', blurb: 'Two clubs, one match. Snake draft 5 players each from the two sides, at least 2 from each side. Highest score wins.', ready: true },
   { kind: 'tbd2', label: 'Season-long league (coming soon)', blurb: 'TBD', ready: false },
   { kind: 'tbd3', label: 'Captain’s pick (coming soon)', blurb: 'TBD', ready: false },
 ];
