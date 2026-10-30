@@ -159,6 +159,37 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
       </header>
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2">Line strength</h2>
+          {LINES.map((l) => (
+            <div key={l} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 72px', gap: 10, alignItems: 'center' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
+              <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
+              <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
+            </div>
+          ))}
+        </section>
+
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="row-between">
+              <span className="eyebrow">Keeper age profile</span>
+              <span className="muted" style={{ fontSize: 12 }}>{keepers.length} keepers{avgAge != null ? ` · avg ${avgAge.toFixed(1)}` : ''}</span>
+            </div>
+            {avgAge != null ? (
+              <>
+                <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em' }}>{AGE_PHASES[agePhase(avgAge)].name}</span>
+                <StepBar steps={AGE_PHASES.map((p) => ({ name: p.name, sub: p.range }))} active={agePhase(avgAge)} colours={[C.green2, C.green4, C.green5, C.green3, C.yellow]} />
+              </>
+            ) : (
+              <span className="muted" style={{ fontSize: 13 }}>
+                {keepers.length ? 'Player ages arrive with the first stats feed.' : 'No keepers set for 2027 yet.'}
+                {(isMine || me?.is_commish) && <> <Link href={`/clubhouse/${a.team.id}/keepers`}>Set keepers</Link></>}
+              </span>
+            )}
+          </div>
+        </section>
+
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <VerdictTabs panels={[
             <div key="v" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -222,35 +253,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <div className="tile"><span className="eyebrow">Grand final</span><b>{season?.premier_id === a.team.id ? `${season.gf_winner_score}–${season.gf_loser_score}` : season?.runner_up_id === a.team.id ? `${season.gf_loser_score}–${season.gf_winner_score}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{season?.premier_id === a.team.id ? 'won the flag' : season?.runner_up_id === a.team.id ? 'lost the decider' : 'missed it'}</span></div>
           </div>
 
-          <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div className="row-between">
-              <span className="eyebrow">Keeper age profile</span>
-              <span className="muted" style={{ fontSize: 12 }}>{keepers.length} keepers{avgAge != null ? ` · avg ${avgAge.toFixed(1)}` : ''}</span>
-            </div>
-            {avgAge != null ? (
-              <>
-                <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em' }}>{AGE_PHASES[agePhase(avgAge)].name}</span>
-                <StepBar steps={AGE_PHASES.map((p) => ({ name: p.name, sub: p.range }))} active={agePhase(avgAge)} colours={[C.green2, C.green4, C.green5, C.green3, C.yellow]} />
-              </>
-            ) : (
-              <span className="muted" style={{ fontSize: 13 }}>
-                {keepers.length ? 'Player ages arrive with the first stats feed.' : 'No keepers set for 2027 yet.'}
-                {(isMine || me?.is_commish) && <> <Link href={`/clubhouse/${a.team.id}/keepers`}>Set keepers</Link></>}
-              </span>
-            )}
-          </div>
         </section>
 
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Line strength</h2>
-          {LINES.map((l) => (
-            <div key={l} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 72px', gap: 10, alignItems: 'center' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
-              <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
-              <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
-            </div>
-          ))}
-        </section>
 
         <section style={{ display: 'flex', flexDirection: 'column' }}>
           <h2 className="h2" style={{ marginBottom: 6 }}>Needs</h2>
