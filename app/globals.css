@@ -187,6 +187,9 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .pc-card h3 small { font: 400 12px var(--font); color: var(--muted); text-align: right; }
 .pc-note { margin: 0; font-size: 12px; line-height: 1.45; color: #3a423c; }
 .pc-form { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; }
+.pc-wide { grid-column: 1 / -1; }
+.pc-form.pc-season { grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 6px 4px; }
+@media (max-width: 640px) { .pc-form.pc-season { grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); } }
 .pc-fchip { display: flex; flex-direction: column; align-items: center; gap: 2px; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; }
 .pc-fchip b { width: 100%; text-align: center; border-radius: 7px; padding: 6px 0; font: 700 12px var(--mono); }
 .pc-fchip span { font-size: 9px; font-weight: 600; }

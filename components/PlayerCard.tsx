@@ -20,9 +20,9 @@ const pctTone = (p: number) => (p >= 80 ? '#1f6b3a' : p >= 60 ? '#4f9a5f' : p >=
 const rnd = (r: number | null) => (r == null ? '' : r === 0 ? 'OR' : r >= 25 ? ['QF', 'SF', 'PF', 'GF'][Math.min(3, r - 25)] ?? `R${r}` : `R${r}`);
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
 
-function Card({ title, note, children }: { title: string; note?: string; children: React.ReactNode }) {
+function Card({ title, note, wide, children }: { title: string; note?: string; wide?: boolean; children: React.ReactNode }) {
   return (
-    <section className="pc-card">
+    <section className={`pc-card${wide ? ' pc-wide' : ''}`}>
       <h3><span>{title}</span>{note && <small>{note}</small>}</h3>
       {children}
     </section>
@@ -97,10 +97,9 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
           </div>
         </Card>
       )}
-      <Card title="Form" note="last 10 games · tap one for its heat map">
-        <div className="pc-form">
-          {games.slice(-10).map((g, i) => {
-            const idx = n - Math.min(10, n) + i;
+      <Card wide title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
+        <div className="pc-form pc-season">
+          {games.map((g, idx) => {
             return (
               <button key={idx} type="button" onClick={() => setHeatIdx(idx)} aria-pressed={heatIdx === idx} className="pc-fchip">
                 <b style={{ background: tone(g[3])[0], color: tone(g[3])[1], outline: heatIdx === idx ? '2px solid #151a16' : 'none', outlineOffset: 1 }}>{g[3]}</b>
