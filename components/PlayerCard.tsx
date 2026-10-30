@@ -30,6 +30,7 @@ function Card({ title, note, o, children }: { title: string; note?: string; o?: 
 }
 
 export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, seasons, current }: CardProps) {
+  const [splitView, setSplitView] = useState<'pos' | 'opp'>('pos');
   const [heatIdx, setHeatIdx] = useState(() => {
     for (let i = games.length - 1; i >= 0; i--) if (games[i][14]) return i;
     return -1;
@@ -160,29 +161,35 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
 
       </div>
       <div className="pc-col">
-      {pct.length > 0 && (
-        <Card o={3} title={`Against other ${lineName}s`} note={poolNote}>
-          {pct.map((x) => (
-            <div key={x.label} className="pc-pbar">
-              <span>{x.label}</span><b>{x.value}</b>
-              <div className="pc-track"><div style={{ width: `${Math.max(3, x.pct)}%`, background: pctTone(x.pct) }} /></div>
-              <em style={{ color: pctTone(x.pct) }}>{x.pct}</em>
-            </div>
-          ))}
-        </Card>
-      )}
-
-      {(opps.length >= 2 || vens.length > 0) && (
-        <Card o={7} title="Opponents and venues" note="2025–26 · 2+ games">
-          <div className="pc-two">
-            <div>
-              {opps.length >= 2 && <><div className="eyebrow">Best against</div>{opps.slice(0, 3).map(oRow)}
-                <div className="eyebrow" style={{ marginTop: 8 }}>Toughest</div>{opps.slice(-3).reverse().map(oRow)}</>}
-            </div>
-            <div>{vens.length > 0 && <><div className="eyebrow">Venues</div>{vens.map(oRow)}</>}</div>
-          </div>
-        </Card>
-      )}
+      {(pct.length > 0 || opps.length >= 2 || vens.length > 0) && (() => {
+        const hasPos = pct.length > 0, hasOpp = opps.length >= 2 || vens.length > 0;
+        const view = splitView === 'opp' && hasOpp ? 'opp' : hasPos ? 'pos' : 'opp';
+        return (
+          <Card o={3} title="Splits" note={view === 'pos' ? poolNote : '2025–26 · 2+ games'}>
+            {hasPos && hasOpp && (
+              <div className="pc-seg" role="tablist" aria-label="Splits">
+                <button type="button" role="tab" aria-selected={view === 'pos'} className={view === 'pos' ? 'on' : ''} onClick={() => setSplitView('pos')}>v other {lineName}s</button>
+                <button type="button" role="tab" aria-selected={view === 'opp'} className={view === 'opp' ? 'on' : ''} onClick={() => setSplitView('opp')}>Opponents &amp; venues</button>
+              </div>
+            )}
+            {view === 'pos' ? pct.map((x) => (
+              <div key={x.label} className="pc-pbar">
+                <span>{x.label}</span><b>{x.value}</b>
+                <div className="pc-track"><div style={{ width: `${Math.max(3, x.pct)}%`, background: pctTone(x.pct) }} /></div>
+                <em style={{ color: pctTone(x.pct) }}>{x.pct}</em>
+              </div>
+            )) : (
+              <div className="pc-two">
+                <div>
+                  {opps.length >= 2 && <><div className="eyebrow">Best against</div>{opps.slice(0, 3).map(oRow)}
+                    <div className="eyebrow" style={{ marginTop: 8 }}>Toughest</div>{opps.slice(-3).reverse().map(oRow)}</>}
+                </div>
+                <div>{vens.length > 0 && <><div className="eyebrow">Venues</div>{vens.map(oRow)}</>}</div>
+              </div>
+            )}
+          </Card>
+        );
+      })()}
       </div>
       <div className="pc-col">
       <Card o={4} title="Heat map" note={heat ? `${rnd(heat[0])} v ${heat[1]} · ${heat[3]} points` : undefined}>
