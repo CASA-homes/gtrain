@@ -22,7 +22,7 @@ Schema: {"title": short heading, "ownership": "owned"|"free"|"all", "team": G-Tr
 "sortBy": metric, "order": "desc"|"asc", "limit": 5-25, "columns": [up to 5 metrics to show besides the name]}.
 Metrics: ${METRIC_HELP}
 Rules: default ownership "all" and team null: only set team when the question names a G-Train team or says "my team"/"my list". For "biggest jump"/"most improved" sort by jump with minGames26 10. For "trending up"/"finishing strong" sort by trend with min.avg26 50 and minGames26 10.
-"Free agent"/"available"/"unowned" means ownership "free". "Slept on"/"cheap" usually means max.avg26 around 80. Ages are current ages. Keep limit 15 unless asked.`;
+"Free agent"/"available"/"unowned" means ownership "free". "Slept on"/"cheap" usually means max.avg26 around 80. Ages are current ages. Unless the coach says otherwise, always set minGames26 to at least 8 (10 for jump/trend) so tiny samples don't top the list. Keep limit 15 unless asked.`;
 
 const SYSTEM_ANSWER = `You are a sharp, casual AFL Fantasy analyst for a 10-team keeper league. Answer the coach's question in 1–3 short sentences using ONLY the rows given
 (name, numbers, owner). Name the standout players and the key number for each. Australian spelling, no hype, no made-up facts, no markdown headings.`;
