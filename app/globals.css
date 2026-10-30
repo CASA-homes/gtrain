@@ -171,9 +171,10 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .own-toggle a.on span { background: rgb(255 255 255 / .18); }
 .pf-row .btn { min-height: 36px; padding: 0 12px; }
 @media (max-width: 480px) {
-  .pf-row { flex-wrap: nowrap; gap: 6px; }
+  .pf-row { flex-wrap: wrap; gap: 6px; }
   .pf-row .btn { padding: 0 10px; gap: 6px; }
   .own-toggle { flex: 1; min-width: 0; }
+  .own-toggle.own-main { flex: 1 1 100%; order: 3; }
   .own-toggle a { flex: 1; justify-content: center; padding: 0 6px; font-size: 12px; }
   .own-toggle a span { display: none; }
 }

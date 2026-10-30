@@ -163,7 +163,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4" /></svg>
               Filters{activeFilters ? ` · ${activeFilters}` : ''}
             </span>
-            <span className="own-toggle" role="tablist" aria-label="Season">
+            <span className="own-toggle own-year" role="tablist" aria-label="Season">
               {(['2026', '2025'] as const).map((y) => {
                 const u = new URLSearchParams();
                 for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
@@ -171,7 +171,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                 return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={(y === '2025') === y25} className={(y === '2025') === y25 ? 'on' : undefined}>{y}</Link>;
               })}
             </span>
-            <span className="own-toggle" role="tablist" aria-label="Ownership">
+            <span className="own-toggle own-main" role="tablist" aria-label="Ownership">
               {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
                 <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
                   {lab}{n != null && <span>{n}</span>}
