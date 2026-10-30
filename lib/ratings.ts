@@ -332,11 +332,13 @@ const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x
 /**
  * Potential (0.5–5 stars). Where a player is heading, not where he is.
  *
- * Young players (23 and under, or in their first three seasons):
- *   - Scoring against what's normal for his season number (a 3rd-year averaging 81 is ahead of the curve),
- *     plus the jump from last season. This is the main driver.
- *   - Draft pedigree adds to it: top 5 picks ≈ 4.5★, 6–10 ≈ 4★, 11–20 ≈ 3.5★, 21–40 ≈ 3★.
- *     It counts for less the more games he plays, and fades each year he stays on the fringe.
+ * Young players (23 and under, or in their first three seasons): a projected peak average, starred like ability.
+ *   - Production: 60% season average + 40% his best quarter of games (role-limited kids still show their best),
+ *     grown along the age curve to 26 (up to +35%).
+ *   - Pedigree: what his pick typically becomes (top 5 ≈ 102, 6–10 ≈ 97, 11–20 ≈ 92, 21–40 ≈ 86, else 80),
+ *     nudged by his junior scoring.
+ *   - Production weight = 35% + 1% per 1.5 games (max 90%), so pedigree keeps a real say through the early years.
+ *   - 5★ only for kids already scoring like it: 85+ line-adjusted, or 70+ at 20 and under.
  *   Pedigree floor for 22 and under who haven't had a full go (injured or out of the side): 4★ for top-12 picks with
  *   100+ junior numbers, top-40 picks with 115+ or top-5 picks; 3.5★ for top-20 picks, 95+ juniors, a 130+ junior game or a 100+ AFL game.
  * Prime (24–27): current ability, with a little extra if he's still climbing.
@@ -377,29 +379,25 @@ export function potential(p: Pick<PlayerRow, 'full_name' | 'birth_date' | 'draft
   const C = abilityStars((den ? num / den : p.average ?? 0) + lineBonus);
 
   if (a <= 23 || (hist.length <= 3 && a <= 25)) {
-    let S: number;
-    if (full.length) {
-      const [yr, , f] = full[full.length - 1];
-      const n = hist.filter((h) => h[0] <= yr).length;
-      S = 3 + (f / EXPECTED[Math.min(n, 5)] - 1) * 5;
-      // One-year jump, trusted in proportion to how many games it was built on (16+ games = full credit).
-      if (full.length >= 2) S += clamp((full[full.length - 1][2] - full[full.length - 2][2]) / 20, -0.75, 1.5) * Math.min(1, full[full.length - 1][1] / 16);
-      S -= Math.max(0, a - 22) * 0.3;
-    } else if (hist.length) {
-      S = 3 + (hist[hist.length - 1][2] / EXPECTED[1] - 1) * 5;
-    } else S = 3;
-    S = 3 + (S - 3) * Math.min(1, cg / 20); // small samples lean to neutral
-
-    let D = 2.5;
-    if (p.draft_pick && p.draft_pick <= 40) {
-      const pk = p.draft_pick;
-      D = pk <= 5 ? 4.5 : pk <= 10 ? 4 : pk <= 20 ? 3.5 : 3;
-      const seasonsSince = p.draft_year ? SEASON_NOW - p.draft_year : 0;
-      D = Math.max(2.5, D - 0.5 * Math.max(0, seasonsSince - 1) * (1 - Math.min(1, cg / 40)));
-    }
-    const wS = 0.8 * Math.min(1, cg / 40);
-    let P = S + (1 - wS) * Math.max(0, D - S);
-    if (a <= 21) P += 0.25;
+    // Young players are projected to a peak average, then starred like ability. Two views, blended:
+    //   Production: what he's shown (season average plus his best quarter of games, since a kid stuck in a
+    //   half-forward or wing role still shows what he can do in his best games), grown along the age curve to 26.
+    //   Pedigree: what a pick of his number (and his junior scoring) typically becomes.
+    // Production earns more weight with every game, but pedigree keeps a say until 150+ games: plenty of stars
+    // (Butters: 57, 61, 75, 86, then 100) don't score big until their fourth or fifth season.
+    const log26 = (p.games_log ?? []).filter((g) => g[1] != null && (g[2] ?? 100) >= 50).map((g) => g[1] as number);
+    const avgNow = full.length ? full[full.length - 1][2] : hist.length ? hist[hist.length - 1][2] : 0;
+    const best = [...log26].sort((x, y) => y - x).slice(0, Math.max(1, Math.round(log26.length / 4)));
+    const upside = log26.length >= 6 ? best.reduce((x, y) => x + y, 0) / best.length : avgNow;
+    let growth = 1;
+    for (let x = a; x <= 26; x++) growth *= Math.max(1, curve(x));
+    const prod = (0.6 * avgNow + 0.4 * upside) * Math.min(1.35, growth);
+    const pick0 = p.draft_pick ?? 99;
+    const [jfp0] = (JUNIOR_FP as Record<string, number[]>)[p.full_name ?? ''] ?? [0];
+    const pedigree = (pick0 <= 5 ? 102 : pick0 <= 10 ? 97 : pick0 <= 20 ? 92 : pick0 <= 40 ? 86 : 80) + (jfp0 ? clamp((jfp0 - 95) * 0.25, -6, 8) : 0);
+    const wProd = avgNow ? clamp(0.35 + cg / 150, 0.35, 0.9) * Math.min(1, cg / 10) : 0;
+    // Five stars is kept for kids already scoring like it's coming: 85+ line-adjusted, or 70+ at 20 and under.
+    const P = Math.min(avgNow + lineBonus >= 85 || (a <= 20 && avgNow >= 70) ? 5 : 4.5, abilityStars(wProd * prod + (1 - wProd) * pedigree + lineBonus));
     const pk = projectedPeak(p);
     // Pedigree floor (22 and under who haven't had a full go yet: under 40 career games or under 12 this year).
     // Stars are about who could become a great scorer; a quiet, injury-hit or out-of-the-side start doesn't take that away.
