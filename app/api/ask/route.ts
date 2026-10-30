@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { ASK_COOKIE, askCodeOk, askToken } from '@/lib/ask-access';
+import { chat } from '@/lib/openai';
 import { getLeague, getMe } from '@/lib/data';
 import { METRIC_KEYS, metricsFor, runQuery, type Metrics, type Query } from '@/lib/player-metrics';
 
@@ -9,7 +10,6 @@ import { METRIC_KEYS, metricsFor, runQuery, type Metrics, type Query } from '@/l
 //   2. write a 1–3 sentence answer from the top rows the server found.
 // Key and model come from Vercel env vars: OPENAI_API_KEY (required), OPENAI_MODEL (optional).
 export const maxDuration = 30;
-const MODEL = process.env.OPENAI_MODEL || 'gpt-5.4-mini';
 const DAILY_LIMIT = 40;
 const used = new Map<string, { day: string; n: number }>();
 const wrong = new Map<string, { hour: string; n: number }>();   // wrong-passcode attempts per person per hour   // per-instance soft cap; set a hard cap in the OpenAI dashboard too
@@ -29,17 +29,6 @@ Rules: default ownership "all" and team null: only set team when the question na
 
 const SYSTEM_ANSWER = `You are a sharp, casual AFL Fantasy analyst for a 10-team keeper league. Answer the coach's question in 1–3 short sentences using ONLY the rows given
 (name, numbers, owner). Name the standout players and the key number for each. Australian spelling, no hype, no made-up facts, no markdown headings.`;
-
-async function chat(messages: { role: string; content: string }[], json: boolean) {
-  const r = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
-    body: JSON.stringify({ model: MODEL, messages, reasoning_effort: 'low', ...(json ? { response_format: { type: 'json_object' } } : {}), max_completion_tokens: json ? 2500 : 1500 }),
-  });
-  const d = await r.json();
-  if (!r.ok) throw new Error(d?.error?.message ?? `OpenAI ${r.status}`);
-  return String(d.choices?.[0]?.message?.content ?? '');
-}
 
 export async function POST(req: Request) {
   const me = await getMe();

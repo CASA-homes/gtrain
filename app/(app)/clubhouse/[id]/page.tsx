@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubLogoEditor } from '@/components/ClubLogoEditor';
+import { ListHealth } from '@/components/ListHealth';
 import { ClubhouseSplit } from '@/components/ClubhouseSplit';
 import { StatusOverride } from './StatusOverride';
 import { TEAM_NOTES } from '@/lib/team-notes';
@@ -193,6 +194,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <span style={{ fontSize: 11, color: '#8d978e' }}>A mock of the redraft: rebuilding clubs take the best rookie left, contenders the best player left on 2027 projections.</span>
             </div>,
           ]} />
+
+          <ListHealth teamId={a.team.id} teamName={a.team.name} />
 
           <div className="card" style={{ padding: '10px 14px 6px', display: 'flex', flexDirection: 'column', gap: 4, background: C.ink, color: '#f4f2ea', border: 0 }}>
             <span className="eyebrow" style={{ color: '#b9c4b6' }}>Premiership window</span>
