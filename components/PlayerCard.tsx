@@ -20,9 +20,9 @@ const pctTone = (p: number) => (p >= 80 ? '#1f6b3a' : p >= 60 ? '#4f9a5f' : p >=
 const rnd = (r: number | null) => (r == null ? '' : r === 0 ? 'OR' : r >= 25 ? ['QF', 'SF', 'PF', 'GF'][Math.min(3, r - 25)] ?? `R${r}` : `R${r}`);
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
 
-function Card({ title, note, wide, children }: { title: string; note?: string; wide?: boolean; children: React.ReactNode }) {
+function Card({ title, note, o, children }: { title: string; note?: string; o?: number; children: React.ReactNode }) {
   return (
-    <section className={`pc-card${wide ? ' pc-wide' : ''}`}>
+    <section className={`pc-card${o ? ` pc-o${o}` : ''}`}>
       <h3><span>{title}</span>{note && <small>{note}</small>}</h3>
       {children}
     </section>
@@ -85,6 +85,7 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
 
   return (
     <div className="pc-grid">
+      <div className="pc-top">
       {seasons.length > 0 && (
         <Card title="Season averages" note={`${seasons.length} season${seasons.length > 1 ? 's' : ''} · AFL Fantasy`}>
           <div className="pc-form">
@@ -97,7 +98,7 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
           </div>
         </Card>
       )}
-      <Card wide title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
+      <Card title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
         <div className="pc-form pc-season">
           {games.map((g, idx) => {
             return (
@@ -110,13 +111,36 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
         </div>
       </Card>
 
-      <Card title="Scoring range" note={`floor ${sorted[0]} · median ${median} · ceiling ${sorted[n - 1]}`}>
+      </div>
+
+      {/* Desktop: four stacked columns so short cards don't leave gaps. Narrower screens flatten them back into card order (pc-oN). */}
+      <div className="pc-cols">
+      <div className="pc-col">
+      <Card o={1} title="Scoring range" note={`floor ${sorted[0]} · median ${median} · ceiling ${sorted[n - 1]}`}>
         <div className="pc-dist">{bands.filter((b) => b[1]).map(([l, c, bg]) => <div key={l} style={{ flex: c, background: bg }} title={l} />)}</div>
         <div className="pc-distl">{bands.map(([l, c, bg]) => <div key={l}><span><i style={{ background: bg }} />{l}</span><b>{Math.round((c / n) * 100)}%</b></div>)}</div>
         <p className="pc-note">{rangeNote}{rangeNote2}</p>
       </Card>
 
-      <Card title="Role" note={mid ? `centre bounces ${Math.round(mean(cbas))}% · last 5: ${Math.round(mean(last5.map((g) => g[5] ?? 0)))}%` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
+      {zt > 0 && (
+        <Card o={5} title="Where he wins the ball" note={`${zt} possessions in 2026`}>
+          <div className="pc-zones">
+            {(['Defensive 50', 'Defensive mid', 'Attacking mid', 'Attacking 50'] as const).map((z, i) => {
+              const s = zones[i] / zt;
+              return (
+                <div key={z} style={{ background: `rgb(31 107 58 / ${0.08 + s * 1.6})`, color: s > 0.3 ? '#fff' : '#151a16' }}>
+                  <b>{Math.round(s * 100)}%</b><span>{z}</span>
+                </div>
+              );
+            })}
+          </div>
+          <div className="pc-legend"><span>← defending</span><span style={{ marginLeft: 'auto' }}>attacking →</span></div>
+        </Card>
+      )}
+
+      </div>
+      <div className="pc-col">
+      <Card o={2} title="Role" note={mid ? `centre bounces ${Math.round(mean(cbas))}% · last 5: ${Math.round(mean(last5.map((g) => g[5] ?? 0)))}%` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
         <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }} role="img" aria-label="Score per game with centre bounce and time on ground">
           {games.map((g, i) => <rect key={i} x={i * bw + 1.2} y={H - (g[3] / top) * H} width={Math.max(1, bw - 2.4)} height={(g[3] / top) * H} rx={2} fill={tone(g[3])[0]} />)}
           <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[4] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#6b726c" strokeWidth={1.2} strokeDasharray="3 3" />
@@ -128,8 +152,15 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
         )}
       </Card>
 
+      <Card o={6} title="By quarter" note="average points">
+        <div className="pc-q">{q.map((v, i) => <div key={i}><span>Q{i + 1}</span><b>{Math.round(v)}</b></div>)}</div>
+        <p className="pc-note">{qNote}</p>
+      </Card>
+
+      </div>
+      <div className="pc-col">
       {pct.length > 0 && (
-        <Card title={`Against other ${lineName}s`} note={poolNote}>
+        <Card o={3} title={`Against other ${lineName}s`} note={poolNote}>
           {pct.map((x) => (
             <div key={x.label} className="pc-pbar">
               <span>{x.label}</span><b>{x.value}</b>
@@ -140,7 +171,20 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
         </Card>
       )}
 
-      <Card title="Heat map" note={heat ? `${rnd(heat[0])} v ${heat[1]} · ${heat[3]} points` : undefined}>
+      {(opps.length >= 2 || vens.length > 0) && (
+        <Card o={7} title="Opponents and venues" note="2025–26 · 2+ games">
+          <div className="pc-two">
+            <div>
+              {opps.length >= 2 && <><div className="eyebrow">Best against</div>{opps.slice(0, 3).map(oRow)}
+                <div className="eyebrow" style={{ marginTop: 8 }}>Toughest</div>{opps.slice(-3).reverse().map(oRow)}</>}
+            </div>
+            <div>{vens.length > 0 && <><div className="eyebrow">Venues</div>{vens.map(oRow)}</>}</div>
+          </div>
+        </Card>
+      )}
+      </div>
+      <div className="pc-col">
+      <Card o={4} title="Heat map" note={heat ? `${rnd(heat[0])} v ${heat[1]} · ${heat[3]} points` : undefined}>
         {heatUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={heatUrl} alt={`Heat map, ${rnd(heat![0])} v ${heat![1]}`} className="pc-heat" loading="lazy" />
@@ -156,38 +200,8 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
         <p className="pc-note" style={{ fontSize: 11 }}>AFL heat map: red is where he spent the most time. His team attacks left to right in the first half; use it for role, not direction.</p>
       </Card>
 
-      {zt > 0 && (
-        <Card title="Where he wins the ball" note={`${zt} possessions in 2026`}>
-          <div className="pc-zones">
-            {(['Defensive 50', 'Defensive mid', 'Attacking mid', 'Attacking 50'] as const).map((z, i) => {
-              const s = zones[i] / zt;
-              return (
-                <div key={z} style={{ background: `rgb(31 107 58 / ${0.08 + s * 1.6})`, color: s > 0.3 ? '#fff' : '#151a16' }}>
-                  <b>{Math.round(s * 100)}%</b><span>{z}</span>
-                </div>
-              );
-            })}
-          </div>
-          <div className="pc-legend"><span>← defending</span><span style={{ marginLeft: 'auto' }}>attacking →</span></div>
-        </Card>
-      )}
-
-      <Card title="By quarter" note="average points">
-        <div className="pc-q">{q.map((v, i) => <div key={i}><span>Q{i + 1}</span><b>{Math.round(v)}</b></div>)}</div>
-        <p className="pc-note">{qNote}</p>
-      </Card>
-
-      {(opps.length >= 2 || vens.length > 0) && (
-        <Card title="Opponents and venues" note="2025–26 · 2+ games">
-          <div className="pc-two">
-            <div>
-              {opps.length >= 2 && <><div className="eyebrow">Best against</div>{opps.slice(0, 3).map(oRow)}
-                <div className="eyebrow" style={{ marginTop: 8 }}>Toughest</div>{opps.slice(-3).reverse().map(oRow)}</>}
-            </div>
-            <div>{vens.length > 0 && <><div className="eyebrow">Venues</div>{vens.map(oRow)}</>}</div>
-          </div>
-        </Card>
-      )}
+      </div>
+      </div>
     </div>
   );
 }
