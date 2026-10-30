@@ -88,7 +88,7 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
       <div className="pc-top">
       {seasons.length > 0 && (
         <Card title="Season averages" note={`${seasons.length} season${seasons.length > 1 ? 's' : ''} · AFL Fantasy`}>
-          <div className="pc-form">
+          <div className="pc-form pc-season">
             {seasons.slice(0, 10).map(([y, gm, avg]) => (
               <div key={y} className="pc-fchip" title={`${y}: ${gm} games`}>
                 <b style={{ background: tone(avg)[0], color: tone(avg)[1], outline: y === current ? '2px solid #151a16' : 'none', outlineOffset: 1 }}>{Math.round(avg)}</b>
