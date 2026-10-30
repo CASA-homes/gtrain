@@ -21,7 +21,7 @@ Schema: {"title": short heading, "ownership": "owned"|"free"|"all", "team": G-Tr
 "minAge","maxAge","minGames26","minGames25": numbers or null, "min": {metric: number}, "max": {metric: number},
 "sortBy": metric, "order": "desc"|"asc", "limit": 5-25, "columns": [up to 5 metrics to show besides the name]}.
 Metrics: ${METRIC_HELP}
-Rules: default ownership "all". For "biggest jump"/"most improved" sort by jump with minGames26 10. For "trending up"/"finishing strong" sort by trend with min.avg26 50 and minGames26 10.
+Rules: default ownership "all" and team null: only set team when the question names a G-Train team or says "my team"/"my list". For "biggest jump"/"most improved" sort by jump with minGames26 10. For "trending up"/"finishing strong" sort by trend with min.avg26 50 and minGames26 10.
 "Free agent"/"available"/"unowned" means ownership "free". "Slept on"/"cheap" usually means max.avg26 around 80. Ages are current ages. Keep limit 15 unless asked.`;
 
 const SYSTEM_ANSWER = `You are a sharp, casual AFL Fantasy analyst for a 10-team keeper league. Answer the coach's question in 1–3 short sentences using ONLY the rows given
@@ -60,7 +60,8 @@ export async function POST(req: Request) {
   });
 
   try {
-    const myTeam = me.is_guest ? null : teamName(me.team_id);
+    // Only tell the model who's asking when the question is about "my" team; otherwise it over-filters.
+    const myTeam = !me.is_guest && /\b(my|mine|our|i)\b/i.test(question) ? teamName(me.team_id) : null;
     const raw = await chat([
       { role: 'system', content: SYSTEM_QUERY },
       { role: 'user', content: `${myTeam ? `(The coach asking runs "${myTeam}"; "my team"/"my list" means that team.)\n` : ''}${question}` },
