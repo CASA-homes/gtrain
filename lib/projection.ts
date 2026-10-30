@@ -46,8 +46,9 @@ export const prospectScore = (overall: number) => Math.round(115 * Math.exp(-0.0
  *   years left = prime seasons until 31; a 19-year-old has twelve, a 28-year-old three.
  * The scarce-line bonus (forwards, defenders) only counts in full for players good enough to start there.
  */
-/** Commish calls: NSW-ACT sits behind Pato's and Ram Dawgs; Bodega's kids are good, but with no top-10 pick they sit 5th. Applied in order. */
-export const FUTURE_PIN: Record<string, number> = { 'Bodega Boys': 5, 'NSW-ACT Academy': 4 };
+/** Commish calls, applied in order: Ram Dawgs (pick 1, Holmes, Reid, O'Sullivan, Freijah, top-two lines) sit 3rd;
+ *  NSW-ACT sits behind Pato's and Ram Dawgs; Bodega's kids are good, but with no top-10 pick they sit 5th. */
+export const FUTURE_PIN: Record<string, number> = { 'Ram Dawgs': 3, 'NSW-ACT Academy': 4, 'Bodega Boys': 5 };
 
 /** Commish calls on the future build, as a multiplier on a player's future score. */
 const FUTURE_ADJUST: Record<string, number> = { 'L. Humphries': 1.4, 'H. Thomas': 0.6 };
