@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import { ASK_COOKIE, askCodeOk, askToken } from '@/lib/ask-access';
 import { getLeague, getMe } from '@/lib/data';
 import { METRIC_KEYS, metricsFor, runQuery, type Metrics, type Query } from '@/lib/player-metrics';
 
@@ -9,7 +11,8 @@ import { METRIC_KEYS, metricsFor, runQuery, type Metrics, type Query } from '@/l
 export const maxDuration = 30;
 const MODEL = process.env.OPENAI_MODEL || 'gpt-5.4-mini';
 const DAILY_LIMIT = 40;
-const used = new Map<string, { day: string; n: number }>();   // per-instance soft cap; set a hard cap in the OpenAI dashboard too
+const used = new Map<string, { day: string; n: number }>();
+const wrong = new Map<string, { hour: string; n: number }>();   // wrong-passcode attempts per person per hour   // per-instance soft cap; set a hard cap in the OpenAI dashboard too
 
 const METRIC_HELP = `avg26 (2026 season average), avg25, avg24, jump (avg26 minus avg25, both 5+ games), last3, last5, last8 (average of his most recent games),
 trend (last8 minus avg26: positive = finished 2026 stronger than his season average), secondHalf (average from round 13 on), max (best 2026 score),
@@ -42,7 +45,19 @@ export async function POST(req: Request) {
   const me = await getMe();
   if (!me) return NextResponse.json({ error: 'Sign in first.' }, { status: 401 });
   if (!process.env.OPENAI_API_KEY) return NextResponse.json({ error: 'The assistant isn’t switched on yet: the commish needs to add the OpenAI key in Vercel.' }, { status: 503 });
-  const { q } = (await req.json().catch(() => ({}))) as { q?: string };
+  const { q, code } = (await req.json().catch(() => ({}))) as { q?: string; code?: string };
+  // Passcode wall: the first ask needs the code, then a cookie remembers it for this person.
+  const jar = await cookies();
+  let unlockNow = false;
+  if (jar.get(ASK_COOKIE)?.value !== askToken(me.user_id)) {
+    if (!code) return NextResponse.json({ needCode: true }, { status: 403 });
+    const hour = new Date().toISOString().slice(0, 13);
+    const w = wrong.get(me.user_id);
+    const tries = w?.hour === hour ? w.n : 0;
+    if (tries >= 5) return NextResponse.json({ needCode: true, error: 'Too many wrong codes. Try again in an hour.' }, { status: 429 });
+    if (!askCodeOk(code)) { wrong.set(me.user_id, { hour, n: tries + 1 }); return NextResponse.json({ needCode: true, error: 'Wrong code.' }, { status: 403 }); }
+    unlockNow = true;
+  }
   const question = String(q ?? '').trim().slice(0, 300);
   if (question.length < 3) return NextResponse.json({ error: 'Ask a question first.' }, { status: 400 });
 
@@ -76,10 +91,12 @@ export async function POST(req: Request) {
     const answer = rows.length
       ? await chat([{ role: 'system', content: SYSTEM_ANSWER }, { role: 'user', content: `Question: ${question}\nTop rows (sorted by ${query.sortBy ?? 'avg26'}):\n${brief}` }], false)
       : 'No players match that. Try loosening it (fewer games, wider age range or a different position).';
-    return NextResponse.json({
+    const res = NextResponse.json({
       title: query.title ?? question, answer, columns, sortBy: query.sortBy ?? 'avg26',
       rows: rows.map((m) => ({ id: m.id, name: m.name, positions: m.positions, club: m.club, owner: m.owner, age: m.age, ...Object.fromEntries(columns.map((c) => [c, m[c]])) })),
     });
+    if (unlockNow) res.cookies.set(ASK_COOKIE, askToken(me.user_id), { httpOnly: true, sameSite: 'lax', secure: true, path: '/', maxAge: 60 * 60 * 24 * 365 });
+    return res;
   } catch (e) {
     return NextResponse.json({ error: (e as Error).message }, { status: 502 });
   }
