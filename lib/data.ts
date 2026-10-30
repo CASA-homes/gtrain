@@ -141,9 +141,10 @@ export const getLeague = cache(async (): Promise<League> => {
   }
   const projection = simulate2027(players, teams.map((t) => t.id),
     picks.filter((p) => p.year === CURRENT_SEASON + 1 && p.overall != null) as { overall: number; owner_team_id: number }[]);
-  // Future build: only players aged 24 or under count. Each team's best six of them, plus line-by-line strength on future scores.
+  // Future build: only kept players (set keepers, or the projected 18) aged 23 or under count. Each team's best six of them, plus line-by-line strength on future scores.
   const futureByTeam = teams.map((t) => {
-    const mine = players.filter((p) => p.team_id === t.id && isFutureAge(p))
+    const kept = new Set(projection.get(t.id)?.keepers ?? []);
+    const mine = players.filter((p) => p.team_id === t.id && kept.has(p.id) && isFutureAge(p))
       .map((p) => ({ p, f: futureScore(p, ratings.get(p.id)?.potential ?? null, ratings.get(p.id)?.lineBonus ?? 0, ratings.get(p.id)?.lineEdge ?? 0) }))
       .sort((x, y) => y.f - x.f);
     // Best two 2027 picks join the pool as prospects before taking the best six.

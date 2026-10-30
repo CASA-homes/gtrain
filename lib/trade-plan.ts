@@ -3,7 +3,7 @@
 //
 // For each team we measure two things before and after:
 //   now    = 2027 position-valid starting 18 from projected 2027 averages (same as the Rankings 2027 outlook)
-//   future = its best six players aged 24 or under (future-build scores) plus its best two 2027 picks as prospects
+//   future = its best six players aged 23 or under (future-build scores) plus its best two 2027 picks as prospects
 // A team's window sets how much it cares about each: a contender weighs now, a rebuild weighs future.
 import { lineTotals, LINE_WEIGHT } from '@/lib/projection';
 import type { Line } from '@/lib/ratings';
@@ -23,7 +23,7 @@ export interface PAsset {
   club: string | null;
   photo: string | null;
   dfs: string | null;
-  young: boolean;         // counts toward the future core (24 or under)
+  young: boolean;         // counts toward the future core (23 or under)
 }
 export interface PTeam { id: number; name: string; short: string; logo?: string | null; projRank: number; futRank: number; status: string; window: string; wNow: number; blurb: string }
 

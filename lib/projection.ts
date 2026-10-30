@@ -30,8 +30,8 @@ export function projected2027(p: PlayerRow): number {
   return Math.max(0, Math.round((base * curve(a) + delta) * 10) / 10);
 }
 
-/** Future build only counts players this age or younger (current age)... */
-export const FUTURE_MAX_AGE = 24;
+/** Future build only counts kept players this age or younger (current age)... */
+export const FUTURE_MAX_AGE = 23;
 /** ...and ranks each team on its best this-many of them, so quality beats quantity. */
 export const FUTURE_CORE = 6;
 /** A team's best two 2027 picks count as incoming prospects in its future build. */
@@ -48,7 +48,7 @@ export const prospectScore = (overall: number) => Math.round(115 * Math.exp(-0.0
  */
 /** Commish calls, applied in order: Ram Dawgs (pick 1, Holmes, Reid, O'Sullivan, Freijah, top-two lines) sit 3rd;
  *  NSW-ACT sits behind Pato's and Ram Dawgs; Bodega's kids are good, but with no top-10 pick they sit 5th. */
-export const FUTURE_PIN: Record<string, number> = { 'Ram Dawgs': 3, 'NSW-ACT Academy': 4, 'Bodega Boys': 5 };
+export const FUTURE_PIN: Record<string, number> = {};
 
 /** Commish calls on the future build, as a multiplier on a player's future score. */
 const FUTURE_ADJUST: Record<string, number> = { 'L. Humphries': 1.4, 'H. Thomas': 0.6 };

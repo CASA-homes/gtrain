@@ -40,7 +40,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
       <div className="wrap">
         <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
           <div>
-            <span className="eyebrow">Each team’s best six: players aged 24 or under, plus its top 2027 picks</span>
+            <span className="eyebrow">Each team’s best six: kept players aged 23 or under, plus its top 2027 picks</span>
             <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Future build</h1>
           </div>
           {tabs}
@@ -52,7 +52,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
             </thead>
             <tbody>
               {rows.map((a) => {
-                const top = a.players.filter((p) => (age(p.birth_date) ?? 99) <= FUTURE_MAX_AGE)
+                const top = a.players.filter((p) => a.projection.keepers.includes(p.id) && (age(p.birth_date) ?? 99) <= FUTURE_MAX_AGE)
                   .map((p) => ({ p, f: futureScore(p, league.ratings.get(p.id)?.potential ?? null, league.ratings.get(p.id)?.lineBonus ?? 0, league.ratings.get(p.id)?.lineEdge ?? 0) }))
                   .sort((x, y) => y.f - x.f).slice(0, 6);
                 return (
@@ -97,7 +97,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           </table>
         </div>
         <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-          Only players aged 24 or under count, plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best six, so quality beats quantity. A player’s future score is his projected peak (2027 projection plus some growth, scaled by potential) times how many prime years he has left, so youngsters already scoring rate ahead of raw ones.
+          Only kept players aged 23 or under count (a club’s set keepers, or its best 18 projected if it hasn’t set them), plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best six, so quality beats quantity. A player’s future score is his projected peak (2027 projection plus some growth, scaled by potential) times how many prime years he has left, so youngsters already scoring rate ahead of raw ones.
           Avg age and avg potential are across that best six. The line bars rank each line’s future strength against the league, with the ruck at half weight.
         </p>
       </div>
