@@ -6,6 +6,7 @@ import { age, C, form, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 import { ATTRS } from '@/lib/scouting';
 import { CLUBS } from '@/lib/clubs';
 import { positions2025 } from '@/lib/positions-2025';
+import { AskPlayers } from '@/components/AskPlayers';
 
 type SP = { q?: string; line?: string; team?: string; sort?: string; f1?: string; m1?: string; f2?: string; m2?: string; agemin?: string; agemax?: string; avgmax?: string; mine?: string;
   own?: string; club?: string; status?: string; period?: string; yr?: string };
@@ -146,6 +147,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Players</h1>
         </div>
       </div>
+
+      <AskPlayers />
 
       <form className="card players-filter" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
         {own !== 'owned' && <input type="hidden" name="own" value={own} />}
