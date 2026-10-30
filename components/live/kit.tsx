@@ -3,7 +3,7 @@
 import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { duelFits, picksPerTeam, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
+import { duelFits, picksPerTeam, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
 import { CLUBS } from '@/lib/clubs';
 
@@ -123,8 +123,14 @@ export function Shell({ title, sub, right, children, compact }: { title: string;
     const f = () => setNavh(nav?.offsetHeight ?? 56);
     f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f);
   }, []);
+  // Tap any player (anything marked data-pid) for their profile.
+  const [sheet, setSheet] = useState<number | null>(null);
   return (
-    <div className={`rh ${compact ? 'compact' : ''}`} style={cssVar('--navh', `${navh}px`)}>
+    <div className={`rh ${compact ? 'compact' : ''}`} style={cssVar('--navh', `${navh}px`)}
+      onClick={(e) => {
+        const el = (e.target as HTMLElement).closest('[data-pid]') as HTMLElement | null;
+        if (el && !(e.target as HTMLElement).closest('button, a, select, input')) setSheet(Number(el.dataset.pid));
+      }}>
       <nav className="rh-sub" aria-label="Live Matchups">
         {SECTIONS.map((s) => <Link key={s.href} href={s.href} aria-current={(s.href === '/live' ? path === '/live' : path.startsWith(s.href)) ? 'page' : undefined}>{s.label}</Link>)}
       </nav>
@@ -136,6 +142,7 @@ export function Shell({ title, sub, right, children, compact }: { title: string;
         {right}
       </header>
       {children}
+      {sheet != null && <PlayerSheet id={sheet} onClose={() => setSheet(null)} />}
     </div>
   );
 }
@@ -217,7 +224,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
           const cell = (p: LPlayer | undefined, right: boolean) => {
             const g = p ? gameBySquad.get(p.squadId) : undefined;
             const name = (
-              <span className={`rh-who ${right ? 'r' : ''}`}>
+              <span className={`rh-who ${right ? 'r' : ''}`} data-pid={p?.id}>
                 {p && <Face p={p} size={28} />}
                 <span className={`rh-pl ${right ? 'r' : ''}`}>
                   <span className="rh-pl-n">{p?.name ?? '—'}</span>
@@ -238,7 +245,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
               const cell = (p: LPlayer | undefined, sc: number | null, other: number | null, right: boolean) => {
                 const g = p ? gameBySquad.get(p.squadId) : undefined;
                 const name = (
-                  <span className={`rh-who ${right ? 'r' : ''}`}>
+                  <span className={`rh-who ${right ? 'r' : ''}`} data-pid={p?.id}>
                     {p && <Face p={p} size={28} />}
                     <span className={`rh-pl ${right ? 'r' : ''}`}>
                       <span className="rh-pl-n">{p?.name ?? '—'}</span>
@@ -368,7 +375,7 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
               <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
                 {Array.from({ length: per }, (_, i) => {
                   const pk = viewPicks[i]; const pl = pk ? byId.get(pk.player_id) : undefined;
-                  return <div key={i} className="rh-feed">{pl ? <><Face p={pl} size={24} /><b>{pl.name}</b><span className="rh-dim">{pl.squad} · {pl.avg?.toFixed(0) ?? ''}</span></> : <span className="rh-dim">Pick {i + 1}</span>}</div>;
+                  return <div key={i} className="rh-feed" data-pid={pl?.id}>{pl ? <><Face p={pl} size={24} /><b>{pl.name}</b><span className="rh-dim">{pl.squad} · {pl.avg?.toFixed(0) ?? ''}</span></> : <span className="rh-dim">Pick {i + 1}</span>}</div>;
                 })}
                 <span className="rh-dim" style={{ fontSize: 12 }}>
                   {match.home} {viewPicks.filter((pk) => squadOfPick(pk) === match.homeId).length} · {match.away} {viewPicks.filter((pk) => squadOfPick(pk) === match.awayId).length} · need 2+ from each
@@ -402,7 +409,7 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
               const ok = canPick && fits(p, clockTeam);
               return (
                 <div key={p.id} className="rh-lrow">
-                  <span className="rh-who"><Face p={p} size={34} /><span className="rh-pl">
+                  <span className="rh-who" data-pid={p.id}><Face p={p} size={34} /><span className="rh-pl">
                     <span className="rh-pl-n">{p.name}</span>
                     <span className="rh-pl-m">{p.squad} · {p.pos.map((x) => <b key={x} style={{ color: SLOT_HUE[x as Slot] }}>{x} </b>)}{p.status === 'uncertain' && <em className="rh-doubt">doubt</em>}</span>
                   </span></span>
@@ -467,7 +474,7 @@ export function Oval({ picks, byId }: { picks: GamePick[]; byId: Map<number, LPl
             {Array.from({ length: SLOTS[s] }, (_, i) => {
               const p = got[i];
               return p
-                ? <span key={i} className="rh-ps on" style={cssVar('--c', SLOT_HUE[s])}>{byId.get(p.player_id) && <Face p={byId.get(p.player_id)!} size={24} />}<b>{surname(p.player_name)}</b><em>{byId.get(p.player_id)?.avg?.toFixed(0) ?? ''}</em></span>
+                ? <span key={i} className="rh-ps on" data-pid={p.player_id} style={cssVar('--c', SLOT_HUE[s])}>{byId.get(p.player_id) && <Face p={byId.get(p.player_id)!} size={24} />}<b>{surname(p.player_name)}</b><em>{byId.get(p.player_id)?.avg?.toFixed(0) ?? ''}</em></span>
                 : <span key={i} className="rh-ps" style={cssVar('--c', SLOT_HUE[s])}>{s}</span>;
             })}
           </div>
@@ -574,7 +581,7 @@ export function ScoresBoard({ initial }: { initial: LRound }) {
                 <div key={String(sid)} className="rh-game-team">
                   <div className={`rh-game-score ${lead ? 'lead' : ''}`}><span>{abbr as string}</span><b>{(sc as number | null) ?? ''}</b></div>
                   <div className="rh-game-top">
-                    {top(sid as number).map((p) => <span key={p.id}><span className="rh-who"><Face p={p} size={24} /><span className="rh-ellip">{p.name}</span></span><b className={p.score != null && p.score >= 100 ? 'rh-up' : ''}>{p.score ?? <span className="rh-dim">{p.avg?.toFixed(0)}</span>}</b></span>)}
+                    {top(sid as number).map((p) => <span key={p.id}><span className="rh-who" data-pid={p.id}><Face p={p} size={24} /><span className="rh-ellip">{p.name}</span></span><b className={p.score != null && p.score >= 100 ? 'rh-up' : ''}>{p.score ?? <span className="rh-dim">{p.avg?.toFixed(0)}</span>}</b></span>)}
                   </div>
                 </div>
               ))}
@@ -607,5 +614,86 @@ export function PrizeStrip({ prize, clubs, standings, final, teamName, myTeamId 
       </div>
       {final && pay.length > 0 && standings[0] != null && <span className={`rh-prizestrip-win ${standings[0] === myTeamId ? 'me' : ''}`}>{standings[0] === myTeamId ? `You win $${pay[0]}` : `${teamName(standings[0])} wins $${pay[0]}`}</span>}
     </section>
+  );
+}
+
+/* ---------------- player profile pop-up ---------------- */
+
+const tone = (x: number) => (x >= 100 ? 'var(--rh-up)' : x >= 80 ? '#7fd88a' : x >= 60 ? '#c9b26b' : 'var(--rh-down)');
+const money = (n: number) => (Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(2)}m` : `$${Math.round(n / 1000)}k`);
+
+function PlayerSheet({ id, onClose }: { id: number; onClose: () => void }) {
+  const [p, setP] = useState<LProfile | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  useEffect(() => {
+    let stop = false;
+    setP(null); setErr(null);
+    fetch(`/api/live/player?id=${id}`).then(async (r) => { const j = await r.json(); if (!stop) (r.ok ? setP(j) : setErr(j.error ?? 'Couldn’t load her profile')); })
+      .catch(() => !stop && setErr('Couldn’t load her profile'));
+    const key = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', key);
+    const o = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    return () => { stop = true; window.removeEventListener('keydown', key); document.body.style.overflow = o; };
+  }, [id, onClose]);
+  const scale = Math.max(120, p?.hi ?? 0);
+  const n = p?.log.length ?? 0;
+  const share = (f: (x: number) => boolean) => (n ? Math.round((p!.log.filter((l) => f(l.score)).length / n) * 100) : 0);
+  return (
+    <div className="rh-sheet-back" role="dialog" aria-modal="true" aria-label="Player profile" onClick={(e) => { e.stopPropagation(); if (e.target === e.currentTarget) onClose(); }}>
+      <div className="rh-sheet">
+        <button className="rh-sheet-x" onClick={onClose} aria-label="Close">×</button>
+        {!p ? <div className="rh-dim" style={{ padding: 30, textAlign: 'center' }}>{err ?? 'Loading…'}</div> : (
+          <>
+            <div className="rh-sheet-head">
+              <Face p={{ id: p.id, name: p.name, squad: p.squad }} size={64} />
+              <div style={{ minWidth: 0 }}>
+                <h2>{p.name}</h2>
+                <div className="rh-dim" style={{ fontSize: 13 }}>
+                  {p.club} · {p.pos.map((x) => <b key={x} style={{ color: SLOT_HUE[x as Slot] ?? 'inherit' }}>{x} </b>)}
+                  {p.age != null && <>· {p.age}y </>}{p.firstSeason && <>· AFLW since {p.firstSeason}</>}
+                </div>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 6 }}>
+                  {p.rank != null && <span className="rh-chip">#{p.rank} overall</span>}
+                  {p.posRank && <span className="rh-chip">#{p.posRank.rank} of {p.posRank.of} {p.posRank.pos}</span>}
+                  {p.status !== 'playing' && <span className="rh-chip" style={{ color: p.status === 'injured' || p.status === 'suspended' ? 'var(--rh-down)' : undefined }}>{p.injury ?? p.status.replace('-', ' ')}</span>}
+                </div>
+              </div>
+            </div>
+            <div className="rh-sheet-tiles">
+              {([['Average', p.avg?.toFixed(1)], ['Last 3', p.l3?.toFixed(0)], ['Last 5', p.l5?.toFixed(0)], ['High', p.hi], ['Low', p.lo], ['Games', p.games]] as [string, React.ReactNode][]).map(([k, v]) => (
+                <div key={k}><span className="rh-k">{k}</span><b>{v ?? '–'}</b></div>
+              ))}
+            </div>
+            {n > 0 && (
+              <div>
+                <div className="rh-k" style={{ marginBottom: 8 }}>Round by round</div>
+                <div className="rh-sheet-bars" ref={(el) => { if (el) el.scrollLeft = el.scrollWidth; }}>
+                  {p.log.map((l) => (
+                    <div key={l.round} title={`Round ${l.round} ${l.home ? 'v' : '@'} ${l.opp}: ${l.score}`}>
+                      <em>{l.score}</em>
+                      <i style={{ height: `${Math.max(4, (l.score / scale) * 100)}%`, background: tone(l.score) }} />
+                      <span>{l.opp}</span><small>R{l.round}</small>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {n > 0 && (
+              <div className="rh-sheet-range">
+                <div><b style={{ color: 'var(--rh-up)' }}>{share((x) => x >= 100)}%</b><span>100+</span></div>
+                <div><b style={{ color: '#7fd88a' }}>{share((x) => x >= 80 && x < 100)}%</b><span>80–99</span></div>
+                <div><b style={{ color: '#c9b26b' }}>{share((x) => x >= 60 && x < 80)}%</b><span>60–79</span></div>
+                <div><b style={{ color: 'var(--rh-down)' }}>{share((x) => x < 60)}%</b><span>under 60</span></div>
+              </div>
+            )}
+            <div className="rh-sheet-foot rh-dim">
+              <span>{money(p.price)}{p.seasonPriceChange ? <> ({p.seasonPriceChange > 0 ? '+' : '−'}{money(Math.abs(p.seasonPriceChange))} this year)</> : null}</span>
+              {p.owned != null && <span>{p.owned.toFixed(0)}% owned in AFLW Fantasy</span>}
+              {p.next && <span>Next: R{p.next.round} {p.next.home ? 'v' : '@'} {p.next.opp} · {new Date(p.next.date).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}</span>}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 }

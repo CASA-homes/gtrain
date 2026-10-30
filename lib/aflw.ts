@@ -141,3 +141,54 @@ export function payouts(p: Prize | null | undefined, clubs: number): number[] {
   out[0] += pool - out.reduce((a, b) => a + b, 0);
   return out;
 }
+
+/* ---------------- player profile (pop-up in the live game) ---------------- */
+
+export interface LProfile {
+  id: number; name: string; squad: string; club: string; pos: string[]; age: number | null; firstSeason: number | null; seasons: number;
+  status: string; injury: string | null; price: number; seasonPriceChange: number; owned: number | null;
+  games: number; avg: number | null; l3: number | null; l5: number | null; hi: number | null; lo: number | null; total: number;
+  rank: number | null; posRank: { pos: string; rank: number; of: number } | null;
+  log: { round: number; score: number; opp: string; home: boolean }[];
+  next: { round: number; opp: string; home: boolean; date: string; status: string } | null;
+}
+
+export async function aflwProfile(id: number): Promise<LProfile | null> {
+  type FullPlayer = RawPlayer & { dob?: string; totalPoints?: number; last5Avg?: number | null; lowScore?: number | null; seasonRank?: number | null;
+    ownership?: Record<string, number> | null; seasonPriceChange?: number; seasons?: number[]; injuryMeta?: unknown };
+  const [rounds, squads, players] = await Promise.all([
+    get<RawRound[]>('rounds.json', 60), get<RawSquad[]>('squads.json', 86400), get<FullPlayer[]>('players.json', 120),
+  ]);
+  const p = players.find((x) => x.id === id);
+  if (!p) return null;
+  const sq = new Map(squads.map((s) => [s.id, s]));
+  const abbr = (sid: number) => sq.get(sid)?.abbreviation ?? String(sid);
+  const gameOf = (r: RawRound) => r.games.find((g) => g.homeId === p.squadId || g.awayId === p.squadId);
+  const log = Object.entries(p.scores ?? {}).map(([rn, score]) => {
+    const g = gameOf(rounds.find((r) => r.roundNumber === Number(rn)) ?? ({ games: [] } as unknown as RawRound));
+    const home = g?.homeId === p.squadId;
+    return { round: Number(rn), score, opp: g ? abbr(home ? g.awayId : g.homeId) : '', home };
+  }).sort((a, b) => a.round - b.round);
+  const nr = currentRound(rounds), ng = nr && gameOf(nr);
+  const dob = p.dob ? new Date(p.dob) : null;
+  const age = dob ? Math.floor((Date.now() - dob.getTime()) / 31_557_600_000) : null;
+  const years = [...new Set((p.seasons ?? []).map((s) => Math.floor(s / 10)))].sort();
+  const own = p.ownership ? Object.entries(p.ownership).sort((a, b) => Number(b[0]) - Number(a[0]))[0]?.[1] ?? null : null;
+  // Position rank: by average among players at that position with 3+ games.
+  const mainPos = p.position[0];
+  const peers = players.filter((x) => x.position.includes(mainPos) && x.gamesPlayed >= 3 && x.averagePoints != null).sort((a, b) => (b.averagePoints ?? 0) - (a.averagePoints ?? 0));
+  const pr = peers.findIndex((x) => x.id === p.id);
+  const inj = p.injuryMeta as { description?: string; weeks?: number } | null | undefined;
+  return {
+    id: p.id, name: `${p.firstName} ${p.lastName}`, squad: abbr(p.squadId), club: sq.get(p.squadId)?.name ?? '', pos: p.position, age,
+    firstSeason: years[0] ?? null, seasons: years.length,
+    status: p.status, injury: inj ? [inj.description || 'Injured', inj.weeks ? `${inj.weeks} week${inj.weeks > 1 ? 's' : ''}` : ''].filter(Boolean).join(' · ') : null,
+    price: p.price, seasonPriceChange: p.seasonPriceChange ?? 0, owned: own,
+    games: p.gamesPlayed, avg: p.averagePoints, l3: p.last3Avg ?? null, l5: p.last5Avg ?? null, hi: p.highScore ?? null, lo: p.lowScore ?? null, total: p.totalPoints ?? 0,
+    rank: p.seasonRank ?? null, posRank: pr >= 0 ? { pos: mainPos, rank: pr + 1, of: peers.length } : null,
+    log,
+    next: nr && ng && !log.some((l) => l.round === nr.roundNumber)
+      ? { round: nr.roundNumber, opp: abbr(ng.homeId === p.squadId ? ng.awayId : ng.homeId), home: ng.homeId === p.squadId, date: ng.date, status: ng.status }
+      : null,
+  };
+}
