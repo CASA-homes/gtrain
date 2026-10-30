@@ -99,7 +99,8 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
         </Card>
       )}
       <Card title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
-        <div className="pc-form pc-season">
+        {/* Mobile scrolls sideways: start at the latest game, swipe back for round 1. */}
+        <div className="pc-form pc-season" ref={(el) => { if (el) el.scrollLeft = el.scrollWidth; }}>
           {games.map((g, idx) => {
             return (
               <button key={idx} type="button" onClick={() => setHeatIdx(idx)} aria-pressed={heatIdx === idx} className="pc-fchip">
