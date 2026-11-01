@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'T. Green', tag: 'Role', date: '2026-11-02', title: 'Green stays a Giant',
+    body: 'Green has knocked back Tasmania’s interest and re-signed with GWS after missing all of 2026 with an ACL. The Giants expect him back out there in 2027. If his knee comes up well, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
+  },
+  {
     player: 'J. Cameron', tag: 'Injury', date: '2026-10-29', title: 'Cameron’s arm still in a splint',
     body: 'Cameron had more surgery on the forearm he broke in last year’s grand final, and he admits he might have retired if he’d sat out 2026. The arm is in a splint until a 12-week review, so his pre-season will be interrupted. Hold off counting on a full-strength start.',
   },
@@ -63,10 +67,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'L. Neale', tag: 'Trade', title: 'Neale to the Pies',
     body: 'The Brownlow medallist swaps Brisbane for Collingwood at 33. Still a high-floor midfielder, but the age curve is the risk.',
-  },
-  {
-    player: 'S. Pendlebury', tag: 'Trade', title: 'Pendlebury goes north',
-    body: 'One more chapter, this time at Gold Coast. Elite skills, and he could play a quarterback role off half-back. Low ceiling, high floor.',
   },
   {
     player: 'K. Briggs', tag: 'Role', title: 'Briggs gets his own ruck at Richmond',
