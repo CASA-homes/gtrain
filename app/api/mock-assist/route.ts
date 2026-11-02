@@ -12,13 +12,14 @@ import { coreAge, strengthByYear, windowFor } from '@/lib/window';
 // Same passcode wall as the other assistants.
 export const maxDuration = 45;
 
-export interface AssistPlayer { key: string; name: string; kind: string; pos: string; age: number | null; a26: number | null; g26: number; board: number; fut: number; rank?: number; club?: string | null }
-interface Body { asTeam: number; overall: number; nextPicks: number[]; haul: { overall: number; name: string; pos: string }[]; taken: { overall: number; team: string; name: string }[]; pool: AssistPlayer[]; question?: string; code?: string }
+export interface AssistPlayer { key: string; name: string; kind: string; pos: string; age: number | null; a26: number | null; g26: number; board: number; fut: number; rank?: number; club?: string | null; odds?: number }
+interface Body { asTeam: number; overall: number; nextPicks: number[]; haul: { overall: number; name: string; pos: string }[]; taken: { overall: number; team: string; name: string }[]; pool: AssistPlayer[]; question?: string; code?: string; nextOverall?: number | null }
 
 const SYSTEM = `You are a sharp draft assistant for a 10-team AFL Fantasy keeper league (G-Train). Each club keeps 17 players plus a rookie, then a redraft fills the list.
 On field: 5 DEF, 7 MID, 1 RUC, 5 FWD (plus bench). Scoring is AFL Fantasy. Use ONLY the data given. Australian spelling, casual and direct, specific names and numbers.
 Weigh the club's window: contenders want 2027 points; rebuilding clubs want young upside and rookies. Fill real holes in the best 18 before luxury depth.
-Only recommend players from the AVAILABLE list, using their exact names. Think about who is likely to still be there at the club's next pick.
+Only recommend players from the AVAILABLE list, using their exact names. Where the list shows "% still there at #N", that is the measured chance (from 200 simulated replays of the picks in between) the player lasts to the club's next pick: quote those numbers exactly when asked about availability, and use them to decide what can wait. Don't invent odds for players without one.
+If the coach asks whether to take a win-now asset now, weigh the club's window and depth against that player's odds of lasting and the next-best option at the next pick.
 Reply with JSON only:
 {"pick": {"name": exact name, "why": 1-2 sentences}, "alternatives": [2 objects {"name", "why": one sentence}],
 "needs": one sentence on the club's biggest needs right now, "wait": one sentence on what can wait until the next pick (name 1-2 players likely to still be there),
@@ -64,7 +65,7 @@ export async function POST(req: Request) {
     rank2027: a.projection.rank, futureRank: a.future.rank, coreAge: coreAge(a.team.id, league.players), strength });
   const phase = win.find((w) => w.year === CURRENT_SEASON + 1)?.phase ?? 'Mid table';
 
-  const pool = body.pool.slice(0, 70).map((p) => `${p.name} | ${p.kind}${p.kind === 'Rookie' ? ` (projected AFL pick ${p.rank ?? '?'})` : ''} | ${p.pos} | age ${p.age ?? '?'} | 26avg ${p.a26 != null ? Math.round(p.a26) : '–'} (${p.g26}g) | board ${Math.round(p.board)} | future ${Math.round(p.fut)}`);
+  const pool = body.pool.slice(0, 70).map((p) => `${p.name} | ${p.kind}${p.kind === 'Rookie' ? ` (projected AFL pick ${p.rank ?? '?'})` : ''} | ${p.pos} | age ${p.age ?? '?'} | 26avg ${p.a26 != null ? Math.round(p.a26) : '–'} (${p.g26}g) | board ${Math.round(p.board)} | future ${Math.round(p.fut)}${p.odds != null && body.nextOverall ? ` | ${p.odds}% still there at #${body.nextOverall}` : ''}`);
   const brief = [
     `CLUB: ${a.team.name}. 2027 window: ${phase}. Finished ${lt?.rank ?? '?'} in 2026; projected #${a.projection.rank}/10 for 2027.`,
     `DEPTH: ${depth}`,

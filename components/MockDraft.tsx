@@ -84,6 +84,34 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
   }, [results.length]);
   const myHaul = results.filter((r) => r.mine);
   const myNext = picks.filter((p) => p.teamId === asTeam);
+  // Odds each player is still there at your next pick: replay the picks in between 200 times with fresh randomness.
+  const nextMine = onClock ? picks.find((p) => p.teamId === asTeam && p.overall > onClock.overall) ?? null : null;
+  const odds = useMemo(() => {
+    const m = new Map<string, number>();
+    if (!onClock || !nextMine) return m;
+    const between = picks.filter((p) => p.overall > onClock.overall && p.overall < nextMine.overall);
+    const takenBase: Record<number, MockPlayer[]> = {};
+    for (const r of results) if (r.player) (takenBase[r.pick.teamId] ??= []).push(r.player);
+    const top = [...pool].sort((a, b) => effectiveBoard(b, edits) - effectiveBoard(a, edits)).slice(0, 120);
+    const SIMS = 200;
+    for (const p of top) m.set(p.key, 0);
+    for (let s2 = 0; s2 < SIMS; s2++) {
+      let avail = pool.slice();
+      const taken: Record<number, MockPlayer[]> = Object.fromEntries(Object.entries(takenBase).map(([k, v]) => [k, v.slice()]));
+      const r = rng((s2 + 1) * 7919 + onClock.overall * 104729);
+      for (const pk of between) {
+        const c = aiPick(team(pk.teamId), avail, taken[pk.teamId] ?? [], edits, r);
+        if (!c) break;
+        avail = avail.filter((x) => x.key !== c.key);
+        (taken[pk.teamId] ??= []).push(c);
+      }
+      const left = new Set(avail.map((x) => x.key));
+      for (const p of top) if (left.has(p.key)) m.set(p.key, m.get(p.key)! + 1);
+    }
+    for (const [k, v] of m) m.set(k, Math.round((v / SIMS) * 100));
+    return m;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onClock?.overall, nextMine?.overall, pool, results, edits, asTeam]);
   const list = pool
     .filter((p) => (kind === 'All' || p.kind === kind) && (posLine === 'All' || p.lines.includes(posLine)) && (!q || p.name.toLowerCase().includes(q.toLowerCase())))
     .sort((a, b) => sortBy === 'avg'
@@ -142,7 +170,7 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
           haul={myHaul.map((r) => ({ overall: r.pick.overall, name: r.player?.name ?? '', pos: r.player?.pos ?? '' }))}
           taken={results.filter((r) => !r.mine).map((r) => ({ overall: r.pick.overall, team: team(r.pick.teamId).short, name: r.player?.name ?? '' }))}
           pool={[...pool].sort((a, b) => effectiveBoard(b, edits) - effectiveBoard(a, edits)).slice(0, 70)}
-          board={(p) => effectiveBoard(p, edits)}
+          board={(p) => effectiveBoard(p, edits)} odds={odds} nextOverall={nextMine?.overall ?? null}
           onDraft={(key) => { const p = pool.find((x) => x.key === key); if (p) draft(p); }} />
       )}
 
@@ -213,6 +241,7 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
                   <span style={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.id ? <Link href={`/players/${p.id}`} style={{ color: 'inherit' }}>{p.name}</Link> : p.name}</span>
                   <span className="muted" style={{ fontSize: 11 }}><Chip k={p.kind} /> {line(p)}</span>
                 </span>
+                {nextMine && odds.has(p.key) ? <span className="mono" title={`Chance he's still there at your next pick (#${nextMine.overall})`} style={{ fontSize: 10.5, color: (odds.get(p.key) ?? 0) >= 60 ? '#1f6b3a' : (odds.get(p.key) ?? 0) >= 25 ? '#8a6a12' : '#b4532a' }}>{odds.get(p.key)}%</span> : <span />}
                 <span className="mono" title={sortBy === 'avg' ? '2026 average' : 'Board rating'} style={{ fontSize: 12, fontWeight: 600 }}>{sortBy === 'avg' ? (p.a26 != null ? Math.round(p.a26) : '–') : Math.round(effectiveBoard(p, edits))}</span>
                 {onClock ? <button type="button" className="btn green" onClick={() => draft(p)} style={{ minHeight: 28, padding: '0 10px' }}>Draft</button> : <span />}
               </div>
@@ -241,9 +270,9 @@ function line(p: MockPlayer) {
 
 type Advice = { pick?: { name: string; why: string }; alternatives?: { name: string; why: string }[]; needs?: string; wait?: string; answer?: string; pickKey?: string | null; altKeys?: (string | null)[]; phase?: string };
 /** AI draft assistant: reads your club's real kept list, depth, window and the board, and suggests a pick. */
-function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, onDraft }: {
+function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, odds, nextOverall, onDraft }: {
   asTeam: number; overall: number; nextPicks: number[]; haul: { overall: number; name: string; pos: string }[]; taken: { overall: number; team: string; name: string }[];
-  pool: MockPlayer[]; board: (p: MockPlayer) => number; onDraft: (key: string) => void;
+  pool: MockPlayer[]; board: (p: MockPlayer) => number; odds: Map<string, number>; nextOverall: number | null; onDraft: (key: string) => void;
 }) {
   const [busy, setBusy] = useState(false);
   const [adv, setAdv] = useState<Advice | null>(null);
@@ -256,7 +285,8 @@ function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, 
     try {
       const r = await fetch('/api/mock-assist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
         asTeam, overall, nextPicks, haul, taken, question: question.trim() || undefined, code: passcode,
-        pool: pool.map((p) => ({ key: p.key, name: p.name, kind: p.kind, pos: p.pos, age: p.age, a26: p.a26, g26: p.g26, board: board(p), fut: p.fut, rank: p.rank, club: p.club })),
+        pool: pool.map((p) => ({ key: p.key, name: p.name, kind: p.kind, pos: p.pos, age: p.age, a26: p.a26, g26: p.g26, board: board(p), fut: p.fut, rank: p.rank, club: p.club, odds: odds.get(p.key) })),
+        nextOverall,
       }) });
       const j = await r.json();
       if (j.needCode) { setGate({ error: passcode ? j.error ?? 'Wrong code.' : undefined }); setCode(''); }
@@ -267,7 +297,7 @@ function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, 
   };
   const Option = ({ name, why, k, main }: { name: string; why: string; k?: string | null; main?: boolean }) => (
     <div className={`mock-ai-opt${main ? ' main' : ''}`}>
-      <span style={{ minWidth: 0 }}><b>{name}</b> <span className="muted" style={{ fontSize: 13 }}>{why}</span></span>
+      <span style={{ minWidth: 0 }}><b>{name}</b>{k && odds.has(k) && nextOverall ? <span className="mono" style={{ fontSize: 11, marginLeft: 6, color: (odds.get(k) ?? 0) >= 60 ? '#1f6b3a' : (odds.get(k) ?? 0) >= 25 ? '#8a6a12' : '#b4532a' }}>{odds.get(k)}% at #{nextOverall}</span> : null} <span className="muted" style={{ fontSize: 13 }}>{why}</span></span>
       {k ? <button type="button" className={`btn ${main ? 'green' : ''}`} onClick={() => onDraft(k)} style={{ minHeight: 28, padding: '0 10px', flex: 'none' }}>Draft</button> : <span className="muted" style={{ fontSize: 11 }}>gone</span>}
     </div>
   );
@@ -290,13 +320,13 @@ function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, 
       <div className="row-between" style={{ gap: 10, flexWrap: 'wrap' }}>
         <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="ask-spark" style={{ width: 28, height: 28, fontSize: 13 }} aria-hidden>✦</span><b>Draft assistant</b>{adv?.phase && <span className="muted" style={{ fontSize: 12 }}>· reads your list as {adv.phase.toLowerCase()}</span>}</span>
         <span style={{ display: 'flex', gap: 6, flex: '1 1 260px', justifyContent: 'flex-end' }}>
-          <input className="input" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Optional: ask something, e.g. ruck or mid here?" maxLength={300} style={{ flex: 1, minHeight: 32, fontSize: 13 }} aria-label="Question for the assistant"
+          <input className="input" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Ask anything: “chances X is there at my next pick?”, “take my win-now asset now?”" maxLength={300} style={{ flex: 1, minHeight: 32, fontSize: 13 }} aria-label="Question for the assistant"
             onKeyDown={(e) => { if (e.key === 'Enter' && !busy) ask(); }} />
           <button type="button" className="btn dark" disabled={busy} onClick={() => ask()}>{busy ? 'Thinking…' : adv ? 'Ask again' : `Who at #${overall}?`}</button>
         </span>
       </div>
       {err && <p style={{ margin: 0, color: '#a3271c', fontSize: 14 }}>{err}</p>}
-      {!adv && !err && <p className="muted" style={{ margin: 0, fontSize: 13 }}>Looks at your kept list (ages, 2027 projections, depth on each line), your premiership window, your next picks and who’s left, then suggests a pick and two alternatives.</p>}
+      {!adv && !err && <p className="muted" style={{ margin: 0, fontSize: 13 }}>Looks at your kept list (ages, 2027 projections, depth on each line), your premiership window, your next picks and who’s left, then suggests a pick and two alternatives. {nextOverall ? `It also gets the odds each player is still there at #${nextOverall}, from 200 replays of the picks in between.` : ''}</p>}
       {adv && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {adv.answer && <p style={{ margin: 0, fontSize: 14 }}>{adv.answer}</p>}
