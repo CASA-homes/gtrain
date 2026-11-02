@@ -68,12 +68,12 @@ export function coreAge(teamId: number, players: PlayerRow[]): number {
 }
 
 /**
- * Phases follow the list lifecycle in order: prime → closing (1–2 years) → mid table → rebuild → mid table →
+ * Phases follow the list lifecycle in order: prime → closing (while falling) → mid table or rebuild → mid table →
  * entering (1 year) → prime. Each season is read off a smoothed ladder position (so one odd year doesn't flip it),
  * and a club only moves one step along the cycle at a time.
  *   Prime    top-3ish and holding.
- *   Closing  the decline from a window: one year, or two if the list still has the senior scorers to contend.
- *   Mid table the landing spot after a window, and the first step up out of a rebuild.
+ *   Closing  the decline from a window: holds while the club keeps falling (up to three years), then Rebuild at the bottom or Mid table once it levels off.
+ *   Mid table stuck at the same middling mark year after year, or out of a rebuild but not yet good enough to contend.
  *   Rebuild  bottom of the ladder, building through the draft. One phase, however early or late in it.
  *   Entering one season only: the year a rising list breaks into the top four, then it's prime (or back to mid table).
  */
@@ -93,8 +93,12 @@ export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Ph
         if (x > 5 || (ahead >= 6 && ahead >= x + 1.5) || (a >= OLD && ahead > x + 0.5) || a >= VERY_OLD) state = 'Closing window';
       } else if (state === 'Closing window') {
         // Back in the top three with a core that isn't old: the window reopens. Otherwise one more year at most.
+        // Closing is the whole slide down from contention: it holds while the club is still falling, then lands
+        // in Rebuild if it hits the bottom, or Mid table once the fall levels off.
+        const prev = s[i - 1], falling = x > prev + 0.5 || ahead > x + 0.5;
         if (x <= 3 && a < OLD) state = 'Prime window';
-        else if (run >= 2 || x > 4.5) state = x >= 8.5 ? 'Rebuild' : 'Mid table';
+        else if (x >= 8.5) state = 'Rebuild';
+        else if (!falling || run >= 3) state = 'Mid table';
       } else if (state === 'Mid table') {
         if (x <= 5 && ahead <= x + 0.25 && a >= YOUNG) state = 'Entering window';   // breaking into the top four and holding
         else if (x >= 8) state = 'Rebuild';
