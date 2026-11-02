@@ -968,3 +968,44 @@ body:has(.rh) { background: #000; }
 .mock-ai { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #d9e6d2; background: linear-gradient(180deg, #f6faf3, #fff); }
 .mock-ai-opt { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid var(--line); font-size: 14px; }
 .mock-ai-opt.main { border-color: #1f6b3a; box-shadow: inset 3px 0 0 #1f6b3a; }
+
+/* Knockout Cup (components/live/cup.tsx) */
+.cup-panel { gap: 12px; background: linear-gradient(160deg, #19160b 0%, var(--rh-1) 55%); border-color: #3a3115; }
+.cup-head { display: flex; align-items: center; gap: 12px; }
+.cup-title { display: block; font: 600 19px/1.15 var(--font); letter-spacing: -.02em; }
+.cup-format { display: flex; flex-wrap: wrap; gap: 6px; }
+.cup-format span { font-size: 11.5px; padding: 4px 9px; border-radius: 99px; background: rgba(242,201,76,.1); color: #f2c94c; }
+.cup-next { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 12px; background: var(--rh-2); }
+.cup-next b { font-size: 17px; }
+.cup-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; margin-top: 6px; }
+.cup-table th { font: 500 10.5px var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--rh-dim); padding: 4px 6px; text-align: right; }
+.cup-table td { padding: 6px; text-align: right; border-top: 1px solid var(--rh-line); }
+.cup-table .l { text-align: left; max-width: 160px; }
+.cup-table tr.q td:first-child { box-shadow: inset 3px 0 0 #f2c94c; }
+.cup-table tr.me td { background: rgba(0,200,5,.07); font-weight: 600; }
+.cup-page { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 16px; align-items: start; }
+.cup-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.cup-rules { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 5px; font-size: 13.5px; color: #c9cfcc; }
+.cup-game { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 10px; border-radius: 10px; background: var(--rh-2); font-size: 13.5px; }
+.cup-game b { font-size: 13px; color: var(--rh-dim); }
+.cup-game .r { text-align: right; }
+.cup-game.me { box-shadow: inset 0 0 0 1px var(--rh-up); }
+.cup-round { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; border-top: 1px solid var(--rh-line); }
+.cup-round:first-of-type { border-top: 0; padding-top: 0; }
+.cup-round-h { font-size: 12.5px; font-weight: 600; }
+.cup-ko { display: flex; flex-direction: column; gap: 5px; }
+.cup-lineup { display: flex; flex-direction: column; gap: 10px; }
+.cup-line { display: flex; flex-direction: column; gap: 6px; }
+.cup-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; }
+.cup-slot { position: relative; text-align: left; display: flex; flex-direction: column; gap: 2px; min-height: 48px; padding: 7px 26px 7px 10px; border-radius: 10px; border: 1px dashed var(--rh-line); background: transparent; color: inherit; cursor: pointer; font: 500 13px var(--font); min-width: 0; }
+.cup-slot.full { border-style: solid; background: var(--rh-2); }
+.cup-slot.on { border-color: var(--rh-up); box-shadow: 0 0 0 1px var(--rh-up); }
+.cup-slot .rh-dim { font-size: 11px; }
+.cup-x { position: absolute; top: 4px; right: 6px; width: 18px; height: 18px; display: grid; place-items: center; border-radius: 50%; color: var(--rh-dim); font-size: 14px; }
+.cup-x:hover { background: var(--rh-3); color: var(--rh-text); }
+.cup-picker { display: flex; flex-direction: column; gap: 2px; max-height: 300px; overflow-y: auto; padding: 8px; border-radius: 12px; background: var(--rh-2); }
+.cup-opt { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: 500 13.5px var(--font); cursor: pointer; min-width: 0; }
+.cup-opt:hover { background: var(--rh-3); }
+.cup-opt.used { opacity: .55; }
+.cup-opt .sw { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+@media (max-width: 900px) { .cup-page { grid-template-columns: minmax(0, 1fr); } }

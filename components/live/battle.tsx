@@ -9,6 +9,7 @@ import type { MGame, MRound } from '@/lib/mens-round';
 import { loadRoles, saveRoles } from '@/app/(app)/live/actions';
 import { cancelChallenge, decideRequest, grantTokens, loadDesk, markAssetsDone, offerChallenge, requestTokens, respondChallenge, settleChallenge, type Challenge, type Desk, type Stake } from '@/app/(app)/live/battle-actions';
 import { A_COL, B_COL, MFace, PlayerSheet, Worm, liveOf, teamAt, useTimeline, type ProfileOpen } from './mens';
+import { CupPanel, type CupData } from './cup';
 import { Face, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
 const SLOTS4: Slot[] = ['DEF', 'MID', 'RUC', 'FWD'];
@@ -376,8 +377,8 @@ function BattleDesk({ initial, teams, myTeamId, isCommish, games, assets, roundN
 }
 
 /* ---------------- home ---------------- */
-export function LiveHome({ initial, games, ready, teams, myTeamId, isCommish, mens, desk, assets }: {
-  initial: LRound; games: Game[]; ready: boolean; teams: TeamRow[]; myTeamId: number; isCommish: boolean; mens: MRound; desk: Desk; assets: Assets;
+export function LiveHome({ initial, games, ready, teams, myTeamId, isCommish, mens, desk, assets, cup }: {
+  initial: LRound; games: Game[]; ready: boolean; teams: TeamRow[]; myTeamId: number; isCommish: boolean; mens: MRound; desk: Desk; assets: Assets; cup: CupData;
 }) {
   const { data } = useRound(initial);
   const name = (id: number) => teams.find((t) => t.id === id)?.name ?? `Club ${id}`;
@@ -396,6 +397,7 @@ export function LiveHome({ initial, games, ready, teams, myTeamId, isCommish, me
       <div className="bd-home">
         <KeeperPanel mens={mens} myTeamId={myTeamId} />
         <div className="bd-right">
+          <CupPanel data={cup} />
           <BattleDesk initial={desk} teams={teams} myTeamId={myTeamId} isCommish={isCommish} games={data.games} assets={assets} roundName={data.name} />
           <section className="rh-card">
             <div className="bd-kh"><span className="rh-k">Current games · {data.name}</span><Link href="/live/new" className="rh-link" style={{ fontSize: 13 }}>New game</Link></div>
