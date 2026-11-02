@@ -12,7 +12,7 @@ import {
   AGE_PHASES, agePhase, age, C, form, LINES, played, STATUSES, type Line, type PlayerRow, type Slot,
 } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
-import { coreAge, strengthByYear, windowFor } from '@/lib/window';
+import { coreAge, projectAhead, strengthByYear, windowFor } from '@/lib/window';
 import { draftOutlook, squadSummary } from '@/lib/verdict';
 import { VerdictTabs } from '@/components/VerdictTabs';
 import { WindowChart } from '@/components/WindowChart';
@@ -117,8 +117,19 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
     line: l, title: `${LINE_NAMES[l]} depth`, why: `${LINE_NAMES[l]} ranks ${ordinal(a.lineStrength[l].rank)} of 10 on Best 22 averages.`,
   }));
 
-  // Cut candidates: the lowest-value players outside the Best 22
-  const cuts = [...a.lineup.extended].sort((x, y) => league.ratings.get(x.id)!.value - league.ratings.get(y.id)!.value).slice(0, 4);
+  // Cut candidates. Retired and delisted players are already gone, so they're listed apart. Then the rest of the
+  // squad (minus the rookie keeper and rookie-eligible kids with real potential, who are likely rookie keepers) ranked by
+  // keep value: projected scoring over 2027–29 (age curve applied, so old players fade and young ones grow toward
+  // their potential), plus a youth bonus for list value. The lowest keep value is the first to cut.
+  const gone = a.players.filter((p) => p.list_status && /^(retired|delisted)/i.test(p.list_status));
+  const keepValue = (p: PlayerRow) => {
+    const r = league.ratings.get(p.id);
+    const proj = 0.5 * projectAhead(p, r, 1) + 0.3 * projectAhead(p, r, 2) + 0.2 * projectAhead(p, r, 3);
+    return proj + Math.max(0, 24.5 - (age(p.birth_date) ?? 26)) * 6;
+  };
+  const likelyRookie = (p: PlayerRow) => (p.career_games ?? 99) <= 10 && (league.ratings.get(p.id)?.potential ?? 0) >= 2.5;
+  const cuts = a.players.filter((p) => !p.list_status && !p.is_rookie_keeper && !likelyRookie(p))
+    .map((p) => ({ p, kv: keepValue(p) })).sort((x, y) => x.kv - y.kv).slice(0, 5).map((x) => x.p);
 
   return (
     <div className="wrap">
@@ -288,20 +299,32 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         </section>
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div className="row-between"><h2 className="h2">Cut candidates</h2><span className="muted" style={{ fontSize: 12 }}>Lowest value outside the starting 22</span></div>
+          <div className="row-between"><h2 className="h2">Cut candidates</h2><span className="muted" style={{ fontSize: 12 }}>Weakest and oldest, by projected scoring 2027–29</span></div>
           <div className="card" style={{ overflow: 'hidden' }}>
+            {gone.map((p, i) => (
+              <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '18px minmax(0, 1fr) auto', gap: 12, alignItems: 'center', padding: '11px 14px', borderTop: i ? '1px solid var(--line)' : 0, opacity: 0.75 }}>
+                <ClubDot code={p.afl_club} size={16} />
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                  <Link href={`/players/${p.id}`} style={{ fontWeight: 600, color: 'inherit', textDecoration: 'none' }}>{p.name}</Link>
+                  <span className="muted" style={{ fontSize: 12 }}>{p.positions.join('/')} · {p.average?.toFixed(1) ?? '–'} avg in {CURRENT_SEASON}</span>
+                </div>
+                <span className="mono" style={{ fontSize: 11, color: '#a3271c', textTransform: 'uppercase', letterSpacing: '.04em' }}>{p.list_status} · gone</span>
+              </div>
+            ))}
             {cuts.map((p, i) => {
-              const v = league.ratings.get(p.id)!.value;
+              const r = league.ratings.get(p.id);
+              const p27 = Math.round(projectAhead(p, r, 1));
+              const ag = age(p.birth_date);
               return (
-                <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '18px minmax(0, 1fr) 96px', gap: 12, alignItems: 'center', padding: '11px 14px', borderTop: i ? '1px solid var(--line)' : 0 }}>
+                <div key={p.id} style={{ display: 'grid', gridTemplateColumns: '18px minmax(0, 1fr) 96px', gap: 12, alignItems: 'center', padding: '11px 14px', borderTop: i || gone.length ? '1px solid var(--line)' : 0 }}>
                   <ClubDot code={p.afl_club} size={16} />
                   <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
                     <Link href={`/players/${p.id}`} style={{ fontWeight: 600, color: 'inherit', textDecoration: 'none' }}>{p.name}</Link>
-                    <span className="muted" style={{ fontSize: 12 }}>{p.positions.join('/')} · {p.games ?? 0} games · {p.average?.toFixed(1) ?? '–'} avg</span>
+                    <span className="muted" style={{ fontSize: 12 }}>{p.positions.join('/')} · age {ag ?? '–'} · {p.average?.toFixed(1) ?? '–'} avg ({p.games ?? 0}g){p.is_keeper ? ' · kept' : ''}</span>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
-                    <div style={{ width: '100%' }}><Bar20 value={Math.max(1, Math.round(v / 5))} height={8} label="Value" /></div>
-                    <span className="mono muted" style={{ fontSize: 11 }}>value {v}</span>
+                    <div style={{ width: '100%' }}><Bar20 value={Math.max(1, Math.round(p27 / 6))} height={8} label="Projected 2027" /></div>
+                    <span className="mono muted" style={{ fontSize: 11 }}>proj {CURRENT_SEASON + 1}: {p27}</span>
                   </div>
                 </div>
               );
