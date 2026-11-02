@@ -136,6 +136,16 @@ export function MockDraft({ players, teams, picks, myTeamId }: { players: MockPl
         {results.some((r) => r.bumped) && <span style={{ fontWeight: 400 }}> One of your earlier choices was taken before your pick after an edit; pick again.</span>}
       </div>
 
+      {onClock && (
+        <DraftAssistant key={`${asTeam}-${onClock.overall}`} asTeam={asTeam} overall={onClock.overall}
+          nextPicks={myNext.filter((p) => p.overall > onClock.overall).map((p) => p.overall)}
+          haul={myHaul.map((r) => ({ overall: r.pick.overall, name: r.player?.name ?? '', pos: r.player?.pos ?? '' }))}
+          taken={results.filter((r) => !r.mine).map((r) => ({ overall: r.pick.overall, team: team(r.pick.teamId).short, name: r.player?.name ?? '' }))}
+          pool={[...pool].sort((a, b) => effectiveBoard(b, edits) - effectiveBoard(a, edits)).slice(0, 70)}
+          board={(p) => effectiveBoard(p, edits)}
+          onDraft={(key) => { const p = pool.find((x) => x.key === key); if (p) draft(p); }} />
+      )}
+
       <div className="mock-grid">
         {/* Board */}
         <section className="card" style={{ padding: 0, overflow: 'hidden' }}>
@@ -227,4 +237,76 @@ function Chip({ k }: { k: string }) {
 function line(p: MockPlayer) {
   if (p.kind === 'Rookie') return `${p.pos} · AFL #${p.rank}${p.club ? ` · ${p.club}` : ''}`;
   return `${p.pos} · ${p.age ?? '–'} · ’26 ${p.a26 != null ? Math.round(p.a26) : '–'} (${p.g26}g)${p.from ? ` · from ${p.from}` : p.club ? ` · ${p.club}` : ''}`;
+}
+
+type Advice = { pick?: { name: string; why: string }; alternatives?: { name: string; why: string }[]; needs?: string; wait?: string; answer?: string; pickKey?: string | null; altKeys?: (string | null)[]; phase?: string };
+/** AI draft assistant: reads your club's real kept list, depth, window and the board, and suggests a pick. */
+function DraftAssistant({ asTeam, overall, nextPicks, haul, taken, pool, board, onDraft }: {
+  asTeam: number; overall: number; nextPicks: number[]; haul: { overall: number; name: string; pos: string }[]; taken: { overall: number; team: string; name: string }[];
+  pool: MockPlayer[]; board: (p: MockPlayer) => number; onDraft: (key: string) => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [adv, setAdv] = useState<Advice | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const [gate, setGate] = useState<{ error?: string } | null>(null);
+  const [code, setCode] = useState('');
+  const [question, setQuestion] = useState('');
+  const ask = async (passcode?: string) => {
+    setBusy(true); setErr(null);
+    try {
+      const r = await fetch('/api/mock-assist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+        asTeam, overall, nextPicks, haul, taken, question: question.trim() || undefined, code: passcode,
+        pool: pool.map((p) => ({ key: p.key, name: p.name, kind: p.kind, pos: p.pos, age: p.age, a26: p.a26, g26: p.g26, board: board(p), fut: p.fut, rank: p.rank, club: p.club })),
+      }) });
+      const j = await r.json();
+      if (j.needCode) { setGate({ error: passcode ? j.error ?? 'Wrong code.' : undefined }); setCode(''); }
+      else if (j.error) { setGate(null); setErr(j.error); }
+      else { setGate(null); setAdv(j); }
+    } catch { setErr('Couldn’t reach the assistant. Try again.'); }
+    setBusy(false);
+  };
+  const Option = ({ name, why, k, main }: { name: string; why: string; k?: string | null; main?: boolean }) => (
+    <div className={`mock-ai-opt${main ? ' main' : ''}`}>
+      <span style={{ minWidth: 0 }}><b>{name}</b> <span className="muted" style={{ fontSize: 13 }}>{why}</span></span>
+      {k ? <button type="button" className={`btn ${main ? 'green' : ''}`} onClick={() => onDraft(k)} style={{ minHeight: 28, padding: '0 10px', flex: 'none' }}>Draft</button> : <span className="muted" style={{ fontSize: 11 }}>gone</span>}
+    </div>
+  );
+  return (
+    <section className="card mock-ai">
+      {gate && (
+        <div className="logo-modal" role="dialog" aria-modal="true" aria-label="Enter passcode" onClick={(e) => { if (e.target === e.currentTarget) setGate(null); }}>
+          <form className="logo-modal-card" style={{ width: 280 }} onSubmit={(e) => { e.preventDefault(); ask(code); }}>
+            <b style={{ fontSize: 16 }}>Passcode</b>
+            <span className="muted" style={{ fontSize: 13 }}>Enter the code to use the assistant. You’ll only need it once on this device.</span>
+            <input className="input" autoFocus inputMode="numeric" autoComplete="off" value={code} onChange={(e) => setCode(e.target.value)} maxLength={12} aria-label="Passcode" style={{ width: '100%', textAlign: 'center', fontSize: 22, letterSpacing: '.3em' }} />
+            {gate.error && <span style={{ color: '#a3271c', fontSize: 13 }}>{gate.error}</span>}
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', width: '100%' }}>
+              <button type="button" className="btn" onClick={() => setGate(null)}>Cancel</button>
+              <button type="submit" className="btn dark" disabled={busy || !code}>{busy ? 'Checking…' : 'Unlock'}</button>
+            </div>
+          </form>
+        </div>
+      )}
+      <div className="row-between" style={{ gap: 10, flexWrap: 'wrap' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="ask-spark" style={{ width: 28, height: 28, fontSize: 13 }} aria-hidden>✦</span><b>Draft assistant</b>{adv?.phase && <span className="muted" style={{ fontSize: 12 }}>· reads your list as {adv.phase.toLowerCase()}</span>}</span>
+        <span style={{ display: 'flex', gap: 6, flex: '1 1 260px', justifyContent: 'flex-end' }}>
+          <input className="input" value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="Optional: ask something, e.g. ruck or mid here?" maxLength={300} style={{ flex: 1, minHeight: 32, fontSize: 13 }} aria-label="Question for the assistant"
+            onKeyDown={(e) => { if (e.key === 'Enter' && !busy) ask(); }} />
+          <button type="button" className="btn dark" disabled={busy} onClick={() => ask()}>{busy ? 'Thinking…' : adv ? 'Ask again' : `Who at #${overall}?`}</button>
+        </span>
+      </div>
+      {err && <p style={{ margin: 0, color: '#a3271c', fontSize: 14 }}>{err}</p>}
+      {!adv && !err && <p className="muted" style={{ margin: 0, fontSize: 13 }}>Looks at your kept list (ages, 2027 projections, depth on each line), your premiership window, your next picks and who’s left, then suggests a pick and two alternatives.</p>}
+      {adv && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {adv.answer && <p style={{ margin: 0, fontSize: 14 }}>{adv.answer}</p>}
+          {adv.pick && <Option name={adv.pick.name} why={adv.pick.why} k={adv.pickKey} main />}
+          {(adv.alternatives ?? []).map((x, i) => <Option key={i} name={x.name} why={x.why} k={adv.altKeys?.[i]} />)}
+          {adv.needs && <span style={{ fontSize: 13 }}><b>Needs:</b> {adv.needs}</span>}
+          {adv.wait && <span style={{ fontSize: 13 }}><b>Can wait:</b> {adv.wait}</span>}
+          <span className="muted" style={{ fontSize: 11 }}>AI suggestion from the site’s numbers. A second opinion, not gospel.</span>
+        </div>
+      )}
+    </section>
+  );
 }

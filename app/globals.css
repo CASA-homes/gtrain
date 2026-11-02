@@ -963,3 +963,8 @@ body:has(.rh) { background: #000; }
 .mx-histbar { display: block; height: 6px; border-radius: 3px; background: var(--rh-3, #1c201e); overflow: hidden; }
 .mx-histbar i { display: block; height: 100%; background: var(--rh-up, #00c805); border-radius: 3px; }
 @media (max-width: 480px) { .mx-sh-now { grid-template-columns: repeat(2, minmax(0, 1fr)); } .mx-sheet { padding: 14px; } }
+
+/* Mock draft assistant */
+.mock-ai { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #d9e6d2; background: linear-gradient(180deg, #f6faf3, #fff); }
+.mock-ai-opt { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; background: #fff; border: 1px solid var(--line); font-size: 14px; }
+.mock-ai-opt.main { border-color: #1f6b3a; box-shadow: inset 3px 0 0 #1f6b3a; }
