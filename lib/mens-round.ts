@@ -11,6 +11,24 @@ export interface MStats { k: number; h: number; m: number; t: number; g: number;
 export interface MPlayer {
   id: number; name: string; club: string; line: 'DEF' | 'MID' | 'RUC' | 'FWD' | 'BENCH'; cap: 'C' | 'VC' | null; photo: string | null;
   proj: number; final: number; path: number[]; injAt: number | null; tog: number; st: MStats;
+  prof: MProfile;
+}
+/** Condensed profile for the pop-up: 2026 game-by-game scores, season stat line, career by season. */
+export interface MProfile {
+  pos: string[]; age: number | null; avg: number | null; games: number | null;
+  log: [number, number, number | null][];               // [round, score, TOG %] for 2026
+  box: { k?: number; h?: number; m?: number; t?: number; g?: number; b?: number; ho?: number; tog?: number; cba?: number; de?: number; cp?: number; cl?: number } | null;
+  hist: [number, number, number][];                     // [season, games, average], newest first
+}
+const ageOf = (d: string | null) => { if (!d) return null; const b = new Date(d), n = new Date(2027, 2, 17); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
+function profileOf(p: PlayerRow): MProfile {
+  const b = p.box;
+  return {
+    pos: p.positions, age: ageOf(p.birth_date), avg: p.average, games: p.games,
+    log: (p.games_log ?? []).filter((g) => g[0] != null && g[1] != null).map((g) => [g[0]!, g[1]!, g[2]] as [number, number, number | null]),
+    box: b ? { k: b.k, h: b.h, m: b.m, t: b.t, g: b.g, b: b.b, ho: b.ho, tog: b.tog, cba: b.cba, de: b.de, cp: b.cp, cl: b.cl } : null,
+    hist: [...(p.hist ?? [])].sort((x, y) => y[0] - x[0]).slice(0, 6),
+  };
 }
 export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; players: MPlayer[] }
 export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][] }
@@ -60,7 +78,7 @@ function simPlayer(p: PlayerRow, line: MPlayer['line'], cap: MPlayer['cap'], pro
   while (rest < 0 && (m > 0 || t > 0)) { if (m > 0) { m--; rest += 3; } else { t--; rest += 4; } }
   const k = Math.max(0, Math.round((Math.max(0, rest) * (0.55 + r() * 0.15)) / 3));
   const h = Math.max(0, Math.round((Math.max(0, rest) - 3 * k) / 2));
-  return { id: p.id, name: p.full_name ?? p.name, club: p.afl_club ?? '', line, cap, photo: photoUrl(p), proj: Math.round(proj), final, path: norm, injAt, tog, st: { k, h, m, t, g, b, ho } };
+  return { id: p.id, name: p.full_name ?? p.name, club: p.afl_club ?? '', line, cap, photo: photoUrl(p), proj: Math.round(proj), final, path: norm, injAt, tog, st: { k, h, m, t, g, b, ho }, prof: profileOf(p) };
 }
 
 export function buildMensRound(league: League): MRound {

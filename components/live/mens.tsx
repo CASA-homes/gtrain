@@ -153,7 +153,7 @@ function tip(l: Live) {
   return l.ph.label;
 }
 
-function PlayerRow({ p, l, side }: { p: MPlayer; l: Live; side: 'a' | 'b' }) {
+function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b'; onOpen: () => void }) {
   const pre = l.ph.state === 'pre', live = l.ph.state === 'live';
   const pace = l.play > 0 ? l.score - Math.round(p.proj * l.play) : 0;
   const togCol = l.injured ? '#ff5000' : p.tog >= 80 ? '#00c805' : p.tog >= 70 ? '#d9c24f' : '#ff9a3c';
@@ -162,7 +162,7 @@ function PlayerRow({ p, l, side }: { p: MPlayer; l: Live; side: 'a' | 'b' }) {
       <MFace p={p} />
       <div className="mx-who">
         <span className="mx-name">
-          <span className="rh-ellip">{p.name}</span>
+          <button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>
           {p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}
           {l.injured && <span className="mx-inj">INJ</span>}
         </span>
@@ -183,7 +183,7 @@ function PlayerRow({ p, l, side }: { p: MPlayer; l: Live; side: 'a' | 'b' }) {
   );
 }
 
-function TeamCol({ t, side, gameByClub, now }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number }) {
+function TeamCol({ t, side, gameByClub, now, onOpen }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void }) {
   return (
     <div className="mx-col">
       {LINE_ORDER.map((ln) => {
@@ -192,7 +192,7 @@ function TeamCol({ t, side, gameByClub, now }: { t: MTeam; side: 'a' | 'b'; game
         return (
           <div key={ln} className="mx-line">
             <span className="rh-k">{LINE_NAME[ln]}{ln === 'BENCH' ? ' · emergencies' : ''}</span>
-            {ps.map((p) => <PlayerRow key={p.id} p={p} l={liveOf(p, gameByClub, now)} side={side} />)}
+            {ps.map((p) => <PlayerRow key={p.id} p={p} l={liveOf(p, gameByClub, now)} side={side} onOpen={() => onOpen({ p, team: t })} />)}
           </div>
         );
       })}
@@ -216,6 +216,84 @@ function MiniWorm({ a, b, gameByClub, tl, now }: { a: MTeam; b: MTeam; gameByClu
   );
 }
 
+
+/* ---------------- player pop-up ---------------- */
+export type ProfileOpen = { p: MPlayer; team: MTeam } | null;
+export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileOpen; onClose: () => void; gameByClub: Map<string, MGame>; now: number }) {
+  const [pick, setPick] = useState<number | null>(null);
+  useEffect(() => { setPick(null); }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k);
+  }, [open, onClose]);
+  if (!open) return null;
+  const { p, team } = open, pr = p.prof, l = liveOf(p, gameByClub, now);
+  const log = pr.log;
+  const scores = log.map((g) => g[1]);
+  const hi = scores.length ? Math.max(...scores) : null, lo = scores.length ? Math.min(...scores) : null;
+  const l5 = scores.slice(-5), l5avg = l5.length ? Math.round(l5.reduce((a, b) => a + b, 0) / l5.length) : null;
+  const tons = scores.filter((x) => x >= 100).length;
+  const maxBar = Math.max(130, ...scores, p.proj);
+  const b = pr.box;
+  const statLine: [string, string][] = b ? [['K', b.k], ['HB', b.h], ['D', (b.k ?? 0) + (b.h ?? 0)], ['M', b.m], ['T', b.t], ['G', b.g], ['B', b.b], ...(b.ho ? [['HO', b.ho]] : []), ['CP', b.cp], ['CL', b.cl], ['DE%', b.de], ['TOG%', b.tog], ['CBA%', b.cba]].filter(([, v]) => v != null).map(([k, v]) => [k as string, typeof v === 'number' ? (Number.isInteger(v) ? String(v) : v.toFixed(1)) : String(v)]) as [string, string][] : [];
+  const pre = l.ph.state === 'pre';
+  return (
+    <div className="rh-sheet-back" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="mx-sheet" role="dialog" aria-modal="true" aria-label={`${p.name} profile`}>
+        <div className="mx-sh-head">
+          <MFace p={p} size={58} />
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <span className="rh-k">{team.name}{p.cap ? ` · ${p.cap === 'C' ? 'Captain' : 'Vice-captain'}` : ''}{p.line === 'BENCH' ? ' · Emergency' : ''}</span>
+            <h3 className="mx-sh-name">{p.name}</h3>
+            <span className="rh-dim" style={{ fontSize: 13 }}>{CLUBS[p.club]?.name ?? p.club} · {pr.pos.join('/')}{pr.age != null ? ` · ${pr.age} yo` : ''}</span>
+          </div>
+          <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+
+        <div className="mx-sh-now">
+          <div><span className="rh-k">Round 1</span><b className="rh-mono">{pre ? '–' : l.score}</b><span className="rh-dim">{pre ? `plays ${new Date(l.game!.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}` : l.ph.label}</span></div>
+          <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">vs projection</span></div>
+          <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{pre ? 'not played yet' : `on track for ${l.proj}`}</span></div>
+          {!pre && <div className="mx-sh-line rh-mono">{l.st.k}K {l.st.h}HB {l.st.k + l.st.h}D {l.st.m}M {l.st.t}T {l.st.g}.{l.st.b}{l.st.ho ? ` ${l.st.ho}HO` : ''} · TOG {p.tog}%{l.injured ? ' · injured' : ''}</div>}
+        </div>
+
+        <div className="mx-sh-sec">
+          <div className="mx-sh-row"><span className="rh-k">2026 scores · {pr.games ?? scores.length} games</span><span className="rh-dim rh-mono" style={{ fontSize: 12 }}>avg {pr.avg?.toFixed(1) ?? '–'} · L5 {l5avg ?? '–'} · high {hi ?? '–'} · low {lo ?? '–'} · {tons} tons</span></div>
+          {log.length ? (
+            <div className="mx-bars" aria-label="2026 scores by round">
+              <i className="mx-projline" style={{ bottom: `${(p.proj / maxBar) * 100}%` }} title={`2027 projection ${p.proj}`} />
+              {log.map(([r, sc, tog]) => (
+                <button key={r} className={`mx-bar ${pick === r ? 'on' : ''}`} onClick={() => setPick(pick === r ? null : r)} aria-label={`Round ${r}: ${sc}${tog != null ? `, ${tog}% time on ground` : ''}`}>
+                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#00c805' : sc >= p.proj ? '#7ddc5a' : sc >= p.proj * 0.75 ? '#d9c24f' : '#ff9a3c' }} />
+                  <em>{r}</em>
+                </button>
+              ))}
+            </div>
+          ) : <span className="rh-dim" style={{ fontSize: 13 }}>No 2026 games on record.</span>}
+          {log.length > 0 && (() => { const g = log.find((x) => x[0] === pick); return <span className="rh-dim" style={{ fontSize: 12 }}>{g ? <><b style={{ color: 'var(--rh-text)' }}>Round {g[0]}: {g[1]}</b>{g[2] != null ? ` · ${g[2]}% TOG` : ''}</> : <>Dashed line: his 2027 projection ({p.proj}). Tap a bar for that round.</>}</span>; })()}
+        </div>
+
+        {statLine.length > 0 && (
+          <div className="mx-sh-sec"><span className="rh-k">2026 averages</span>
+            <div className="mx-statline">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
+          </div>
+        )}
+
+        {pr.hist.length > 0 && (
+          <div className="mx-sh-sec"><span className="rh-k">Career</span>
+            <table className="mx-hist"><thead><tr><th>Season</th><th>Games</th><th>Avg</th><th /></tr></thead>
+              <tbody>{pr.hist.map(([y, g, a]) => <tr key={y}><td>{y}</td><td className="rh-mono">{g}</td><td className="rh-mono">{a.toFixed(1)}</td><td><span className="mx-histbar"><i style={{ width: `${Math.min(100, a / 1.3)}%` }} /></span></td></tr>)}</tbody>
+            </table>
+          </div>
+        )}
+
+        <a href={`/players/${p.id}`} className="rh-btn go lg" style={{ alignSelf: 'stretch' }}>Open full profile →</a>
+      </div>
+    </div>
+  );
+}
+
 /* ---------------- page ---------------- */
 export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number }) {
   const gameByClub = useMemo(() => { const m = new Map<string, MGame>(); for (const g of round.games) { m.set(g.home, g); m.set(g.away, g); } return m; }, [round.games]);
@@ -225,6 +303,7 @@ export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number
   const [playing, setPlaying] = useState(false);
   const mineIdx = round.matchups.findIndex((m) => m.includes(myTeamId));
   const [sel, setSel] = useState(mineIdx >= 0 ? mineIdx : 0);
+  const [prof, setProf] = useState<ProfileOpen>(null);
   const team = (id: number) => round.teams.find((t) => t.id === id)!;
 
   useEffect(() => {
@@ -316,10 +395,11 @@ export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number
       </section>
 
       <div className="mx-teams">
-        <div><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} /></div>
-        <div><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} /></div>
+        <div><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
+        <div><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
       </div>
       <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>
+      <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />
     </Shell>
   );
 }

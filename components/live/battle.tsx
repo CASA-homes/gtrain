@@ -8,7 +8,7 @@ import { DEFAULT_SETTINGS, FORMATIONS, customResults, matchesInPlay, type GamePi
 import type { MGame, MRound } from '@/lib/mens-round';
 import { loadRoles, saveRoles } from '@/app/(app)/live/actions';
 import { cancelChallenge, decideRequest, grantTokens, loadDesk, markAssetsDone, offerChallenge, requestTokens, respondChallenge, settleChallenge, type Challenge, type Desk, type Stake } from '@/app/(app)/live/battle-actions';
-import { A_COL, B_COL, MFace, Worm, liveOf, teamAt, useTimeline } from './mens';
+import { A_COL, B_COL, MFace, PlayerSheet, Worm, liveOf, teamAt, useTimeline, type ProfileOpen } from './mens';
 import { Face, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
 const SLOTS4: Slot[] = ['DEF', 'MID', 'RUC', 'FWD'];
@@ -172,6 +172,7 @@ export function CustomMatchup({ game, picks, data, byId, gameBySquad, teamName, 
 
 /* ---------------- keeper matchup panel (left) ---------------- */
 function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
+  const [prof, setProf] = useState<ProfileOpen>(null);
   const gameByClub = useMemo(() => { const m = new Map<string, MGame>(); for (const g of mens.games) { m.set(g.home, g); m.set(g.away, g); } return m; }, [mens.games]);
   const tl = useTimeline(mens.games);
   const now = Date.parse(mens.now);
@@ -205,7 +206,7 @@ function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
             <div key={t.id} className="bd-ki">
               <span className="rh-k" style={{ color: i ? B_COL : A_COL }}>{t.short || t.name} · {toPlay(t)} still to play</span>
               {top(t).map(({ p, l }) => (
-                <div key={p.id} className="bd-kirow"><MFace p={p} size={24} /><span className="rh-ellip">{p.name}</span>{p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}<b className="rh-mono">{l.score}</b></div>
+                <div key={p.id} className="bd-kirow"><MFace p={p} size={24} /><button className="mx-pname rh-ellip" onClick={() => setProf({ p, team: t })}>{p.name}</button>{p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}<b className="rh-mono">{l.score}</b></div>
               ))}
               {c && <span className="rh-dim" style={{ fontSize: 12 }}>Captain {c.c.name}: {c.l.ph.state === 'pre' ? `plays ${when(c.l.game!.start)}` : `${c.l.score}${c.l.ph.state === 'live' ? ` · ${c.l.ph.label}` : ''}`}</span>}
             </div>
@@ -213,6 +214,7 @@ function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
         })}
       </div>
       <Link href="/live/mens" className="rh-btn alt" style={{ alignSelf: 'flex-start' }}>Open the full matchup →</Link>
+      <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />
     </section>
   );
 }
