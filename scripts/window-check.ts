@@ -24,6 +24,9 @@ const players: any[] = rows.map((r: any, i: number) => {
     birth_date: r.dob, draft_pick: null, draft_year: r.draft_year, full_name: r.full, dfs_id: r.dfs_id, height_cm: r.height, debut_year: r.debut,
     career_games: r.career_games, box: r.box, hist: r.hist, games_log: r.games26, photo_path: null, list_status: null, lineup: null };
 });
+// Mark the 2027 keepers (as the live site does once keepers are set).
+const KEEP = JSON.parse(fs.readFileSync('data/keepers-2027.json', 'utf8')).teams;
+for (const p of players) { const t = KEEP[names[p.team_id - 1]]; if (!t) continue; if (t.keep.includes(p.full_name)) p.is_keeper = true; if (t.rookie === p.full_name) p.is_rookie_keeper = true; }
 const ratings = buildRatings(players);
 const picks = JSON.parse(fs.readFileSync('data/picks-2027-2028.json', 'utf8')).picks.filter((p: any) => p.year === 2027).map((p: any) => ({ overall: p.overall, owner_team_id: tid(p.owner) }));
 const ids = names.map((_, i) => i + 1);
@@ -43,7 +46,7 @@ for (const n of names) {
   const core = players.filter((p) => p.team_id === id).sort((a, b) => projected2027(b) - projected2027(a)).slice(0, 10);
   const ca = core.reduce((s, p) => s + (age(p.birth_date) ?? 26), 0) / core.length;
   const w = windowFor({ teamId: id, teamName: n, teamIds: ids, premierYears: prem(n), rank2026: lad[n], rank2027: sim.get(id)!.rank, strength, coreAge: coreAge(id, players), futureRank: futRank(id) });
-  console.log(n.padEnd(22), 'core', ca.toFixed(1), 'fut', futRank(id), '|', w.map((p) => `${String(p.year).slice(2)}:${p.rank}${p.phase.split(' ')[0].slice(0, 5)}`).join(' '));
+  console.log(n.padEnd(22), 'core', coreAge(id, players).toFixed(1), 'fut', futRank(id), '|', w.map((p) => `${String(p.year).slice(2)}:${p.rank}${p.phase.split(' ')[0].slice(0, 5)}`).join(' '));
 }
 if (process.argv[2] === 'raw') {
 

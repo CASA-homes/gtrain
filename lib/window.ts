@@ -53,14 +53,18 @@ export function strengthByYear(teamIds: number[], players: PlayerRow[], ratings:
   return out;
 }
 
-/** Average age (now) of a team's six best scorers among its keepers: the stars whose age sets when a window closes. */
+/**
+ * Core age: the scoring-weighted average age (now) of the whole kept list, not just its top few stars.
+ * Every keeper counts, weighted by how much he scores above a replacement-level player in 2027, so a 21-year-old
+ * averaging 90 pulls the age down as much as a 32-year-old averaging 90 pushes it up.
+ */
 export function coreAge(teamId: number, players: PlayerRow[]): number {
   const mine = players.filter((p) => p.team_id === teamId);
   const kept = mine.filter((p) => p.is_keeper || p.is_rookie_keeper);
-  // The stars are who's actually scoring now (2026 average), from the keepers once they're set.
-  const core = (kept.length ? kept : mine).sort((a, b) => (b.average ?? 0) - (a.average ?? 0)).slice(0, 6);
-  const ages = core.map((p) => age(p.birth_date)).filter((x): x is number => x != null);
-  return ages.length ? ages.reduce((s2, x) => s2 + x, 0) / ages.length : 26;
+  const list = (kept.length ? kept : mine).map((p) => ({ a: age(p.birth_date), w: Math.max(0, projected2027(p) - 60) }))
+    .filter((x): x is { a: number; w: number } => x.a != null).sort((x, y) => y.w - x.w).slice(0, 18);
+  const tw = list.reduce((s2, x) => s2 + x.w, 0);
+  return tw ? list.reduce((s2, x) => s2 + x.a * x.w, 0) / tw : 26;
 }
 
 /**
@@ -76,7 +80,7 @@ export function coreAge(teamId: number, players: PlayerRow[]): number {
 export function phasesFor(ranks: number[], flags: boolean[], ages: number[]): Phase[] {
   const r = (i: number) => ranks[Math.max(0, Math.min(ranks.length - 1, i))];
   const s = ranks.map((_, i) => 0.25 * r(i - 1) + 0.5 * r(i) + 0.25 * r(i + 1));
-  const YOUNG = 22.5, OLD = 28.5, VERY_OLD = 31;
+  const YOUNG = 22.5, OLD = 27.5, VERY_OLD = 30;   // on the scoring-weighted whole-list age (younger than a top-six average)
   const out: Phase[] = [];
   let state: Phase = s[0] <= 4.5 ? 'Prime window' : s[0] >= 8 ? 'Rebuild' : 'Mid table';
   let run = 0;
