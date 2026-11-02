@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CAP_BUDGETS, GAME_KINDS, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, picksPerTeam, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/aflw';
 import { createGame } from '@/app/(app)/live/actions';
+import { DEFAULT_SETTINGS, type GameSettings } from '@/lib/aflw';
+import { GameSetup } from './battle';
 import { Empty, HeadToHead, LiveChip, Shell, gameLabel, isLive, totals, useRound, type TeamRow } from './kit';
 
 type Game = GameRow & { picks: GamePick[] };
@@ -120,12 +122,15 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
   const [budget, setBudget] = useState(350);
   const [matchId, setMatchId] = useState<number | null>(null);
   const [prize, setPrize] = useState<Prize>({ on: false, entry: 10, split: 'wta', extras: [] });
+  const [settings, setSettings] = useState<GameSettings>({ ...DEFAULT_SETTINGS });
   const [pending, start] = useTransition();
   const [err, setErr] = useState<string | null>(null);
   const k = GAME_KINDS.find((x) => x.kind === kind)!;
-  const duel = kind === 'duel5', maxClubs = duel ? 2 : 10;
+  const custom = kind === 'custom';
+  const duel = kind === 'duel5' || (custom && settings.mode === 'duels'), maxClubs = duel ? 2 : 10;
   const toggle = (id: number) => setSel((s) => s.includes(id) ? s.filter((x) => x !== id) : s.length >= maxClubs ? (duel ? [s[s.length - 1], id] : s) : [...s, id]);
-  const pickKind = (v: string) => { setKind(v); if (v === 'duel5') { setSel((s) => s.slice(0, 2)); if (round !== current) setRound(current); } };
+  const pickKind = (v: string) => { setKind(v); if (v === 'duel5' || v === 'custom') { if (v === 'duel5') setSel((s) => s.slice(0, 2)); if (round !== current) setRound(current); } };
+  const setCustom = (n: GameSettings) => { setSettings(n); if (n.mode === 'duels') setSel((s) => s.slice(0, 2)); };
   return (
     <Shell title="New game" sub="Pick a format, the clubs, and go">
       <div className="rh-newgrid">
@@ -138,7 +143,7 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
         </label>
         <div className="rh-form-2">
           <label className="rh-field"><span className="rh-k">Round</span>
-            <select className="rh-select" value={round} onChange={(e) => setRound(Number(e.target.value))} disabled={duel}>
+            <select className="rh-select" value={round} onChange={(e) => setRound(Number(e.target.value))} disabled={duel || custom}>
               {rounds.map((r) => <option key={r.n} value={r.n}>{r.name}{r.status === 'completed' ? ' · finished (practice)' : r.status === 'scheduled' ? '' : ' · live'}</option>)}
             </select>
           </label>
@@ -161,7 +166,8 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
             </label>
           </div>
         )}
-        {duel && (
+        {custom && <GameSetup s={settings} set={setCustom} games={games} />}
+        {kind === 'duel5' && (
           <label className="rh-field"><span className="rh-k">Match</span>
             <select className="rh-select" value={matchId ?? ''} onChange={(e) => setMatchId(e.target.value ? Number(e.target.value) : null)}>
               <option value="">Pick a match…</option>
@@ -183,11 +189,11 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
           </div>
         </div>
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-          <button className="rh-btn go lg" disabled={pending || sel.length < 2 || !k.ready || (duel && (sel.length !== 2 || !matchId))}
-            onClick={() => start(async () => { const r = await createGame(duel ? current : round, kind, name, sel, { budget, matchId: round === current || duel ? matchId : null, prize }); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
+          <button className="rh-btn go lg" disabled={pending || sel.length < 2 || !k.ready || (kind === 'duel5' && (sel.length !== 2 || !matchId)) || (custom && (settings.per < 1 || (settings.mode === 'duels' && sel.length !== 2)))}
+            onClick={() => start(async () => { const r = await createGame(duel || custom ? current : round, kind, name, sel, { budget, matchId: round === current || kind === 'duel5' ? matchId : null, prize, settings: custom ? settings : null }); if (r.ok && r.id) router.push(`/live/g/${r.id}`); else setErr(r.error ?? 'Couldn’t create the game.'); })}>
             {kind === 'cap5' ? 'Create game' : duel ? <>Randomise order &amp; start duel</> : <>Randomise order &amp; start draft</>}
           </button>
-          <span className="rh-dim">{kind === 'cap5' ? `Everyone picks 5 under $${budget}k` : duel ? '10 picks · 5 each, 2+ from each side' : `${sel.length * picksPerTeam(kind)} picks · order drawn at random`}</span>
+          <span className="rh-dim">{kind === 'cap5' ? `Everyone picks 5 under $${budget}k` : kind === 'duel5' ? '10 picks · 5 each, 2+ from each side' : `${sel.length * picksPerTeam(kind, custom ? settings : null)} picks · order drawn at random`}</span>
           {err && <span className="rh-down">{err}</span>}
         </div>
       </section>

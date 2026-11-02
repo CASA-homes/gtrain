@@ -7,14 +7,14 @@ import { GAME_MINUTES, type MGame, type MPlayer, type MRound, type MTeam } from 
 import { Shell } from './kit';
 
 const PERTH = 'Australia/Perth';
-const A_COL = '#4cc9f0', B_COL = '#f5a524';
+export const A_COL = '#4cc9f0', B_COL = '#f5a524';
 const LINE_ORDER: MPlayer['line'][] = ['DEF', 'MID', 'RUC', 'FWD', 'BENCH'];
 const LINE_NAME: Record<MPlayer['line'], string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', BENCH: 'Bench' };
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 const signed = (x: number) => (x > 0 ? `+${x}` : `${x}`);
 
 /** Where a game is at, given minutes since the first bounce: label and fraction of playing time done. */
-function phase(min: number): { state: 'pre' | 'live' | 'final'; label: string; play: number } {
+export function phase(min: number): { state: 'pre' | 'live' | 'final'; label: string; play: number } {
   if (min < 0) return { state: 'pre', label: '', play: 0 };
   if (min >= GAME_MINUTES) return { state: 'final', label: 'Final', play: 1 };
   const seg: [number, number, string, number, number][] = [[0, 32, 'Q1', 0, 0.25], [32, 38, 'QT', 0.25, 0.25], [38, 70, 'Q2', 0.25, 0.5], [70, 90, 'HT', 0.5, 0.5], [90, 122, 'Q3', 0.5, 0.75], [122, 128, '3QT', 0.75, 0.75], [128, GAME_MINUTES, 'Q4', 0.75, 1]];
@@ -28,8 +28,8 @@ const interp = (path: number[], play: number) => { const x = play * 16, i = Math
 const erf = (x: number) => { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; };
 const phi = (z: number) => 0.5 * (1 + erf(z / Math.SQRT2));
 
-type Live = { score: number; play: number; ph: ReturnType<typeof phase>; rating: number | null; proj: number; injured: boolean; st: MPlayer['st']; game: MGame | undefined };
-function liveOf(p: MPlayer, gameByClub: Map<string, MGame>, now: number): Live {
+export type Live = { score: number; play: number; ph: ReturnType<typeof phase>; rating: number | null; proj: number; injured: boolean; st: MPlayer['st']; game: MGame | undefined };
+export function liveOf(p: MPlayer, gameByClub: Map<string, MGame>, now: number): Live {
   const game = gameByClub.get(p.club);
   const ph = game ? phase((now - Date.parse(game.start)) / 60e3) : { state: 'pre' as const, label: '', play: 0 };
   const frac = ph.play > 0 ? interp(p.path, ph.play) : 0;
@@ -42,7 +42,7 @@ function liveOf(p: MPlayer, gameByClub: Map<string, MGame>, now: number): Live {
   const st = Object.fromEntries(Object.entries(p.st).map(([k, v]) => [k, Math.round(v * f)])) as unknown as MPlayer['st'];
   return { score, play: ph.play, ph, rating, proj: Math.round(score + remain), injured, st, game };
 }
-function teamAt(t: MTeam, gameByClub: Map<string, MGame>, now: number) {
+export function teamAt(t: MTeam, gameByClub: Map<string, MGame>, now: number) {
   let score = 0, proj = 0, varr = 0;
   for (const p of t.players) {
     if (p.line === 'BENCH') continue;
@@ -55,7 +55,7 @@ function teamAt(t: MTeam, gameByClub: Map<string, MGame>, now: number) {
 }
 
 /* ---------------- worm ---------------- */
-function useTimeline(games: MGame[]) {
+export function useTimeline(games: MGame[]) {
   return useMemo(() => {
     const iv = games.map((g) => [Date.parse(g.start), Date.parse(g.start) + GAME_MINUTES * 60e3] as [number, number]).sort((a, b) => a[0] - b[0]);
     const merged: [number, number][] = [];
@@ -68,7 +68,7 @@ function useTimeline(games: MGame[]) {
   }, [games]);
 }
 
-function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam; round: MRound; now: number; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline> }) {
+export function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam; round: MRound; now: number; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline> }) {
   // Drawn at the container's real width so labels stay readable on a phone.
   const box = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(760);
@@ -136,7 +136,7 @@ function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam; round:
 }
 
 /* ---------------- bits ---------------- */
-function MFace({ p, size = 34 }: { p: MPlayer; size?: number }) {
+export function MFace({ p, size = 34 }: { p: MPlayer; size?: number }) {
   const [bad, setBad] = useState(false);
   const c = CLUBS[p.club];
   const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#2a302d';
@@ -146,7 +146,7 @@ function MFace({ p, size = 34 }: { p: MPlayer; size?: number }) {
     </span>
   );
 }
-const rtCol = (r: number) => (r >= 8.5 ? '#00c805' : r >= 7.5 ? '#7ddc5a' : r >= 6.5 ? '#d9c24f' : r >= 5.5 ? '#ff9a3c' : '#ff5000');
+export const rtCol = (r: number) => (r >= 8.5 ? '#00c805' : r >= 7.5 ? '#7ddc5a' : r >= 6.5 ? '#d9c24f' : r >= 5.5 ? '#ff9a3c' : '#ff5000');
 function tip(l: Live) {
   if (!l.game) return 'No game';
   if (l.ph.state === 'pre') return new Date(l.game.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });

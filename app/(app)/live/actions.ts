@@ -1,18 +1,19 @@
 'use server';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CAP_BUDGETS, CAP_PICKS, COMP, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/aflw';
+import { CAP_BUDGETS, CAP_PICKS, COMP, cleanSettings, customFits, type GameSettings, type Roles, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/aflw';
 
 type Res = { ok: boolean; error?: string; id?: number };
-type RawGame = { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; draft_order: number[]; created_by: string; created_at: string; finished_at: string | null; budget?: number | null; match_id?: number | null; prize?: Prize | null };
+type RawGame = { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; draft_order: number[]; created_by: string; created_at: string; finished_at: string | null; budget?: number | null; match_id?: number | null; prize?: Prize | null; settings?: GameSettings | null };
 const toGame = (r: RawGame): GameRow =>
-  ({ id: r.id, round: r.round, kind: r.kind, name: r.name, status: r.status, order: r.draft_order, created_by: r.created_by, created_at: r.created_at, finished_at: r.finished_at, budget: r.budget ?? null, match_id: r.match_id ?? null, prize: r.prize ?? null });
+  ({ id: r.id, round: r.round, kind: r.kind, name: r.name, status: r.status, order: r.draft_order, created_by: r.created_by, created_at: r.created_at, finished_at: r.finished_at, budget: r.budget ?? null, match_id: r.match_id ?? null, prize: r.prize ?? null, settings: r.settings ?? null });
 const COLS_OLD = 'id, round, kind, name, status, draft_order, created_by, created_at, finished_at';
 const COLS_CAP = COLS_OLD + ', budget, match_id';
 const COLS = COLS_CAP + ', prize';
+const COLS_SET = COLS + ', settings';
 /** Select games with the newest columns that exist (prize 0012, salary cap 0011), falling back gracefully. */
 async function selectGames(q: (cols: string) => PromiseLike<{ data: unknown; error: unknown }>) {
-  for (const c of [COLS, COLS_CAP]) { const r = await q(c); if (!r.error) return r; }
+  for (const c of [COLS_SET, COLS, COLS_CAP]) { const r = await q(c); if (!r.error) return r; }
   return q(COLS_OLD);
 }
 function cleanPrize(p?: Prize | null): Prize | null {
@@ -43,10 +44,17 @@ export async function loadGame(id: number): Promise<{ game: GameRow | null; pick
 }
 
 /** Start a new game: these clubs, in a random draft order. */
-export async function createGame(round: number, kind: string, name: string, teamIds: number[], opts: { budget?: number; matchId?: number | null; prize?: Prize | null } = {}): Promise<Res> {
+export async function createGame(round: number, kind: string, name: string, teamIds: number[], opts: { budget?: number; matchId?: number | null; prize?: Prize | null; settings?: Partial<GameSettings> | null } = {}): Promise<Res> {
   const me = await getMe();
   if (!me) return { ok: false, error: 'Sign in first.' };
-  if (kind !== 'snake11' && kind !== 'cap5' && kind !== 'duel5') return { ok: false, error: 'That game type isn’t built yet.' };
+  if (kind !== 'snake11' && kind !== 'cap5' && kind !== 'duel5' && kind !== 'custom') return { ok: false, error: 'That game type isn’t built yet.' };
+  let settings: GameSettings | null = null;
+  if (kind === 'custom') {
+    const data = await liveRound(round);
+    settings = cleanSettings(opts.settings, data.games.map((g) => g.id));
+    if (settings.mode === 'duels' && new Set(teamIds).size !== 2) return { ok: false, error: 'Player duels are 2 clubs.' };
+    if (settings.mode === 'total' && settings.per < 1) return { ok: false, error: 'Pick at least one position.' };
+  }
   if (kind === 'duel5' && new Set(teamIds).size !== 2) return { ok: false, error: 'A duel is exactly 2 clubs.' };
   if (kind === 'duel5' && !opts.matchId) return { ok: false, error: 'Pick the match for the duel.' };
   const ids = [...new Set(teamIds.map(Number))].filter((x) => Number.isInteger(x) && x > 0);
@@ -54,7 +62,8 @@ export async function createGame(round: number, kind: string, name: string, team
   const order = [...ids];
   for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
   const supabase = await createClient();
-  const row: Record<string, unknown> = { comp: COMP, round, kind, name: name.trim().slice(0, 60) || (kind === 'cap5' ? `Round ${round} salary cap` : kind === 'duel5' ? `Round ${round} duel` : `Round ${round} draft`), draft_order: order };
+  const row: Record<string, unknown> = { comp: COMP, round, kind, name: name.trim().slice(0, 60) || (kind === 'cap5' ? `Round ${round} salary cap` : kind === 'duel5' ? `Round ${round} duel` : kind === 'custom' ? `Round ${round} ${settings?.mode === 'duels' ? 'player duels' : 'custom game'}` : `Round ${round} draft`), draft_order: order };
+  if (settings) row.settings = settings;
   if (kind === 'duel5') row.match_id = Number(opts.matchId);
   if (kind === 'cap5') { row.budget = CAP_BUDGETS.includes(Number(opts.budget)) ? Number(opts.budget) : 350; row.match_id = opts.matchId ? Number(opts.matchId) : null; }
   const prize = cleanPrize(opts.prize);
@@ -63,6 +72,7 @@ export async function createGame(round: number, kind: string, name: string, team
   if (res.error && prize && /prize/i.test(res.error.message)) return { ok: false, error: 'Prizes need supabase/migrations/0012_game_prizes.sql run first.' };
   if (res.error && kind === 'cap5' && /column|check/i.test(res.error.message)) return { ok: false, error: 'Salary cap needs supabase/migrations/0011_salary_cap.sql run first.' };
   if (res.error && kind === 'duel5' && /check/i.test(res.error.message)) return { ok: false, error: 'Duels need supabase/migrations/0017_duel.sql run first.' };
+  if (res.error && kind === 'custom' && /check|settings|column/i.test(res.error.message)) return { ok: false, error: 'Custom games need supabase/migrations/0018_battle_desk.sql run first.' };
   return res.error ? { ok: false, error: res.error.message } : { ok: true, id: res.data.id };
 }
 
@@ -83,7 +93,12 @@ export async function makePick(gameId: number, playerId: number): Promise<Res> {
   const pl = data.players.find((p) => p.id === playerId);
   if (!pl) return { ok: false, error: 'That player isn’t playing this round.' };
   let slot: Slot | null;
-  if (game.kind === 'duel5') {
+  if (game.kind === 'custom' && game.settings) {
+    const squadOf = new Map(data.players.map((p) => [p.id, p.squadId]));
+    const mine = picks.filter((p) => p.team_id === team);
+    if (!customFits(pl, mine, game.settings, data.games, (id) => squadOf.get(id) ?? 0)) return { ok: false, error: game.settings.mode === 'duels' ? 'You already have a player from that match, or it isn’t in this game.' : `No ${pl.pos.join('/')} spot left, or that match isn’t in this game.` };
+    slot = game.settings.mode === 'total' ? slotFor(pl.pos, mine, game.settings.formation) : ((['DEF', 'MID', 'RUC', 'FWD'] as Slot[]).find((x) => pl.pos.includes(x)) ?? 'MID');
+  } else if (game.kind === 'duel5') {
     const match = data.games.find((g) => g.id === game.match_id);
     const squadOf = new Map(data.players.map((p) => [p.id, p.squadId]));
     const mineSq = picks.filter((p) => p.team_id === team).map((p) => squadOf.get(p.player_id) ?? 0);
@@ -164,4 +179,30 @@ export async function saveEntry(gameId: number, players: number[], captain: numb
   if (oldC !== captain && ((oldC != null && locked.has(oldC)) || (captain != null && locked.has(captain)))) return { ok: false, error: 'Captain is locked once their game starts.' };
   const res = await supabase.from('mini_entries').upsert({ game_id: gameId, team_id: team, players: ids, captain, cost, updated_at: new Date().toISOString() }, { onConflict: 'game_id,team_id' });
   return res.error ? { ok: false, error: res.error.message } : { ok: true };
+}
+
+/* ---------------- custom game captains ---------------- */
+export async function loadRoles(gameId: number): Promise<Record<number, Roles>> {
+  const supabase = await createClient();
+  const r = await supabase.from('mini_roles').select('team_id, captain, vc').eq('game_id', gameId);
+  return Object.fromEntries((r.data ?? []).map((x) => [x.team_id, { captain: x.captain, vc: x.vc }]));
+}
+/** Set my club's captain and vice-captain. Each is locked once that player's game starts. */
+export async function saveRoles(gameId: number, captain: number | null, vc: number | null, teamId?: number): Promise<Res> {
+  const me = await getMe();
+  if (!me) return { ok: false, error: 'Sign in first.' };
+  const team = teamId && me.is_commish ? teamId : me.team_id;
+  const { game, picks } = await loadGame(gameId);
+  if (!game || game.kind !== 'custom' || !game.settings?.captain) return { ok: false, error: 'This game has no captains.' };
+  const mine = picks.filter((p) => p.team_id === team).map((p) => p.player_id);
+  if ((captain != null && !mine.includes(captain)) || (vc != null && !mine.includes(vc))) return { ok: false, error: 'Pick from your own players.' };
+  if (captain != null && captain === vc) return { ok: false, error: 'Captain and vice-captain must be different.' };
+  const locked = lockedIds(await liveRound(game.round));
+  const prev = (await loadRoles(gameId))[team] ?? { captain: null, vc: null };
+  const changed = (a: number | null, b: number | null) => a !== b && ((a != null && locked.has(a)) || (b != null && locked.has(b)));
+  if (changed(prev.captain, captain)) return { ok: false, error: 'Captain is locked once his game starts.' };
+  if (changed(prev.vc, vc)) return { ok: false, error: 'Vice-captain is locked once his game starts.' };
+  const supabase = await createClient();
+  const res = await supabase.from('mini_roles').upsert({ game_id: gameId, team_id: team, captain, vc, updated_at: new Date().toISOString() }, { onConflict: 'game_id,team_id' });
+  return res.error ? { ok: false, error: /mini_roles/.test(res.error.message) ? 'Captains need supabase/migrations/0018_battle_desk.sql run first.' : res.error.message } : { ok: true };
 }

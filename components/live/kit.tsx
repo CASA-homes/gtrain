@@ -3,9 +3,10 @@
 import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { duelFits, picksPerTeam, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
+import { customFits, duelFits, matchesInPlay, picksPerTeam, slotLimits, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
 import { CLUBS } from '@/lib/clubs';
+import { CustomMatchup } from './battle';
 
 export type TeamRow = { id: number; name: string; short_code: string };
 export const SLOT_ORDER = Object.keys(SLOTS) as Slot[];
@@ -307,7 +308,10 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
   game: GameRow; picks: GamePick[]; refresh: () => Promise<void>; players: LPlayer[]; gamesOfRound?: LGame[]; teamName: (id: number) => string; myTeamId: number; canManage: boolean;
 }) {
   const router = useRouter();
-  const per = picksPerTeam(game.kind), duel = game.kind === 'duel5';
+  const per = picksPerTeam(game.kind, game.settings), duel = game.kind === 'duel5';
+  const custom = game.kind === 'custom' && !!game.settings, cs = game.settings;
+  const limits = slotLimits(game.kind, game.settings) ?? SLOTS;
+  const customSquads = useMemo(() => (custom && cs ? new Set(matchesInPlay(cs, gamesOfRound).flatMap((g) => [g.homeId, g.awayId])) : null), [custom, cs, gamesOfRound]);
   const n = game.order.length, total = n * per, k = picks.length;
   const match = duel ? gamesOfRound.find((g) => g.id === game.match_id) ?? null : null;
   const done = game.status === 'done' || k >= total;
@@ -320,7 +324,7 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
   const [pos, setPos] = useState<Slot | 'ALL'>('ALL');
   const [side, setSide] = useState<number | 'ALL'>('ALL');
   // A duel only uses the two sides in its match.
-  const players = useMemo(() => (match ? allPlayers.filter((p) => p.squadId === match.homeId || p.squadId === match.awayId) : allPlayers), [allPlayers, match]);
+  const players = useMemo(() => (match ? allPlayers.filter((p) => p.squadId === match.homeId || p.squadId === match.awayId) : customSquads ? allPlayers.filter((p) => customSquads.has(p.squadId)) : allPlayers), [allPlayers, match, customSquads]);
   const [onlyFit, setOnlyFit] = useState(true);
   const [limit, setLimit] = useState(40);
   const [pending, start] = useTransition();
@@ -331,7 +335,9 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
   const taken = useMemo(() => new Set(picks.map((p) => p.player_id)), [picks]);
   const picksOf = (t: number) => picks.filter((p) => p.team_id === t);
   const squadOfPick = (pk: GamePick) => byId.get(pk.player_id)?.squadId ?? 0;
-  const fits = (p: LPlayer, t: number | null) => t != null && (duel
+  const fits = (p: LPlayer, t: number | null) => t != null && (custom && cs
+    ? customFits(p, picksOf(t), cs, gamesOfRound, (id) => byId.get(id)?.squadId ?? 0)
+    : duel
     ? duelFits(p.squadId, picksOf(t).map(squadOfPick), match)
     : slotFor(p.pos, picksOf(t)) != null);
   const pool = players
@@ -382,7 +388,14 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
                   {match.home} {viewPicks.filter((pk) => squadOfPick(pk) === match.homeId).length} · {match.away} {viewPicks.filter((pk) => squadOfPick(pk) === match.awayId).length} · need 2+ from each
                 </span>
               </div>
-            ) : <Oval picks={viewPicks} byId={byId} />}
+            ) : custom && cs?.mode === 'duels' ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 8 }}>
+                {matchesInPlay(cs, gamesOfRound).map((g) => {
+                  const pk = viewPicks.find((x) => [g.homeId, g.awayId].includes(squadOfPick(x))); const pl = pk ? byId.get(pk.player_id) : undefined;
+                  return <div key={g.id} className="rh-feed" data-pid={pl?.id}><span className="rh-mono rh-dim" style={{ minWidth: 74 }}>{g.home} v {g.away}</span>{pl ? <><Face p={pl} size={24} /><b>{pl.name}</b></> : <span className="rh-dim">to pick</span>}</div>;
+                })}
+              </div>
+            ) : <Oval picks={viewPicks} byId={byId} limits={limits} />}
             <div className="rh-dim hide-sm rh-avgtot">
               <span>Avg total <b style={{ color: 'var(--rh-text)' }}>{Math.round(viewPicks.reduce((s, p) => s + (byId.get(p.player_id)?.avg ?? 0), 0))}</b></span>
             </div>
@@ -401,7 +414,7 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
                 {(['ALL', ...SLOT_ORDER] as (Slot | 'ALL')[]).map((s) => <button key={s} className={pos === s ? 'on' : ''} onClick={() => { setPos(s); setLimit(40); }}>{s === 'ALL' ? 'All' : s}</button>)}
               </div>
             )}
-            {!done && <label className="rh-toggle"><input type="checkbox" checked={onlyFit} onChange={(e) => setOnlyFit(e.target.checked)} /><span />{duel ? 'Only legal picks' : 'Only open spots'}</label>}
+            {!done && <label className="rh-toggle"><input type="checkbox" checked={onlyFit} onChange={(e) => setOnlyFit(e.target.checked)} /><span />{duel || (custom && cs?.mode === 'duels') ? 'Only legal picks' : 'Only open spots'}</label>}
           </div>
           {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`}>{msg.text}</div>}
           <div className="rh-list">
@@ -464,7 +477,7 @@ export function DraftRoom({ game, picks, refresh, players: allPlayers, gamesOfRo
 }
 
 /** Your team on an oval: forwards up top, defence at the bottom. */
-export function Oval({ picks, byId }: { picks: GamePick[]; byId: Map<number, LPlayer> }) {
+export function Oval({ picks, byId, limits = SLOTS }: { picks: GamePick[]; byId: Map<number, LPlayer>; limits?: Record<Slot, number> }) {
   return (
     <div className="rh-oval">
       <i className="rh-oval-c" aria-hidden="true" />
@@ -472,7 +485,7 @@ export function Oval({ picks, byId }: { picks: GamePick[]; byId: Map<number, LPl
         const got = picks.filter((p) => p.slot === s);
         return (
           <div key={s} className="rh-oval-line" aria-label={SLOT_NAME[s]}>
-            {Array.from({ length: SLOTS[s] }, (_, i) => {
+            {Array.from({ length: limits[s] }, (_, i) => {
               const p = got[i];
               return p
                 ? <span key={i} className="rh-ps on" data-pid={p.player_id} style={cssVar('--c', SLOT_HUE[s])}>{byId.get(p.player_id) && <Face p={byId.get(p.player_id)!} size={24} />}<b>{surname(p.player_name)}</b><em>{byId.get(p.player_id)?.avg?.toFixed(0) ?? ''}</em></span>
@@ -530,7 +543,7 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
   const [opp, setOpp] = useState(others[0]);
   useEffect(() => { if (game.status === 'done') setTab('live'); }, [game.status]);
   return (
-    <Shell compact title={game.name} sub={<>{data.name} · {game.kind === 'duel5' ? (() => { const m = data.games.find((g) => g.id === game.match_id); return m ? `Duel · ${m.home} v ${m.away}` : 'Duel'; })() : `${game.order.length} clubs`}</>}
+    <Shell compact title={game.name} sub={<>{data.name} · {game.kind === 'custom' ? `${game.settings?.mode === 'duels' ? 'Player duels' : `${game.settings?.per ?? ''} a side`} · ${game.order.length} clubs` : game.kind === 'duel5' ? (() => { const m = data.games.find((g) => g.id === game.match_id); return m ? `Duel · ${m.home} v ${m.away}` : 'Duel'; })() : `${game.order.length} clubs`}</>}
       right={<div className="rh-headright">
         <div className="rh-seg" role="tablist">
           <button role="tab" aria-selected={tab === 'live'} className={tab === 'live' ? 'on' : ''} onClick={() => setTab('live')}>Matchup</button>
@@ -542,7 +555,8 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
         standings={[...game.order].sort((x, y) => totals(lineups[y], byId, gameBySquad).score - totals(lineups[x], byId, gameBySquad).score)} />
       {tab === 'draft'
         ? <DraftRoom game={game} picks={picks} refresh={refresh} players={data.players} gamesOfRound={data.games} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
-        : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its {picksPerTeam(game.kind)}.</Empty>
+        : game.status !== 'done' ? <Empty>The draft is still going. Scores show here once every club has its {picksPerTeam(game.kind, game.settings)}.</Empty>
+        : game.kind === 'custom' && game.settings ? <CustomMatchup game={game} picks={picks} data={data} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} canManage={canManage} />
         : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {game.order.length > 2 && <Leaderboard order={game.order} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} selected={opp} onPick={(t) => t !== me && setOpp(t)} />}
