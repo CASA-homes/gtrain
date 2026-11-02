@@ -114,6 +114,7 @@ const SECTIONS = [
   { href: '/live/new', label: 'New game' },
   { href: '/live/matchups', label: 'Matchups' },
   { href: '/live/scores', label: 'Live scores' },
+  { href: '/live/mens', label: 'Men’s R1 (test)' },
 ];
 export function Shell({ title, sub, right, children, compact }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
   const path = usePathname();
