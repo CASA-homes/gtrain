@@ -3196,5 +3196,72 @@
    "consensus": 30,
    "score": 36.8
   }
+ },
+ {
+  "year": 2026,
+  "name": "Jordan Knapp",
+  "junior": "Eastern Ranges",
+  "state": "Vic Metro",
+  "position": "MID",
+  "height": 179,
+  "stats": [
+   {
+    "label": "AFL Fantasy (Talent League)",
+    "value": "117"
+   },
+   {
+    "label": "Disposals",
+    "value": "28.0"
+   },
+   {
+    "label": "Clearances",
+    "value": "4.4"
+   },
+   {
+    "label": "Tackles",
+    "value": "4.0"
+   },
+   {
+    "label": "Marks",
+    "value": "6.9"
+   },
+   {
+    "label": "AFL Fantasy (U18 champs)",
+    "value": "99"
+   }
+  ],
+  "statsFrom": "2026 Talent League, 14 games (Rookie Me)",
+  "strengths": [
+   "Ball winning",
+   "Kicking",
+   "Decision making",
+   "Work rate",
+   "Leadership",
+   "Clean hands"
+  ],
+  "improvements": [],
+  "summary": "Eastern Ranges captain and best and fairest who averaged 28 disposals and 117 fantasy points across 14 Talent League games, then made the All-Australian side at the national carnival. A composed, clean ball-winner who also played wing and run-with roles for Vic Metro. Top-10 agility at the Combine. Rookie Me had him 47th in August; Zero Hanger 49th in November.",
+  "source": {
+   "title": "AFL Draft Power Rankings: August 2026 Top 50",
+   "url": "https://central.rookieme.com/afl/power-rankings/afl-draft-power-rankings-august-2026-top-50/"
+  },
+  "boards": {
+   "twomey": {
+    "rank": null,
+    "note": "",
+    "url": "https://www.afl.com.au/news/1633149/cal-twomeys-phantom-form-guide-top-draft-prospects-october-ranking",
+    "date": "20 Oct 2026"
+   },
+   "rookieme": {
+    "rank": 47,
+    "url": "https://central.rookieme.com/afl/power-rankings/afl-draft-power-rankings-august-2026-top-50/",
+    "date": "Aug 2026",
+    "of": 50
+   },
+   "zh": null,
+   "consensus": 36,
+   "score": 36.4,
+   "extra": true
+  }
  }
 ]

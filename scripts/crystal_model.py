@@ -18,7 +18,7 @@ ROLE_W = {'Key position': 3.0, 'Ruck': 0.0, 'Small forward': 2.0}   # ruck acts 
 COMBO = ['Combine: top-10 endurance', 'Combine: top-10 speed/jump']
 # Profile types from the 2016–2024 draft review (see crystal-ball page): what the scouts sold him on, as a whole.
 PROFILES = ['Class + production', 'Pure runner / athlete', 'Accumulator without class', 'Tall (192cm+, not a ruck)']
-FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (95+)', 'Big junior games (140+)'] + PROFILES
+FEATS = ['Draft position', 'Low junior numbers', 'Junior tackles', 'No junior numbers'] + ROLES + COMBO + TRAITS + FLAGS + ['Big junior numbers (90+)', 'Big junior games (140+)'] + PROFILES
 CLASS = {'Kicking / skills', 'Footy IQ / vision', 'Clean hands'}
 # The draft review set a direction for each profile. If the fitted model disagrees once everything else is in (the signal
 # is mixed or already carried by other features), that profile is made neutral rather than allowed to flip.
@@ -40,8 +40,21 @@ def profile_flags(p):
     tall = (p.get('ht') or 0) >= 192 and p.get('role') not in ('Ruck', 'Tall utility')
     return [1 if classy and production else 0, 1 if runner else 0, 1 if acc_no_class else 0, 1 if tall else 0]
 
+# Tags that come with the role aren't evidence of anything extra. Every small forward is sold on pressure and goals
+# (7 forwards tagged for pressure, 0 stars, against 12 of 59 midfielders with the same tag), and every tall on marking.
+ROLE_TAGS = {'Small forward': {'Defensive pressure', 'Scoreboard impact'}, 'Forward': {'Defensive pressure', 'Scoreboard impact'},
+             'Key position': {'Aerial / marking'}, 'Tall utility': {'Aerial / marking'}, 'Ruck': {'Aerial / marking'}}
+def counted_tags(p):
+    drop = ROLE_TAGS.get(p.get('role'), set())
+    return [t for t in (p.get('str') or []) if t not in drop]
+# Scout adjectives are one writer's read; junior numbers are measured. Scaling the tag columns down makes the fit shrink
+# them harder (same accuracy out of sample: AUC 0.80 either way), so a single adjective can't outweigh a 100+ junior.
+TAG_SCALE = 0.7
+JUNIOR_KNOT = 90   # junior fantasy credit starts at 90 (100–110 juniors became stars at 1.8x their draft slots)
+
 def fv(p, pick):
     j = p.get('jun') or {}
+    tags = counted_tags(p)
     fp = (j.get('FP') or 0) - (j.get('HO') or 0)   # take hitouts out: a ruck's junior score isn't comparable to a mid's
     has = 1 if (j.get('FP') or 0) > 20 else 0
     # Junior scoring only ever helps as it goes up. Low output (under 85) counts against him unless his contested work
@@ -53,10 +66,10 @@ def fv(p, pick):
          0 if has else 1]
     x += [ROLE_W[r] if p.get('role') == r else 0 for r in ROLES]
     x += [1 if 'endurance' in (p.get('combine') or []) else 0, 1 if 'power' in (p.get('combine') or []) else 0]
-    x += [1 if t in p['str'] else 0 for t in TRAITS]
-    x += [1 if f in p['imp'] else 0 for f in FLAGS]
-    # The lift from junior scoring isn't a straight line: 80 v 90 means little, 105+ roughly doubles a pick's star rate.
-    x += [max(0, min(fp, 125) - 95) / 10 if has else 0]   # capped: only a handful of juniors ever averaged 115+
+    x += [TAG_SCALE if t in tags else 0 for t in TRAITS]
+    x += [TAG_SCALE if f in p['imp'] else 0 for f in FLAGS]
+    # The lift from junior scoring isn't a straight line: under 90 means little, 100+ roughly doubles a pick's star rate.
+    x += [max(0, min(fp, 125) - JUNIOR_KNOT) / 10 if has else 0]   # capped: only a handful of juniors ever averaged 115+
     # Big single games. A junior averaging under 95 who still had a 140+ game (Sheezel 83 avg, 159 best; Berry 79, 149)
     # became a star well above his draft slot's rate. For 95+ averages the line above already gives the credit.
     jm = j.get('max') or 0

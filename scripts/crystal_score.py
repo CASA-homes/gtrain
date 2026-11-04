@@ -24,7 +24,11 @@ DRAFTED = bool(re.search(r'DRAFT_2026_DONE\s*=\s*true', _PT))
 CLUB = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']*)'[^\n]*?club: '([^']*)'", _PT)}
 ALIAS = {'Mitch Harris': 'Mitchell Harris'}
 
-from crystal import role_of, combine_flags, H as HIST  # noqa: E402
+from crystal import role_of, fantasy_role, combine_flags, H as HIST  # noqa: E402
+# Prospects outside Twomey's 30 that were added by scripts/profiles-extra-2026.py (e.g. Jordan Knapp): scored the same way,
+# slotted at their weighted board rank. Before the draft only; after it, the real draft order is the list.
+if not DRAFTED:
+    PH = PH + [(p['boards']['consensus'], n) for n, p in PROF.items() if (p.get('boards') or {}).get('extra') and n not in {x for _, x in PH}]
 NOW_AVG = {(d['y'], d['n']): next((a for (y, g, a) in (d.get('h') or []) if y == 2026 and g >= 5), None) for d in HIST}
 PEAK = {(d['y'], d['n']): max([a for (_, g, a) in (d.get('h') or []) if g >= 8], default=None) for d in HIST}
 # Current top players we can compare to: had a draft profile with traits, and average 95+ in 2026 (or 100+ peak).
@@ -165,6 +169,12 @@ def why(p, contrib, role):
                 lines.append({'good': True, 'text': f"Scouts noted {label.lower()}. {hits} of {n} draftees with that note became 90+ players, {lift:.1f}× what their draft slots predicted."})
             else:
                 lines.append({'good': False, 'text': f"Scouts noted {label.lower()}: only {hits} of {n} with that note became 90+ players ({lift:.1f}× their draft slots)."})
+    role_tags = sorted(set(p['str']) & cm.ROLE_TAGS.get(role, set()))
+    if role_tags:
+        if role in ('Small forward', 'Forward'):
+            lines.append({'good': False, 'text': f"Scouts noted {' and '.join(t.lower() for t in role_tags)}, but that's the small forward's job description, so it isn't counted. The 7 forwards tagged for pressure produced no 90+ players; the 59 midfielders with the same tag produced 12."})
+        else:
+            lines.append({'good': False, 'text': "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."})
     if 'Accumulator' in p['str'] and ACC['made']:
         lines.append({'good': True, 'text': f"Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: {round(ACC['rel'] / ACC['made'] * 100)}% of accumulators who played 50+ games had an 80+ season, against {round(REST['rel'] / REST['made'] * 100)}% of everyone else (best season typically {ACC['medPeak']:.0f} vs {REST['medPeak']:.0f}). {', '.join(ACC['examples'][:3])}."})
     if 'endurance' in (p.get('combine') or []): lines.append({'good': True, 'text': 'Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash).'})
@@ -211,7 +221,7 @@ for rank, name in PH:
             jg = {'max': float(max(gs)), 'maxYr': int(best_yr), 'g120': sum(1 for x in gs if x >= 120), 'g150': sum(1 for x in gs if x >= 150), 'gms': len(gs)}
     if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120'], 'g150': jg.get('g150'), 'jGames': jg.get('gms')}
     listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
-    role = role_of(listed, ht, strs)
+    role = fantasy_role(role_of(listed, ht, strs), j, ht)
     p = {'name': name, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
     # Before the draft the pick slot is the consensus of Twomey / Rookie Me / Zero Hanger; after it, the real pick.
     brd = (prof or {}).get('boards') or {}
@@ -228,7 +238,7 @@ for rank, name in PH:
     pos_only = float(pick_model.predict_proba([x[:1]])[0, 1])
     eff = {FEATS[i]: float(model.coef_[0][i] * x[i]) for i in range(1, len(FEATS))}
     # One junior-scoring line on the page: the low-output penalty and the big-numbers boost are two halves of the same thing
-    eff['Junior fantasy avg'] = eff.pop('Low junior numbers', 0) + eff.pop('Big junior numbers (95+)', 0)
+    eff['Junior fantasy avg'] = eff.pop('Low junior numbers', 0) + eff.pop('Big junior numbers (90+)', 0)
     contrib = sorted([(k, v) for k, v in eff.items() if abs(v) > 0.08], key=lambda t: -abs(t[1]))
     types = prospect_type((prof or {}).get('position', ''), role)
     out.append({'rank': rank, 'name': name, 'slot': slot, 'boards': {'tw': (brd.get('twomey') or {}).get('rank'), 'rm': (brd.get('rookieme') or {}).get('rank'), 'zh': brd.get('zh')}, 'club': CLUB.get(name), 'drafted': DRAFTED, 'junior': (prof or {}).get('junior') or (j or {}).get('team', ''), 'position': (prof or {}).get('position', ''), 'height': ht, 'role': role,

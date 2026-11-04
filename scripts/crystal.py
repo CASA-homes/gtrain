@@ -131,6 +131,14 @@ def role_of(pos, ht, strs):
     if 'forward' in p: return 'Forward'
     return 'Midfielder' if not p and ht and ht < 194 else 'Unknown'
 
+def fantasy_role(role, j, ht):
+    """A tall 'utility' who was a big junior ball-winner (95+ junior fantasy, under 194cm) is a midfielder for fantasy
+    purposes. The tall-utility history (0 stars from 28) is swingmen with low junior numbers; 188-193cm juniors who
+    averaged 95+ reached 80+ seasons at midfielder rates (3 of 10: Noah Anderson, Stephenson, Rivers)."""
+    fp = (j or {}).get('FP') or 0
+    if role == 'Tall utility' and fp >= 95 and (ht or 0) < 194: return 'Midfielder'
+    return role
+
 def peak(h):
     xs = [a for (_, g, a) in (h or []) if g >= 8]
     return max(xs) if xs else 0.0
@@ -198,7 +206,7 @@ for d in H:
     yrs_in = NOW_SEASON - d['y']
     certainty = min(1.0, yrs_in / 7)
     recency = 1.25 if d['y'] >= 2020 else 1.0
-    players.append({'id': d.get('id'), 'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else role_of(r['pos'], ht, r['str'])), 'listed': r['pos'], 'str': st, 'imp': im,
+    players.append({'id': d.get('id'), 'year': d['y'], 'pick': d['p'], 'name': d['n'], 'club': d['c'], 'ht': ht, 'pos': posgroup(r['pos'], ht), 'combine': combine_flags(d['y'], d['n']), 'role': ('Ruck' if (not r['pos'] and (max((x['HO'] for x in parse_rows(r['rows'], d['y'])), default=0) >= 8 or career_hitouts(d.get('id')) >= 8)) else fantasy_role(role_of(r['pos'], ht, r['str']), j, ht)), 'listed': r['pos'], 'str': st, 'imp': im,
                     'rawstr': r['str'], 'rawimp': r['imp'], 'jun': j, 'range': range_mid(r['range']), 'peak': pk,
                     'hit': pk >= HIT, 'elite': pk >= ELITE, 'mature': mature, 'rel': pk >= REL, 'rel_label': (1 if pk >= REL else (0 if d['y'] <= 2024 else None)),
                     'label': (1 if pk >= HIT else (0 if d['y'] <= 2024 else None)),
