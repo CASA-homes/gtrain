@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'J. Worrell', tag: 'Off-field', date: '2026-11-04', title: 'Worrell fined after court appearance',
+    body: 'Adelaide’s Worrell pleaded guilty to driving without due care over hitting a pedestrian in July, and was convicted and fined $2,400 with no licence disqualification. He’s said he accepts full responsibility. No club or AFL ban has been reported, so as it stands his 2027 availability isn’t affected.',
+  },
+  {
+    player: 'I. Heeney', tag: 'Off-field', date: '2026-11-04', title: 'Pullman saga takes a legal turn',
+    body: 'Lawyers for two women involved in the Pullman Hotel incident have reportedly sent legal letters to Sydney and the five players stood down, Heeney included. Police laid no charges, and Heeney remains eligible for round 1 after winning the Swans best and fairest. Worth watching, but no new sanction has been announced.',
+  },
+  {
     player: 'T. Green', tag: 'Role', date: '2026-11-02', title: 'Green stays a Giant',
     body: 'Green has knocked back Tasmania’s interest and re-signed with GWS after missing all of 2026 with an ACL. The Giants expect him back out there in 2027. If his knee comes up well, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
   },
@@ -49,10 +57,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
     body: 'The biggest fantasy move of the trade period. Butters leaves Port for the Western Bulldogs and walks into one of the best midfields in the comp. Expect plenty of the ball, but less of the centre-bounce monopoly he had at Alberton. He also had a minor ankle clean-up in October and says he’ll be right for round 1.',
   },
   {
-    player: 'I. Heeney', tag: 'Off-field', title: 'Pullman Hotel fallout, then a best and fairest',
-    body: 'Sydney banned Heeney, Blakey, Warner, Bice and Jordon for the rest of 2026 amid a police investigation into an incident at the Pullman Hotel. Heeney still won the Swans best and fairest off what he’d banked before it. Watch for any further sanctions before round 1.',
-  },
-  {
     player: 'R. Marshall', tag: 'Trade', title: 'Marshall heads to Geelong',
     body: 'After years sharing the ruck at St Kilda, Marshall moves to the Cats. If he wins the No.1 job outright, his around-the-ground game makes him a genuine premium ruck option again.',
   },
@@ -67,10 +71,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'L. Neale', tag: 'Trade', title: 'Neale to the Pies',
     body: 'The Brownlow medallist swaps Brisbane for Collingwood at 33. Still a high-floor midfielder, but the age curve is the risk.',
-  },
-  {
-    player: 'K. Briggs', tag: 'Role', title: 'Briggs gets his own ruck at Richmond',
-    body: 'Moves from GWS to Richmond, where he should be the No.1 ruck from day one. A full-time ruck role could push his scoring up.',
   },
   {
     player: 'C. Mills', tag: 'Injury', title: 'Mills out with an ACL',
