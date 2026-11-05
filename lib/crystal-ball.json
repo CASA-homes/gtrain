@@ -1,14 +1,14 @@
 {
  "meta": {
   "relBar": 80,
-  "aucRel": 0.769,
+  "aucRel": 0.768,
   "hitBar": 90,
   "trainN": 574,
   "trainHits": 53,
   "years": "2016\u20132025",
-  "auc": 0.791,
+  "auc": 0.792,
   "aucPositionOnly": 0.695,
-  "aucLate": 0.71,
+  "aucLate": 0.707,
   "aucLatePositionOnly": 0.562,
   "accumulator": {
    "acc": {
@@ -628,7 +628,7 @@
    "year": 2022,
    "pick": 2,
    "peak": 105.6,
-   "chance": 61.9,
+   "chance": 62.4,
    "positionOnly": 46.7,
    "jFP": 136.0,
    "traits": [
@@ -645,7 +645,7 @@
    "year": 2021,
    "pick": 4,
    "peak": 116.6,
-   "chance": 54.4,
+   "chance": 53.2,
    "positionOnly": 31.7,
    "jFP": 136.0,
    "traits": [
@@ -663,7 +663,7 @@
    "year": 2022,
    "pick": 3,
    "peak": 116.2,
-   "chance": 37.8,
+   "chance": 37.3,
    "positionOnly": 38.8,
    "jFP": 83.0,
    "traits": [
@@ -678,7 +678,7 @@
    "year": 2018,
    "pick": 7,
    "peak": 117.7,
-   "chance": 39.7,
+   "chance": 40.7,
    "positionOnly": 22.2,
    "jFP": 149.0,
    "traits": [
@@ -693,7 +693,7 @@
    "year": 2021,
    "pick": 11,
    "peak": 110.8,
-   "chance": 27.3,
+   "chance": 26.5,
    "positionOnly": 17.5,
    "jFP": 66.5,
    "traits": [
@@ -708,7 +708,7 @@
    "year": 2019,
    "pick": 8,
    "peak": 108.1,
-   "chance": 29.0,
+   "chance": 29.3,
    "positionOnly": 18.5,
    "jFP": 112.0,
    "traits": [
@@ -725,7 +725,7 @@
    "year": 2018,
    "pick": 12,
    "peak": 104.5,
-   "chance": 26.9,
+   "chance": 26.5,
    "positionOnly": 15.8,
    "jFP": 91.0,
    "traits": [
@@ -740,7 +740,7 @@
    "year": 2020,
    "pick": 32,
    "peak": 115.1,
-   "chance": 14.2,
+   "chance": 13.3,
    "positionOnly": 7.7,
    "jFP": 125.0,
    "traits": [
@@ -755,7 +755,7 @@
    "year": 2019,
    "pick": 39,
    "peak": 93.0,
-   "chance": 24.1,
+   "chance": 24.5,
    "positionOnly": 7.1,
    "jFP": 105.9,
    "traits": [
@@ -770,7 +770,7 @@
    "year": 2020,
    "pick": 28,
    "peak": 90.3,
-   "chance": 14.3,
+   "chance": 14.8,
    "positionOnly": 8.7,
    "jFP": 79.0,
    "traits": [
@@ -786,7 +786,7 @@
    "year": 2020,
    "pick": 21,
    "peak": 90.0,
-   "chance": 21.9,
+   "chance": 21.0,
    "positionOnly": 11.1,
    "jFP": 66.0,
    "traits": [
@@ -803,7 +803,7 @@
    "year": 2021,
    "pick": 60,
    "peak": 90.4,
-   "chance": 15.5,
+   "chance": 14.5,
    "positionOnly": 5.4,
    "jFP": 107.1,
    "traits": [
@@ -846,8 +846,8 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 78.2,
-   "relevant": 88.9,
+   "chance": 78.7,
+   "relevant": 89.2,
    "positionOnly": 38.7,
    "reasons": [
     {
@@ -856,11 +856,11 @@
     },
     {
      "label": "Junior tackles",
-     "effect": 0.6
+     "effect": 0.64
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     },
     {
      "label": "Combine: top-10 endurance",
@@ -868,7 +868,7 @@
     },
     {
      "label": "Engine / work rate",
-     "effect": -0.18
+     "effect": -0.19
     }
    ],
    "why": [
@@ -1011,7 +1011,7 @@
     "needs strength/size"
    ],
    "chance": 63.3,
-   "relevant": 79.6,
+   "relevant": 79.4,
    "positionOnly": 17.1,
    "reasons": [
     {
@@ -1019,12 +1019,12 @@
      "effect": 0.9
     },
     {
-     "label": "Footy IQ / vision",
+     "label": "Junior tackles",
      "effect": 0.41
     },
     {
-     "label": "Junior tackles",
-     "effect": 0.38
+     "label": "Footy IQ / vision",
+     "effect": 0.41
     },
     {
      "label": "needs contested/inside game",
@@ -1180,17 +1180,17 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 60.8,
-   "relevant": 73.4,
+   "chance": 61.9,
+   "relevant": 74.0,
    "positionOnly": 23.1,
    "reasons": [
     {
      "label": "Junior fantasy avg",
-     "effect": 0.79
+     "effect": 0.8
     },
     {
      "label": "Junior tackles",
-     "effect": 0.64
+     "effect": 0.68
     },
     {
      "label": "Combine: top-10 speed/jump",
@@ -1202,7 +1202,7 @@
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     }
    ],
    "why": [
@@ -1341,8 +1341,8 @@
     "durability concern",
     "needs strength/size"
    ],
-   "chance": 52.4,
-   "relevant": 64.7,
+   "chance": 52.7,
+   "relevant": 65.0,
    "positionOnly": 52.5,
    "reasons": [
     {
@@ -1355,11 +1355,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Junior tackles",
-     "effect": 0.17
+     "effect": 0.18
     },
     {
      "label": "Junior fantasy avg",
@@ -1466,8 +1466,8 @@
     "Kicking / skills"
    ],
    "flags": [],
-   "chance": 47.7,
-   "relevant": 69.1,
+   "chance": 52.6,
+   "relevant": 73.0,
    "positionOnly": 26.5,
    "reasons": [
     {
@@ -1480,15 +1480,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
-    },
-    {
-     "label": "Junior tackles",
-     "effect": -0.21
+     "effect": 0.33
     },
     {
      "label": "Engine / work rate",
-     "effect": -0.18
+     "effect": -0.19
     }
    ],
    "why": [
@@ -1507,6 +1503,10 @@
     {
      "good": false,
      "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "2.5 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     },
     {
      "good": true,
@@ -1540,24 +1540,24 @@
      "type": "half-back"
     },
     {
-     "name": "Nasiah Wanganeen-Milera",
-     "pick": 11,
-     "year": 2021,
-     "peak": 110.8,
-     "now": 105.4,
-     "jFP": 66.5,
-     "jT": 2.5,
-     "jD": 15.8,
+     "name": "Lachlan Ash",
+     "pick": 4,
+     "year": 2019,
+     "peak": 103.0,
+     "now": 103.0,
+     "jFP": 98.0,
+     "jT": 4.5,
+     "jD": 23.0,
      "scouts": [
-      "Foot skills",
-      "Class",
-      "Composure",
-      "Evasiveness",
-      "Balance"
+      "Athleticism",
+      "Endurance",
+      "Penetrating kick",
+      "Leadership",
+      "Vision"
      ],
      "workons": [
-      "Strength",
-      "Inside game"
+      "Contested ball",
+      "Midfield craft"
      ],
      "role": "Midfielder",
      "type": "half-back"
@@ -1616,13 +1616,13 @@
     "needs contested/inside game",
     "needs speed/athleticism"
    ],
-   "chance": 44.6,
-   "relevant": 65.8,
+   "chance": 44.2,
+   "relevant": 65.3,
    "positionOnly": 7.0,
    "reasons": [
     {
      "label": "Junior fantasy avg",
-     "effect": 0.64
+     "effect": 0.65
     },
     {
      "label": "Footy IQ / vision",
@@ -1634,11 +1634,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Junior tackles",
-     "effect": 0.23
+     "effect": 0.25
     }
    ],
    "why": [
@@ -1782,13 +1782,13 @@
     "Speed / agility"
    ],
    "flags": [],
-   "chance": 36.8,
-   "relevant": 41.8,
+   "chance": 37.4,
+   "relevant": 41.4,
    "positionOnly": 7.6,
    "reasons": [
     {
      "label": "Junior tackles",
-     "effect": 0.92
+     "effect": 0.98
     },
     {
      "label": "Defensive pressure",
@@ -1796,11 +1796,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     }
    ],
    "why": [
@@ -1933,8 +1933,8 @@
     "needs consistency",
     "needs endurance"
    ],
-   "chance": 34.4,
-   "relevant": 27.4,
+   "chance": 33.8,
+   "relevant": 26.9,
    "positionOnly": 18.7,
    "reasons": [
     {
@@ -1943,11 +1943,11 @@
     },
     {
      "label": "Junior tackles",
-     "effect": -0.38
+     "effect": -0.41
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "X-factor / hurt",
@@ -2089,8 +2089,8 @@
     "needs contested/inside game",
     "needs defensive work"
    ],
-   "chance": 26.4,
-   "relevant": 42.4,
+   "chance": 33.4,
+   "relevant": 50.3,
    "positionOnly": 13.7,
    "reasons": [
     {
@@ -2102,16 +2102,16 @@
      "effect": -0.37
     },
     {
-     "label": "Junior tackles",
-     "effect": -0.36
-    },
-    {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Junior fantasy avg",
      "effect": 0.28
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
     }
    ],
    "why": [
@@ -2138,6 +2138,10 @@
     {
      "good": false,
      "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "1.8 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     },
     {
      "good": true,
@@ -2175,49 +2179,49 @@
      "type": "half-back"
     },
     {
-     "name": "Lachlan Ash",
-     "pick": 4,
-     "year": 2019,
-     "peak": 103.0,
-     "now": 103.0,
-     "jFP": 98.0,
-     "jT": 4.5,
-     "jD": 23.0,
+     "name": "Nasiah Wanganeen-Milera",
+     "pick": 11,
+     "year": 2021,
+     "peak": 110.8,
+     "now": 105.4,
+     "jFP": 66.5,
+     "jT": 2.5,
+     "jD": 15.8,
      "scouts": [
-      "Athleticism",
-      "Endurance",
-      "Penetrating kick",
-      "Leadership",
-      "Vision"
+      "Foot skills",
+      "Class",
+      "Composure",
+      "Evasiveness",
+      "Balance"
      ],
      "workons": [
-      "Contested ball",
-      "Midfield craft"
+      "Strength",
+      "Inside game"
      ],
      "role": "Midfielder",
      "type": "half-back"
     },
     {
-     "name": "Archie Roberts",
-     "pick": 54,
-     "year": 2023,
-     "peak": 94.7,
-     "now": 94.7,
-     "jFP": 78.0,
-     "jT": 1.5,
-     "jD": 20.8,
+     "name": "Connor Rozee",
+     "pick": 5,
+     "year": 2018,
+     "peak": 104.2,
+     "now": null,
+     "jFP": 53.0,
+     "jT": 3.8,
+     "jD": 13.3,
      "scouts": [
-      "Intercept game",
-      "Kicking",
-      "Reading the play",
-      "Rebounding",
-      "Run-and-carry"
+      "Athleticism",
+      "Speed",
+      "Foot Skills",
+      "Cleanliness",
+      "Overhead Marking"
      ],
      "workons": [
-      "Defensive craft",
-      "Strength"
+      "Strength",
+      "Contested Ball"
      ],
-     "role": "Defender",
+     "role": "Midfielder",
      "type": "half-back"
     }
    ]
@@ -2248,12 +2252,12 @@
     "needs consistency"
    ],
    "chance": 25.0,
-   "relevant": 33.5,
+   "relevant": 33.4,
    "positionOnly": 31.2,
    "reasons": [
     {
      "label": "Junior tackles",
-     "effect": -0.32
+     "effect": -0.34
     },
     {
      "label": "needs consistency",
@@ -2371,8 +2375,8 @@
     "needs contested/inside game",
     "needs strength/size"
    ],
-   "chance": 23.7,
-   "relevant": 38.9,
+   "chance": 22.9,
+   "relevant": 37.8,
    "positionOnly": 10.5,
    "reasons": [
     {
@@ -2389,11 +2393,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     }
    ],
    "why": [
@@ -2518,8 +2522,8 @@
     "Leadership / character"
    ],
    "flags": [],
-   "chance": 22.7,
-   "relevant": 39.3,
+   "chance": 22.8,
+   "relevant": 39.7,
    "positionOnly": 14.7,
    "reasons": [
     {
@@ -2532,7 +2536,7 @@
     },
     {
      "label": "Engine / work rate",
-     "effect": -0.18
+     "effect": -0.19
     },
     {
      "label": "Junior tackles",
@@ -2660,8 +2664,8 @@
     "needs contested/inside game",
     "needs to win more ball"
    ],
-   "chance": 20.7,
-   "relevant": 24.3,
+   "chance": 20.1,
+   "relevant": 23.4,
    "positionOnly": 9.3,
    "reasons": [
     {
@@ -2674,15 +2678,15 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
-    },
-    {
-     "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.33
     },
     {
      "label": "needs to win more ball",
      "effect": -0.23
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
     }
    ],
    "why": [
@@ -2699,12 +2703,12 @@
      "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
     },
     {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
-    },
-    {
      "good": false,
      "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
     },
     {
      "good": false,
@@ -2808,13 +2812,13 @@
     "Leadership / character"
    ],
    "flags": [],
-   "chance": 18.8,
-   "relevant": 36.1,
+   "chance": 18.4,
+   "relevant": 35.7,
    "positionOnly": 5.8,
    "reasons": [
     {
      "label": "Junior fantasy avg",
-     "effect": 0.69
+     "effect": 0.7
     },
     {
      "label": "Footy IQ / vision",
@@ -2826,11 +2830,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Engine / work rate",
-     "effect": -0.18
+     "effect": -0.19
     }
    ],
    "why": [
@@ -2939,6 +2943,161 @@
    ]
   },
   {
+   "rank": 24,
+   "name": "Jake Eime",
+   "slot": 21,
+   "boards": {
+    "tw": 24,
+    "rm": 23,
+    "zh": 15
+   },
+   "club": null,
+   "drafted": false,
+   "junior": "Central District",
+   "position": "DEF/Wing",
+   "height": 182,
+   "role": "Midfielder",
+   "jFP": 76.0,
+   "jD": 20.3,
+   "jT": 1.3,
+   "jSeason": 2026,
+   "jMax": 83.0,
+   "j120": 0,
+   "traits": [
+    "Engine / work rate",
+    "Intercept / rebound",
+    "Kicking / skills",
+    "Leadership / character",
+    "Speed / agility",
+    "X-factor / hurt"
+   ],
+   "flags": [
+    "needs defensive work",
+    "needs strength/size"
+   ],
+   "chance": 18.1,
+   "relevant": 25.0,
+   "positionOnly": 8.6,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "X-factor / hurt",
+     "effect": 0.29
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
+    },
+    {
+     "label": "Engine / work rate",
+     "effect": -0.19
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "1.3 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    }
+   ],
+   "type": "half-back",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7,
+     "now": 94.7,
+     "jFP": 78.0,
+     "jT": 1.5,
+     "jD": 20.8,
+     "scouts": [
+      "Intercept game",
+      "Kicking",
+      "Reading the play",
+      "Rebounding",
+      "Run-and-carry"
+     ],
+     "workons": [
+      "Defensive craft",
+      "Strength"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    },
+    {
+     "name": "Josh Daicos",
+     "pick": 57,
+     "year": 2016,
+     "peak": 99.8,
+     "now": 99.8,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "x-factor",
+      "decision making",
+      "speed"
+     ],
+     "workons": [
+      "consistency"
+     ],
+     "role": "Midfielder",
+     "type": "half-back"
+    },
+    {
+     "name": "Luke Ryan",
+     "pick": 66,
+     "year": 2016,
+     "peak": 102.1,
+     "now": 79.1,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "marking",
+      "speed"
+     ],
+     "workons": [
+      "durability"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    }
+   ]
+  },
+  {
    "rank": 6,
    "name": "Gus Teixeira",
    "slot": 6,
@@ -2964,8 +3123,8 @@
     "Size / strength"
    ],
    "flags": [],
-   "chance": 18.0,
-   "relevant": 35.9,
+   "chance": 17.8,
+   "relevant": 35.7,
    "positionOnly": 20.6,
    "reasons": [
     {
@@ -3087,13 +3246,13 @@
     "needs composure/decisions",
     "needs strength/size"
    ],
-   "chance": 17.3,
-   "relevant": 30.9,
+   "chance": 17.4,
+   "relevant": 31.3,
    "positionOnly": 7.4,
    "reasons": [
     {
      "label": "Junior fantasy avg",
-     "effect": 0.51
+     "effect": 0.52
     },
     {
      "label": "Combine: top-10 speed/jump",
@@ -3105,7 +3264,7 @@
     },
     {
      "label": "Junior tackles",
-     "effect": 0.3
+     "effect": 0.32
     },
     {
      "label": "Combine: top-10 endurance",
@@ -3252,8 +3411,8 @@
    "flags": [
     "needs speed/athleticism"
    ],
-   "chance": 16.0,
-   "relevant": 29.9,
+   "chance": 15.6,
+   "relevant": 29.8,
    "positionOnly": 8.1,
    "reasons": [
     {
@@ -3262,7 +3421,7 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Combine: top-10 endurance",
@@ -3270,11 +3429,11 @@
     },
     {
      "label": "Engine / work rate",
-     "effect": -0.18
+     "effect": -0.19
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.18
+     "effect": -0.17
     }
    ],
    "why": [
@@ -3380,157 +3539,6 @@
    ]
   },
   {
-   "rank": 24,
-   "name": "Jake Eime",
-   "slot": 21,
-   "boards": {
-    "tw": 24,
-    "rm": 23,
-    "zh": 15
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Central District",
-   "position": "DEF/Wing",
-   "height": 182,
-   "role": "Midfielder",
-   "jFP": 76.0,
-   "jD": 20.3,
-   "jT": 1.3,
-   "jSeason": 2026,
-   "jMax": 83.0,
-   "j120": 0,
-   "traits": [
-    "Engine / work rate",
-    "Intercept / rebound",
-    "Kicking / skills",
-    "Leadership / character",
-    "Speed / agility",
-    "X-factor / hurt"
-   ],
-   "flags": [
-    "needs defensive work",
-    "needs strength/size"
-   ],
-   "chance": 12.5,
-   "relevant": 18.0,
-   "positionOnly": 8.6,
-   "reasons": [
-    {
-     "label": "Junior tackles",
-     "effect": -0.47
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.34
-    },
-    {
-     "label": "X-factor / hurt",
-     "effect": 0.29
-    },
-    {
-     "label": "Speed / agility",
-     "effect": 0.23
-    },
-    {
-     "label": "Combine: top-10 endurance",
-     "effect": 0.22
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    }
-   ],
-   "type": "half-back",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Jake Bowey",
-     "pick": 21,
-     "year": 2020,
-     "peak": 90.0,
-     "now": 90.0,
-     "jFP": 66.0,
-     "jT": 3.1,
-     "jD": 15.8,
-     "scouts": [
-      "Skill",
-      "Speed/Agility",
-      "Vertical leap",
-      "Toughness",
-      "Decision making"
-     ],
-     "workons": [
-      "Strength",
-      "Inside game"
-     ],
-     "role": "Midfielder",
-     "type": "half-back"
-    },
-    {
-     "name": "Josh Daicos",
-     "pick": 57,
-     "year": 2016,
-     "peak": 99.8,
-     "now": 99.8,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "x-factor",
-      "decision making",
-      "speed"
-     ],
-     "workons": [
-      "consistency"
-     ],
-     "role": "Midfielder",
-     "type": "half-back"
-    },
-    {
-     "name": "Luke Ryan",
-     "pick": 66,
-     "year": 2016,
-     "peak": 102.1,
-     "now": 79.1,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "marking",
-      "speed"
-     ],
-     "workons": [
-      "durability"
-     ],
-     "role": "Defender",
-     "type": "half-back"
-    }
-   ]
-  },
-  {
    "rank": 30,
    "name": "Keenan Boi",
    "slot": 30,
@@ -3571,11 +3579,11 @@
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     },
     {
      "label": "Aerial / marking",
-     "effect": -0.18
+     "effect": -0.17
     }
    ],
    "why": [
@@ -3693,8 +3701,8 @@
     "Speed / agility"
    ],
    "flags": [],
-   "chance": 9.4,
-   "relevant": 11.8,
+   "chance": 9.3,
+   "relevant": 11.6,
    "positionOnly": 10.1,
    "reasons": [
     {
@@ -3711,11 +3719,11 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Speed / agility",
-     "effect": 0.23
+     "effect": 0.22
     }
    ],
    "why": [
@@ -3819,21 +3827,21 @@
    "flags": [
     "needs strength/size"
    ],
-   "chance": 9.0,
-   "relevant": 8.1,
+   "chance": 8.8,
+   "relevant": 8.0,
    "positionOnly": 8.9,
    "reasons": [
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "Junior tackles",
-     "effect": -0.17
+     "effect": -0.18
     },
     {
      "label": "Small forward",
-     "effect": -0.13
+     "effect": -0.12
     }
    ],
    "why": [
@@ -3884,7 +3892,7 @@
    ],
    "flags": [],
    "chance": 8.3,
-   "relevant": 11.2,
+   "relevant": 11.1,
    "positionOnly": 7.2,
    "reasons": [],
    "why": [
@@ -3930,8 +3938,8 @@
    "flags": [
     "needs strength/size"
    ],
-   "chance": 7.9,
-   "relevant": 24.7,
+   "chance": 8.0,
+   "relevant": 25.0,
    "positionOnly": 9.7,
    "reasons": [
     {
@@ -3940,7 +3948,7 @@
     },
     {
      "label": "No junior numbers",
-     "effect": 0.26
+     "effect": 0.27
     }
    ],
    "why": [
@@ -4053,8 +4061,8 @@
    "flags": [
     "needs composure/decisions"
    ],
-   "chance": 6.0,
-   "relevant": 11.2,
+   "chance": 7.7,
+   "relevant": 14.0,
    "positionOnly": 6.8,
    "reasons": [
     {
@@ -4066,12 +4074,8 @@
      "effect": -0.36
     },
     {
-     "label": "Junior tackles",
-     "effect": -0.34
-    },
-    {
      "label": "Aerial / marking",
-     "effect": -0.18
+     "effect": -0.17
     }
    ],
    "why": [
@@ -4094,27 +4098,15 @@
     {
      "good": false,
      "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "1.9 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     }
    ],
    "type": "inside midfielder",
    "ceiling": false,
    "comps": [
-    {
-     "name": "Finn Callaghan",
-     "pick": 3,
-     "year": 2021,
-     "peak": 100.6,
-     "now": 95.6,
-     "jFP": 87.0,
-     "jT": 3.2,
-     "jD": 24.3,
-     "scouts": [],
-     "workons": [
-      "Contested game"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
     {
      "name": "Tom Green",
      "pick": 10,
@@ -4151,6 +4143,22 @@
       "decision making"
      ],
      "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Finn Callaghan",
+     "pick": 3,
+     "year": 2021,
+     "peak": 100.6,
+     "now": 95.6,
+     "jFP": 87.0,
+     "jT": 3.2,
+     "jD": 24.3,
+     "scouts": [],
+     "workons": [
+      "Contested game"
+     ],
      "role": "Midfielder",
      "type": "inside midfielder"
     }
@@ -4190,7 +4198,7 @@
     "needs kicking",
     "needs outside game"
    ],
-   "chance": 4.8,
+   "chance": 4.7,
    "relevant": 10.5,
    "positionOnly": 7.8,
    "reasons": [
@@ -4333,16 +4341,16 @@
     "needs kicking"
    ],
    "chance": 0.5,
-   "relevant": 1.7,
+   "relevant": 1.6,
    "positionOnly": 15.8,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Junior tackles",
-     "effect": -0.53
+     "effect": -0.57
     },
     {
      "label": "Tall (192cm+, not a ruck)",
@@ -4451,7 +4459,7 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Tall (192cm+, not a ruck)",
@@ -4467,7 +4475,7 @@
     },
     {
      "label": "Junior tackles",
-     "effect": -0.21
+     "effect": -0.23
     }
    ],
    "why": [
@@ -4532,7 +4540,7 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Combine: top-10 speed/jump",
@@ -4540,15 +4548,15 @@
     },
     {
      "label": "Junior tackles",
-     "effect": -0.38
+     "effect": -0.41
     },
     {
      "label": "needs consistency",
      "effect": -0.28
     },
     {
-     "label": "Speed / agility",
-     "effect": 0.23
+     "label": "needs to win more ball",
+     "effect": -0.23
     }
    ],
    "why": [
@@ -4561,12 +4569,12 @@
      "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
     },
     {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
-    },
-    {
      "good": false,
      "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5\u00d7 their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
     },
     {
      "good": false,
@@ -4624,12 +4632,12 @@
     "needs finishing"
    ],
    "chance": 0.2,
-   "relevant": 0.6,
+   "relevant": 0.7,
    "positionOnly": 11.6,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Tall (192cm+, not a ruck)",
@@ -4712,16 +4720,16 @@
     "needs speed/athleticism"
    ],
    "chance": 0.2,
-   "relevant": 0.8,
+   "relevant": 0.7,
    "positionOnly": 11.0,
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Junior tackles",
-     "effect": -0.53
+     "effect": -0.57
     },
     {
      "label": "Tall (192cm+, not a ruck)",
@@ -4733,7 +4741,7 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     }
    ],
    "why": [
@@ -4796,11 +4804,11 @@
    "reasons": [
     {
      "label": "Key position",
-     "effect": -1.99
+     "effect": -1.98
     },
     {
      "label": "Junior tackles",
-     "effect": -0.53
+     "effect": -0.57
     },
     {
      "label": "Tall (192cm+, not a ruck)",
@@ -4808,7 +4816,7 @@
     },
     {
      "label": "Kicking / skills",
-     "effect": 0.34
+     "effect": 0.33
     },
     {
      "label": "needs consistency",
@@ -4849,8 +4857,8 @@
  "coef": {
   "Draft position": 0.75,
   "Low junior numbers": 0.0,
-  "Junior tackles": 0.32,
-  "No junior numbers": 0.26,
+  "Junior tackles": 0.34,
+  "No junior numbers": 0.27,
   "Key position": -0.66,
   "Ruck": 0.0,
   "Small forward": -0.06,
@@ -4858,36 +4866,36 @@
   "Combine: top-10 speed/jump": -0.47,
   "Defensive pressure": 0.67,
   "Contested / inside": 0.17,
-  "Leadership / character": -0.02,
-  "Kicking / skills": 0.48,
-  "Footy IQ / vision": 0.59,
-  "Speed / agility": 0.33,
+  "Leadership / character": -0.03,
+  "Kicking / skills": 0.47,
+  "Footy IQ / vision": 0.58,
+  "Speed / agility": 0.32,
   "X-factor / hurt": 0.41,
-  "Engine / work rate": -0.26,
-  "Aerial / marking": -0.26,
+  "Engine / work rate": -0.27,
+  "Aerial / marking": -0.25,
   "Versatility": -0.53,
   "Athleticism": -0.09,
-  "Upside": 0.08,
+  "Upside": 0.09,
   "Clean hands": -0.52,
-  "needs contested/inside game": 0.55,
-  "needs consistency": -0.4,
-  "needs to win more ball": -0.33,
+  "needs contested/inside game": 0.54,
+  "needs consistency": -0.39,
+  "needs to win more ball": -0.32,
   "raw / limited exposure": 0.01,
   "Big junior numbers (90+)": 0.26,
   "Big junior games (140+)": 0.0,
   "Class + production": 0.0,
-  "Pure runner / athlete": -0.03,
+  "Pure runner / athlete": -0.01,
   "Accumulator without class": 0.0,
   "Tall (192cm+, not a ruck)": -0.51
  },
  "roleCal": {
-  "Key position": 0.414,
-  "Ruck": 2.411,
-  "Small forward": 0.966,
+  "Key position": 0.416,
+  "Ruck": 2.436,
+  "Small forward": 0.968,
   "Tall utility": 0.6,
   "Midfielder": 1.009,
-  "Defender": 1.382,
-  "Forward": 1.083
+  "Defender": 1.295,
+  "Forward": 1.091
  },
  "past": {
   "years": [

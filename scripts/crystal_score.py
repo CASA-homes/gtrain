@@ -169,6 +169,8 @@ def why(p, contrib, role):
                 lines.append({'good': True, 'text': f"Scouts noted {label.lower()}. {hits} of {n} draftees with that note became 90+ players, {lift:.1f}× what their draft slots predicted."})
             else:
                 lines.append({'good': False, 'text': f"Scouts noted {label.lower()}: only {hits} of {n} with that note became 90+ players ({lift:.1f}× their draft slots)."})
+    if cm.half_back(p) and t is not None and t < 4.5:
+        lines.append({'good': True, 'text': f"{t:.1f} tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."})
     role_tags = sorted(set(p['str']) & cm.ROLE_TAGS.get(role, set()))
     if role_tags:
         if role in ('Small forward', 'Forward'):
@@ -222,7 +224,7 @@ for rank, name in PH:
     if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120'], 'g150': jg.get('g150'), 'jGames': jg.get('gms')}
     listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
     role = fantasy_role(role_of(listed, ht, strs), j, ht)
-    p = {'name': name, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
+    p = {'name': name, 'listed': listed, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
     # Before the draft the pick slot is the consensus of Twomey / Rookie Me / Zero Hanger; after it, the real pick.
     brd = (prof or {}).get('boards') or {}
     slot = rank if DRAFTED else brd.get('consensus', rank)

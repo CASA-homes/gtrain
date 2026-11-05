@@ -52,6 +52,11 @@ def counted_tags(p):
 TAG_SCALE = 0.7
 JUNIOR_KNOT = 90   # junior fantasy credit starts at 90 (100–110 juniors became stars at 1.8x their draft slots)
 
+def half_back(p):
+    """Listed as a defender but not a key back or ruck: a rebounder whose job isn't tackling. Among 35 such draftees, juniors
+    laying under 3 tackles did no worse than the ones laying more (1 star from 24 v 0 from 11), so tackles say nothing here."""
+    return 'def' in (p.get('listed') or '').lower() and p.get('role') not in ('Key position', 'Ruck')
+
 def fv(p, pick):
     j = p.get('jun') or {}
     tags = counted_tags(p)
@@ -62,7 +67,7 @@ def fv(p, pick):
     hidden = (j.get('T') or 0) >= 5 or (j.get('CLR') or 0) >= 4
     x = [-math.log(pick),
          0,   # low output is NOT counted against him: tested, a penalty made the model worse once pick, tackles and missing data are in
-         (min(max(j.get('T') or 0, 0), 8) - 3.5) / 1.5 if has else 0,
+         (min(max(j.get('T') or 0, 0), 8) - 3.5) / 1.5 if has and not half_back(p) else 0,
          0 if has else 1]
     x += [ROLE_W[r] if p.get('role') == r else 0 for r in ROLES]
     x += [1 if 'endurance' in (p.get('combine') or []) else 0, 1 if 'power' in (p.get('combine') or []) else 0]
