@@ -5,16 +5,20 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'J. Gunston', tag: 'Role', date: '2026-11-05', title: 'Gunston faces a crowded Hawks forward line',
+    body: 'Ben King’s arrival from Gold Coast means more competition up forward at Hawthorn, and the 35-year-old Gunston says it’s healthy and the coaches will sort the structure. He’s kicked 73 and 66 goals the last two years, but sharing the marking load with King could trim his scoring ceiling.',
+  },
+  {
+    player: 'T. Green', tag: 'Injury', date: '2026-11-05', title: 'Green on track for round 1',
+    body: 'Green says his ACL rehab is going really well and he’s expected back for round 1 against Adelaide, after knocking back Tasmania to stay at GWS. If that timeline holds, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
+  },
+  {
     player: 'J. Worrell', tag: 'Off-field', date: '2026-11-04', title: 'Worrell fined after court appearance',
     body: 'Adelaide’s Worrell pleaded guilty to driving without due care over hitting a pedestrian in July, and was convicted and fined $2,400 with no licence disqualification. He’s said he accepts full responsibility. No club or AFL ban has been reported, so as it stands his 2027 availability isn’t affected.',
   },
   {
     player: 'I. Heeney', tag: 'Off-field', date: '2026-11-04', title: 'Pullman saga takes a legal turn',
     body: 'Lawyers for two women involved in the Pullman Hotel incident have reportedly sent legal letters to Sydney and the five players stood down, Heeney included. Police laid no charges, and Heeney remains eligible for round 1 after winning the Swans best and fairest. Worth watching, but no new sanction has been announced.',
-  },
-  {
-    player: 'T. Green', tag: 'Role', date: '2026-11-02', title: 'Green stays a Giant',
-    body: 'Green has knocked back Tasmania’s interest and re-signed with GWS after missing all of 2026 with an ACL. The Giants expect him back out there in 2027. If his knee comes up well, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
   },
   {
     player: 'J. Cameron', tag: 'Injury', date: '2026-10-29', title: 'Cameron’s arm still in a splint',
@@ -67,10 +71,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'Z. Merrett', tag: 'Trade', title: 'Merrett joins Hawthorn at 31',
     body: 'Leaves Essendon after a decade as their ball magnet. At Hawthorn he’s one of several on-ballers, so expect a drop in raw possessions.',
-  },
-  {
-    player: 'L. Neale', tag: 'Trade', title: 'Neale to the Pies',
-    body: 'The Brownlow medallist swaps Brisbane for Collingwood at 33. Still a high-floor midfielder, but the age curve is the risk.',
   },
   {
     player: 'C. Mills', tag: 'Injury', title: 'Mills out with an ACL',
