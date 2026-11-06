@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'L. Pedlar', tag: 'Role', date: '2026-11-06', title: 'Pedlar wants midfield minutes at Port',
+    body: 'Fresh from crossing from the Crows, Pedlar says he’s keen to train more as a midfielder under Josh Carr while still growing his forward game. Injuries have limited him to 49 games in six years, so a full pre-season is the priority. More midfield time would lift his ceiling, but he’s a speculative pick until his body holds up.',
+  },
+  {
     player: 'J. Gunston', tag: 'Role', date: '2026-11-05', title: 'Gunston faces a crowded Hawks forward line',
     body: 'Ben King’s arrival from Gold Coast means more competition up forward at Hawthorn, and the 35-year-old Gunston says it’s healthy and the coaches will sort the structure. He’s kicked 73 and 66 goals the last two years, but sharing the marking load with King could trim his scoring ceiling.',
   },
@@ -67,10 +71,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'N. Blakey', tag: 'Trade', title: 'Blakey starts fresh at North',
     body: 'Out of Sydney after the Pullman ban and into North Melbourne. A rebuilding club should give him a big half-back role, which is where his best scores have come from.',
-  },
-  {
-    player: 'Z. Merrett', tag: 'Trade', title: 'Merrett joins Hawthorn at 31',
-    body: 'Leaves Essendon after a decade as their ball magnet. At Hawthorn he’s one of several on-ballers, so expect a drop in raw possessions.',
   },
   {
     player: 'C. Mills', tag: 'Injury', title: 'Mills out with an ACL',
