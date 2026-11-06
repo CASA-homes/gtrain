@@ -7,7 +7,7 @@ import { GAME_MINUTES, type MGame, type MPlayer, type MRound, type MTeam } from 
 import { Shell } from './kit';
 
 const PERTH = 'Australia/Perth';
-export const A_COL = '#4cc9f0', B_COL = '#f5a524';
+export const A_COL = '#2563c9', B_COL = '#e0780f';
 const LINE_ORDER: MPlayer['line'][] = ['DEF', 'MID', 'RUC', 'FWD', 'BENCH'];
 const LINE_NAME: Record<MPlayer['line'], string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', BENCH: 'Bench' };
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
@@ -102,34 +102,34 @@ export function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam;
         <clipPath id="wa"><rect x={L} y={T} width={W - L - R} height={y(0) - T} /></clipPath>
         <clipPath id="wb"><rect x={L} y={y(0)} width={W - L - R} height={H - Bm - y(0)} /></clipPath>
       </defs>
-      <rect x={xNow} y={T} width={Math.max(0, W - R - xNow)} height={H - T - Bm} fill="#fff" fillOpacity={0.025} />
+      <rect x={xNow} y={T} width={Math.max(0, W - R - xNow)} height={H - T - Bm} fill="#121513" fillOpacity={0.03} />
       {ticks.map((v) => (
         <g key={v}>
-          <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#fff" strokeOpacity={v === 0 ? 0.28 : 0.07} />
-          <text x={L - 6} y={y(v) + 3.5} textAnchor="end" fill="#8a928e" fontSize={10} fontFamily="var(--mono)">{v === 0 ? '0' : Math.abs(v)}</text>
+          <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#121513" strokeOpacity={v === 0 ? 0.28 : 0.07} />
+          <text x={L - 6} y={y(v) + 3.5} textAnchor="end" fill="#6c736e" fontSize={10} fontFamily="var(--mono)">{v === 0 ? '0' : Math.abs(v)}</text>
         </g>
       ))}
       <text x={L + 6} y={T + 12} fill={A_COL} fontSize={10.5} fontWeight={600}>▲ {a.short}</text>
       <text x={L + 6} y={H - Bm - 6} fill={B_COL} fontSize={10.5} fontWeight={600}>▼ {b.short}</text>
       {round.games.map((g) => { const gx = x(Date.parse(g.start)); return (
         <g key={g.id}>
-          <line x1={gx} x2={gx} y1={H - Bm} y2={H - Bm + 5} stroke="#8a928e" strokeOpacity={0.6} />
-          <text x={gx + 2} y={H - Bm + 15} fill="#8a928e" fontSize={8.5} fontFamily="var(--mono)">{g.home}</text>
-          <text x={gx + 2} y={H - Bm + 25} fill="#5c6461" fontSize={8.5} fontFamily="var(--mono)">{g.away}</text>
+          <line x1={gx} x2={gx} y1={H - Bm} y2={H - Bm + 5} stroke="#6c736e" strokeOpacity={0.6} />
+          <text x={gx + 2} y={H - Bm + 15} fill="#6c736e" fontSize={8.5} fontFamily="var(--mono)">{g.home}</text>
+          <text x={gx + 2} y={H - Bm + 25} fill="#9aa19c" fontSize={8.5} fontFamily="var(--mono)">{g.away}</text>
         </g>); })}
-      {days.map((d) => <text key={d.day} x={x(d.t) + 2} y={H - 3} fill="#c9cfcc" fontSize={10} fontWeight={600}>{d.day}</text>)}
+      {days.map((d) => <text key={d.day} x={x(d.t) + 2} y={H - 3} fill="#4d544f" fontSize={10} fontWeight={600}>{d.day}</text>)}
       {area && <path d={area} fill={A_COL} fillOpacity={0.22} clipPath="url(#wa)" />}
       {area && <path d={area} fill={B_COL} fillOpacity={0.22} clipPath="url(#wb)" />}
-      {projArr.length > 1 && <path d={line(projArr)} fill="none" stroke="#f4f6f5" strokeOpacity={0.75} strokeWidth={1.5} strokeDasharray="4 4" />}
-      {liveArr.length > 1 && <path d={line(liveArr)} fill="none" stroke="#f4f6f5" strokeWidth={2.2} strokeLinejoin="round" />}
+      {projArr.length > 1 && <path d={line(projArr)} fill="none" stroke="#121513" strokeOpacity={0.75} strokeWidth={1.5} strokeDasharray="4 4" />}
+      {liveArr.length > 1 && <path d={line(liveArr)} fill="none" stroke="#121513" strokeWidth={2.2} strokeLinejoin="round" />}
       {now > tl.samples[0] && now < tl.samples[tl.samples.length - 1] && <>
-        <line x1={xNow} x2={xNow} y1={T} y2={H - Bm} stroke="#00c805" strokeOpacity={0.6} strokeDasharray="2 3" />
-        <line x1={xNow} x2={W - R} y1={y(cur.proj)} y2={y(cur.proj)} stroke="#f4f6f5" strokeOpacity={0.35} strokeDasharray="2 4" />
+        <line x1={xNow} x2={xNow} y1={T} y2={H - Bm} stroke="#1d8a3c" strokeOpacity={0.6} strokeDasharray="2 3" />
+        <line x1={xNow} x2={W - R} y1={y(cur.proj)} y2={y(cur.proj)} stroke="#121513" strokeOpacity={0.35} strokeDasharray="2 4" />
       </>}
-      <circle cx={xNow} cy={y(cur.live)} r={4.5} fill="#f4f6f5" />
+      <circle cx={xNow} cy={y(cur.live)} r={4.5} fill="#121513" />
       <circle cx={W - R} cy={y(cur.proj)} r={4} fill="none" stroke={cur.proj >= 0 ? A_COL : B_COL} strokeWidth={2} />
       <text x={W - R + 7} y={y(cur.proj) - 2} fill={cur.proj >= 0 ? A_COL : B_COL} fontSize={11} fontWeight={700} fontFamily="var(--mono)">{signed(Math.round(cur.proj))}</text>
-      <text x={W - R + 7} y={y(cur.proj) + 10} fill="#8a928e" fontSize={8.5}>proj.</text>
+      <text x={W - R + 7} y={y(cur.proj) + 10} fill="#6c736e" fontSize={8.5}>proj.</text>
     </svg>
     </div>
   );
@@ -139,14 +139,14 @@ export function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam;
 export function MFace({ p, size = 34 }: { p: MPlayer; size?: number }) {
   const [bad, setBad] = useState(false);
   const c = CLUBS[p.club];
-  const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#2a302d';
+  const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#d6dad3';
   return (
     <span className="rh-face" style={{ width: size, height: size, background: ring }} aria-hidden="true">
       <span>{bad || !p.photo ? p.name.split(' ').map((w) => w[0]).slice(0, 2).join('') : <img src={p.photo} alt="" loading="lazy" onError={() => setBad(true)} />}</span>
     </span>
   );
 }
-export const rtCol = (r: number) => (r >= 8.5 ? '#00c805' : r >= 7.5 ? '#7ddc5a' : r >= 6.5 ? '#d9c24f' : r >= 5.5 ? '#ff9a3c' : '#ff5000');
+export const rtCol = (r: number) => (r >= 8.5 ? '#2fae4f' : r >= 7.5 ? '#86cf63' : r >= 6.5 ? '#e1c84f' : r >= 5.5 ? '#f59d4a' : '#e8582a');
 function tip(l: Live) {
   if (!l.game) return 'No game';
   if (l.ph.state === 'pre') return new Date(l.game.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });
@@ -156,7 +156,7 @@ function tip(l: Live) {
 function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b'; onOpen: () => void }) {
   const pre = l.ph.state === 'pre', live = l.ph.state === 'live';
   const pace = l.play > 0 ? l.score - Math.round(p.proj * l.play) : 0;
-  const togCol = l.injured ? '#ff5000' : p.tog >= 80 ? '#00c805' : p.tog >= 70 ? '#d9c24f' : '#ff9a3c';
+  const togCol = l.injured ? '#d4470f' : p.tog >= 80 ? '#1d8a3c' : p.tog >= 70 ? '#d9c24f' : '#ff9a3c';
   return (
     <div className={`mx-row ${p.line === 'BENCH' ? 'bench' : ''}`}>
       <MFace p={p} />
@@ -205,13 +205,13 @@ function MiniWorm({ a, b, gameByClub, tl, now }: { a: MTeam; b: MTeam; gameByClu
   const shown = pts.filter((p) => p.t <= now);
   const m = Math.max(30, ...pts.map((p) => Math.abs(p.v)));
   const x = (t: number) => tl.toX(t) * 120, y = (v: number) => 16 - (v / m) * 14;
-  if (shown.length < 2) return <svg width={120} height={32} aria-hidden="true"><line x1={0} x2={120} y1={16} y2={16} stroke="#fff" strokeOpacity={0.15} /></svg>;
+  if (shown.length < 2) return <svg width={120} height={32} aria-hidden="true"><line x1={0} x2={120} y1={16} y2={16} stroke="#121513" strokeOpacity={0.15} /></svg>;
   const d = shown.map((p, i) => `${i ? 'L' : 'M'}${x(p.t).toFixed(1)},${y(p.v).toFixed(1)}`).join(' ');
   return (
     <svg width={120} height={32} viewBox="0 0 120 32" aria-hidden="true">
-      <line x1={0} x2={120} y1={16} y2={16} stroke="#fff" strokeOpacity={0.15} />
+      <line x1={0} x2={120} y1={16} y2={16} stroke="#121513" strokeOpacity={0.15} />
       <path d={`${d} L${x(shown[shown.length - 1].t)},16 L${x(shown[0].t)},16 Z`} fill={shown[shown.length - 1].v >= 0 ? A_COL : B_COL} fillOpacity={0.25} />
-      <path d={d} fill="none" stroke="#f4f6f5" strokeWidth={1.4} />
+      <path d={d} fill="none" stroke="#121513" strokeWidth={1.4} />
     </svg>
   );
 }
@@ -265,7 +265,7 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
               <i className="mx-projline" style={{ bottom: `${(p.proj / maxBar) * 100}%` }} title={`2027 projection ${p.proj}`} />
               {log.map(([r, sc, tog]) => (
                 <button key={r} className={`mx-bar ${pick === r ? 'on' : ''}`} onClick={() => setPick(pick === r ? null : r)} aria-label={`Round ${r}: ${sc}${tog != null ? `, ${tog}% time on ground` : ''}`}>
-                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#00c805' : sc >= p.proj ? '#7ddc5a' : sc >= p.proj * 0.75 ? '#d9c24f' : '#ff9a3c' }} />
+                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#1d8a3c' : sc >= p.proj ? '#7ddc5a' : sc >= p.proj * 0.75 ? '#d9c24f' : '#ff9a3c' }} />
                   <em>{r}</em>
                 </button>
               ))}

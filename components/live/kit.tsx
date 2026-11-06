@@ -19,7 +19,7 @@ const SQUAD_CODE: Record<string, string> = { BL: 'BRL', GC: 'GCS', NM: 'NTH', PA
 export function Face({ p, size = 30 }: { p: { id: number; name: string; squad: string }; size?: number }) {
   const [bad, setBad] = useState(false);
   const c = CLUBS[SQUAD_CODE[p.squad] ?? p.squad];
-  const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#2a302d';
+  const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#d6dad3';
   return (
     <span className="rh-face" style={{ width: size, height: size, background: ring }} aria-hidden="true">
       <span>{bad ? p.name.split(' ').map((w) => w[0]).slice(0, 2).join('') : <img src={`https://fantasy.afl.com.au/media/aflw_fantasy/players/${p.id}_100.webp`} alt="" loading="lazy" onError={() => setBad(true)}
@@ -27,7 +27,7 @@ export function Face({ p, size = 30 }: { p: { id: number; name: string; squad: s
     </span>
   );
 }
-const SLOT_HUE: Record<Slot, string> = { DEF: '#5aa9ff', MID: '#f5c242', RUC: '#b48cff', FWD: '#ff7a59' };
+const SLOT_HUE: Record<Slot, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 
 export const isLive = (g?: LGame) => !!g && g.status !== 'scheduled' && g.status !== 'completed';
 export function gameLabel(g?: LGame) {
@@ -110,12 +110,14 @@ export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBy
 /* ---------------- shell ---------------- */
 
 const SECTIONS = [
-  { href: '/live', label: 'Home' },
-  { href: '/live/games', label: 'Current games' },
-  { href: '/live/new', label: 'New game' },
+  { href: '/live', label: 'Matchday' },
   { href: '/live/matchups', label: 'Matchups' },
-  { href: '/live/scores', label: 'Live scores' },
   { href: '/live/cup', label: 'Knockout Cup' },
+  { href: '/live/comps', label: 'Side comps' },
+  { href: '/live/desk', label: 'Battle desk' },
+  { href: '/live/games', label: 'Mini games' },
+  { href: '/live/new', label: 'New game' },
+  { href: '/live/scores', label: 'Live scores' },
   { href: '/live/mens', label: 'Men’s R1 (test)' },
 ];
 export function Shell({ title, sub, right, children, compact }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
@@ -238,7 +240,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
             const num = <Nums proj={projOf(p, g)} score={p?.score ?? null} right={right} />;
             return right ? <>{num}{name}</> : <>{name}{num}</>;
           };
-          return <div key={i} className="rh-row">{cell(pa, false)}<span className="rh-slot" style={cssVar('--c', '#8fd18f')}>{i + 1}</span>{cell(pb, true)}</div>;
+          return <div key={i} className="rh-row">{cell(pa, false)}<span className="rh-slot" style={cssVar('--c', '#4f9a5f')}>{i + 1}</span>{cell(pb, true)}</div>;
         })}
         {!flat && SLOT_ORDER.map((s) => (
           <Fragment key={s}>
@@ -635,7 +637,7 @@ export function PrizeStrip({ prize, clubs, standings, final, teamName, myTeamId 
 
 /* ---------------- player profile pop-up ---------------- */
 
-const tone = (x: number) => (x >= 100 ? 'var(--rh-up)' : x >= 80 ? '#7fd88a' : x >= 60 ? '#c9b26b' : 'var(--rh-down)');
+const tone = (x: number) => (x >= 100 ? 'var(--rh-up)' : x >= 80 ? '#4f9a5f' : x >= 60 ? '#b08d1e' : 'var(--rh-down)');
 const money = (n: number) => (Math.abs(n) >= 1e6 ? `$${(n / 1e6).toFixed(2)}m` : `$${Math.round(n / 1000)}k`);
 
 function PlayerSheet({ id, onClose }: { id: number; onClose: () => void }) {
@@ -697,8 +699,8 @@ function PlayerSheet({ id, onClose }: { id: number; onClose: () => void }) {
             {n > 0 && (
               <div className="rh-sheet-range">
                 <div><b style={{ color: 'var(--rh-up)' }}>{share((x) => x >= 100)}%</b><span>100+</span></div>
-                <div><b style={{ color: '#7fd88a' }}>{share((x) => x >= 80 && x < 100)}%</b><span>80–99</span></div>
-                <div><b style={{ color: '#c9b26b' }}>{share((x) => x >= 60 && x < 80)}%</b><span>60–79</span></div>
+                <div><b style={{ color: '#4f9a5f' }}>{share((x) => x >= 80 && x < 100)}%</b><span>80–99</span></div>
+                <div><b style={{ color: '#b08d1e' }}>{share((x) => x >= 60 && x < 80)}%</b><span>60–79</span></div>
                 <div><b style={{ color: 'var(--rh-down)' }}>{share((x) => x < 60)}%</b><span>under 60</span></div>
               </div>
             )}

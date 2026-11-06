@@ -34,7 +34,7 @@ export async function makeOffer(listingId: string, form: FormData) {
   let offer = String(form.get('offer') || '').trim();
   let points: number | null = null;
   if (pickId) {
-    const { data: pick } = await supabase.from('picks').select('year, round, overall, owner_team_id').eq('id', pickId).single();
+    const { data: pick } = await supabase.from('picks').select('*').eq('id', pickId).single();
     if (pick && pick.owner_team_id === me.team_id) {
       offer = [pickLabel(pick), offer].filter(Boolean).join(' + ');
       points = pickValue(pick);

@@ -393,7 +393,7 @@ export function LiveHome({ initial, games, ready, teams, myTeamId, isCommish, me
     </Link>
   );
   return (
-    <Shell title="Live Matchups" sub={<>{data.name} · your keeper matchup, challenges and games in one place</>}>
+    <Shell title="Battle desk" sub={<>{data.name} · token cash, challenges and your mini games</>}>
       <div className="bd-home">
         <KeeperPanel mens={mens} myTeamId={myTeamId} />
         <div className="bd-right">

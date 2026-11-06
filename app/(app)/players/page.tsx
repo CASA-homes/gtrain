@@ -146,6 +146,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           <span className="eyebrow">{own === 'owned' ? 'On a G-Train list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Players</h1>
         </div>
+        <Link href="/players/rather" className="btn dark">Who’d you rather? · player values →</Link>
       </div>
 
       <AskPlayers />

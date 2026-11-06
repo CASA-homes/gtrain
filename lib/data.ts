@@ -20,7 +20,7 @@ export const FREE_AGENTS_UPDATED = (freeAgentData as unknown as { updated: strin
 export interface Team {
   id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null; logo_url?: string | null;
 }
-export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean }
+export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean; kind?: 'draft' | 'msd' | 'bonus' }
 export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null; is_guest?: boolean }
 
 export const getMe = cache(async (): Promise<Me | null> => {
@@ -67,6 +67,8 @@ export interface League {
   byTeam: Map<number, TeamAnalysis>;
   seasons: { year: number; premier_id: number; runner_up_id: number; spoon_id: number; medal: string | null; gf_winner_score: number | null; gf_loser_score: number | null }[];
   picks: Pick[];
+  /** Mid-season draft and bonus picks (migration 0020). Kept apart so the national-draft maths ignore them. */
+  extraPicks: Pick[];
   ladder: { season: number; team_id: number; rank: number; wins: number; losses: number; draws: number; points: number; pts_for: number; pts_against: number }[];
 }
 
@@ -95,9 +97,16 @@ export const getLeague = cache(async (): Promise<League> => {
     })(),
     supabase.from('seasons').select('*').order('year', { ascending: false }),
     supabase.from('ladder').select('*').order('rank'),
-    supabase.from('picks').select('id, year, round, overall, original_team_id, owner_team_id, is_optional').in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id'),
+    (() => {
+      // kind arrives with migration 0020 (mid-season draft picks); until it's run, every pick is a draft pick.
+      const sel = (kind: boolean) => supabase.from('picks').select(`id, year, round, overall, original_team_id, owner_team_id, is_optional${kind ? ', kind' : ''}`)
+        .in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id');
+      return sel(true).then((r) => (r.error ? sel(false) : r));
+    })(),
   ]);
-  const picks = (picksQ.data ?? []) as Pick[];
+  const allPicks = ((picksQ.data ?? []) as unknown as Pick[]).map((p) => ({ ...p, kind: p.kind ?? 'draft' }));
+  const picks = allPicks.filter((p) => p.kind === 'draft');
+  const extraPicks = allPicks.filter((p) => p.kind !== 'draft');
 
   const teams = (teamsQ.data ?? []) as Team[];
   type SquadRow = {
@@ -202,7 +211,7 @@ export const getLeague = cache(async (): Promise<League> => {
   }
 
   const attrs = buildAttrs(players, freeAgents);
-  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
+  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
 });
 
 export { primaryLine };

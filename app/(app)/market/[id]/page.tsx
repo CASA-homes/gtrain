@@ -22,7 +22,7 @@ export default async function ListingPage({ params }: { params: Promise<{ id: st
   const [{ data: offers }, { data: comments }, { data: myPicks }] = await Promise.all([
     supabase.from('offers').select('*').eq('listing_id', id).order('created_at'),
     supabase.from('listing_comments').select('*').eq('listing_id', id).order('created_at'),
-    supabase.from('picks').select('id, year, round, overall').eq('owner_team_id', me?.team_id ?? -1).order('year').order('round'),
+    supabase.from('picks').select('*').eq('owner_team_id', me?.team_id ?? -1).order('year').order('round'),
   ]);
   const p = league.players.find((x) => x.id === l.player_id)!;
   const r = league.ratings.get(p.id)!;

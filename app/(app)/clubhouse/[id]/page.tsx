@@ -19,6 +19,10 @@ import { WindowChart } from '@/components/WindowChart';
 import { ClubGames } from '@/components/ClubGames';
 import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
+import { ClubLegacy, type LegacySeason } from '@/components/ClubLegacy';
+import { leagueHistory, sameTeam } from '@/lib/league-history';
+import LEAGUE_JSON from '@/data/league.json';
+import { pickLabel } from '@/lib/picks';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -131,6 +135,23 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const cuts = a.players.filter((p) => !p.list_status && !p.is_rookie_keeper && !likelyRookie(p))
     .map((p) => ({ p, kv: keepValue(p) })).sort((x, y) => x.kv - y.kv).slice(0, 5).map((x) => x.p);
 
+  // Legacy strip: trophy cabinet (every season since 2022), record, rivals and the pick vault.
+  const hist = leagueHistory();
+  const lj = (LEAGUE_JSON as unknown as { teams: { name: string; third: number }[] }).teams.find((t) => sameTeam(t.name, a.team.name));
+  const career = hist.careers.find((c) => sameTeam(c.name, a.team.name));
+  const rival = hist.rivals.find((r) => sameTeam(r.team, a.team.name));
+  const legacySeasons: LegacySeason[] = [...league.seasons].sort((x, y) => x.year - y.year).map((s) => {
+    const rank = league.ladder.find((l) => l.season === s.year && l.team_id === a.team.id)?.rank ?? null;
+    return { year: s.year, rank, result: s.premier_id === a.team.id ? 'premier' : s.runner_up_id === a.team.id ? 'runner' : s.spoon_id === a.team.id ? 'spoon' : rank ? 'rank' : 'none' };
+  });
+  const clubShort = (tid: number) => league.teams.find((t) => t.id === tid)?.short_code ?? '?';
+  const vault = [...league.picks, ...league.extraPicks].filter((pk) => pk.owner_team_id === a.team.id)
+    .sort((x, y) => x.year - y.year || (x.kind === 'msd' ? 1 : 0) - (y.kind === 'msd' ? 1 : 0) || x.round - y.round || (x.overall ?? 99) - (y.overall ?? 99))
+    .map((pk) => ({ id: pk.id, year: pk.year, kind: pk.kind ?? 'draft', round: pk.round, label: pickLabel({ ...pk, year: pk.year }).replace(/^\d{4}( MSD| Bonus)? /, ''), via: pk.original_team_id !== pk.owner_team_id ? clubShort(pk.original_team_id) : null }));
+  const won = await supabase.from('comp_prizes').select('label, comp, season').eq('winner_id', a.team.id).eq('status', 'transferred').eq('kind', 'trophy');
+  const compTrophies = (won.error ? [] : won.data ?? []).map((t) => ({ label: t.label.replace(/^Trophy for the clubhouse cabinet$/, String(t.comp).replace(/^./, (c: string) => c.toUpperCase())), year: t.season as number }));
+  const rv = (x?: { o: string; w: number; l: number; margin: number }) => (x ? { name: x.o, w: x.w, l: x.l, margin: x.margin } : null);
+
   return (
     <div className="wrap">
       <header className="club-head">
@@ -168,6 +189,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           {(isMine || me?.is_commish) && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link>}
         </div>
       </header>
+
+      <ClubLegacy colour="#1f6b3a" record={career ? { w: career.w, l: career.l, pct: career.pct } : null} seasons={legacySeasons} prelims={lj?.third ?? 0}
+        extraTrophies={compTrophies} picks={vault} nemesis={rv(rival?.nemesis)} bunny={rv(rival?.bunny)} />
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

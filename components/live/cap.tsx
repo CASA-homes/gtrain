@@ -6,7 +6,7 @@ import { CAP_PICKS, lockedIds, priceOf, type CapEntry, type GameRow, type LGame,
 import { deleteGame, loadEntries, saveEntry } from '@/app/(app)/live/actions';
 import { Empty, Face, LiveChip, MarginChart, Nums, NumsHead, PrizeStrip, Shell, projOf, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
-const HUE: Record<string, string> = { DEF: '#5aa9ff', MID: '#f5c242', RUC: '#b48cff', FWD: '#ff7a59' };
+const HUE: Record<string, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 const signed = (x: number) => (x > 0 ? `+${x}` : `${x}`);
 
 /** Score with captain doubled; projection adds her average for the part of the game still to come. */

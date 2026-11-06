@@ -32,7 +32,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
     supabase.from('desk_teams').select('*').eq('desk_id', id).order('joined_at'),
     supabase.from('desk_comments').select('*').eq('desk_id', id).order('created_at'),
     supabase.from('desk_votes').select('team_id').eq('desk_id', id),
-    supabase.from('picks').select('id, year, round, overall, owner_team_id, original_team_id').in('year', [2027, 2028]),
+    supabase.from('picks').select('*').in('year', [2027, 2028]),
   ]);
   const team = (tid: number) => league.teams.find((t) => t.id === tid)!;
   const pickById = new Map((allPicks ?? []).map((p) => [p.id, p]));

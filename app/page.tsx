@@ -34,8 +34,8 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
             <span>Keeper</span>
           </h1>
           {me ? (
-            <Link href="/clubhouse" className={styles.enter}>
-              Enter the clubhouse
+            <Link href="/live" className={styles.enter}>
+              Enter Matchday
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
           ) : (

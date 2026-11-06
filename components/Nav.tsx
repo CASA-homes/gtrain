@@ -24,7 +24,7 @@ const LINKS = [
   { href: '/league', label: 'League', short: 'League', icon: 'league' },
   { href: '/rankings', label: 'Rankings', short: 'Ranks', icon: 'rankings' },
   { href: '/draft', label: 'Draft', short: 'Draft', icon: 'draft' },
-  { href: '/live', label: 'Live Matchups', short: 'Live', icon: 'live' },
+  { href: '/live', label: 'Matchday', short: 'Match', icon: 'live' },
 ];
 
 export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null }) {

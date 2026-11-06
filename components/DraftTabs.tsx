@@ -3,6 +3,7 @@ import { C } from '@/lib/ratings';
 
 const TABS = [
   ['picks', 'G-Train picks', '/draft'],
+  ['msd', 'Mid-season draft', '/draft/msd'],
   ['mock', '2027 mock draft', '/draft/mock'],
   ['review', 'AFL draft review', '/draft/history'],
   ['crystal', 'Crystal ball', '/draft/crystal-ball'],

@@ -14,10 +14,15 @@ export function playerPoints(value: number) {
   return Math.round(3000 * Math.pow(value / 100, 2.2));
 }
 
-export function pickLabel(p: { year: number; round: number; overall: number | null }) {
-  return `${p.year} R${p.round}${p.overall ? ` #${p.overall}` : ''}`;
+type PickLike = { year: number; round: number; overall: number | null; kind?: string | null };
+export function pickLabel(p: PickLike) {
+  const tag = p.kind === 'msd' ? ' MSD' : p.kind === 'bonus' ? ' Bonus' : '';
+  return `${p.year}${tag} R${p.round}${p.overall ? ` #${p.overall}` : ''}`;
 }
 
-export function pickValue(p: { round: number; overall: number | null }) {
-  return p.overall ? pickPoints(p.overall) : roundPoints(p.round);
+/** Mid-season draft picks come from a thinner pool: MSD pick 1 is valued like national pick 16. */
+export const MSD_OFFSET = 15;
+export function pickValue(p: { round: number; overall: number | null; kind?: string | null }) {
+  const off = p.kind === 'msd' ? MSD_OFFSET : 0;
+  return p.overall ? pickPoints(p.overall + off) : pickPoints((p.round - 1) * 10 + 5 + off);
 }
