@@ -258,7 +258,7 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
 }
 
 /* ---------------- page ---------------- */
-export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number }) {
+export function MensRound({ round, myTeamId, compact = false }: { round: MRound; myTeamId: number; compact?: boolean }) {
   const gameByClub = useMemo(() => { const m = new Map<string, MGame>(); for (const g of round.games) { m.set(g.home, g); m.set(g.away, g); } return m; }, [round.games]);
   const tl = useTimeline(round.games);
   const t0 = Date.parse(round.start), t1 = Date.parse(round.end), nowDefault = Date.parse(round.now);
@@ -290,13 +290,13 @@ export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number
   const live = round.games.filter((g) => phase((now - Date.parse(g.start)) / 60e3).state === 'live');
   const nowLabel = new Date(now).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });
 
-  return (
-    <Shell title="Round 1 · 2027" sub={<>Men’s matchday test. Real AFL fixture, randomised G-Train draw, simulated scores. <span className="rh-mono">{nowLabel}</span> Perth time.</>}
-      right={live.length ? <span className="rh-chip live"><span className="rh-pulse" />{live.map((g) => `${g.home} v ${g.away}`).join(', ')}</span> : <span className="rh-chip">{now >= t1 ? 'Round complete' : 'No games on'}</span>}>
-
+  const chip = live.length ? <span className="rh-chip live"><span className="rh-pulse" />{live.map((g) => `${g.home} v ${g.away}`).join(', ')}</span> : <span className="rh-chip">{now >= t1 ? 'Round complete' : 'No games on'}</span>;
+  const body = (
+    <>
       <div className="mx-scrub rh-card">
         <div className="mx-scrubtop">
-          <span className="rh-k">Replay the round</span>
+          <span className="rh-k">{compact ? <>Test round · simulated scores · <span className="rh-mono">{nowLabel}</span></> : 'Replay the round'}</span>
+          {compact && chip}
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="rh-btn alt" onClick={() => { if (now >= t1) setNow(t0); setPlaying((p) => !p); }}>{playing ? 'Pause' : now >= t1 ? 'Replay from start' : 'Play'}</button>
             <button className="rh-btn soft" onClick={() => { setPlaying(false); setNow(nowDefault); }}>Back to “now”</button>
@@ -361,8 +361,14 @@ export function MensRound({ round, myTeamId }: { round: MRound; myTeamId: number
         <div><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
         <div><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
       </div>
-      <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>
+      {!compact && <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>}
       <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />
+    </>
+  );
+  if (compact) return <div className="mx-compact">{body}</div>;
+  return (
+    <Shell title="Round 1 · 2027" sub={<>Men’s matchday test. Real AFL fixture, randomised G-Train draw, simulated scores. <span className="rh-mono">{nowLabel}</span> Perth time.</>} right={chip}>
+      {body}
     </Shell>
   );
 }

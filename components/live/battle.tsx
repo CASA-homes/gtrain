@@ -214,7 +214,7 @@ function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
           );
         })}
       </div>
-      <Link href="/live/mens" className="rh-btn alt" style={{ alignSelf: 'flex-start' }}>Open the full matchup →</Link>
+      <Link href="/live/matchups" className="rh-btn alt" style={{ alignSelf: 'flex-start' }}>Open the full matchup →</Link>
       <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />
     </section>
   );

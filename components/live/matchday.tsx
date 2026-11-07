@@ -18,7 +18,7 @@ const POS_COL: Record<Pos, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC
 const empty = (r: Rules): MdLineup => ({ slots: Object.fromEntries(r.slots.map((s) => [s.key, []])), c: null, vc: null });
 const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
 const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
-const shortGame = (g: GameOpt) => `${g.label.replace('Knockout Cup · Round ', 'Cup R').replace(' · Round ', ' R')}${g.opp ? ` · v ${g.opp.name}` : ''}`;
+export const shortGame = (g: GameOpt) => `${g.label.replace('Knockout Cup · Round ', 'Cup R').replace(' · Round ', ' R')}${g.opp ? ` · v ${g.opp.name}` : ''}`;
 
 export function Disc({ p, size = 16, label = false }: { p: MdPlayer; size?: number; label?: boolean }) {
   return (
@@ -329,7 +329,7 @@ function SideList({ side, rules, look }: { side: { lineup: MdLineup }; rules: Ru
   );
 }
 
-function Matchup({ game, rules, mine, myName, myTeamId, look }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; myTeamId: number; look: (id: number) => MdPlayer | undefined }) {
+export function Matchup({ game, rules, mine, myName, myTeamId, look }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; myTeamId: number; look: (id: number) => MdPlayer | undefined }) {
   const proj = (id: number) => look(id)?.proj ?? 0;
   if (game.opp) {
     const a = projTotal(rules, mine, proj), b = projTotal(rules, game.opp.lineup, proj);

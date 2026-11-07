@@ -352,6 +352,7 @@ export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
         <div className="cup-col">
           <GroupCard data={data} ci={0} name={name} />
           <GroupCard data={data} ci={1} name={name} />
+          <Bracket data={data} name={name} />
           <section className="rh-card">
             <span className="rh-k">Knockouts</span>
             <div className="cup-kos">
@@ -363,7 +364,6 @@ export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
             ))}
             </div>
           </section>
-          <Bracket data={data} name={name} />
         </div>
         <div className="cup-col">
           <DrawPanel />

@@ -112,12 +112,11 @@ export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBy
 const SIDE_GAMES = [{ href: '/live/desk', label: 'Battle desk' }, { href: '/live/games', label: 'Mini games' }, { href: '/live/new', label: 'New game' }];
 const SECTIONS: { href: string; label: string; also?: string[] }[] = [
   { href: '/live', label: 'Squad Selector' },
-  { href: '/live/matchups', label: 'Matchups' },
+  { href: '/live/matchups', label: 'Live Matchups' },
   { href: '/live/cup', label: 'Knockout Cup' },
   { href: '/live/comps', label: 'Side comps' },
   { href: '/live/desk', label: 'Side Games', also: ['/live/games', '/live/new'] },
   { href: '/live/scores', label: 'Live scores' },
-  { href: '/live/mens', label: 'Men’s R1 (test)' },
 ];
 export function Shell({ title, sub, right, children, compact }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
   const path = usePathname();
