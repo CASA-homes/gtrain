@@ -5,7 +5,7 @@ import type { PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { photoUrl } from '@/lib/photos';
 import { createClient } from '@/lib/supabase/server';
-import { buildMensRound, profileOf } from '@/lib/mens-round';
+import { R1_2027, buildMensRound, profileOf } from '@/lib/mens-round';
 import { form as formOf } from '@/lib/ratings';
 import { CUP_SEASON, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
@@ -27,6 +27,12 @@ export interface MatchdayData {
   squad: MdPlayer[]; pool: MdPlayer[]; others: Record<number, MdPlayer>;
   games: GameOpt[]; lineups: Record<string, MdLineup | null>;
   survivorUsed: number[]; entered: CompKey[];
+  /** game ids your club has saved a team for (exactly that round) */
+  savedIds: string[];
+  /** this AFL round's fixture, for the strip under the title */
+  fixtures: { home: string; away: string; start: string }[];
+  /** when each game locks (first bounce of its AFL round), ISO; null if not known yet */
+  locks: Record<string, string | null>;
 }
 
 export const toMd = (p: PlayerRow, full = false): MdPlayer => {
@@ -118,5 +124,9 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
     lineups[`plate:${r}`] = saved.get(`plate:${r}:${myTeamId}`) ?? null;
   }
 
-  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, survivorUsed, entered };
+  const savedIds = games.filter((g) => saved.has(`${g.key}:${g.round}:${myTeamId}`)).map((g) => g.id);
+  const firstBounce = [...R1_2027].sort((a, b) => Date.parse(a.start) - Date.parse(b.start))[0]?.start ?? null;
+  const locks = Object.fromEntries(games.map((g) => [g.id, g.round === round ? firstBounce : null]));
+  const fixtures = R1_2027.map((g) => ({ home: g.home, away: g.away, start: g.start }));
+  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, survivorUsed, entered, savedIds, fixtures, locks };
 }

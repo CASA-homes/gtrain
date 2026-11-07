@@ -39,7 +39,7 @@ function Table({ rows, name, myTeamId, compact }: { rows: StandRow[]; name: (id:
 }
 
 /* ---------------- home panel ---------------- */
-export function CupPanel({ data }: { data: CupData }) {
+export function CupPanel({ data, compact = false }: { data: CupData; compact?: boolean }) {
   const name = (id: number) => data.teams.find((t) => t.id === id)?.name ?? `Club ${id}`;
   const myConf = data.confs[0].includes(data.myTeamId) ? 0 : data.confs[1].includes(data.myTeamId) ? 1 : 0;
   const rows = standings(data.confs[myConf], data.matches, data.results);
@@ -50,7 +50,14 @@ export function CupPanel({ data }: { data: CupData }) {
   const opp = next ? (next.home === data.myTeamId ? next.away : next.home) : null;
   const set = next ? filled(data.lineups[next.round]) : 0;
   return (
-    <section className="rh-card cup-panel">
+    <section className={`rh-card cup-panel ${compact ? 'cup-compact' : ''}`}>
+      {compact ? (
+        <div className="cup-head">
+          <Trophy />
+          <b className="cup-title" style={{ flex: 1 }}>{CUP_NAME}</b>
+          <Link href="/live/cup" className="rh-link" style={{ fontSize: 12 }}>Full cup →</Link>
+        </div>
+      ) : (<>
       <div className="cup-head">
         <Trophy />
         <div style={{ minWidth: 0, flex: 1 }}>
@@ -62,18 +69,19 @@ export function CupPanel({ data }: { data: CupData }) {
       <div className="cup-format">
         <span>2 conferences of 5</span><span>4 group games</span><span>Top 2 → semis</span><span>Final R{FINAL_ROUND}</span><span>16 a side · no captains</span>
       </div>
+      </>)}
       <div className="cup-next">
         {next ? (
           <>
-            <span className="rh-k">Your next cup game · Round {next.round} · week of {roundWeek(next.round)}{next.stage !== 'group' ? ` · ${next.stage === 'semi' ? 'Semi-final' : 'Final'}` : ` · group game ${mine.filter((m) => m.stage === 'group').indexOf(next) + 1} of 4`}</span>
+            <span className="rh-k">{compact ? `Next · Round ${next.round}` : <>Your next cup game · Round {next.round} · week of {roundWeek(next.round)}{next.stage !== 'group' ? ` · ${next.stage === 'semi' ? 'Semi-final' : 'Final'}` : ` · group game ${mine.filter((m) => m.stage === 'group').indexOf(next) + 1} of 4`}</>}</span>
             <b>v {opp ? name(opp) : next.label ?? 'TBC'}</b>
-            {nextBye && <span className="rh-dim" style={{ fontSize: 12.5 }}>You have the bye in round {nextBye}.</span>}
+            {nextBye && !compact && <span className="rh-dim" style={{ fontSize: 12.5 }}>You have the bye in round {nextBye}.</span>}
             <span className={set >= ON_FIELD ? 'rh-up' : 'rh-down'} style={{ fontSize: 13 }}>{set >= ON_FIELD ? 'Cup lineup set' : set ? `Cup lineup ${set}/${ON_FIELD}` : 'Cup lineup not set yet'}</span>
           </>
         ) : <b>Your cup run is over for {CUP_SEASON}.</b>}
       </div>
       <div><span className="rh-k">{CONF_NAMES[myConf]}</span><Table rows={rows} name={name} myTeamId={data.myTeamId} compact /></div>
-      <Link href="/live/cup#lineup" className="rh-btn go" style={{ alignSelf: 'flex-start' }}>Set cup lineup</Link>
+      {!compact && <Link href="/live/cup#lineup" className="rh-btn go" style={{ alignSelf: 'flex-start' }}>Set cup lineup</Link>}
     </section>
   );
 }

@@ -109,14 +109,13 @@ export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBy
 
 /* ---------------- shell ---------------- */
 
-const SECTIONS = [
+const SIDE_GAMES = [{ href: '/live/desk', label: 'Battle desk' }, { href: '/live/games', label: 'Mini games' }, { href: '/live/new', label: 'New game' }];
+const SECTIONS: { href: string; label: string; also?: string[] }[] = [
   { href: '/live', label: 'Squad Selector' },
   { href: '/live/matchups', label: 'Matchups' },
   { href: '/live/cup', label: 'Knockout Cup' },
   { href: '/live/comps', label: 'Side comps' },
-  { href: '/live/desk', label: 'Battle desk' },
-  { href: '/live/games', label: 'Mini games' },
-  { href: '/live/new', label: 'New game' },
+  { href: '/live/desk', label: 'Side Games', also: ['/live/games', '/live/new'] },
   { href: '/live/scores', label: 'Live scores' },
   { href: '/live/mens', label: 'Men’s R1 (test)' },
 ];
@@ -137,8 +136,13 @@ export function Shell({ title, sub, right, children, compact }: { title: string;
         if (el && !(e.target as HTMLElement).closest('button, a, select, input')) setSheet(Number(el.dataset.pid));
       }}>
       <nav className="rh-sub" aria-label="Live Matchups">
-        {SECTIONS.map((s) => <Link key={s.href} href={s.href} aria-current={(s.href === '/live' ? path === '/live' : path.startsWith(s.href)) ? 'page' : undefined}>{s.label}</Link>)}
+        {SECTIONS.map((s) => <Link key={s.href} href={s.href} aria-current={(s.href === '/live' ? path === '/live' : [s.href, ...(s.also ?? [])].some((h) => path.startsWith(h))) ? 'page' : undefined}>{s.label}</Link>)}
       </nav>
+      {SIDE_GAMES.some((g) => path.startsWith(g.href)) && (
+        <nav className="rh-sub2" aria-label="Side Games">
+          {SIDE_GAMES.map((g) => <Link key={g.href} href={g.href} aria-current={path.startsWith(g.href) ? 'page' : undefined}>{g.label}</Link>)}
+        </nav>
+      )}
       <header className="rh-head">
         <div style={{ minWidth: 0 }}>
           <h1 className="rh-title">{title}</h1>

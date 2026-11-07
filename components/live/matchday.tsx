@@ -1,7 +1,7 @@
 'use client';
 // Matchday · Squad Selector. Left: your whole list beside the field (3-2 / 4-3 / 1 / 3-2 + emergencies), drag and drop
 // or tap to place. Right: the matchup for whichever game is picked in the dropdown, and the Knockout Cup.
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CLUBS } from '@/lib/clubs';
@@ -267,7 +267,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
+        <div className="sq-fieldcol">
           <div className="sq-field">
             {lines.map((s, li) => {
               let i = 0;
@@ -291,7 +291,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
               </div>
             )}
           </div>
-          <span className="sq-hint"><b>Bold number</b> on each card is his projected score{rules.captain ? ' (captain doubled)' : ''}. Arrows show form, last 5 v his average: <span style={{ color: '#10a35a' }}>rising</span>, <span style={{ color: '#c9930f' }}>steady</span>, <span style={{ color: '#d6452f' }}>falling</span>. Drag a player onto a spot, or tap him then tap the spot. Drag between spots to swap, or back to the list to take him out. {rules.summary}</span>
+          <span className="sq-hint"><b>Bold</b> = projected{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · drag onto a spot or tap then tap · drag back to the list to remove · {rules.summary}</span>
         </div>
       </div>
       {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} />}
@@ -324,7 +324,7 @@ function Matchup({ game, rules, mine, myName, myTeamId, look }: { game: GameOpt;
     const lineSum = (l: MdLineup, k: string) => (l.slots[k] ?? []).reduce((t, id) => t + proj(id) * (rules.captain && l.c === id ? 2 : 1), 0);
     return (
       <section className="rh-card md-mu">
-        <div className="md-mu-h"><span className="rh-k">{game.label}{game.key === 'cup' && game.note ? ` · ${game.note}` : ''}</span><span className="rh-chip">Projected</span></div>
+        <div className="md-mu-h"><span className="rh-k">{game.label}{game.key === 'cup' && game.note ? ` · ${game.note}` : ''} · projected</span><Link href="/live/matchups" className="rh-link" style={{ fontSize: 12 }}>All matchups →</Link></div>
         <div className="md-score">
           <div className="me"><span className="rh-dim">You</span><b className="md-ellip">{myName}</b><span className="md-big rh-mono">{a}</span></div>
           <div className="md-vs"><span className="md-pct rh-mono">{Math.round(win * 100)}<small>%</small></span><span className="rh-dim">win chance</span></div>
@@ -346,7 +346,6 @@ function Matchup({ game, rules, mine, myName, myTeamId, look }: { game: GameOpt;
           })}
         </div>
         <details className="md-det"><summary>Their lineup</summary><SideList side={game.opp} rules={rules} look={look} /></details>
-        {game.note && game.key !== 'cup' && <span className="rh-dim" style={{ fontSize: 12 }}>{game.note}</span>}
       </section>
     );
   }
@@ -378,6 +377,48 @@ function Matchup({ game, rules, mine, myName, myTeamId, look }: { game: GameOpt;
   return <section className="rh-card md-mu"><span className="rh-k">{game.label}</span><span className="rh-dim">No opponent this round.</span></section>;
 }
 
+/* ---------------- AFL fixture strip ---------------- */
+function Fixtures({ round, games }: { round: number; games: { home: string; away: string; start: string }[] }) {
+  // Times in the viewer's own time zone, so only render them after mount.
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
+  const t = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(' am', 'am').replace(' pm', 'pm').replace(',', '');
+  return (
+    <div className="sq-fx" aria-label={`AFL round ${round} fixture`}>
+      <span className="sq-fx-r">R{round}</span>
+      {games.map((g) => (
+        <span key={`${g.home}${g.away}`} className="sq-fx-g">
+          <b>{g.home} v {g.away}</b>
+          <small suppressHydrationWarning>{ready ? t(g.start) : ' '}</small>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/* ---------------- lineups status ---------------- */
+function Lineups({ games, savedIds, locks, current, onPick }: { games: GameOpt[]; savedIds: string[]; locks: Record<string, string | null>; current: string; onPick: (id: string) => void }) {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 30_000); return () => clearInterval(t); }, []);
+  const when = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(' am', 'am').replace(' pm', 'pm').replace(',', '');
+  const done = games.filter((g) => savedIds.includes(g.id)).length;
+  return (
+    <section className="rh-card sq-locks" aria-label="Your lineups">
+      <div className="md-mu-h"><span className="rh-k">Lineups · {done}/{games.length} saved</span></div>
+      {games.map((g) => {
+        const ok = savedIds.includes(g.id), lock = locks[g.id], locked = lock && now != null && Date.parse(lock) <= now;
+        return (
+          <button key={g.id} type="button" className={`sq-lock ${g.id === current ? 'on' : ''}`} onClick={() => onPick(g.id)}>
+            <i className={`sq-dot ${ok ? 'ok' : ''}`} aria-hidden="true">{ok ? '✓' : ''}</i>
+            <span className="md-ellip">{shortGame(g)}</span>
+            <em className={locked ? 'locked' : ''} suppressHydrationWarning>{locked ? 'Locked' : lock && now != null ? `Locks ${when(lock)}` : ok ? 'Saved' : 'Not set'}</em>
+          </button>
+        );
+      })}
+    </section>
+  );
+}
+
 /* ---------------- page ---------------- */
 export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
   const [gid, setGid] = useState(data.games[0]?.id ?? '');
@@ -387,19 +428,30 @@ export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
   const look = useMemo(() => { const m = new Map<number, MdPlayer>([...Object.values(data.others), ...data.squad, ...data.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [data]);
   const [live, setLive] = useState<Record<string, MdLineup>>({});
   const mine = live[game.id] ?? data.lineups[game.id] ?? autoFill(rules, squad, new Set(data.survivorUsed));
+  // On desktop both columns run to the bottom of the screen and end together.
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState<number | null>(null);
+  useEffect(() => {
+    const f = () => {
+      const el = gridRef.current; if (!el) return;
+      if (window.innerWidth <= 1180) { setFit(null); return; }
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      setFit(Math.max(600, window.innerHeight - top - 14));
+    };
+    f(); window.addEventListener('resize', f); return () => window.removeEventListener('resize', f);
+  }, []);
   return (
-    <Shell title="Squad Selector" sub={<>Round {data.round}, {data.season} · {data.myName}</>}
-      right={<Link href="/live/matchups" className="rh-btn alt">All your matchups →</Link>}>
+    <Shell compact title="Squad Selector" sub={<>Round {data.round}, {data.season} · {data.myName}</>} right={<Fixtures round={data.round} games={data.fixtures} />}>
       {!data.ready && <div className="rh-card md-warn">Saving teams needs <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code>. You can still build and preview.</div>}
-      <div className="sq-grid">
+      <div className="sq-grid" ref={gridRef} style={fit ? { height: fit } : undefined}>
         <section className="rh-card sq-card" aria-label="Set your team">
           <Selector key={game.id} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
             used={game.key === 'survivor' ? data.survivorUsed : []} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
-        <div className="md-right">
+        <div className="sq-right">
+          <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} />
           <Matchup game={game} rules={rules} mine={mine} myName={data.myName} myTeamId={data.myTeamId} look={look} />
-          <CupPanel data={cup} />
-          <span className="rh-dim" style={{ fontSize: 12.5 }}>Want more games? <Link href="/live/comps" className="rh-link">Enter a side comp</Link> or <Link href="/live/new" className="rh-link">start a mini game</Link>.</span>
+          <CupPanel data={cup} compact />
         </div>
       </div>
     </Shell>
