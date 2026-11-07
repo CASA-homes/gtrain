@@ -8,6 +8,7 @@ import { COMP_SEASON } from '@/lib/comps';
 import { RULES, clean, type GameKey, type MdLineup } from '@/lib/matchday';
 import { toMd } from '@/lib/matchday-data';
 import { R1_2027 } from '@/lib/mens-round';
+import { cupTiedError } from './cup-actions';
 
 type Res = { ok: boolean; error?: string };
 const needMigration = (m: string) => (/game_lineups|comp_entries|relation/.test(m) ? 'Matchday needs supabase/migrations/0020_matchday_comps_msd_values.sql run in Supabase first.' : m);
@@ -49,6 +50,11 @@ export async function saveGameLineup(key: GameKey, round: number, lineup: MdLine
       const p = squad.get(id);
       if (p?.club && locked.has(p.club) && before.has(id) !== after.has(id)) return { ok: false, error: `${p.name} has already played or is playing: he’s locked.` };
     }
+  }
+
+  if (key === 'cup') {
+    const tied = await cupTiedError(me.team_id, Object.values(res.lineup.slots).flat());
+    if (tied) return { ok: false, error: tied };
   }
 
   if (key === 'survivor') {

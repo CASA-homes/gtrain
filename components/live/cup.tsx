@@ -1,8 +1,8 @@
 'use client';
 // G-Train Knockout Cup: the home-page panel and the full cup page (tables, fixture, knockout bracket, cup lineup).
-import { useMemo, useState, useTransition } from 'react';
+import { useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
-import { CONF_NAMES, CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_NAME, CUP_SLOT_ORDER, FINAL_ROUND, GROUP_ROUNDS, ON_FIELD, SEMI_ROUND, fitsSlot, roundWeek, standings, type CupLineup, type CupMatch, type CupResult, type CupSlot, type StandRow } from '@/lib/cup';
+import { CONF_NAMES, CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_NAME, CUP_SLOT_ORDER, FINAL_ROUND, GROUP_ROUNDS, ON_FIELD, QF_ROUND, SAFE, SEMI_ROUND, STAGE_NAME, WILDCARD_ROUND, fitsSlot, roundWeek, standings, type CupLineup, type CupMatch, type CupResult, type CupSlot, type StandRow } from '@/lib/cup';
 import { saveCupLineup } from '@/app/(app)/live/cup-actions';
 import { CLUBS } from '@/lib/clubs';
 import { Shell } from './kit';
@@ -11,6 +11,8 @@ export interface CupSquadPlayer { id: number; name: string; pos: string[]; club:
 export interface CupData {
   ready: boolean; confs: [number[], number[]]; matches: CupMatch[]; byes: Record<number, number[]>; results: CupResult[];
   teams: { id: number; name: string; short: string }[]; myTeamId: number; lineups: Record<number, CupLineup>; squad: CupSquadPlayer[];
+  /** player id → the club he's cup-tied to (played a cup game for them this season) */
+  ties: Record<number, number>;
 }
 const filled = (l?: CupLineup) => (l ? CUP_SLOT_ORDER.filter((s) => s !== 'EMG').reduce((a, s) => a + (l[s]?.length ?? 0), 0) : 0);
 
@@ -29,13 +31,68 @@ function Table({ rows, name, myTeamId, compact }: { rows: StandRow[]; name: (id:
       <thead><tr><th>#</th><th className="l">Club</th><th>P</th><th>W</th>{!compact && <><th>L</th><th>D</th></>}<th>%</th><th>Pts</th></tr></thead>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={r.team} className={`${i < 2 ? 'q' : ''} ${r.team === myTeamId ? 'me' : ''}`}>
+          <tr key={r.team} className={`${i < SAFE ? 'safe' : 'elim'} ${r.team === myTeamId ? 'me' : ''}`}>
             <td>{i + 1}</td><td className="l"><span className="rh-ellip">{name(r.team)}</span></td><td>{r.p}</td><td>{r.w}</td>{!compact && <><td>{r.l}</td><td>{r.d}</td></>}<td>{r.p ? r.pct.toFixed(1) : '–'}</td><td><b>{r.pts}</b></td>
           </tr>
         ))}
       </tbody>
     </table>
   );
+}
+const Zones = () => <div className="cup-zones"><span><i className="safe" />Top {SAFE}: quarter-finals</span><span><i className="elim" />4th v 5th: wildcard</span></div>;
+
+/* ---------------- rules pop-up ---------------- */
+export function CupRules({ onClose }: { onClose: () => void }) {
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k);
+  }, [onClose]);
+  const cal: [string, string][] = [...GROUP_ROUNDS.map((r) => [`R${r}`, 'Group'] as [string, string]), [`R${WILDCARD_ROUND}`, 'Wildcard'], [`R${QF_ROUND}`, 'Quarters'], [`R${SEMI_ROUND}`, 'Semis'], [`R${FINAL_ROUND}`, 'Final']];
+  return (
+    <div className="rh-sheet-back" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="mx-sheet cup-rules-sheet" role="dialog" aria-modal="true" aria-label="Knockout Cup rules">
+        <div className="mx-sh-head">
+          <Trophy size={30} />
+          <div style={{ flex: 1, minWidth: 0 }}><span className="rh-k">{CUP_SEASON}</span><h3 className="mx-sh-name">Knockout Cup rules</h3></div>
+          <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        <div className="mx-sh-sec"><span className="rh-k">Format</span>
+          <ul className="cup-rules">
+            <li>Two groups of five, seeded off the 2026 ladder (1st, 4th, 5th, 8th and 9th in Group A; 2nd, 3rd, 6th, 7th and 10th in Group B).</li>
+            <li>Four group games, AFL rounds {GROUP_ROUNDS[0]} to {GROUP_ROUNDS[GROUP_ROUNDS.length - 1]}. Five clubs only make two games a round, so each round the spare club in Group A plays the spare club in Group B. That game counts on both tables.</li>
+            <li>4 points a win, 2 a draw. Percentage breaks ties.</li>
+            <li><b className="cup-safe-t">Top {SAFE} in each group are safe</b> and go straight to the quarter-finals.</li>
+            <li><b className="cup-elim-t">4th plays 5th</b> in a wildcard game in round {WILDCARD_ROUND}. The loser is out.</li>
+            <li>The eight left are drawn at random into quarter-finals (round {QF_ROUND}), then semi-finals (round {SEMI_ROUND}) and the final (round {FINAL_ROUND}). The cup stays clear of the round 11 to 15 byes.</li>
+            <li>A drawn knockout goes to the club that finished higher in the group stage.</li>
+          </ul>
+        </div>
+        <div className="mx-sh-sec"><span className="rh-k">When it&apos;s played</span>
+          <div className="cup-cal">{cal.map(([r, s]) => <span key={r}><b className="rh-mono">{r}</b><em>{s}</em></span>)}</div>
+        </div>
+        <div className="mx-sh-sec"><span className="rh-k">Your cup team</span>
+          <ul className="cup-rules">
+            <li>A separate lineup from your G-Train team. Same AFL round, same fantasy scores.</li>
+            <li>4 DEF, 6 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies.</li>
+            <li>No captain or vice-captain. Every player scores once.</li>
+            <li>A player locks at his own game&apos;s first bounce.</li>
+          </ul>
+        </div>
+        <div className="cup-tied-box">
+          <span className="cup-new">NEW</span><b>Cup-tied</b>
+          <ul className="cup-rules">
+            <li>Once a player has played a cup game for one club, he&apos;s tied to that club for the rest of that season&apos;s cup.</li>
+            <li>If he&apos;s traded, his new club can still pick him in the G-Train, but not in the cup.</li>
+            <li>Played means he was on the field in a cup game that has been played. A cup-tied player can&apos;t be named as an emergency either. Ties reset each season.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+export function RulesButton() {
+  const [open, setOpen] = useState(false);
+  return <><button className="rh-btn alt sm cup-rules-btn" onClick={() => setOpen(true)}>Rules</button>{open && <CupRules onClose={() => setOpen(false)} />}</>;
 }
 
 /* ---------------- home panel ---------------- */
@@ -46,7 +103,6 @@ export function CupPanel({ data, compact = false }: { data: CupData; compact?: b
   const played = new Set(data.results.map((r) => r.match_id));
   const mine = data.matches.filter((m) => m.home === data.myTeamId || m.away === data.myTeamId);
   const next = mine.find((m) => !played.has(m.id));
-  const nextBye = GROUP_ROUNDS.find((r) => data.byes[r]?.includes(data.myTeamId) && (!next || r < next.round));
   const opp = next ? (next.home === data.myTeamId ? next.away : next.home) : null;
   const set = next ? filled(data.lineups[next.round]) : 0;
   return (
@@ -55,6 +111,7 @@ export function CupPanel({ data, compact = false }: { data: CupData; compact?: b
         <div className="cup-head">
           <Trophy />
           <b className="cup-title" style={{ flex: 1 }}>{CUP_NAME}</b>
+          <RulesButton />
           <Link href="/live/cup" className="rh-link" style={{ fontSize: 12 }}>Full cup →</Link>
         </div>
       ) : (<>
@@ -64,23 +121,23 @@ export function CupPanel({ data, compact = false }: { data: CupData; compact?: b
           <span className="rh-k">{CUP_SEASON} · separate from the regular season</span>
           <b className="cup-title">{CUP_NAME}</b>
         </div>
+        <RulesButton />
         <Link href="/live/cup" className="rh-link" style={{ fontSize: 13 }}>Full cup</Link>
       </div>
       <div className="cup-format">
-        <span>2 conferences of 5</span><span>4 group games</span><span>Top 2 → semis</span><span>Final R{FINAL_ROUND}</span><span>16 a side · no captains</span>
+        <span>2 groups of 5</span><span>4 group games</span><span>Top {SAFE} safe · 4v5 wildcard</span><span>Quarters R{QF_ROUND}</span><span>Final R{FINAL_ROUND}</span>
       </div>
       </>)}
       <div className="cup-next">
         {next ? (
           <>
-            <span className="rh-k">{compact ? `Next · Round ${next.round}` : <>Your next cup game · Round {next.round} · week of {roundWeek(next.round)}{next.stage !== 'group' ? ` · ${next.stage === 'semi' ? 'Semi-final' : 'Final'}` : ` · group game ${mine.filter((m) => m.stage === 'group').indexOf(next) + 1} of 4`}</>}</span>
+            <span className="rh-k">{compact ? `Next · Round ${next.round}` : <>Your next cup game · Round {next.round} · week of {roundWeek(next.round)}{next.stage !== 'group' ? ` · ${STAGE_NAME[next.stage]}` : ` · group game ${mine.filter((m) => m.stage === 'group').indexOf(next) + 1} of 4${next.cross ? ' (crossover)' : ''}`}</>}</span>
             <b>v {opp ? name(opp) : next.label ?? 'TBC'}</b>
-            {nextBye && !compact && <span className="rh-dim" style={{ fontSize: 12.5 }}>You have the bye in round {nextBye}.</span>}
             <span className={set >= ON_FIELD ? 'rh-up' : 'rh-down'} style={{ fontSize: 13 }}>{set >= ON_FIELD ? 'Cup lineup set' : set ? `Cup lineup ${set}/${ON_FIELD}` : 'Cup lineup not set yet'}</span>
           </>
         ) : <b>Your cup run is over for {CUP_SEASON}.</b>}
       </div>
-      <div><span className="rh-k">{CONF_NAMES[myConf]}</span><Table rows={rows} name={name} myTeamId={data.myTeamId} compact /></div>
+      <div><span className="rh-k">{CONF_NAMES[myConf]}</span><Table rows={rows} name={name} myTeamId={data.myTeamId} compact />{!compact && <Zones />}</div>
       {!compact && <Link href="/live/cup#lineup" className="rh-btn go" style={{ alignSelf: 'flex-start' }}>Set cup lineup</Link>}
     </section>
   );
@@ -100,7 +157,7 @@ function autoFill(squad: CupSquadPlayer[]): CupLineup {
 
 function LineupEditor({ data }: { data: CupData }) {
   const mine = data.matches.filter((m) => m.home === data.myTeamId || m.away === data.myTeamId);
-  const rounds = [...new Set([...mine.map((m) => m.round), SEMI_ROUND, FINAL_ROUND])].sort((a, b) => a - b);
+  const rounds = [...new Set([...mine.map((m) => m.round), WILDCARD_ROUND, QF_ROUND, SEMI_ROUND, FINAL_ROUND])].sort((a, b) => a - b);
   const played = new Set(data.results.map((r) => r.match_id));
   const first = mine.find((m) => !played.has(m.id))?.round ?? rounds[0];
   const [round, setRound] = useState(first);
@@ -124,14 +181,15 @@ function LineupEditor({ data }: { data: CupData }) {
     setLineup(next); setSel(null); setMsg(null);
   };
   const remove = (s: CupSlot, id: number) => { setLineup({ ...lineup, [s]: (lineup[s] ?? []).filter((x) => x !== id) }); setMsg(null); };
-  const options = sel ? data.squad.filter((p) => fitsSlot(p.pos, sel.slot)).sort((a, b) => b.proj - a.proj) : [];
+  const tiedTo = (id: number) => (data.ties[id] != null && data.ties[id] !== data.myTeamId ? name(data.ties[id]) : null);
+  const options = sel ? data.squad.filter((p) => fitsSlot(p.pos, sel.slot) && !tiedTo(p.id)).sort((a, b) => b.proj - a.proj) : [];
   const count = filled(lineup);
   return (
     <section className="rh-card" id="lineup" style={{ gap: 14 }}>
       <div className="cup-head">
         <div style={{ flex: 1, minWidth: 0 }}><span className="rh-k">Cup lineup</span><b className="cup-title">Round {round}{opp ? ` v ${name(opp)}` : match?.label ? ` · ${match.label}` : !match && round !== SEMI_ROUND && round !== FINAL_ROUND ? ' · bye' : ''}</b></div>
         <select className="rh-select sm" id="cup-round" value={round} onChange={(e) => pickRound(Number(e.target.value))}>
-          {rounds.map((r) => <option key={r} value={r}>Round {r}{r === SEMI_ROUND ? ' · semis' : r === FINAL_ROUND ? ' · final' : ''}{data.lineups[r] ? ' · saved' : ''}</option>)}
+          {rounds.map((r) => <option key={r} value={r}>Round {r}{r === WILDCARD_ROUND ? ' · wildcard' : r === QF_ROUND ? ' · quarters' : r === SEMI_ROUND ? ' · semis' : r === FINAL_ROUND ? ' · final' : ''}{data.lineups[r] ? ' · saved' : ''}</option>)}
         </select>
       </div>
       <span className="rh-dim" style={{ fontSize: 13 }}>4 DEF, 6 MID, 1 RUC, 4 FWD and a utility on the field, plus 4 emergencies. No captain: every player scores once. Tap a spot, then a player.</span>
@@ -157,6 +215,7 @@ function LineupEditor({ data }: { data: CupData }) {
       {sel && (
         <div className="cup-picker">
           <span className="rh-k">Pick for {CUP_SLOT_NAME[sel.slot].toLowerCase()} · sorted by 2027 projection</span>
+          {data.squad.some((p) => tiedTo(p.id)) && <span className="rh-dim" style={{ fontSize: 12 }}>Cup-tied, can&apos;t play: {data.squad.filter((p) => tiedTo(p.id)).map((p) => `${p.name} (${tiedTo(p.id)})`).join(', ')}</span>}
           {options.map((p) => (
             <button key={p.id} className={`cup-opt ${used.has(p.id) ? 'used' : ''}`} onClick={() => place(p.id)}>
               <span className="sw" style={{ background: p.club ? CLUBS[p.club]?.a ?? '#444' : '#444' }} />
@@ -188,31 +247,22 @@ export function CupPage({ data, isCommish }: { data: CupData; isCommish: boolean
         <span className="rh-ellip">{name(m.home)}</span>
         <b className="rh-mono">{r ? `${r.home_score} – ${r.away_score}` : 'v'}</b>
         <span className="rh-ellip r">{name(m.away)}</span>
+        {m.cross && <em className="cup-cross">A v B crossover</em>}
       </div>
     );
   };
   return (
-    <Shell title={`${CUP_NAME} ${CUP_SEASON}`} sub={<>A cup run alongside the regular season. Group games every fortnight from round {GROUP_ROUNDS[0]}, semi-finals round {SEMI_ROUND}, final round {FINAL_ROUND}, the week before the grand final.</>}>
+    <Shell title={`${CUP_NAME} ${CUP_SEASON}`} sub={<>A cup run alongside the regular season. Group games rounds {GROUP_ROUNDS[0]} to {GROUP_ROUNDS[GROUP_ROUNDS.length - 1]}, wildcards round {WILDCARD_ROUND}, quarter-finals round {QF_ROUND}, semis round {SEMI_ROUND}, final round {FINAL_ROUND}.</>} right={<RulesButton />}>
       <div className="cup-page">
         <div className="cup-col">
-          <section className="rh-card">
-            <span className="rh-k">How it works</span>
-            <ul className="cup-rules">
-              <li>Two conferences of five, seeded off the 2026 ladder (1st, 4th, 5th, 8th and 9th in A; 2nd, 3rd, 6th, 7th and 10th in B).</li>
-              <li>Each club plays the other four in its conference once. There are five group rounds, so every club sits one out.</li>
-              <li>4 points for a win, 2 for a draw. Percentage breaks ties.</li>
-              <li>Top two in each conference cross over in the semis: A1 v B2, B1 v A2. Winners meet in the final.</li>
-              <li>Same weekend’s AFL Fantasy scores, separate cup lineup: 4 DEF, 6 MID, 1 RUC, 4 FWD + 1 utility, 4 emergencies, no captains.</li>
-            </ul>
-          </section>
           {data.confs.map((c, i) => (
-            <section key={i} className="rh-card"><span className="rh-k">{CONF_NAMES[i]}</span><Table rows={standings(c, data.matches, data.results)} name={(id) => name(id)} myTeamId={data.myTeamId} /></section>
+            <section key={i} className="rh-card"><span className="rh-k">{CONF_NAMES[i]}</span><Table rows={standings(c, data.matches, data.results)} name={(id) => name(id)} myTeamId={data.myTeamId} /><Zones /></section>
           ))}
           <section className="rh-card">
             <span className="rh-k">Knockouts</span>
             {data.matches.filter((m) => m.stage !== 'group').map((m) => (
               <div key={m.id} className="cup-ko">
-                <span className="rh-dim" style={{ fontSize: 12 }}>{m.stage === 'semi' ? 'Semi-final' : 'Final'} · round {m.round} · {m.label}</span>
+                <span className="rh-dim" style={{ fontSize: 12 }}>{STAGE_NAME[m.stage]} {m.stage === 'qf' ? m.id.slice(2) : m.stage === 'semi' ? m.id.slice(2) : m.stage === 'wildcard' ? (m.conf === 0 ? 'A' : 'B') : ''} · round {m.round}{m.label ? ` · ${m.label}` : ''}</span>
                 {game(m)}
               </div>
             ))}
@@ -226,7 +276,6 @@ export function CupPage({ data, isCommish }: { data: CupData; isCommish: boolean
               <div key={r} className="cup-round">
                 <span className="cup-round-h">Group round {i + 1} · AFL round {r} · week of {roundWeek(r)}</span>
                 {data.matches.filter((m) => m.round === r && m.stage === 'group').map(game)}
-                <span className="rh-dim" style={{ fontSize: 12 }}>Bye: {(data.byes[r] ?? []).map((t) => name(t)).join(', ')}</span>
               </div>
             ))}
             {isCommish && <span className="rh-dim" style={{ fontSize: 12 }}>Results will fill in from the cup lineups once the 2027 scores are flowing.</span>}

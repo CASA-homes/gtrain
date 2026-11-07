@@ -7,7 +7,8 @@ import { photoUrl } from '@/lib/photos';
 import { createClient } from '@/lib/supabase/server';
 import { R1_2027, buildMensRound, profileOf } from '@/lib/mens-round';
 import { form as formOf } from '@/lib/ratings';
-import { CUP_SEASON, type CupLineup } from '@/lib/cup';
+import { clubRows } from '@/lib/club-rounds';
+import { CUP_SEASON, STAGE_NAME, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
 import { RULES, ageOn, autoFill, type GameKey, type MdLineup, type MdPlayer, type Pos } from '@/lib/matchday';
 import type { CupData } from '@/components/live/cup';
@@ -33,9 +34,11 @@ export interface MatchdayData {
   fixtures: { home: string; away: string; start: string }[];
   /** when each game locks (first bounce of its AFL round), ISO; null if not known yet */
   locks: Record<string, string | null>;
+  /** your players who are cup-tied to another club, with that club's name */
+  cupTied: Record<number, string>;
 }
 
-export const toMd = (p: PlayerRow, full = false): MdPlayer => {
+export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer => {
   const l5s = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null).slice(-5);
   return {
     id: p.id, name: p.full_name ?? p.name, pos: [...p.positions] as Pos[], club: p.afl_club, proj: Math.round(projected2027(p) || 0),
@@ -43,7 +46,7 @@ export const toMd = (p: PlayerRow, full = false): MdPlayer => {
     avg: p.average != null ? Math.round(p.average * 10) / 10 : null, form: formOf(p),
     l5: l5s.length ? Math.round(l5s.reduce((a, b) => a + b, 0) / l5s.length) : null,
     keeper: p.is_rookie_keeper ? 'RK' : p.is_keeper ? 'K' : null,
-    ...(full ? { prof: profileOf(p) } : {}),
+    ...(full ? { prof: (() => { const pr = profileOf(p); return { ...pr, club: clubRows(p.full_name ?? p.name, teamName, pr.log) }; })() } : {}),
   };
 };
 const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v ?? []])) } : null);
@@ -51,8 +54,8 @@ const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Obj
 export async function buildMatchday(league: League, myTeamId: number, cup: CupData): Promise<MatchdayData> {
   const supabase = await createClient();
   const listOf = (team: number) => league.players.filter((p) => p.team_id === team && !p.list_status).map((p) => toMd(p));
-  const squad = league.players.filter((p) => p.team_id === myTeamId && !p.list_status).map((p) => toMd(p, true)).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
   const team = (id: number) => league.teams.find((t) => t.id === id);
+  const squad = league.players.filter((p) => p.team_id === myTeamId && !p.list_status).map((p) => toMd(p, true, team(myTeamId)?.name)).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
   const round = MATCHDAY_ROUND;
 
   const [gl, ce, cl] = await Promise.all([
@@ -94,7 +97,7 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
     const opp = next.home === myTeamId ? next.away : next.away === myTeamId ? next.home : null;
     games.push({ id: `cup:${next.round}`, key: 'cup', round: next.round,
       label: `Knockout Cup · Round ${next.round}`, sub: opp ? `v ${team(opp)?.name}` : next.label ?? 'TBC',
-      opp: opp ? side('cup', next.round, opp) : null, note: next.stage === 'group' ? 'Group game' : next.stage === 'semi' ? 'Semi-final' : 'Final' });
+      opp: opp ? side('cup', next.round, opp) : null, note: STAGE_NAME[next.stage] });
     lineups[`cup:${next.round}`] = saved.get(`cup:${next.round}:${myTeamId}`)
       ?? [...cup.matches.map((m) => m.round)].filter((r) => r < next.round).reverse().map((r) => saved.get(`cup:${r}:${myTeamId}`)).find(Boolean) ?? null;
   }
@@ -128,5 +131,7 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
   const firstBounce = [...R1_2027].sort((a, b) => Date.parse(a.start) - Date.parse(b.start))[0]?.start ?? null;
   const locks = Object.fromEntries(games.map((g) => [g.id, g.round === round ? firstBounce : null]));
   const fixtures = R1_2027.map((g) => ({ home: g.home, away: g.away, start: g.start }));
-  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, survivorUsed, entered, savedIds, fixtures, locks };
+  const cupTied: Record<number, string> = {};
+  for (const p of squad) { const t = cup.ties[p.id]; if (t != null && t !== myTeamId) cupTied[p.id] = team(t)?.name ?? 'another club'; }
+  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, survivorUsed, entered, savedIds, fixtures, locks, cupTied };
 }

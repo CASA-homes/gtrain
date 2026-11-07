@@ -3,6 +3,7 @@
 // graph of the live and projected margin across the AFL round. A time slider replays the round.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CLUBS } from '@/lib/clubs';
+import { ProfileTabs } from './profile-tabs';
 import { GAME_MINUTES, type MGame, type MPlayer, type MRound, type MTeam } from '@/lib/mens-round';
 import { Shell } from './kit';
 
@@ -220,8 +221,6 @@ function MiniWorm({ a, b, gameByClub, tl, now }: { a: MTeam; b: MTeam; gameByClu
 /* ---------------- player pop-up ---------------- */
 export type ProfileOpen = { p: MPlayer; team: MTeam } | null;
 export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileOpen; onClose: () => void; gameByClub: Map<string, MGame>; now: number }) {
-  const [pick, setPick] = useState<number | null>(null);
-  useEffect(() => { setPick(null); }, [open]);
   useEffect(() => {
     if (!open) return;
     const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -229,14 +228,6 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
   }, [open, onClose]);
   if (!open) return null;
   const { p, team } = open, pr = p.prof, l = liveOf(p, gameByClub, now);
-  const log = pr.log;
-  const scores = log.map((g) => g[1]);
-  const hi = scores.length ? Math.max(...scores) : null, lo = scores.length ? Math.min(...scores) : null;
-  const l5 = scores.slice(-5), l5avg = l5.length ? Math.round(l5.reduce((a, b) => a + b, 0) / l5.length) : null;
-  const tons = scores.filter((x) => x >= 100).length;
-  const maxBar = Math.max(130, ...scores, p.proj);
-  const b = pr.box;
-  const statLine: [string, string][] = b ? [['K', b.k], ['HB', b.h], ['D', (b.k ?? 0) + (b.h ?? 0)], ['M', b.m], ['T', b.t], ['G', b.g], ['B', b.b], ...(b.ho ? [['HO', b.ho]] : []), ['CP', b.cp], ['CL', b.cl], ['DE%', b.de], ['TOG%', b.tog], ['CBA%', b.cba]].filter(([, v]) => v != null).map(([k, v]) => [k as string, typeof v === 'number' ? (Number.isInteger(v) ? String(v) : v.toFixed(1)) : String(v)]) as [string, string][] : [];
   const pre = l.ph.state === 'pre';
   return (
     <div className="rh-sheet-back" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -251,42 +242,14 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
           <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
         </div>
 
+        <ProfileTabs roundLabel="Round 1" prof={pr} proj={p.proj} clubName={team.name} round={<>
         <div className="mx-sh-now">
           <div><span className="rh-k">Round 1</span><b className="rh-mono">{pre ? '–' : l.score}</b><span className="rh-dim">{pre ? `plays ${new Date(l.game!.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}` : l.ph.label}</span></div>
           <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">vs projection</span></div>
           <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{pre ? 'not played yet' : `on track for ${l.proj}`}</span></div>
           {!pre && <div className="mx-sh-line rh-mono">{l.st.k}K {l.st.h}HB {l.st.k + l.st.h}D {l.st.m}M {l.st.t}T {l.st.g}.{l.st.b}{l.st.ho ? ` ${l.st.ho}HO` : ''} · TOG {p.tog}%{l.injured ? ' · injured' : ''}</div>}
         </div>
-
-        <div className="mx-sh-sec">
-          <div className="mx-sh-row"><span className="rh-k">2026 scores · {pr.games ?? scores.length} games</span><span className="rh-dim rh-mono" style={{ fontSize: 12 }}>avg {pr.avg?.toFixed(1) ?? '–'} · L5 {l5avg ?? '–'} · high {hi ?? '–'} · low {lo ?? '–'} · {tons} tons</span></div>
-          {log.length ? (
-            <div className="mx-bars" aria-label="2026 scores by round">
-              <i className="mx-projline" style={{ bottom: `${(p.proj / maxBar) * 100}%` }} title={`2027 projection ${p.proj}`} />
-              {log.map(([r, sc, tog]) => (
-                <button key={r} className={`mx-bar ${pick === r ? 'on' : ''}`} onClick={() => setPick(pick === r ? null : r)} aria-label={`Round ${r}: ${sc}${tog != null ? `, ${tog}% time on ground` : ''}`}>
-                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#1d8a3c' : sc >= p.proj ? '#7ddc5a' : sc >= p.proj * 0.75 ? '#d9c24f' : '#ff9a3c' }} />
-                  <em>{r}</em>
-                </button>
-              ))}
-            </div>
-          ) : <span className="rh-dim" style={{ fontSize: 13 }}>No 2026 games on record.</span>}
-          {log.length > 0 && (() => { const g = log.find((x) => x[0] === pick); return <span className="rh-dim" style={{ fontSize: 12 }}>{g ? <><b style={{ color: 'var(--rh-text)' }}>Round {g[0]}: {g[1]}</b>{g[2] != null ? ` · ${g[2]}% TOG` : ''}</> : <>Dashed line: his 2027 projection ({p.proj}). Tap a bar for that round.</>}</span>; })()}
-        </div>
-
-        {statLine.length > 0 && (
-          <div className="mx-sh-sec"><span className="rh-k">2026 averages</span>
-            <div className="mx-statline">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
-          </div>
-        )}
-
-        {pr.hist.length > 0 && (
-          <div className="mx-sh-sec"><span className="rh-k">Career</span>
-            <table className="mx-hist"><thead><tr><th>Season</th><th>Games</th><th>Avg</th><th /></tr></thead>
-              <tbody>{pr.hist.map(([y, g, a]) => <tr key={y}><td>{y}</td><td className="rh-mono">{g}</td><td className="rh-mono">{a.toFixed(1)}</td><td><span className="mx-histbar"><i style={{ width: `${Math.min(100, a / 1.3)}%` }} /></span></td></tr>)}</tbody>
-            </table>
-          </div>
-        )}
+        </>} />
 
         <a href={`/players/${p.id}`} className="rh-btn go lg" style={{ alignSelf: 'stretch' }}>Open full profile →</a>
       </div>

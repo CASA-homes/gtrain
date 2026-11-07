@@ -11,6 +11,8 @@ import type { GameOpt, MatchdayData, Side } from '@/lib/matchday-data';
 import { saveGameLineup } from '@/app/(app)/live/matchday-actions';
 import { CupPanel, type CupData } from './cup';
 import { Shell } from './kit';
+import { ProfileTabs } from './profile-tabs';
+import { R1_2027 } from '@/lib/mens-round';
 
 const POS_COL: Record<Pos, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 const empty = (r: Rules): MdLineup => ({ slots: Object.fromEntries(r.slots.map((s) => [s.key, []])), c: null, vc: null });
@@ -43,18 +45,18 @@ const Info = ({ p, onInfo }: { p: MdPlayer; onInfo: (p: MdPlayer) => void }) => 
 );
 
 /* ---------------- profile pop-up (same layout as the Matchups pop-up) ---------------- */
-function SquadSheet({ p, slot, cap, vc, onClose }: { p: MdPlayer; slot: string | null; cap: boolean; vc: boolean; onClose: () => void }) {
+function SquadSheet({ p, slot, cap, vc, onClose, clubName, gameName }: { p: MdPlayer; slot: string | null; cap: boolean; vc: boolean; onClose: () => void; clubName: string | null; gameName: string }) {
+  const afl = p.club ? R1_2027.find((g) => g.home === p.club || g.away === p.club) : undefined;
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => { setNow(Date.now()); }, []);
+  const t0 = afl ? Date.parse(afl.start) : 0;
+  const started = now != null && afl != null && now >= t0, live = started && now! < t0 + 3 * 3600e3;
+  const when = afl && now != null ? new Date(afl.start).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }) : '';
   useEffect(() => {
     const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k);
   }, [onClose]);
-  const pr = p.prof, log = pr?.log ?? [], scores = log.map((g) => g[1]);
-  const hi = scores.length ? Math.max(...scores) : null, lo = scores.length ? Math.min(...scores) : null;
-  const tons = scores.filter((x) => x >= 100).length;
-  const maxBar = Math.max(130, ...scores, p.proj);
-  const b = pr?.box;
-  const statLine = b ? ([['K', b.k], ['HB', b.h], ['D', b.k != null && b.h != null ? b.k + b.h : null], ['M', b.m], ['T', b.t], ['G', b.g], ['HO', b.ho || null], ['CBA%', b.cba], ['TOG%', b.tog]] as [string, number | null | undefined][])
-    .filter(([, v]) => v != null).map(([k, v]) => [k, Number.isInteger(v) ? String(v) : (v as number).toFixed(1)]) : [];
+  const pr = p.prof;
   return (
     <div className="rh-sheet-back" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="mx-sheet" role="dialog" aria-modal="true" aria-label={`${p.name} profile`}>
@@ -67,38 +69,20 @@ function SquadSheet({ p, slot, cap, vc, onClose }: { p: MdPlayer; slot: string |
           </div>
           <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
         </div>
-        <div className="mx-sh-now">
-          <div><span className="rh-k">This round</span><b className="rh-mono">{slot ?? '–'}</b><span className="rh-dim">{slot ? (slot === 'EMG' ? 'emergency' : 'in your team') : 'not selected'}</span></div>
-          <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{cap ? `${p.proj * 2} as captain` : 'per game'}</span></div>
-          <div><span className="rh-k">2026 avg</span><b className="rh-mono">{p.avg?.toFixed(1) ?? '–'}</b><span className="rh-dim" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Form p={p} size={13} />{p.l5 != null ? `last 5: ${p.l5}` : `${pr?.games ?? 0} games`}</span></div>
-        </div>
-        <div className="mx-sh-sec">
-          <div className="mx-sh-row"><span className="rh-k">2026 scores · {pr?.games ?? scores.length} games</span><span className="rh-dim rh-mono" style={{ fontSize: 12 }}>high {hi ?? '–'} · low {lo ?? '–'} · {tons} tons</span></div>
-          {log.length ? (
-            <div className="mx-bars" aria-label="2026 scores by round">
-              <i className="mx-projline" style={{ bottom: `${(p.proj / maxBar) * 100}%` }} title={`2027 projection ${p.proj}`} />
-              {log.map(([r, sc]) => (
-                <span key={r} className="mx-bar" title={`Round ${r}: ${sc}`}>
-                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#10a35a' : sc >= p.proj ? '#7ccf8f' : sc >= p.proj * 0.75 ? '#e5c84f' : '#f39a4a' }} />
-                  <em>{r}</em>
-                </span>
-              ))}
+        <ProfileTabs roundLabel="Round 1" prof={pr} proj={p.proj} clubName={clubName} round={<>
+          {afl && (
+            <div className="pt-match">
+              <div><b>{afl.home} v {afl.away}</b><span className="rh-dim" suppressHydrationWarning>{afl.venue} · {when}</span></div>
+              <span className={`pt-state ${live ? 'live' : ''}`}>{live ? 'Live' : started ? 'Played' : 'Not started'}</span>
             </div>
-          ) : <span className="rh-dim" style={{ fontSize: 13 }}>No 2026 games on record.</span>}
-          {log.length > 0 && <span className="rh-dim" style={{ fontSize: 12 }}>Dashed line: his 2027 projection ({p.proj}).</span>}
-        </div>
-        {statLine.length > 0 && (
-          <div className="mx-sh-sec"><span className="rh-k">2026 averages</span>
-            <div className="mx-statline">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
+          )}
+          <div className="mx-sh-now">
+            <div><span className="rh-k">{gameName}</span><b className="rh-mono">{slot ?? '–'}</b><span className="rh-dim">{slot ? (slot === 'EMG' || slot.startsWith('E') && slot.length === 4 ? 'emergency' : 'in your team') : 'not selected'}</span></div>
+            <div><span className="rh-k">Projected</span><b className="rh-mono">{cap ? p.proj * 2 : p.proj}</b><span className="rh-dim">{cap ? 'doubled as captain' : vc ? 'vice-captain' : 'this round'}</span></div>
+            <div><span className="rh-k">Form</span><b className="rh-mono" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Form p={p} size={14} />{p.l5 ?? '–'}</b><span className="rh-dim">last 5 avg</span></div>
           </div>
-        )}
-        {pr && pr.hist.length > 0 && (
-          <div className="mx-sh-sec"><span className="rh-k">Career</span>
-            <table className="mx-hist"><thead><tr><th>Season</th><th>Games</th><th>Avg</th><th /></tr></thead>
-              <tbody>{pr.hist.map(([y, g, a]) => <tr key={y}><td>{y}</td><td className="rh-mono">{g}</td><td className="rh-mono">{a.toFixed(1)}</td><td><span className="mx-histbar"><i style={{ width: `${Math.min(100, a / 1.3)}%` }} /></span></td></tr>)}</tbody>
-            </table>
-          </div>
-        )}
+          <span className="rh-dim" style={{ fontSize: 12.5 }}>{started ? 'Live scores and his stat line show here once 2027 scores are flowing.' : 'His score, time on ground and stat line show here once his game starts.'}</span>
+        </>} />
         <a href={`/players/${p.id}`} className="rh-btn go lg" style={{ alignSelf: 'stretch', textAlign: 'center' }}>Open full profile →</a>
       </div>
     </div>
@@ -107,8 +91,8 @@ function SquadSheet({ p, slot, cap, vc, onClose }: { p: MdPlayer; slot: string |
 
 /* ---------------- squad selector (left) ---------------- */
 type Pick = { pid: number; from: string | null } | null;
-function Selector({ game, games, onGame, rules, squad, initial, used, onChange }: {
-  game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; onChange: (l: MdLineup) => void;
+function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange }: {
+  clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
 }) {
   const router = useRouter();
   const byId = useMemo(() => new Map(squad.map((p) => [p.id, p])), [squad]);
@@ -138,6 +122,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
     if (!p) return;
     if (!fits(p, s, rules)) { setMsg({ ok: false, text: rules.eligible && !rules.eligible(p) ? `${short(p.name)} isn’t eligible for the ${rules.name}.` : `${short(p.name)} can’t play ${s.label}.` }); return; }
     if (used.includes(pid)) { setMsg({ ok: false, text: `You’ve already used ${short(p.name)}.` }); return; }
+    if (tied[pid]) { setMsg({ ok: false, text: `${short(p.name)} is cup-tied: he played a cup game for ${tied[pid]}, so he can’t play in your cup team.` }); return; }
     const slots: Record<string, (number | undefined)[]> = Object.fromEntries(rules.slots.map((r) => [r.key, Array.from({ length: r.n }, (_, j) => lineup.slots[r.key]?.[j])]));
     let from: [string, number] | null = null;
     for (const [k, arr] of Object.entries(slots)) { const j = arr.indexOf(pid); if (j >= 0) { from = [k, j]; arr[j] = undefined; } }
@@ -170,7 +155,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
   });
   useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setPicked(null); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
 
-  const spotState = (s: SlotRule) => (movingP ? (fits(movingP, s, rules) && !used.includes(movingP.id) ? 'can' : 'cant') : '');
+  const spotState = (s: SlotRule) => (movingP ? (fits(movingP, s, rules) && !used.includes(movingP.id) && !tied[movingP.id] ? 'can' : 'cant') : '');
   const dropProps = (key: string, i: number) => ({
     onDragOver: (e: React.DragEvent) => { if (movingP && fits(movingP, rule(key), rules)) { e.preventDefault(); setOver(`${key}:${i}`); } },
     onDragLeave: () => setOver((o) => (o === `${key}:${i}` ? null : o)),
@@ -228,7 +213,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
           <div className="sq-stat"><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
           <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
           <div className="sq-acts">
-            <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set(used)))}>Auto-pick</button>
+            <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set([...used, ...Object.keys(tied).map(Number)])))}>Auto-pick</button>
             <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
             <button className="rh-btn go" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
           </div>
@@ -249,16 +234,16 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
           </div>
           <div className="sq-rows">
             {shown.map((p) => {
-              const w = where(p.id), burnt = used.includes(p.id), ok = !rules.eligible || rules.eligible(p);
+              const w = where(p.id), burnt = used.includes(p.id), isTied = !!tied[p.id], ok = !rules.eligible || rules.eligible(p);
               return (
-                <div key={p.id} className={`sq-row ${w ? 'in' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${!ok || burnt ? 'off' : ''}`} role="button" tabIndex={0}
+                <div key={p.id} className={`sq-row ${w ? 'in' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${!ok || burnt || isTied ? 'off' : ''}`} role="button" tabIndex={0}
                   onClick={() => setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null })}
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null }); } }}
                   {...(ok && !burnt ? dragProps(p.id, slotOf.get(p.id) ?? null) : {})}>
                   <Disc p={p} size={26} label />
                   <span className="sq-row-main">
                     <span className="sq-row-nm"><span>{p.name}</span>{p.keeper && <em>{p.keeper}</em>}<Info p={p} onInfo={setSheet} /></span>
-                    <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
+                    <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{isTied && <i className="tied" title={`Played a cup game for ${tied[p.id]}`}>CUP-TIED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
                   </span>
                   <span className="sq-row-av"><Form p={p} size={12} />{p.avg != null ? Math.round(p.avg) : '–'}</span>
                 </div>
@@ -294,7 +279,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, onChange }
           <span className="sq-hint"><b>Bold</b> = projected{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · drag onto a spot or tap then tap · drag back to the list to remove · {rules.summary}</span>
         </div>
       </div>
-      {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} />}
+      {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} clubName={clubName} gameName={rules.name} />}
     </>
   );
 }
@@ -427,7 +412,8 @@ export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
   const squad = game.key === 'survivor' ? data.pool : data.squad;
   const look = useMemo(() => { const m = new Map<number, MdPlayer>([...Object.values(data.others), ...data.squad, ...data.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [data]);
   const [live, setLive] = useState<Record<string, MdLineup>>({});
-  const mine = live[game.id] ?? data.lineups[game.id] ?? autoFill(rules, squad, new Set(data.survivorUsed));
+  const tied = game.key === 'cup' ? data.cupTied : {};
+  const mine = live[game.id] ?? data.lineups[game.id] ?? autoFill(rules, squad, new Set([...data.survivorUsed, ...Object.keys(tied).map(Number)]));
   // On desktop both columns run to the bottom of the screen and end together.
   const gridRef = useRef<HTMLDivElement>(null);
   const [fit, setFit] = useState<number | null>(null);
@@ -446,7 +432,7 @@ export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
       <div className="sq-grid" ref={gridRef} style={fit ? { height: fit } : undefined}>
         <section className="rh-card sq-card" aria-label="Set your team">
           <Selector key={game.id} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
-            used={game.key === 'survivor' ? data.survivorUsed : []} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
+            used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
         <div className="sq-right">
           <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} />

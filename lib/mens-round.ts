@@ -19,6 +19,8 @@ export interface MProfile {
   log: [number, number, number | null][];               // [round, score, TOG %] for 2026
   box: { k?: number; h?: number; m?: number; t?: number; g?: number; b?: number; ho?: number; tog?: number; cba?: number; de?: number; cp?: number; cl?: number } | null;
   hist: [number, number, number][];                     // [season, games, average], newest first
+  /** rounds he was on the field for his G-Train club (filled in server-side, see lib/club-rounds) */
+  club?: import('@/lib/club-rounds').ClubRow[];
 }
 const ageOf = (d: string | null) => { if (!d) return null; const b = new Date(d), n = new Date(2027, 2, 17); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
 export function profileOf(p: PlayerRow): MProfile {

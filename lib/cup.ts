@@ -1,22 +1,30 @@
 // G-Train Knockout Cup 2027: a separate competition alongside the regular season (think FA Cup next to the Premier League).
-// Two conferences of five, seeded snake-style off the 2026 ladder. Each club plays the other four in its conference once
-// (five group rounds, so each club sits out one), top two from each conference go to cross-over semi-finals, then a final
-// the week before the regular-season grand final. Cup games use the same AFL round's fantasy scores, but their own lineup:
-// 4 DEF, 6 MID, 1 RUC, 4 FWD + 1 utility, 4 emergencies, and no captains.
+// Two groups of five, seeded snake-style off the 2026 ladder. Four group games in AFL rounds 5-8 (clear of the round 11-15
+// byes). Five clubs only make two games a round, so each round the spare club in Group A plays the spare club in Group B
+// and that game counts on both tables. Top three in each group are safe; 4th plays 5th in a wildcard game (round 9).
+// The eight left are drawn at random into quarter-finals (round 16), then semis (round 18) and the final (round 20).
+// Cup games use the same AFL round's fantasy scores, but their own lineup: 4 DEF, 6 MID, 1 RUC, 4 FWD + 1 utility,
+// 4 emergencies, and no captains. Cup-tied: once a player has played a cup game for one club, he can't play in the cup
+// for anyone else that season.
 
 export const CUP_SEASON = 2027;
 export const CUP_NAME = 'G-Train Knockout Cup';
-export const CONF_NAMES = ['Conference A', 'Conference B'] as const;
-/** AFL rounds the cup is played in. Group rounds are a fortnight apart and clear of the mid-season byes; the final is the week before the grand final (round 24). */
-export const GROUP_ROUNDS = [3, 5, 7, 9, 11];
-export const SEMI_ROUND = 21;
-export const FINAL_ROUND = 23;
+export const CONF_NAMES = ['Group A', 'Group B'] as const;
+/** AFL rounds the cup is played in. */
+export const GROUP_ROUNDS = [5, 6, 7, 8];
+export const WILDCARD_ROUND = 9;
+export const QF_ROUND = 16;
+export const SEMI_ROUND = 18;
+export const FINAL_ROUND = 20;
+/** Top three in each group go straight to the quarter-finals; 4th and 5th play the wildcard. */
+export const SAFE = 3;
 export const CUP_SLOTS = { DEF: 4, MID: 6, RUC: 1, FWD: 4, UTIL: 1, EMG: 4 } as const;
 export type CupSlot = keyof typeof CUP_SLOTS;
 export const CUP_SLOT_ORDER: CupSlot[] = ['DEF', 'MID', 'RUC', 'FWD', 'UTIL', 'EMG'];
 export const CUP_SLOT_NAME: Record<CupSlot, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility', EMG: 'Emergencies' };
 export type CupLineup = Partial<Record<CupSlot, number[]>>;
 export const ON_FIELD = 16;
+export const STAGE_NAME = { group: 'Group game', wildcard: 'Wildcard', qf: 'Quarter-final', semi: 'Semi-final', final: 'Final' } as const;
 /** Round 1 2027 starts Wed 17 March; later rounds are about a week apart (a guide only until the full fixture is loaded). */
 export function roundWeek(round: number) {
   const d = new Date(Date.UTC(2027, 2, 17 + (round - 1) * 7 + (round > 12 ? 7 : 0)));
@@ -33,60 +41,107 @@ export function conferences(ladderOrder: number[]): [number[], number[]] {
   return [a, b];
 }
 
-export interface CupMatch { id: string; stage: 'group' | 'semi' | 'final'; round: number; groupRound?: number; conf?: 0 | 1; home: number | null; away: number | null; label?: string }
-/** Round robin for five clubs (circle method with a bye): five rounds, two games each, one club resting. */
-function roundRobin5(t: number[]): { pairs: [number, number][]; bye: number }[] {
+export type CupStage = keyof typeof STAGE_NAME;
+export interface CupMatch { id: string; stage: CupStage; round: number; groupRound?: number; conf?: 0 | 1; cross?: boolean; home: number | null; away: number | null; label?: string }
+/** Circle method for five clubs: each round two games and one spare club. We use the first four rounds. */
+function circle5(t: number[]): { pairs: [number, number][]; spare: number }[] {
   const slots: (number | null)[] = [...t, null];
-  const out: { pairs: [number, number][]; bye: number }[] = [];
+  const out: { pairs: [number, number][]; spare: number }[] = [];
   for (let r = 0; r < 5; r++) {
-    const pairs: [number, number][] = []; let bye = -1;
+    const pairs: [number, number][] = []; let spare = -1;
     for (let i = 0; i < 3; i++) {
       const x = slots[i], y = slots[5 - i];
-      if (x == null) bye = y!; else if (y == null) bye = x; else pairs.push(r % 2 ? [y, x] : [x, y]);
+      if (x == null) spare = y!; else if (y == null) spare = x; else pairs.push(r % 2 ? [y, x] : [x, y]);
     }
-    out.push({ pairs, bye });
+    out.push({ pairs, spare });
     slots.splice(1, 0, slots.pop()!);   // rotate everyone but the first
   }
   return out;
 }
 export function cupFixture(confs: [number[], number[]]): { matches: CupMatch[]; byes: Record<number, number[]> } {
-  const matches: CupMatch[] = [], byes: Record<number, number[]> = {};
-  confs.forEach((c, ci) => roundRobin5(c).forEach((rd, i) => {
-    const round = GROUP_ROUNDS[i];
-    (byes[round] ??= []).push(rd.bye);
-    rd.pairs.forEach(([h, a], j) => matches.push({ id: `g${ci}${i}${j}`, stage: 'group', round, groupRound: i + 1, conf: ci as 0 | 1, home: h, away: a }));
-  }));
-  matches.push({ id: 'sf1', stage: 'semi', round: SEMI_ROUND, home: null, away: null, label: 'A1 v B2' });
-  matches.push({ id: 'sf2', stage: 'semi', round: SEMI_ROUND, home: null, away: null, label: 'B1 v A2' });
+  const matches: CupMatch[] = [];
+  const [A, B] = confs.map(circle5);
+  GROUP_ROUNDS.forEach((round, i) => {
+    [A, B].forEach((c, ci) => c[i].pairs.forEach(([h, a], j) => matches.push({ id: `g${ci}${i}${j}`, stage: 'group', round, groupRound: i + 1, conf: ci as 0 | 1, home: h, away: a })));
+    matches.push({ id: `gx${i}`, stage: 'group', round, groupRound: i + 1, cross: true, home: i % 2 ? B[i].spare : A[i].spare, away: i % 2 ? A[i].spare : B[i].spare });
+  });
+  matches.push({ id: 'wc1', stage: 'wildcard', round: WILDCARD_ROUND, conf: 0, home: null, away: null, label: 'A4 v A5' });
+  matches.push({ id: 'wc2', stage: 'wildcard', round: WILDCARD_ROUND, conf: 1, home: null, away: null, label: 'B4 v B5' });
+  for (let i = 1; i <= 4; i++) matches.push({ id: `qf${i}`, stage: 'qf', round: QF_ROUND, home: null, away: null, label: 'Drawn after the wildcards' });
+  matches.push({ id: 'sf1', stage: 'semi', round: SEMI_ROUND, home: null, away: null, label: 'Winner QF1 v Winner QF2' });
+  matches.push({ id: 'sf2', stage: 'semi', round: SEMI_ROUND, home: null, away: null, label: 'Winner QF3 v Winner QF4' });
   matches.push({ id: 'final', stage: 'final', round: FINAL_ROUND, home: null, away: null, label: 'Winner SF1 v Winner SF2' });
-  return { matches, byes };
+  return { matches, byes: {} };
 }
 
 export interface CupResult { match_id: string; home_score: number; away_score: number }
 export interface StandRow { team: number; p: number; w: number; d: number; l: number; pf: number; pa: number; pct: number; pts: number }
-/** Conference table: 4 points a win, 2 a draw; percentage (points for / against) breaks ties. */
+/** Group table: 4 points a win, 2 a draw; percentage (points for / against) breaks ties. Crossover games count for each side's own group. */
 export function standings(conf: number[], matches: CupMatch[], results: CupResult[]): StandRow[] {
   const rows = new Map(conf.map((t) => [t, { team: t, p: 0, w: 0, d: 0, l: 0, pf: 0, pa: 0, pct: 0, pts: 0 }]));
   const byId = new Map(results.map((r) => [r.match_id, r]));
+  const add = (x: StandRow | undefined, f: number, a: number) => {
+    if (!x) return;
+    x.p++; x.pf += f; x.pa += a;
+    if (f > a) { x.w++; x.pts += 4; } else if (f < a) x.l++; else { x.d++; x.pts += 2; }
+  };
   for (const m of matches) {
     const r = byId.get(m.id);
     if (m.stage !== 'group' || !r || m.home == null || m.away == null) continue;
-    const h = rows.get(m.home), a = rows.get(m.away);
-    if (!h || !a) continue;
-    h.p++; a.p++; h.pf += r.home_score; h.pa += r.away_score; a.pf += r.away_score; a.pa += r.home_score;
-    if (r.home_score > r.away_score) { h.w++; a.l++; h.pts += 4; } else if (r.home_score < r.away_score) { a.w++; h.l++; a.pts += 4; } else { h.d++; a.d++; h.pts += 2; a.pts += 2; }
+    add(rows.get(m.home), r.home_score, r.away_score);
+    add(rows.get(m.away), r.away_score, r.home_score);
   }
   for (const x of rows.values()) x.pct = x.pa ? Math.round((x.pf / x.pa) * 1000) / 10 : 0;
   return [...rows.values()].sort((x, y) => y.pts - x.pts || y.pct - x.pct || y.pf - x.pf);
 }
-/** Fill in the semis and final once the group stage (and semis) are decided. */
-export function resolveKnockouts(matches: CupMatch[], confs: [number[], number[]], results: CupResult[]): CupMatch[] {
-  const groupDone = matches.filter((m) => m.stage === 'group').every((m) => results.some((r) => r.match_id === m.id));
-  const [A, B] = confs.map((c) => standings(c, matches, results));
-  const winner = (id: string, m?: CupMatch) => { const r = results.find((x) => x.match_id === id); if (!r || !m || m.home == null || m.away == null) return null; return r.home_score >= r.away_score ? m.home : m.away; };
-  const out = matches.map((m) => ({ ...m }));
-  const sf1 = out.find((m) => m.id === 'sf1')!, sf2 = out.find((m) => m.id === 'sf2')!, fin = out.find((m) => m.id === 'final')!;
-  if (groupDone) { sf1.home = A[0].team; sf1.away = B[1].team; sf2.home = B[0].team; sf2.away = A[1].team; }
-  fin.home = winner('sf1', sf1); fin.away = winner('sf2', sf2);
+
+/** Seeded shuffle so the quarter-final draw is random but doesn't change on refresh. */
+function shuffle<T>(xs: T[], seed: number): T[] {
+  let s = seed >>> 0 || 1;
+  const r = () => { s ^= s << 13; s >>>= 0; s ^= s >> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; };
+  const out = [...xs];
+  for (let i = out.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [out[i], out[j]] = [out[j], out[i]]; }
   return out;
+}
+/** Fill in the wildcards, the quarter-final draw, semis and final as each stage is decided. A drawn knockout goes to the home club,
+ *  which is the higher group finisher (wildcards) or the better-ranked club across both groups (quarter-finals on). */
+export function resolveKnockouts(matches: CupMatch[], confs: [number[], number[]], results: CupResult[]): CupMatch[] {
+  const has = (id: string) => results.some((r) => r.match_id === id);
+  const groupDone = matches.filter((m) => m.stage === 'group').every((m) => has(m.id));
+  const tables = confs.map((c) => standings(c, matches, results));
+  const out = matches.map((m) => ({ ...m }));
+  const get = (id: string) => out.find((m) => m.id === id)!;
+  const winner = (m: CupMatch) => { const r = results.find((x) => x.match_id === m.id); if (!r || m.home == null || m.away == null) return null; return r.home_score >= r.away_score ? m.home : m.away; };
+  // rank across both groups: finishing place, then percentage
+  const rank = new Map<number, number>();
+  tables.flatMap((t) => t.map((row, i) => ({ row, i }))).sort((x, y) => x.i - y.i || y.row.pct - x.row.pct).forEach(({ row }, n) => rank.set(row.team, n));
+  const seeded = (a: number | null, b: number | null): [number | null, number | null] => (a != null && b != null && (rank.get(b) ?? 99) < (rank.get(a) ?? 99) ? [b, a] : [a, b]);
+  if (groupDone) {
+    tables.forEach((t, i) => { const wc = get(`wc${i + 1}`); wc.home = t[3]?.team ?? null; wc.away = t[4]?.team ?? null; });
+    const w1 = winner(get('wc1')), w2 = winner(get('wc2'));
+    if (w1 != null && w2 != null) {
+      const eight = [...tables[0].slice(0, SAFE), ...tables[1].slice(0, SAFE)].map((r) => r.team).concat([w1, w2]);
+      const draw = shuffle(eight, CUP_SEASON * 1000 + [...eight].sort((a, b) => a - b).reduce((a, b) => a * 31 + b, 7) % 997);
+      for (let i = 0; i < 4; i++) { const q = get(`qf${i + 1}`); [q.home, q.away] = seeded(draw[i * 2], draw[i * 2 + 1]); q.label = undefined; }
+    }
+  }
+  const sf1 = get('sf1'), sf2 = get('sf2'), fin = get('final');
+  [sf1.home, sf1.away] = seeded(winner(get('qf1')), winner(get('qf2')));
+  [sf2.home, sf2.away] = seeded(winner(get('qf3')), winner(get('qf4')));
+  [fin.home, fin.away] = seeded(winner(sf1), winner(sf2));
+  return out;
+}
+
+/** Cup-tied players: the first club each player played a cup game for (on the field, in a round that has a result). */
+export function cupTies(rows: { cup_round: number; team_id: number; lineup: CupLineup }[], matches: CupMatch[], results: CupResult[]): Record<number, number> {
+  const done = new Set(results.map((r) => r.match_id));
+  const playedRounds = new Set(matches.filter((m) => done.has(m.id)).map((m) => m.round));
+  const ties: Record<number, number> = {};
+  for (const r of [...rows].sort((a, b) => a.cup_round - b.cup_round)) {
+    if (!playedRounds.has(r.cup_round)) continue;
+    const played = matches.some((m) => m.round === r.cup_round && done.has(m.id) && (m.home === r.team_id || m.away === r.team_id));
+    if (!played) continue;
+    for (const s of CUP_SLOT_ORDER) if (s !== 'EMG') for (const id of r.lineup[s] ?? []) ties[id] ??= r.team_id;
+  }
+  return ties;
 }
