@@ -41,7 +41,9 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const prof = draftProfileFor(drafted?.y ?? p.draft_year, drafted?.n ?? p.full_name ?? p.name);
   const showDraft = view === 'draft';
   const card = playerCard(p, r, league.players, league.ratings);
-  const summary = playerSummary(p);
+  const pool26 = [...league.players, ...league.freeAgents].filter((x) => (x.games ?? 0) >= 10 && x.average != null).sort((x, y) => (y.average ?? 0) - (x.average ?? 0));
+  const rank26 = pool26.findIndex((x) => x.id === p.id);
+  const summary = playerSummary(p, { rank: rank26 >= 0 ? rank26 + 1 : null });
   const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
