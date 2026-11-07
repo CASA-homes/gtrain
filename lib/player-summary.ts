@@ -4,6 +4,10 @@ import type { PlayerRow } from '@/lib/ratings';
 import { age } from '@/lib/ratings';
 import { CLUBS } from '@/lib/clubs';
 import { INJURY_2026 } from '@/lib/injury';
+import NOTES from './player-notes.json';
+
+/** Hand-written summaries for every rostered player (November 2026), keyed by full name. */
+const WRITTEN = NOTES as Record<string, string>;
 
 const NICK: Record<string, string> = {
   ADE: 'Crows', BRL: 'Lions', CAR: 'Blues', COL: 'Magpies', ESS: 'Bombers', FRE: 'Dockers', GEE: 'Cats', GCS: 'Suns', GWS: 'Giants',
@@ -44,6 +48,8 @@ function role(p: PlayerRow): { label: string; area: string } {
 
 /** rank: where his 2026 average sits among every player with 10+ games (1 = highest). */
 export function playerSummary(p: PlayerRow, ctx: { rank?: number | null } = {}): string[] {
+  const note = WRITTEN[p.full_name ?? ''] ?? WRITTEN[p.name];
+  if (note) return [note];
   const a = age(p.birth_date);
   const r = role(p);
   const first = (p.full_name ?? p.name).split(' ')[0];
