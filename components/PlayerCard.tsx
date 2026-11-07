@@ -89,8 +89,8 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
       <div className="pc-top">
       {seasons.length > 0 && (
         <Card title="Season averages" note={`${seasons.length} season${seasons.length > 1 ? 's' : ''} · AFL Fantasy`}>
-          <div className="pc-form pc-season">
-            {seasons.slice(0, 10).map(([y, gm, avg]) => (
+          <div className="pc-form pc-season pc-row">
+            {seasons.map(([y, gm, avg]) => (
               <div key={y} className="pc-fchip" title={`${y}: ${gm} games`}>
                 <b style={{ background: tone(avg)[0], color: tone(avg)[1], outline: y === current ? '2px solid #151a16' : 'none', outlineOffset: 1 }}>{Math.round(avg)}</b>
                 <span>’{String(y).slice(2)}</span><i>{gm} gm</i>
@@ -99,9 +99,9 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
           </div>
         </Card>
       )}
-      <Card title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
+      <Card o={0} title="Form" note={`all ${games.length} game${games.length === 1 ? '' : 's'} this season · tap one for its heat map`}>
         {/* Mobile scrolls sideways: start at the latest game, swipe back for round 1. */}
-        <div className="pc-form pc-season" ref={(el) => { if (el) el.scrollLeft = el.scrollWidth; }}>
+        <div className="pc-form pc-season pc-row" ref={(el) => { if (el) el.scrollLeft = el.scrollWidth; }}>
           {games.map((g, idx) => {
             return (
               <button key={idx} type="button" onClick={() => setHeatIdx(idx)} aria-pressed={heatIdx === idx} className="pc-fchip">

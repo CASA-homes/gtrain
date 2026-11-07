@@ -184,9 +184,13 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 
 /* Player card (FotMob-style match centre on the player page) */
 .pc-grid { display: flex; flex-direction: column; gap: 12px; }
-.pc-top { display: grid; grid-template-columns: fit-content(340px) minmax(0, 1fr); gap: 12px; }
+.pc-top { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.pc-top > .pc-card:first-child:not(:only-child) { grid-column: 1; }
+.pc-top > .pc-card:last-child:not(:only-child) { grid-column: 2 / -1; }
 .pc-top > :only-child { grid-column: 1 / -1; }
-.pc-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.pc-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.pc-col > .pc-card:last-child { flex: 1 1 auto; }
+.pc-col > .pc-card.pc-o4 { justify-content: flex-start; }
 .pc-col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .pc-o1 { order: 1; } .pc-o2 { order: 2; } .pc-o3 { order: 3; } .pc-o4 { order: 4; } .pc-o5 { order: 5; } .pc-o6 { order: 6; } .pc-o7 { order: 7; }
 @media (max-width: 1100px) { .pc-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pc-col { display: contents; } }
@@ -1743,3 +1747,22 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .mx-statline.one b { font-size: 13px; }
 .mx-statline.one em { font-size: 8.5px; letter-spacing: .04em; }
 @media (max-width: 480px) { .mx-statline.one b { font-size: 11px; } .mx-statline.one em { font-size: 7.5px; } }
+
+/* player page: form and season averages as single scrolling rows */
+.pc-form.pc-row { display: flex; flex-wrap: nowrap; gap: 4px; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; padding: 2px 1px 6px; }
+.pc-form.pc-row .pc-fchip { flex: 0 0 44px; }
+@media (max-width: 1100px) { .pc-top { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pc-top > .pc-card:last-child:not(:only-child) { grid-column: 2; } }
+@media (max-width: 760px) { .pc-top > .pc-card:first-child:not(:only-child), .pc-top > .pc-card:last-child:not(:only-child) { grid-column: 1 / -1; } }
+/* player summary in the header */
+.ph-top { grid-template-columns: auto minmax(0, 1fr) minmax(0, 420px); }
+.ph-summary { justify-self: end; align-self: stretch; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 14px; background: var(--sunk); max-width: 420px; }
+.ph-summary p { margin: 0; font-size: 13.5px; line-height: 1.5; color: #2c332e; }
+@media (max-width: 900px) { .ph-top { grid-template-columns: auto minmax(0, 1fr); } .ph-summary { grid-column: 1 / -1; justify-self: stretch; max-width: none; } }
+/* scouting report accordion */
+.sr-acc { padding: 0; }
+.sr-sum { list-style: none; cursor: pointer; padding: 18px 22px; }
+.sr-sum::-webkit-details-marker { display: none; }
+.sr-chev { margin-left: auto; font-size: 16px; color: var(--muted); transition: transform .2s; }
+.sr-acc[open] .sr-chev { transform: rotate(180deg); }
+.sr-body { padding: 0 22px 20px; }
+.sr-sum:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; border-radius: 16px; }

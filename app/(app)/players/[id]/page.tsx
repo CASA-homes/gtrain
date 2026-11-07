@@ -16,6 +16,7 @@ import { PlayerCard } from '@/components/PlayerCard';
 import { playerCard } from '@/lib/player-card';
 import { DRAFTEES } from '@/lib/draft-history';
 import { WatchStar } from '@/components/WatchStar';
+import { playerSummary } from '@/lib/player-summary';
 import { getWatchlist } from '@/lib/watchlist';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
@@ -40,6 +41,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const prof = draftProfileFor(drafted?.y ?? p.draft_year, drafted?.n ?? p.full_name ?? p.name);
   const showDraft = view === 'draft';
   const card = playerCard(p, r, league.players, league.ratings);
+  const summary = playerSummary(p);
   const LINE_NAME = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' } as const;
 
   const profile = [
@@ -96,6 +98,10 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               </div>
             </div>
           </div>
+          <aside className="ph-summary" aria-label="Player summary">
+            <span className="eyebrow">Player summary</span>
+            {summary.map((t, i) => <p key={i}>{t}</p>)}
+          </aside>
         </div>
         <div className="ph-bio">
           {bio.map(([k, v]) => (
@@ -134,8 +140,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
       ) : (
         <>
       {card && <PlayerCard {...card} />}
-      <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-        <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
+      <details className="card sr-acc">
+        <summary className="row-between sr-sum" style={{ flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <h2 className="h2">Scouting report</h2>
             <span className="pill" style={{ background: C.ink, color: '#fff', padding: '4px 12px' }}>{report.verdict}</span>
@@ -144,8 +150,9 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {report.tags.map((t) => <span key={t} className="pill" style={{ background: '#eef3ea', color: C.green5, padding: '3px 10px' }}>{t}</span>)}
           </div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
+          <span className="sr-chev" aria-hidden="true">▾</span>
+        </summary>
+        <div className="sr-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 22 }}>
           {([['Play style', report.style], ['Potential', report.potential], ['Fantasy output', report.fantasy], ...(report.health ? [['Body & ceiling', report.health] as const] : []), ...(report.position ? [['Positional value', report.position] as const] : []), ['Outlook', report.outlook]] as const).map(([h, t]) => (
             <div key={h} style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               <span className="eyebrow">{h}</span>
@@ -153,7 +160,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             </div>
           ))}
         </div>
-      </section>
+      </details>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 32 }}>
         <section>
