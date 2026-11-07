@@ -69,7 +69,7 @@ export function useTimeline(games: MGame[]) {
   }, [games]);
 }
 
-export function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam; round: MRound; now: number; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline> }) {
+export function Worm({ a, b, round, now, gameByClub, tl, height }: { a: MTeam; b: MTeam; round: MRound; now: number; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline>; height?: number }) {
   // Drawn at the container's real width so labels stay readable on a phone.
   const box = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(760);
@@ -78,7 +78,7 @@ export function Worm({ a, b, round, now, gameByClub, tl }: { a: MTeam; b: MTeam;
     const ro = new ResizeObserver(([e]) => setW(Math.max(300, Math.round(e.contentRect.width))));
     ro.observe(el); return () => ro.disconnect();
   }, []);
-  const H = W < 500 ? 210 : 240, L = 36, R = 50, T = 14, Bm = 40;
+  const H = height ?? (W < 500 ? 210 : 240), L = 36, R = 50, T = 14, Bm = height ? 36 : 40;
   const pts = useMemo(() => tl.samples.map((t) => {
     const A = teamAt(a, gameByClub, t), B = teamAt(b, gameByClub, t);
     return { t, live: A.score - B.score, proj: A.proj - B.proj };
@@ -293,13 +293,14 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
   const chip = live.length ? <span className="rh-chip live"><span className="rh-pulse" />{live.map((g) => `${g.home} v ${g.away}`).join(', ')}</span> : <span className="rh-chip">{now >= t1 ? 'Round complete' : 'No games on'}</span>;
   const body = (
     <>
+      <div className="mx-toprow">
       <div className="mx-scrub rh-card">
         <div className="mx-scrubtop">
-          <span className="rh-k">{compact ? <>Test round · simulated scores · <span className="rh-mono">{nowLabel}</span></> : 'Replay the round'}</span>
+          <span className="rh-k">{compact ? <>Test round · <span className="rh-mono">{nowLabel}</span></> : 'Replay the round'}</span>
           {compact && chip}
           <div style={{ display: 'flex', gap: 8 }}>
             <button className="rh-btn alt" onClick={() => { if (now >= t1) setNow(t0); setPlaying((p) => !p); }}>{playing ? 'Pause' : now >= t1 ? 'Replay from start' : 'Play'}</button>
-            <button className="rh-btn soft" onClick={() => { setPlaying(false); setNow(nowDefault); }}>Back to “now”</button>
+            <button className="rh-btn soft" onClick={() => { setPlaying(false); setNow(nowDefault); }}>{compact ? 'Now' : 'Back to “now”'}</button>
           </div>
         </div>
         <input type="range" id="mx-time" min={t0} max={t1} step={60e3} value={now} onChange={(e) => { setPlaying(false); setNow(Number(e.target.value)); }} aria-label="Point in the round" />
@@ -330,6 +331,8 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
         })}
       </div>
 
+      </div>
+
       <section className="rh-card mx-board">
         <div className="mx-sb">
           <div className="mx-sbt a">
@@ -353,7 +356,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
         </div>
         <div className="mx-worm">
           <div className="mx-legend"><span><i className="solid" />Live margin</span><span><i className="dash" />Projected final margin</span><span className="rh-dim">Shading shows who’s ahead</span></div>
-          <Worm a={A} b={B} round={round} now={now} gameByClub={gameByClub} tl={tl} />
+          <Worm a={A} b={B} round={round} now={now} gameByClub={gameByClub} tl={tl} height={compact ? 118 : undefined} />
         </div>
       </section>
 

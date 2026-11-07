@@ -14,9 +14,8 @@ export function LiveMatchups({ mens, md }: { mens: MRound; md: MatchdayData }) {
   const [gid, setGid] = useState(md.games[0]?.id ?? '');
   const game = md.games.find((g) => g.id === gid) ?? md.games[0];
   const look = useMemo(() => { const m = new Map([...Object.values(md.others), ...md.squad, ...md.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [md]);
-  return (
-    <Shell compact title="Live Matchups" sub={<>Round {md.round}, {md.season} · {md.myName}</>}>
-      <div className="lm-tabs" role="tablist" aria-label="Your games this week">
+  const tabsEl = (
+        <div className="lm-tabs" role="tablist" aria-label="Your games this week">
         {md.games.map((g) => (
           <button key={g.id} role="tab" aria-selected={g.id === game?.id} className={`lm-tab ${g.id === game?.id ? 'on' : ''} ${g.key}`} onClick={() => setGid(g.id)}>
             <b>{shortGame(g)}</b>
@@ -25,6 +24,9 @@ export function LiveMatchups({ mens, md }: { mens: MRound; md: MatchdayData }) {
         ))}
         <Link href="/live" className="lm-set">Set teams in Squad Selector →</Link>
       </div>
+  );
+  return (
+    <Shell compact title="Live Matchups" sub={<>Round {md.round}, {md.season} · {md.myName}</>} right={tabsEl}>
       {!game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : (
