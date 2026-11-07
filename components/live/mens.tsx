@@ -9,6 +9,15 @@ import { Shell } from './kit';
 
 const PERTH = 'Australia/Perth';
 export const A_COL = '#2563c9', B_COL = '#e0780f';
+/** Each club's chosen colour, falling back to blue v orange; if both picked (nearly) the same, the away side goes back to a default. */
+export function pairCols(a?: { colour?: string | null } | null, b?: { colour?: string | null } | null): [string, string] {
+  const ca = a?.colour || A_COL;
+  let cb = b?.colour || B_COL;
+  const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const near = (x: string, y: string) => { try { const [p, q] = [hex(x), hex(y)]; return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]) < 70; } catch { return x === y; } };
+  if (near(ca, cb)) cb = near(ca, B_COL) ? A_COL : B_COL;
+  return [ca, cb];
+}
 const LINE_ORDER: MPlayer['line'][] = ['DEF', 'MID', 'RUC', 'FWD', 'BENCH'];
 const LINE_NAME: Record<MPlayer['line'], string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', BENCH: 'Bench' };
 const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
@@ -70,6 +79,7 @@ export function useTimeline(games: MGame[]) {
 }
 
 export function Worm({ a, b, round, now, gameByClub, tl, height }: { a: MTeam; b: MTeam; round: MRound; now: number; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline>; height?: number }) {
+  const [A_COL, B_COL] = pairCols(a, b);
   // Drawn at the container's real width so labels stay readable on a phone.
   const box = useRef<HTMLDivElement>(null);
   const [W, setW] = useState(760);
@@ -156,30 +166,28 @@ function tip(l: Live) {
 
 function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b'; onOpen: () => void }) {
   const pre = l.ph.state === 'pre', live = l.ph.state === 'live';
-  const pace = l.play > 0 ? l.score - Math.round(p.proj * l.play) : 0;
-  const togCol = l.injured ? '#d4470f' : p.tog >= 80 ? '#1d8a3c' : p.tog >= 70 ? '#d9c24f' : '#ff9a3c';
+  const face = <MFace p={p} />;
+  const who = (
+    <div className="mx-who">
+      <span className="mx-name">
+        <button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>
+        {p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}
+        {l.injured && <span className="mx-inj">INJ</span>}
+      </span>
+      <span className="mx-sub">
+        <span className={live ? 'rh-up' : ''}>{live && <span className="rh-pulse" />}{p.club} · {tip(l)}</span>
+        {!pre && <span className="mx-stats rh-mono">{l.st.k + l.st.h}D {l.st.m}M {l.st.t}T {l.st.g}.{l.st.b}{l.st.ho ? ` ${l.st.ho}HO` : ''}</span>}
+      </span>
+    </div>
+  );
+  const tog = <span className={`mx-tog rh-mono ${l.injured ? 'inj' : ''}`} title={pre ? 'Not played yet' : `${l.injured ? 'Injured, ' : ''}${p.tog}% time on ground`}>{pre ? '' : `${p.tog}%`}</span>;
+  const rate = <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>;
+  const projN = <span className="mx-projn rh-mono" title="Projected">{pre ? p.proj : l.ph.state === 'final' ? p.proj : Math.round(p.proj)}</span>;
+  const act = <b className="rh-mono">{pre ? '' : l.score}</b>;
+  const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{projN}{act}</> : <>{act}{projN}</>}</div>;
   return (
-    <div className={`mx-row ${p.line === 'BENCH' ? 'bench' : ''}`}>
-      <MFace p={p} />
-      <div className="mx-who">
-        <span className="mx-name">
-          <button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>
-          {p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}
-          {l.injured && <span className="mx-inj">INJ</span>}
-        </span>
-        <span className="mx-sub">
-          <span className={live ? 'rh-up' : ''}>{live && <span className="rh-pulse" />}{p.club} · {tip(l)}</span>
-          {!pre && <span className="mx-stats rh-mono">{l.st.k + l.st.h}D {l.st.m}M {l.st.t}T {l.st.g}.{l.st.b}{l.st.ho ? ` ${l.st.ho}HO` : ''}</span>}
-        </span>
-      </div>
-      <div className="mx-tog" title={pre ? 'Not played yet' : `${l.injured ? 'Injured, ' : ''}${p.tog}% time on ground`}>
-        {!pre && <><span className="mx-togbar"><i style={{ width: `${l.injured ? p.tog : p.tog}%`, background: togCol }} /></span><span className="rh-mono">{p.tog}%</span></>}
-      </div>
-      <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>
-      <div className={`mx-score ${side}`}>
-        <b className="rh-mono">{pre ? <span className="rh-dim">{p.proj}</span> : l.score}</b>
-        <span className={`rh-mono ${pre ? 'rh-dim' : pace >= 0 ? 'rh-up' : 'rh-down'}`}>{pre ? 'proj' : l.ph.state === 'final' ? `${signed(l.score - p.proj)} v proj` : `${signed(pace)} pace`}</span>
-      </div>
+    <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''}`}>
+      {side === 'a' ? <>{face}{who}{tog}{rate}{score}</> : <>{score}{rate}{tog}{who}{face}</>}
     </div>
   );
 }
@@ -202,6 +210,7 @@ function TeamCol({ t, side, gameByClub, now, onOpen }: { t: MTeam; side: 'a' | '
 }
 
 function MiniWorm({ a, b, gameByClub, tl, now }: { a: MTeam; b: MTeam; gameByClub: Map<string, MGame>; tl: ReturnType<typeof useTimeline>; now: number }) {
+  const [A_COL, B_COL] = pairCols(a, b);
   const pts = useMemo(() => tl.samples.filter((_, i) => i % 3 === 0).map((t) => ({ t, v: teamAt(a, gameByClub, t).score - teamAt(b, gameByClub, t).score })), [a, b, gameByClub, tl.samples]);
   const shown = pts.filter((p) => p.t <= now);
   const m = Math.max(30, ...pts.map((p) => Math.abs(p.v)));
@@ -286,6 +295,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
   let A = team(aId), B = team(bId);
   if (bId === myTeamId) [A, B] = [B, A];
   const sa = teamAt(A, gameByClub, now), sb = teamAt(B, gameByClub, now);
+  const [A_COL, B_COL] = pairCols(A, B);
   const win = phi((sa.proj - sb.proj) / Math.max(1, Math.hypot(sa.sd, sb.sd)));
   const live = round.games.filter((g) => phase((now - Date.parse(g.start)) / 60e3).state === 'live');
   const nowLabel = new Date(now).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });
@@ -319,6 +329,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
           if (y === myTeamId) [ta, tb] = [tb, ta];
           const a = teamAt(ta, gameByClub, now), b = teamAt(tb, gameByClub, now);
           const w = phi((a.proj - b.proj) / Math.max(1, Math.hypot(a.sd, b.sd)));
+          const [A_COL, B_COL] = pairCols(ta, tb);
           return (
             <button key={i} className={`mx-mu ${i === sel ? 'on' : ''}`} onClick={() => setSel(i)} aria-pressed={i === sel}>
               <span className="mx-mu-t"><span className="rh-ellip">{ta.name}</span><b className="rh-mono" style={{ color: A_COL }}>{a.score}</b></span>
@@ -361,8 +372,8 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
       </section>
 
       <div className="mx-teams">
-        <div><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
-        <div><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
+        <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
+        <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
       </div>
       {!compact && <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>}
       <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />

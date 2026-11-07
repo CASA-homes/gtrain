@@ -32,7 +32,7 @@ export function profileOf(p: PlayerRow): MProfile {
     hist: [...(p.hist ?? [])].sort((x, y) => y[0] - x[0]).slice(0, 6),
   };
 }
-export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; players: MPlayer[] }
+export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; colour?: string | null; players: MPlayer[] }
 export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][] }
 
 // Round One 2027 (afl.com.au, 27 Oct 2026). Start times carry the venue's UTC offset.
@@ -100,7 +100,7 @@ export function buildMensRound(league: League): MRound {
       ...starters.map(({ p, l }) => simPlayer(p, l, capOf(p.id), proj.get(p.id)!)),
       ...b.bench.map((p) => simPlayer(p, 'BENCH', null, proj.get(p.id)!)),
     ];
-    teams.push({ id, name: t.team.name, short: t.team.short_code, coach: t.team.coach_name, logo: t.team.logo_url ?? null, players });
+    teams.push({ id, name: t.team.name, short: t.team.short_code, coach: t.team.coach_name, logo: t.team.logo_url ?? null, colour: t.team.colour ?? null, players });
   }
   // Randomised G-Train fixture for the week (seeded so it doesn't change on refresh).
   const r = rng(20270317);

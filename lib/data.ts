@@ -19,6 +19,8 @@ export const FREE_AGENTS_UPDATED = (freeAgentData as unknown as { updated: strin
 
 export interface Team {
   id: number; name: string; coach_name: string; short_code: string; keeper_id: number | null; status_override: Status | null; logo_url?: string | null;
+  /** the club's chosen highlight colour (0021), e.g. #2563c9 */
+  colour?: string | null;
 }
 export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean; kind?: 'draft' | 'msd' | 'bonus' }
 export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null; is_guest?: boolean }
@@ -74,7 +76,7 @@ export interface League {
 
 /** Teams without guest clubs. Tries the newest columns first (logo 0016, guests 0013) and falls back if a migration hasn't run. */
 async function loadTeams(supabase: Awaited<ReturnType<typeof createClient>>): Promise<{ data: Team[] | null; error: unknown }> {
-  for (const cols of ['id,name,coach_name,short_code,keeper_id,status_override,is_guest,logo_url', 'id,name,coach_name,short_code,keeper_id,status_override,is_guest']) {
+  for (const cols of ['id,name,coach_name,short_code,keeper_id,status_override,is_guest,logo_url,colour', 'id,name,coach_name,short_code,keeper_id,status_override,is_guest,logo_url', 'id,name,coach_name,short_code,keeper_id,status_override,is_guest']) {
     const r = await supabase.from('teams').select(cols).order('id');
     if (!r.error) return { data: ((r.data ?? []) as unknown as (Team & { is_guest?: boolean })[]).filter((t) => !t.is_guest), error: null };
   }

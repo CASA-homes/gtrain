@@ -8,7 +8,7 @@ import { DEFAULT_SETTINGS, FORMATIONS, customResults, matchesInPlay, type GamePi
 import type { MGame, MRound } from '@/lib/mens-round';
 import { loadRoles, saveRoles } from '@/app/(app)/live/actions';
 import { cancelChallenge, decideRequest, grantTokens, loadDesk, markAssetsDone, offerChallenge, requestTokens, respondChallenge, settleChallenge, type Challenge, type Desk, type Stake } from '@/app/(app)/live/battle-actions';
-import { A_COL, B_COL, MFace, PlayerSheet, Worm, liveOf, teamAt, useTimeline, type ProfileOpen } from './mens';
+import { MFace, pairCols, PlayerSheet, Worm, liveOf, teamAt, useTimeline, type ProfileOpen } from './mens';
 import { CupPanel, type CupData } from './cup';
 import { Face, Shell, gameLabel, isLive, useRound, type TeamRow } from './kit';
 
@@ -182,6 +182,7 @@ function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
   let A = team(mu[0]), B = team(mu[1]);
   if (mu[1] === myTeamId) [A, B] = [B, A];
   const sa = teamAt(A, gameByClub, now), sb = teamAt(B, gameByClub, now);
+  const [A_COL, B_COL] = pairCols(A, B);
   const z = (sa.proj - sb.proj) / Math.max(1, Math.hypot(sa.sd, sb.sd));
   const win = 1 / (1 + Math.exp(-1.702 * z));
   const top = (t: typeof A) => t.players.filter((p) => p.line !== 'BENCH').map((p) => ({ p, l: liveOf(p, gameByClub, now) })).filter((x) => x.l.play > 0).sort((x, y) => y.l.score - x.l.score).slice(0, 3);

@@ -1,3 +1,4 @@
+import { ClubColourPicker } from '@/components/ClubColourPicker';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubLogoEditor } from '@/components/ClubLogoEditor';
@@ -133,7 +134,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="wrap">
-      <header className="club-head">
+      <header className={`club-head ${a.team.colour ? 'has-colour' : ''}`} style={a.team.colour ? ({ '--club': a.team.colour } as React.CSSProperties) : undefined}>
         {season?.premier_id === a.team.id && (
           <div className="club-head-band">
             <svg width="13" height="14" viewBox="0 0 26 28" aria-hidden="true"><path d="M7 2 H19 V9 C19 13 16.5 16 13 16 C9.5 16 7 13 7 9 Z" fill="currentColor" /><rect x="11.5" y="16" width="3" height="5" fill="currentColor" /><rect x="7.5" y="21" width="11" height="4" rx="1" fill="currentColor" /></svg>
@@ -146,6 +147,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none' }}>
               <TeamBadge code={a.team.short_code} logo={a.team.logo_url} />
               {(isMine || me?.is_commish) && <ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} />}
+              {(isMine || me?.is_commish) && <ClubColourPicker teamId={a.team.id} colour={a.team.colour ?? null} />}
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
