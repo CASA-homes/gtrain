@@ -77,11 +77,12 @@ export function Hub({ initial, games, ready, teams, myTeamId }: { initial: LRoun
 
 /* ---------------- current games ---------------- */
 
-export function GamesList({ round, roundName, games, ready, teams, myTeamId }: { round: number; roundName: string; games: Game[]; ready: boolean; teams: TeamRow[]; myTeamId: number }) {
+export function GamesList({ round, roundName, games, ready, teams, myTeamId, roundDone = false }: { round: number; roundName: string; games: Game[]; ready: boolean; teams: TeamRow[]; myTeamId: number; roundDone?: boolean }) {
   const teamName = useNames(teams);
-  const mineNow = games.filter((g) => g.round === round && g.order.includes(myTeamId));
-  const othersNow = games.filter((g) => g.round === round && !g.order.includes(myTeamId));
-  const earlier = games.filter((g) => g.round !== round && g.order.includes(myTeamId));
+  const isNow = (g: Game) => g.round === round && !roundDone;
+  const mineNow = games.filter((g) => isNow(g) && g.order.includes(myTeamId));
+  const othersNow = games.filter((g) => isNow(g) && !g.order.includes(myTeamId));
+  const earlier = games.filter((g) => !isNow(g) && g.order.includes(myTeamId));
   const card = (g: Game) => {
     const s = statusOf(g, teamName, myTeamId);
     return (
@@ -106,7 +107,7 @@ export function GamesList({ round, roundName, games, ready, teams, myTeamId }: {
       <h2 className="rh-h2">Season</h2>
       <Empty>Season-long games are coming. They’ll sit here alongside your weekend games.</Empty>
       {othersNow.length > 0 && <><h2 className="rh-h2">Other games this weekend</h2><div className="rh-glist">{othersNow.map(card)}</div></>}
-      {earlier.length > 0 && <><h2 className="rh-h2">Earlier rounds</h2><div className="rh-glist">{earlier.map(card)}</div></>}
+      {earlier.length > 0 && <><h2 className="rh-h2">Past results</h2><div className="rh-glist">{earlier.map(card)}</div></>}
     </Shell>
   );
 }

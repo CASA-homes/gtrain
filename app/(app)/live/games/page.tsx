@@ -10,5 +10,5 @@ export default async function GamesPage() {
   const { me, teams, data, error } = await loadLive();
   if (!data) return <FeedDown error={error} />;
   const { ready, games } = await listGames();
-  return <GamesList round={data.round} roundName={data.name} games={games} ready={ready} teams={teams} myTeamId={me.team_id} />;
+  return <GamesList round={data.round} roundName={data.name} games={games} ready={ready} teams={teams} myTeamId={me.team_id} roundDone={data.status === 'completed'} />;
 }

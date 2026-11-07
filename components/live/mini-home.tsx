@@ -92,8 +92,9 @@ export function MiniHome({ initial, games, ready, teams, myTeamId }: { initial: 
   const { data, byId, gameBySquad } = useRound(initial);
   const name = (id: number) => teams.find((t) => t.id === id)?.name ?? `Club ${id}`;
   const mine = games.filter((g) => g.order.includes(myTeamId));
-  const now = mine.filter((g) => g.round === data.round);
-  const past = mine.filter((g) => g.round !== data.round).slice(0, 8);
+  const open = new Set(data.rounds.filter((r) => r.status !== 'completed').map((r) => r.n));
+  const now = mine.filter((g) => open.has(g.round));
+  const past = mine.filter((g) => !open.has(g.round)).slice(0, 12);
   const myTurn = now.find((g) => g.kind !== 'cap5' && g.status === 'drafting' && onClock(g.order, g.picks.length) === myTeamId);
   const card = (g: Game, live: boolean) => {
     const l = lineupsFromPicks(g.picks);
