@@ -10,9 +10,13 @@ import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 import { postNews, rsvp } from './actions';
 import { LeagueHistory } from '@/components/LeagueHistory';
+import { CupTables } from '@/components/live/cup';
+import { buildCup } from '@/lib/cup-data';
+import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 
 export default async function LeaguePage() {
   const [league, me] = await Promise.all([getLeague(), getMe()]);
+  const cup = await buildCup(league, me?.team_id ?? 0);
   const supabase = await createClient();
   const [{ data: news }, { data: chat }, { data: rsvps }] = await Promise.all([
     supabase.from('news').select('*').order('happens_at', { ascending: true, nullsFirst: false }).limit(8),
@@ -214,6 +218,16 @@ export default async function LeaguePage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="muted">
               {allTeamByCoach.map(([t, n]) => <span key={t}><b style={{ color: 'var(--ink)' }}>{n}</b> {t}</span>)}
             </div>
+          </section>
+          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 6 }}>
+              <div>
+                <span className="eyebrow">Group stage · rounds 5 to 8</span>
+                <h2 className="h2" style={{ fontSize: 22 }}>{CUP_NAME} {CUP_SEASON}</h2>
+              </div>
+              <Link href="/live/cup" className="muted" style={{ fontSize: 13 }}>Full cup →</Link>
+            </div>
+            <CupTables data={cup} />
           </section>
         </div>
       </div>

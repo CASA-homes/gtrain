@@ -374,3 +374,19 @@ export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
     </Shell>
   );
 }
+
+/** Both group tables, for the League page. */
+export function CupTables({ data }: { data: CupData }) {
+  const name = (id: number) => data.teams.find((t) => t.id === id)?.name ?? `Club ${id}`;
+  return (
+    <div className="rh cup-league">
+      {data.confs.map((c, i) => (
+        <div key={i} className="cup-league-g">
+          <span className="rh-k">{CONF_NAMES[i]}</span>
+          <Table rows={standings(c, data.matches, data.results)} name={name} myTeamId={data.myTeamId} compact />
+        </div>
+      ))}
+      <Zones />
+    </div>
+  );
+}
