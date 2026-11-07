@@ -1223,43 +1223,22 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .wr-name { font-size: 19px; }
 }
 
-/* Clubhouse legacy strip (components/ClubLegacy.tsx) */
-.lg { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
-.lg-cab { position: relative; border-radius: 18px; padding: 16px 18px 0; overflow: hidden;
-  background: radial-gradient(120% 90% at 50% 0%, #ffffff 0%, #f4f2ec 60%, #ece8de 100%); border: 1px solid #e3ddcf; box-shadow: inset 0 1px 0 #fff; display: flex; flex-direction: column; gap: 10px; }
-.lg-cab::before { content: ''; position: absolute; inset: 0; background: radial-gradient(40% 50% at 50% 0%, rgb(255 236 180 / .35), transparent 70%); pointer-events: none; }
-.lg-cab-h { position: relative; display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: baseline; }
-.lg-cab-sum { font: 600 13px var(--font); color: #6d5a2a; }
-.lg-shelf { position: relative; flex: 1; display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 0; scrollbar-width: none; align-items: flex-end; min-height: 120px; }
-.lg-shelf::-webkit-scrollbar { display: none; }
-.lg-slot { flex: 1 0 86px; max-width: 120px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.lg-piece { height: 58px; display: flex; align-items: flex-end; justify-content: center; filter: drop-shadow(0 6px 6px rgb(80 60 10 / .18)); }
-.lg-slot.none .lg-piece, .lg-slot.rank .lg-piece, .lg-slot.next .lg-piece { filter: none; opacity: .75; }
-.lg-slot.premier .lg-piece { animation: lgshine 4s ease-in-out infinite; }
-@keyframes lgshine { 0%, 100% { filter: drop-shadow(0 6px 6px rgb(80 60 10 / .18)); } 50% { filter: drop-shadow(0 6px 12px rgb(212 166 42 / .55)); } }
-.lg-plaque { display: flex; flex-direction: column; align-items: center; gap: 0; padding: 4px 8px 5px; border-radius: 5px; font-size: 10.5px; color: #6d5a2a; background: linear-gradient(180deg, #d9c49a, #c7ae7c); box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 1px 0 rgb(0 0 0 / .08); white-space: nowrap; }
-.lg-plaque b { font: 700 12px var(--mono); color: #3e3012; }
-.lg-slot.premier .lg-plaque { background: linear-gradient(180deg, #f2d98a, #d4a62a); color: #4d3a08; }
-.lg-slot.next .lg-plaque { background: transparent; box-shadow: inset 0 0 0 1px #d8cfba; }
-.lg-ledge { position: relative; height: 16px; margin: 0 -18px; background: linear-gradient(180deg, #b8946a 0, #9c7a52 60%, #876843 100%); box-shadow: 0 -2px 8px rgb(80 60 10 / .2); }
-.lg-side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.lg-card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
-.lg-rec { font: 600 30px/1 var(--font); letter-spacing: -.03em; display: flex; align-items: baseline; gap: 4px; }
-.lg-rec span { color: var(--muted); font-weight: 400; }
-.lg-rec small { font: 500 12px var(--font); color: var(--muted); letter-spacing: 0; margin-left: 8px; }
-.lg-rival { display: grid; grid-template-columns: 74px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 8px 10px; border-radius: 10px; font-size: 13px; }
-.lg-rival b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.lg-rival .mono { font-size: 11.5px; color: var(--muted); }
-.lg-rival.bad { background: #fbece7; }
-.lg-rival.bad .eyebrow { color: #a3271c; }
-.lg-rival.good { background: #edf6ee; }
-.lg-rival.good .eyebrow { color: var(--g5); }
-.lg-tickets { display: flex; flex-wrap: wrap; gap: 6px; }
-.lg-ticket { position: relative; display: flex; flex-direction: column; min-width: 74px; padding: 6px 12px 6px 10px; border-radius: 6px; background: var(--sunk); border: 1px dashed #cfd6ca; font-size: 11px; color: var(--muted); }
-.lg-ticket::before, .lg-ticket::after { content: ''; position: absolute; top: 50%; width: 8px; height: 8px; border-radius: 50%; background: var(--surface); border: 1px dashed #cfd6ca; transform: translateY(-50%); }
-.lg-ticket::before { left: -5px; } .lg-ticket::after { right: -5px; }
-.lg-ticket b { font: 600 14px var(--mono); color: var(--ink); }
-.lg-ticket i { font-style: normal; font: 600 9.5px var(--mono); color: #a3271c; text-transform: uppercase; letter-spacing: .04em; }
-.lg-ticket.r1 { background: #eef6ee; border-color: #b9d6be; }
-.lg-ticket.msd { background: #f3f1fb; border-color: #cfc8ef; }
-@media (max-width: 900px) { .lg { grid-template-columns: minmax(0, 1fr); } }
+/* Clubhouse: compact honours row + pick vault with a year switch */
+.hn { padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.hn-row { display: flex; gap: 4px; flex-wrap: wrap; }
+.hn-yr { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px 4px 6px; border-radius: 99px; background: var(--sunk); border: 1px solid var(--line-soft); font: 500 11.5px var(--mono); color: var(--muted); }
+.hn-yr.premier { background: #fbf1cf; border-color: #ecd68b; color: #6d5208; font-weight: 600; }
+.hn-yr.runner { background: #eef0f2; border-color: #d7dbe0; color: #4b535b; }
+.hn-yr.spoon { background: #f4e9dc; border-color: #e3cdb0; color: #7a5326; }
+.hn-meta { display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); }
+.hn-meta b { color: var(--ink); font-weight: 600; }
+.pv { overflow: hidden; }
+.pv-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; }
+.pv-sel { font: 600 12.5px var(--font); border: 1px solid var(--line); border-radius: 7px; padding: 4px 8px; background: var(--surface); color: var(--ink); }
+.pv-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 7px 14px; border-top: 1px solid var(--line-soft); font-size: 13px; }
+.pv-rd { font: 600 11px var(--mono); color: var(--muted); }
+.pv-no { font: 600 13px var(--mono); }
+.pv-via { font: 500 10.5px var(--mono); color: var(--muted); }
+.pv-tag { font: 600 9.5px var(--mono); padding: 2px 5px; border-radius: 4px; background: #efecfa; color: #5b4bb5; }
+.pv-pts { font: 500 11.5px var(--mono); color: var(--muted); text-align: right; min-width: 52px; }
+.pv-empty { padding: 10px 14px 14px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line-soft); }
