@@ -5,7 +5,8 @@ import type { PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { photoUrl } from '@/lib/photos';
 import { createClient } from '@/lib/supabase/server';
-import { buildMensRound } from '@/lib/mens-round';
+import { buildMensRound, profileOf } from '@/lib/mens-round';
+import { form as formOf } from '@/lib/ratings';
 import { CUP_SEASON, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
 import { RULES, ageOn, autoFill, type GameKey, type MdLineup, type MdPlayer, type Pos } from '@/lib/matchday';
@@ -28,16 +29,23 @@ export interface MatchdayData {
   survivorUsed: number[]; entered: CompKey[];
 }
 
-export const toMd = (p: PlayerRow): MdPlayer => ({
-  id: p.id, name: p.full_name ?? p.name, pos: [...p.positions] as Pos[], club: p.afl_club, proj: Math.round(projected2027(p) || 0),
-  age: ageOn(p.birth_date), rookie: p.is_rookie_keeper, photo: photoUrl(p),
-});
+export const toMd = (p: PlayerRow, full = false): MdPlayer => {
+  const l5s = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null).slice(-5);
+  return {
+    id: p.id, name: p.full_name ?? p.name, pos: [...p.positions] as Pos[], club: p.afl_club, proj: Math.round(projected2027(p) || 0),
+    age: ageOn(p.birth_date), rookie: p.is_rookie_keeper, photo: photoUrl(p),
+    avg: p.average != null ? Math.round(p.average * 10) / 10 : null, form: formOf(p),
+    l5: l5s.length ? Math.round(l5s.reduce((a, b) => a + b, 0) / l5s.length) : null,
+    keeper: p.is_rookie_keeper ? 'RK' : p.is_keeper ? 'K' : null,
+    ...(full ? { prof: profileOf(p) } : {}),
+  };
+};
 const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v ?? []])) } : null);
 
 export async function buildMatchday(league: League, myTeamId: number, cup: CupData): Promise<MatchdayData> {
   const supabase = await createClient();
-  const listOf = (team: number) => league.players.filter((p) => p.team_id === team && !p.list_status).map(toMd);
-  const squad = listOf(myTeamId);
+  const listOf = (team: number) => league.players.filter((p) => p.team_id === team && !p.list_status).map((p) => toMd(p));
+  const squad = league.players.filter((p) => p.team_id === myTeamId && !p.list_status).map((p) => toMd(p, true)).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
   const team = (id: number) => league.teams.find((t) => t.id === id);
   const round = MATCHDAY_ROUND;
 
@@ -97,7 +105,7 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
   if (entered.includes('survivor')) {
     survivorUsed = [...saved.entries()].filter(([k]) => k.startsWith('survivor:') && k.endsWith(`:${myTeamId}`) && !k.startsWith(`survivor:${round}:`))
       .flatMap(([, l]) => l.slots.PICK ?? []);
-    pool = [...league.players.filter((p) => !p.list_status), ...league.freeAgents].map(toMd).filter((p) => p.proj >= 70).sort((a, b) => b.proj - a.proj);
+    pool = [...league.players.filter((p) => !p.list_status), ...league.freeAgents].map((p) => toMd(p)).filter((p) => p.proj >= 70).sort((a, b) => b.proj - a.proj);
     games.push({ id: `survivor:${round}`, key: 'survivor', round, label: `Survivor · Round ${round}`, sub: `${entrants('survivor').length} alive`,
       opp: null, table: entrants('survivor').map((t) => { const s = side('survivor', round, t); if (!s.saved) s.lineup = { slots: { PICK: [] } }; return s; }) });
     for (const p of pool) others[p.id] ??= p;

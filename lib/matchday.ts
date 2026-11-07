@@ -11,7 +11,12 @@ export interface Rules {
   /** extra eligibility (Rookie Shield: 21 and under, or the rookie keeper) */
   eligible?: (p: MdPlayer) => boolean;
 }
-export interface MdPlayer { id: number; name: string; pos: Pos[]; club: string | null; proj: number; age: number | null; rookie: boolean; photo: string | null }
+export interface MdPlayer {
+  id: number; name: string; pos: Pos[]; club: string | null; proj: number; age: number | null; rookie: boolean; photo: string | null;
+  avg?: number | null; form?: 'up' | 'flat' | 'down' | null; l5?: number | null; keeper?: 'K' | 'RK' | null;
+  /** 2026 game log, stat line and career, for the profile pop-up (your own list only) */
+  prof?: import('@/lib/mens-round').MProfile;
+}
 export type MdLineup = { slots: Record<string, number[]>; c?: number | null; vc?: number | null };
 
 const POS4: Pos[] = ['DEF', 'MID', 'RUC', 'FWD'];
@@ -100,3 +105,12 @@ export const ageOn = (birth: string | null, on = new Date(Date.UTC(2027, 2, 1)))
   if (on.getUTCMonth() < b.getUTCMonth() || (on.getUTCMonth() === b.getUTCMonth() && on.getUTCDate() < b.getUTCDate())) a--;
   return a;
 };
+
+/** How a line's spots are laid out on the field: G-Train is 3-2 / 4-3 / 1 / 3-2. */
+export function rowsFor(n: number): number[] {
+  if (n <= 4) return [n];
+  if (n === 5) return [3, 2];
+  if (n === 6) return [3, 3];
+  if (n === 7) return [4, 3];
+  return [Math.ceil(n / 2), Math.floor(n / 2)];
+}

@@ -1,143 +1,300 @@
 'use client';
-// Matchday: the home of game week. Left half: your team for whichever game you pick from the dropdown.
-// Right half: that game's matchup (or table), and the Knockout Cup panel underneath.
-import { useMemo, useState, useTransition } from 'react';
+// Matchday · Squad Selector. Left: your whole list beside the field (3-2 / 4-3 / 1 / 3-2 + emergencies), drag and drop
+// or tap to place. Right: the matchup for whichever game is picked in the dropdown, and the Knockout Cup.
+import { useEffect, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CLUBS } from '@/lib/clubs';
-import { RULES, autoFill, filledField, fits, onField, projTotal, type MdLineup, type MdPlayer, type Rules, type SlotRule } from '@/lib/matchday';
+import { jumper } from '@/lib/jumpers';
+import { RULES, autoFill, filledField, fits, onField, projTotal, rowsFor, type MdLineup, type MdPlayer, type Pos, type Rules, type SlotRule } from '@/lib/matchday';
 import type { GameOpt, MatchdayData, Side } from '@/lib/matchday-data';
 import { saveGameLineup } from '@/app/(app)/live/matchday-actions';
 import { CupPanel, type CupData } from './cup';
 import { Shell } from './kit';
 
+const POS_COL: Record<Pos, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 const empty = (r: Rules): MdLineup => ({ slots: Object.fromEntries(r.slots.map((s) => [s.key, []])), c: null, vc: null });
 const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
+const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
+const shortGame = (g: GameOpt) => `${g.label.replace('Knockout Cup · Round ', 'Cup R').replace(' · Round ', ' R')}${g.opp ? ` · v ${g.opp.name}` : ''}`;
 
-function Face({ p, size = 30 }: { p: MdPlayer; size?: number }) {
-  const [bad, setBad] = useState(false);
-  const c = p.club ? CLUBS[p.club] : null;
+export function Disc({ p, size = 16, label = false }: { p: MdPlayer; size?: number; label?: boolean }) {
   return (
-    <span className="md-face" style={{ width: size, height: size, boxShadow: `0 0 0 2px ${c?.a ?? '#d6dad3'}` }} aria-hidden="true">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      {p.photo && !bad ? <img src={p.photo} alt="" loading="lazy" onError={() => setBad(true)} /> : <span>{initials(p.name)}</span>}
+    <span className="sq-disc" style={{ width: size, height: size, background: jumper(p.club) }} title={p.club ? CLUBS[p.club]?.name ?? p.club : undefined} aria-hidden="true">
+      {label && <b style={{ fontSize: Math.round(size * 0.32) }}>{initials(p.name)}</b>}
     </span>
   );
 }
 
-/* ---------------- lineup builder (left) ---------------- */
-function Builder({ game, rules, squad, initial, used, onChange }: {
-  game: GameOpt; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; onChange: (l: MdLineup) => void;
+export function Form({ p, size = 14 }: { p: MdPlayer; size?: number }) {
+  if (!p.form) return null;
+  const [rot, col, label] = ({ up: ['rotate(-45 10 10)', '#10a35a', 'Form rising'], down: ['rotate(45 10 10)', '#d6452f', 'Form falling'], flat: ['', '#c9930f', 'Form steady'] } as const)[p.form];
+  return (
+    <svg className="sq-form" width={size} height={size} viewBox="0 0 20 20" role="img" aria-label={label}>
+      <title>{`${label}${p.l5 != null ? `: last 5 avg ${p.l5}` : ''}`}</title>
+      <g transform={rot}><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke={col} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></g>
+    </svg>
+  );
+}
+
+const Info = ({ p, onInfo }: { p: MdPlayer; onInfo: (p: MdPlayer) => void }) => (
+  <button type="button" className="sq-info" draggable={false} aria-label={`${p.name} profile`} title="Profile"
+    onClick={(e) => { e.stopPropagation(); onInfo(p); }} onPointerDown={(e) => e.stopPropagation()}>i</button>
+);
+
+/* ---------------- profile pop-up (same layout as the Matchups pop-up) ---------------- */
+function SquadSheet({ p, slot, cap, vc, onClose }: { p: MdPlayer; slot: string | null; cap: boolean; vc: boolean; onClose: () => void }) {
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k);
+  }, [onClose]);
+  const pr = p.prof, log = pr?.log ?? [], scores = log.map((g) => g[1]);
+  const hi = scores.length ? Math.max(...scores) : null, lo = scores.length ? Math.min(...scores) : null;
+  const tons = scores.filter((x) => x >= 100).length;
+  const maxBar = Math.max(130, ...scores, p.proj);
+  const b = pr?.box;
+  const statLine = b ? ([['K', b.k], ['HB', b.h], ['D', b.k != null && b.h != null ? b.k + b.h : null], ['M', b.m], ['T', b.t], ['G', b.g], ['HO', b.ho || null], ['CBA%', b.cba], ['TOG%', b.tog]] as [string, number | null | undefined][])
+    .filter(([, v]) => v != null).map(([k, v]) => [k, Number.isInteger(v) ? String(v) : (v as number).toFixed(1)]) : [];
+  return (
+    <div className="rh-sheet-back" role="presentation" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="mx-sheet" role="dialog" aria-modal="true" aria-label={`${p.name} profile`}>
+        <div className="mx-sh-head">
+          <Disc p={p} size={56} label />
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <span className="rh-k">{p.keeper === 'RK' ? 'Rookie keeper' : p.keeper === 'K' ? 'Keeper' : 'On your list'}{cap ? ' · Captain' : vc ? ' · Vice-captain' : ''}</span>
+            <h3 className="mx-sh-name">{p.name}</h3>
+            <span className="rh-dim" style={{ fontSize: 13 }}>{p.club ? CLUBS[p.club]?.name ?? p.club : 'No club'} · {p.pos.join('/')}{p.age != null ? ` · ${p.age} yo` : ''}</span>
+          </div>
+          <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
+        </div>
+        <div className="mx-sh-now">
+          <div><span className="rh-k">This round</span><b className="rh-mono">{slot ?? '–'}</b><span className="rh-dim">{slot ? (slot === 'EMG' ? 'emergency' : 'in your team') : 'not selected'}</span></div>
+          <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{cap ? `${p.proj * 2} as captain` : 'per game'}</span></div>
+          <div><span className="rh-k">2026 avg</span><b className="rh-mono">{p.avg?.toFixed(1) ?? '–'}</b><span className="rh-dim" style={{ display: 'flex', alignItems: 'center', gap: 4 }}><Form p={p} size={13} />{p.l5 != null ? `last 5: ${p.l5}` : `${pr?.games ?? 0} games`}</span></div>
+        </div>
+        <div className="mx-sh-sec">
+          <div className="mx-sh-row"><span className="rh-k">2026 scores · {pr?.games ?? scores.length} games</span><span className="rh-dim rh-mono" style={{ fontSize: 12 }}>high {hi ?? '–'} · low {lo ?? '–'} · {tons} tons</span></div>
+          {log.length ? (
+            <div className="mx-bars" aria-label="2026 scores by round">
+              <i className="mx-projline" style={{ bottom: `${(p.proj / maxBar) * 100}%` }} title={`2027 projection ${p.proj}`} />
+              {log.map(([r, sc]) => (
+                <span key={r} className="mx-bar" title={`Round ${r}: ${sc}`}>
+                  <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#10a35a' : sc >= p.proj ? '#7ccf8f' : sc >= p.proj * 0.75 ? '#e5c84f' : '#f39a4a' }} />
+                  <em>{r}</em>
+                </span>
+              ))}
+            </div>
+          ) : <span className="rh-dim" style={{ fontSize: 13 }}>No 2026 games on record.</span>}
+          {log.length > 0 && <span className="rh-dim" style={{ fontSize: 12 }}>Dashed line: his 2027 projection ({p.proj}).</span>}
+        </div>
+        {statLine.length > 0 && (
+          <div className="mx-sh-sec"><span className="rh-k">2026 averages</span>
+            <div className="mx-statline">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
+          </div>
+        )}
+        {pr && pr.hist.length > 0 && (
+          <div className="mx-sh-sec"><span className="rh-k">Career</span>
+            <table className="mx-hist"><thead><tr><th>Season</th><th>Games</th><th>Avg</th><th /></tr></thead>
+              <tbody>{pr.hist.map(([y, g, a]) => <tr key={y}><td>{y}</td><td className="rh-mono">{g}</td><td className="rh-mono">{a.toFixed(1)}</td><td><span className="mx-histbar"><i style={{ width: `${Math.min(100, a / 1.3)}%` }} /></span></td></tr>)}</tbody>
+            </table>
+          </div>
+        )}
+        <a href={`/players/${p.id}`} className="rh-btn go lg" style={{ alignSelf: 'stretch', textAlign: 'center' }}>Open full profile →</a>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- squad selector (left) ---------------- */
+type Pick = { pid: number; from: string | null } | null;
+function Selector({ game, games, onGame, rules, squad, initial, used, onChange }: {
+  game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; onChange: (l: MdLineup) => void;
 }) {
   const router = useRouter();
   const byId = useMemo(() => new Map(squad.map((p) => [p.id, p])), [squad]);
   const [lineup, setLineupRaw] = useState<MdLineup>(() => initial ?? empty(rules));
   const [dirty, setDirty] = useState(false);
-  const [sel, setSel] = useState<{ slot: SlotRule; i: number } | null>(null);
+  const [filter, setFilter] = useState<'ALL' | Pos>('ALL');
   const [q, setQ] = useState('');
+  const [picked, setPicked] = useState<Pick>(null);
+  const [drag, setDrag] = useState<Pick>(null);
+  const [over, setOver] = useState<string | null>(null);
+  const [sheet, setSheet] = useState<MdPlayer | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [pending, start] = useTransition();
   const setLineup = (l: MdLineup) => { setLineupRaw(l); setDirty(true); setMsg(null); onChange(l); };
 
-  const inLineup = new Set(Object.values(lineup.slots).flat());
+  const slotOf = useMemo(() => { const m = new Map<number, string>(); for (const [k, ids] of Object.entries(lineup.slots)) for (const id of ids) m.set(id, k); return m; }, [lineup]);
+  const rule = (key: string) => rules.slots.find((s) => s.key === key)!;
   const proj = (id: number) => byId.get(id)?.proj ?? 0;
-  const total = projTotal(rules, lineup, proj);
-  const count = filledField(rules, lineup), need = onField(rules);
+  const total = projTotal(rules, lineup, proj), count = filledField(rules, lineup), need = onField(rules);
+  const moving = drag ?? picked;
+  const movingP = moving ? byId.get(moving.pid) : undefined;
+  const big = rules.key !== 'survivor';
 
-  const place = (id: number) => {
-    if (!sel) return;
-    const slots = Object.fromEntries(Object.entries(lineup.slots).map(([k, v]) => [k, v.filter((x) => x !== id)]));
-    const arr = [...(slots[sel.slot.key] ?? [])];
-    if (sel.i < arr.length) arr[sel.i] = id; else arr.push(id);
-    slots[sel.slot.key] = arr.slice(0, sel.slot.n);
-    setLineup({ ...lineup, slots }); setSel(null); setQ('');
+  // Every spot as (slot key, index) so a line's spots can be laid out across rows.
+  const place = (pid: number, key: string, i: number) => {
+    const p = byId.get(pid), s = rule(key);
+    if (!p) return;
+    if (!fits(p, s, rules)) { setMsg({ ok: false, text: rules.eligible && !rules.eligible(p) ? `${short(p.name)} isn’t eligible for the ${rules.name}.` : `${short(p.name)} can’t play ${s.label}.` }); return; }
+    if (used.includes(pid)) { setMsg({ ok: false, text: `You’ve already used ${short(p.name)}.` }); return; }
+    const slots: Record<string, (number | undefined)[]> = Object.fromEntries(rules.slots.map((r) => [r.key, Array.from({ length: r.n }, (_, j) => lineup.slots[r.key]?.[j])]));
+    let from: [string, number] | null = null;
+    for (const [k, arr] of Object.entries(slots)) { const j = arr.indexOf(pid); if (j >= 0) { from = [k, j]; arr[j] = undefined; } }
+    const occupant = slots[key][i];
+    slots[key][i] = pid;
+    let c = lineup.c, vc = lineup.vc;
+    if (occupant != null && occupant !== pid) {
+      const op = byId.get(occupant)!;
+      if (from && fits(op, rule(from[0]), rules)) slots[from[0]][from[1]] = occupant;
+      else { if (c === occupant) c = null; if (vc === occupant) vc = null; }
+    }
+    if (s.bench) { if (c === pid) c = null; if (vc === pid) vc = null; }
+    setLineup({ slots: Object.fromEntries(Object.entries(slots).map(([k, arr]) => [k, arr.filter((x): x is number => x != null)])), c, vc });
+    setPicked(null);
   };
-  const remove = (key: string, id: number) => setLineup({ ...lineup, slots: { ...lineup.slots, [key]: (lineup.slots[key] ?? []).filter((x) => x !== id) },
-    c: lineup.c === id ? null : lineup.c, vc: lineup.vc === id ? null : lineup.vc });
-  const role = (id: number, kind: 'c' | 'vc') => {
-    const next = { ...lineup, [kind]: lineup[kind] === id ? null : id };
-    if (kind === 'c' && next.vc === id) next.vc = null;
-    if (kind === 'vc' && next.c === id) next.c = null;
+  const remove = (pid: number) => {
+    setLineup({ slots: Object.fromEntries(Object.entries(lineup.slots).map(([k, v]) => [k, v.filter((x) => x !== pid)])), c: lineup.c === pid ? null : lineup.c, vc: lineup.vc === pid ? null : lineup.vc });
+    setPicked(null);
+  };
+  const role = (pid: number, kind: 'c' | 'vc') => {
+    const next = { ...lineup, [kind]: lineup[kind] === pid ? null : pid };
+    if (kind === 'c' && next.vc === pid) next.vc = null;
+    if (kind === 'vc' && next.c === pid) next.c = null;
     setLineup(next);
   };
-  const options = sel ? squad.filter((p) => fits(p, sel.slot, rules) && (!q || p.name.toLowerCase().includes(q.toLowerCase()))).sort((a, b) => b.proj - a.proj).slice(0, 60) : [];
   const save = () => start(async () => {
     const r = await saveGameLineup(rules.key, game.round, lineup);
     setMsg(r.ok ? { ok: true, text: `Saved for ${game.label}.` } : { ok: false, text: r.error ?? 'Couldn’t save.' });
     if (r.ok) { setDirty(false); router.refresh(); }
   });
+  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setPicked(null); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
+
+  const spotState = (s: SlotRule) => (movingP ? (fits(movingP, s, rules) && !used.includes(movingP.id) ? 'can' : 'cant') : '');
+  const dropProps = (key: string, i: number) => ({
+    onDragOver: (e: React.DragEvent) => { if (movingP && fits(movingP, rule(key), rules)) { e.preventDefault(); setOver(`${key}:${i}`); } },
+    onDragLeave: () => setOver((o) => (o === `${key}:${i}` ? null : o)),
+    onDrop: (e: React.DragEvent) => { e.preventDefault(); const pid = Number(e.dataTransfer.getData('text/plain')); setDrag(null); setOver(null); if (pid) place(pid, key, i); },
+  });
+  const dragProps = (pid: number, from: string | null) => ({
+    draggable: true,
+    onDragStart: (e: React.DragEvent) => { e.dataTransfer.setData('text/plain', String(pid)); e.dataTransfer.effectAllowed = 'move'; setDrag({ pid, from }); },
+    onDragEnd: () => { setDrag(null); setOver(null); },
+  });
+
+  const spot = (s: SlotRule, i: number) => {
+    const k = `${s.key}:${i}`;
+    const id = lineup.slots[s.key]?.[i]; const p = id != null ? byId.get(id) : undefined;
+    const st = spotState(s), isOver = over === `${s.key}:${i}`;
+    const tap = () => { if (picked) place(picked.pid, s.key, i); else if (p) setPicked({ pid: p.id, from: s.key }); };
+    if (!p) return (
+      <div key={k} className={`sq-spot ${st} ${isOver ? 'over' : ''}`} role="button" tabIndex={0} onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)}>
+        <span className="sq-ph">{s.bench ? (s.fits === 'any' ? 'EMG' : `${s.fits[0]} EMG`) : s.fits === 'any' ? 'ANY' : s.fits[0]}</span>
+      </div>
+    );
+    const capd = rules.captain && lineup.c === p.id;
+    return (
+      <div key={k} className={`sq-spot full ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
+        onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)} {...dragProps(p.id, s.key)}>
+        <span className="sq-nm"><Disc p={p} /><b>{short(p.name)}</b><Info p={p} onInfo={setSheet} /></span>
+        {!s.bench && rules.captain ? (
+          <span className="sq-roles">
+            <button type="button" className={`sq-role ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>
+            {rules.vc && <button type="button" className={`sq-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
+          </span>
+        ) : <span />}
+        <span className="sq-meta">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}<span>{p.avg != null ? `${Math.round(p.avg)} avg` : 'no games'}</span><Form p={p} /></span>
+        <span className={`sq-proj ${capd ? 'is-cap' : ''}`}>{capd ? p.proj * 2 : p.proj}</span>
+      </div>
+    );
+  };
+
+  const lines = rules.slots.filter((s) => !s.bench), bench = rules.slots.filter((s) => s.bench);
+  const benchSpots = bench.flatMap((s) => Array.from({ length: s.n }, (_, i) => ({ s, i })));
+  const lineTotal = (s: SlotRule) => Math.round((lineup.slots[s.key] ?? []).reduce((t, id) => t + proj(id) * (rules.captain && lineup.c === id ? 2 : 1), 0));
+  const shown = squad.filter((p) => (filter === 'ALL' || p.pos.includes(filter)) && (!q || p.name.toLowerCase().includes(q.toLowerCase()))).slice(0, big ? 400 : 120);
+  const where = (pid: number) => { const k = slotOf.get(pid); if (!k) return null; const r = rule(k); return r.bench ? 'EMG' : r.key === 'UTIL' ? 'UTIL' : r.key === 'PICK' ? 'PICK' : 'IN'; };
 
   return (
     <>
-      <div className="md-total">
-        <div><span className="rh-k">Projected</span><b className="rh-mono">{total}</b></div>
-        <div><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
-        {rules.captain && <div><span className="rh-k">Captain</span><b className="md-ellip">{lineup.c ? byId.get(lineup.c)?.name.split(' ').slice(-1)[0] : '–'}</b></div>}
-        <span className={`md-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved changes' : initial ? 'Saved' : 'Not set'}</span>
-      </div>
-
-      <div className="md-lines">
-        {rules.slots.map((s) => (
-          <div key={s.key} className={`md-line ${s.bench ? 'bench' : ''}`}>
-            <span className="md-line-k">{s.label}<small>{(lineup.slots[s.key] ?? []).length}/{s.n}</small></span>
-            <div className="md-slots">
-              {Array.from({ length: s.n }, (_, i) => {
-                const id = lineup.slots[s.key]?.[i]; const p = id != null ? byId.get(id) : undefined;
-                const on = sel?.slot.key === s.key && sel.i === i;
-                return p ? (
-                  <div key={i} className={`md-slot full ${on ? 'on' : ''}`}>
-                    <button className="md-slot-main" onClick={() => setSel(on ? null : { slot: s, i })}>
-                      <Face p={p} size={28} />
-                      <span className="md-slot-n"><b className="md-ellip">{p.name}</b><span className="rh-dim rh-mono">{p.pos.join('/')} · {p.proj}</span></span>
-                    </button>
-                    {!s.bench && rules.captain && (
-                      <span className="md-roles">
-                        <button className={`md-role ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} onClick={() => role(p.id, 'c')}>C</button>
-                        {rules.vc && <button className={`md-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} onClick={() => role(p.id, 'vc')}>VC</button>}
-                      </span>
-                    )}
-                    <button className="md-x" aria-label={`Take ${p.name} out`} onClick={() => remove(s.key, p.id)}>×</button>
-                  </div>
-                ) : (
-                  <button key={i} className={`md-slot ${on ? 'on' : ''}`} onClick={() => setSel(on ? null : { slot: s, i: (lineup.slots[s.key] ?? []).length })}>
-                    <span className="md-plus">+</span><span className="rh-dim">{s.fits === 'any' ? (s.bench ? 'Emergency' : 'Any position') : s.label.replace(' emergency', '')}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {sel && (
-        <div className="md-picker">
-          <div className="md-picker-h">
-            <span className="rh-k">Pick for {sel.slot.label.toLowerCase()}</span>
-            <input className="md-search" placeholder="Search" value={q} onChange={(e) => setQ(e.target.value)} autoFocus />
-            <button className="md-close" onClick={() => { setSel(null); setQ(''); }} aria-label="Close picker">×</button>
-          </div>
-          <div className="md-opts">
-            {options.map((p) => {
-              const burnt = used.includes(p.id);
-              return (
-                <button key={p.id} className={`md-opt ${inLineup.has(p.id) ? 'in' : ''}`} disabled={burnt} onClick={() => place(p.id)}>
-                  <Face p={p} size={26} />
-                  <span className="md-ellip" style={{ flex: 1, textAlign: 'left' }}>{p.name} <span className="rh-dim">{p.pos.join('/')}{p.club ? ` · ${p.club}` : ''}{burnt ? ' · used' : inLineup.has(p.id) ? ' · moves here' : ''}</span></span>
-                  <span className="rh-mono">{p.proj}</span>
-                </button>
-              );
-            })}
-            {!options.length && <span className="rh-dim" style={{ padding: 12, fontSize: 13 }}>No one on your list fits here{rules.eligible ? ' and is eligible' : ''}.</span>}
+      <div className="sq-top">
+        <label className="sq-game"><span className="sr-only">Game</span>
+          <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
+            {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
+          </select>
+        </label>
+        <div className="sq-rest">
+          <div className="sq-stat"><span className="rh-k">Projected</span><b className="rh-mono">{total}</b></div>
+          <div className="sq-stat"><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
+          <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
+          <div className="sq-acts">
+            <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set(used)))}>Auto-pick</button>
+            <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
+            <button className="rh-btn go" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
           </div>
         </div>
-      )}
-
-      {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
-      <div className="md-actions">
-        <button className="rh-btn go" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
-        <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set(used)))}>Auto-pick best</button>
-        <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
       </div>
+      {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
+
+      <div className="sq-body">
+        <div className={`sq-list ${drag?.from ? 'drop-ok' : ''}`}
+          onDragOver={(e) => { if (drag?.from) e.preventDefault(); }}
+          onDrop={(e) => { e.preventDefault(); const pid = Number(e.dataTransfer.getData('text/plain')); setDrag(null); setOver(null); if (pid && slotOf.has(pid)) remove(pid); }}>
+          <div className="sq-lh">
+            <div className="sq-lh-row"><span className="rh-k">{rules.key === 'survivor' ? 'Any player' : `Your list · ${squad.length}`}</span><span className="rh-k">Avg</span></div>
+            {!big && <input className="sq-search" placeholder="Search players" value={q} onChange={(e) => setQ(e.target.value)} />}
+            <div className="sq-filters" role="group" aria-label="Filter by position">
+              {(['ALL', 'DEF', 'MID', 'RUC', 'FWD'] as const).map((f) => <button key={f} className={filter === f ? 'on' : ''} onClick={() => setFilter(f)}>{f}</button>)}
+            </div>
+          </div>
+          <div className="sq-rows">
+            {shown.map((p) => {
+              const w = where(p.id), burnt = used.includes(p.id), ok = !rules.eligible || rules.eligible(p);
+              return (
+                <div key={p.id} className={`sq-row ${w ? 'in' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${!ok || burnt ? 'off' : ''}`} role="button" tabIndex={0}
+                  onClick={() => setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null })}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null }); } }}
+                  {...(ok && !burnt ? dragProps(p.id, slotOf.get(p.id) ?? null) : {})}>
+                  <Disc p={p} size={26} label />
+                  <span className="sq-row-main">
+                    <span className="sq-row-nm"><span>{p.name}</span>{p.keeper && <em>{p.keeper}</em>}<Info p={p} onInfo={setSheet} /></span>
+                    <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
+                  </span>
+                  <span className="sq-row-av"><Form p={p} size={12} />{p.avg != null ? Math.round(p.avg) : '–'}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
+          <div className="sq-field">
+            {lines.map((s, li) => {
+              let i = 0;
+              return (
+                <div key={s.key} className="sq-lgroup">
+                  {li > 0 && <div className="sq-sep" />}
+                  {rowsFor(s.n).map((n, r) => (
+                    <div key={r} className="sq-line">
+                      <span className="sq-lk">{r === 0 && <><i style={{ background: s.fits === 'any' ? 'var(--rh-dim)' : POS_COL[s.fits[0]] }} />{s.key === 'PICK' ? 'PICK' : s.key}<small>{lineTotal(s)}</small></>}</span>
+                      <div className="sq-spots">{Array.from({ length: n }, () => spot(s, i++))}</div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+            {benchSpots.length > 0 && (
+              <div className="sq-lgroup"><div className="sq-sep" />
+                <div className="sq-line emg"><span className="sq-lk">EMG<small>{bench.length > 1 ? '1/line' : `${benchSpots.length}`}</small></span>
+                  <div className="sq-spots">{benchSpots.map(({ s, i }) => spot(s, i))}</div>
+                </div>
+              </div>
+            )}
+          </div>
+          <span className="sq-hint"><b>Bold number</b> on each card is his projected score{rules.captain ? ' (captain doubled)' : ''}. Arrows show form, last 5 v his average: <span style={{ color: '#10a35a' }}>rising</span>, <span style={{ color: '#c9930f' }}>steady</span>, <span style={{ color: '#d6452f' }}>falling</span>. Drag a player onto a spot, or tap him then tap the spot. Drag between spots to swap, or back to the list to take him out. {rules.summary}</span>
+        </div>
+      </div>
+      {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} />}
     </>
   );
 }
@@ -231,28 +388,18 @@ export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
   const [live, setLive] = useState<Record<string, MdLineup>>({});
   const mine = live[game.id] ?? data.lineups[game.id] ?? autoFill(rules, squad, new Set(data.survivorUsed));
   return (
-    <Shell title="Matchday" sub={<>Round {data.round}, {data.season} · set your teams, see who you’re up against</>}
+    <Shell title="Squad Selector" sub={<>Round {data.round}, {data.season} · {data.myName}</>}
       right={<Link href="/live/matchups" className="rh-btn alt">All your matchups →</Link>}>
-      {!data.ready && <div className="rh-card md-warn">Saving teams switches on once <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code> has been run. You can still build and preview.</div>}
-      <div className="md-grid">
-        <section className="rh-card md-team">
-          <div className="md-team-h">
-            <div style={{ minWidth: 0 }}><span className="rh-k">Set your team</span><h2 className="md-h">{game.label}</h2><span className="rh-dim" style={{ fontSize: 13 }}>{game.sub}</span></div>
-            <label className="md-gamesel">
-              <span className="sr-only">Game</span>
-              <select className="rh-select" value={game.id} onChange={(e) => setGid(e.target.value)}>
-                {data.games.map((g) => <option key={g.id} value={g.id}>{g.label} · {g.sub}</option>)}
-              </select>
-            </label>
-          </div>
-          <p className="md-rules">{rules.summary}</p>
-          <Builder key={game.id} game={game} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null} used={game.key === 'survivor' ? data.survivorUsed : []}
-            onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
-          <span className="rh-dim" style={{ fontSize: 12.5 }}>Want more games? <Link href="/live/comps" className="rh-link">Enter a side comp</Link> or <Link href="/live/new" className="rh-link">start a mini game</Link>.</span>
+      {!data.ready && <div className="rh-card md-warn">Saving teams needs <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code>. You can still build and preview.</div>}
+      <div className="sq-grid">
+        <section className="rh-card sq-card" aria-label="Set your team">
+          <Selector key={game.id} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
+            used={game.key === 'survivor' ? data.survivorUsed : []} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
         <div className="md-right">
           <Matchup game={game} rules={rules} mine={mine} myName={data.myName} myTeamId={data.myTeamId} look={look} />
           <CupPanel data={cup} />
+          <span className="rh-dim" style={{ fontSize: 12.5 }}>Want more games? <Link href="/live/comps" className="rh-link">Enter a side comp</Link> or <Link href="/live/new" className="rh-link">start a mini game</Link>.</span>
         </div>
       </div>
     </Shell>

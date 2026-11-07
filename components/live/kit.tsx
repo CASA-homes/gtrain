@@ -110,7 +110,7 @@ export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBy
 /* ---------------- shell ---------------- */
 
 const SECTIONS = [
-  { href: '/live', label: 'Matchday' },
+  { href: '/live', label: 'Squad Selector' },
   { href: '/live/matchups', label: 'Matchups' },
   { href: '/live/cup', label: 'Knockout Cup' },
   { href: '/live/comps', label: 'Side comps' },

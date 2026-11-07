@@ -21,7 +21,7 @@ export interface MProfile {
   hist: [number, number, number][];                     // [season, games, average], newest first
 }
 const ageOf = (d: string | null) => { if (!d) return null; const b = new Date(d), n = new Date(2027, 2, 17); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
-function profileOf(p: PlayerRow): MProfile {
+export function profileOf(p: PlayerRow): MProfile {
   const b = p.box;
   return {
     pos: p.positions, age: ageOf(p.birth_date), avg: p.average, games: p.games,
