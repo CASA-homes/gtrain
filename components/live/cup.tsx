@@ -1,10 +1,9 @@
 'use client';
 // G-Train Knockout Cup: the home-page panel and the full cup page (tables, fixture, knockout bracket, cup lineup).
-import { useEffect, useMemo, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { CONF_NAMES, CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_NAME, CUP_SLOT_ORDER, FINAL_ROUND, GROUP_ROUNDS, ON_FIELD, QF_ROUND, SAFE, SEMI_ROUND, STAGE_NAME, WILDCARD_ROUND, fitsSlot, roundWeek, standings, type CupLineup, type CupMatch, type CupResult, type CupSlot, type StandRow } from '@/lib/cup';
-import { saveCupLineup } from '@/app/(app)/live/cup-actions';
-import { CLUBS } from '@/lib/clubs';
+import { CONF_NAMES, CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_NAME, CUP_SLOT_ORDER, DRAW_AT, FINAL_ROUND, GROUP_ROUNDS, ON_FIELD, QF_ROUND, SAFE, SEMI_ROUND, STAGE_NAME, WILDCARD_ROUND, fitsSlot, roundWeek, standings, type CupLineup, type CupMatch, type CupResult, type CupSlot, type StandRow } from '@/lib/cup';
+import { jumper } from '@/lib/jumpers';
 import { Shell } from './kit';
 
 export interface CupSquadPlayer { id: number; name: string; pos: string[]; club: string | null; proj: number; a26: number | null; keeper: boolean }
@@ -13,7 +12,13 @@ export interface CupData {
   teams: { id: number; name: string; short: string }[]; myTeamId: number; lineups: Record<number, CupLineup>; squad: CupSquadPlayer[];
   /** player id → the club he's cup-tied to (played a cup game for them this season) */
   ties: Record<number, number>;
+  /** your next cup game, line by line */
+  h2h: CupH2H | null;
+  people: Record<number, CupPerson>;
 }
+export interface CupPerson { name: string; pos: string[]; proj: number; club: string | null }
+export type LineSource = 'saved' | 'last' | 'assumed';
+export interface CupH2H { matchId: string; round: number; stage: CupMatch['stage']; mine: { lineup: CupLineup; source: LineSource }; theirs: { teamId: number; lineup: CupLineup; source: LineSource } | null }
 const filled = (l?: CupLineup) => (l ? CUP_SLOT_ORDER.filter((s) => s !== 'EMG').reduce((a, s) => a + (l[s]?.length ?? 0), 0) : 0);
 
 function Trophy({ size = 26 }: { size?: number }) {
@@ -144,100 +149,191 @@ export function CupPanel({ data, compact = false }: { data: CupData; compact?: b
 }
 
 /* ---------------- full page ---------------- */
-function autoFill(squad: CupSquadPlayer[]): CupLineup {
-  const pool = [...squad].sort((a, b) => b.proj - a.proj);
-  const used = new Set<number>(), out: CupLineup = {};
-  for (const s of ['RUC', 'DEF', 'FWD', 'MID'] as CupSlot[]) {
-    out[s] = [];
-    for (const p of pool) { if (out[s]!.length >= CUP_SLOTS[s]) break; if (!used.has(p.id) && p.pos.includes(s)) { out[s]!.push(p.id); used.add(p.id); } }
-  }
-  for (const s of ['UTIL', 'EMG'] as CupSlot[]) { out[s] = pool.filter((p) => !used.has(p.id)).slice(0, CUP_SLOTS[s]).map((p) => p.id); out[s]!.forEach((id) => used.add(id)); }
-  return out;
-}
+const SRC: Record<LineSource, string> = { saved: 'Saved team', last: 'Last team fielded', assumed: 'Best guess' };
 
-function LineupEditor({ data }: { data: CupData }) {
-  const mine = data.matches.filter((m) => m.home === data.myTeamId || m.away === data.myTeamId);
-  const rounds = [...new Set([...mine.map((m) => m.round), WILDCARD_ROUND, QF_ROUND, SEMI_ROUND, FINAL_ROUND])].sort((a, b) => a - b);
-  const played = new Set(data.results.map((r) => r.match_id));
-  const first = mine.find((m) => !played.has(m.id))?.round ?? rounds[0];
-  const [round, setRound] = useState(first);
-  const savedFor = (r: number) => data.lineups[r] ?? [...rounds].reverse().filter((x) => x < r).map((x) => data.lineups[x]).find(Boolean);
-  const [lineup, setLineup] = useState<CupLineup>(() => savedFor(first) ?? {});
-  const [sel, setSel] = useState<{ slot: CupSlot; i: number } | null>(null);
-  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
-  const [pending, start] = useTransition();
-  const byId = useMemo(() => new Map(data.squad.map((p) => [p.id, p])), [data.squad]);
-  const used = new Set(CUP_SLOT_ORDER.flatMap((s) => lineup[s] ?? []));
-  const match = mine.find((m) => m.round === round);
-  const name = (id: number) => data.teams.find((t) => t.id === id)?.name ?? `Club ${id}`;
-  const opp = match ? (match.home === data.myTeamId ? match.away : match.home) : null;
-  const pickRound = (r: number) => { setRound(r); setLineup(savedFor(r) ?? {}); setSel(null); setMsg(null); };
-  const place = (id: number) => {
-    if (!sel) return;
-    const next: CupLineup = Object.fromEntries(CUP_SLOT_ORDER.map((s) => [s, (lineup[s] ?? []).filter((x) => x !== id)]));
-    const arr = [...(next[sel.slot] ?? [])];
-    arr[sel.i] = id;
-    next[sel.slot] = arr.filter((x) => x != null);
-    setLineup(next); setSel(null); setMsg(null);
-  };
-  const remove = (s: CupSlot, id: number) => { setLineup({ ...lineup, [s]: (lineup[s] ?? []).filter((x) => x !== id) }); setMsg(null); };
-  const tiedTo = (id: number) => (data.ties[id] != null && data.ties[id] !== data.myTeamId ? name(data.ties[id]) : null);
-  const options = sel ? data.squad.filter((p) => fitsSlot(p.pos, sel.slot) && !tiedTo(p.id)).sort((a, b) => b.proj - a.proj) : [];
-  const count = filled(lineup);
+function GroupCard({ data, ci, name }: { data: CupData; ci: 0 | 1; name: (id: number | null) => string }) {
+  const [view, setView] = useState<'table' | 'fixtures'>('table');
+  const res = new Map(data.results.map((r) => [r.match_id, r]));
+  const conf = data.confs[ci];
+  const games = data.matches.filter((m) => m.stage === 'group' && (m.conf === ci || (m.cross && (conf.includes(m.home!) || conf.includes(m.away!)))));
   return (
-    <section className="rh-card" id="lineup" style={{ gap: 14 }}>
-      <div className="cup-head">
-        <div style={{ flex: 1, minWidth: 0 }}><span className="rh-k">Cup lineup</span><b className="cup-title">Round {round}{opp ? ` v ${name(opp)}` : match?.label ? ` · ${match.label}` : !match && round !== SEMI_ROUND && round !== FINAL_ROUND ? ' · bye' : ''}</b></div>
-        <select className="rh-select sm" id="cup-round" value={round} onChange={(e) => pickRound(Number(e.target.value))}>
-          {rounds.map((r) => <option key={r} value={r}>Round {r}{r === WILDCARD_ROUND ? ' · wildcard' : r === QF_ROUND ? ' · quarters' : r === SEMI_ROUND ? ' · semis' : r === FINAL_ROUND ? ' · final' : ''}{data.lineups[r] ? ' · saved' : ''}</option>)}
-        </select>
+    <section className="rh-card cup-group">
+      <div className="cup-group-h">
+        <span className="rh-k">{CONF_NAMES[ci]}</span>
+        <div className="cup-toggle" role="tablist" aria-label={`${CONF_NAMES[ci]} view`}>
+          <button role="tab" aria-selected={view === 'table'} className={view === 'table' ? 'on' : ''} onClick={() => setView('table')}>Table</button>
+          <button role="tab" aria-selected={view === 'fixtures'} className={view === 'fixtures' ? 'on' : ''} onClick={() => setView('fixtures')}>Fixtures</button>
+        </div>
       </div>
-      <span className="rh-dim" style={{ fontSize: 13 }}>4 DEF, 6 MID, 1 RUC, 4 FWD and a utility on the field, plus 4 emergencies. No captain: every player scores once. Tap a spot, then a player.</span>
-      <div className="cup-lineup">
-        {CUP_SLOT_ORDER.map((s) => (
-          <div key={s} className="cup-line">
-            <span className="rh-k">{CUP_SLOT_NAME[s]} · {(lineup[s] ?? []).length}/{CUP_SLOTS[s]}</span>
-            <div className="cup-slots">
-              {Array.from({ length: CUP_SLOTS[s] }, (_, i) => {
-                const id = lineup[s]?.[i]; const p = id != null ? byId.get(id) : undefined;
-                const on = sel?.slot === s && sel.i === i;
+      {view === 'table' ? <><Table rows={standings(conf, data.matches, data.results)} name={(id) => name(id)} myTeamId={data.myTeamId} /><Zones /></> : (
+        <div className="cup-fx">
+          {GROUP_ROUNDS.map((r, i) => (
+            <div key={r} className="cup-round">
+              <span className="cup-round-h">Game {i + 1} · AFL round {r} · week of {roundWeek(r)}</span>
+              {games.filter((m) => m.round === r).map((m) => {
+                const x = res.get(m.id);
                 return (
-                  <button key={i} className={`cup-slot ${p ? 'full' : ''} ${on ? 'on' : ''}`} onClick={() => setSel(on ? null : { slot: s, i: p ? i : (lineup[s] ?? []).length })}>
-                    {p ? <><b className="rh-ellip">{p.name}</b><span className="rh-dim">{p.pos.join('/')} · {p.proj}</span></> : <span className="rh-dim">+ {s === 'UTIL' ? 'Any position' : s === 'EMG' ? 'Emergency' : s}</span>}
-                    {p && <span className="cup-x" role="button" aria-label={`Remove ${p.name}`} onClick={(e) => { e.stopPropagation(); remove(s, p.id); }}>×</span>}
-                  </button>
+                  <div key={m.id} className={`cup-game ${m.home === data.myTeamId || m.away === data.myTeamId ? 'me' : ''}`}>
+                    <span className="rh-ellip">{name(m.home)}</span>
+                    <b className="rh-mono">{x ? `${x.home_score} – ${x.away_score}` : 'v'}</b>
+                    <span className="rh-ellip r">{name(m.away)}</span>
+                    {m.cross && <em className="cup-cross">Crossover with Group {ci === 0 ? 'B' : 'A'}</em>}
+                  </div>
                 );
               })}
             </div>
-          </div>
-        ))}
-      </div>
-      {sel && (
-        <div className="cup-picker">
-          <span className="rh-k">Pick for {CUP_SLOT_NAME[sel.slot].toLowerCase()} · sorted by 2027 projection</span>
-          {data.squad.some((p) => tiedTo(p.id)) && <span className="rh-dim" style={{ fontSize: 12 }}>Cup-tied, can&apos;t play: {data.squad.filter((p) => tiedTo(p.id)).map((p) => `${p.name} (${tiedTo(p.id)})`).join(', ')}</span>}
-          {options.map((p) => (
-            <button key={p.id} className={`cup-opt ${used.has(p.id) ? 'used' : ''}`} onClick={() => place(p.id)}>
-              <span className="sw" style={{ background: p.club ? CLUBS[p.club]?.a ?? '#444' : '#444' }} />
-              <span className="rh-ellip" style={{ flex: 1, textAlign: 'left' }}>{p.name}<span className="rh-dim"> {p.pos.join('/')}{used.has(p.id) ? ' · in lineup (moves here)' : ''}</span></span>
-              <span className="rh-mono">{p.proj}</span>
-            </button>
           ))}
         </div>
       )}
-      {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`}>{msg.text}</div>}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
-        <button className="rh-btn go" disabled={pending || !data.ready} onClick={() => start(async () => { const r = await saveCupLineup(round, lineup); setMsg(r.ok ? { ok: true, text: `Saved for round ${round}.` } : { ok: false, text: r.error ?? 'Couldn’t save.' }); })}>Save lineup</button>
-        <button className="rh-btn alt" onClick={() => { setLineup(autoFill(data.squad)); setMsg(null); }}>Auto-fill best 16</button>
-        <button className="rh-btn alt" onClick={() => { setLineup({}); setMsg(null); }}>Clear</button>
-        <span className={count >= ON_FIELD ? 'rh-up' : 'rh-dim'} style={{ fontSize: 13 }}>{count}/{ON_FIELD} on field · {(lineup.EMG ?? []).length}/4 emergencies</span>
-      </div>
-      {!data.ready && <span className="rh-down" style={{ fontSize: 13 }}>Saving switches on once supabase/migrations/0019_cup.sql has been run.</span>}
     </section>
   );
 }
 
-export function CupPage({ data, isCommish }: { data: CupData; isCommish: boolean }) {
+function Bracket({ data, name }: { data: CupData; name: (id: number | null) => string }) {
+  const res = new Map(data.results.map((r) => [r.match_id, r]));
+  const m = (id: string) => data.matches.find((x) => x.id === id)!;
+  const tables = data.confs.map((c) => standings(c, data.matches, data.results));
+  const groupsDone = data.matches.filter((x) => x.stage === 'group').every((x) => res.has(x.id));
+  const Tie = ({ id, a, b }: { id: string; a?: string; b?: string }) => {
+    const g = m(id), r = res.get(id);
+    const win = r && g.home != null && g.away != null ? (r.home_score >= r.away_score ? g.home : g.away) : null;
+    const row = (t: number | null, ph: string | undefined, sc: number | undefined) => (
+      <div className={`br-team ${t != null && t === win ? 'win' : ''} ${t === data.myTeamId ? 'me' : ''}`}>
+        <span className="rh-ellip">{t != null ? name(t) : <span className="rh-dim">{ph ?? 'TBC'}</span>}</span>
+        {sc != null && <b className="rh-mono">{sc}</b>}
+      </div>
+    );
+    return <div className="br-tie">{row(g.home, a, r?.home_score)}{row(g.away, b, r?.away_score)}</div>;
+  };
+  const champ = (() => { const g = m('final'), r = res.get('final'); return r && g.home != null && g.away != null ? (r.home_score >= r.away_score ? g.home : g.away) : null; })();
+  const safe = groupsDone ? tables.flatMap((t) => t.slice(0, SAFE).map((r) => r.team)) : [];
+  return (
+    <section className="rh-card">
+      <div className="cup-group-h"><span className="rh-k">Path to the cup</span><span className="rh-dim" style={{ fontSize: 12 }}>Quarter-finals are drawn at random</span></div>
+      <div className="br-wrap">
+        <div className="br">
+          <div className="br-col">
+            <span className="br-h">Wildcard · R{WILDCARD_ROUND}</span>
+            <Tie id="wc1" a="A4" b="A5" /><Tie id="wc2" a="B4" b="B5" />
+            <div className="br-safe"><span className="br-h">Safe</span>
+              {(safe.length ? safe : ['A1', 'A2', 'A3', 'B1', 'B2', 'B3']).map((t) => <span key={t} className={`br-chip ${t === data.myTeamId ? 'me' : ''}`}>{typeof t === 'number' ? name(t) : t}</span>)}
+            </div>
+          </div>
+          <div className="br-col">
+            <span className="br-h">Quarters · R{QF_ROUND}</span>
+            {[1, 2, 3, 4].map((i) => <Tie key={i} id={`qf${i}`} a="Draw" b="Draw" />)}
+          </div>
+          <div className="br-col">
+            <span className="br-h">Semis · R{SEMI_ROUND}</span>
+            <Tie id="sf1" a="Winner QF1" b="Winner QF2" /><Tie id="sf2" a="Winner QF3" b="Winner QF4" />
+          </div>
+          <div className="br-col">
+            <span className="br-h">Final · R{FINAL_ROUND}</span>
+            <Tie id="final" a="Winner SF1" b="Winner SF2" />
+          </div>
+          <div className="br-col br-champ">
+            <span className="br-h">Champion</span>
+            <div className="br-cup"><Trophy size={34} /><b className="rh-ellip">{champ != null ? name(champ) : 'TBC'}</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function useNow() { const [now, setNow] = useState<number | null>(null); useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 60_000); return () => clearInterval(t); }, []); return now; }
+
+function DrawPanel() {
+  const now = useNow(), at = Date.parse(DRAW_AT);
+  const left = now != null ? at - now : null;
+  const days = left != null ? Math.max(0, Math.floor(left / 86400e3)) : null;
+  const when = now != null ? new Date(at).toLocaleString('en-AU', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit' }) : '';
+  return (
+    <section className="rh-card cup-draw">
+      <div className="cup-draw-ic" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="30" height="30"><circle cx="11" cy="13" r="6" fill="#f2c94c" /><circle cx="21" cy="11" r="5" fill="#e5b93a" /><circle cx="17" cy="21" r="6" fill="#f6d97a" /><text x="17" y="24" textAnchor="middle" fontSize="7" fontWeight="800" fill="#7a5a08">QF</text></svg>
+      </div>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <span className="rh-k">Next cup draw · quarter-finals</span>
+        <b className="cup-draw-when" suppressHydrationWarning>{when || ' '}</b>
+        <span className="rh-dim" style={{ fontSize: 12.5 }}>Sunday night of round {QF_ROUND - 1}, once that round has locked. The six safe clubs and the two wildcard winners go into the hat.</span>
+      </div>
+      {left != null && <div className="cup-draw-cd">{left > 0 ? <><b className="rh-mono">{days}</b><span>days</span></> : <span>Drawn</span>}</div>}
+    </section>
+  );
+}
+
+function H2H({ data, name }: { data: CupData; name: (id: number | null) => string }) {
+  const h = data.h2h;
+  if (!h) return <section className="rh-card"><span className="rh-k">Your next cup game</span><b>Your cup run is over for {CUP_SEASON}.</b></section>;
+  const ppl = (id: number) => data.people[id];
+  const tot = (l: CupLineup | undefined) => (l ? CUP_SLOT_ORDER.filter((s) => s !== 'EMG').reduce((t, s) => t + (l[s] ?? []).reduce((a, id) => a + (ppl(id)?.proj ?? 0), 0), 0) : 0);
+  const a = tot(h.mine.lineup), b = tot(h.theirs?.lineup);
+  const opp = h.theirs ? name(h.theirs.teamId) : 'TBC';
+  const cell = (id: number | undefined, side: 'l' | 'r') => {
+    const p = id != null ? ppl(id) : undefined;
+    if (!p) return <span className={`h2h-p ${side} empty`}><span className="rh-dim">–</span></span>;
+    return (
+      <span className={`h2h-p ${side}`}>
+        <i className="h2h-disc" style={{ background: jumper(p.club) }} />
+        <span className="rh-ellip">{p.name.replace(/^(\S)\S*\s/, '$1. ')}</span>
+        <b className="rh-mono">{p.proj}</b>
+      </span>
+    );
+  };
+  return (
+    <section className="rh-card cup-h2h">
+      <div className="cup-group-h"><span className="rh-k">Round {h.round} · {STAGE_NAME[h.stage]} · projected</span><Link href="/live" className="rh-link" style={{ fontSize: 12 }}>Set your cup team in Squad Selector →</Link></div>
+      <div className="h2h-top">
+        <div><span className="rh-dim">{SRC[h.mine.source]}</span><b className="rh-ellip">{name(data.myTeamId)}</b><span className="h2h-big rh-mono">{a}</span></div>
+        <span className="h2h-vs">v</span>
+        <div className="r"><span className="rh-dim">{h.theirs ? SRC[h.theirs.source] : 'Opponent'}</span><b className="rh-ellip">{opp}</b><span className="h2h-big rh-mono">{b}</span></div>
+      </div>
+      <span className="md-winbar"><i style={{ width: `${a + b ? (a / (a + b)) * 100 : 50}%` }} /></span>
+      <div className="h2h-lines">
+        {CUP_SLOT_ORDER.map((s) => {
+          const L = h.mine.lineup[s] ?? [], R = h.theirs?.lineup[s] ?? [];
+          const n = CUP_SLOTS[s];
+          const lt = L.reduce((t, id) => t + (ppl(id)?.proj ?? 0), 0), rt = R.reduce((t, id) => t + (ppl(id)?.proj ?? 0), 0);
+          return (
+            <div key={s} className={`h2h-line ${s === 'EMG' ? 'emg' : ''}`}>
+              <div className="h2h-lh"><span className={`rh-mono ${lt >= rt ? 'up' : ''}`}>{lt}</span><b>{CUP_SLOT_NAME[s]}</b><span className={`rh-mono ${rt > lt ? 'up' : ''}`}>{rt}</span></div>
+              {Array.from({ length: n }, (_, i) => <div key={i} className="h2h-row">{cell(L[i], 'l')}{cell(R[i], 'r')}</div>)}
+            </div>
+          );
+        })}
+      </div>
+      <span className="rh-dim" style={{ fontSize: 12 }}>Lineups can only be changed in Squad Selector. Emergencies aren&apos;t counted in the totals. If they haven&apos;t saved a team for this round, you see their last cup team, or their best 16 by projection.</span>
+    </section>
+  );
+}
+
+function News({ data, name }: { data: CupData; name: (id: number | null) => string }) {
+  const res = new Map(data.results.map((r) => [r.match_id, r]));
+  const items: { tag: string; text: string }[] = [];
+  const played = data.matches.filter((m) => res.has(m.id)).sort((x, y) => y.round - x.round);
+  for (const m of played.slice(0, 4)) {
+    const r = res.get(m.id)!, hw = r.home_score >= r.away_score;
+    items.push({ tag: `R${m.round}`, text: `${name(hw ? m.home : m.away)} beat ${name(hw ? m.away : m.home)} ${Math.max(r.home_score, r.away_score)} to ${Math.min(r.home_score, r.away_score)}${m.stage !== 'group' ? ` in the ${STAGE_NAME[m.stage].toLowerCase()}` : ''}.` });
+  }
+  const tied = Object.entries(data.ties).filter(([id, t]) => t !== data.myTeamId && data.squad.some((p) => p.id === Number(id)));
+  for (const [id, t] of tied) items.push({ tag: 'Cup-tied', text: `${data.squad.find((p) => p.id === Number(id))?.name} played for ${name(t)} and can't play in your cup team this season.` });
+  const next = data.matches.find((m) => !res.has(m.id));
+  if (next) items.push({ tag: 'Next', text: next.stage === 'group' ? `Group game ${next.groupRound} is AFL round ${next.round}, week of ${roundWeek(next.round)}.` : `${STAGE_NAME[next.stage]}s are AFL round ${next.round}, week of ${roundWeek(next.round)}.` });
+  if (!played.length) {
+    items.push({ tag: 'Draw', text: `Groups set off the 2026 ladder. Group A: ${data.confs[0].map((t) => name(t)).join(', ')}. Group B: ${data.confs[1].map((t) => name(t)).join(', ')}.` });
+    items.push({ tag: 'New', text: 'Cup-tied rule: once a player plays a cup game for one club, he can only play in the cup for that club this season.' });
+    items.push({ tag: 'Format', text: `Top ${SAFE} in each group go straight to the quarter-finals; 4th and 5th play a wildcard in round ${WILDCARD_ROUND}.` });
+  }
+  return (
+    <section className="rh-card">
+      <span className="rh-k">Cup news</span>
+      <ul className="cup-news">{items.map((x, i) => <li key={i}><em>{x.tag}</em><span>{x.text}</span></li>)}</ul>
+    </section>
+  );
+}
+
+export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
   const name = (id: number | null) => (id == null ? 'TBC' : data.teams.find((t) => t.id === id)?.name ?? `Club ${id}`);
   const res = new Map(data.results.map((r) => [r.match_id, r]));
   const game = (m: CupMatch) => {
@@ -247,39 +343,32 @@ export function CupPage({ data, isCommish }: { data: CupData; isCommish: boolean
         <span className="rh-ellip">{name(m.home)}</span>
         <b className="rh-mono">{r ? `${r.home_score} – ${r.away_score}` : 'v'}</b>
         <span className="rh-ellip r">{name(m.away)}</span>
-        {m.cross && <em className="cup-cross">A v B crossover</em>}
       </div>
     );
   };
   return (
-    <Shell title={`${CUP_NAME} ${CUP_SEASON}`} sub={<>A cup run alongside the regular season. Group games rounds {GROUP_ROUNDS[0]} to {GROUP_ROUNDS[GROUP_ROUNDS.length - 1]}, wildcards round {WILDCARD_ROUND}, quarter-finals round {QF_ROUND}, semis round {SEMI_ROUND}, final round {FINAL_ROUND}.</>} right={<RulesButton />}>
+    <Shell title={`${CUP_NAME} ${CUP_SEASON}`} sub={<>Groups rounds {GROUP_ROUNDS[0]} to {GROUP_ROUNDS[GROUP_ROUNDS.length - 1]} · wildcards round {WILDCARD_ROUND} · quarter-finals round {QF_ROUND} · semis round {SEMI_ROUND} · final round {FINAL_ROUND}</>} right={<RulesButton />}>
       <div className="cup-page">
         <div className="cup-col">
-          {data.confs.map((c, i) => (
-            <section key={i} className="rh-card"><span className="rh-k">{CONF_NAMES[i]}</span><Table rows={standings(c, data.matches, data.results)} name={(id) => name(id)} myTeamId={data.myTeamId} /><Zones /></section>
-          ))}
+          <GroupCard data={data} ci={0} name={name} />
+          <GroupCard data={data} ci={1} name={name} />
           <section className="rh-card">
             <span className="rh-k">Knockouts</span>
+            <div className="cup-kos">
             {data.matches.filter((m) => m.stage !== 'group').map((m) => (
               <div key={m.id} className="cup-ko">
-                <span className="rh-dim" style={{ fontSize: 12 }}>{STAGE_NAME[m.stage]} {m.stage === 'qf' ? m.id.slice(2) : m.stage === 'semi' ? m.id.slice(2) : m.stage === 'wildcard' ? (m.conf === 0 ? 'A' : 'B') : ''} · round {m.round}{m.label ? ` · ${m.label}` : ''}</span>
+                <span className="rh-dim" style={{ fontSize: 12 }}>{STAGE_NAME[m.stage]} {m.stage === 'qf' || m.stage === 'semi' ? m.id.slice(2) : m.stage === 'wildcard' ? (m.conf === 0 ? 'A' : 'B') : ''} · round {m.round}{m.label && m.stage !== 'qf' ? ` · ${m.label}` : ''}</span>
                 {game(m)}
               </div>
             ))}
+            </div>
           </section>
+          <Bracket data={data} name={name} />
         </div>
         <div className="cup-col">
-          <LineupEditor data={data} />
-          <section className="rh-card">
-            <span className="rh-k">Group fixture</span>
-            {GROUP_ROUNDS.map((r, i) => (
-              <div key={r} className="cup-round">
-                <span className="cup-round-h">Group round {i + 1} · AFL round {r} · week of {roundWeek(r)}</span>
-                {data.matches.filter((m) => m.round === r && m.stage === 'group').map(game)}
-              </div>
-            ))}
-            {isCommish && <span className="rh-dim" style={{ fontSize: 12 }}>Results will fill in from the cup lineups once the 2027 scores are flowing.</span>}
-          </section>
+          <DrawPanel />
+          <H2H data={data} name={name} />
+          <News data={data} name={name} />
         </div>
       </div>
     </Shell>

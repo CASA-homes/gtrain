@@ -16,6 +16,8 @@ export const WILDCARD_ROUND = 9;
 export const QF_ROUND = 16;
 export const SEMI_ROUND = 18;
 export const FINAL_ROUND = 20;
+/** The quarter-final draw: Sunday night of round 15, once that round has locked (Perth time; a guide until the full 2027 fixture is loaded). */
+export const DRAW_AT = '2027-07-04T20:00:00+08:00';
 /** Top three in each group go straight to the quarter-finals; 4th and 5th play the wildcard. */
 export const SAFE = 3;
 export const CUP_SLOTS = { DEF: 4, MID: 6, RUC: 1, FWD: 4, UTIL: 1, EMG: 4 } as const;
@@ -105,7 +107,7 @@ function shuffle<T>(xs: T[], seed: number): T[] {
 }
 /** Fill in the wildcards, the quarter-final draw, semis and final as each stage is decided. A drawn knockout goes to the home club,
  *  which is the higher group finisher (wildcards) or the better-ranked club across both groups (quarter-finals on). */
-export function resolveKnockouts(matches: CupMatch[], confs: [number[], number[]], results: CupResult[]): CupMatch[] {
+export function resolveKnockouts(matches: CupMatch[], confs: [number[], number[]], results: CupResult[], now = Date.now()): CupMatch[] {
   const has = (id: string) => results.some((r) => r.match_id === id);
   const groupDone = matches.filter((m) => m.stage === 'group').every((m) => has(m.id));
   const tables = confs.map((c) => standings(c, matches, results));
@@ -119,7 +121,7 @@ export function resolveKnockouts(matches: CupMatch[], confs: [number[], number[]
   if (groupDone) {
     tables.forEach((t, i) => { const wc = get(`wc${i + 1}`); wc.home = t[3]?.team ?? null; wc.away = t[4]?.team ?? null; });
     const w1 = winner(get('wc1')), w2 = winner(get('wc2'));
-    if (w1 != null && w2 != null) {
+    if (w1 != null && w2 != null && now >= Date.parse(DRAW_AT)) {
       const eight = [...tables[0].slice(0, SAFE), ...tables[1].slice(0, SAFE)].map((r) => r.team).concat([w1, w2]);
       const draw = shuffle(eight, CUP_SEASON * 1000 + [...eight].sort((a, b) => a - b).reduce((a, b) => a * 31 + b, 7) % 997);
       for (let i = 0; i < 4; i++) { const q = get(`qf${i + 1}`); [q.home, q.away] = seeded(draw[i * 2], draw[i * 2 + 1]); q.label = undefined; }
@@ -144,4 +146,16 @@ export function cupTies(rows: { cup_round: number; team_id: number; lineup: CupL
     for (const s of CUP_SLOT_ORDER) if (s !== 'EMG') for (const id of r.lineup[s] ?? []) ties[id] ??= r.team_id;
   }
   return ties;
+}
+
+/** Best 16 by projection for a cup lineup (scarce lines first, then utility and emergencies from what's left). */
+export function cupAutoFill<P extends { id: number; pos: string[]; proj: number }>(squad: P[], exclude: Set<number> = new Set()): CupLineup {
+  const pool = squad.filter((p) => !exclude.has(p.id)).sort((a, b) => b.proj - a.proj);
+  const used = new Set<number>(), out: CupLineup = {};
+  for (const s of ['RUC', 'DEF', 'FWD', 'MID'] as CupSlot[]) {
+    out[s] = [];
+    for (const p of pool) { if (out[s]!.length >= CUP_SLOTS[s]) break; if (!used.has(p.id) && p.pos.includes(s)) { out[s]!.push(p.id); used.add(p.id); } }
+  }
+  for (const s of ['UTIL', 'EMG'] as CupSlot[]) { out[s] = pool.filter((p) => !used.has(p.id)).slice(0, CUP_SLOTS[s]).map((p) => p.id); out[s]!.forEach((id) => used.add(id)); }
+  return out;
 }
