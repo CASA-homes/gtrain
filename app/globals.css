@@ -1733,3 +1733,13 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .mx-cap { border-radius: 50%; width: 17px; height: 17px; padding: 0; display: inline-grid; place-items: center; font: 800 9px/1 var(--font); }
 .mx-cap.C { background: #d6a92a; color: #fff; box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px #d6a92a; }
 .mx-cap.VC { background: #a9b1ba; color: #fff; width: 21px; height: 17px; border-radius: 9px; font-size: 8px; }
+
+/* pop-up: score under each bar, averages on one row */
+.mx-bars.sc { padding-bottom: 30px; }
+.mx-bars.sc .mx-bar small { position: absolute; bottom: -15px; font: 600 9px var(--mono); color: var(--rh-text); }
+.mx-bars.sc .mx-bar em { bottom: -28px; }
+.mx-statline.one { display: flex; gap: 3px; }
+.mx-statline.one span { flex: 1 1 0; min-width: 0; padding: 6px 2px; border-radius: 8px; }
+.mx-statline.one b { font-size: 13px; }
+.mx-statline.one em { font-size: 8.5px; letter-spacing: .04em; }
+@media (max-width: 480px) { .mx-statline.one b { font-size: 11px; } .mx-statline.one em { font-size: 7.5px; } }

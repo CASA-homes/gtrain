@@ -6,7 +6,7 @@ import type { MProfile } from '@/lib/mens-round';
 
 type Tab = 'round' | 'season' | 'club';
 
-export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'round' }: {
+export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'season' }: {
   roundLabel: string; round: React.ReactNode; prof: MProfile | undefined; proj: number; clubName: string | null; defaultTab?: Tab;
 }) {
   const [tab, setTab] = useState<Tab>(defaultTab);
@@ -50,11 +50,12 @@ function SeasonPane({ prof, proj }: { prof: MProfile | undefined; proj: number }
       <div className="mx-sh-sec">
         <div className="mx-sh-row"><span className="rh-k">2026 scores by AFL round</span><span className="rh-dim rh-mono" style={{ fontSize: 12 }}>L5 {l5avg ?? '–'} · low {lo ?? '–'}</span></div>
         {log.length ? (
-          <div className="mx-bars" aria-label="2026 scores by round">
+          <div className="mx-bars sc" aria-label="2026 scores by round">
             <i className="mx-projline" style={{ bottom: `${(proj / maxBar) * 100}%` }} title={`2027 projection ${proj}`} />
             {log.map(([r, sc, tog]) => (
               <button key={r} className={`mx-bar ${pick === r ? 'on' : ''}`} onClick={() => setPick(pick === r ? null : r)} aria-label={`Round ${r}: ${sc}${tog != null ? `, ${tog}% time on ground` : ''}`}>
                 <i style={{ height: `${(sc / maxBar) * 100}%`, background: sc >= 100 ? '#10a35a' : sc >= proj ? '#7ccf8f' : sc >= proj * 0.75 ? '#e5c84f' : '#f39a4a' }} />
+                <small className="rh-mono">{sc}</small>
                 <em>{r}</em>
               </button>
             ))}
@@ -64,7 +65,7 @@ function SeasonPane({ prof, proj }: { prof: MProfile | undefined; proj: number }
       </div>
       {statLine.length > 0 && (
         <div className="mx-sh-sec"><span className="rh-k">Averages per game</span>
-          <div className="mx-statline">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
+          <div className="mx-statline one">{statLine.map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>
         </div>
       )}
       {prof && prof.hist.length > 0 && (

@@ -70,7 +70,7 @@ function SquadSheet({ p, slot, cap, vc, onClose, clubName, gameName }: { p: MdPl
           </div>
           <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
         </div>
-        <ProfileTabs roundLabel="Round 1" prof={pr} proj={p.proj} clubName={clubName} round={<>
+        <ProfileTabs roundLabel="This round" prof={pr} proj={p.proj} clubName={clubName} round={<>
           {afl && (
             <div className="pt-match">
               <div><b>{afl.home} v {afl.away}</b><span className="rh-dim" suppressHydrationWarning>{afl.venue} · {when}</span></div>
