@@ -25,6 +25,10 @@ export interface HPlayer {
   key: string; name: string; club: string; line: string; emg: boolean;
   game: HGame | null; avg: number | null; playerNo: string | null; photo: string | null;
   id: number | null; prof?: MProfile;
+  /** emergency who came on: the starter he replaced */
+  cameOnFor?: string;
+  /** starter who didn't play (or scored 0) and was covered by an emergency */
+  coveredBy?: string;
 }
 export interface HSide { teamId: number | null; name: string; short: string; colour: string | null; coach: string; total: number | null; res: string; players: HPlayer[] }
 export interface HRound { season: number; round: number; label: string; matchups: { a: string; b: string; as: number | null; bs: number | null }[]; mine: [HSide, HSide] | null; myName: string }
@@ -59,6 +63,12 @@ export function buildHistoryRound(round: number, league: League, myTeamId: numbe
         playerNo: dfs ? dfs.replace('CD_I', '') : null, photo: p ? photoUrl(p) : null, id: p?.id ?? null, prof,
       };
     });
+    // Emergencies: one per line. If a starter in his line didn't play (or scored 0), the emergency's score counts instead.
+    for (const ln of ['DEF', 'MID', 'RUC', 'FWD']) {
+      const outs = players.filter((p) => !p.emg && p.line === ln && (!p.game || p.game[3] === 0));
+      const ems = players.filter((p) => p.emg && p.line === ln && p.game && p.game[3] > 0);
+      outs.forEach((o, i) => { const e = ems[i]; if (e) { e.cameOnFor = o.name; o.coveredBy = e.name; } });
+    }
     return { teamId: t?.id ?? null, name, short: t?.short_code ?? name.slice(0, 2).toUpperCase(), colour: t?.colour ?? null, coach: t?.coach_name ?? '', total: f?.[3] ?? null, res: f?.[2] ?? '', players };
   };
   const mf = FX[myName]?.find((x) => x[0] === label);

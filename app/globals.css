@@ -1655,3 +1655,11 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .rd-zones { display: flex; gap: 4px; }
 .rd-zones > div { flex-basis: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; border-radius: 8px; background: var(--rh-up-soft); min-width: 44px; }
 .rd-heat { width: 100%; max-width: 100%; border-radius: 12px; border: 1px solid var(--rh-line); background: #2e5e33; }
+
+/* emergency who came on, and the starter he covered */
+.mx-row.came-on { border: 2px solid var(--rh-up); background: var(--rh-up-soft); box-shadow: 0 0 0 3px rgb(29 138 60 / .12); }
+.mx-row.came-on .mx-pname, .mx-row.came-on .mx-score b { font-weight: 800; }
+.mx-row.covered { opacity: .55; border-style: dashed; }
+.hx-on, .hx-out { font: 800 9px/1 var(--font); letter-spacing: .05em; padding: 3px 5px; border-radius: 4px; flex: none; }
+.hx-on { background: var(--rh-up); color: #fff; }
+.hx-out { background: var(--rh-3); color: var(--rh-dim); }
