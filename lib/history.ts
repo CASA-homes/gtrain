@@ -29,6 +29,8 @@ export interface HPlayer {
   cameOnFor?: string;
   /** starter who didn't play (or scored 0) and was covered by an emergency */
   coveredBy?: string;
+  /** whose score was doubled: worked out from the official team total (null when it can't be pinned down) */
+  cap?: 'C' | null;
 }
 export interface HSide { teamId: number | null; name: string; short: string; colour: string | null; coach: string; total: number | null; res: string; players: HPlayer[] }
 export interface HRound { season: number; round: number; label: string; matchups: { a: string; b: string; as: number | null; bs: number | null }[]; mine: [HSide, HSide] | null; myName: string }
@@ -68,6 +70,15 @@ export function buildHistoryRound(round: number, league: League, myTeamId: numbe
       const outs = players.filter((p) => !p.emg && p.line === ln && (!p.game || p.game[3] === 0));
       const ems = players.filter((p) => p.emg && p.line === ln && p.game && p.game[3] > 0);
       outs.forEach((o, i) => { const e = ems[i]; if (e) { e.cameOnFor = o.name; o.coveredBy = e.name; } });
+    }
+    // Captain: the official total is the counted scores plus one player's score again. If exactly one player's score
+    // fills that gap, he was the captain (or the vice-captain covering).
+    const total = f?.[3] ?? null;
+    if (total != null) {
+      const counted = players.filter((p) => (!p.emg && !p.coveredBy) || p.cameOnFor);
+      const gap = total - counted.reduce((a, p) => a + (p.game?.[3] ?? 0), 0);
+      const hit = counted.filter((p) => p.game && p.game[3] === gap && gap > 0);
+      if (hit.length === 1) hit[0].cap = 'C';
     }
     return { teamId: t?.id ?? null, name, short: t?.short_code ?? name.slice(0, 2).toUpperCase(), colour: t?.colour ?? null, coach: t?.coach_name ?? '', total: f?.[3] ?? null, res: f?.[2] ?? '', players };
   };

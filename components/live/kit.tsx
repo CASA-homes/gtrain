@@ -109,13 +109,13 @@ export function totals(l: Lineup | undefined, byId: Map<number, LPlayer>, gameBy
 
 /* ---------------- shell ---------------- */
 
-const SIDE_GAMES = [{ href: '/live/desk', label: 'Battle desk' }, { href: '/live/games', label: 'Mini games' }, { href: '/live/new', label: 'New game' }];
+const SIDE_GAMES = [{ href: '/live/mini', label: 'Home' }, { href: '/live/games', label: 'Current games' }, { href: '/live/new', label: 'New game' }];
 const SECTIONS: { href: string; label: string; also?: string[] }[] = [
   { href: '/live', label: 'Squad Selector' },
   { href: '/live/matchups', label: 'Live Matchups' },
   { href: '/live/cup', label: 'Knockout Cup' },
-  { href: '/live/comps', label: 'Side comps' },
-  { href: '/live/desk', label: 'Side Games', also: ['/live/games', '/live/new'] },
+  { href: '/live/mini', label: 'Mini Games', also: ['/live/games', '/live/new', '/live/g/'] },
+  { href: '/live/comps', label: 'Mini Comps' },
   { href: '/live/scores', label: 'Live scores' },
 ];
 export function Shell({ title, sub, right, children, compact }: { title: React.ReactNode; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {

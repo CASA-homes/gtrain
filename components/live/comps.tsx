@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { COMPS, MINT_PRESETS, OPT_IN, PRIZE_KIND_NAME, placeName, type CompDef, type CompKey, type Prize, type PrizeKind } from '@/lib/comps';
+import { COMPS, COMP_BY_KEY, MINT_PRESETS, OPT_IN, PRIZE_KIND_NAME, placeName, type CompDef, type CompKey, type Prize, type PrizeKind } from '@/lib/comps';
 import { addPrize, joinComp, removePrize, saveCompSettings, settlePrize, type CompsState } from '@/app/(app)/live/comps-actions';
 import { Shell } from './kit';
 
@@ -174,14 +174,43 @@ function Settings({ props }: { props: CompsProps }) {
   );
 }
 
+function PrizePanel({ props }: { props: CompsProps }) {
+  const pool = props.state.prizes.filter((p) => p.status === 'pool' && COMP_BY_KEY[p.comp]);
+  const name = (id: number | null) => props.teams.find((t) => t.id === id)?.short ?? '?';
+  const what = (p: Prize) => (p.kind === 'pick' && p.pick_id ? props.labels.picks[p.pick_id] ?? p.label : p.kind === 'player' && p.player_id ? props.labels.players[p.player_id] ?? p.label : p.label);
+  const icon = (k: PrizeKind) => ({ pick: '🎟️', bonus_pick: '🎟️', msd_bump: '⏫', player: '🏉', tokens: '🪙', trophy: '🏆', other: '🎁' } as Record<PrizeKind, string>)[k] ?? '🎁';
+  return (
+    <section className="rh-card cp-up">
+      <div className="cp-up-h"><span className="rh-k">Up for grabs · {pool.length} prize{pool.length === 1 ? '' : 's'}</span><span className="rh-dim" style={{ fontSize: 12 }}>Minted by the commish or staked by coaches who entered</span></div>
+      {pool.length ? (
+        <div className="cp-up-grid">
+          {pool.map((p) => {
+            const c = COMP_BY_KEY[p.comp];
+            return (
+              <div key={p.id} className="cp-up-item" style={{ ['--hue' as string]: c.hue }}>
+                <span className="cp-up-ic" aria-hidden="true">{icon(p.kind)}</span>
+                <div style={{ minWidth: 0 }}>
+                  <b className="rh-ellip" style={{ display: 'block' }}>{what(p)}</b>
+                  <span className="rh-dim" style={{ fontSize: 11.5 }}>{c.name} · {placeName(p.place)} · {p.source === 'minted' ? 'minted' : `staked by ${name(p.staked_by)}`}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : <span className="rh-dim" style={{ fontSize: 13 }}>No prizes on the table yet. Enter a comp and stake a pick, a player or tokens, or ask the commish to mint one.</span>}
+    </section>
+  );
+}
+
 export function CompsPage(props: CompsProps) {
   const { settings, entries, ready } = props.state;
   const mine = entries.filter((e) => e.team_id === props.myTeamId && OPT_IN.includes(e.comp)).length;
-  const order = [...COMPS].sort((a, b) => Number(!!b.everyone) - Number(!!a.everyone) || Number(settings.enabled.includes(b.key)) - Number(settings.enabled.includes(a.key)));
+  const order = COMPS.filter((c) => c.key !== 'cup').sort((a, b) => Number(!!b.everyone) - Number(!!a.everyone) || Number(settings.enabled.includes(b.key)) - Number(settings.enabled.includes(a.key)));
   return (
-    <Shell title="Side comps" sub={<>Pick your comps for {settings.season}. Prizes are minted by the commish or staked by the coaches who enter.</>}
+    <Shell title="Mini Comps" sub={<>Season-long comps for {settings.season}. Pick the ones you want; the Knockout Cup has its own tab.</>}
       right={<span className="rh-chip">{mine} of {settings.cap} entered</span>}>
       {!ready && <div className="rh-card md-warn">Entering and prizes switch on once <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code> has been run.</div>}
+      <PrizePanel props={props} />
       {props.isCommish && <Settings props={props} />}
       <div className="cp-grid">{order.map((c) => <CompCard key={c.key} comp={c} props={props} />)}</div>
     </Shell>

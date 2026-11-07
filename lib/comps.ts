@@ -1,10 +1,10 @@
-// G-Train side comps. The Knockout Cup is league-wide (its fixture needs all ten clubs); everything else on the menu
+// G-Train mini comps. The Knockout Cup is league-wide (its fixture needs all ten clubs); everything else on the menu
 // is opt-in, and the commish sets how many each coach may enter. Prizes are minted by the commish or staked by
 // entrants from their own list, and the winner takes them once the commish settles.
 
 export const COMP_SEASON = 2027;
 
-export type CompKey = 'cup' | 'plate' | 'shield' | 'survivor' | 'captain' | 'ruck';
+export type CompKey = 'cup' | 'plate' | 'shield' | 'survivor' | 'captain';
 export interface CompDef {
   key: CompKey; name: string; short: string; blurb: string; how: string;
   /** league-wide comps don't count towards the entry cap */
@@ -16,8 +16,8 @@ export interface CompDef {
   hue: string;
 }
 export const COMPS: CompDef[] = [
-  { key: 'cup', name: 'Knockout Cup', short: 'Cup', everyone: true, lineup: 'cup', rounds: 'Groups R3–R11 · semis R21 · final R23', hue: '#c79a1c',
-    blurb: 'Two conferences of five, top two to the semis, final the week before the grand final.', how: '16 a side (4/6/1/4 + utility), 4 emergencies, no captains.' },
+  { key: 'cup', name: 'Knockout Cup', short: 'Cup', everyone: true, lineup: 'cup', rounds: 'Groups R5–R8 · wildcards R9 · quarters R16 · final R20', hue: '#c79a1c',
+    blurb: 'Two groups of five, top three safe, 4th v 5th wildcards, then random quarter-finals.', how: '16 a side (4/6/1/4 + utility), 4 emergencies, no captains.' },
   { key: 'shield', name: 'Rookie Shield', short: 'Shield', lineup: 'own', rounds: 'Every round', hue: '#2f7de1',
     blurb: 'A weekly team of kids: only players 21 or under on 1 March, or your rookie keeper.', how: '3 DEF, 4 MID, 1 RUC, 3 FWD, captain scores double. Highest season total wins.' },
   { key: 'survivor', name: 'Survivor', short: 'Survivor', lineup: 'own', rounds: 'Every round until one is left', hue: '#d4470f',
@@ -26,14 +26,12 @@ export const COMPS: CompDef[] = [
     blurb: 'The consolation cup for clubs knocked out of the Cup in the groups.', how: 'Cup rules, four rounds, highest total wins. Only open to clubs that miss the Cup semis.' },
   { key: 'captain', name: 'Captain’s Challenge', short: 'Captains', lineup: 'gtrain', rounds: 'Every round', hue: '#1d8a3c',
     blurb: 'Your G-Train captain’s score, every week, added up.', how: 'Nothing extra to pick: it reads your G-Train captain. Highest season total wins.' },
-  { key: 'ruck', name: 'Ruck Rumble', short: 'Rucks', lineup: 'gtrain', rounds: 'Every round', hue: '#7a5fc0',
-    blurb: 'Your G-Train ruck against everyone else’s, every round.', how: 'Top ruck score each round gets 3 points, second 2, third 1. Most points wins.' },
 ];
 export const COMP_BY_KEY = Object.fromEntries(COMPS.map((c) => [c.key, c])) as Record<CompKey, CompDef>;
 export const OPT_IN = COMPS.filter((c) => !c.everyone).map((c) => c.key);
 
 export interface CompSettings { season: number; cap: number; enabled: CompKey[]; locks_at: string | null }
-export const DEFAULT_SETTINGS: CompSettings = { season: COMP_SEASON, cap: 2, enabled: ['plate', 'shield', 'survivor', 'captain', 'ruck'], locks_at: null };
+export const DEFAULT_SETTINGS: CompSettings = { season: COMP_SEASON, cap: 2, enabled: ['plate', 'shield', 'survivor', 'captain'], locks_at: null };
 
 export type PrizeKind = 'pick' | 'player' | 'tokens' | 'msd_bump' | 'bonus_pick' | 'trophy' | 'other';
 export interface Prize {

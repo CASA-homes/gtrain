@@ -182,11 +182,12 @@ function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b
   );
   const tog = <span className={`mx-tog rh-mono ${l.injured ? 'inj' : ''}`} title={pre ? 'Not played yet' : `${l.injured ? 'Injured, ' : ''}${p.tog}% time on ground`}>{pre ? '' : `${p.tog}%`}</span>;
   const rate = <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>;
-  const projN = <span className="mx-projn rh-mono" title="Projected">{pre ? p.proj : l.ph.state === 'final' ? p.proj : Math.round(p.proj)}</span>;
-  const act = <b className={`rh-mono ${pre ? 'mx-dash' : ''}`}>{pre ? '–' : l.score}</b>;
+  const projN = <span className="mx-projn rh-mono" title="Projected">{Math.round(p.proj) * (p.cap === 'C' ? 2 : 1)}</span>;
+  const x = p.cap === 'C' ? 2 : 1;
+  const act = <b className={`rh-mono ${pre ? 'mx-dash' : l.score >= 100 ? 'ton' : ''}`} title={x === 2 && !pre ? `${l.score} doubled as captain` : undefined}>{pre ? '–' : l.score * x}</b>;
   const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{projN}{act}</> : <>{act}{projN}</>}</div>;
   return (
-    <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''}`}>
+    <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''} ${p.cap === 'C' ? 'cap-c' : p.cap === 'VC' ? 'cap-vc' : ''}`}>
       {side === 'a' ? <>{face}{who}{tog}{rate}{score}</> : <>{score}{rate}{tog}{who}{face}</>}
     </div>
   );

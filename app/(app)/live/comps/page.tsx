@@ -4,7 +4,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { pickLabel } from '@/lib/picks';
 import { loadComps } from '../comps-actions';
 
-export const metadata = { title: 'Side comps' };
+export const metadata = { title: 'Mini Comps' };
 export const dynamic = 'force-dynamic';
 
 export default async function CompsRoute() {

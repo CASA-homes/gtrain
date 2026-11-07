@@ -1663,3 +1663,71 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .hx-on, .hx-out { font: 800 9px/1 var(--font); letter-spacing: .05em; padding: 3px 5px; border-radius: 4px; flex: none; }
 .hx-on { background: var(--rh-up); color: #fff; }
 .hx-out { background: var(--rh-3); color: var(--rh-dim); }
+/* 100+ scores in gold */
+.mx-score b.ton { color: #c18f12; }
+.sq-lock.mini { text-decoration: none; }
+.sq-lock.mini em { color: var(--rh-up); }
+.lm-tab.mini { text-decoration: none; border-style: dashed; }
+/* Mini Comps: prizes up for grabs */
+.cp-up { gap: 10px; background: linear-gradient(160deg, #fbf5e2, var(--rh-1) 60%); border-color: #ecdfb4; }
+.cp-up-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.cp-up-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+.cp-up-item { display: flex; gap: 10px; align-items: center; padding: 9px 11px; border-radius: 12px; background: var(--rh-1); border: 1px solid var(--rh-line); box-shadow: inset 3px 0 0 var(--hue); min-width: 0; }
+.cp-up-ic { font-size: 20px; flex: none; }
+/* Mini Games home */
+.mg-home { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.mg-col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.mg-list { display: flex; flex-direction: column; gap: 8px; }
+.mg-game { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: inherit; }
+.mg-game:hover { border-color: #cdd2cb; }
+.mg-game-h { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.mg-game-sc { display: flex; align-items: baseline; gap: 8px; }
+.mg-game-sc b { font-size: 22px; }
+.mg-demo { gap: 12px; }
+.mg-demo-h { display: flex; justify-content: space-between; align-items: center; }
+.mg-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.mg-step { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: none; padding: 4px 2px; font: 600 11px var(--font); color: var(--rh-dim); cursor: pointer; text-align: center; }
+.mg-step i { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-style: normal; background: var(--rh-2); color: var(--rh-dim); transition: background .2s, color .2s; }
+.mg-step.done i { background: var(--rh-up-soft); color: var(--rh-up); }
+.mg-step.on { color: var(--rh-text); }
+.mg-step.on i { background: var(--rh-text); color: #fff; }
+.mg-stage { min-height: 230px; border-radius: 14px; background: linear-gradient(180deg, var(--rh-2), var(--rh-1)); border: 1px solid var(--rh-line); padding: 18px; display: grid; place-items: center; overflow: hidden; position: relative; }
+.mg-scene { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; animation: mgIn .35s ease-out; }
+.mg-scene p { margin: 0; font-size: 13px; color: var(--rh-dim); text-align: center; max-width: 42ch; }
+@keyframes mgIn { from { opacity: 0; transform: translateY(8px); } }
+.mg-challenge { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+.mg-challenge p { flex-basis: 100%; }
+.mg-club { padding: 10px 14px; border-radius: 12px; background: var(--rh-1); border: 1px solid var(--rh-line); font-weight: 700; font-size: 14px; }
+.mg-club.a { box-shadow: inset 3px 0 0 #2563c9; } .mg-club.b { box-shadow: inset -3px 0 0 #e0780f; }
+.mg-fly { font-size: 26px; animation: mgFly 1.2s ease-in-out infinite alternate; }
+@keyframes mgFly { from { transform: translateX(-16px) rotate(-10deg); } to { transform: translateX(16px) rotate(10deg); } }
+.mg-chips, .mg-stakes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.mg-chips span, .mg-stakes span { padding: 7px 12px; border-radius: 99px; background: var(--rh-1); border: 1px solid var(--rh-line); font: 600 13px var(--font); animation: mgPop .4s backwards; display: inline-flex; gap: 6px; align-items: center; }
+.mg-stakes span.pick { border-color: #d6a92a; background: #fbf4e2; box-shadow: 0 0 0 3px rgb(214 169 42 / .18); }
+@keyframes mgPop { from { opacity: 0; transform: scale(.7); } }
+.mg-score { width: 100%; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.mg-side { display: flex; flex-direction: column; gap: 2px; font-size: 12.5px; font-weight: 600; transition: opacity .3s; }
+.mg-side.r { align-items: flex-end; }
+.mg-side b { font-size: 30px; letter-spacing: -.03em; }
+.mg-side:first-child b { color: #2563c9; } .mg-side.r b { color: #e0780f; }
+.mg-side.lose { opacity: .45; }
+.mg-bar { height: 8px; border-radius: 4px; background: #f6c89e; overflow: hidden; }
+.mg-bar i { display: block; height: 100%; background: #2563c9; transition: width .1s linear; }
+.mg-crown { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 13px; color: var(--rh-dim); }
+.mg-crown b { font-size: 17px; color: var(--rh-text); }
+.mg-trophy { font-size: 34px; animation: mgPop .5s; }
+.mg-confetti { position: absolute; inset: -40px -60px auto; height: 120px; pointer-events: none; }
+.mg-confetti i { position: absolute; top: 0; width: 6px; height: 10px; border-radius: 2px; animation: mgDrop 1.4s ease-in forwards; }
+@keyframes mgDrop { from { transform: translateY(-20px) rotate(0); opacity: 1; } to { transform: translateY(120px) rotate(300deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .mg-scene, .mg-fly, .mg-chips span, .mg-stakes span, .mg-trophy, .mg-confetti i { animation: none; } }
+@media (max-width: 900px) { .mg-home { grid-template-columns: minmax(0, 1fr); } .mg-home .mg-col:last-child { order: -1; } }
+@media (max-width: 520px) { .mg-step { font-size: 9.5px; } }
+
+/* captain gold, vice-captain silver in matchups */
+.mx-row.cap-c { background: linear-gradient(90deg, #fff8df, #f6e6ad); border-color: #d6a92a; }
+.mx-row.b.cap-c { background: linear-gradient(270deg, #fff8df, #f6e6ad); }
+.mx-row.cap-vc { background: linear-gradient(90deg, #fbfbfc, #e3e6ea); border-color: #a9b1ba; }
+.mx-row.b.cap-vc { background: linear-gradient(270deg, #fbfbfc, #e3e6ea); }
+.mx-cap { border-radius: 50%; width: 17px; height: 17px; padding: 0; display: inline-grid; place-items: center; font: 800 9px/1 var(--font); }
+.mx-cap.C { background: #d6a92a; color: #fff; box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px #d6a92a; }
+.mx-cap.VC { background: #a9b1ba; color: #fff; width: 21px; height: 17px; border-radius: 9px; font-size: 8px; }

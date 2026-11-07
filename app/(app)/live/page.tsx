@@ -2,6 +2,7 @@ import { Matchday } from '@/components/live/matchday';
 import { getLeague, getMe } from '@/lib/data';
 import { buildCup } from '@/lib/cup-data';
 import { buildMatchday } from '@/lib/matchday-data';
+import { myMinis } from '@/lib/minis';
 import { redirect } from 'next/navigation';
 
 export const metadata = { title: 'Matchday' };
@@ -12,6 +13,6 @@ export default async function MatchdayPage() {
   if (!me) redirect('/');
   const league = await getLeague();
   const cup = await buildCup(league, me.team_id);
-  const data = await buildMatchday(league, me.team_id, cup);
-  return <Matchday data={data} cup={cup} />;
+  const [data, minis] = await Promise.all([buildMatchday(league, me.team_id, cup), myMinis(league, me.team_id)]);
+  return <Matchday data={data} cup={cup} minis={minis} />;
 }

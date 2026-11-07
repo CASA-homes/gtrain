@@ -15,15 +15,15 @@ function Row({ p, side, onOpen }: { p: HPlayer; side: 'a' | 'b'; onOpen: () => v
   const face = <MFace p={p as unknown as MPlayer} size={24} />;
   const who = (
     <div className="mx-who">
-      <span className="mx-name"><button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>{p.cameOnFor && <span className="hx-on" title={`Came on for ${p.cameOnFor}`}>ON</span>}{p.coveredBy && <span className="hx-out" title={`Covered by ${p.coveredBy}`}>OUT</span>}</span>
+      <span className="mx-name"><button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>{p.cap && <span className="mx-cap C" title="Captain: score doubled">C</span>}{p.cameOnFor && <span className="hx-on" title={`Came on for ${p.cameOnFor}`}>ON</span>}{p.coveredBy && <span className="hx-out" title={`Covered by ${p.coveredBy}`}>OUT</span>}</span>
       <span className="mx-sub"><span>{p.club}{g ? ` · v ${g[1]}` : ' · didn’t play'}{p.cameOnFor ? ` · for ${p.cameOnFor.split(' ').slice(-1)[0]}` : ''}{p.coveredBy ? ` · covered by ${p.coveredBy.split(' ').slice(-1)[0]}` : ''}</span>{g?.[5] ? <span className="rh-mono">CBA {g[5]}%</span> : null}</span>
     </div>
   );
   const tog = <span className="mx-tog rh-mono">{g?.[4] != null ? `${g[4]}%` : ''}</span>;
   const avg = <span className="mx-projn rh-mono" title="His 2026 average">{p.avg ?? ''}</span>;
-  const sc = <b className={`rh-mono ${g ? '' : 'mx-dash'}`}>{g ? g[3] : '–'}</b>;
+  const sc = <b className={`rh-mono ${!g ? 'mx-dash' : g[3] >= 100 ? 'ton' : ''}`} title={p.cap && g ? `${g[3]} doubled as captain` : undefined}>{g ? g[3] * (p.cap ? 2 : 1) : '–'}</b>;
   const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{avg}{sc}</> : <>{sc}{avg}</>}</div>;
-  return <div className={`mx-row hx ${side} ${p.emg && !p.cameOnFor ? 'bench' : ''} ${p.cameOnFor ? 'came-on' : ''} ${p.coveredBy ? 'covered' : ''}`}>{side === 'a' ? <>{face}{who}{tog}{score}</> : <>{score}{tog}{who}{face}</>}</div>;
+  return <div className={`mx-row hx ${side} ${p.emg && !p.cameOnFor ? 'bench' : ''} ${p.cameOnFor ? 'came-on' : ''} ${p.coveredBy ? 'covered' : ''} ${p.cap ? 'cap-c' : ''}`}>{side === 'a' ? <>{face}{who}{tog}{score}</> : <>{score}{tog}{who}{face}</>}</div>;
 }
 
 function Col({ t, side, onOpen }: { t: HSide; side: 'a' | 'b'; onOpen: (p: HPlayer) => void }) {
@@ -97,7 +97,7 @@ export function HistoryBoard({ round }: { round: HRound }) {
           <div className="mx-side a"><h2 className="rh-h2" style={{ color: ca }}>{A.name}</h2><Col t={A} side="a" onOpen={(p) => setOpen({ p, team: A.name })} /></div>
           <div className="mx-side b"><h2 className="rh-h2" style={{ color: cb }}>{B.name}</h2><Col t={B} side="b" onOpen={(p) => setOpen({ p, team: B.name })} /></div>
         </div>
-        <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Team totals are the official G-Train scores for the week (captain doubled, emergencies applied). Player scores are their AFL Fantasy points that round.</p>
+        <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Team totals are the official G-Train scores for the week. Player scores are their AFL Fantasy points that round; the captain’s is shown doubled (worked out from the official total, so it’s blank on the odd week it can’t be pinned down).</p>
       </>)}
       {open && <Sheet p={open.p} team={open.team} round={round} onClose={() => setOpen(null)} />}
     </div>

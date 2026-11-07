@@ -4,6 +4,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { HRound } from '@/lib/history';
+import type { MiniLink } from '@/lib/minis';
 import { HistoryBoard } from './history';
 import Link from 'next/link';
 import { RULES, autoFill } from '@/lib/matchday';
@@ -13,7 +14,7 @@ import { MensRound } from './mens';
 import { Matchup, shortGame } from './matchday';
 import { Shell } from './kit';
 
-export function LiveMatchups({ mens, md, rounds, sel, history }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null }) {
+export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null; minis?: MiniLink[] }) {
   const router = useRouter();
   const [gid, setGid] = useState(md.games[0]?.id ?? '');
   const game = md.games.find((g) => g.id === gid) ?? md.games[0];
@@ -25,6 +26,9 @@ export function LiveMatchups({ mens, md, rounds, sel, history }: { mens: MRound;
             <b>{shortGame(g)}</b>
             <span>{md.savedIds.includes(g.id) ? 'Team saved' : 'Team not saved'}</span>
           </button>
+        ))}
+        {minis.map((m) => (
+          <Link key={m.id} href={`/live/g/${m.id}`} className="lm-tab mini"><b>Mini · {m.name}</b><span>{m.sub} · {m.status === 'drafting' ? 'drafting' : 'open game →'}</span></Link>
         ))}
         <Link href="/live" className="lm-set">Set teams in Squad Selector →</Link>
       </div>

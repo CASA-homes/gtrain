@@ -8,6 +8,7 @@ import { CLUBS } from '@/lib/clubs';
 import { jumper } from '@/lib/jumpers';
 import { RULES, autoFill, filledField, fits, onField, projTotal, rowsFor, type MdLineup, type MdPlayer, type Pos, type Rules, type SlotRule } from '@/lib/matchday';
 import type { GameOpt, MatchdayData, Side } from '@/lib/matchday-data';
+import type { MiniLink } from '@/lib/minis';
 import { saveGameLineup } from '@/app/(app)/live/matchday-actions';
 import { CupPanel, type CupData } from './cup';
 import { Shell } from './kit';
@@ -411,7 +412,7 @@ function Fixtures({ round, games }: { round: number; games: { home: string; away
 }
 
 /* ---------------- lineups status ---------------- */
-function Lineups({ games, savedIds, locks, current, onPick }: { games: GameOpt[]; savedIds: string[]; locks: Record<string, string | null>; current: string; onPick: (id: string) => void }) {
+function Lineups({ games, savedIds, locks, current, onPick, minis = [] }: { games: GameOpt[]; savedIds: string[]; locks: Record<string, string | null>; current: string; onPick: (id: string) => void; minis?: MiniLink[] }) {
   const [now, setNow] = useState<number | null>(null);
   useEffect(() => { setNow(Date.now()); const t = setInterval(() => setNow(Date.now()), 30_000); return () => clearInterval(t); }, []);
   const when = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(' am', 'am').replace(' pm', 'pm').replace(',', '');
@@ -429,12 +430,19 @@ function Lineups({ games, savedIds, locks, current, onPick }: { games: GameOpt[]
           </button>
         );
       })}
+      {minis.map((m) => (
+        <Link key={`m${m.id}`} href={`/live/g/${m.id}`} className="sq-lock mini">
+          <i className={`sq-dot ${m.status === 'done' ? 'ok' : ''}`} aria-hidden="true">{m.status === 'done' ? '✓' : ''}</i>
+          <span className="md-ellip">Mini · {m.name} · {m.sub}</span>
+          <em>{m.status === 'drafting' ? 'Drafting →' : 'Drafted →'}</em>
+        </Link>
+      ))}
     </section>
   );
 }
 
 /* ---------------- page ---------------- */
-export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
+export function Matchday({ data, cup, minis = [] }: { data: MatchdayData; cup: CupData; minis?: MiniLink[] }) {
   const [gid, setGid] = useState(data.games[0]?.id ?? '');
   const game = data.games.find((g) => g.id === gid) ?? data.games[0];
   const rules = RULES[game.key];
@@ -464,7 +472,7 @@ export function Matchday({ data, cup }: { data: MatchdayData; cup: CupData }) {
             used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
         <div className="sq-right">
-          <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} />
+          <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} minis={minis} />
           <Matchup game={game} rules={rules} mine={mine} myName={data.myName} myTeamId={data.myTeamId} look={look} />
           <CupPanel data={cup} compact />
         </div>
