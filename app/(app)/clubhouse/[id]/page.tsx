@@ -1,4 +1,5 @@
-import { ClubColourPicker } from '@/components/ClubColourPicker';
+import { ClubSettings } from '@/components/ClubSettings';
+import { CLUBHOUSE_SECTIONS } from '@/lib/team-colours';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ClubLogoEditor } from '@/components/ClubLogoEditor';
@@ -132,6 +133,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const cuts = a.players.filter((p) => !p.list_status && !p.is_rookie_keeper && !likelyRookie(p))
     .map((p) => ({ p, kv: keepValue(p) })).sort((x, y) => x.kv - y.kv).slice(0, 5).map((x) => x.p);
 
+  const hiddenSet = new Set(a.team.clubhouse_hide ?? []);
+  const show = (k: (typeof CLUBHOUSE_SECTIONS)[number]['key']) => !hiddenSet.has(k);
   return (
     <div className="wrap">
       <header className={`club-head ${a.team.colour ? 'has-colour' : ''}`} style={a.team.colour ? ({ '--club': a.team.colour } as React.CSSProperties) : undefined}>
@@ -147,7 +150,6 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none' }}>
               <TeamBadge code={a.team.short_code} logo={a.team.logo_url} />
               {(isMine || me?.is_commish) && <ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} />}
-              {(isMine || me?.is_commish) && <ClubColourPicker teamId={a.team.id} colour={a.team.colour ?? null} />}
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
@@ -167,12 +169,12 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
             <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
           </div>
-          {(isMine || me?.is_commish) && <Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link>}
+          {(isMine || me?.is_commish) && <div className="club-head-acts"><ClubSettings teamId={a.team.id} colour={a.team.colour ?? null} hidden={a.team.clubhouse_hide ?? []} /><Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link></div>}
         </div>
       </header>
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {show('lines') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h2 className="h2">Line strength</h2>
           {LINES.map((l) => (
             <div key={l} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 72px', gap: 10, alignItems: 'center' }}>
@@ -181,9 +183,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
             </div>
           ))}
-        </section>
+        </section>)}
 
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {show('ages') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
             <div className="row-between">
               <span className="eyebrow">Keeper age profile</span>
@@ -201,10 +203,10 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               </span>
             )}
           </div>
-        </section>
+        </section>)}
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <VerdictTabs panels={[
+          {show('outlook') && (<><VerdictTabs panels={[
             <div key="v" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {note ? <>
                 <span title={note.headline} style={{ font: '600 17px/1.2 var(--font)', letterSpacing: '-.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{note.headline}</span>
@@ -254,9 +256,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em', color: STATUSES.indexOf(a.status) === 0 ? C.green5 : C.ink }}>{a.status}</span>
             <StepBar steps={STATUSES.map((s) => ({ name: s }))} active={STATUSES.indexOf(a.status)} colours={[C.green5, C.green4, C.green2, C.yellow]} />
             {me?.is_commish && <StatusOverride teamId={a.team.id} value={a.team.status_override} />}
-          </div>
+          </div></>)}
 
-          <div className="row-between"><h2 className="h2">Last season</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON}</span></div>
+          {show('lastSeason') && (<><div className="row-between"><h2 className="h2">Last season</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON}</span></div>
           <div className="tiles" style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
             <div className="tile"><span className="eyebrow">Finish</span><b>{finish}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${ordinal(lad.rank)} on the ladder` : ''}</span></div>
             <div className="tile"><span className="eyebrow">Record</span><b>{lad ? `${lad.wins}–${lad.losses}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad?.draws ? `${lad.draws} draws` : 'no draws'}</span></div>
@@ -264,12 +266,12 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <div className="tile"><span className="eyebrow">Points against</span><b>{lad?.pts_against.toLocaleString() ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{lad ? `${Math.round(lad.pts_against / 21).toLocaleString()} a round` : ''}</span></div>
             <div className="tile"><span className="eyebrow">Best player</span><b>{topPlayer?.name ?? '–'}</b><span className="muted" style={{ fontSize: 12 }}>{topPlayer?.average?.toFixed(1)} avg</span></div>
             <div className="tile"><span className="eyebrow">Grand final</span><b>{season?.premier_id === a.team.id ? `${season.gf_winner_score}–${season.gf_loser_score}` : season?.runner_up_id === a.team.id ? `${season.gf_loser_score}–${season.gf_winner_score}` : '–'}</b><span className="muted" style={{ fontSize: 12 }}>{season?.premier_id === a.team.id ? 'won the flag' : season?.runner_up_id === a.team.id ? 'lost the decider' : 'missed it'}</span></div>
-          </div>
+          </div></>)}
 
         </section>
 
 
-        <section style={{ display: 'flex', flexDirection: 'column' }}>
+        {show('needs') && (<section style={{ display: 'flex', flexDirection: 'column' }}>
           <h2 className="h2" style={{ marginBottom: 6 }}>Needs</h2>
           {needs.length ? needs.map((n) => (
             <div key={n.line} style={{ display: 'grid', gridTemplateColumns: '10px minmax(0, 1fr) auto', gap: 12, padding: '11px 0', borderTop: '1px solid var(--line)' }}>
@@ -278,9 +280,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <Link href={`/market?line=${n.line}`} style={{ fontSize: 13 }}>Find on market</Link>
             </div>
           )) : <span className="muted" style={{ fontSize: 13, padding: '8px 0', borderTop: '1px solid var(--line)' }}>Every line ranks top 5. No glaring holes.</span>}
-        </section>
+        </section>)}
 
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {show('trades') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div className="row-between">
             <h2 className="h2">Trade list</h2>
             {isMine && <Link href="/market/new" className="btn dark">List a player</Link>}
@@ -298,9 +300,9 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               );
             }) : <div className="muted" style={{ padding: '12px 14px', fontSize: 13 }}>Nobody listed yet.</div>}
           </div>
-        </section>
+        </section>)}
 
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {show('cuts') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div className="row-between"><h2 className="h2">Cut candidates</h2><span className="muted" style={{ fontSize: 12 }}>Weakest and oldest, by projected scoring 2027–29</span></div>
           <div className="card" style={{ overflow: 'hidden' }}>
             {gone.map((p, i) => (
@@ -332,10 +334,10 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               );
             })}
           </div>
-        </section>
-        <ClubGames rows={games} teamId={a.team.id} editable={isMine || !!me?.is_commish} tableReady={gamesReady}
+        </section>)}
+        {show('games') && (<ClubGames rows={games} teamId={a.team.id} editable={isMine || !!me?.is_commish} tableReady={gamesReady}
           current={a.players.map((p) => nameKey(p.full_name ?? p.name))}
-          links={Object.fromEntries([...league.freeAgents, ...league.players].flatMap((p) => { const v = { id: p.id, afl_club: p.afl_club, photo_path: p.photo_path, dfs_id: p.dfs_id }; return [[nameKey(p.name), v], [nameKey(p.full_name ?? p.name), v]]; }))} />
+          links={Object.fromEntries([...league.freeAgents, ...league.players].flatMap((p) => { const v = { id: p.id, afl_club: p.afl_club, photo_path: p.photo_path, dfs_id: p.dfs_id }; return [[nameKey(p.name), v], [nameKey(p.full_name ?? p.name), v]]; }))} />)}
       </ClubhouseSplit>
     </div>
   );

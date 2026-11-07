@@ -14,3 +14,15 @@ export const CLUB_COLOURS: { hex: string; name: string }[] = [
   { hex: '#3b3f45', name: 'Charcoal' },
 ];
 export const isHex = (s: unknown): s is string => typeof s === 'string' && /^#[0-9a-fA-F]{6}$/.test(s);
+
+/** Clubhouse sections a coach can switch off on their club's page. */
+export const CLUBHOUSE_SECTIONS = [
+  { key: 'lines', name: 'Line strength' },
+  { key: 'ages', name: 'Keeper age profile' },
+  { key: 'outlook', name: 'Verdict and 2027 outlook' },
+  { key: 'lastSeason', name: 'Last season' },
+  { key: 'needs', name: 'Needs' },
+  { key: 'trades', name: 'Trade list' },
+  { key: 'cuts', name: 'Cut candidates' },
+  { key: 'games', name: 'Club games' },
+] as const;
