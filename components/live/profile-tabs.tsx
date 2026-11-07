@@ -6,11 +6,12 @@ import type { MProfile } from '@/lib/mens-round';
 
 type Tab = 'round' | 'season' | 'club';
 
-export function ProfileTabs({ roundLabel, round, prof, proj, clubName }: {
-  roundLabel: string; round: React.ReactNode; prof: MProfile | undefined; proj: number; clubName: string | null;
+export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'round' }: {
+  roundLabel: string; round: React.ReactNode; prof: MProfile | undefined; proj: number; clubName: string | null; defaultTab?: Tab;
 }) {
-  const [tab, setTab] = useState<Tab>('round');
-  const tabs: [Tab, string][] = [['round', roundLabel], ['season', '2026 season'], ['club', clubName ? `For ${clubName}` : 'For your club']];
+  const [tab, setTab] = useState<Tab>(defaultTab);
+  const tabs: [Tab, string][] = defaultTab === 'season' ? [['season', '2026 season'], ['round', roundLabel]] : [['round', roundLabel], ['season', '2026 season']];
+  tabs.push(['club', clubName ? `For ${clubName}` : 'For your club']);
   return (
     <>
       <div className="pt-tabs" role="tablist">
@@ -108,6 +109,38 @@ function ClubPane({ prof, clubName }: { prof: MProfile | undefined; clubName: st
         </table>
       </div>
       <span className="rh-dim" style={{ fontSize: 12 }}>2026 G-Train, only the rounds he was on your field (bench weeks aren&apos;t counted). DNP: named, but didn&apos;t play that AFL round. Cup games show as their own rows from 2027.</span>
+    </>
+  );
+}
+
+/** One AFL game in full: score, time on ground, centre bounces, quarter by quarter, where he got the ball, and the AFL heat map. */
+export function RoundDetail({ g, playerNo, proj }: { g: [number, string | null, string | null, number, number | null, number | null, number | null, number | null, number | null, number | null, number | null, number | null, number | null, number | null, string | null] | null; playerNo: string | null; proj?: number | null }) {
+  if (!g) return <span className="rh-dim" style={{ fontSize: 13 }}>He didn&apos;t play an AFL game this round.</span>;
+  const qs = [g[6], g[7], g[8], g[9]], zones: [string, number | null][] = [['D50', g[10]], ['D-mid', g[11]], ['A-mid', g[12]], ['A50', g[13]]];
+  const qMax = Math.max(30, ...qs.map((x) => x ?? 0));
+  const zTot = zones.reduce((a, [, v]) => a + (v ?? 0), 0);
+  const heat = g[14] && playerNo ? `https://s.afl.com.au/heatmaps/2026/match-${g[14]}-${playerNo}.png` : null;
+  return (
+    <>
+      <div className="pt-tiles">
+        <div><b className="rh-mono">{g[3]}</b><span>{proj != null ? `Score · 2026 avg ${proj}` : 'Score'}</span></div>
+        <div><b className="rh-mono">{g[4] ?? '–'}%</b><span>Time on ground</span></div>
+        <div><b className="rh-mono">{g[5] ?? '–'}%</b><span>Centre bounces</span></div>
+        <div><b className="rh-ellip">v {g[1] ?? '–'}</b><span>{g[2] ?? ''}</span></div>
+      </div>
+      <div className="mx-sh-sec"><span className="rh-k">Quarter by quarter</span>
+        <div className="rd-qs">{qs.map((q, i) => (
+          <div key={i}><span className="rd-qbar"><i style={{ height: `${Math.max(0, (q ?? 0) / qMax) * 100}%` }} /></span><b className="rh-mono">{q ?? '–'}</b><em>Q{i + 1}</em></div>
+        ))}</div>
+      </div>
+      <div className="mx-sh-sec"><span className="rh-k">Where he won the ball · {zTot} possessions</span>
+        <div className="rd-zones">{zones.map(([k, v]) => <div key={k} style={{ flexGrow: Math.max(1, v ?? 0) }}><b className="rh-mono">{v ?? 0}</b><em>{k}</em></div>)}</div>
+      </div>
+      <div className="mx-sh-sec"><span className="rh-k">Heat map</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {heat ? <img src={heat} alt={`Heat map v ${g[1]}`} className="rd-heat" loading="lazy" /> : <span className="rh-dim" style={{ fontSize: 13 }}>No heat map for this game.</span>}
+        {heat && <span className="rh-dim" style={{ fontSize: 11.5 }}>AFL heat map: red is where he spent the most time.</span>}
+      </div>
     </>
   );
 }

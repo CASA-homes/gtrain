@@ -251,13 +251,15 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
           <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
         </div>
 
-        <ProfileTabs roundLabel="Round 1" prof={pr} proj={p.proj} clubName={team.name} round={<>
+        <ProfileTabs roundLabel="This round" defaultTab="season" prof={pr} proj={p.proj} clubName={team.name} round={<>
         <div className="mx-sh-now">
           <div><span className="rh-k">Round 1</span><b className="rh-mono">{pre ? '–' : l.score}</b><span className="rh-dim">{pre ? `plays ${new Date(l.game!.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}` : l.ph.label}</span></div>
           <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">vs projection</span></div>
           <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{pre ? 'not played yet' : `on track for ${l.proj}`}</span></div>
-          {!pre && <div className="mx-sh-line rh-mono">{l.st.k}K {l.st.h}HB {l.st.k + l.st.h}D {l.st.m}M {l.st.t}T {l.st.g}.{l.st.b}{l.st.ho ? ` ${l.st.ho}HO` : ''} · TOG {p.tog}%{l.injured ? ' · injured' : ''}</div>}
         </div>
+        {!pre && <div className="mx-statline">{([['K', l.st.k], ['HB', l.st.h], ['D', l.st.k + l.st.h], ['M', l.st.m], ['T', l.st.t], ['G', l.st.g], ['B', l.st.b], ['HO', l.st.ho], ['TOG%', p.tog]] as [string, number][]).filter(([k, v]) => k !== 'HO' || v).map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>}
+        {l.injured && <span className="rh-down" style={{ fontSize: 12.5 }}>Injured during the game.</span>}
+        <div className="mx-sh-sec"><span className="rh-k">Heat map</span><span className="rh-dim" style={{ fontSize: 13 }}>{pre ? 'His heat map shows here after his game.' : 'Heat maps come from the AFL once the real 2027 games are played. This round is simulated.'}</span></div>
         </>} />
 
         <a href={`/players/${p.id}`} className="rh-btn go lg" style={{ alignSelf: 'stretch' }}>Open full profile →</a>

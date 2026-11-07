@@ -2,6 +2,9 @@
 // Live Matchups: every game you're in this week, one tab each. G-Train shows the live board (test round for now);
 // the cup and opt-in comps show the head to head off your saved team.
 import { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import type { HRound } from '@/lib/history';
+import { HistoryBoard } from './history';
 import Link from 'next/link';
 import { RULES, autoFill } from '@/lib/matchday';
 import type { MatchdayData } from '@/lib/matchday-data';
@@ -10,7 +13,8 @@ import { MensRound } from './mens';
 import { Matchup, shortGame } from './matchday';
 import { Shell } from './kit';
 
-export function LiveMatchups({ mens, md }: { mens: MRound; md: MatchdayData }) {
+export function LiveMatchups({ mens, md, rounds, sel, history }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null }) {
+  const router = useRouter();
   const [gid, setGid] = useState(md.games[0]?.id ?? '');
   const game = md.games.find((g) => g.id === gid) ?? md.games[0];
   const look = useMemo(() => { const m = new Map([...Object.values(md.others), ...md.squad, ...md.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [md]);
@@ -26,8 +30,14 @@ export function LiveMatchups({ mens, md }: { mens: MRound; md: MatchdayData }) {
       </div>
   );
   return (
-    <Shell compact title="Live Matchups" sub={<>Round {md.round}, {md.season} · {md.myName}</>} right={tabsEl}>
-      {!game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
+    <Shell compact title={<span className="lm-title">Live Matchups
+      <select className="rh-select lm-round" id="lm-round" aria-label="Round" value={sel} onChange={(e) => router.push(`/live/matchups?r=${e.target.value}`)}>
+        {[...new Set(rounds.map((r) => r.group))].map((g) => <optgroup key={g} label={g}>{rounds.filter((r) => r.group === g).map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}</optgroup>)}
+      </select>
+      {history && <span className="lm-done">Completed</span>}</span>}
+      sub={history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>} right={history ? null : tabsEl}>
+      {history ? <HistoryBoard round={history} />
+        : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : (
           <div className="lm-proj">

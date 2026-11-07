@@ -118,7 +118,7 @@ const SECTIONS: { href: string; label: string; also?: string[] }[] = [
   { href: '/live/desk', label: 'Side Games', also: ['/live/games', '/live/new'] },
   { href: '/live/scores', label: 'Live scores' },
 ];
-export function Shell({ title, sub, right, children, compact }: { title: string; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
+export function Shell({ title, sub, right, children, compact }: { title: React.ReactNode; sub?: React.ReactNode; right?: React.ReactNode; children: React.ReactNode; compact?: boolean }) {
   const path = usePathname();
   const [navh, setNavh] = useState(56);
   useEffect(() => {
