@@ -187,7 +187,7 @@ function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b
   const act = <b className={`rh-mono ${pre ? 'mx-dash' : l.score >= 100 ? 'ton' : ''}`} title={x === 2 && !pre ? `${l.score} doubled as captain` : undefined}>{pre ? '–' : l.score * x}</b>;
   const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{projN}{act}</> : <>{act}{projN}</>}</div>;
   return (
-    <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''} ${p.cap === 'C' ? 'cap-c' : p.cap === 'VC' ? 'cap-vc' : ''}`}>
+    <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''} ${p.cap === 'C' ? 'row-c' : p.cap === 'VC' ? 'row-vc' : ''}`}>
       {side === 'a' ? <>{face}{who}{tog}{rate}{score}</> : <>{score}{rate}{tog}{who}{face}</>}
     </div>
   );

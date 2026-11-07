@@ -208,7 +208,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     );
     const capd = rules.captain && lineup.c === p.id, vcd = rules.vc && lineup.vc === p.id;
     return (
-      <div key={k} className={`sq-spot full ${capd ? 'cap-c' : vcd ? 'cap-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
+      <div key={k} className={`sq-spot full ${capd ? 'row-c' : vcd ? 'row-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
         onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)} {...dragProps(p.id, s.key)}>
         <span className="sq-nm"><Disc p={p} /><b>{short(p.name)}</b><Info p={p} onInfo={setSheet} /></span>
         {!s.bench && rules.captain ? (

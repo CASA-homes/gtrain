@@ -23,7 +23,7 @@ function Row({ p, side, onOpen }: { p: HPlayer; side: 'a' | 'b'; onOpen: () => v
   const avg = <span className="mx-projn rh-mono" title="His 2026 average">{p.avg ?? ''}</span>;
   const sc = <b className={`rh-mono ${!g ? 'mx-dash' : g[3] >= 100 ? 'ton' : ''}`} title={p.cap && g ? `${g[3]} doubled as captain` : undefined}>{g ? g[3] * (p.cap ? 2 : 1) : '–'}</b>;
   const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{avg}{sc}</> : <>{sc}{avg}</>}</div>;
-  return <div className={`mx-row hx ${side} ${p.emg && !p.cameOnFor ? 'bench' : ''} ${p.cameOnFor ? 'came-on' : ''} ${p.coveredBy ? 'covered' : ''} ${p.cap ? 'cap-c' : ''}`}>{side === 'a' ? <>{face}{who}{tog}{score}</> : <>{score}{tog}{who}{face}</>}</div>;
+  return <div className={`mx-row hx ${side} ${p.emg && !p.cameOnFor ? 'bench' : ''} ${p.cameOnFor ? 'came-on' : ''} ${p.coveredBy ? 'covered' : ''} ${p.cap ? 'row-c' : ''}`}>{side === 'a' ? <>{face}{who}{tog}{score}</> : <>{score}{tog}{who}{face}</>}</div>;
 }
 
 function Col({ t, side, onOpen }: { t: HSide; side: 'a' | 'b'; onOpen: (p: HPlayer) => void }) {
