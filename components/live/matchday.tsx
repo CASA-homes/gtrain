@@ -101,6 +101,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
   const [filter, setFilter] = useState<'ALL' | Pos>('ALL');
   const [q, setQ] = useState('');
   const [picked, setPicked] = useState<Pick>(null);
+  const [swap, setSwap] = useState<number | null>(null);
   const [drag, setDrag] = useState<Pick>(null);
   const [over, setOver] = useState<string | null>(null);
   const [sheet, setSheet] = useState<MdPlayer | null>(null);
@@ -142,6 +143,33 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     setLineup({ slots: Object.fromEntries(Object.entries(lineup.slots).map(([k, v]) => [k, v.filter((x) => x !== pid)])), c: lineup.c === pid ? null : lineup.c, vc: lineup.vc === pid ? null : lineup.vc });
     setPicked(null);
   };
+  // Swap arrows: pick one player, then any player he can trade places with lights up; the rest grey out.
+  const locOf = (pid: number): [string, number] | null => { const k = slotOf.get(pid); return k ? [k, lineup.slots[k].indexOf(pid)] : null; };
+  const blocked = (pid: number) => used.includes(pid) || !!tied[pid] || (!!rules.eligible && !rules.eligible(byId.get(pid)!));
+  const swapOk = (a: number, b: number) => {
+    if (a === b) return false;
+    const pa = byId.get(a), pb = byId.get(b); if (!pa || !pb) return false;
+    const la = locOf(a), lb = locOf(b);
+    if (la && lb) return fits(pa, rule(lb[0]), rules) && fits(pb, rule(la[0]), rules);
+    if (la) return !blocked(b) && fits(pb, rule(la[0]), rules);
+    if (lb) return !blocked(a) && fits(pa, rule(lb[0]), rules);
+    return false;
+  };
+  const doSwap = (b: number) => {
+    const a = swap; if (a == null) return;
+    if (!swapOk(a, b)) { setMsg({ ok: false, text: `${short(byId.get(a)!.name)} and ${short(byId.get(b)!.name)} can’t swap: they don’t fit each other’s spots.` }); return; }
+    const lb = locOf(b), la = locOf(a);
+    if (lb) place(a, lb[0], lb[1]); else if (la) place(b, la[0], la[1]);
+    setSwap(null);
+  };
+  const swapTo = (key: string, i: number) => { const a = swap; if (a == null) return; const pa = byId.get(a); if (pa && !blocked(a) && fits(pa, rule(key), rules)) { place(a, key, i); setSwap(null); } };
+  const swapCls = (pid: number) => (swap == null ? '' : swap === pid ? 'swap-src' : swapOk(swap, pid) ? 'swap-ok' : 'swap-no');
+  const swapBtn = (pid: number) => (
+    <button type="button" className={`sq-swap ${swap === pid ? 'on' : ''}`} aria-label={swap == null ? `Swap ${byId.get(pid)?.name}` : swap === pid ? 'Cancel swap' : `Swap with ${byId.get(pid)?.name}`}
+      onClick={(e) => { e.stopPropagation(); if (swap == null) { setSwap(pid); setPicked(null); } else if (swap === pid) setSwap(null); else doSwap(pid); }}>
+      <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path d="M4 2v10M4 12l-2.5-2.5M4 12l2.5-2.5M12 14V4M12 4L9.5 6.5M12 4l2.5 2.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </button>
+  );
   const role = (pid: number, kind: 'c' | 'vc') => {
     const next = { ...lineup, [kind]: lineup[kind] === pid ? null : pid };
     if (kind === 'c' && next.vc === pid) next.vc = null;
@@ -153,7 +181,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     setMsg(r.ok ? { ok: true, text: `Saved for ${game.label}.` } : { ok: false, text: r.error ?? 'Couldn’t save.' });
     if (r.ok) { setDirty(false); router.refresh(); }
   });
-  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') setPicked(null); }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
+  useEffect(() => { const k = (e: KeyboardEvent) => { if (e.key === 'Escape') { setPicked(null); setSwap(null); } }; window.addEventListener('keydown', k); return () => window.removeEventListener('keydown', k); }, []);
 
   const spotState = (s: SlotRule) => (movingP ? (fits(movingP, s, rules) && !used.includes(movingP.id) && !tied[movingP.id] ? 'can' : 'cant') : '');
   const dropProps = (key: string, i: number) => ({
@@ -171,23 +199,23 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     const k = `${s.key}:${i}`;
     const id = lineup.slots[s.key]?.[i]; const p = id != null ? byId.get(id) : undefined;
     const st = spotState(s), isOver = over === `${s.key}:${i}`;
-    const tap = () => { if (picked) place(picked.pid, s.key, i); else if (p) setPicked({ pid: p.id, from: s.key }); };
+    const tap = () => { if (swap != null) { if (p) doSwap(p.id); else swapTo(s.key, i); return; } if (picked) place(picked.pid, s.key, i); else if (p) setPicked({ pid: p.id, from: s.key }); };
     if (!p) return (
-      <div key={k} className={`sq-spot ${st} ${isOver ? 'over' : ''}`} role="button" tabIndex={0} onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)}>
+      <div key={k} className={`sq-spot ${st} ${isOver ? 'over' : ''} ${swap != null ? (byId.get(swap) && !blocked(swap) && fits(byId.get(swap)!, s, rules) ? 'swap-ok' : 'swap-no') : ''}`} role="button" tabIndex={0} onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)}>
         <span className="sq-ph">{s.bench ? (s.fits === 'any' ? 'EMG' : `${s.fits[0]} EMG`) : s.fits === 'any' ? 'ANY' : s.fits[0]}</span>
       </div>
     );
-    const capd = rules.captain && lineup.c === p.id;
+    const capd = rules.captain && lineup.c === p.id, vcd = rules.vc && lineup.vc === p.id;
     return (
-      <div key={k} className={`sq-spot full ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
+      <div key={k} className={`sq-spot full ${capd ? 'cap-c' : vcd ? 'cap-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
         onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)} {...dragProps(p.id, s.key)}>
         <span className="sq-nm"><Disc p={p} /><b>{short(p.name)}</b><Info p={p} onInfo={setSheet} /></span>
         {!s.bench && rules.captain ? (
-          <span className="sq-roles">
+          <span className="sq-roles">{swapBtn(p.id)}
             <button type="button" className={`sq-role ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>
             {rules.vc && <button type="button" className={`sq-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
           </span>
-        ) : <span />}
+        ) : <span className="sq-roles">{swapBtn(p.id)}</span>}
         <span className="sq-meta">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}<span>{p.avg != null ? `${Math.round(p.avg)} avg` : 'no games'}</span><Form p={p} /></span>
         <span className={`sq-proj ${capd ? 'is-cap' : ''}`}>{capd ? p.proj * 2 : p.proj}</span>
       </div>
@@ -236,8 +264,8 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
             {shown.map((p) => {
               const w = where(p.id), burnt = used.includes(p.id), isTied = !!tied[p.id], ok = !rules.eligible || rules.eligible(p);
               return (
-                <div key={p.id} className={`sq-row ${w ? 'in' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${!ok || burnt || isTied ? 'off' : ''}`} role="button" tabIndex={0}
-                  onClick={() => setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null })}
+                <div key={p.id} className={`sq-row ${w ? 'in' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${!ok || burnt || isTied ? 'off' : ''} ${swapCls(p.id)}`} role="button" tabIndex={0}
+                  onClick={() => swap != null ? doSwap(p.id) : setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null })}
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setPicked(picked?.pid === p.id ? null : { pid: p.id, from: slotOf.get(p.id) ?? null }); } }}
                   {...(ok && !burnt ? dragProps(p.id, slotOf.get(p.id) ?? null) : {})}>
                   <Disc p={p} size={26} label />
@@ -246,6 +274,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
                     <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{isTied && <i className="tied" title={`Played a cup game for ${tied[p.id]}`}>CUP-TIED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
                   </span>
                   <span className="sq-row-av"><Form p={p} size={12} />{p.avg != null ? Math.round(p.avg) : '–'}</span>
+                  {ok && !burnt && !isTied ? swapBtn(p.id) : <span />}
                 </div>
               );
             })}
@@ -253,7 +282,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
         </div>
 
         <div className="sq-fieldcol">
-          <div className="sq-field">
+          <div className={`sq-field ${rules.key === 'cup' ? 'cup-gold' : ''}`}>
             {lines.map((s, li) => {
               let i = 0;
               return (
@@ -276,7 +305,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
               </div>
             )}
           </div>
-          <span className="sq-hint"><b>Bold</b> = projected{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · drag onto a spot or tap then tap · drag back to the list to remove · {rules.summary}</span>
+          <span className="sq-hint"><b>Bold</b> = projected{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · drag onto a spot, or tap the swap arrows on two players · drag back to the list to remove · {rules.summary}</span>
         </div>
       </div>
       {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} clubName={clubName} gameName={rules.name} />}
