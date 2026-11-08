@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'B. Daniels', tag: 'Injury', date: '2026-11-08', title: 'Daniels on track before Christmas',
+    body: 'GWS say Daniels is managing a soft-tissue issue but should be in full pre-season training before Christmas, with his load modified early. Not a long-term worry, so he looks a safe keeper for Serong So’Right if he stays on the park.',
+  },
+  {
+    player: 'P. Gothard', tag: 'Injury', date: '2026-11-08', title: 'Gothard back from shoulder surgery in January',
+    body: 'The Giants confirmed Gothard had shoulder surgery and is tracking towards full training in January. Missing the first chunk of pre-season puts his early-round spot in a strong forward line at some risk, so don’t bank on him from round 1.',
+  },
+  {
     player: 'T. Green', tag: 'Injury', date: '2026-11-07', title: 'Green re-signs, eyes round 1',
     body: 'Green has signed a two-year extension at GWS after knocking back rival interest, and says his ACL rehab is going really well. The Giants have him pencilled in for full training around January, with round 1 against Adelaide the target. If that holds, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
   },
@@ -67,13 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'Z. Butters', tag: 'Trade', title: 'Butters lands at the Bulldogs',
     body: 'The biggest fantasy move of the trade period. Butters leaves Port for the Western Bulldogs and walks into one of the best midfields in the comp. Expect plenty of the ball, but less of the centre-bounce monopoly he had at Alberton. He also had a minor ankle clean-up in October and says he’ll be right for round 1.',
-  },
-  {
-    player: 'R. Marshall', tag: 'Trade', title: 'Marshall heads to Geelong',
-    body: 'After years sharing the ruck at St Kilda, Marshall moves to the Cats. If he wins the No.1 job outright, his around-the-ground game makes him a genuine premium ruck option again.',
-  },
-  {
-    player: 'N. Blakey', tag: 'Trade', title: 'Blakey starts fresh at North',
-    body: 'Out of Sydney after the Pullman ban and into North Melbourne. A rebuilding club should give him a big half-back role, which is where his best scores have come from.',
   },
 ];
