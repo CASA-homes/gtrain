@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'Z. Williams', tag: 'Retired', date: '2026-11-09', title: 'Zac Williams calls it a day',
+    body: 'Delisted by Carlton at the end of 2026 and not picked up elsewhere, Williams has announced his retirement after 183 games across GWS and Carlton. He won’t be on an AFL list in 2027, so he’s no use to anyone’s fantasy side.',
+  },
+  {
+    player: 'D. Prestia', tag: 'Retired', date: '2026-11-09', title: 'Prestia retired, now a Hawks coach',
+    body: 'Prestia retired at the end of 2026 and has been unveiled as a development coach at Hawthorn. Separately, he and Steven May are reportedly facing a civil lawsuit over a 2024 pub incident, after the criminal charges were dropped in May. Either way, he’s done as a player, so scratch him from fantasy plans.',
+  },
+  {
     player: 'B. Daniels', tag: 'Injury', date: '2026-11-08', title: 'Daniels on track before Christmas',
     body: 'GWS say Daniels is managing a soft-tissue issue but should be in full pre-season training before Christmas, with his load modified early. Not a long-term worry, so he looks a safe keeper for Serong So’Right if he stays on the park.',
   },
@@ -67,13 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'T. Rivers', tag: 'Trade', title: 'Rivers heads west to the Eagles',
     body: 'Rivers leaves Melbourne for West Coast, where he should get a bigger midfield share than he did behind the Demons’ stars. More centre bounces would lift him back toward his 2025 scoring.',
-  },
-  {
-    player: 'J. Viney', tag: 'Trade', title: 'Viney joins him at West Coast',
-    body: 'The ex-Demons skipper also lands at the Eagles after barely playing in 2026. Still an elite contested ball winner when fit, but at 32 and coming off a lost year, treat him as a depth piece rather than a starter.',
-  },
-  {
-    player: 'Z. Butters', tag: 'Trade', title: 'Butters lands at the Bulldogs',
-    body: 'The biggest fantasy move of the trade period. Butters leaves Port for the Western Bulldogs and walks into one of the best midfields in the comp. Expect plenty of the ball, but less of the centre-bounce monopoly he had at Alberton. He also had a minor ankle clean-up in October and says he’ll be right for round 1.',
   },
 ];
