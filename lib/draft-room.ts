@@ -5,7 +5,7 @@ export const DRAFT_YEAR = 2027;
 export type Line = 'DEF' | 'MID' | 'RUC' | 'FWD';
 
 export interface RoomSettings {
-  year: number; status: 'scheduled' | 'live' | 'paused' | 'done'; starts_at: string | null;
+  year: number; status: 'scheduled' | 'live' | 'paused' | 'done' | 'posted'; starts_at: string | null; posted_at?: string | null; news_id?: string | null;
   pick_seconds: number; break_every: number; break_minutes: number; snake: boolean; trading: boolean; list_max: number;
   on_clock_since: string | null; paused_left: number | null; makeups: number[];
 }
@@ -14,7 +14,7 @@ export interface DraftPlayer {
   key: string; n: string; pos: Line; positions: Line[]; club: string; img: string | null;
   avg: number | null; games: number | null; age: number | null; rookie?: boolean; was?: string | null; note?: string | null;
 }
-export interface RoomSel { id: number; pick_id: number | null; overall: number | null; round: number | null; team_id: number; player_key: string | null; player: DraftPlayer | null; how: 'pick' | 'auto' | 'skip' | 'makeup' | 'commish'; made_at: string }
+export interface RoomSel { id: number; pick_id: number | null; overall: number | null; round: number | null; team_id: number; player_key: string | null; player: DraftPlayer | null; how: 'pick' | 'auto' | 'skip' | 'makeup' | 'commish'; made_at: string; edited?: boolean }
 export interface RoomFeed { id: number; kind: 'pick' | 'skip' | 'trade' | 'info'; body: string; made_at: string }
 export interface RoomTrade { id: number; from_team: number; to_team: number; give_picks: number[]; get_picks: number[]; status: string; created_at: string; decided_at: string | null }
 export interface RoomCurrent { pick_id: number | null; overall: number | null; team_id: number; rnd: number | null; makeup: boolean }
@@ -22,6 +22,7 @@ export interface RoomState {
   now: string; room: RoomSettings; current: RoomCurrent | null; sels: RoomSel[]; feed: RoomFeed[]; picks: RoomPick[];
   trades: RoomTrade[]; queue: { key: string; player: DraftPlayer }[];
 }
+export interface RoomRequest { id: number; team_id: number; body: string; status: 'open' | 'done' | 'declined'; created_at: string }
 export interface RoomTeam { id: number; name: string; short: string; coach: string; colour: string; keepers: DraftPlayer[] }
 
 export const DEFAULT_ROOM: RoomSettings = {

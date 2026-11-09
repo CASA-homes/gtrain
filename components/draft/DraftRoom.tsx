@@ -275,13 +275,19 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
           <Link href="/draft/centre" className="dr-btn" style={{ textDecoration: 'none' }}>Draft Centre</Link>
           <button className="dr-btn" onClick={() => setMuted((m) => !m)} aria-pressed={muted}>{muted ? 'Sound off' : 'Sound on'}</button>
           {me.is_commish && (<>
-            {(room.status === 'scheduled' || done) && <button className="dr-btn g" disabled={busy} onClick={() => control('start')}>Start the draft</button>}
+            {room.status === 'scheduled' && <button className="dr-btn g" disabled={busy} onClick={() => control('start')}>Start the draft</button>}
             {live && <button className="dr-btn" disabled={busy} onClick={() => control('pause')}>Pause</button>}
             {paused && <button className="dr-btn g" disabled={busy} onClick={() => control('resume')}>Resume</button>}
             {(live || paused || done) && st.sels.length > 0 && <button className="dr-btn r" disabled={busy} onClick={() => { if (confirm('Undo the last pick? That club goes back on the clock.')) control('undo'); }}>Undo last pick</button>}
           </>)}
         </div>
       </div>
+      {(done || room.status === 'posted') && (
+        <div className="dr-welcome" style={{ padding: '12px 16px' }}>
+          <p style={{ margin: 0, color: 'var(--nt)' }}>{room.status === 'posted' ? 'The draft has been signed off and posted. Every club’s list is updated.' : 'That’s the draft done. Check your new list and tick it off in the Draft Centre before the commish posts it.'}</p>
+          <Link href="/draft/centre" className="dr-btn g" style={{ textDecoration: 'none' }}>{room.status === 'posted' ? 'See the results' : 'Review my list'}</Link>
+        </div>
+      )}
       {msg && <div className="dr-msg" role="status">{msg}</div>}
 
       <div className="dr-main">

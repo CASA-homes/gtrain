@@ -5,7 +5,7 @@ import type { PlayerRow } from '@/lib/ratings';
 import { age } from '@/lib/ratings';
 import { photoUrl } from '@/lib/photos';
 import PROFILES from './draft-profiles-2026.json';
-import { DEFAULT_ROOM, DRAFT_YEAR, FALLBACK_TEAM_COLOURS, type DraftPlayer, type Line, type RoomState, type RoomTeam } from '@/lib/draft-room';
+import { DEFAULT_ROOM, DRAFT_YEAR, FALLBACK_TEAM_COLOURS, type DraftPlayer, type Line, type RoomRequest, type RoomState, type RoomTeam } from '@/lib/draft-room';
 
 const OUT = /retired|delisted/i;
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
@@ -18,7 +18,7 @@ function toPlayer(p: PlayerRow, was: string | null): DraftPlayer {
   };
 }
 
-function profileLine(pos: string): Line[] {
+export function profileLine(pos: string): Line[] {
   const out: Line[] = [];
   for (const part of pos.split('/')) {
     const s = part.toLowerCase();
@@ -74,4 +74,19 @@ export async function loadReady(): Promise<Map<number, number>> {
   const supabase = await createClient();
   const { data } = await supabase.rpc('draft_room_ready', { y: DRAFT_YEAR });
   return new Map(((data ?? []) as { team_id: number; queued: number }[]).map((r) => [r.team_id, r.queued]));
+}
+
+/** Sign-off: which clubs have ticked their picks, the change requests, and (once posted) the pre-post squads. */
+export async function loadSignoff(): Promise<{ checks: Set<number>; requests: RoomRequest[]; snapshot: { player_id: number; team_id: number; is_keeper: boolean; is_rookie_keeper: boolean }[] | null }> {
+  const supabase = await createClient();
+  const [c, r, s] = await Promise.all([
+    supabase.from('draft_room_checks').select('team_id').eq('year', DRAFT_YEAR),
+    supabase.from('draft_room_requests').select('id, team_id, body, status, created_at').eq('year', DRAFT_YEAR).order('id', { ascending: false }),
+    supabase.from('draft_room').select('snapshot').eq('year', DRAFT_YEAR).maybeSingle(),
+  ]);
+  return {
+    checks: new Set(((c.data ?? []) as { team_id: number }[]).map((x) => x.team_id)),
+    requests: (r.data ?? []) as RoomRequest[],
+    snapshot: (s.data?.snapshot ?? null) as { player_id: number; team_id: number; is_keeper: boolean; is_rookie_keeper: boolean }[] | null,
+  };
 }

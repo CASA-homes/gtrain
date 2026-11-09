@@ -3,8 +3,10 @@ import { redirect } from 'next/navigation';
 import '@/components/draft/draft.css';
 import { DraftTabs } from '@/components/DraftTabs';
 import { Countdown, DraftSettings, StartDraftButton } from '@/components/draft/DraftCentreClient';
+import { DraftReview, UndoPostButton } from '@/components/draft/DraftReview';
+import { CLUB_COLOURS } from '@/lib/draft-room';
 import { getLeague, getMe } from '@/lib/data';
-import { loadReady, loadRoomState, roomPool, roomTeams } from '@/lib/draft-room-data';
+import { loadReady, loadRoomState, loadSignoff, roomPool, roomTeams } from '@/lib/draft-room-data';
 import { DRAFT_YEAR, naPicks, orderPicks, upcoming, type RoomPick } from '@/lib/draft-room';
 import PROFILES from '@/lib/draft-profiles-2026.json';
 
@@ -18,7 +20,7 @@ const perth = (iso: string | null) => iso
 export default async function DraftCentrePage() {
   const me = await getMe();
   if (!me) redirect('/');
-  const [league, { ready, state }, readyMap] = await Promise.all([getLeague(), loadRoomState(), loadReady()]);
+  const [league, { ready, state }, readyMap, signoff] = await Promise.all([getLeague(), loadRoomState(), loadReady(), loadSignoff()]);
   const teams = roomTeams(league);
   const team = new Map(teams.map((t) => [t.id, t]));
   const tn = (id: number) => team.get(id)?.name ?? 'Club';
@@ -85,25 +87,104 @@ export default async function DraftCentrePage() {
   const vets = pool.filter((p) => !p.rookie && !taken.has(p.key) && p.avg != null && (p.games ?? 0) >= 6).slice(0, 5);
   const curTeam = state.current?.team_id ?? null;
 
+  const header = (
+    <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
+      <div>
+        <span className="eyebrow">{DRAFT_YEAR} national draft</span>
+        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>G-Train Draft Centre</h1>
+      </div>
+      <DraftTabs active="centre" />
+    </div>
+  );
+  const chipOf = (club: string) => { const c = CLUB_COLOURS[club]; return c ? <i className="rv-cc" style={{ background: `linear-gradient(135deg,${c[0]} 50%,${c[1]} 50%)` }} /> : null; };
+
+  // ---- awaiting sign-off ----
+  if (room.status === 'done') {
+    const dbIds = new Set(league.players.map((p) => p.id));
+    const notKept = league.players.filter((p) => !p.is_keeper && !p.is_rookie_keeper);
+    const notKeptIds = new Set(notKept.map((p) => p.id));
+    const keys = sels.map((s) => s.player_key!);
+    const idOf = (k: string) => (/^p:\d+$/.test(k) ? Number(k.slice(2)) : null);
+    const moved = keys.filter((k) => { const id = idOf(k); return id != null && notKeptIds.has(id); }).length;
+    const counts = {
+      drafted: sels.length, na: na.size, moved, released: notKept.length - moved,
+      created: keys.filter((k) => { const id = idOf(k); return id == null || !dbIds.has(id); }).length,
+    };
+    return (
+      <div className="wrap">
+        {header}
+        <DraftReview teams={teams} sels={state.sels} pool={roomPool(league)} checks={[...signoff.checks]} requests={signoff.requests}
+          me={{ team_id: isCoach ? me.team_id : null, is_commish: me.is_commish }} counts={counts} />
+      </div>
+    );
+  }
+
+  // ---- posted ----
+  if (room.status === 'posted') {
+    const snap = signoff.snapshot ?? [];
+    const snapIds = new Set(snap.map((r) => r.player_id));
+    const movedN = sels.filter((s) => { const m = /^p:(\d+)$/.exec(s.player_key ?? ''); return m && snapIds.has(Number(m[1])); }).length;
+    const releasedN = snap.filter((r) => !r.is_keeper && !r.is_rookie_keeper).length - movedN;
+    const r1s = sels.filter((s) => s.round === 1).sort((a, b) => (a.overall ?? 0) - (b.overall ?? 0));
+    const byTeam = teams.map((t) => ({ t, list: sels.filter((s) => s.team_id === t.id) }));
+    return (
+      <div className="wrap">
+        {header}
+        <div className="dc-hero">
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <span className="k">{DRAFT_YEAR} national draft</span><span className="dc-pill ok">Posted</span>
+            <h1>The {DRAFT_YEAR} draft is official</h1>
+            <p>Signed off {room.posted_at ? `on ${perth(room.posted_at)}` : ''}. Every club&apos;s {DRAFT_YEAR} list is updated and the results are on the news feed.</p>
+          </div>
+          <div className="dc-stats"><div><b>{sels.length}</b><span>Drafted</span></div><div><b>{teams.length}</b><span>Clubs updated</span></div><div><b>{Math.max(0, releasedN)}</b><span>To free agency</span></div></div>
+        </div>
+        <div className="rv-banner">
+          <div><b>Lists are live.</b> <span className="dc-dim">Your clubhouse now shows your {DRAFT_YEAR} list.</span></div>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            {isCoach && <Link href={`/clubhouse/${me.team_id}`} className="dc-btn">Go to my clubhouse</Link>}
+            {me.is_commish && <UndoPostButton />}
+          </div>
+        </div>
+        <div className="dc-grid">
+          <div className="dc-col">
+            <div className="dc-card">
+              <span className="dc-ck">League news</span>
+              <h2 style={{ fontSize: 20 }}>{DRAFT_YEAR} Draft results</h2>
+              <p style={{ margin: 0 }}>{r1s[0] ? `${tn(r1s[0].team_id)} opened the night with ${r1s[0].player!.n} at pick 1. ` : ''}{sels.length} players went across the draft, {sels.filter((s) => s.player!.rookie).length} of them 2026 draftees.</p>
+              <span className="dc-ck">Round 1</span>
+              <div className="rv-r1">{r1s.map((s) => <div key={s.id}><em>{s.overall}</em>{chipOf(s.player!.club)}<b>{s.player!.n}</b><span>{tn(s.team_id)}</span></div>)}</div>
+              <span className="dc-ck">Every club&apos;s haul</span>
+              <div className="rv-hauls">{byTeam.map(({ t, list }) => <div key={t.id}><b>{t.name} · {list.length}</b>{list.map((s) => s.player!.n).join(', ') || 'No picks'}</div>)}</div>
+            </div>
+          </div>
+          <div className="dc-col">
+            <div className="dc-card"><h2>What changed</h2>
+              <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 13 }}>
+                <li>{sels.length} drafted players joined their new clubs</li>
+                {movedN > 0 && <li>{movedN} player{movedN > 1 ? 's' : ''} not kept were re-drafted by a new club</li>}
+                <li>{Math.max(0, releasedN)} players not kept went back to free agency</li>
+                <li>The draft room is locked{me.is_commish ? '. You can undo the post if something needs fixing.' : '.'}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="wrap">
-      <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
-        <div>
-          <span className="eyebrow">{DRAFT_YEAR} national draft</span>
-          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>G-Train Draft Centre</h1>
-        </div>
-        <DraftTabs active="centre" />
-      </div>
+      {header}
       {!ready && <div className="dc-warn" style={{ marginBottom: 14 }}>The draft room needs <b>supabase/migrations/0022_draft_room.sql</b> run in Supabase. Until then this page shows the pick order only.</div>}
 
       <div className="dc-hero">
         <div style={{ position: 'relative', zIndex: 1 }}>
           <span className="k">G-Train Draft Centre · {DRAFT_YEAR} national draft</span>{' '}
-          <span className={`dc-status ${room.status === 'live' ? 'live' : ''}`}>{room.status === 'live' ? 'Live now' : room.status === 'paused' ? 'Paused' : room.status === 'done' ? 'Complete' : 'Scheduled'}</span>
-          <h1>{room.status === 'live' || room.status === 'paused' ? `${curTeam ? tn(curTeam) : 'The room'} on the clock` : room.status === 'done' ? 'The draft is done' : `Draft night: ${perth(room.starts_at)}`}</h1>
+          <span className={`dc-status ${room.status === 'live' ? 'live' : ''}`}>{room.status === 'live' ? 'Live now' : room.status === 'paused' ? 'Paused' : 'Scheduled'}</span>
+          <h1>{room.status === 'live' || room.status === 'paused' ? `${curTeam ? tn(curTeam) : 'The room'} on the clock` : `Draft night: ${perth(room.starts_at)}`}</h1>
           <p>
             {rounds} rounds, {ordered.length} picks, {room.snake ? 'snake' : 'straight'} order. {r1[0] ? `${tn(r1[0].owner)} pick first. ` : ''}
-            {room.status === 'done' ? `${sels.length} players drafted.` : 'Set your queue before the night: if your timer runs out, the room picks from it.'}
+            {'Set your queue before the night: if your timer runs out, the room picks from it.'}
           </p>
           <div className="dc-acts">
             <Link href="/draft/room" className="dc-btn lime">{started ? 'Go to the draft room' : 'Enter the draft room'}</Link>
