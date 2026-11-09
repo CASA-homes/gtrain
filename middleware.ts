@@ -20,7 +20,9 @@ export async function middleware(request: NextRequest) {
     },
   );
 
-  const { data: { user } } = await supabase.auth.getUser();
+  // getClaims checks the signed session locally (no trip to the auth server) and refreshes it when it's about to expire.
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims?.sub ? data.claims : null;
   const path = request.nextUrl.pathname;
   const isPublic = path === '/' || path.startsWith('/auth');
 
@@ -34,5 +36,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  // Run next to the database (Tokyo) instead of at the edge near the visitor, so session refreshes are quick.
+  runtime: 'nodejs',
   matcher: ['/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|icons/|landing/|.*\\.(?:png|jpg|svg|webp)$).*)'],
 };

@@ -29,11 +29,19 @@ export interface Me { user_id: string; email: string; team_id: number; is_commis
 
 export const getMe = cache(async (): Promise<Me | null> => {
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
-  const { data } = await supabase.from('members').select('*').eq('user_id', user.id).maybeSingle();
+  // getClaims verifies the session locally; one query then gets the member and whether their club is a guest club.
+  const { data: auth } = await supabase.auth.getClaims();
+  const uid = auth?.claims?.sub;
+  if (!uid) return null;
+  const q = await supabase.from('members').select('*, teams(is_guest)').eq('user_id', uid).maybeSingle();
+  if (!q.error) {
+    if (!q.data) return null;
+    const { teams, ...m } = q.data as Me & { teams: { is_guest?: boolean } | null };
+    // Guests (no G-Train club) sign in with a guest club so they can play the Live Matchups mini games.
+    return { ...(m as Me), is_guest: !!teams?.is_guest };
+  }
+  const { data } = await supabase.from('members').select('*').eq('user_id', uid).maybeSingle();
   if (!data) return null;
-  // Guests (no G-Train club) sign in with a guest club so they can play the Live Matchups mini games.
   const t = await supabase.from('teams').select('is_guest').eq('id', data.team_id).maybeSingle();
   return { ...(data as Me), is_guest: !t.error && !!t.data?.is_guest };
 });
