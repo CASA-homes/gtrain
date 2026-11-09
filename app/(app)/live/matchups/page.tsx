@@ -2,7 +2,6 @@ import { redirect } from 'next/navigation';
 import { LiveMatchups } from '@/components/live/live-matchups';
 import { getLeague, getMe } from '@/lib/data';
 import { buildMensRound } from '@/lib/mens-round';
-import { withClubRows } from '@/lib/club-rounds';
 import { buildCup } from '@/lib/cup-data';
 import { buildMatchday } from '@/lib/matchday-data';
 import { myMinis } from '@/lib/minis';
@@ -25,5 +24,5 @@ export default async function MatchupsPage({ searchParams }: { searchParams: Pro
   const m = /^(\d{4})-(\d{1,2})$/.exec(r ?? '');
   const hist = m && Number(m[1]) === HISTORY_SEASON && HISTORY_ROUNDS.includes(Number(m[2])) ? buildHistoryRound(Number(m[2]), league, me.team_id) : null;
   const sel = hist ? `${HISTORY_SEASON}-${hist.round}` : rounds[0].value;
-  return <LiveMatchups mens={withClubRows(buildMensRound(league))} md={md} rounds={rounds} sel={sel} history={hist} minis={minis} />;
+  return <LiveMatchups mens={buildMensRound(league)} md={md} rounds={rounds} sel={sel} history={hist} minis={minis} />;
 }

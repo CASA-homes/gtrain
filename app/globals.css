@@ -1807,3 +1807,18 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .sqc-b .sq-disc { width: 22px !important; height: 22px !important; }
   .sqc-role { min-width: 15px; height: 15px; font-size: 8px; padding: 0 3px; }
 }
+/* loading skeletons */
+.sk-page { display: flex; flex-direction: column; gap: 14px; padding-top: 12px; }
+.sk { background: linear-gradient(90deg, #eceee9 0%, #f6f7f4 40%, #eceee9 80%); background-size: 200% 100%; border-radius: 14px; animation: skShine 1.2s ease-in-out infinite; }
+@keyframes skShine { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .sk { animation: none; } }
+.sk-tabs { height: 34px; max-width: 640px; border-radius: 99px; }
+.sk-title { height: 44px; max-width: 360px; }
+.sk-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sk-card { height: 110px; }
+.sk-block { height: 220px; }
+.sk-block.short { height: 140px; }
+.sk-block.tall { height: 620px; }
+.sk-grid { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); gap: 12px; }
+.sk-col { display: flex; flex-direction: column; gap: 12px; }
+@media (max-width: 900px) { .sk-grid, .sk-row { grid-template-columns: minmax(0, 1fr); } .sk-block.tall { height: 420px; } }

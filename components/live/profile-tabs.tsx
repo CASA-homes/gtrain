@@ -1,13 +1,16 @@
 'use client';
 // Player pop-up body, shared by Squad Selector and Matchups: three tabs.
 // This round (passed in by each sheet), the 2026 season, and his scores for your club (only the rounds he was on your field).
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { loadClubRows } from '@/app/(app)/live/club-rows-action';
 import type { MProfile } from '@/lib/mens-round';
 
 type Tab = 'round' | 'season' | 'club';
 
-export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'season' }: {
+export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'season', fullName }: {
   roundLabel: string; round: React.ReactNode; prof: MProfile | undefined; proj: number; clubName: string | null; defaultTab?: Tab;
+  /** when the club rows weren't sent with the page, fetch them for this player when the tab opens */
+  fullName?: string;
 }) {
   const [tab, setTab] = useState<Tab>(defaultTab);
   const tabs: [Tab, string][] = defaultTab === 'season' ? [['season', '2026 season'], ['round', roundLabel]] : [['round', roundLabel], ['season', '2026 season']];
@@ -22,7 +25,7 @@ export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTa
         ))}
       </div>
       <div role="tabpanel" aria-labelledby={`pt-${tab}`} className="pt-pane">
-        {tab === 'round' ? round : tab === 'season' ? <SeasonPane prof={prof} proj={proj} /> : <ClubPane prof={prof} clubName={clubName} />}
+        {tab === 'round' ? round : tab === 'season' ? <SeasonPane prof={prof} proj={proj} /> : <ClubPane prof={prof} clubName={clubName} fullName={fullName} />}
       </div>
     </>
   );
@@ -79,8 +82,17 @@ function SeasonPane({ prof, proj }: { prof: MProfile | undefined; proj: number }
   );
 }
 
-function ClubPane({ prof, clubName }: { prof: MProfile | undefined; clubName: string | null }) {
-  const rows = prof?.club ?? [];
+function ClubPane({ prof, clubName, fullName }: { prof: MProfile | undefined; clubName: string | null; fullName?: string }) {
+  const [fetched, setFetched] = useState<MProfile['club'] | null>(null);
+  const need = !prof?.club && !!fullName && !!clubName && !!prof;
+  useEffect(() => {
+    if (!need) return;
+    let on = true;
+    loadClubRows(fullName!, clubName!, prof!.log).then((r) => { if (on) setFetched(r); }).catch(() => { if (on) setFetched([]); });
+    return () => { on = false; };
+  }, [need, fullName, clubName, prof]);
+  if (need && fetched == null) return <span className="rh-dim" style={{ fontSize: 13 }}>Loading his rounds for {clubName}…</span>;
+  const rows = prof?.club ?? fetched ?? [];
   const counted = rows.filter((r) => r.sc != null && !r.cup);
   const avg = counted.length ? counted.reduce((a, r) => a + (r.sc ?? 0), 0) / counted.length : null;
   const w = counted.filter((r) => r.res === 'W').length, l = counted.filter((r) => r.res === 'L').length;

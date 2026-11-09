@@ -252,7 +252,7 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
           <button className="rh-btn alt" onClick={onClose} aria-label="Close">✕</button>
         </div>
 
-        <ProfileTabs roundLabel="This round" defaultTab="season" prof={pr} proj={p.proj} clubName={team.name} round={<>
+        <ProfileTabs roundLabel="This round" defaultTab="season" prof={pr} proj={p.proj} clubName={team.name} fullName={p.name} round={<>
         <div className="mx-sh-now">
           <div><span className="rh-k">Round 1</span><b className="rh-mono">{pre ? '–' : l.score}</b><span className="rh-dim">{pre ? `plays ${new Date(l.game!.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}` : l.ph.label}</span></div>
           <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">vs projection</span></div>

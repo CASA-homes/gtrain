@@ -2,15 +2,15 @@
 // A mini game lasts one round; once that round is completed it's a past result and drops off.
 import { listGames } from '@/app/(app)/live/actions';
 import type { League } from '@/lib/data';
-import { liveRound } from '@/lib/aflw';
+import { aflwRounds } from '@/lib/aflw';
 
 export interface MiniLink { id: number; name: string; sub: string; status: 'drafting' | 'done' }
 export async function myMinis(league: League, myTeamId: number): Promise<MiniLink[]> {
   const { ready, games } = await listGames().catch(() => ({ ready: false, games: [] as Awaited<ReturnType<typeof listGames>>['games'] }));
-  if (!ready || !games.length) return [];
+  if (!ready || !games.some((g) => g.order.includes(myTeamId))) return [];
   // Only games whose round hasn't finished are "this week"; anything from a completed round is a past result.
   let open = new Set<number>();
-  try { const lr = await liveRound(); open = new Set(lr.rounds.filter((r) => r.status !== 'completed').map((r) => r.n)); } catch { return []; }
+  try { open = new Set((await aflwRounds()).filter((r) => r.status !== 'completed').map((r) => r.n)); } catch { return []; }
   const live = games.filter((g) => open.has(g.round));
   if (!live.length) return [];
   const round = Math.min(...live.map((g) => g.round));

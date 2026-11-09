@@ -22,6 +22,12 @@ async function get<T>(path: string, revalidate: number): Promise<T> {
   return r.json() as Promise<T>;
 }
 
+/** Just the round list and each round's status (one small file), for code that only needs to know which rounds are finished. */
+export async function aflwRounds(): Promise<{ n: number; status: string }[]> {
+  const rounds = await get<RawRound[]>('rounds.json', 300);
+  return rounds.map((x) => ({ n: x.roundNumber, status: x.status }));
+}
+
 /** The round to show by default: the one being played, else the next scheduled, else the last. */
 function currentRound(rounds: RawRound[]) {
   return rounds.find((r) => r.status !== 'completed' && r.status !== 'scheduled')
