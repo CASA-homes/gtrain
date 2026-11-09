@@ -107,6 +107,16 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
   const [over, setOver] = useState<string | null>(null);
   const [sheet, setSheet] = useState<MdPlayer | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  /** this round's AFL game for a club: "v SYD · Wed 7:30pm" in the viewer's time */
+  const fixtureOf = (club: string | null) => {
+    const g = club ? R1_2027.find((x) => x.home === club || x.away === club) : undefined;
+    if (!g) return 'No game this round';
+    const opp = g.home === club ? g.away : `@ ${g.home}`;
+    const when = mounted ? new Date(g.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit' }).replace(',', '').replace(/\s?([ap])m/, '$1m') : '';
+    return `${g.home === club ? 'v ' : ''}${opp}${when ? ` · ${when}` : ''}`;
+  };
   const [pending, start] = useTransition();
   const setLineup = (l: MdLineup) => { setLineupRaw(l); setDirty(true); setMsg(null); onChange(l); };
 
@@ -208,17 +218,24 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     );
     const capd = rules.captain && lineup.c === p.id, vcd = rules.vc && lineup.vc === p.id;
     return (
-      <div key={k} className={`sq-spot full ${capd ? 'row-c' : vcd ? 'row-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
+      <div key={k} className={`sq-spot full sqc ${capd ? 'row-c' : vcd ? 'row-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
         onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)} {...dragProps(p.id, s.key)}>
-        <span className="sq-nm"><Disc p={p} /><b>{short(p.name)}</b><Info p={p} onInfo={setSheet} /></span>
-        {!s.bench && rules.captain ? (
-          <span className="sq-roles">{swapBtn(p.id)}
-            <button type="button" className={`sq-role ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>
-            {rules.vc && <button type="button" className={`sq-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
-          </span>
-        ) : <span className="sq-roles">{swapBtn(p.id)}</span>}
-        <span className="sq-meta">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}<span>{p.avg != null ? `${Math.round(p.avg)} avg` : 'no games'}</span><Form p={p} /></span>
-        <span className={`sq-proj ${capd ? 'is-cap' : ''}`}>{capd ? p.proj * 2 : p.proj}</span>
+        <span className="sqc-h">
+          <b className="sqc-n">{short(p.name)}</b>
+          {!s.bench && rules.captain && <>
+            <button type="button" className={`sqc-role c ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} aria-pressed={lineup.c === p.id} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>
+            {rules.vc && <button type="button" className={`sqc-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} aria-pressed={lineup.vc === p.id} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
+          </>}
+          {swapBtn(p.id)}
+          <Info p={p} onInfo={setSheet} />
+        </span>
+        <span className="sqc-b">
+          <Disc p={p} size={28} />
+          <span className="sqc-meta"><b>{p.club ?? '–'}</b> | {p.pos.join('/')}</span>
+          <span className="sqc-sub"><Form p={p} size={12} />{p.avg != null ? `avg ${p.avg.toFixed(1)}` : 'no games'}</span>
+          <span className={`sqc-proj ${capd ? 'is-cap' : ''} ${(capd ? p.proj * 2 : p.proj) >= 100 ? 'ton' : ''}`} title={capd ? `${p.proj} doubled as captain` : 'Projected'}>{capd ? p.proj * 2 : p.proj}</span>
+        </span>
+        <span className="sqc-f" suppressHydrationWarning>{fixtureOf(p.club)}</span>
       </div>
     );
   };
