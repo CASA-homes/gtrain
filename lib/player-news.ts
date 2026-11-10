@@ -5,6 +5,18 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'C. Rozee', tag: 'Injury', date: '2026-11-10', title: 'Port confident Rozee is right for round 1',
+    body: 'After a hamstring injury and nerve damage wiped out his 2026 from round 2, Rozee has started a running program on day one of Port’s pre-season. Club CEO Mathew Richardson says he’s very confident Rozee will be there for round 1. If that holds, Serong So’Right get back a mid who averaged over 100 in 2025.',
+  },
+  {
+    player: 'J. Viney', tag: 'Role', date: '2026-11-10', title: 'Viney hits the ground running at West Coast',
+    body: 'The 32-year-old ex-Demon was the last off the track on the Eagles’ first day back, doing a heavy running and skills session alongside young mid Bo Allan. West Coast recruited him for his midfield craft, so expect plenty of centre time in a rebuilding side. A fit Viney in a big midfield role is a handy bounce-back option after he managed just one game in 2026.',
+  },
+  {
+    player: 'H. Reid', tag: 'Injury', date: '2026-11-10', title: 'Reid modified on day one, banned rounds 1–2',
+    body: 'Reid did a modified session on the Eagles’ first day back, running and agility work but no footy drills, after his end-of-season shoulder clean-up. No return date has been given. He still carries a two-match ban for a dangerous tackle into 2027, so he misses the first two rounds regardless.',
+  },
+  {
     player: 'Z. Williams', tag: 'Retired', date: '2026-11-09', title: 'Zac Williams calls it a day',
     body: 'Delisted by Carlton at the end of 2026 and not picked up elsewhere, Williams has announced his retirement after 183 games across GWS and Carlton. He won’t be on an AFL list in 2027, so he’s no use to anyone’s fantasy side.',
   },
@@ -61,19 +73,7 @@ export const PLAYER_NEWS: PlayerStory[] = [
     body: 'Short tried to get to Collingwood in the trade period, but the clubs couldn’t agree on the final day and he’s back at Richmond for the last year of his contract. Fantasy-wise that’s good news: he keeps his spot as the Tigers’ main half-back ball user and kick-in taker, with a new deal to play for.',
   },
   {
-    player: 'H. Reid', tag: 'Injury', title: 'Reid: shoulder fixed, but banned for rounds 1–2',
-    body: 'West Coast’s best and fairest winner had a shoulder clean-up after the season and will be ready for pre-season in November. The catch for fantasy: he carries a two-match ban for a dangerous tackle into 2027, so he misses the first two rounds.',
-  },
-  {
     player: 'L. Whitfield', tag: 'Trade', title: 'Whitfield crosses to Carlton',
     body: 'GWS’s long-time kick-in and half-back playmaker joins the Blues. Carlton need exactly that kind of ball user off half-back, so his role and kick-ins should carry over. Keep an eye on whether they push him into the midfield.',
-  },
-  {
-    player: 'J. Ridley', tag: 'Trade', title: 'Ridley gets a fresh start at Geelong',
-    body: 'After two injury-hit years at Essendon, Ridley moves to the Cats. At his best he’s an intercepting half-back who scores in the 80s; Geelong’s system has been kind to that type. A cheap bounce-back option if his body holds up.',
-  },
-  {
-    player: 'T. Rivers', tag: 'Trade', title: 'Rivers heads west to the Eagles',
-    body: 'Rivers leaves Melbourne for West Coast, where he should get a bigger midfield share than he did behind the Demons’ stars. More centre bounces would lift him back toward his 2025 scoring.',
   },
 ];
