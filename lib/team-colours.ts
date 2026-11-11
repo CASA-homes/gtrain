@@ -17,6 +17,7 @@ export const isHex = (s: unknown): s is string => typeof s === 'string' && /^#[0
 
 /** Clubhouse sections a coach can switch off on their club's page. */
 export const CLUBHOUSE_SECTIONS = [
+  { key: 'highlights', name: 'Player highlights' },
   { key: 'lines', name: 'Line strength' },
   { key: 'ages', name: 'Keeper age profile' },
   { key: 'outlook', name: 'Verdict and 2027 outlook' },

@@ -190,7 +190,12 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: -12 }}>
-        {msg && <span role="status" style={{ fontSize: 13, marginRight: 'auto', color: msg.bad ? C.redFg : C.muted }}>{msg.text}</span>}
+        {/* The Starting 22 heading sits on the same row as the buttons, level with the panel beside it. */}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px 12px', flexWrap: 'wrap', marginRight: 'auto', minWidth: 0 }}>
+          <h2 className="h2">{blocks[0].title}</h2>
+          <span className="muted" style={{ fontSize: 13 }}>{blocks[0].sub}</span>
+          {msg && <span role="status" style={{ fontSize: 13, color: msg.bad ? C.redFg : C.muted }}>{msg.text}</span>}
+        </div>
         {editable && saved && !dirty && <button type="button" className="btn" onClick={reset} disabled={pending}>Auto-pick</button>}
         {editable && dirty && (
           <>
@@ -207,10 +212,12 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
       </div>
       {blocks.map((b) => (
         <section key={b.title} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <div className="row-between">
-            <h2 className="h2">{b.title}</h2>
-            <span className="muted" style={{ fontSize: 13 }}>{b.sub}</span>
-          </div>
+          {b !== blocks[0] && (
+            <div className="row-between">
+              <h2 className="h2">{b.title}</h2>
+              <span className="muted" style={{ fontSize: 13 }}>{b.sub}</span>
+            </div>
+          )}
           <div className="table-box">
             <table className="squad" style={{ minWidth: open ? 930 : 610 }}>
               <thead>

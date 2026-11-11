@@ -21,6 +21,7 @@ import { WindowChart } from '@/components/WindowChart';
 import { ClubGames } from '@/components/ClubGames';
 import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
+import { PlayerHighlights } from '@/components/PlayerHighlights';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -174,10 +175,13 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
       </header>
 
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
-        {show('lines') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-          <h2 className="h2">Line strength</h2>
+        {show('highlights') && <PlayerHighlights players={a.players} all={league.players} clubName={a.team.name} />}
+
+        {(show('lines') || show('ages')) && (<div className="ch-pair">
+        {show('lines') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <h2 className="h2" style={{ fontSize: 17 }}>Line strength</h2>
           {LINES.map((l) => (
-            <div key={l} style={{ display: 'grid', gridTemplateColumns: '44px minmax(0, 1fr) 72px', gap: 10, alignItems: 'center' }}>
+            <div key={l} style={{ display: 'grid', gridTemplateColumns: '40px minmax(0, 1fr) 64px', gap: 8, alignItems: 'center' }}>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
               <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
               <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
@@ -186,14 +190,14 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         </section>)}
 
         {show('ages') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="card" style={{ padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className="card" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div className="row-between">
               <span className="eyebrow">Keeper age profile</span>
               <span className="muted" style={{ fontSize: 12 }}>{keepers.length} keepers{avgAge != null ? ` · avg ${avgAge.toFixed(1)}` : ''}</span>
             </div>
             {avgAge != null ? (
               <>
-                <span style={{ font: '600 24px var(--font)', letterSpacing: '-.02em' }}>{AGE_PHASES[agePhase(avgAge)].name}</span>
+                <span style={{ font: '600 20px var(--font)', letterSpacing: '-.02em' }}>{AGE_PHASES[agePhase(avgAge)].name}</span>
                 <StepBar steps={AGE_PHASES.map((p) => ({ name: p.name, sub: p.range }))} active={agePhase(avgAge)} colours={[C.green2, C.green4, C.green5, C.green3, C.yellow]} />
               </>
             ) : (
@@ -204,6 +208,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             )}
           </div>
         </section>)}
+        </div>)}
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {show('outlook') && (<><VerdictTabs panels={[
