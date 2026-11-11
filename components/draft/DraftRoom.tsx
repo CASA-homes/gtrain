@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import {
-  CLUB_COLOURS, CLUB_NAME, DRAFT_YEAR, fmtClock, naPicks, orderPicks, upcoming, withThe,
+  CLUB_COLOURS, CLUB_NAME, DRAFT_YEAR, fmtClock, naPicks, orderPicks, pickName, upcoming, withThe,
   type DraftPlayer, type Line, type RoomPick, type RoomSel, type RoomState, type RoomTeam,
 } from '@/lib/draft-room';
 
@@ -201,8 +201,9 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
   const respond = (id: number, accept: boolean) => run(() => supabase.rpc('draft_room_respond', { trade: id, accept }));
 
   // ---- views ---------------------------------------------------------------------------------------------------
-  const pickLabel = (id: number) => { const p = st.picks.find((x) => x.id === id); return p ? `Pick ${p.overall}` : 'a pick'; };
-  const cols = useMemo(() => ordered.filter((p) => p.round === 1).map((p) => p.orig), [ordered]);
+  const pickLabel = (id: number) => { const p = st.picks.find((x) => x.id === id); return p ? pickName(p) : 'a pick'; };
+  const cols = useMemo(() => ordered.filter((p) => p.round === 1 && !p.first).map((p) => p.orig), [ordered]);
+  const bonusPicks = ordered.filter((p) => p.first);
   const rounds = useMemo(() => [...new Set(ordered.map((p) => p.round))].sort((a, b) => a - b), [ordered]);
   const myPicks = ordered.filter((p) => p.owner === me.team_id);
   const myNext = slots.find((s) => (s.kind === 'pick' ? s.pick.owner : s.team) === me.team_id);
@@ -337,7 +338,7 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
                 <span className="dr-k g">{done ? 'Draft complete' : paused ? 'Paused' : onBreak ? 'Break · back in' : live ? (cur?.makeup ? 'On the clock · make-up pick' : 'On the clock') : 'First pick'}</span>
                 <h2>{done ? 'That’s a wrap' : curTeam != null ? tn(curTeam) : '—'}</h2>
                 <p>{done ? `${st.sels.filter((s) => s.player).length} players drafted` : curTeam != null ? team.get(curTeam)?.coach : ''}</p>
-                {!done && cur && <span className="pk">{cur.makeup ? 'Skipped pick, taken at the end' : `Pick ${cur.overall} · Round ${cur.rnd}${(() => { const p = st.picks.find((x) => x.id === cur.pick_id); return p && p.orig !== p.owner ? ` · via ${tn(p.orig)}` : ''; })()}`}</span>}
+                {!done && cur && <span className="pk">{cur.makeup ? 'Skipped pick, taken at the end' : `${cur.overall != null ? `Pick ${cur.overall}` : 'Cup bonus pick'} · Round ${cur.rnd}${(() => { const p = st.picks.find((x) => x.id === cur.pick_id); return p && p.orig !== p.owner ? ` · via ${tn(p.orig)}` : ''; })()}`}</span>}
               </div>
             </div>
             <div className="dr-next">
@@ -349,8 +350,8 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
                   return (
                     <div key={i} className={owner === me.team_id ? 'me' : ''}>
                       <i style={{ background: team.get(owner)?.colour }} />
-                      <small>{s.kind === 'pick' ? 'Pick' : 'Make-up'}</small>
-                      <b>{s.kind === 'pick' ? s.pick.overall : '+'}</b>
+                      <small>{s.kind === 'pick' ? (s.pick.first ? 'Cup pick' : 'Pick') : 'Make-up'}</small>
+                      <b>{s.kind === 'pick' ? s.pick.overall ?? '★' : '+'}</b>
                       <strong>{tn(owner)}</strong>
                       <span>{team.get(owner)?.coach}</span>
                       {via ? <em>via {tn(via)}</em> : owner === me.team_id ? <em>That’s you</em> : null}
@@ -366,7 +367,7 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
               <div className="dr-bh">Rd</div>
               {cols.map((t) => <div key={t} className={`dr-bh ${t === me.team_id ? 'me' : ''}`}><i style={{ background: team.get(t)?.colour }} />{tn(t)}</div>)}
               {rounds.map((r) => {
-                const inRound = ordered.filter((p) => p.round === r);
+                const inRound = ordered.filter((p) => p.round === r && !p.first);
                 return [
                   <div key={`r${r}`} className="dr-rl">{r}</div>,
                   ...cols.map((c, i) => { const p = inRound.find((x) => x.orig === c) ?? inRound[i]; return p ? cell(p) : <div key={`e${r}-${i}`} className="dr-cell" />; }),
@@ -374,6 +375,16 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
               })}
             </div>
           </div>
+          {bonusPicks.length > 0 && (
+            <div className="dr-makeups">
+              <span className="dr-k">Cup bonus picks · first in their round</span>
+              {bonusPicks.map((p) => { const x = selByPick.get(p.id); return (
+                <span key={p.id} className="dr-chip" style={live && cur?.pick_id === p.id ? { boxShadow: 'inset 0 0 0 2px var(--ng)' } : undefined}>
+                  {p.bonus ?? 'Bonus'} · R{p.round} · {tn(p.owner)}{x?.player ? <> · <Chip club={x.player.club} />{x.player.n}</> : na.has(p.id) ? ' · N/A' : ''}
+                </span>
+              ); })}
+            </div>
+          )}
           {(room.makeups?.length > 0 || st.sels.some((s) => s.pick_id == null)) && (
             <div className="dr-makeups">
               <span className="dr-k">Make-up picks</span>
@@ -451,9 +462,9 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
                   </select>
                   {tradeTo !== '' && (<>
                     <span className="dr-help">You give</span>
-                    <div className="dr-pickchips">{unused(me.team_id).map((p) => <button key={p.id} className={give.includes(p.id) ? 'on' : ''} onClick={() => setGive((g) => g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id])}>{p.overall}</button>)}</div>
+                    <div className="dr-pickchips">{unused(me.team_id).map((p) => <button key={p.id} className={give.includes(p.id) ? 'on' : ''} onClick={() => setGive((g) => g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id])}>{p.overall ?? `R${p.round} Cup`}</button>)}</div>
                     <span className="dr-help">You get from {tn(tradeTo)}</span>
-                    <div className="dr-pickchips">{unused(tradeTo).map((p) => <button key={p.id} className={get.includes(p.id) ? 'on' : ''} onClick={() => setGet((g) => g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id])}>{p.overall}</button>)}</div>
+                    <div className="dr-pickchips">{unused(tradeTo).map((p) => <button key={p.id} className={get.includes(p.id) ? 'on' : ''} onClick={() => setGet((g) => g.includes(p.id) ? g.filter((x) => x !== p.id) : [...g, p.id])}>{p.overall ?? `R${p.round} Cup`}</button>)}</div>
                     <button className="dr-btn g" disabled={busy || (!give.length && !get.length)} onClick={sendOffer}>Send offer</button>
                   </>)}
                   <span className="dr-help">Goes through once the other coach accepts. The whole room is told.</span>

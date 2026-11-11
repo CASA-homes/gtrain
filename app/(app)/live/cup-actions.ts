@@ -1,5 +1,6 @@
 'use server';
 // Knockout Cup: cup lineups and results.
+import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
 import { CUP_SEASON, CUP_SLOTS, CUP_SLOT_ORDER, conferences, cupFixture, cupTies, fitsSlot, type CupLineup, type CupResult } from '@/lib/cup';
@@ -71,4 +72,56 @@ export async function saveCupResult(matchId: string, home: number, away: number)
   const supabase = await createClient();
   const res = await supabase.from('cup_results').upsert({ season: CUP_SEASON, match_id: matchId, home_score: Math.round(home), away_score: Math.round(away), updated_at: new Date().toISOString() }, { onConflict: 'season,match_id' });
   return res.error ? { ok: false, error: needMigration(res.error.message) } : { ok: true };
+}
+
+// ---- Cup pick prizes ------------------------------------------------------------------------------------------
+export interface CupPrizeSettings { prizes_on: boolean; winner_round: number; runner_round: number; awarded_at: string | null; winner_team: number | null; runner_team: number | null }
+const PRIZE_MIG = 'Cup prizes need supabase/migrations/0025_cup_prizes.sql run in Supabase first.';
+
+export async function loadCupPrizes(): Promise<CupPrizeSettings | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase.from('cup_settings').select('prizes_on, winner_round, runner_round, awarded_at, winner_team, runner_team').eq('season', CUP_SEASON).maybeSingle();
+  return error || !data ? null : (data as CupPrizeSettings);
+}
+
+async function commishOnly(): Promise<string | null> {
+  const me = await getMe();
+  return me?.is_commish ? null : 'Commish only.';
+}
+function revalidateCup() {
+  revalidatePath('/live/cup');
+  revalidatePath('/league/settings');
+}
+
+export async function setCupPrizes(patch: { prizes_on?: boolean; winner_round?: number; runner_round?: number }): Promise<Res> {
+  const no = await commishOnly(); if (no) return { ok: false, error: no };
+  const clean: Record<string, unknown> = { updated_at: new Date().toISOString() };
+  if (typeof patch.prizes_on === 'boolean') clean.prizes_on = patch.prizes_on;
+  for (const k of ['winner_round', 'runner_round'] as const) {
+    const v = patch[k];
+    if (v != null) { if (!Number.isInteger(v) || v < 1 || v > 16) return { ok: false, error: 'Rounds go from 1 to 16.' }; clean[k] = v; }
+  }
+  const supabase = await createClient();
+  const { error } = await supabase.from('cup_settings').upsert({ season: CUP_SEASON, ...clean }, { onConflict: 'season' });
+  if (error) return { ok: false, error: /cup_settings/.test(error.message) ? PRIZE_MIG : error.message };
+  revalidateCup();
+  return { ok: true };
+}
+
+export async function awardCupPrizes(winner: number, runner: number): Promise<Res> {
+  const no = await commishOnly(); if (no) return { ok: false, error: no };
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('cup_award_prizes', { season_in: CUP_SEASON, winner, runner });
+  if (error) return { ok: false, error: /cup_award_prizes/.test(error.message) ? PRIZE_MIG : error.message };
+  revalidateCup(); revalidatePath('/', 'layout');
+  return { ok: true };
+}
+
+export async function unawardCupPrizes(): Promise<Res> {
+  const no = await commishOnly(); if (no) return { ok: false, error: no };
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('cup_unaward_prizes', { season_in: CUP_SEASON });
+  if (error) return { ok: false, error: error.message };
+  revalidateCup(); revalidatePath('/', 'layout');
+  return { ok: true };
 }

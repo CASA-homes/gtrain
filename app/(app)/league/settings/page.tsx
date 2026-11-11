@@ -1,5 +1,9 @@
 import LEAGUE from '@/data/league.json';
 import { Group, SubHead } from '@/components/LeagueSubpage';
+import { CupPrizes } from '@/components/live/cup-prizes';
+import { loadCupPrizes } from '@/app/(app)/live/cup-actions';
+import { getLeague, getMe } from '@/lib/data';
+import { CUP_NAME } from '@/lib/cup';
 
 export const metadata = { title: 'League settings' };
 
@@ -8,7 +12,12 @@ const C = LEAGUE.charter;
 
 const SCORING: [string, number][] = [['Kick', 3], ['Handball', 2], ['Mark', 3], ['Tackle', 4], ['Hitout', 1], ['Goal', 6], ['Behind', 1], ['Free for', 1], ['Free against', -3]];
 
-export default function LeagueSettingsPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function LeagueSettingsPage() {
+  const [me, league, prizes] = await Promise.all([getMe(), getLeague(), loadCupPrizes()]);
+  const holders = new Set(league.picks.map((p) => p.owner_team_id));
+  const teams = league.teams.filter((t) => holders.has(t.id)).map((t) => ({ id: t.id, name: t.name }));
   return (
     <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <SubHead eyebrow="Settings" title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
@@ -62,6 +71,10 @@ export default function LeagueSettingsPage() {
           ['End-of-season draft order', C.ladder.end_of_season_draft_order],
           ['Next draft', `${LEAGUE.league.next_draft.season} · ${LEAGUE.league.next_draft.date}`],
         ]} />
+        <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <h2 className="h2" style={{ fontSize: 18 }}>{CUP_NAME}</h2>
+          <CupPrizes variant="settings" settings={prizes} isCommish={!!me?.is_commish} teams={teams} />
+        </section>
         <Group title="Fines" rows={[
           ['Captain loophole', `$${C.fines.captain_loop}`],
           ['Zero on field loophole', `$${C.fines.zero_on_field_loop}`],

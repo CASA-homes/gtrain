@@ -1822,3 +1822,31 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .sk-grid { display: grid; grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr); gap: 12px; }
 .sk-col { display: flex; flex-direction: column; gap: 12px; }
 @media (max-width: 900px) { .sk-grid, .sk-row { grid-template-columns: minmax(0, 1fr); } .sk-block.tall { height: 420px; } }
+
+/* Knockout Cup pick prizes (Cup page + League settings) */
+.cpz{border:1px solid #ecd9a8;background:linear-gradient(180deg,#fffbef,#fff);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;color:#121513}
+.cpz.off{border-color:var(--line,#e3e7e2);background:#fff}
+.cpz-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.cpz-h b{display:block;font-size:16px;margin-top:2px}
+.cpz-k{font:600 10.5px ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:#8a6a14}
+.cpz.off .cpz-k{color:#6c736e}
+.cpz-dim{color:#6c736e;font-size:12.5px;line-height:1.45}
+.cpz-sw{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:#6c736e}
+.cpz-tg{position:relative;width:40px;height:23px;border-radius:99px;border:0;background:#d5d9d2;cursor:pointer;flex:none;padding:0;transition:background .15s}
+.cpz-tg i{position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff;transition:transform .15s;box-shadow:0 1px 2px rgb(0 0 0/.2)}
+.cpz-tg.on{background:#1d8a3c}.cpz-tg.on i{transform:translateX(17px)}
+.cpz-tg:disabled{opacity:.5;cursor:not-allowed}
+.cpz-prizes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cpz-p{display:flex;gap:10px;align-items:center;border-radius:12px;padding:10px 12px;flex-wrap:wrap}
+.cpz-p > div{flex:1;min-width:120px;display:flex;flex-direction:column;gap:1px}
+.cpz-p b{font-size:15px}
+.cpz-p.gold{background:#fbf1d3;border:1px solid #ecd39a}
+.cpz-p.silver{background:#eef0f2;border:1px solid #d9dde2}
+.cpz-medal{font-size:22px;line-height:1}
+.cpz-p select{font:inherit;font-size:12.5px;border:1px solid var(--line,#e3e7e2);border-radius:8px;padding:5px 7px;background:#fff}
+.cpz-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.cpz-btn{border:1px solid var(--line,#e3e7e2);background:#fff;color:#121513;padding:8px 13px;border-radius:10px;font-weight:600;font-size:13px;cursor:pointer}
+.cpz-btn.go{background:#1d8a3c;border-color:#1d8a3c;color:#fff}
+.cpz-btn:disabled{opacity:.55;cursor:not-allowed}
+.cpz-msg{font-size:12.5px;color:#b4392b}.cpz-msg.ok{color:#1d8a3c}
+@media (max-width:560px){.cpz-prizes{grid-template-columns:minmax(0,1fr)}}

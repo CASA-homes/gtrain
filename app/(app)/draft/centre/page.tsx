@@ -30,14 +30,14 @@ export default async function DraftCentrePage() {
   // Picks: from the room state once 0022 is run, otherwise straight from the league data.
   const picks: RoomPick[] = state.picks.length ? state.picks
     : league.picks.filter((p) => p.year === DRAFT_YEAR && p.overall != null && (p.kind ?? 'draft') === 'draft')
-      .map((p) => ({ id: p.id, overall: p.overall!, round: p.round, owner: p.owner_team_id, orig: p.original_team_id }));
+      .map((p) => ({ id: p.id, overall: p.overall!, round: p.round, owner: p.owner_team_id, orig: p.original_team_id, bonus: (p as { bonus?: string | null }).bonus ?? null, first: !!(p as { slot_first?: boolean }).slot_first }));
   const ordered = orderPicks(picks, room.snake);
   const keep = new Map(teams.map((t) => [t.id, t.keepers.length]));
   const na = naPicks(ordered, keep, room.list_max);
   const used = new Map(state.sels.filter((s) => s.pick_id != null).map((s) => [s.pick_id!, s]));
   const slots = upcoming(ordered, new Set(used.keys()), na, room.makeups ?? []);
   const rounds = Math.max(0, ...ordered.map((p) => p.round));
-  const r1 = ordered.filter((p) => p.round === 1);
+  const r1 = ordered.filter((p) => p.round === 1 && !p.first);
   const mine = ordered.filter((p) => p.owner === me.team_id);
   const isCoach = team.has(me.team_id);
 
@@ -223,7 +223,7 @@ export default async function DraftCentrePage() {
             {isCoach && (<>
               <span className="dc-ck" style={{ marginTop: 4 }}>Your picks · {tn(me.team_id)} · {spots.find((s) => s.t.id === me.team_id)?.allow} list spots</span>
               <div className="dc-mine">
-                {mine.map((p, i) => <span key={p.id} className={na.has(p.id) ? 'na' : used.has(p.id) ? 'used' : i < 3 ? 'early' : ''} title={na.has(p.id) ? 'N/A: your list is full by then' : undefined}>Pick {p.overall}</span>)}
+                {mine.map((p, i) => <span key={p.id} className={na.has(p.id) ? 'na' : used.has(p.id) ? 'used' : i < 3 ? 'early' : ''} title={na.has(p.id) ? 'N/A: your list is full by then' : undefined}>{p.first ? `R${p.round} Cup pick` : `Pick ${p.overall}`}</span>)}
                 {!mine.length && <span className="dc-dim">No picks held.</span>}
               </div>
             </>)}

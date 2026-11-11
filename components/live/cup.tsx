@@ -1,4 +1,6 @@
 'use client';
+import { CupPrizes } from '@/components/live/cup-prizes';
+import type { CupPrizeSettings } from '@/app/(app)/live/cup-actions';
 // G-Train Knockout Cup: the home-page panel and the full cup page (tables, fixture, knockout bracket, cup lineup).
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
@@ -333,7 +335,11 @@ function News({ data, name }: { data: CupData; name: (id: number | null) => stri
   );
 }
 
-export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
+export function CupPage({ data, isCommish, prizes }: { data: CupData; isCommish: boolean; prizes?: CupPrizeSettings | null }) {
+  const fin = data.matches.find((m) => m.id === 'final');
+  const finRes = fin ? data.results.find((r) => r.match_id === 'final') : undefined;
+  const finalResult = fin && finRes && fin.home != null && fin.away != null
+    ? (finRes.home_score >= finRes.away_score ? { winner: fin.home, runner: fin.away } : { winner: fin.away, runner: fin.home }) : null;
   const name = (id: number | null) => (id == null ? 'TBC' : data.teams.find((t) => t.id === id)?.name ?? `Club ${id}`);
   const res = new Map(data.results.map((r) => [r.match_id, r]));
   const game = (m: CupMatch) => {
@@ -350,6 +356,7 @@ export function CupPage({ data }: { data: CupData; isCommish: boolean }) {
     <Shell title={`${CUP_NAME} ${CUP_SEASON}`} sub={<>Groups rounds {GROUP_ROUNDS[0]} to {GROUP_ROUNDS[GROUP_ROUNDS.length - 1]} · wildcards round {WILDCARD_ROUND} · quarter-finals round {QF_ROUND} · semis round {SEMI_ROUND} · final round {FINAL_ROUND}</>} right={<RulesButton />}>
       <div className="cup-page">
         <div className="cup-col">
+          {prizes !== undefined && <CupPrizes settings={prizes} isCommish={isCommish} teams={data.teams} final={finalResult} />}
           <GroupCard data={data} ci={0} name={name} />
           <GroupCard data={data} ci={1} name={name} />
           <Bracket data={data} name={name} />

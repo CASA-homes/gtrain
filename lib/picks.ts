@@ -14,9 +14,9 @@ export function playerPoints(value: number) {
   return Math.round(3000 * Math.pow(value / 100, 2.2));
 }
 
-type PickLike = { year: number; round: number; overall: number | null; kind?: string | null };
+type PickLike = { year: number; round: number; overall: number | null; kind?: string | null; bonus?: string | null };
 export function pickLabel(p: PickLike) {
-  const tag = p.kind === 'msd' ? ' MSD' : p.kind === 'bonus' ? ' Bonus' : '';
+  const tag = p.bonus ? ` ${p.bonus.replace(/ \d{4}$/, '')} pick` : p.kind === 'msd' ? ' MSD' : p.kind === 'bonus' ? ' Bonus' : '';
   return `${p.year}${tag} R${p.round}${p.overall ? ` #${p.overall}` : ''}`;
 }
 

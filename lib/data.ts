@@ -24,7 +24,7 @@ export interface Team {
   /** clubhouse sections the coach has switched off (0021) */
   clubhouse_hide?: string[] | null;
 }
-export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean; kind?: 'draft' | 'msd' | 'bonus' }
+export interface Pick { id: number; year: number; round: number; overall: number | null; original_team_id: number; owner_team_id: number; is_optional: boolean; kind?: 'draft' | 'msd' | 'bonus'; bonus?: string | null; slot_first?: boolean }
 export interface Me { user_id: string; email: string; team_id: number; is_commish: boolean; display_name: string | null; is_guest?: boolean }
 
 export const getMe = cache(async (): Promise<Me | null> => {
@@ -111,9 +111,10 @@ export const getLeague = cache(async (): Promise<League> => {
     supabase.from('ladder').select('*').order('rank'),
     (() => {
       // kind arrives with migration 0020 (mid-season draft picks); until it's run, every pick is a draft pick.
-      const sel = (kind: boolean) => supabase.from('picks').select(`id, year, round, overall, original_team_id, owner_team_id, is_optional${kind ? ', kind' : ''}`)
+      // bonus / slot_first arrive with 0025 (Knockout Cup prize picks).
+      const sel = (cols: string) => supabase.from('picks').select(`id, year, round, overall, original_team_id, owner_team_id, is_optional${cols}`)
         .in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id');
-      return sel(true).then((r) => (r.error ? sel(false) : r));
+      return sel(', kind, bonus, slot_first').then((r) => (r.error ? sel(', kind') : r)).then((r) => (r.error ? sel('') : r));
     })(),
   ]);
   const allPicks = ((picksQ.data ?? []) as unknown as Pick[]).map((p) => ({ ...p, kind: p.kind ?? 'draft' }));

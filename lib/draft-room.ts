@@ -9,7 +9,9 @@ export interface RoomSettings {
   pick_seconds: number; break_every: number; break_minutes: number; snake: boolean; trading: boolean; list_max: number;
   on_clock_since: string | null; paused_left: number | null; makeups: number[];
 }
-export interface RoomPick { id: number; overall: number; round: number; owner: number; orig: number }
+export interface RoomPick { id: number; overall: number; round: number; owner: number; orig: number; bonus?: string | null; first?: boolean }
+/** "Pick 14", or the bonus label for a Cup pick that has no number yet. */
+export const pickName = (p: Pick<RoomPick, 'overall' | 'bonus' | 'round'>) => (p.overall != null ? `Pick ${p.overall}` : `${p.bonus ?? 'Bonus pick'} (round ${p.round})`);
 export interface DraftPlayer {
   key: string; n: string; pos: Line; positions: Line[]; club: string; img: string | null;
   avg: number | null; games: number | null; age: number | null; rookie?: boolean; was?: string | null; note?: string | null;
@@ -30,9 +32,9 @@ export const DEFAULT_ROOM: RoomSettings = {
   snake: false, trading: true, list_max: 33, on_clock_since: null, paused_left: null, makeups: [],
 };
 
-/** Picks in draft order (snake reverses the even rounds). */
+/** Picks in draft order (snake reverses the even rounds; Cup bonus picks go first in their round). */
 export function orderPicks(picks: RoomPick[], snake: boolean): RoomPick[] {
-  return [...picks].sort((a, b) => a.round - b.round || (snake && a.round % 2 === 0 ? b.overall - a.overall : a.overall - b.overall));
+  return [...picks].sort((a, b) => a.round - b.round || Number(!!b.first) - Number(!!a.first) || (snake && a.round % 2 === 0 ? (b.overall ?? 0) - (a.overall ?? 0) : (a.overall ?? 0) - (b.overall ?? 0)));
 }
 
 /** Picks a club can't use because its list would be full: list_max minus keepers, counted in draft order. */
