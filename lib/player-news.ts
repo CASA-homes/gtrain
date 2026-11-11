@@ -5,8 +5,8 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
-    player: 'C. Rozee', tag: 'Injury', date: '2026-11-10', title: 'Port confident Rozee is right for round 1',
-    body: 'After a hamstring injury and nerve damage wiped out his 2026 from round 2, Rozee has started a running program on day one of Port’s pre-season. Club CEO Mathew Richardson says he’s very confident Rozee will be there for round 1. If that holds, Serong So’Right get back a mid who averaged over 100 in 2025.',
+    player: 'C. Rozee', tag: 'Injury', date: '2026-11-11', title: 'Rozee in drills, Port bullish on round 1',
+    body: 'Port high-performance boss Tim Parham says Rozee is now training in drills after a minor UK procedure to clear scar tissue around the nerve in his torn hamstring, though he’s not quite at full speed. Parham is bullish about round 1 against North Melbourne, roughly four and a half months off. If he gets there, Serong So’Right get back a mid who averaged over 100 in 2025.',
   },
   {
     player: 'J. Viney', tag: 'Role', date: '2026-11-10', title: 'Viney hits the ground running at West Coast',
