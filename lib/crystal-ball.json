@@ -5,7 +5,7 @@
   "hitBar": 90,
   "trainN": 574,
   "trainHits": 53,
-  "years": "2016\u20132025",
+  "years": "2016–2025",
   "auc": 0.792,
   "aucPositionOnly": 0.695,
   "aucLate": 0.707,
@@ -466,21 +466,21 @@
     "lift": 0.62
    },
    {
-    "label": "75\u201390",
+    "label": "75–90",
     "n": 115,
     "hits": 9,
     "rate": 0.078,
     "lift": 0.78
    },
    {
-    "label": "90\u2013100",
+    "label": "90–100",
     "n": 46,
     "hits": 5,
     "rate": 0.109,
     "lift": 0.85
    },
    {
-    "label": "100\u2013110",
+    "label": "100–110",
     "n": 36,
     "hits": 7,
     "rate": 0.194,
@@ -503,14 +503,14 @@
     "lift": 0.5
    },
    {
-    "label": "15\u201320",
+    "label": "15–20",
     "n": 133,
     "hits": 13,
     "rate": 0.098,
     "lift": 0.99
    },
    {
-    "label": "20\u201325",
+    "label": "20–25",
     "n": 110,
     "hits": 10,
     "rate": 0.091,
@@ -533,14 +533,14 @@
     "lift": 0.48
    },
    {
-    "label": "3\u20134.5",
+    "label": "3–4.5",
     "n": 143,
     "hits": 16,
     "rate": 0.112,
     "lift": 1.0
    },
    {
-    "label": "4.5\u20136",
+    "label": "4.5–6",
     "n": 48,
     "hits": 8,
     "rate": 0.167,
@@ -563,14 +563,14 @@
     "lift": 1.37
    },
    {
-    "label": "180\u2013185cm",
+    "label": "180–185cm",
     "n": 190,
     "hits": 25,
     "rate": 0.132,
     "lift": 1.39
    },
    {
-    "label": "186\u2013192cm",
+    "label": "186–192cm",
     "n": 173,
     "hits": 13,
     "rate": 0.075,
@@ -586,28 +586,28 @@
   ],
   "pick": [
    {
-    "label": "Picks 1\u20135",
+    "label": "Picks 1–5",
     "n": 44,
     "hits": 17,
     "rate": 0.386,
     "lift": 1.14
    },
    {
-    "label": "Picks 6\u201310",
+    "label": "Picks 6–10",
     "n": 42,
     "hits": 5,
     "rate": 0.119,
     "lift": 0.68
    },
    {
-    "label": "Picks 11\u201320",
+    "label": "Picks 11–20",
     "n": 86,
     "hits": 13,
     "rate": 0.151,
     "lift": 1.37
    },
    {
-    "label": "Picks 21\u201340",
+    "label": "Picks 21–40",
     "n": 172,
     "hits": 8,
     "rate": 0.047,
@@ -886,15 +886,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     },
     {
      "good": true,
@@ -902,7 +902,7 @@
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
    "type": "inside midfielder",
@@ -1050,23 +1050,23 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
@@ -1220,15 +1220,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     },
     {
      "good": false,
@@ -1373,15 +1373,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4\u00d7 their draft slots)."
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
@@ -1389,7 +1389,7 @@
     },
     {
      "good": false,
-     "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75\u201390 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
+     "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75–90 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
     }
    ],
    "type": "midfielder",
@@ -1494,19 +1494,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "2.5 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+     "text": "2.5 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     },
     {
      "good": true,
@@ -1585,11 +1585,11 @@
    ]
   },
   {
-   "rank": 25,
+   "rank": 28,
    "name": "Albert MacGowan",
    "slot": 28,
    "boards": {
-    "tw": 25,
+    "tw": null,
     "rm": 38,
     "zh": 24
    },
@@ -1656,23 +1656,23 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
      "good": true,
@@ -1806,7 +1806,7 @@
    "why": [
     {
      "good": true,
-     "text": "Big-game ceiling: best junior game 140, well above his 89 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 0.0\u00d7 their draft slots (0 of 0: ). A few huge games say the scoring is in him."
+     "text": "Big-game ceiling: best junior game 140, well above his 89 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 0.0× their draft slots (0 of 0: ). A few huge games say the scoring is in him."
     },
     {
      "good": true,
@@ -1814,15 +1814,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     }
    ],
    "type": "inside midfielder",
@@ -1965,19 +1965,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
@@ -1989,7 +1989,7 @@
     },
     {
      "good": true,
-     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5\u20137 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
+     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5–7 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
     },
     {
      "good": true,
@@ -2121,31 +2121,31 @@
     },
     {
      "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4\u00d7 their draft slots)."
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "1.8 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+     "text": "1.8 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
      "good": true,
@@ -2267,11 +2267,11 @@
    "why": [
     {
      "good": true,
-     "text": "Junior fantasy average of 82 undersells him: 2.0 tackles and 4.0 clearances a game. Low scorers with that contested work became stars at about 1.2\u20131.3\u00d7 their draft slots: a hidden scorer."
+     "text": "Junior fantasy average of 82 undersells him: 2.0 tackles and 4.0 clearances a game. Low scorers with that contested work became stars at about 1.2–1.3× their draft slots: a hidden scorer."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
     }
    ],
    "type": "midfielder-forward",
@@ -2403,31 +2403,31 @@
    "why": [
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     }
    ],
    "type": "wing",
@@ -2550,19 +2550,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016\u201324 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "midfielder-forward",
@@ -2633,11 +2633,11 @@
    ]
   },
   {
-   "rank": 18,
+   "rank": 20,
    "name": "Jackson Phillips",
-   "slot": 19,
+   "slot": 21,
    "boards": {
-    "tw": 18,
+    "tw": 20,
     "rm": 16,
     "zh": null
    },
@@ -2664,9 +2664,9 @@
     "needs contested/inside game",
     "needs to win more ball"
    ],
-   "chance": 20.1,
-   "relevant": 23.4,
-   "positionOnly": 9.3,
+   "chance": 18.9,
+   "relevant": 22.0,
+   "positionOnly": 8.6,
    "reasons": [
     {
      "label": "Footy IQ / vision",
@@ -2692,27 +2692,27 @@
    "why": [
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5\u00d7 what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     }
    ],
    "type": "wing",
@@ -2783,6 +2783,161 @@
    ]
   },
   {
+   "rank": 23,
+   "name": "Jake Eime",
+   "slot": 20,
+   "boards": {
+    "tw": 23,
+    "rm": 23,
+    "zh": 15
+   },
+   "club": null,
+   "drafted": false,
+   "junior": "Central District",
+   "position": "DEF/Wing",
+   "height": 182,
+   "role": "Midfielder",
+   "jFP": 76.0,
+   "jD": 20.3,
+   "jT": 1.3,
+   "jSeason": 2026,
+   "jMax": 83.0,
+   "j120": 0,
+   "traits": [
+    "Engine / work rate",
+    "Intercept / rebound",
+    "Kicking / skills",
+    "Leadership / character",
+    "Speed / agility",
+    "X-factor / hurt"
+   ],
+   "flags": [
+    "needs defensive work",
+    "needs strength/size"
+   ],
+   "chance": 18.7,
+   "relevant": 25.7,
+   "positionOnly": 8.9,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "X-factor / hurt",
+     "effect": 0.29
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
+    },
+    {
+     "label": "Engine / work rate",
+     "effect": -0.19
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "1.3 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    }
+   ],
+   "type": "half-back",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Archie Roberts",
+     "pick": 54,
+     "year": 2023,
+     "peak": 94.7,
+     "now": 94.7,
+     "jFP": 78.0,
+     "jT": 1.5,
+     "jD": 20.8,
+     "scouts": [
+      "Intercept game",
+      "Kicking",
+      "Reading the play",
+      "Rebounding",
+      "Run-and-carry"
+     ],
+     "workons": [
+      "Defensive craft",
+      "Strength"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    },
+    {
+     "name": "Josh Daicos",
+     "pick": 57,
+     "year": 2016,
+     "peak": 99.8,
+     "now": 99.8,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "x-factor",
+      "decision making",
+      "speed"
+     ],
+     "workons": [
+      "consistency"
+     ],
+     "role": "Midfielder",
+     "type": "half-back"
+    },
+    {
+     "name": "Luke Ryan",
+     "pick": 66,
+     "year": 2016,
+     "peak": 102.1,
+     "now": 79.1,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "marking",
+      "speed"
+     ],
+     "workons": [
+      "durability"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    }
+   ]
+  },
+  {
    "rank": 36,
    "name": "Jordan Knapp",
    "slot": 36,
@@ -2844,19 +2999,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
@@ -2939,161 +3094,6 @@
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
-    }
-   ]
-  },
-  {
-   "rank": 24,
-   "name": "Jake Eime",
-   "slot": 21,
-   "boards": {
-    "tw": 24,
-    "rm": 23,
-    "zh": 15
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Central District",
-   "position": "DEF/Wing",
-   "height": 182,
-   "role": "Midfielder",
-   "jFP": 76.0,
-   "jD": 20.3,
-   "jT": 1.3,
-   "jSeason": 2026,
-   "jMax": 83.0,
-   "j120": 0,
-   "traits": [
-    "Engine / work rate",
-    "Intercept / rebound",
-    "Kicking / skills",
-    "Leadership / character",
-    "Speed / agility",
-    "X-factor / hurt"
-   ],
-   "flags": [
-    "needs defensive work",
-    "needs strength/size"
-   ],
-   "chance": 18.1,
-   "relevant": 25.0,
-   "positionOnly": 8.6,
-   "reasons": [
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
-    },
-    {
-     "label": "X-factor / hurt",
-     "effect": 0.29
-    },
-    {
-     "label": "Speed / agility",
-     "effect": 0.22
-    },
-    {
-     "label": "Combine: top-10 endurance",
-     "effect": 0.22
-    },
-    {
-     "label": "Engine / work rate",
-     "effect": -0.19
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "1.3 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    }
-   ],
-   "type": "half-back",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Archie Roberts",
-     "pick": 54,
-     "year": 2023,
-     "peak": 94.7,
-     "now": 94.7,
-     "jFP": 78.0,
-     "jT": 1.5,
-     "jD": 20.8,
-     "scouts": [
-      "Intercept game",
-      "Kicking",
-      "Reading the play",
-      "Rebounding",
-      "Run-and-carry"
-     ],
-     "workons": [
-      "Defensive craft",
-      "Strength"
-     ],
-     "role": "Defender",
-     "type": "half-back"
-    },
-    {
-     "name": "Josh Daicos",
-     "pick": 57,
-     "year": 2016,
-     "peak": 99.8,
-     "now": 99.8,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "x-factor",
-      "decision making",
-      "speed"
-     ],
-     "workons": [
-      "consistency"
-     ],
-     "role": "Midfielder",
-     "type": "half-back"
-    },
-    {
-     "name": "Luke Ryan",
-     "pick": 66,
-     "year": 2016,
-     "peak": 102.1,
-     "now": 79.1,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "marking",
-      "speed"
-     ],
-     "workons": [
-      "durability"
-     ],
-     "role": "Defender",
-     "type": "half-back"
     }
    ]
   },
@@ -3213,11 +3213,11 @@
    ]
   },
   {
-   "rank": 20,
+   "rank": 19,
    "name": "Harvie Cooke",
    "slot": 26,
    "boards": {
-    "tw": 20,
+    "tw": 19,
     "rm": 35,
     "zh": null
    },
@@ -3282,15 +3282,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     },
     {
      "good": true,
@@ -3298,7 +3298,7 @@
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
      "good": false,
@@ -3383,7 +3383,7 @@
   {
    "rank": 26,
    "name": "George Gale",
-   "slot": 23,
+   "slot": 24,
    "boards": {
     "tw": 26,
     "rm": 25,
@@ -3411,9 +3411,9 @@
    "flags": [
     "needs speed/athleticism"
    ],
-   "chance": 15.6,
-   "relevant": 29.8,
-   "positionOnly": 8.1,
+   "chance": 15.2,
+   "relevant": 29.1,
+   "positionOnly": 7.8,
    "reasons": [
     {
      "label": "Junior fantasy avg",
@@ -3443,15 +3443,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9\u00d7 their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
     },
     {
      "good": false,
-     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
@@ -3459,7 +3459,7 @@
     },
     {
      "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3\u00d7 their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
      "good": true,
@@ -3539,11 +3539,11 @@
    ]
   },
   {
-   "rank": 30,
+   "rank": 28,
    "name": "Keenan Boi",
    "slot": 30,
    "boards": {
-    "tw": 30,
+    "tw": 28,
     "rm": null,
     "zh": 29
    },
@@ -3593,19 +3593,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016\u201324 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "midfielder-forward",
@@ -3674,11 +3674,11 @@
    ]
   },
   {
-   "rank": 19,
+   "rank": 18,
    "name": "George Dimer",
    "slot": 17,
    "boards": {
-    "tw": 19,
+    "tw": 18,
     "rm": 19,
     "zh": 17
    },
@@ -3733,19 +3733,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
@@ -3801,7 +3801,7 @@
   {
    "rank": 21,
    "name": "Khaled El Souki",
-   "slot": 20,
+   "slot": 19,
    "boards": {
     "tw": 21,
     "rm": 18,
@@ -3827,9 +3827,9 @@
    "flags": [
     "needs strength/size"
    ],
-   "chance": 8.8,
-   "relevant": 8.0,
-   "positionOnly": 8.9,
+   "chance": 9.1,
+   "relevant": 8.3,
+   "positionOnly": 9.3,
    "reasons": [
     {
      "label": "Kicking / skills",
@@ -3851,7 +3851,7 @@
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
@@ -3867,11 +3867,11 @@
    "comps": []
   },
   {
-   "rank": 28,
+   "rank": 25,
    "name": "Archie Elliott",
    "slot": 27,
    "boards": {
-    "tw": 28,
+    "tw": 25,
     "rm": 30,
     "zh": null
    },
@@ -3954,11 +3954,11 @@
    "why": [
     {
      "good": false,
-     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4\u00d7 their draft slots)."
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
     },
     {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016\u201324 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "midfielder-forward",
@@ -4032,11 +4032,11 @@
    ]
   },
   {
-   "rank": 27,
+   "rank": 30,
    "name": "Billy Wigmore",
    "slot": 29,
    "boards": {
-    "tw": 27,
+    "tw": 30,
     "rm": 45,
     "zh": null
    },
@@ -4081,7 +4081,7 @@
    "why": [
     {
      "good": true,
-     "text": "Big-game ceiling: best junior game 163, 3 games of 120+, well above his 80 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 0.0\u00d7 their draft slots (0 of 0: ). A few huge games say the scoring is in him."
+     "text": "Big-game ceiling: best junior game 163, 3 games of 120+, well above his 80 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 0.0× their draft slots (0 of 0: ). A few huge games say the scoring is in him."
     },
     {
      "good": false,
@@ -4089,19 +4089,19 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": false,
-     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
-     "text": "1.9 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016\u201324, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+     "text": "1.9 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
     }
    ],
    "type": "inside midfielder",
@@ -4165,11 +4165,11 @@
    ]
   },
   {
-   "rank": 29,
+   "rank": 27,
    "name": "Kodah Edwards",
-   "slot": 24,
+   "slot": 23,
    "boards": {
-    "tw": 29,
+    "tw": 27,
     "rm": 20,
     "zh": 19
    },
@@ -4198,9 +4198,9 @@
     "needs kicking",
     "needs outside game"
    ],
-   "chance": 4.7,
-   "relevant": 10.5,
-   "positionOnly": 7.8,
+   "chance": 4.8,
+   "relevant": 10.8,
+   "positionOnly": 8.1,
    "reasons": [
     {
      "label": "Versatility",
@@ -4226,15 +4226,15 @@
     },
     {
      "good": false,
-     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4\u00d7 their draft slots)."
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4\u00d7 what their draft slots predicted."
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     }
    ],
    "type": "midfielder-forward",
@@ -4368,7 +4368,7 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
@@ -4427,11 +4427,64 @@
    ]
   },
   {
-   "rank": 13,
-   "name": "Clancy Snell",
-   "slot": 13,
+   "rank": 29,
+   "name": "Harvey Spawton-Guy",
+   "slot": 31,
    "boards": {
-    "tw": 13,
+    "tw": 29,
+    "rm": null,
+    "zh": null
+   },
+   "club": null,
+   "drafted": false,
+   "junior": "West Perth",
+   "position": "Tall forward",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Aerial / marking",
+    "Scoreboard impact"
+   ],
+   "flags": [],
+   "chance": 0.5,
+   "relevant": 3.1,
+   "positionOnly": 6.4,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 14,
+   "name": "Clancy Snell",
+   "slot": 14,
+   "boards": {
+    "tw": 14,
     "rm": 9,
     "zh": 21
    },
@@ -4454,8 +4507,8 @@
    ],
    "flags": [],
    "chance": 0.4,
-   "relevant": 1.8,
-   "positionOnly": 12.2,
+   "relevant": 1.7,
+   "positionOnly": 11.6,
    "reasons": [
     {
      "label": "Key position",
@@ -4485,11 +4538,11 @@
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6\u00d7 their draft slots)."
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
     },
     {
      "good": false,
@@ -4566,15 +4619,15 @@
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1\u00d7 what their draft slots predicted."
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
     },
     {
      "good": false,
@@ -4590,7 +4643,7 @@
     },
     {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016\u201324 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "key position player",
@@ -4598,11 +4651,11 @@
    "comps": []
   },
   {
-   "rank": 14,
+   "rank": 13,
    "name": "Sam Gayfer",
-   "slot": 14,
+   "slot": 13,
    "boards": {
-    "tw": 14,
+    "tw": 13,
     "rm": 14,
     "zh": 13
    },
@@ -4631,9 +4684,9 @@
     "needs consistency",
     "needs finishing"
    ],
-   "chance": 0.2,
+   "chance": 0.3,
    "relevant": 0.7,
-   "positionOnly": 11.6,
+   "positionOnly": 12.2,
    "reasons": [
     {
      "label": "Key position",
@@ -4663,11 +4716,11 @@
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6\u00d7 what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": false,
@@ -4683,7 +4736,7 @@
     },
     {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016\u201324 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "key position player",
@@ -4751,7 +4804,7 @@
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
@@ -4767,11 +4820,11 @@
    "comps": []
   },
   {
-   "rank": 23,
+   "rank": 24,
    "name": "Jack Pickett",
    "slot": 22,
    "boards": {
-    "tw": 23,
+    "tw": 24,
     "rm": 22,
     "zh": 20
    },
@@ -4830,15 +4883,15 @@
     },
     {
      "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3\u00d7 what their draft slots predicted."
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": false,
-     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5\u00d7 their draft slots)."
+     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": false,
@@ -18406,7 +18459,7 @@
     "track": 81,
     "status": "Unlikely",
     "why": [
-     "Delisted by Essendon after 2026 (picked up by North). Couldn\u2019t hold a spot over younger players.",
+     "Delisted by Essendon after 2026 (picked up by North). Couldn’t hold a spot over younger players.",
      "Plays 25% of games (22 from 88 available)",
      "Stuck in the seconds: 13 state-league games v 6 AFL in 2026"
     ],

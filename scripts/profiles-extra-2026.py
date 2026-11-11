@@ -28,7 +28,7 @@ for e in EXTRA:
               'strengths': e['strengths'], 'improvements': e['improvements'], 'summary': e['summary'],
               'source': {'title': 'AFL Draft Power Rankings: August 2026 Top 50', 'url': RM_URL},
               # Consensus slot on the same scale as the top 30: his weighted board rank.
-              'boards': {'twomey': {'rank': None, 'note': '', 'url': 'https://www.afl.com.au/news/1633149/cal-twomeys-phantom-form-guide-top-draft-prospects-october-ranking', 'date': '20 Oct 2026'},
+              'boards': {'twomey': {'rank': None, 'note': '', 'url': 'https://www.afl.com.au/news/1640123/cal-twomeys-phantom-form-guide-top-draft-prospects-november-ranking', 'date': 'Nov 2026'},
                          'rookieme': {'rank': e['rm_rank'], 'url': RM_URL, 'date': 'Aug 2026', 'of': 50}, 'zh': None,
                          'consensus': round(score), 'score': score, 'extra': True}})
     if e['name'] not in by: prof.append(p)

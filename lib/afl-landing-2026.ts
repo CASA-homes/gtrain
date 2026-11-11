@@ -3,9 +3,11 @@
 // rookies on this, not on the scouts' rankings. Fixed spots are the commish's read or known bids; everyone else fills
 // the remaining picks in consensus-board order (Twomey / Rookie Me / Zero Hanger). Replace with the real order after the draft.
 export const AFL_LANDING_2026: Record<string, { pick: number; club?: string }> = {
-  'Dougie Cochrane': { pick: 1, club: 'Port Adelaide' },   // Essendon expected to bid at 1, Port match (NGA)
-  'Cody Walker': { pick: 2, club: 'Carlton' },              // father-son, bid expected very early
-  'Heath Mellody': { pick: 3, club: 'West Coast' },          // commish: likely pick 3 to the Eagles
+  // From Cal Twomey's November Phantom Form Guide, plus the commish's read on Mellody.
+  'Dougie Cochrane': { pick: 1, club: 'Port Adelaide' },   // Essendon bid at 1, Port match (NGA)
+  'Ethan Drever': { pick: 2, club: 'Essendon' },            // favourite for Essendon's top pick once Port match the bid
+  'Cody Walker': { pick: 3, club: 'Carlton' },              // father-son: Carlton can't match before 3, Richmond the likely bidder
+  'Heath Mellody': { pick: 4, club: 'West Coast' },          // commish: the Eagles' top pick (Twomey: West Coast big contenders)
 };
 
 /** Projected AFL pick for every prospect: fixed spots first, then the consensus order fills the gaps. */

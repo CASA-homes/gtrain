@@ -28,7 +28,7 @@ from crystal import role_of, fantasy_role, combine_flags, H as HIST  # noqa: E40
 # Prospects outside Twomey's 30 that were added by scripts/profiles-extra-2026.py (e.g. Jordan Knapp): scored the same way,
 # slotted at their weighted board rank. Before the draft only; after it, the real draft order is the list.
 if not DRAFTED:
-    PH = PH + [(p['boards']['consensus'], n) for n, p in PROF.items() if (p.get('boards') or {}).get('extra') and n not in {x for _, x in PH}]
+    PH = PH + [(p['boards']['consensus'], n) for n, p in PROF.items() if ((p.get('boards') or {}).get('extra') or (p.get('boards') or {}).get('dropped')) and n not in {x for _, x in PH}]
 NOW_AVG = {(d['y'], d['n']): next((a for (y, g, a) in (d.get('h') or []) if y == 2026 and g >= 5), None) for d in HIST}
 PEAK = {(d['y'], d['n']): max([a for (_, g, a) in (d.get('h') or []) if g >= 8], default=None) for d in HIST}
 # Current top players we can compare to: had a draft profile with traits, and average 95+ in 2026 (or 100+ peak).
