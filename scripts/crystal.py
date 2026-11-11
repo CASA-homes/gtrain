@@ -17,7 +17,7 @@ NOW_SEASON = 2026
 
 GROUPS = {
   'Accumulator': ['accumulation', 'production', 'ball winning', 'accumulator'],
-  'Contested / inside': ['contested work', 'contested ball', 'contested game', 'contested ball winning', 'contested ability', 'inside game', 'clearances', 'clearance work', 'stoppage craft', 'stoppage work', 'stoppage positioning', 'stoppage burst', 'ground balls', 'hardness', 'impact in the midfield', 'movement through traffic'],
+  'Contested / inside': ['power out of congestion', 'out of congestion', 'contested work', 'contested ball', 'contested game', 'contested ball winning', 'contested ability', 'inside game', 'clearances', 'clearance work', 'stoppage craft', 'stoppage work', 'stoppage positioning', 'stoppage burst', 'ground balls', 'hardness', 'impact in the midfield', 'movement through traffic'],
   'Clean hands': ['clean hands', 'cleanliness', 'cleanness', 'quick hands', 'clean at ground level', 'clean', 'cleanness at ground level'],
   'Footy IQ / vision': ['decision making', 'footy iq', 'football iq', 'smarts', 'footy smarts', 'football smarts', 'vision', 'reading the play', 'reading of the play', 'poise', 'composure', 'composed', 'class', 'classy', 'creativity', 'skills and decision making'],
   'Kicking / skills': ['kicking', 'skills', 'skill', 'kick penetration', 'penetrating kick', 'ball use', 'disposal efficiency', 'foot skills', 'dual-sided', 'dual-footed', 'dual footed', 'two-footed', 'clean skills', 'efficiency', 'kicking efficiency', 'kick efficiency', 'kicking skills', 'long kicking', 'kicking accuracy', 'distribution'],

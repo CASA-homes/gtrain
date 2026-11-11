@@ -2633,6 +2633,129 @@
    ]
   },
   {
+   "rank": 6,
+   "name": "Gus Teixeira",
+   "slot": 6,
+   "boards": {
+    "tw": 6,
+    "rm": 4,
+    "zh": 7
+   },
+   "club": null,
+   "drafted": false,
+   "junior": "Sandringham Dragons",
+   "position": "MID/FWD",
+   "height": 181,
+   "role": "Midfielder",
+   "jFP": 83.0,
+   "jD": 18.0,
+   "jT": 3.0,
+   "jSeason": 2026,
+   "jMax": 116.0,
+   "j120": 0,
+   "traits": [
+    "Contested / inside",
+    "Scoreboard impact"
+   ],
+   "flags": [],
+   "chance": 19.6,
+   "relevant": 34.2,
+   "positionOnly": 20.6,
+   "reasons": [
+    {
+     "label": "Contested / inside",
+     "effect": 0.12
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.11
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
+    }
+   ],
+   "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
+     "scouts": [
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
+     ],
+     "workons": [
+      "Strength",
+      "Damage by foot"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2,
+     "now": 116.2,
+     "jFP": 83.0,
+     "jT": 3.3,
+     "jD": 19.3,
+     "scouts": [
+      "Footy IQ",
+      "Forward Craft",
+      "Goal Sense",
+      "Kicking",
+      "Overhead marking"
+     ],
+     "workons": [
+      "Limited midfield exposure",
+      "Speed"
+     ],
+     "role": "Forward",
+     "type": "midfielder"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
+     "year": 2019,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
+     "scouts": [
+      "Kicking",
+      "Intercept marking",
+      "Reading the play",
+      "Agility",
+      "Athleticism"
+     ],
+     "workons": [
+      "Midfield craft",
+      "Scoreboard impact"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    }
+   ]
+  },
+  {
    "rank": 20,
    "name": "Jackson Phillips",
    "slot": 21,
@@ -3094,121 +3217,6 @@
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
-    }
-   ]
-  },
-  {
-   "rank": 6,
-   "name": "Gus Teixeira",
-   "slot": 6,
-   "boards": {
-    "tw": 6,
-    "rm": 4,
-    "zh": 7
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "MID/FWD",
-   "height": 181,
-   "role": "Midfielder",
-   "jFP": 83.0,
-   "jD": 18.0,
-   "jT": 3.0,
-   "jSeason": 2026,
-   "jMax": 116.0,
-   "j120": 0,
-   "traits": [
-    "Scoreboard impact",
-    "Size / strength"
-   ],
-   "flags": [],
-   "chance": 17.8,
-   "relevant": 35.7,
-   "positionOnly": 20.6,
-   "reasons": [
-    {
-     "label": "Junior tackles",
-     "effect": -0.11
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    }
-   ],
-   "type": "midfielder-forward",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Tom Powell",
-     "pick": 13,
-     "year": 2020,
-     "peak": 86.9,
-     "now": 71.2,
-     "jFP": 0.0,
-     "jT": 3.0,
-     "jD": 24.3,
-     "scouts": [
-      "Accumulation",
-      "Consistency",
-      "Contested ball",
-      "Stoppage craft",
-      "Handball skills"
-     ],
-     "workons": [
-      "Strength",
-      "Damage by foot"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
-      "Kicking",
-      "Overhead marking"
-     ],
-     "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward",
-     "type": "midfielder"
-    },
-    {
-     "name": "Hayden Young",
-     "pick": 7,
-     "year": 2019,
-     "peak": 92.9,
-     "now": 78.7,
-     "jFP": 89.0,
-     "jT": 3.6,
-     "jD": 22.3,
-     "scouts": [
-      "Kicking",
-      "Intercept marking",
-      "Reading the play",
-      "Agility",
-      "Athleticism"
-     ],
-     "workons": [
-      "Midfield craft",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
     }
    ]
   },
