@@ -19,8 +19,10 @@ const STATS: Record<Line, Stat[]> = {
 const LINE_NAME: Record<Line, string> = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' };
 
 export function playerCard(p: PlayerRow, r: Ratings, rostered: PlayerRow[], ratings: Map<number, Ratings>): CardProps | null {
-  const d = p.dfs_id ? G[p.dfs_id] : null;
-  if (!d || !d.g.length) return null;
+  const found = p.dfs_id ? G[p.dfs_id] : null;
+  // Missed the whole season: keep the card so his past season averages still show.
+  if ((!found || !found.g.length) && !(p.hist ?? []).some((h) => h[1] > 0)) return null;
+  const d = found && found.g.length ? found : { g: [] as typeof G[string]['g'], p: [] as typeof G[string]['p'] };
   const line = r.line;
   const pool = rostered.filter((q) => q.box && (q.box.gm ?? 0) >= 8 && ratings.get(q.id)?.line === line);
   const pct = p.box ? STATS[line].map(([label, f, fmt]) => {

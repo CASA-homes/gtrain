@@ -35,7 +35,26 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
     for (let i = games.length - 1; i >= 0; i--) if (games[i][14]) return i;
     return -1;
   });
-  if (!games.length) return null;
+  // No AFL games this season (e.g. injured all year): still show his season averages from previous years.
+  if (!games.length) {
+    if (!seasons.length) return null;
+    return (
+      <div className="pc-grid">
+        <div className="pc-top">
+          <Card title="Season averages" note={`${seasons.length} season${seasons.length > 1 ? 's' : ''} · AFL Fantasy · no games in ${current}`}>
+            <div className="pc-form pc-season pc-row">
+              {seasons.map(([y, gm, avg]) => (
+                <div key={y} className="pc-fchip" title={`${y}: ${gm} games`}>
+                  <b style={{ background: tone(avg)[0], color: tone(avg)[1] }}>{Math.round(avg)}</b>
+                  <span>’{String(y).slice(2)}</span><i>{gm} gm</i>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
   const scores = games.map((g) => g[3]);
   const sorted = [...scores].sort((a, b) => a - b);
   const median = sorted[Math.floor(sorted.length / 2)];

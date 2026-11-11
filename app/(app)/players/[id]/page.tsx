@@ -114,7 +114,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               {showDraft ? 'Back' : 'Draft profile'}
             </Link>
           ) : (
-            <span className="ph-draft off" title="No draft guide profile loaded for this player yet">Draft profile</span>
+            <span className="ph-draft off" title={p.draft_year && p.draft_year < 2020 ? `Draft guide profiles start with the 2020 draft (drafted ${p.draft_year})` : "No draft guide profile loaded for this player yet"}>Draft profile</span>
           )}
         </div>
       </header>
