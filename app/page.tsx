@@ -47,7 +47,8 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
   return (
     <main className="kl">
       <section className="kl-left">
-        <div className="kl-lock"><KeeperMark size={40} /><KeeperWordmark /></div>
+        <div className="kl-lock"><KeeperMark size={44} /><KeeperWordmark /></div>
+        <div className="kl-mid">
         <span className="kl-eyebrow">The all-in-one AFL keeper league platform</span>
         <h1 className="kl-hl">The home of your<br /><b>AFL keeper league.</b></h1>
         <ul className="kl-sell">
@@ -57,6 +58,8 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
           <li><b>Deep rookie research</b> boards, junior data, star chance</li>
           <li><b>History and records</b> every flag, spoon and medal</li>
         </ul>
+        </div>
+        <div className="kl-bottom">
         <p className="kl-slogan">Keep your stars. <b>Build your dynasty.</b></p>
         <div className="kl-form">
           {me ? (
@@ -65,6 +68,7 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
           ) : <LoginForm linkError={sp.error === 'link'} />}
+        </div>
         </div>
       </section>
       <section className="kl-right">
