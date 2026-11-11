@@ -4,6 +4,8 @@ import { CupPrizes } from '@/components/live/cup-prizes';
 import { loadCupPrizes } from '@/app/(app)/live/cup-actions';
 import { getLeague, getMe } from '@/lib/data';
 import { CUP_NAME } from '@/lib/cup';
+import { getLeagueName, leagueTitle } from '@/lib/league-name';
+import { LeagueNameForm } from '@/components/LeagueNameForm';
 
 export const metadata = { title: 'League settings' };
 
@@ -15,13 +17,14 @@ const SCORING: [string, number][] = [['Kick', 3], ['Handball', 2], ['Mark', 3], 
 export const dynamic = 'force-dynamic';
 
 export default async function LeagueSettingsPage() {
-  const [me, league, prizes] = await Promise.all([getMe(), getLeague(), loadCupPrizes()]);
+  const [me, league, prizes, leagueName] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName()]);
   const holders = new Set(league.picks.map((p) => p.owner_team_id));
   const teams = league.teams.filter((t) => holders.has(t.id)).map((t) => ({ id: t.id, name: t.name }));
   return (
     <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <SubHead eyebrow="Settings" title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
+      <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
+        <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
         <Group title="Team structure" rows={[
           ['Squad size', '33 players: 18 starters, 5 emergencies, 10 bench'],
           ['On field', '5 DEF · 7 MID · 1 RUC · 5 FWD'],
@@ -81,7 +84,7 @@ export default async function LeagueSettingsPage() {
           ['Lopsided trade', `$${C.fines.lopsided_trade} per offence`],
         ]} />
       </div>
-      <p className="muted" style={{ fontSize: 12, margin: 0 }}>From the league’s settings on Keeper, plus G-Train house rules.</p>
+      <p className="muted" style={{ fontSize: 12, margin: 0 }}>From the league’s settings on Keeper, plus {leagueName} house rules.</p>
     </div>
   );
 }

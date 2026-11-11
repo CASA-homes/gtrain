@@ -8,6 +8,7 @@ import { PLAYER_NEWS } from '@/lib/player-news';
 import { best22, LINES } from '@/lib/ratings';
 import { getLeague, getMe, CURRENT_SEASON } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
+import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { postNews, rsvp } from './actions';
 import { LeagueHistory } from '@/components/LeagueHistory';
 import { CupTables } from '@/components/live/cup';
@@ -15,7 +16,7 @@ import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 
 export default async function LeaguePage() {
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
+  const [league, me, leagueName] = await Promise.all([getLeague(), getMe(), getLeagueName()]);
   const cup = await buildCup(league, me?.team_id ?? 0);
   const supabase = await createClient();
   const [{ data: news }, { data: chat }, { data: rsvps }] = await Promise.all([
@@ -42,7 +43,7 @@ export default async function LeaguePage() {
       <header style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'center', justifyContent: 'space-between', padding: '22px 24px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: 18 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <span style={{ font: '500 12px var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', color: '#9ccb84' }}>Keeper HQ</span>
-          <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>The League</h1>
+          <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>{leagueTitle(leagueName)}</h1>
           <span style={{ color: '#b9c0b8' }}>10 coaches · est. 2022 · {league.seasons.length} seasons</span>
         </div>
         <div className="kpis">

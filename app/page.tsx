@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { LoginForm } from '@/components/LoginForm';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { getMe } from '@/lib/data';
+import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import styles from './landing.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -19,7 +20,7 @@ function OvalLines({ className }: { className: string }) {
 }
 
 export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
-  const [me, sp] = await Promise.all([getMe(), searchParams]);
+  const [me, sp, leagueName] = await Promise.all([getMe(), searchParams, getLeagueName()]);
 
   return (
     <main className={styles.page}>
@@ -27,7 +28,7 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
         <OvalLines className={styles.oval} />
         <div className={styles.brand}>
           <KeeperMark size={56} />
-          <KeeperWordmark sub="AFL Fantasy keeper league" />
+          <KeeperWordmark sub={leagueTitle(leagueName)} />
         </div>
         <h1 className={styles.head}>Keep 18.<br />Draft the rest.<br /><b>Build a dynasty.</b></h1>
         <div className={styles.facts} aria-label="League facts">
@@ -50,7 +51,7 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
           ) : (
             <>
               <h2>Sign in</h2>
-              <p>Enter the email your commish added to the league. We’ll send you a sign-in link.</p>
+              <p>Enter the email your commish added to the {leagueTitle(leagueName)}. We’ll send you a sign-in link.</p>
               <LoginForm linkError={sp.error === 'link'} />
             </>
           )}
