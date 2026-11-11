@@ -19,7 +19,7 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
     const supabase = createClient();
     const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
     if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
-    if (!allowed) return setState({ kind: 'error', message: 'That email isn’t on the G-Train list. Ask the commish to add it.' });
+    if (!allowed) return setState({ kind: 'error', message: 'That email isn’t on the league list. Ask the commish to add it.' });
     const { error } = await supabase.auth.signInWithOtp({
       email: clean,
       options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
@@ -42,44 +42,28 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
 
   if (state.kind === 'sent') {
     return (
-      <div style={{ width: 'min(380px, 100%)', textAlign: 'center', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <span style={{ font: '600 16px var(--font)' }}>Check your inbox</span>
-        <span style={{ color: 'rgb(244 241 230 / .75)', fontSize: 14 }}>
-          We sent a sign-in link to {state.email}. Tap it to sign in.
-        </span>
-        <details style={{ fontSize: 13, color: 'rgb(244 241 230 / .6)' }}>
-        <summary style={{ cursor: 'pointer' }}>Email has a 6-digit code?</summary>
-        <form onSubmit={verify} style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-          <label htmlFor="code" className="sr-only">6-digit code</label>
-          <input id="code" inputMode="numeric" autoComplete="one-time-code" maxLength={8} value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456"
-            style={{ flex: '1 1 auto', minWidth: 0, minHeight: 48, borderRadius: 99, border: '1px solid rgb(244 241 230 / .3)', background: 'rgb(244 241 230 / .08)', color: 'var(--cream)', padding: '0 18px', font: '500 18px var(--mono)', letterSpacing: '.2em', textAlign: 'center' }} />
-          <button type="submit" disabled={state.checking}
-            style={{ minHeight: 48, borderRadius: 99, border: 0, background: 'var(--cream)', color: 'var(--ink)', padding: '0 22px', font: '600 15px var(--font)', whiteSpace: 'nowrap' }}>
-            {state.checking ? 'Checking…' : 'Sign in'}
-          </button>
-        </form>
+      <div className="lg">
+        <div className="lg-ok"><i aria-hidden="true">✓</i><span><b>Check your inbox.</b> We sent a sign-in link to {state.email}. Tap it on this device.</span></div>
+        <details className="lg-code">
+          <summary>Email has a 6-digit code?</summary>
+          <form onSubmit={verify} className="lg-row">
+            <label htmlFor="code" className="sr-only">6-digit code</label>
+            <input id="code" className="lg-in lg-mono" inputMode="numeric" autoComplete="one-time-code" maxLength={8} value={code} onChange={(e) => setCode(e.target.value)} placeholder="123456" />
+            <button type="submit" className="lg-btn" disabled={state.checking}>{state.checking ? 'Checking…' : 'Sign in'}</button>
+          </form>
         </details>
-        {state.codeError && <span role="status" style={{ fontSize: 13, color: '#f3c2b9' }}>{state.codeError}</span>}
+        {state.codeError && <span role="status" className="lg-err">{state.codeError}</span>}
       </div>
     );
   }
 
   return (
-    <form onSubmit={submit} style={{ width: 'min(380px, 100%)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-      <label htmlFor="email" className="sr-only">Email</label>
-      <div style={{ display: 'flex', gap: 8 }}>
-        <input
-          id="email" type="email" autoComplete="email" required value={email}
-          onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com"
-          style={{ flex: '1 1 auto', minWidth: 0, minHeight: 48, borderRadius: 99, border: '1px solid rgb(244 241 230 / .3)', background: 'rgb(244 241 230 / .08)', color: 'var(--cream)', padding: '0 18px', font: '400 15px var(--font)' }}
-        />
-        <button type="submit" disabled={state.kind === 'sending'}
-          style={{ minHeight: 48, borderRadius: 99, border: 0, background: 'var(--cream)', color: 'var(--ink)', padding: '0 22px', font: '600 15px var(--font)', whiteSpace: 'nowrap' }}>
-          {state.kind === 'sending' ? 'Sending…' : 'Send link'}
-        </button>
-      </div>
-      <span role="status" style={{ fontSize: 13, color: state.kind === 'error' ? '#f3c2b9' : 'rgb(244 241 230 / .65)', textAlign: 'center' }}>
-        {state.kind === 'error' ? state.message : 'Coaches only. We’ll email you a one-tap sign-in link.'}
+    <form onSubmit={submit} className="lg">
+      <label htmlFor="email" className="lg-lab">Email</label>
+      <input id="email" className="lg-in" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
+      <button type="submit" className="lg-btn" disabled={state.kind === 'sending'}><i aria-hidden="true" />{state.kind === 'sending' ? 'Sending…' : 'Send sign-in link'}</button>
+      <span role="status" className={state.kind === 'error' ? 'lg-err' : 'lg-note'}>
+        {state.kind === 'error' ? state.message : 'No password needed. New coach? Ask your commish for an invite.'}
       </span>
     </form>
   );

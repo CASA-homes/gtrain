@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { usePathname } from 'next/navigation';
 import { NavSearch } from '@/components/NavSearch';
 
@@ -31,11 +32,11 @@ const LINKS = [
 export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null }) {
   const path = usePathname();
   return (
-    <nav className="nav" aria-label="G-Train">
+    <nav className="nav" aria-label="Keeper HQ">
       <div className="nav-in">
         <Link href="/" className="nav-brand">
-          <span>GT</span>
-          <span style={{ fontWeight: 600, fontSize: 15 }}>G-Train</span>
+          <KeeperMark size={30} tile className="nav-mark" />
+          <KeeperWordmark />
         </Link>
         <div className="nav-links">
           {LINKS.map((l) => (

@@ -2,18 +2,18 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'G-Train Fantasy Keeper',
-  description: 'Clubhouse, market and history for the G-Train keeper league.',
-  applicationName: 'G-Train',
-  appleWebApp: { capable: true, title: 'G-Train', statusBarStyle: 'default' },
+  title: 'Keeper HQ',
+  description: 'Clubhouse, market, draft and history for our AFL Fantasy keeper league.',
+  applicationName: 'Keeper HQ',
+  appleWebApp: { capable: true, title: 'Keeper HQ', statusBarStyle: 'default' },
   icons: {
-    icon: [{ url: '/icons/favicon-32.png?v=2', sizes: '32x32', type: 'image/png' }, { url: '/icons/icon-192.png?v=2', sizes: '192x192', type: 'image/png' }],
-    apple: [{ url: '/icons/apple-touch-icon.png?v=2', sizes: '180x180' }],
+    icon: [{ url: '/icons/favicon-32.png?v=3', sizes: '32x32', type: 'image/png' }, { url: '/icons/icon-192.png?v=3', sizes: '192x192', type: 'image/png' }],
+    apple: [{ url: '/icons/apple-touch-icon.png?v=3', sizes: '180x180' }],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#17241c',
+  themeColor: '#f4f6f1',
   width: 'device-width',
   initialScale: 1,
 };

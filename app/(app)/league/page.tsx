@@ -41,7 +41,7 @@ export default async function LeaguePage() {
     <div className="wrap">
       <header style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'center', justifyContent: 'space-between', padding: '22px 24px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: 18 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <span style={{ font: '500 12px var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', color: '#9ccb84' }}>G-Train Fantasy Keeper</span>
+          <span style={{ font: '500 12px var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', color: '#9ccb84' }}>Keeper HQ</span>
           <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>The League</h1>
           <span style={{ color: '#b9c0b8' }}>10 coaches · est. 2022 · {league.seasons.length} seasons</span>
         </div>

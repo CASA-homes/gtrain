@@ -16,6 +16,8 @@
   --red-bg: #f3c2b9; --red-fg: #7a1d12;
   --def: #3f7fb5; --mid: #c48a1f; --ruc: #7a5fc0; --fwd: #d0583f;
   --gold: #d4a62a;
+  /* Keeper HQ brand (Sage & Brass) */
+  --khq-bg: #f4f6f1; --khq-panel: #e7ede3; --khq-line: #dbe3d6; --khq-sage: #2f5d46; --khq-sage-deep: #234836; --khq-brass: #c09a4b; --khq-brass-text: #80622a;
   --font: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --mono: 'Geist Mono', ui-monospace, Menlo, Consolas, monospace;
   --display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
@@ -90,7 +92,8 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 .nav-in { max-width: none; margin: 0; min-height: 56px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
 .nav a { text-decoration: none; }
 .nav-brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); margin-right: 6px; }
-.nav-brand span:first-child { width: 32px; height: 32px; border-radius: 9px; background: url(/icons/nav-64.png?v=2) center/cover; box-shadow: 0 0 0 1px rgb(0 0 0 / .08); font-size: 0; color: transparent; }
+.nav-mark { flex: none; display: block; }
+.nav-brand .khq-wm { font-size: 21px; }
 .nav-links { display: flex; flex-wrap: wrap; gap: 2px; flex: 1 1 auto; }
 .nav-links a { display: inline-flex; align-items: center; min-height: 36px; padding: 0 12px; border-radius: 8px; color: var(--muted); font-weight: 500; }
 .nav-links a:hover { color: var(--ink); }
@@ -109,7 +112,8 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   .nav-in { display: grid; grid-template-columns: 1fr auto auto auto; align-items: center; gap: 8px 10px; min-height: 0; padding: 8px 0 10px; }
   .nav-search { width: 34px; height: 34px; padding: 0; justify-content: center; border-radius: 10px; }
   .nav-brand { margin: 0; gap: 8px; }
-  .nav-brand span:first-child { width: 28px; height: 28px; border-radius: 8px; }
+  .nav-mark { width: 28px; height: 28px; }
+  .nav-brand .khq-wm { font-size: 19px; }
   .nav-me { padding: 3px; }
   .nav-me em { display: none; }
   .nav-out button { width: 34px; height: 34px; justify-content: center; border-radius: 10px; color: var(--muted); padding: 0; }
@@ -1905,3 +1909,27 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .ns-avg{font:700 13px var(--mono);font-style:normal;color:var(--ink)}
 .ns-empty{padding:14px 10px;color:var(--muted);font-size:13px}
 .ns-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:9px 16px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);background:#fafbf9}
+
+/* Keeper HQ wordmark */
+.khq-wm { font: 800 28px/.9 var(--display); text-transform: uppercase; letter-spacing: .01em; color: var(--ink); white-space: nowrap; }
+.khq-wm b { color: var(--khq-brass-text); font-weight: 800; }
+.khq-wm small { display: block; font: 600 11px/1 var(--font); letter-spacing: .2em; color: var(--muted); margin-top: 6px; }
+
+/* Sign-in form (landing) */
+.lg { display: grid; gap: 10px; }
+.lg-lab { font-size: 13px; font-weight: 600; }
+.lg-in { font: 400 16px var(--font); min-height: 50px; padding: 0 16px; border: 1px solid var(--khq-line); border-radius: 12px; background: var(--surface); color: var(--ink); min-width: 0; }
+.lg-in:focus { outline: 2px solid var(--khq-sage); outline-offset: 1px; border-color: var(--khq-sage); }
+.lg-mono { font: 500 18px var(--mono); letter-spacing: .2em; text-align: center; flex: 1 1 auto; }
+.lg-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--khq-sage); color: #fff; font: 600 15px var(--font); cursor: pointer; white-space: nowrap; }
+.lg-btn:hover { background: var(--khq-sage-deep); }
+.lg-btn:disabled { opacity: .7; }
+.lg-btn:focus-visible { outline: 3px solid var(--khq-brass); outline-offset: 2px; }
+.lg-btn i { width: 7px; height: 7px; border-radius: 50%; background: var(--khq-brass); }
+.lg-note { font-size: 13px; color: var(--muted); }
+.lg-err { font-size: 13px; color: var(--red-fg); }
+.lg-ok { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: var(--khq-panel); font-size: 14px; }
+.lg-ok i { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--khq-brass); color: #fff; display: grid; place-items: center; font: 800 11px var(--font); }
+.lg-code { font-size: 13px; color: var(--muted); }
+.lg-code summary { cursor: pointer; }
+.lg-row { display: flex; gap: 8px; margin-top: 8px; }
