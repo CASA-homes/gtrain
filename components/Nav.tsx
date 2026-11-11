@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { NavSearch } from '@/components/NavSearch';
 
 // Simple line icons (24px grid, stroked) used for the phone menu.
 const ICONS: Record<string, React.ReactNode> = {
@@ -43,6 +44,7 @@ export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: nu
             </Link>
           ))}
         </div>
+        <NavSearch />
         <Link href={guest ? '/live' : `/clubhouse/${myTeamId}`} className="nav-me" aria-label={guest ? 'Guest' : 'My club'}>
           {logo && !guest
             // eslint-disable-next-line @next/next/no-img-element
