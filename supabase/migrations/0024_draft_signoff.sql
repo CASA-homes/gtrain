@@ -209,22 +209,4 @@ begin
 end $$;
 grant execute on function public.draft_room_control(int, text) to authenticated;
 
--- The room's polling call leaves out the posting snapshot (it's only needed to undo).
-create or replace function public.draft_room_state(y int)
-returns jsonb language plpgsql stable security definer set search_path = public as $$
-declare mine int := public.my_team_id();
-begin
-  if not public.is_member() then return null; end if;
-  return jsonb_build_object(
-    'now', now(),
-    'room', (select to_jsonb(d) - 'snapshot' from draft_room d where d.year = y),
-    'current', (select to_jsonb(c) from draft_room_current(y) c),
-    'sels', coalesce((select jsonb_agg(to_jsonb(s) order by s.id) from draft_room_picks s where s.year = y), '[]'),
-    'feed', coalesce((select jsonb_agg(f order by f.id desc) from (select id, kind, body, made_at from draft_room_feed where year = y order by id desc limit 40) f), '[]'),
-    'picks', coalesce((select jsonb_agg(jsonb_build_object('id', p.id, 'overall', p.overall, 'round', p.round, 'owner', p.owner_team_id, 'orig', p.original_team_id) order by p.overall)
-                        from picks p where p.year = y and p.kind = 'draft' and p.overall is not null), '[]'),
-    'trades', coalesce((select jsonb_agg(to_jsonb(t) order by t.id desc) from draft_room_trades t where t.year = y and (t.status = 'pending' or t.decided_at > now() - interval '1 hour')), '[]'),
-    'queue', coalesce((select jsonb_agg(jsonb_build_object('key', q.player_key, 'player', q.player) order by q.rank) from draft_room_queue q where q.year = y and q.team_id = mine), '[]')
-  );
-end $$;
-grant execute on function public.draft_room_state(int) to authenticated;
+-- (draft_room_state is updated in 0025, which leaves out the posting snapshot and adds Cup bonus picks.)
