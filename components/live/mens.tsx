@@ -6,6 +6,7 @@ import { CLUBS } from '@/lib/clubs';
 import { ProfileTabs } from './profile-tabs';
 import { GAME_MINUTES, type MGame, type MPlayer, type MRound, type MTeam } from '@/lib/mens-round';
 import { Shell } from './kit';
+import { plateVars, type TopPerformer } from '@/lib/top-performer';
 
 const PERTH = 'Australia/Perth';
 export const A_COL = '#2563c9', B_COL = '#e0780f';
@@ -164,8 +165,9 @@ function tip(l: Live) {
   return l.ph.label;
 }
 
-function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b'; onOpen: () => void }) {
+function PlayerRow({ p, l, side, onOpen, top }: { p: MPlayer; l: Live; side: 'a' | 'b'; onOpen: () => void; top?: TopPerformer | null }) {
   const pre = l.ph.state === 'pre', live = l.ph.state === 'live';
+  const star = top?.id === p.id;
   const face = <MFace p={p} />;
   const who = (
     <div className="mx-who">
@@ -173,6 +175,7 @@ function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b
         <button className="mx-pname rh-ellip" onClick={onOpen}>{p.name}</button>
         {p.cap && <span className={`mx-cap ${p.cap}`}>{p.cap}</span>}
         {l.injured && <span className="mx-inj">INJ</span>}
+        {star && <span className="tp-badge" style={plateVars(p.club)} title={`Top scorer of round ${top!.round}, ${top!.season}: ${top!.score}`}>★ Top · {top!.score}</span>}
       </span>
       <span className="mx-sub">
         <span className={live ? 'rh-up' : ''}>{live && <span className="rh-pulse" />}{p.club} · {tip(l)}</span>
@@ -184,7 +187,7 @@ function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b
   const rate = <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>;
   const projN = <span className="mx-projn rh-mono" title="Projected">{Math.round(p.proj) * (p.cap === 'C' ? 2 : 1)}</span>;
   const x = p.cap === 'C' ? 2 : 1;
-  const act = <b className={`rh-mono ${pre ? 'mx-dash' : l.score >= 100 ? 'ton' : ''}`} title={x === 2 && !pre ? `${l.score} doubled as captain` : undefined}>{pre ? '–' : l.score * x}</b>;
+  const act = <b className={`rh-mono ${pre ? 'mx-dash' : l.score >= 100 ? 'ton' : ''} ${star ? 'tp-plate' : ''}`} style={star ? plateVars(p.club) : undefined} title={x === 2 && !pre ? `${l.score} doubled as captain` : undefined}>{pre ? '–' : l.score * x}</b>;
   const score = <div className={`mx-score ${side}`}>{side === 'a' ? <>{projN}{act}</> : <>{act}{projN}</>}</div>;
   return (
     <div className={`mx-row ${side} ${p.line === 'BENCH' ? 'bench' : ''} ${p.cap === 'C' ? 'row-c' : p.cap === 'VC' ? 'row-vc' : ''}`}>
@@ -193,7 +196,7 @@ function PlayerRow({ p, l, side, onOpen }: { p: MPlayer; l: Live; side: 'a' | 'b
   );
 }
 
-function TeamCol({ t, side, gameByClub, now, onOpen }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void }) {
+function TeamCol({ t, side, gameByClub, now, onOpen, top }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void; top?: TopPerformer | null }) {
   return (
     <div className="mx-col">
       {LINE_ORDER.map((ln) => {
@@ -202,7 +205,7 @@ function TeamCol({ t, side, gameByClub, now, onOpen }: { t: MTeam; side: 'a' | '
         return (
           <div key={ln} className="mx-line">
             <span className="rh-k">{LINE_NAME[ln]}{ln === 'BENCH' ? ' · emergencies' : ''}</span>
-            {ps.map((p) => <PlayerRow key={p.id} p={p} l={liveOf(p, gameByClub, now)} side={side} onOpen={() => onOpen({ p, team: t })} />)}
+            {ps.map((p) => <PlayerRow key={p.id} p={p} l={liveOf(p, gameByClub, now)} side={side} top={top} onOpen={() => onOpen({ p, team: t })} />)}
           </div>
         );
       })}
@@ -375,8 +378,8 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
       </section>
 
       <div className="mx-teams">
-        <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
-        <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} /></div>
+        <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
+        <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
       </div>
       {!compact && <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>}
       <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />

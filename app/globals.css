@@ -1933,3 +1933,15 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .lg-code { font-size: 13px; color: var(--muted); }
 .lg-code summary { cursor: pointer; }
 .lg-row { display: flex; gap: 8px; margin-top: 8px; }
+
+/* Matchday top performer: last round's top scorer has his score on a shiny plate in his club colours (lib/top-performer.ts). */
+.tp-plate { position: relative; overflow: hidden; display: inline-block; min-width: 2.6em; text-align: center; padding: 3px 6px; border-radius: 8px; color: #fff !important;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--tp1) 80%, #000), var(--tp1) 45%, color-mix(in srgb, var(--tp1) 55%, var(--tp2)));
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px color-mix(in srgb, var(--tp2) 70%, var(--tp1)), 0 6px 14px -4px color-mix(in srgb, var(--tp1) 60%, transparent); }
+.tp-plate::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; mix-blend-mode: screen; background-size: 260% 100%;
+  background-image: linear-gradient(110deg, transparent 22%, color-mix(in srgb, var(--tp2) 60%, transparent) 36%, rgb(255 255 255 / .95) 44%, color-mix(in srgb, var(--tp1) 45%, #fff) 50%, rgb(255 255 255 / .9) 56%, transparent 70%);
+  animation: tpSweep 3.6s ease-in-out infinite; }
+@keyframes tpSweep { 0% { background-position: 120% 0; } 60%, 100% { background-position: -60% 0; } }
+.tp-badge { display: inline-flex; align-items: center; font: 700 9.5px var(--font); letter-spacing: .06em; text-transform: uppercase; border-radius: 99px; padding: 1px 6px; white-space: nowrap;
+  color: color-mix(in srgb, var(--tp1) 80%, #000); background: linear-gradient(90deg, color-mix(in srgb, var(--tp2) 40%, #fff), color-mix(in srgb, var(--tp1) 22%, #fff)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tp1) 30%, transparent); }
+@media (prefers-reduced-motion: reduce) { .tp-plate::after { animation: none; background-position: 30% 0; } }

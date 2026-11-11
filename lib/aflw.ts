@@ -14,7 +14,9 @@ type RawSquad = { id: number; name: string; abbreviation: string };
 
 export interface LPlayer { id: number; name: string; squad: string; squadId: number; pos: string[]; avg: number | null; l3: number | null; hi: number | null; games: number; status: string; score: number | null }
 export interface LGame { id: number; date: string; status: string; home: string; away: string; homeId: number; awayId: number; homeScore: number | null; awayScore: number | null; period: number | null; periodSeconds: number }
-export interface LRound { round: number; name: string; status: string; rounds: { n: number; name: string; status: string }[]; games: LGame[]; players: LPlayer[]; fetchedAt: string }
+export interface LRound { round: number; name: string; status: string; rounds: { n: number; name: string; status: string }[]; games: LGame[]; players: LPlayer[]; fetchedAt: string;
+  /** Top scorer of the last completed round before this one: he gets the score plate in this round's matchups. */
+  top?: { id: number; name: string; squad: string; score: number; round: number } | null }
 
 async function get<T>(path: string, revalidate: number): Promise<T> {
   const r = await fetch(BASE + path, { next: { revalidate } });
@@ -46,6 +48,12 @@ export async function liveRound(round?: number): Promise<LRound> {
   const liveBy = new Map(live.map((x) => [x.id, x.score]));
   const sq = new Map(squads.map((s) => [s.id, s]));
   const playing = new Set(r.games.flatMap((g) => [g.homeId, g.awayId]));
+  const prev = [...rounds].filter((x) => x.status === 'completed' && x.roundNumber < r.roundNumber).pop();
+  let top: LRound['top'] = null;
+  if (prev) for (const p of players) {
+    const s = p.scores?.[String(prev.roundNumber)];
+    if (s != null && (!top || s > top.score)) top = { id: p.id, name: `${p.firstName} ${p.lastName}`, squad: sq.get(p.squadId)?.abbreviation ?? '', score: s, round: prev.roundNumber };
+  }
   return {
     round: r.roundNumber, name: r.name, status: r.status,
     rounds: rounds.map((x) => ({ n: x.roundNumber, name: x.name, status: x.status })),
@@ -60,6 +68,7 @@ export async function liveRound(round?: number): Promise<LRound> {
       score: done ? (p.scores?.[String(r.roundNumber)] ?? null) : (liveBy.get(p.id) ?? null),
     })),
     fetchedAt: new Date().toISOString(),
+    top,
   };
 }
 

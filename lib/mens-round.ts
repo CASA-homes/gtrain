@@ -1,6 +1,7 @@
 // Men's matchday TEST: a mocked G-Train round 1, 2027. The AFL fixture is the real one (released 27 Oct 2026);
 // the G-Train pairings are randomised, and every player's score is simulated from his 2027 projection so the
 // live views (ratings, TOG, worm) can be designed before the season starts.
+import { topFromLogs, type TopPerformer } from '@/lib/top-performer';
 import type { League } from '@/lib/data';
 import { best22, type PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
@@ -33,7 +34,7 @@ export function profileOf(p: PlayerRow): MProfile {
   };
 }
 export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; colour?: string | null; players: MPlayer[] }
-export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][] }
+export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][]; top: TopPerformer | null }
 
 // Round One 2027 (afl.com.au, 27 Oct 2026). Start times carry the venue's UTC offset.
 export const R1_2027: MGame[] = [
@@ -110,5 +111,7 @@ export function buildMensRound(league: League): MRound {
   for (let i = 0; i + 1 < order.length; i += 2) matchups.push([order[i], order[i + 1]]);
   const start = R1_2027[0].start;
   const lastStart = Math.max(...R1_2027.map((g) => Date.parse(g.start)));
-  return { round: 1, season: 2027, now: '2027-03-20T21:05:00+11:00', start, end: new Date(lastStart + GAME_MINUTES * 60e3).toISOString(), games: R1_2027, teams, matchups };
+  // Last week's top performer: for this test round, the top scorer of the last 2026 round.
+  const top = topFromLogs([...pool.values()], 2026);
+  return { round: 1, season: 2027, now: '2027-03-20T21:05:00+11:00', start, end: new Date(lastStart + GAME_MINUTES * 60e3).toISOString(), games: R1_2027, teams, matchups, top };
 }

@@ -54,7 +54,7 @@ export function CapGame({ initialRound, game, initialEntries, ready, teams, myTe
       {!ready && <Empty>Run supabase/migrations/0011_salary_cap.sql in the Supabase SQL editor to switch salary-cap games on.</Empty>}
       {tab === 'pick' && inGame
         ? <Picker game={game} round={data} byId={byId} saved={mineSaved} budget={budget} onSaved={refresh} />
-        : <CapBoard game={game} entries={entries} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} />}
+        : <CapBoard game={game} entries={entries} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} topScorer={data.top} />}
       {canManage && (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <button className="rh-btn danger" onClick={async () => { if (window.confirm('Delete this game and every entry?')) { const r = await deleteGame(game.id); if (r.ok) router.push('/live/games'); } }}>Delete game</button>
@@ -156,7 +156,8 @@ function Picker({ game, round, byId, saved, budget, onSaved }: { game: GameRow; 
 
 /* ---------------- leaderboard + head to head ---------------- */
 
-function CapBoard({ game, entries, byId, gameBySquad, teamName, myTeamId, liveNow }: {
+function CapBoard({ game, entries, byId, gameBySquad, teamName, myTeamId, liveNow, topScorer }: {
+  topScorer?: LRound['top'];
   game: GameRow; entries: CapEntry[]; byId: Map<number, LPlayer>; gameBySquad: Map<number, LGame>; teamName: (id: number) => string; myTeamId: number; liveNow: boolean;
 }) {
   const rows = game.order.map((t) => { const e = entries.find((x) => x.team_id === t); return { t, e, ...capTotals(e, byId, gameBySquad) }; })
@@ -197,7 +198,7 @@ function CapBoard({ game, entries, byId, gameBySquad, teamName, myTeamId, liveNo
                 const g = p ? gameBySquad.get(p.squadId) : undefined, c = !!p && e?.captain === p.id;
                 const sc = p?.score != null ? p.score * (c ? 2 : 1) : null;
                 const name = <span className={`rh-who ${right ? 'r' : ''}`} data-pid={p?.id}>{p && <Face p={p} size={28} />}<span className={`rh-pl ${right ? 'r' : ''}`}><span className="rh-pl-n">{p ? <>{c && <b className="cap-cb">C</b>}{p.name}</> : hiddenIdx ? <span className="rh-dim">Hidden till bounce</span> : '—'}</span>{p && <span className="rh-pl-m">{p.squad} · <span className={isLive(g) ? 'rh-on' : ''}>{gameLabel(g)}</span></span>}</span></span>;
-                const num = <Nums proj={projOf(p, g, c ? 2 : 1)} score={sc} right={right} />;
+                const num = <Nums proj={projOf(p, g, c ? 2 : 1)} score={sc} right={right} star={p && topScorer?.id === p.id ? p.squad : null} />;
                 return right ? <>{num}{name}</> : <>{name}{num}</>;
               };
               return (

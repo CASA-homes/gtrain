@@ -1,6 +1,7 @@
 'use client';
 // Live Matchups UI kit: dark, minimal, one green for winning and one orange for losing.
 import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } from 'react';
+import { plateVars } from '@/lib/top-performer';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { customFits, duelFits, matchesInPlay, picksPerTeam, slotLimits, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
@@ -83,8 +84,8 @@ export function projOf(p: LPlayer | undefined, g?: LGame, mult = 1): number | nu
   return p.avg != null ? Math.round(p.avg * mult) : null;
 }
 /** PROJ (faint) and SCORE (green) side by side; mirrored on the right. */
-export function Nums({ proj, score, right }: { proj: number | null; score: number | null; right?: boolean }) {
-  const pj = <span className="rh-proj">{proj ?? ''}</span>, sc = <span className={`rh-score ${score == null ? 'none' : ''}`}>{score ?? '–'}</span>;
+export function Nums({ proj, score, right, star }: { proj: number | null; score: number | null; right?: boolean; /** club code: last round's top scorer gets the score plate */ star?: string | null }) {
+  const pj = <span className="rh-proj">{proj ?? ''}</span>, sc = <span className={`rh-score ${score == null ? 'none' : ''} ${star != null ? 'tp-plate' : ''}`} style={star != null ? plateVars(star) : undefined}>{score ?? '–'}</span>;
   return right ? <>{sc}{pj}</> : <>{pj}{sc}</>;
 }
 export function NumsHead() {
@@ -195,7 +196,8 @@ export function MarginChart({ id, margin, live }: { id: string; margin: number; 
 
 /* ---------------- head to head ---------------- */
 
-export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamName, myTeamId, liveNow, flat }: {
+export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamName, myTeamId, liveNow, flat, top }: {
+  top?: LRound['top'];
   gameId: number; me: number; opp: number; lineups: Record<number, Lineup>; byId: Map<number, LPlayer>; gameBySquad: Map<number, LGame>;
   teamName: (id: number) => string; myTeamId: number; liveNow: boolean;
   /** Duel: each club's players in pick order, no position lines. */
@@ -240,7 +242,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
                 </span>
               </span>
             );
-            const num = <Nums proj={projOf(p, g)} score={p?.score ?? null} right={right} />;
+            const num = <Nums proj={projOf(p, g)} score={p?.score ?? null} right={right} star={p && top?.id === p.id ? p.squad : null} />;
             return right ? <>{num}{name}</> : <>{name}{num}</>;
           };
           return <div key={i} className="rh-row">{cell(pa, false)}<span className="rh-slot" style={cssVar('--c', '#4f9a5f')}>{i + 1}</span>{cell(pb, true)}</div>;
@@ -261,7 +263,7 @@ export function HeadToHead({ gameId, me, opp, lineups, byId, gameBySquad, teamNa
                     </span>
                   </span>
                 );
-                const num = <Nums proj={projOf(p, g)} score={sc} right={right} />;
+                const num = <Nums proj={projOf(p, g)} score={sc} right={right} star={p && top?.id === p.id ? p.squad : null} />;
                 return right ? <>{num}{name}</> : <>{name}{num}</>;
               };
               return (
@@ -566,7 +568,7 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
         : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {game.order.length > 2 && <Leaderboard order={game.order} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} selected={opp} onPick={(t) => t !== me && setOpp(t)} />}
-            <HeadToHead gameId={game.id} me={me} opp={opp} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow}
+            <HeadToHead gameId={game.id} me={me} opp={opp} lineups={lineups} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} top={data.top}
               flat={game.kind === 'duel5' ? { me: picks.filter((p) => p.team_id === me).map((p) => p.player_id), opp: picks.filter((p) => p.team_id === opp).map((p) => p.player_id) } : undefined} />
           </div>
         )}

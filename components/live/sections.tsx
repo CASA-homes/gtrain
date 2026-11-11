@@ -292,7 +292,7 @@ export function MyMatchups({ initial, games, teams, myTeamId }: { initial: LRoun
         return (
           <div key={g.id} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <Link href={`/live/g/${g.id}`} className="rh-gtitle">{g.name}{g.order.length > 2 && <span className="rh-dim"> · v the best of {g.order.length - 1} rivals</span>} →</Link>
-            <HeadToHead gameId={g.id} me={myTeamId} opp={opp} lineups={l} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow}
+            <HeadToHead gameId={g.id} me={myTeamId} opp={opp} lineups={l} byId={byId} gameBySquad={gameBySquad} teamName={teamName} myTeamId={myTeamId} liveNow={liveNow} top={data.top}
               flat={g.kind === 'duel5' ? { me: g.picks.filter((p) => p.team_id === myTeamId).map((p) => p.player_id), opp: g.picks.filter((p) => p.team_id === opp).map((p) => p.player_id) } : undefined} />
           </div>
         );
