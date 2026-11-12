@@ -3,8 +3,8 @@
 .kl { min-height: 100dvh; display: grid; grid-template-columns: minmax(340px, .8fr) minmax(0, 1.4fr); grid-template-rows: 1fr auto; gap: 0 24px; padding: 28px max(24px, 4vw) 18px;
   background: radial-gradient(120% 90% at 80% 40%, var(--khq-panel), var(--surface) 70%); color: var(--ink); overflow: hidden; }
 .kl-left { display: flex; flex-direction: column; gap: min(16px, 1.6vh); max-width: 580px; position: relative; z-index: 2; padding-block: 4px 12px; }
-.kl-mid { display: flex; flex-direction: column; gap: min(18px, 2vh); margin-block: auto; padding-block: min(28px, 3vh); }
-.kl-bottom { display: flex; flex-direction: column; gap: min(14px, 1.6vh); }
+.kl-mid { display: flex; flex-direction: column; gap: min(18px, 2vh); margin-top: auto; padding-top: min(28px, 3vh); }
+.kl-bottom { display: flex; flex-direction: column; gap: min(14px, 1.6vh); margin-top: min(30px, 3.4vh); margin-bottom: auto; padding-bottom: min(28px, 3vh); }
 @media (max-height: 820px) and (min-width: 861px) { .kl { padding-top: 18px; } .kl-sell { gap: 6px; } .kl-sell li { font-size: 13px; } .kl .lg-in, .kl .lg-btn { min-height: 44px; } }
 .kl-lock { display: flex; align-items: center; gap: 10px; }
 .kl-lock .khq-wm { font-size: 30px; }
