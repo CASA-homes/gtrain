@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { LoginForm } from '@/components/LoginForm';
+import { Gate, GateLink } from '@/components/landing/Gate';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { CardFan, type FanData, type HeatGame } from '@/components/landing/CardFan';
 import { getMe } from '@/lib/data';
@@ -46,10 +46,17 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
   const [me, sp] = await Promise.all([getMe(), searchParams]);
   return (
     <main className="kl">
-      <section className="kl-left">
-        <div className="kl-lock"><KeeperMark size={44} /><KeeperWordmark /></div>
-        <div className="kl-mid">
+      <header className="kl-ribbon">
+        <div className="kl-lock"><KeeperMark size={36} /><KeeperWordmark /></div>
         <span className="kl-eyebrow">The all-in-one AFL keeper league platform</span>
+        <nav className="kl-nav">
+          {me ? <Link href="/live" className="kl-btn sm">Enter Matchday</Link> : (
+            <><GateLink to="login" className="kl-link strong">Log in</GateLink><GateLink to="start" className="kl-btn sm">Start a league</GateLink></>
+          )}
+        </nav>
+      </header>
+      <section className="kl-left">
+        <div className="kl-mid">
         <h1 className="kl-hl">The home of your<br /><b>AFL keeper league.</b></h1>
         <ul className="kl-sell">
           <li><b>Custom everything</b> your rules, lists, scoring and comps</li>
@@ -67,7 +74,7 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
               Enter Matchday
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
-          ) : <LoginForm linkError={sp.error === 'link'} />}
+          ) : <Gate linkError={sp.error === 'link'} />}
         </div>
         </div>
       </section>

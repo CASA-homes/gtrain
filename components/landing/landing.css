@@ -1,6 +1,6 @@
 /* Keeper HQ sign-in (app/page.tsx): copy and sign-in on the left, the card fan on the right, a league wire along the bottom.
    Phones: copy and form first, then a smaller fan. */
-.kl { min-height: 100dvh; display: grid; grid-template-columns: minmax(340px, .8fr) minmax(0, 1.4fr); grid-template-rows: 1fr auto; gap: 0 24px; padding: 28px max(24px, 4vw) 18px;
+.kl { min-height: 100dvh; display: grid; grid-template-columns: minmax(340px, .8fr) minmax(0, 1.4fr); grid-template-rows: auto 1fr auto; gap: 0 24px; padding: 28px max(24px, 4vw) 18px;
   background: radial-gradient(120% 90% at 80% 40%, var(--khq-panel), var(--surface) 70%); color: var(--ink); overflow: hidden; }
 .kl-left { display: flex; flex-direction: column; gap: min(16px, 1.6vh); max-width: 580px; position: relative; z-index: 2; padding-block: 4px 12px; }
 .kl-mid { display: flex; flex-direction: column; gap: min(18px, 2vh); margin-top: auto; padding-top: min(28px, 3vh); }
@@ -146,3 +146,24 @@
   .kl-card.tall { height: 360px; }
 }
 @media (prefers-reduced-motion: reduce) { .kl-tk { animation: none; } .kl-card { transition: none; } }
+
+/* header ribbon + start/log in */
+.kl-ribbon { grid-column: 1 / -1; display: flex; align-items: center; gap: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--khq-line); position: relative; z-index: 3; }
+.kl-ribbon .khq-wm { font-size: 26px; }
+.kl-ribbon .kl-eyebrow { padding-left: 18px; border-left: 1px solid var(--khq-line); }
+.kl-nav { margin-left: auto; display: flex; align-items: center; gap: clamp(10px, 2vw, 16px); }
+.kl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 22px; border: 0; border-radius: 12px; background: var(--khq-sage); color: #fff; font: 600 15px var(--font); cursor: pointer; text-decoration: none; white-space: nowrap; }
+.kl-btn:hover { background: var(--khq-sage-deep); color: #fff; }
+.kl-btn:focus-visible, .kl-link:focus-visible { outline: 3px solid var(--khq-brass); outline-offset: 2px; }
+.kl-btn i { width: 7px; height: 7px; border-radius: 50%; background: var(--khq-brass); }
+.kl-btn.sm { min-height: 38px; padding: 0 15px; font-size: 14px; }
+.kl-btn.ghost { background: var(--surface); color: var(--khq-sage-deep); box-shadow: inset 0 0 0 1.5px var(--khq-sage); }
+.kl-btn.ghost:hover { background: #f1f7f3; }
+.kl-link { border: 0; background: none; padding: 0; font: 600 13px var(--font); color: var(--khq-sage); cursor: pointer; }
+.kl-link.strong { font-size: 14px; color: var(--ink); white-space: nowrap; }
+.kl-gate { display: grid; gap: 10px; max-width: 400px; }
+.kl-two { display: flex; flex-wrap: wrap; gap: 8px; }
+.kl-note { margin: 0; font-size: 13px; color: var(--muted); }
+.kl-soon { padding: 12px 14px; border-radius: 12px; background: #fbf3df; border: 1px solid #efe2bf; font-size: 14px; line-height: 1.45; color: var(--ink); }
+.kl-soon b { color: var(--khq-brass-text); }
+@media (max-width: 860px) { .kl-ribbon .kl-eyebrow { display: none; } .kl-ribbon { padding-bottom: 10px; } .kl-ribbon .khq-wm { font-size: 22px; } }
