@@ -30,7 +30,7 @@ const CAPTION: Record<Key, [string, string]> = {
 
 /** An AFL guernsey in club colours (no logos), in place of a player photo. */
 const KIT_BODY = 'M13 3 L17 3 Q20 7.5 23 3 L27 3 L35 8.5 L31.5 15.5 L30.5 37 L9.5 37 L8.5 15.5 L5 8.5 Z';
-function Kit({ club }: { club: 'GEE' | 'GCS' }) {
+function Kit({ club, no }: { club: 'GEE' | 'GCS'; no: number }) {
   const id = `kit-${club}`;
   return (
     <svg className="kl-kit" viewBox="0 0 40 40" aria-hidden="true">
@@ -44,6 +44,7 @@ function Kit({ club }: { club: 'GEE' | 'GCS' }) {
       </g>
       <path d={KIT_BODY} fill="none" stroke="rgb(0 0 0 / .25)" strokeWidth=".8" />
       <path d="M17 3 Q20 7.5 23 3" fill="none" stroke="rgb(0 0 0 / .35)" strokeWidth="1" />
+      <text x="20" y="28.5" textAnchor="middle" className="kl-kitno" stroke={club === 'GEE' ? '#1c3c63' : '#8a1409'}>{no}</text>
     </svg>
   );
 }
@@ -56,7 +57,7 @@ function ProfileCard() {
   const attrs: [string, number][] = [['Ball winning', 20], ['Contested ball', 18], ['Clearances', 17], ['Kicking', 16], ['Metres gained', 19], ['Tackling', 14]];
   return (
     <>
-      <div className="kl-pf"><span className="kl-face"><Kit club="GEE" /></span><div><b>Bailey Smith</b><small>Geelong · MID · 25</small></div><div className="kl-avg"><b>118.2</b><small>2026 avg</small></div></div>
+      <div className="kl-pf"><span className="kl-face"><Kit club="GEE" no={3} /></span><div><b>Bailey Smith</b><small>Geelong · MID · 25</small></div><div className="kl-avg"><b>118.2</b><small>2026 avg</small></div></div>
       <div className="kl-kv"><span>Keeper value</span><span className="kl-stars" aria-label="5 out of 5">★★★★★</span><b>Elite keeper</b></div>
       <div className="kl-body">{attrs.map(([l, v]) => <div key={l} className="kl-attr"><span>{l}</span><Bar20 v={v} /><b>{v}</b></div>)}</div>
     </>
@@ -84,7 +85,7 @@ function HeatCard({ d, active }: { d: FanData['anderson']; active: boolean }) {
   useEffect(() => { games.slice(-8).forEach((x) => { if (x.heat) { const im = new Image(); im.src = heatSrc(x.heat, d.playerNo); } }); }, [games, d.playerNo]);
   return (
     <>
-      <div className="kl-pf"><span className="kl-face"><Kit club="GCS" /></span><div><b>Noah Anderson</b><small>Gold Coast · MID · 26</small></div><div className="kl-avg"><b>{d.avg.toFixed(1)}</b><small>2026 avg</small></div></div>
+      <div className="kl-pf"><span className="kl-face"><Kit club="GCS" no={15} /></span><div><b>Noah Anderson</b><small>Gold Coast · MID · 26</small></div><div className="kl-avg"><b>{d.avg.toFixed(1)}</b><small>2026 avg</small></div></div>
       <div className="kl-body" style={{ gap: 6 }}>
         <div className="kl-hh"><span>Heat map</span><b>{RND(g.round)} v {g.opp} · {g.score}</b></div>
         <div className={`kl-heat ${fade ? 'fade' : ''}`}>
