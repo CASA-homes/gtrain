@@ -297,7 +297,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
                   {...(ok && !burnt ? dragProps(p.id, slotOf.get(p.id) ?? null) : {})}>
                   <Disc p={p} size={26} label />
                   <span className="sq-row-main">
-                    <span className="sq-row-nm"><button type="button" className="sq-nm-btn" onClick={(e) => { e.stopPropagation(); setSheet(p); }} onKeyDown={(e) => e.stopPropagation()}>{p.name}</button><Form p={p} size={11} />{p.keeper && <em>{p.keeper}</em>}<Info p={p} onInfo={setSheet} /></span>
+                    <span className="sq-row-nm"><button type="button" className="sq-nm-btn" onClick={(e) => { e.stopPropagation(); setSheet(p); }} onKeyDown={(e) => e.stopPropagation()}>{p.name}</button><Form p={p} size={11} />{p.keeper && <em>{p.keeper}</em>}</span>
                     <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{isTied && <i className="tied" title={`Played a cup game for ${tied[p.id]}`}>CUP-TIED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
                   </span>
                   <span className="sq-row-av">{p.avg != null ? Math.round(p.avg) : '–'}</span>
