@@ -2,7 +2,7 @@
 // Battle desk: token cash, buying tokens from the commish, and club-v-club challenges with stakes.
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { COMP, cleanSettings, customResults, liveRound, matchesInPlay, type GameSettings } from '@/lib/aflw';
+import { COMP, cleanSettings, customResults, liveRound, matchesInPlay, type GameSettings } from '@/lib/live';
 import { createGame, loadGame, loadRoles } from './actions';
 
 type Res = { ok: boolean; error?: string; id?: number };

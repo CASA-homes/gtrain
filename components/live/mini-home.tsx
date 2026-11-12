@@ -2,7 +2,7 @@
 // Mini Games home: your games this round, past results, and a short animation of how a mini game plays out.
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { lineupsFromPicks, onClock, type GamePick, type GameRow, type LRound } from '@/lib/aflw';
+import { lineupsFromPicks, onClock, type GamePick, type GameRow, type LRound } from '@/lib/live';
 import { Empty, LiveChip, Shell, totals, useRound, type TeamRow } from './kit';
 
 type Game = GameRow & { picks: GamePick[] };

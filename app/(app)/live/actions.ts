@@ -1,7 +1,7 @@
 'use server';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CAP_BUDGETS, CAP_PICKS, COMP, cleanSettings, customFits, type GameSettings, type Roles, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/aflw';
+import { CAP_BUDGETS, CAP_PICKS, COMP, cleanSettings, customFits, type GameSettings, type Roles, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, liveRound, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/live';
 
 type Res = { ok: boolean; error?: string; id?: number };
 type RawGame = { id: number; round: number; kind: string; name: string; status: 'drafting' | 'done'; draft_order: number[]; created_by: string; created_at: string; finished_at: string | null; budget?: number | null; match_id?: number | null; prize?: Prize | null; settings?: GameSettings | null };

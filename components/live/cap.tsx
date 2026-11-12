@@ -2,7 +2,7 @@
 // Salary Cap 5: pick any 5 under the cap, captain doubles, players lock at their first bounce.
 import { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { CAP_PICKS, lockedIds, priceOf, type CapEntry, type GameRow, type LGame, type LPlayer, type LRound } from '@/lib/aflw';
+import { CAP_PICKS, lockedIds, priceOf, type CapEntry, type GameRow, type LGame, type LPlayer, type LRound } from '@/lib/live';
 import { deleteGame, loadEntries, saveEntry } from '@/app/(app)/live/actions';
 import { Empty, Face, LiveChip, MarginChart, Nums, NumsHead, PrizeStrip, Shell, projOf, gameLabel, isLive, useRound, type TeamRow } from './kit';
 

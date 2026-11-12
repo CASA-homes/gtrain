@@ -2,9 +2,9 @@
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CAP_BUDGETS, GAME_KINDS, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, picksPerTeam, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/aflw';
+import { CAP_BUDGETS, GAME_KINDS, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, picksPerTeam, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/live';
 import { createGame } from '@/app/(app)/live/actions';
-import { DEFAULT_SETTINGS, type GameSettings } from '@/lib/aflw';
+import { DEFAULT_SETTINGS, type GameSettings } from '@/lib/live';
 import { GameSetup } from './battle';
 import { Empty, HeadToHead, LiveChip, Shell, gameLabel, isLive, totals, useRound, type TeamRow } from './kit';
 

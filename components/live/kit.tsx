@@ -4,7 +4,7 @@ import { Fragment, useCallback, useEffect, useMemo, useState, useTransition } fr
 import { plateVars } from '@/lib/top-performer';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { customFits, duelFits, matchesInPlay, picksPerTeam, slotLimits, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot } from '@/lib/aflw';
+import { customFits, duelFits, matchesInPlay, picksPerTeam, slotLimits, type LProfile, SLOTS, lineupsFromPicks, payouts, type Prize, onClock, slotFor, type GamePick, type GameRow, type LGame, type LPlayer, type LRound, type Lineup, type Slot, playerPhoto } from '@/lib/live';
 import { deleteGame, loadGame, makePick, undoPick } from '@/app/(app)/live/actions';
 import { CLUBS } from '@/lib/clubs';
 import { CustomMatchup } from './battle';
@@ -23,7 +23,7 @@ export function Face({ p, size = 30 }: { p: { id: number; name: string; squad: s
   const ring = c ? (c.m ? `conic-gradient(${c.a} 0 45%, ${c.m} 45% 55%, ${c.b} 55% 100%)` : `conic-gradient(${c.a} 0 50%, ${c.b} 50% 100%)`) : '#d6dad3';
   return (
     <span className="rh-face" style={{ width: size, height: size, background: ring }} aria-hidden="true">
-      <span>{bad ? p.name.split(' ').map((w) => w[0]).slice(0, 2).join('') : <img src={`https://fantasy.afl.com.au/media/aflw_fantasy/players/${p.id}_100.webp`} alt="" loading="lazy" onError={() => setBad(true)}
+      <span>{bad ? p.name.split(' ').map((w) => w[0]).slice(0, 2).join('') : <img src={playerPhoto(p.id)} alt="" loading="lazy" onError={() => setBad(true)}
         ref={(el) => { if (el && el.complete && el.naturalWidth === 0) setBad(true); }} />}</span>
     </span>
   );

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { liveRound } from '@/lib/aflw';
+import { liveRound } from '@/lib/live';
 import { getMe } from '@/lib/data';
 
 // Polled by the live page every ~25s during games. Members only (the middleware already requires a sign-in).
