@@ -1,3 +1,4 @@
+import { buildPreviews } from '@/lib/mens-preview';
 import { redirect } from 'next/navigation';
 import { LiveMatchups } from '@/components/live/live-matchups';
 import { getLeague, getMe } from '@/lib/data';
@@ -24,5 +25,7 @@ export default async function MatchupsPage({ searchParams }: { searchParams: Pro
   const m = /^(\d{4})-(\d{1,2})$/.exec(r ?? '');
   const hist = m && Number(m[1]) === HISTORY_SEASON && HISTORY_ROUNDS.includes(Number(m[2])) ? buildHistoryRound(Number(m[2]), league, me.team_id) : null;
   const sel = hist ? `${HISTORY_SEASON}-${hist.round}` : rounds[0].value;
-  return <LiveMatchups mens={buildMensRound(league)} md={md} rounds={rounds} sel={sel} history={hist} minis={minis} />;
+  const mens = buildMensRound(league);
+  mens.previews = buildPreviews(league, mens.teams.map((t) => ({ id: t.id, starters: t.players.filter((p) => p.line !== 'BENCH').map((p) => p.id) })));
+  return <LiveMatchups mens={mens} md={md} rounds={rounds} sel={sel} history={hist} minis={minis} />;
 }

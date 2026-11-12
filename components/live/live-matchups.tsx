@@ -30,16 +30,17 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
         {minis.map((m) => (
           <Link key={m.id} href={`/live/g/${m.id}`} className="lm-tab mini"><b>Mini · {m.name}</b><span>{m.sub} · {m.status === 'drafting' ? 'drafting' : 'open game →'}</span></Link>
         ))}
-        <Link href="/live" className="lm-set">Set teams in Squad Selector →</Link>
       </div>
   );
+  const roundSel = (
+    <select className="rh-select lm-round" id="lm-round" aria-label="Round" value={sel} onChange={(e) => router.push(`/live/matchups?r=${e.target.value}`)}>
+      {[...new Set(rounds.map((r) => r.group))].map((g) => <optgroup key={g} label={g}>{rounds.filter((r) => r.group === g).map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}</optgroup>)}
+    </select>
+  );
+  const rightEl = <div className="lm-right">{roundSel}{!history && <Link href="/live" className="lm-set">Set teams in Squad Selector →</Link>}</div>;
   return (
-    <Shell compact title={<span className="lm-title">Live Matchups
-      <select className="rh-select lm-round" id="lm-round" aria-label="Round" value={sel} onChange={(e) => router.push(`/live/matchups?r=${e.target.value}`)}>
-        {[...new Set(rounds.map((r) => r.group))].map((g) => <optgroup key={g} label={g}>{rounds.filter((r) => r.group === g).map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}</optgroup>)}
-      </select>
-      {history && <span className="lm-done">Completed</span>}</span>}
-      sub={history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>} right={history ? null : tabsEl}>
+    <Shell compact title={<span className="lm-title">Live Matchups{history ? <span className="lm-done">Completed</span> : tabsEl}</span>}
+      sub={history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />

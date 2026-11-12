@@ -212,6 +212,11 @@ function LineHead({ ln, ps, gameByClub, now }: { ln: MPlayer['line']; ps: MPlaye
 function TeamCol({ t, side, gameByClub, now, onOpen, top }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void; top?: TopPerformer | null }) {
   return (
     <div className="mx-col">
+      <div className={`mx-row mx-colhead ${side}`} aria-hidden="true">
+        {side === 'a'
+          ? <><span /><span>Player</span><span>TOG</span><span>Rat</span><span className="mx-score a"><span>Proj</span><span>Score</span></span></>
+          : <><span className="mx-score b"><span>Score</span><span>Proj</span></span><span>Rat</span><span>TOG</span><span>Player</span><span /></>}
+      </div>
       {LINE_ORDER.map((ln) => {
         const ps = t.players.filter((p) => p.line === ln);
         if (!ps.length) return null;
@@ -243,6 +248,39 @@ function MiniWorm({ a, b, gameByClub, tl, now }: { a: MTeam; b: MTeam; gameByClu
   );
 }
 
+
+/* ---------------- preview ---------------- */
+function Preview({ a, b, round, sa, sb, cols }: { a: MTeam; b: MTeam; round: MRound; sa: { proj: number }; sb: { proj: number }; cols: [string, string] }) {
+  const pa = round.previews?.[a.id], pb = round.previews?.[b.id];
+  const name = (t: MTeam, id: number) => { const p = t.players.find((x) => x.id === id); if (!p) return null; const w = p.name.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : p.name; };
+  const shortN = (n: string) => n;
+  const ageOf = (t: MTeam) => { const xs = t.players.filter((p) => p.line !== 'BENCH' && p.prof.age != null).map((p) => p.prof.age!); return xs.length ? (xs.reduce((x, y) => x + y, 0) / xs.length).toFixed(1) : '–'; };
+  const list = (xs: (string | null)[]) => { const v = xs.filter((x): x is string => !!x); if (!v.length) return <span className="rh-dim">None</span>; return <>{v.slice(0, 6).map((x) => <span key={x}>{x}</span>)}{v.length > 6 && <span className="rh-dim">+{v.length - 6} more</span>}</>; };
+  const form = (r: ('W' | 'L' | 'D')[] | undefined) => r?.length ? <span className="pv-form">{r.map((x, i) => <i key={i} className={x}>{x}</i>)}</span> : <span className="rh-dim">–</span>;
+  const season = pa?.season ?? pb?.season ?? 2026;
+  const h2h = pa?.vs[b.id];
+  const rows: [string, React.ReactNode, React.ReactNode, boolean?][] = [
+    ['Projected', <b key="a" className="rh-mono" style={{ color: cols[0] }}>{sa.proj}</b>, <b key="b" className="rh-mono" style={{ color: cols[1] }}>{sb.proj}</b>],
+    [`Ladder ${season}`, pa?.rank ? ordinal(pa.rank) : '–', pb?.rank ? ordinal(pb.rank) : '–'],
+    ['Record', pa ? `${pa.w}-${pa.l}-${pa.d}` : '–', pb ? `${pb.w}-${pb.l}-${pb.d}` : '–'],
+    ['Avg pts', pa?.avg?.toFixed(1) ?? '–', pb?.avg?.toFixed(1) ?? '–'],
+    ['Last 5', form(pa?.last5), form(pb?.last5)],
+    [`Head to head ${season}`, h2h ? `${h2h.w} win${h2h.w === 1 ? '' : 's'}` : '–', h2h ? `${h2h.l} win${h2h.l === 1 ? '' : 's'}` : '–'],
+    ['Ins', list((pa?.ins ?? []).map((id) => name(a, id))), list((pb?.ins ?? []).map((id) => name(b, id))), true],
+    ['Outs', list((pa?.outs ?? []).map(shortN)), list((pb?.outs ?? []).map(shortN)), true],
+    ['Avg age', ageOf(a), ageOf(b)],
+  ];
+  return (
+    <section className="rh-card pv">
+      <div className="pv-head"><b style={{ color: cols[0] }}>{a.name}</b><span className="rh-k">Preview</span><b style={{ color: cols[1] }}>{b.name}</b></div>
+      {rows.map(([k, x, y, tall]) => (
+        <div key={k} className={`pv-row ${tall ? 'tall' : ''}`}><div className="pv-a">{x}</div><div className="pv-k">{k}</div><div className="pv-b">{y}</div></div>
+      ))}
+      <span className="rh-dim pv-note">Form is from the {season} season until 2027 games are played. Ins and outs compare this team with their last {season} team.</span>
+    </section>
+  );
+}
+const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`;
 
 /* ---------------- player pop-up ---------------- */
 export type ProfileOpen = { p: MPlayer; team: MTeam } | null;
@@ -295,6 +333,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
   const mineIdx = round.matchups.findIndex((m) => m.includes(myTeamId));
   const [sel, setSel] = useState(mineIdx >= 0 ? mineIdx : 0);
   const [prof, setProf] = useState<ProfileOpen>(null);
+  const [view, setView] = useState<'preview' | 'live' | 'graph'>('live');
   const team = (id: number) => round.teams.find((t) => t.id === id)!;
 
   useEffect(() => {
@@ -363,7 +402,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
 
       </div>
 
-      <section className="rh-card mx-board">
+      <section className="rh-card mx-hero">
         <div className="mx-sb">
           <div className="mx-sbt a">
             <span className="rh-k">{A.coach}</span>
@@ -384,16 +423,26 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
             <span className="rh-dim rh-mono">projected {sb.proj}</span>
           </div>
         </div>
-        <div className="mx-worm">
-          <div className="mx-legend"><span><i className="solid" />Live margin</span><span><i className="dash" />Projected final margin</span><span className="rh-dim">Shading shows who’s ahead</span></div>
-          <Worm a={A} b={B} round={round} now={now} gameByClub={gameByClub} tl={tl} height={compact ? 118 : undefined} />
+        <div className="mx-views" role="tablist" aria-label="Matchup view">
+          {([['preview', 'Preview'], ['live', 'Live scores'], ['graph', 'Graph']] as const).map(([k, label]) => (
+            <button key={k} role="tab" aria-selected={view === k} className={view === k ? 'on' : ''} onClick={() => setView(k)}>{label}</button>
+          ))}
         </div>
       </section>
 
-      <div className="mx-teams">
-        <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
-        <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
-      </div>
+      {view === 'preview' && <Preview a={A} b={B} round={round} sa={sa} sb={sb} cols={[A_COL, B_COL]} />}
+      {view === 'graph' && (
+        <section className="rh-card mx-graph">
+          <div className="mx-legend"><span><i className="solid" />Live margin</span><span><i className="dash" />Projected final margin</span><span className="rh-dim">Shading shows who’s ahead</span></div>
+          <Worm a={A} b={B} round={round} now={now} gameByClub={gameByClub} tl={tl} height={300} />
+        </section>
+      )}
+      {view === 'live' && (
+        <div className="mx-teams">
+          <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
+          <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
+        </div>
+      )}
       {!compact && <p className="rh-dim" style={{ fontSize: 12, margin: 0 }}>Ratings compare each player’s score with where his 2027 projection says he should be at this point of his game: 7.0 is on track, 8.5+ well ahead, under 5.5 well behind. Totals are the 18 on field with the captain doubled. Emergencies aren’t applied in this test.</p>}
       <PlayerSheet open={prof} onClose={() => setProf(null)} gameByClub={gameByClub} now={now} />
     </>

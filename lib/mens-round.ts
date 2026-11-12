@@ -37,7 +37,9 @@ export function profileOf(p: PlayerRow): MProfile {
   };
 }
 export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; colour?: string | null; players: MPlayer[] }
-export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][]; top: TopPerformer | null; pars: PosPars }
+export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][]; top: TopPerformer | null; pars: PosPars;
+  /** each club's form coming in (Live Matchups preview tab), filled in server-side */
+  previews?: Record<number, import('@/lib/mens-preview').TeamPreview> }
 
 // Round One 2027 (afl.com.au, 27 Oct 2026). Start times carry the venue's UTC offset.
 export const R1_2027: MGame[] = [
