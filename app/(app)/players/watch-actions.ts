@@ -12,12 +12,12 @@ export async function toggleWatch(playerId: number, on: boolean): Promise<{ on: 
   const jar = await cookies();
   const local = await cookieIds();
   const res = on
-    ? await supabase.from('watchlist').upsert({ user_id: user.id, player_id: playerId }, { onConflict: 'user_id,player_id' })
+    ? await supabase.from('watchlist').upsert({ user_id: user.id, player_id: playerId }, { onConflict: 'league_id,user_id,player_id' })
     : await supabase.from('watchlist').delete().eq('user_id', user.id).eq('player_id', playerId);
   if (!res.error) {
     // Table is live: move anything saved on this device into it, then drop the cookie.
     const rest = local.filter((x) => x !== playerId);
-    if (rest.length) await supabase.from('watchlist').upsert(rest.map((pid) => ({ user_id: user.id, player_id: pid })), { onConflict: 'user_id,player_id' });
+    if (rest.length) await supabase.from('watchlist').upsert(rest.map((pid) => ({ user_id: user.id, player_id: pid })), { onConflict: 'league_id,user_id,player_id' });
     if (local.length) jar.delete(WATCH_COOKIE);
   } else {
     const next = on ? [...new Set([...local, playerId])] : local.filter((x) => x !== playerId);

@@ -51,7 +51,7 @@ export async function saveCompSettings(cap: number, enabled: CompKey[], locksAt:
   const r = await supabase.from('comp_settings').upsert({
     season: COMP_SEASON, cap: Math.max(0, Math.min(OPT_IN.length, Math.round(cap))), enabled: enabled.filter((k) => OPT_IN.includes(k)),
     locks_at: locksAt || null, updated_at: new Date().toISOString(),
-  }, { onConflict: 'season' });
+  }, { onConflict: 'league_id,season' });
   return r.error ? err(r.error.message) : done();
 }
 

@@ -70,7 +70,7 @@ export async function saveCupLineup(round: number, lineup: CupLineup): Promise<R
 /** Commish: enter or correct a cup result. */
 export async function saveCupResult(matchId: string, home: number, away: number): Promise<Res> {
   const supabase = await createClient();
-  const res = await supabase.from('cup_results').upsert({ season: CUP_SEASON, match_id: matchId, home_score: Math.round(home), away_score: Math.round(away), updated_at: new Date().toISOString() }, { onConflict: 'season,match_id' });
+  const res = await supabase.from('cup_results').upsert({ season: CUP_SEASON, match_id: matchId, home_score: Math.round(home), away_score: Math.round(away), updated_at: new Date().toISOString() }, { onConflict: 'league_id,season,match_id' });
   return res.error ? { ok: false, error: needMigration(res.error.message) } : { ok: true };
 }
 
@@ -102,7 +102,7 @@ export async function setCupPrizes(patch: { prizes_on?: boolean; winner_round?: 
     if (v != null) { if (!Number.isInteger(v) || v < 1 || v > 16) return { ok: false, error: 'Rounds go from 1 to 16.' }; clean[k] = v; }
   }
   const supabase = await createClient();
-  const { error } = await supabase.from('cup_settings').upsert({ season: CUP_SEASON, ...clean }, { onConflict: 'season' });
+  const { error } = await supabase.from('cup_settings').upsert({ season: CUP_SEASON, ...clean }, { onConflict: 'league_id,season' });
   if (error) return { ok: false, error: /cup_settings/.test(error.message) ? PRIZE_MIG : error.message };
   revalidateCup();
   return { ok: true };

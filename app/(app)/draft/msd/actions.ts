@@ -38,7 +38,7 @@ export async function createMsdPicks(): Promise<Res> {
     .filter((r) => !cur.picks.some((p) => p.original_team_id === t.id && p.round === r && !p.is_optional))
     .map((r) => ({ year: MSD_SEASON, round: r, overall: null, original_team_id: t.id, owner_team_id: t.id, is_optional: false, kind: 'msd' })));
   if (rows.length) { const r = await supabase.from('picks').insert(rows); if (r.error) return err(r.error.message); }
-  const s = await supabase.from('msd_state').upsert({ season: MSD_SEASON, updated_at: new Date().toISOString() }, { onConflict: 'season' });
+  const s = await supabase.from('msd_state').upsert({ season: MSD_SEASON, updated_at: new Date().toISOString() }, { onConflict: 'league_id,season' });
   return s.error ? err(s.error.message) : done();
 }
 
@@ -52,7 +52,7 @@ export async function saveMsdOrder(order: number[]): Promise<Res> {
   const bumpsQ = await supabase.from('comp_prizes').select('winner_id, amount').eq('season', MSD_SEASON).eq('kind', 'msd_bump').eq('status', 'transferred');
   const final = applyBumps(order, (bumpsQ.data ?? []).filter((b) => b.winner_id).map((b) => ({ team: b.winner_id as number, spots: b.amount ?? 1 })));
   const nums = numberPicks(cur.picks, final);
-  const s = await supabase.from('msd_state').upsert({ season: MSD_SEASON, order_team_ids: final, updated_at: new Date().toISOString() }, { onConflict: 'season' });
+  const s = await supabase.from('msd_state').upsert({ season: MSD_SEASON, order_team_ids: final, updated_at: new Date().toISOString() }, { onConflict: 'league_id,season' });
   if (s.error) return err(s.error.message);
   const res = await Promise.all([...nums].map(([id, overall]) => supabase.from('picks').update({ overall }).eq('id', id)));
   const bad = res.find((r) => r.error);
@@ -68,7 +68,7 @@ export async function setMsdPhase(phase: MsdPhase, dropsDue?: string | null, clo
   if (dropsDue !== undefined) patch.drops_due = dropsDue;
   if (clockSeconds !== undefined) patch.clock_seconds = clockSeconds;
   if (phase === 'drafting') patch.on_clock_since = new Date().toISOString();
-  const r = await supabase.from('msd_state').upsert(patch, { onConflict: 'season' });
+  const r = await supabase.from('msd_state').upsert(patch, { onConflict: 'league_id,season' });
   return r.error ? err(r.error.message) : done();
 }
 
@@ -148,7 +148,7 @@ export async function applyMsd(): Promise<Res> {
     }
     const pk = pickById.get(s.pick_id);
     const up = await supabase.from('squad').upsert({ player_id: s.player_id, team_id: s.team_id, is_keeper: false, is_rookie_keeper: false,
-      acquired_how: `${MSD_SEASON} MSD R${pk?.round ?? '?'} #${pk?.overall ?? '?'}`, acquired_season: MSD_SEASON }, { onConflict: 'player_id' });
+      acquired_how: `${MSD_SEASON} MSD R${pk?.round ?? '?'} #${pk?.overall ?? '?'}`, acquired_season: MSD_SEASON }, { onConflict: 'league_id,player_id' });
     if (up.error) return err(up.error.message);
     const m = await supabase.from('msd_selections').update({ applied: true }).eq('season', MSD_SEASON).eq('pick_id', s.pick_id);
     if (m.error) return err(m.error.message);
