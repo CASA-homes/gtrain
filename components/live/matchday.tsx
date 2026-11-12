@@ -14,6 +14,7 @@ import { CupPanel, type CupData } from './cup';
 import { Shell } from './kit';
 import { ProfileTabs } from './profile-tabs';
 import { R1_2027 } from '@/lib/mens-round';
+import { rtCol } from './mens';
 
 const POS_COL: Record<Pos, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 const empty = (r: Rules): MdLineup => ({ slots: Object.fromEntries(r.slots.map((s) => [s.key, []])), c: null, vc: null });
@@ -106,6 +107,9 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
   const [drag, setDrag] = useState<Pick>(null);
   const [over, setOver] = useState<string | null>(null);
   const [sheet, setSheet] = useState<MdPlayer | null>(null);
+  const [showProj, setShowProj] = useState(true);
+  useEffect(() => { try { if (localStorage.getItem('khq-sq-proj') === '0') setShowProj(false); } catch { /* storage off */ } }, []);
+  const toggleProj = () => setShowProj((v) => { try { localStorage.setItem('khq-sq-proj', v ? '0' : '1'); } catch { /* storage off */ } return !v; });
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
@@ -218,10 +222,11 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     );
     const capd = rules.captain && lineup.c === p.id, vcd = rules.vc && lineup.vc === p.id;
     return (
-      <div key={k} className={`sq-spot full sqc ${capd ? 'row-c' : vcd ? 'row-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
+      <div key={k} className={`sq-spot full sqc pos-${s.fits === 'any' ? p.pos[0] : s.fits.length === 1 ? s.fits[0] : p.pos.find((x) => (s.fits as Pos[]).includes(x)) ?? p.pos[0]} ${capd ? 'row-c' : vcd ? 'row-vc' : ''} ${swapCls(p.id)} ${st} ${isOver ? 'over' : ''} ${picked?.pid === p.id ? 'picked' : ''} ${drag?.pid === p.id ? 'dragging' : ''}`} role="button" tabIndex={0} title={p.name}
         onClick={tap} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); } }} {...dropProps(s.key, i)} {...dragProps(p.id, s.key)}>
         <span className="sqc-h">
-          <b className="sqc-n">{short(p.name)}</b>
+          <button type="button" className="sqc-n" onClick={(e) => { e.stopPropagation(); setSheet(p); }} onKeyDown={(e) => e.stopPropagation()} title={`${p.name} · profile`}>{short(p.name)}</button>
+          <Form p={p} size={12} />
           {!s.bench && rules.captain && <>
             <button type="button" className={`sqc-role c ${lineup.c === p.id ? 'on' : ''}`} aria-label={`Captain ${p.name}`} aria-pressed={lineup.c === p.id} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>
             {rules.vc && <button type="button" className={`sqc-role vc ${lineup.vc === p.id ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} aria-pressed={lineup.vc === p.id} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
@@ -232,8 +237,8 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
         <span className="sqc-b">
           <Disc p={p} size={28} />
           <span className="sqc-meta"><b>{p.club ?? '–'}</b> | {p.pos.join('/')}</span>
-          <span className="sqc-sub"><Form p={p} size={12} />{p.avg != null ? `avg ${p.avg.toFixed(1)}` : 'no games'}</span>
-          <span className={`sqc-proj ${capd ? 'is-cap' : ''} ${(capd ? p.proj * 2 : p.proj) >= 100 ? 'ton' : ''}`} title={capd ? `${p.proj} doubled as captain` : 'Projected'}>{capd ? p.proj * 2 : p.proj}</span>
+          <span className="sqc-sub" title={`2026 average${p.l5 != null ? ` · last 5: ${p.l5}` : ''}`}>{p.avg != null ? p.avg.toFixed(1) : 'no games'}</span>
+          {showProj && <span className={`sqc-proj est ${capd ? 'is-cap' : ''}`} title={capd ? `Projected ${p.proj}, doubled as captain` : 'Projected score'}>{capd ? p.proj * 2 : p.proj}</span>}
         </span>
         <span className="sqc-f" suppressHydrationWarning>{fixtureOf(p.club)}</span>
       </div>
@@ -258,6 +263,9 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           <div className="sq-stat"><span className="rh-k">Projected</span><b className="rh-mono">{total}</b></div>
           <div className="sq-stat"><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
           <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
+          <button type="button" className={`sq-projtog ${showProj ? 'on' : ''}`} aria-pressed={showProj} onClick={toggleProj} title="Show projected scores on the field">
+            <i aria-hidden="true" />Projections
+          </button>
           <div className="sq-acts">
             <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set([...used, ...Object.keys(tied).map(Number)])))}>Auto-pick</button>
             <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
@@ -272,11 +280,12 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           onDragOver={(e) => { if (drag?.from) e.preventDefault(); }}
           onDrop={(e) => { e.preventDefault(); const pid = Number(e.dataTransfer.getData('text/plain')); setDrag(null); setOver(null); if (pid && slotOf.has(pid)) remove(pid); }}>
           <div className="sq-lh">
-            <div className="sq-lh-row"><span className="rh-k">{rules.key === 'survivor' ? 'Any player' : `Your list · ${squad.length}`}</span><span className="rh-k">Avg</span></div>
+            <div className="sq-lh-row"><span className="rh-k">{rules.key === 'survivor' ? 'Any player' : `Your list · ${squad.length}`}</span></div>
             {!big && <input className="sq-search" placeholder="Search players" value={q} onChange={(e) => setQ(e.target.value)} />}
             <div className="sq-filters" role="group" aria-label="Filter by position">
               {(['ALL', 'DEF', 'MID', 'RUC', 'FWD'] as const).map((f) => <button key={f} className={filter === f ? 'on' : ''} onClick={() => setFilter(f)}>{f}</button>)}
             </div>
+            <div className="sq-cols" aria-hidden="true"><span /><span className="rh-k">Player</span><span className="rh-k" title="2026 average">Avg</span><span className="rh-k" title="Average of his last 5 games">L5</span><span className="rh-k" title="Average match rating out of 10, 2026">Rat</span><span /></div>
           </div>
           <div className="sq-rows">
             {shown.map((p) => {
@@ -288,10 +297,12 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
                   {...(ok && !burnt ? dragProps(p.id, slotOf.get(p.id) ?? null) : {})}>
                   <Disc p={p} size={26} label />
                   <span className="sq-row-main">
-                    <span className="sq-row-nm"><span>{p.name}</span>{p.keeper && <em>{p.keeper}</em>}<Info p={p} onInfo={setSheet} /></span>
+                    <span className="sq-row-nm"><button type="button" className="sq-nm-btn" onClick={(e) => { e.stopPropagation(); setSheet(p); }} onKeyDown={(e) => e.stopPropagation()}>{p.name}</button><Form p={p} size={11} />{p.keeper && <em>{p.keeper}</em>}<Info p={p} onInfo={setSheet} /></span>
                     <span className="sq-row-sub">{p.pos.map((x) => <i key={x} style={{ background: POS_COL[x] }}>{x}</i>)}{w && <i className="in">{w}</i>}{burnt && <i className="in">USED</i>}{isTied && <i className="tied" title={`Played a cup game for ${tied[p.id]}`}>CUP-TIED</i>}{!ok && <span className="rh-dim">not eligible</span>}</span>
                   </span>
-                  <span className="sq-row-av"><Form p={p} size={12} />{p.avg != null ? Math.round(p.avg) : '–'}</span>
+                  <span className="sq-row-av">{p.avg != null ? Math.round(p.avg) : '–'}</span>
+                  <span className="sq-row-l5">{p.l5 ?? '–'}</span>
+                  <span className="sq-row-rt">{p.rat != null ? <i style={{ background: rtCol(p.rat) }}>{p.rat.toFixed(1)}</i> : '–'}</span>
                   {ok && !burnt && !isTied ? swapBtn(p.id) : <span />}
                 </div>
               );
@@ -323,7 +334,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
               </div>
             )}
           </div>
-          <span className="sq-hint"><b>Bold</b> = projected{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · drag onto a spot, or tap the swap arrows on two players · drag back to the list to remove · {rules.summary}</span>
+          <span className="sq-hint">Faded number = projected score{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · Rat = average match rating · drag onto a spot, or tap the swap arrows on two players · drag back to the list to remove · {rules.summary}</span>
         </div>
       </div>
       {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} clubName={clubName} gameName={rules.name} />}

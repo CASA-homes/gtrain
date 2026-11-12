@@ -13,7 +13,9 @@ export interface Rules {
 }
 export interface MdPlayer {
   id: number; name: string; pos: Pos[]; club: string | null; proj: number; age: number | null; rookie: boolean; photo: string | null;
-  avg?: number | null; form?: 'up' | 'flat' | 'down' | null; l5?: number | null; keeper?: 'K' | 'RK' | null;
+  avg?: number | null; form?: 'up' | 'flat' | 'down' | null; l5?: number | null;
+  /** average match rating out of 10 across his 2026 games (see lib/match-rating) */
+  rat?: number | null; keeper?: 'K' | 'RK' | null;
   /** 2026 game log, stat line and career, for the profile pop-up (your own list only) */
   prof?: import('@/lib/mens-round').MProfile;
 }

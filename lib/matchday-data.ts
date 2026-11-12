@@ -8,6 +8,7 @@ import { createClient } from '@/lib/supabase/server';
 import { R1_2027, buildMensRound, profileOf } from '@/lib/mens-round';
 import { form as formOf } from '@/lib/ratings';
 import { clubRows } from '@/lib/club-rounds';
+import { DEFAULT_PARS, baseAverage, matchRating, ratingBasis, ratingPos } from '@/lib/match-rating';
 import { CUP_SEASON, STAGE_NAME, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
 import { RULES, ageOn, autoFill, type GameKey, type MdLineup, type MdPlayer, type Pos } from '@/lib/matchday';
@@ -38,6 +39,15 @@ export interface MatchdayData {
   cupTied: Record<number, string>;
 }
 
+/** Average match rating over his 2026 games, each judged against what he averaged coming in (2025, else 2026). */
+function seasonRating(p: PlayerRow): number | null {
+  const scores = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null && x > 0);
+  if (!scores.length) return null;
+  const prev = (p.hist ?? []).find((h) => h[0] === 2025);
+  const b = ratingBasis(baseAverage({ prevAvg: prev?.[2] ?? null, prevGames: prev?.[1] ?? 0, proj: p.average }), ratingPos(null, p.positions, DEFAULT_PARS), DEFAULT_PARS);
+  return Math.round((scores.reduce((t, x) => t + matchRating(x, b), 0) / scores.length) * 10) / 10;
+}
+
 export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer => {
   const l5s = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null).slice(-5);
   return {
@@ -45,6 +55,7 @@ export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer =>
     age: ageOn(p.birth_date), rookie: p.is_rookie_keeper, photo: photoUrl(p),
     avg: p.average != null ? Math.round(p.average * 10) / 10 : null, form: formOf(p),
     l5: l5s.length ? Math.round(l5s.reduce((a, b) => a + b, 0) / l5s.length) : null,
+    rat: seasonRating(p),
     keeper: p.is_rookie_keeper ? 'RK' : p.is_keeper ? 'K' : null,
     ...(full ? { prof: (() => { const pr = profileOf(p); return { ...pr, club: clubRows(p.full_name ?? p.name, teamName, pr.log) }; })() } : {}),
   };
