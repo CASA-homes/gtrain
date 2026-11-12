@@ -25,7 +25,7 @@ export const COMPS: CompDef[] = [
   { key: 'plate', name: 'The Plate', short: 'Plate', lineup: 'cup', rounds: 'R13, R15, R17, R19', hue: '#6b5bd6',
     blurb: 'The consolation cup for clubs knocked out of the Cup in the groups.', how: 'Cup rules, four rounds, highest total wins. Only open to clubs that miss the Cup semis.' },
   { key: 'captain', name: 'Captain’s Challenge', short: 'Captains', lineup: 'gtrain', rounds: 'Every round', hue: '#1d8a3c',
-    blurb: 'Your G-Train captain’s score, every week, added up.', how: 'Nothing extra to pick: it reads your G-Train captain. Highest season total wins.' },
+    blurb: 'Your captain’s score, every week, added up.', how: 'Nothing extra to pick: it reads your regular-season captain. Highest season total wins.' },
 ];
 export const COMP_BY_KEY = Object.fromEntries(COMPS.map((c) => [c.key, c])) as Record<CompKey, CompDef>;
 export const OPT_IN = COMPS.filter((c) => !c.everyone).map((c) => c.key);

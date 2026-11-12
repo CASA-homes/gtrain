@@ -6,6 +6,7 @@ import { pickValue } from '@/lib/picks';
 import { C } from '@/lib/ratings';
 import { GTRAIN_DRAFTS } from '@/lib/gtrain-draft';
 import { draftAwards } from '@/lib/draft-awards';
+import { isLegacyLeague } from '@/lib/league-scope';
 import { Face } from '@/components/TradeHighlights';
 
 const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
@@ -13,6 +14,7 @@ const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^
 const ROUND_COLOUR = (r: number) => (r <= 2 ? C.green5 : r <= 4 ? C.green4 : r <= 8 ? C.green3 : r <= 15 ? C.green2 : C.empty);
 
 export default async function DraftPage({ searchParams }: { searchParams: Promise<{ year?: string }> }) {
+  const legacy = await isLegacyLeague();
   const { year: y } = await searchParams;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const year = y === '2028' ? 2028 : y === '2026' ? 2026 : 2027;
@@ -58,7 +60,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
         </div>
       </div>
 
-      {year === 2026 ? <Results2026 league={league} myTeam={me?.team_id ?? null} /> : (
+      {year === 2026 && legacy ? <Results2026 league={league} myTeam={me?.team_id ?? null} /> : (
       <div className="split" style={{ alignItems: 'flex-start' }}>
         {/* Draft-day order */}
         <section style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>

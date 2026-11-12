@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { isLegacyLeague } from '@/lib/league-scope';
 import { DraftTabs } from '@/components/DraftTabs';
 import { MockDraft } from '@/components/MockDraft';
 import { getLeague, getMe } from '@/lib/data';
@@ -13,6 +14,7 @@ export const metadata = { title: '2027 mock draft' };
 const START_2027 = new Date(2027, 2, 1);
 
 export default async function MockPage() {
+  if (!(await isLegacyLeague())) return <div className="wrap" style={{ padding: '24px 0' }}><section className="card" style={{ padding: 18 }}><h1 className="h2">Not available for this league</h1><p className="muted" style={{ margin: '6px 0 0' }}>This was built from G-Train’s own draft data. It’ll come to other leagues once their drafts are on Keeper HQ.</p></section></div>;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const teamName = (id: number) => league.teams.find((t) => t.id === id)?.name ?? '';
   const season = (p: PlayerRow, y: number) => (p.hist ?? []).find((h) => h[0] === y);
@@ -59,7 +61,7 @@ export default async function MockPage() {
       <p className="muted" style={{ fontSize: 12, margin: 0 }}>
         How the other clubs pick: a board value for every player, tuned to how the 2026 G-Train draft went (star rookies top 5, key-position talls slide, proven 85+ veterans from
         about pick 17), leaned by each club’s window and last-draft habits. Your edits are saved to your login. Rookies are valued on their projected AFL pick (fixed spots like Mellody to West Coast at 3, then the consensus board) until the
-        AFL draft in November, then on their real pick. <Link href="/draft">G-Train picks</Link>
+        AFL draft in November, then on their real pick. <Link href="/draft">League picks</Link>
       </p>
     </div>
   );

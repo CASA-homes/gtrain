@@ -1,4 +1,5 @@
 import LEAGUE from '@/data/league.json';
+import { getLeagueProfile } from '@/lib/league-scope';
 import { Group, SubHead } from '@/components/LeagueSubpage';
 import { getMe } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
@@ -7,7 +8,6 @@ import { logBet, settleBet } from './actions';
 export const metadata = { title: 'League bets' };
 export const dynamic = 'force-dynamic';
 
-const C = LEAGUE.charter;
 const SEASONS = [2027, 2026];
 const NICKS = ['Alex', 'Fyfey', 'Healz', 'Jr', 'Pato', 'Rammy', 'Sancho', 'Shaggy', 'Zac'];
 
@@ -23,6 +23,8 @@ function Side({ label, who, won, lost }: { label: string; who: string[]; won: bo
 }
 
 export default async function LeagueBetsPage() {
+  const profile = await getLeagueProfile();
+  const C = profile.charter;
   const me = await getMe();
   const supabase = await createClient();
   const q = await supabase.from('side_bets').select('*').order('id');

@@ -1,4 +1,5 @@
 import LEAGUE from '@/data/league.json';
+import { getLeagueProfile } from '@/lib/league-scope';
 import { Group, SubHead } from '@/components/LeagueSubpage';
 import { CupPrizes } from '@/components/live/cup-prizes';
 import { loadCupPrizes } from '@/app/(app)/live/cup-actions';
@@ -10,13 +11,14 @@ import { LeagueNameForm } from '@/components/LeagueNameForm';
 export const metadata = { title: 'League settings' };
 
 // Mirrors the league settings on Keeper (keeperfantasy.com/afl/288126/rules), plus G-Train's own house rules.
-const C = LEAGUE.charter;
 
 const SCORING: [string, number][] = [['Kick', 3], ['Handball', 2], ['Mark', 3], ['Tackle', 4], ['Hitout', 1], ['Goal', 6], ['Behind', 1], ['Free for', 1], ['Free against', -3]];
 
 export const dynamic = 'force-dynamic';
 
 export default async function LeagueSettingsPage() {
+  const profile = await getLeagueProfile();
+  const C = profile.charter;
   const [me, league, prizes, leagueName] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName()]);
   const holders = new Set(league.picks.map((p) => p.owner_team_id));
   const teams = league.teams.filter((t) => holders.has(t.id)).map((t) => ({ id: t.id, name: t.name }));
@@ -48,7 +50,7 @@ export default async function LeagueSettingsPage() {
           ['Mid-season byes', 'No scoring adjustments'],
           ['Ladder tiebreak', 'Total points'],
           ['Finals', '6 teams over 3 weeks · no wildcard, no consolation finals'],
-          ['League medal', 'G-Train Medal: 3 votes, weighted voting'],
+          ['League medal', `${leagueName} Medal: 3 votes, weighted voting`],
         ]} />
         <Group title="Player positions" rows={[
           ['Positions', 'Set by AFL Fantasy / Champion Data at season start'],
@@ -72,7 +74,7 @@ export default async function LeagueSettingsPage() {
           ['Draft', '16 rounds · round 16 is the keeper/rookie round'],
           ['Mid-season draft order', C.ladder.mid_season_draft_order],
           ['End-of-season draft order', C.ladder.end_of_season_draft_order],
-          ['Next draft', `${LEAGUE.league.next_draft.season} · ${LEAGUE.league.next_draft.date}`],
+          ...(profile.legacy ? [['Next draft', `${LEAGUE.league.next_draft.season} · ${LEAGUE.league.next_draft.date}`] as [string, string]] : []),
         ]} />
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h2 className="h2" style={{ fontSize: 18 }}>{CUP_NAME}</h2>

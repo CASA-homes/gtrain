@@ -79,7 +79,7 @@ export function CupRules({ onClose }: { onClose: () => void }) {
         </div>
         <div className="mx-sh-sec"><span className="rh-k">Your cup team</span>
           <ul className="cup-rules">
-            <li>A separate lineup from your G-Train team. Same AFL round, same fantasy scores.</li>
+            <li>A separate lineup from your regular-season team. Same AFL round, same fantasy scores.</li>
             <li>4 DEF, 5 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies.</li>
             <li>No captain or vice-captain. Every player scores once.</li>
             <li>A player locks at his own game&apos;s first bounce.</li>
@@ -89,7 +89,7 @@ export function CupRules({ onClose }: { onClose: () => void }) {
           <span className="cup-new">NEW</span><b>Cup-tied</b>
           <ul className="cup-rules">
             <li>Once a player has played a cup game for one club, he&apos;s tied to that club for the rest of that season&apos;s cup.</li>
-            <li>If he&apos;s traded, his new club can still pick him in the G-Train, but not in the cup.</li>
+            <li>If he&apos;s traded, his new club can still pick him in the regular season, but not in the cup.</li>
             <li>Played means he was on the field in a cup game that has been played. A cup-tied player can&apos;t be named as an emergency either. Ties reset each season.</li>
           </ul>
         </div>

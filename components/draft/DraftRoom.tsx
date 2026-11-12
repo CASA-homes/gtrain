@@ -267,7 +267,7 @@ export function DraftRoom({ teams, pool, initial, ready, me }: { teams: RoomTeam
         <div>
           <h1>Welcome to the draft room, <span>{me.first}</span></h1>
           <p>
-            {DRAFT_YEAR} G-Train national draft
+            {DRAFT_YEAR} national draft
             {me.team_id ? <> · {tn(me.team_id)} · {keepCount.get(me.team_id)} keepers, {myAllow} list spots to fill
               {myNext ? <> · your next pick is {myNext.kind === 'pick' ? `No.${myNext.pick.overall}` : 'a make-up pick'}</> : myPicks.length ? ' · you’re done' : ''}</> : null}
           </p>

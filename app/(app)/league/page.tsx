@@ -11,11 +11,13 @@ import { createClient } from '@/lib/supabase/server';
 import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { postNews, rsvp } from './actions';
 import { LeagueHistory } from '@/components/LeagueHistory';
+import { isLegacyLeague } from '@/lib/league-scope';
 import { CupTables } from '@/components/live/cup';
 import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 
 export default async function LeaguePage() {
+  const legacy = await isLegacyLeague();
   const [league, me, leagueName] = await Promise.all([getLeague(), getMe(), getLeagueName()]);
   const cup = await buildCup(league, me?.team_id ?? 0);
   const supabase = await createClient();
@@ -210,7 +212,7 @@ export default async function LeaguePage() {
             <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 6 }}>
               <div>
                 <span className="eyebrow">Best average on each line · min. 10 games</span>
-                <h2 className="h2" style={{ fontSize: 22 }}>All-G-Train team {CURRENT_SEASON}</h2>
+                <h2 className="h2" style={{ fontSize: 22 }}>All-{leagueName} team {CURRENT_SEASON}</h2>
               </div>
               <span className="muted" style={{ fontSize: 13 }}>
                 18 on the ground total <b style={{ color: 'var(--ink)' }}>{Math.round(LINES.flatMap((l) => allTeam.lines[l]).reduce((s2, p) => s2 + (p.average ?? 0), 0)).toLocaleString()}</b>
@@ -234,7 +236,8 @@ export default async function LeaguePage() {
         </div>
       </div>
       <div id="history" style={{ scrollMarginTop: 72 }} />
-      <LeagueHistory teams={league.teams} myTeamName={league.teams.find((t) => t.id === me?.team_id)?.name ?? null} />
+      {legacy ? <LeagueHistory teams={league.teams} myTeamName={league.teams.find((t) => t.id === me?.team_id)?.name ?? null} />
+        : <section id="history" className="card" style={{ padding: 18 }}><h2 className="h2">League history</h2><p className="muted" style={{ margin: '6px 0 0' }}>Head-to-heads, records and rivalries build here as your league plays its games.</p></section>}
     </div>
   );
 }

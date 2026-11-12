@@ -38,7 +38,7 @@ export async function GET(req: Request) {
     const s = Math.max(score(p.full_name ?? '', q), score(p.name, q));
     if (!s) continue;
     const club = p.afl_club ? CLUBS[p.afl_club]?.name ?? p.afl_club : 'No AFL club';
-    const where = p.team_id ? owner.get(p.team_id) ?? 'G-Train club' : 'Unowned';
+    const where = p.team_id ? owner.get(p.team_id) ?? 'League club' : 'Unowned';
     hits.push({
       kind: 'player', id: p.id, title: p.full_name ?? p.name, href: `/players/${p.id}`, avg: p.average,
       sub: `${p.positions.join('/')} · ${club} · ${where}${p.list_status ? ` · ${p.list_status}` : ''}`,

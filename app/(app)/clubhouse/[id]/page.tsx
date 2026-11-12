@@ -1,4 +1,5 @@
 import { ClubSettings } from '@/components/ClubSettings';
+import { isLegacyLeague } from '@/lib/league-scope';
 import { CLUBHOUSE_SECTIONS } from '@/lib/team-colours';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -57,7 +58,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
   const isMine = me?.team_id === a.team.id;
   const gq = await (await createClient()).from('club_games').select('season, player_name, games').eq('team_id', a.team.id);
   const gamesReady = !gq.error;
-  const games = clubGames(a.team.name, gq.data ?? []);
+  const games = clubGames((await isLegacyLeague()) ? a.team.name : '', gq.data ?? []);
 
   const supabase = await createClient();
   const { data: listings } = await supabase

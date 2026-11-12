@@ -41,7 +41,7 @@ export function draftAwards(players: PlayerRow[], ratings: Map<number, Ratings>)
   // Consensus best rookie: the highest pick in the 2025 AFL national draft that G-Train took
   const rookies = rows.filter((x) => x.rookie);
   const best = [...rookies].filter((x) => x.afl != null).sort((a, b) => a.afl! - b.afl!)[0] ?? [...rookies].sort((a, b) => b.r!.potential! - a.r!.potential!)[0];
-  add('rookie', 'Consensus best rookie', 'The top national draft pick G-Train took', best,
+  add('rookie', 'Consensus best rookie', 'The top national draft pick taken in the league', best,
     best ? `AFL pick ${best.afl ?? '?'} in 2025. ${best.gm ? `${best.avg.toFixed(0)} average from ${best.gm} games in his first year.` : 'Yet to debut.'}` : '');
 
   // Diamond in the rough: a rookie taken at pick 30 or later who scored best

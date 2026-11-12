@@ -8,7 +8,7 @@
 // for anyone else that season.
 
 export const CUP_SEASON = 2027;
-export const CUP_NAME = 'G-Train Knockout Cup';
+export const CUP_NAME = 'Knockout Cup';
 export const CONF_NAMES = ['Group A', 'Group B'] as const;
 /** AFL rounds the cup is played in. */
 export const GROUP_ROUNDS = [5, 6, 7, 8];

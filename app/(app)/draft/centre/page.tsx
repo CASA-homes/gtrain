@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getLeagueName } from '@/lib/league-name';
 import { redirect } from 'next/navigation';
 import '@/components/draft/draft.css';
 import { DraftTabs } from '@/components/DraftTabs';
@@ -18,6 +19,7 @@ const perth = (iso: string | null) => iso
   : 'Date to be set';
 
 export default async function DraftCentrePage() {
+  const leagueName = await getLeagueName();
   const me = await getMe();
   if (!me) redirect('/');
   const [league, { ready, state }, readyMap, signoff] = await Promise.all([getLeague(), loadRoomState(), loadReady(), loadSignoff()]);
@@ -91,7 +93,7 @@ export default async function DraftCentrePage() {
     <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12, marginBottom: 14 }}>
       <div>
         <span className="eyebrow">{DRAFT_YEAR} national draft</span>
-        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>G-Train Draft Centre</h1>
+        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>{leagueName} Draft Centre</h1>
       </div>
       <DraftTabs active="centre" />
     </div>
@@ -179,7 +181,7 @@ export default async function DraftCentrePage() {
 
       <div className="dc-hero">
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <span className="k">G-Train Draft Centre · {DRAFT_YEAR} national draft</span>{' '}
+          <span className="k">{leagueName} Draft Centre · {DRAFT_YEAR} national draft</span>{' '}
           <span className={`dc-status ${room.status === 'live' ? 'live' : ''}`}>{room.status === 'live' ? 'Live now' : room.status === 'paused' ? 'Paused' : 'Scheduled'}</span>
           <h1>{room.status === 'live' || room.status === 'paused' ? `${curTeam ? tn(curTeam) : 'The room'} on the clock` : `Draft night: ${perth(room.starts_at)}`}</h1>
           <p>

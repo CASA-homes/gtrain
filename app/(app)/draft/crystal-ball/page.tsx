@@ -1,4 +1,5 @@
 import { gtrainPicksFor } from '@/lib/gtrain-draft';
+import { isLegacyLeague } from '@/lib/league-scope';
 import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
 import { InfoPopover } from '@/components/InfoPopover';
@@ -622,6 +623,7 @@ export const dynamic = 'force-dynamic';
 
 /** Password wall: nothing from the model is rendered until the password is entered. */
 export default async function CrystalBallPage({ searchParams }: { searchParams: Promise<{ wrong?: string; view?: string; year?: string; pos?: string }> }) {
+  if (!(await isLegacyLeague())) return <div className="wrap" style={{ padding: '24px 0' }}><section className="card" style={{ padding: 18 }}><h1 className="h2">Not available for this league</h1><p className="muted" style={{ margin: '6px 0 0' }}>This was built from G-Train’s own draft data. It’ll come to other leagues once their drafts are on Keeper HQ.</p></section></div>;
   const me = await getMe();
   const sp = await searchParams;
   if (!(await crystalUnlocked(me))) {

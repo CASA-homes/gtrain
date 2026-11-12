@@ -561,7 +561,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
   );
   if (compact) return <div className="mx-compact">{body}</div>;
   return (
-    <Shell title="Round 1 · 2027" sub={<>Men’s matchday test. Real AFL fixture, randomised G-Train draw, simulated scores. <span className="rh-mono">{nowLabel}</span> Perth time.</>} right={chip}>
+    <Shell title="Round 1 · 2027" sub={<>Men’s matchday test. Real AFL fixture, randomised league draw, simulated scores. <span className="rh-mono">{nowLabel}</span> Perth time.</>} right={chip}>
       {body}
     </Shell>
   );

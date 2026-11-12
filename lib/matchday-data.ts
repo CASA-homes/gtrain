@@ -1,6 +1,8 @@
 // Server-side assembly of Matchday for a signed-in club: every game they're in this round, their saved lineups,
 // and enough of each opponent to draw the matchup.
 import type { League } from '@/lib/data';
+import { getLeagueName } from '@/lib/league-name';
+import { isLegacyLeague } from '@/lib/league-scope';
 import type { PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { photoUrl } from '@/lib/photos';
@@ -48,7 +50,7 @@ function seasonRating(p: PlayerRow): number | null {
   return Math.round((scores.reduce((t, x) => t + matchRating(x, b), 0) / scores.length) * 10) / 10;
 }
 
-export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer => {
+export const toMd = (p: PlayerRow, full = false, teamName?: string, legacy = true): MdPlayer => {
   const l5s = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null).slice(-5);
   return {
     id: p.id, name: p.full_name ?? p.name, pos: [...p.positions] as Pos[], club: p.afl_club, proj: Math.round(projected2027(p) || 0),
@@ -57,16 +59,18 @@ export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer =>
     l5: l5s.length ? Math.round(l5s.reduce((a, b) => a + b, 0) / l5s.length) : null,
     rat: seasonRating(p),
     keeper: p.is_rookie_keeper ? 'RK' : p.is_keeper ? 'K' : null,
-    ...(full ? { prof: (() => { const pr = profileOf(p); return { ...pr, club: clubRows(p.full_name ?? p.name, teamName, pr.log) }; })() } : {}),
+    ...(full ? { prof: (() => { const pr = profileOf(p); return { ...pr, club: legacy ? clubRows(p.full_name ?? p.name, teamName, pr.log) : [] }; })() } : {}),
   };
 };
 const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Object.fromEntries(Object.entries(trimCup(l)).map(([k, v]) => [k, v ?? []])) } : null);
 
 export async function buildMatchday(league: League, myTeamId: number, cup: CupData): Promise<MatchdayData> {
   const supabase = await createClient();
+  const legacy = await isLegacyLeague();
+  const leagueName = await getLeagueName();
   const listOf = (team: number) => league.players.filter((p) => p.team_id === team && !p.list_status).map((p) => toMd(p));
   const team = (id: number) => league.teams.find((t) => t.id === id);
-  const squad = league.players.filter((p) => p.team_id === myTeamId && !p.list_status).map((p) => toMd(p, true, team(myTeamId)?.name)).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
+  const squad = league.players.filter((p) => p.team_id === myTeamId && !p.list_status).map((p) => toMd(p, true, team(myTeamId)?.name, legacy)).sort((a, b) => (b.avg ?? 0) - (a.avg ?? 0));
   const round = MATCHDAY_ROUND;
 
   const [gl, ce, cl] = await Promise.all([
@@ -96,7 +100,7 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
   const mens = buildMensRound(league);
   const mu = mens.matchups.find((m) => m.includes(myTeamId));
   const gOpp = mu ? (mu[0] === myTeamId ? mu[1] : mu[0]) : null;
-  games.push({ id: `gtrain:${round}`, key: 'gtrain', round, label: `G-Train · Round ${round}`, sub: gOpp ? `v ${team(gOpp)?.name}` : 'No game',
+  games.push({ id: `gtrain:${round}`, key: 'gtrain', round, label: `${leagueName} · Round ${round}`, sub: gOpp ? `v ${team(gOpp)?.name}` : 'No game',
     opp: gOpp ? side('gtrain', round, gOpp) : null, note: 'Round 1 opponent is from the test draw until the 2027 fixture is set.' });
   lineups[`gtrain:${round}`] = saved.get(`gtrain:${round}:${myTeamId}`) ?? null;
 

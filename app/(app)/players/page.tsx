@@ -143,7 +143,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     <div className="wrap">
       <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow">{own === 'owned' ? 'On a G-Train list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
+          <span className="eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Players</h1>
         </div>
         <Link href="/players/rather" className="btn dark">Who’d you rather? · player values →</Link>
@@ -185,7 +185,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
             {sel('club', 'AFL club', club ?? '', <><option value="">All clubs</option>{Object.entries(CLUBS).sort((a, b) => a[1].name.localeCompare(b[1].name)).map(([k, c]) => <option key={k} value={k}>{c.name}</option>)}</>)}
             {sel('status', 'Status', status ?? '', <><option value="">All statuses</option><option value="playing">Playing</option><option value="injured">Injured</option></>)}
             {!y25 && sel('period', 'Stats from', period, <>{PERIODS.map(([k, l]) => <option key={k} value={k}>{l}</option>)}</>)}
-            {own !== 'free' && sel('team', 'G-Train team', sp.team ?? '', <><option value="">All teams</option>{league.teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</>)}
+            {own !== 'free' && sel('team', 'League team', sp.team ?? '', <><option value="">All teams</option>{league.teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</>)}
             {own !== 'free' && sel('mine', 'My list', sp.mine ?? '', <><option value="">Include mine</option><option value="not">Not on my list</option></>)}
             {sel('sort', 'Sort by', sort, statOptions(false))}
             <div style={{ display: 'flex', gap: 6 }}>

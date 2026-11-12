@@ -136,7 +136,7 @@ function CompCard({ comp, props }: { comp: CompDef; props: CompsProps }) {
           : !off && <button className={`rh-btn ${inIt ? 'alt' : 'go'}`} disabled={pending || (full && !inIt) || !props.state.ready} onClick={() => run(() => joinComp(comp.key, !inIt))}>{inIt ? 'Leave' : full ? 'At your limit' : 'Enter'}</button>}
       </div>
       <p className="cp-blurb">{comp.blurb}</p>
-      <ul className="cp-facts"><li>{comp.how}</li><li>{comp.rounds}</li><li>{comp.lineup === 'gtrain' ? 'Scored off your G-Train team: nothing extra to pick.' : 'Set its team on Matchday.'}</li></ul>
+      <ul className="cp-facts"><li>{comp.how}</li><li>{comp.rounds}</li><li>{comp.lineup === 'gtrain' ? 'Scored off your regular-season team: nothing extra to pick.' : 'Set its team on Matchday.'}</li></ul>
       {!comp.everyone && entrants.length > 0 && <div className="cp-entrants">{entrants.map((t) => <span key={t} className={t === props.myTeamId ? 'me' : ''}>{name(t)}</span>)}</div>}
       {msg && <span className={msg.ok ? 'rh-up' : 'rh-down'} style={{ fontSize: 12.5 }}>{msg.text}</span>}
       <div className="cp-pool">

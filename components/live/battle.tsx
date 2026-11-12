@@ -191,7 +191,7 @@ function KeeperPanel({ mens, myTeamId }: { mens: MRound; myTeamId: number }) {
   return (
     <section className="rh-card bd-keeper">
       <div className="bd-kh">
-        <span className="rh-k">G-Train · Round 1, 2027 · your matchup</span>
+        <span className="rh-k">Round 1, 2027 · your matchup</span>
         <span className="rh-chip">Test data</span>
       </div>
       <div className="mx-sb">

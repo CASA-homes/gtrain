@@ -11,7 +11,7 @@ const PAGES: { title: string; sub: string; href: string; words: string }[] = [
   { title: 'League', sub: 'Ladder, history, honours', href: '/league', words: 'ladder table history honours' },
   { title: 'League settings', sub: 'Rules and scoring', href: '/league/settings', words: 'rules scoring settings cup prizes' },
   { title: 'Rankings', sub: 'Power rankings', href: '/rankings', words: 'power ratings' },
-  { title: 'Draft', sub: 'G-Train picks', href: '/draft', words: 'picks order' },
+  { title: 'Draft', sub: 'League picks', href: '/draft', words: 'picks order' },
   { title: 'Draft Centre', sub: 'Draft night, settings, results', href: '/draft/centre', words: 'draft night countdown sign-off' },
   { title: 'Draft Room', sub: 'Live draft', href: '/draft/room', words: 'live draft queue' },
   { title: 'Mock draft', sub: '2027 mock draft', href: '/draft/mock', words: 'mock' },

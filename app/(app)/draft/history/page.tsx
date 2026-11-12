@@ -1,5 +1,6 @@
 import { ProfileSheet } from '@/components/ProfileSheet';
-import { gtrainPicksFor } from '@/lib/gtrain-draft';
+import { gtrainPicksFor as gtrainPicksForAll } from '@/lib/gtrain-draft';
+import { isLegacyLeague } from '@/lib/league-scope';
 import Link from 'next/link';
 import { AvgChip, ClubDot } from '@/components/bits';
 import { DraftTabs } from '@/components/DraftTabs';
@@ -18,6 +19,8 @@ const STATUS_STYLE: Record<DraftStatus, { bg: string; fg: string }> = {
 };
 
 export default async function DraftHistoryPage({ searchParams }: { searchParams: Promise<{ year?: string; top?: string }> }) {
+  const legacy = await isLegacyLeague();
+  const gtrainPicksFor = (n: string) => (legacy ? gtrainPicksForAll(n) : []);
   const sp = await searchParams;
   const league = await getLeague();
   const year = sp.year === '2026' ? 2026 : DRAFT_YEARS.includes(Number(sp.year)) ? Number(sp.year) : 2022;
