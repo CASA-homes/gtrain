@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'S. Pendlebury', tag: 'Trade', date: '2026-11-12', title: 'Pendlebury flags the No.7 at the Suns',
+    body: 'The games record holder, traded to Gold Coast on a two-year deal after Collingwood moved on, has added a 7 to his Instagram bio, a strong hint he’ll wear the Suns’ No.7 in 2027. He’s 39 in January but still averaged 79 this year. Released by his G-Train side, so he’s a cheap draft option if the Suns give him real midfield minutes.',
+  },
+  {
     player: 'C. Rozee', tag: 'Injury', date: '2026-11-11', title: 'Rozee in drills, Port bullish on round 1',
     body: 'Port high-performance boss Tim Parham says Rozee is now training in drills after a minor UK procedure to clear scar tissue around the nerve in his torn hamstring, though he’s not quite at full speed. Parham is bullish about round 1 against North Melbourne, roughly four and a half months off. If he gets there, Serong So’Right get back a mid who averaged over 100 in 2025.',
   },
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'J. Short', tag: 'Role', title: 'Short’s Collingwood move falls over',
     body: 'Short tried to get to Collingwood in the trade period, but the clubs couldn’t agree on the final day and he’s back at Richmond for the last year of his contract. Fantasy-wise that’s good news: he keeps his spot as the Tigers’ main half-back ball user and kick-in taker, with a new deal to play for.',
-  },
-  {
-    player: 'L. Whitfield', tag: 'Trade', title: 'Whitfield crosses to Carlton',
-    body: 'GWS’s long-time kick-in and half-back playmaker joins the Blues. Carlton need exactly that kind of ball user off half-back, so his role and kick-ins should carry over. Keep an eye on whether they push him into the midfield.',
   },
 ];
