@@ -3,7 +3,7 @@
 // byes). Five clubs only make two games a round, so each round the spare club in Group A plays the spare club in Group B
 // and that game counts on both tables. Top three in each group are safe; 4th plays 5th in a wildcard game (round 9).
 // The eight left are drawn at random into quarter-finals (round 16), then semis (round 18) and the final (round 20).
-// Cup games use the same AFL round's fantasy scores, but their own lineup: 4 DEF, 6 MID, 1 RUC, 4 FWD + 1 utility,
+// Cup games use the same AFL round's fantasy scores, but their own lineup: 4 DEF, 5 MID, 1 RUC, 4 FWD + 1 utility,
 // 4 emergencies, and no captains. Cup-tied: once a player has played a cup game for one club, he can't play in the cup
 // for anyone else that season.
 
@@ -20,12 +20,16 @@ export const FINAL_ROUND = 20;
 export const DRAW_AT = '2027-07-04T20:00:00+08:00';
 /** Top three in each group go straight to the quarter-finals; 4th and 5th play the wildcard. */
 export const SAFE = 3;
-export const CUP_SLOTS = { DEF: 4, MID: 6, RUC: 1, FWD: 4, UTIL: 1, EMG: 4 } as const;
+export const CUP_SLOTS = { DEF: 4, MID: 5, RUC: 1, FWD: 4, UTIL: 1, EMG: 4 } as const;
 export type CupSlot = keyof typeof CUP_SLOTS;
 export const CUP_SLOT_ORDER: CupSlot[] = ['DEF', 'MID', 'RUC', 'FWD', 'UTIL', 'EMG'];
 export const CUP_SLOT_NAME: Record<CupSlot, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility', EMG: 'Emergencies' };
 export type CupLineup = Partial<Record<CupSlot, number[]>>;
-export const ON_FIELD = 16;
+export const ON_FIELD = 15;
+/** A saved lineup cut to the current slot counts (lineups saved before the cup went to 5 MID can hold 6). */
+export function trimCup(l: CupLineup): CupLineup {
+  return Object.fromEntries(Object.entries(l).map(([k, v]) => [k, (v ?? []).slice(0, CUP_SLOTS[k as CupSlot] ?? 0)])) as CupLineup;
+}
 export const STAGE_NAME = { group: 'Group game', wildcard: 'Wildcard', qf: 'Quarter-final', semi: 'Semi-final', final: 'Final' } as const;
 /** Round 1 2027 starts Wed 17 March; later rounds are about a week apart (a guide only until the full fixture is loaded). */
 export function roundWeek(round: number) {
@@ -148,7 +152,7 @@ export function cupTies(rows: { cup_round: number; team_id: number; lineup: CupL
   return ties;
 }
 
-/** Best 16 by projection for a cup lineup (scarce lines first, then utility and emergencies from what's left). */
+/** Best 15 by projection for a cup lineup (scarce lines first, then utility and emergencies from what's left). */
 export function cupAutoFill<P extends { id: number; pos: string[]; proj: number }>(squad: P[], exclude: Set<number> = new Set()): CupLineup {
   const pool = squad.filter((p) => !exclude.has(p.id)).sort((a, b) => b.proj - a.proj);
   const used = new Set<number>(), out: CupLineup = {};

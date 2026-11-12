@@ -80,7 +80,7 @@ export function CupRules({ onClose }: { onClose: () => void }) {
         <div className="mx-sh-sec"><span className="rh-k">Your cup team</span>
           <ul className="cup-rules">
             <li>A separate lineup from your G-Train team. Same AFL round, same fantasy scores.</li>
-            <li>4 DEF, 6 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies.</li>
+            <li>4 DEF, 5 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies.</li>
             <li>No captain or vice-captain. Every player scores once.</li>
             <li>A player locks at his own game&apos;s first bounce.</li>
           </ul>
@@ -294,8 +294,8 @@ function H2H({ data, name }: { data: CupData; name: (id: number | null) => strin
       <span className="md-winbar"><i style={{ width: `${a + b ? (a / (a + b)) * 100 : 50}%` }} /></span>
       <div className="h2h-lines">
         {CUP_SLOT_ORDER.map((s) => {
-          const L = h.mine.lineup[s] ?? [], R = h.theirs?.lineup[s] ?? [];
           const n = CUP_SLOTS[s];
+          const L = (h.mine.lineup[s] ?? []).slice(0, n), R = (h.theirs?.lineup[s] ?? []).slice(0, n);
           const lt = L.reduce((t, id) => t + (ppl(id)?.proj ?? 0), 0), rt = R.reduce((t, id) => t + (ppl(id)?.proj ?? 0), 0);
           return (
             <div key={s} className={`h2h-line ${s === 'EMG' ? 'emg' : ''}`}>
@@ -305,7 +305,7 @@ function H2H({ data, name }: { data: CupData; name: (id: number | null) => strin
           );
         })}
       </div>
-      <span className="rh-dim" style={{ fontSize: 12 }}>Lineups can only be changed in Squad Selector. Emergencies aren&apos;t counted in the totals. If they haven&apos;t saved a team for this round, you see their last cup team, or their best 16 by projection.</span>
+      <span className="rh-dim" style={{ fontSize: 12 }}>Lineups can only be changed in Squad Selector. Emergencies aren&apos;t counted in the totals. If they haven&apos;t saved a team for this round, you see their last cup team, or their best 15 by projection.</span>
     </section>
   );
 }

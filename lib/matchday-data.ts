@@ -9,7 +9,7 @@ import { R1_2027, buildMensRound, profileOf } from '@/lib/mens-round';
 import { form as formOf } from '@/lib/ratings';
 import { clubRows } from '@/lib/club-rounds';
 import { DEFAULT_PARS, baseAverage, matchRating, ratingBasis, ratingPos } from '@/lib/match-rating';
-import { CUP_SEASON, STAGE_NAME, type CupLineup } from '@/lib/cup';
+import { CUP_SEASON, STAGE_NAME, trimCup, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
 import { RULES, ageOn, autoFill, type GameKey, type MdLineup, type MdPlayer, type Pos } from '@/lib/matchday';
 import type { CupData } from '@/components/live/cup';
@@ -60,7 +60,7 @@ export const toMd = (p: PlayerRow, full = false, teamName?: string): MdPlayer =>
     ...(full ? { prof: (() => { const pr = profileOf(p); return { ...pr, club: clubRows(p.full_name ?? p.name, teamName, pr.log) }; })() } : {}),
   };
 };
-const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Object.fromEntries(Object.entries(l).map(([k, v]) => [k, v ?? []])) } : null);
+const fromCup = (l: CupLineup | undefined): MdLineup | null => (l ? { slots: Object.fromEntries(Object.entries(trimCup(l)).map(([k, v]) => [k, v ?? []])) } : null);
 
 export async function buildMatchday(league: League, myTeamId: number, cup: CupData): Promise<MatchdayData> {
   const supabase = await createClient();

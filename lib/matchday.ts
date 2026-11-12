@@ -33,12 +33,12 @@ export const RULES: Record<GameKey, Rules> = {
   },
   cup: {
     key: 'cup', name: 'Knockout Cup', captain: false, vc: false,
-    slots: [...field({ DEF: 4, MID: 6, RUC: 1, FWD: 4 }), { key: 'UTIL', label: 'Utility', n: 1, fits: 'any' }, { key: 'EMG', label: 'Emergencies', n: 4, fits: 'any', bench: true }],
-    summary: '4 DEF, 6 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies. No captains: every player scores once.',
+    slots: [...field({ DEF: 4, MID: 5, RUC: 1, FWD: 4 }), { key: 'UTIL', label: 'Utility', n: 1, fits: 'any' }, { key: 'EMG', label: 'Emergencies', n: 4, fits: 'any', bench: true }],
+    summary: '4 DEF, 5 MID, 1 RUC, 4 FWD and a utility, plus 4 emergencies. No captains: every player scores once.',
   },
   plate: {
     key: 'plate', name: 'The Plate', captain: false, vc: false,
-    slots: [...field({ DEF: 4, MID: 6, RUC: 1, FWD: 4 }), { key: 'UTIL', label: 'Utility', n: 1, fits: 'any' }, { key: 'EMG', label: 'Emergencies', n: 4, fits: 'any', bench: true }],
+    slots: [...field({ DEF: 4, MID: 5, RUC: 1, FWD: 4 }), { key: 'UTIL', label: 'Utility', n: 1, fits: 'any' }, { key: 'EMG', label: 'Emergencies', n: 4, fits: 'any', bench: true }],
     summary: 'Cup rules. Highest total over the four Plate rounds wins.',
   },
   shield: {

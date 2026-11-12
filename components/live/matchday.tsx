@@ -98,7 +98,8 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
 }) {
   const router = useRouter();
   const byId = useMemo(() => new Map(squad.map((p) => [p.id, p])), [squad]);
-  const [lineup, setLineupRaw] = useState<MdLineup>(() => initial ?? empty(rules));
+  // Cut a saved lineup to the current slot counts (e.g. cup lineups saved when it had 6 MID).
+  const [lineup, setLineupRaw] = useState<MdLineup>(() => initial ? { ...initial, slots: Object.fromEntries(rules.slots.map((sl) => [sl.key, (initial.slots[sl.key] ?? []).slice(0, sl.n)])) } : empty(rules));
   const [dirty, setDirty] = useState(false);
   const [filter, setFilter] = useState<'ALL' | Pos>('ALL');
   const [q, setQ] = useState('');
@@ -285,9 +286,9 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
             <div className="sq-filters" role="group" aria-label="Filter by position">
               {(['ALL', 'DEF', 'MID', 'RUC', 'FWD'] as const).map((f) => <button key={f} className={filter === f ? 'on' : ''} onClick={() => setFilter(f)}>{f}</button>)}
             </div>
-            <div className="sq-cols" aria-hidden="true"><span /><span className="rh-k">Player</span><span className="rh-k" title="2026 average">Avg</span><span className="rh-k" title="Average of his last 5 games">L5</span><span className="rh-k" title="Average match rating out of 10, 2026">Rat</span><span /></div>
           </div>
           <div className="sq-rows">
+            <div className="sq-cols" aria-hidden="true"><span /><span className="rh-k">Player</span><span className="rh-k" title="2026 average">Avg</span><span className="rh-k" title="Average of his last 5 games">L5</span><span className="rh-k" title="Average match rating out of 10, 2026">Rat</span><span /></div>
             {shown.map((p) => {
               const w = where(p.id), burnt = used.includes(p.id), isTied = !!tied[p.id], ok = !rules.eligible || rules.eligible(p);
               return (

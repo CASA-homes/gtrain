@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CUP_SEASON, CUP_SLOTS, CUP_SLOT_ORDER, conferences, cupFixture, cupTies, fitsSlot, type CupLineup, type CupResult } from '@/lib/cup';
+import { CUP_SEASON, CUP_SLOTS, CUP_SLOT_ORDER, conferences, trimCup, cupFixture, cupTies, fitsSlot, type CupLineup, type CupResult } from '@/lib/cup';
 
 type Res = { ok: boolean; error?: string };
 const needMigration = (m: string) => (/cup_/.test(m) ? 'The cup needs supabase/migrations/0019_cup.sql run in Supabase first.' : m);
@@ -17,7 +17,7 @@ export async function loadCupData(teamId: number): Promise<{ ready: boolean; lin
   ]);
   if (l.error || r.error) return { ready: false, lineups: {}, results: [], all: [] };
   const all = (l.data ?? []) as CupRow[];
-  return { ready: true, lineups: Object.fromEntries(all.filter((x) => x.team_id === teamId).map((x) => [x.cup_round, x.lineup])), results: (r.data ?? []) as CupResult[], all };
+  return { ready: true, lineups: Object.fromEntries(all.filter((x) => x.team_id === teamId).map((x) => [x.cup_round, trimCup(x.lineup)])), results: (r.data ?? []) as CupResult[], all };
 }
 
 /** Players in this lineup who are cup-tied to another club. Returns an error message, or null if the lineup is fine. */
