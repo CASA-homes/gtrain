@@ -2234,3 +2234,13 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .mxm-num small { font: 500 11px var(--mono); color: #8a918b; }
   .mxm-list.bench .mxm-half { opacity: .8; }
 }
+@media (max-width: 640px) {
+  /* Live Matchups header on phones: title, then your game tabs as a swipeable row, then the round picker full width. */
+  .rh-head:has(.lm-title) { flex-direction: column; align-items: stretch; gap: 10px; }
+  .lm-title { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+  .lm-title .lm-tabs { margin-left: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; justify-content: flex-start; padding-bottom: 2px; }
+  .lm-title .lm-tabs::-webkit-scrollbar { display: none; }
+  .lm-title .lm-tab { flex: none; }
+  .lm-right { justify-content: space-between; width: 100%; }
+  .lm-right .lm-round { flex: 1 1 auto; min-width: 0; }
+}
