@@ -25,6 +25,8 @@ export function buildPreviews(league: League, current: { id: number; starters: n
   const byDfs = new Map<string, number>();
   for (const p of [...league.players, ...league.freeAgents]) if (p.dfs_id) byDfs.set(p.dfs_id, p.id);
   const lastRound = Math.max(...Object.keys(R).map(Number));
+  // Home-and-away ladder position (points, then points for). The stored rank is the final finishing order.
+  const ha = league.ladder.filter((x) => x.season === season).sort((x, y) => y.points - x.points || y.pts_for - x.pts_for).map((x) => x.team_id);
   const out: Record<number, TeamPreview> = {};
   for (const c of current) {
     const t = league.teams.find((x) => x.id === c.id); if (!t) continue;
@@ -49,7 +51,7 @@ export function buildPreviews(league: League, current: { id: number; starters: n
     const prevIds = new Set(prevStarters.map((x) => (x[3] ? byDfs.get(x[3]) : undefined)).filter((x): x is number => x != null));
     const cur = new Set(c.starters);
     out[c.id] = {
-      season, rank: lad?.rank ?? null, w, l, d, avg, last5: res.slice(-5),
+      season, rank: ha.includes(c.id) ? ha.indexOf(c.id) + 1 : null, w, l, d, avg, last5: res.slice(-5),
       ins: c.starters.filter((id) => !prevIds.has(id)),
       outs: prevStarters.filter((x) => { const id = x[3] ? byDfs.get(x[3]) : undefined; return id == null || !cur.has(id); }).map((x) => x[0]),
       vs,
