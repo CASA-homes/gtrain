@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
-import { liveRound, type LRound } from '@/lib/live';
+import { type LRound } from '@/lib/live';
+import { liveRound } from '@/lib/scores/server';
 import { getMe } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 

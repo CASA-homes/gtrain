@@ -10,6 +10,7 @@ import { aflFantasy } from './afl-fantasy';
 import type { ScoreProvider } from './types';
 
 export * from './types';
+export * from './overrides';
 
 interface Feed { key: string; label: string; comp: string; provider: ScoreProvider }
 
@@ -23,7 +24,8 @@ export const FEED: Feed = FEEDS[process.env.NEXT_PUBLIC_SCORE_FEED ?? ''] ?? FEE
 /** Competition id stored on mini games and challenges, so each season's games stay separate. */
 export const COMP = FEED.comp;
 
-export const liveRound = (round?: number) => FEED.provider.liveRound(round);
+/** The raw feed, before commish overrides. Server code should use liveRound from '@/lib/scores/server' instead. */
+export const feedLiveRound = (round?: number) => FEED.provider.liveRound(round);
 export const feedRounds = () => FEED.provider.rounds();
 export const playerProfile = (id: number) => FEED.provider.profile(id);
 export const playerPhoto = (id: number) => FEED.provider.photo(id);

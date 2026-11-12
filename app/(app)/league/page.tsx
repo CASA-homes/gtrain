@@ -53,6 +53,7 @@ export default async function LeaguePage() {
             <Link href="/league/settings">League settings <span aria-hidden>→</span></Link>
             <Link href="#history">League history <span aria-hidden>→</span></Link>
             <Link href="/league/bets">League bets <span aria-hidden>→</span></Link>
+            <Link href="/league/scores">Score override <span aria-hidden>→</span></Link>
           </nav>
         </div>
       </header>

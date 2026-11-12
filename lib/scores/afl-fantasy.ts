@@ -37,8 +37,8 @@ async function liveRound(base: string, round?: number): Promise<LRound> {
   ]);
   const r = (round && rounds.find((x) => x.roundNumber === round)) || currentRound(rounds);
   const done = r.status === 'completed';
-  let live: { id: number; score: number | null }[] = [];
-  if (!done) { try { live = await get<{ id: number; score: number | null }[]>(base, `players_live_scores/${r.roundNumber}.json`, 15); } catch { live = []; } }
+  let live: { id: number; score: number | null }[] = [], feedOk = true;
+  if (!done) { try { live = await get<{ id: number; score: number | null }[]>(base, `players_live_scores/${r.roundNumber}.json`, 15); } catch { live = []; feedOk = r.status === 'scheduled'; } }
   const liveBy = new Map(live.map((x) => [x.id, x.score]));
   const sq = new Map(squads.map((s) => [s.id, s]));
   const playing = new Set(r.games.flatMap((g) => [g.homeId, g.awayId]));
@@ -63,6 +63,7 @@ async function liveRound(base: string, round?: number): Promise<LRound> {
     })),
     fetchedAt: new Date().toISOString(),
     top,
+    feedOk,
   };
 }
 
