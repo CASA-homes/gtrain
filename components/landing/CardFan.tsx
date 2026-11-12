@@ -28,6 +28,26 @@ const CAPTION: Record<Key, [string, string]> = {
   history: ['History and records', 'Every premiership, spoon and medal, plus league records.'],
 };
 
+/** An AFL guernsey in club colours (no logos), in place of a player photo. */
+const KIT_BODY = 'M13 3 L17 3 Q20 7.5 23 3 L27 3 L35 8.5 L31.5 15.5 L30.5 37 L9.5 37 L8.5 15.5 L5 8.5 Z';
+function Kit({ club }: { club: 'GEE' | 'GCS' }) {
+  const id = `kit-${club}`;
+  return (
+    <svg className="kl-kit" viewBox="0 0 40 40" aria-hidden="true">
+      <defs><clipPath id={id}><path d={KIT_BODY} /></clipPath></defs>
+      <g clipPath={`url(#${id})`}>
+        {club === 'GEE' ? (
+          <><rect width="40" height="40" fill="#1c3c63" />{[9, 17.5, 26, 34.5].map((y) => <rect key={y} y={y} width="40" height="4.2" fill="#fff" />)}</>
+        ) : (
+          <><rect width="40" height="40" fill="#e02112" /><path d="M0 0 H40 V12 Q20 17 0 12 Z" fill="#ffd700" /><rect x="8" y="18" width="3" height="20" fill="#ffd700" /><rect x="29" y="18" width="3" height="20" fill="#ffd700" /></>
+        )}
+      </g>
+      <path d={KIT_BODY} fill="none" stroke="rgb(0 0 0 / .25)" strokeWidth=".8" />
+      <path d="M17 3 Q20 7.5 23 3" fill="none" stroke="rgb(0 0 0 / .35)" strokeWidth="1" />
+    </svg>
+  );
+}
+
 function Bar20({ v }: { v: number }) {
   return <span className="kl-b20">{Array.from({ length: 20 }, (_, i) => <i key={i} className={i < v ? (v >= 18 ? 'on hi' : 'on') : ''} />)}</span>;
 }
@@ -36,7 +56,7 @@ function ProfileCard() {
   const attrs: [string, number][] = [['Ball winning', 20], ['Contested ball', 18], ['Clearances', 17], ['Kicking', 16], ['Metres gained', 19], ['Tackling', 14]];
   return (
     <>
-      <div className="kl-pf"><span className="kl-face">BS</span><div><b>Bailey Smith</b><small>Geelong · MID · 25</small></div><div className="kl-avg"><b>118.2</b><small>2026 avg</small></div></div>
+      <div className="kl-pf"><span className="kl-face"><Kit club="GEE" /></span><div><b>Bailey Smith</b><small>Geelong · MID · 25</small></div><div className="kl-avg"><b>118.2</b><small>2026 avg</small></div></div>
       <div className="kl-kv"><span>Keeper value</span><span className="kl-stars" aria-label="5 out of 5">★★★★★</span><b>Elite keeper</b></div>
       <div className="kl-body">{attrs.map(([l, v]) => <div key={l} className="kl-attr"><span>{l}</span><Bar20 v={v} /><b>{v}</b></div>)}</div>
     </>
@@ -64,7 +84,7 @@ function HeatCard({ d, active }: { d: FanData['anderson']; active: boolean }) {
   useEffect(() => { games.slice(-8).forEach((x) => { if (x.heat) { const im = new Image(); im.src = heatSrc(x.heat, d.playerNo); } }); }, [games, d.playerNo]);
   return (
     <>
-      <div className="kl-pf"><span className="kl-face">NA</span><div><b>Noah Anderson</b><small>Gold Coast · MID · 26</small></div><div className="kl-avg"><b>{d.avg.toFixed(1)}</b><small>2026 avg</small></div></div>
+      <div className="kl-pf"><span className="kl-face"><Kit club="GCS" /></span><div><b>Noah Anderson</b><small>Gold Coast · MID · 26</small></div><div className="kl-avg"><b>{d.avg.toFixed(1)}</b><small>2026 avg</small></div></div>
       <div className="kl-body" style={{ gap: 6 }}>
         <div className="kl-hh"><span>Heat map</span><b>{RND(g.round)} v {g.opp} · {g.score}</b></div>
         <div className={`kl-heat ${fade ? 'fade' : ''}`}>
