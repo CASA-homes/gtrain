@@ -13,6 +13,7 @@ import type { MRound } from '@/lib/mens-round';
 import { MensRound } from './mens';
 import { Matchup, shortGame } from './matchday';
 import { Shell } from './kit';
+import { CupLive } from './cup-live';
 
 export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null; minis?: MiniLink[] }) {
   const router = useRouter();
@@ -44,6 +45,7 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
+        : game.key === 'cup' ? <CupLive game={game} rules={RULES.cup} mine={md.lineups[game.id] ?? autoFill(RULES.cup, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} />
         : (
           <div className="lm-proj">
             <Matchup game={game} rules={RULES[game.key]} mine={md.lineups[game.id] ?? autoFill(RULES[game.key], game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
