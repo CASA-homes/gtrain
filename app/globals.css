@@ -2236,7 +2236,8 @@ button.md-slot:hover { border-color: #cdd2cb; }
 }
 @media (max-width: 640px) {
   /* Live Matchups header on phones: title, then your game tabs as a swipeable row, then the round picker full width. */
-  .rh-head:has(.lm-title) { flex-direction: column; align-items: stretch; gap: 10px; }
+  .rh-head:has(.lm-title) { flex-direction: column; align-items: stretch !important; gap: 10px; }
+  .rh-head:has(.lm-title) > * { min-width: 0; max-width: 100%; }
   .lm-title { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
   .lm-title .lm-tabs { margin-left: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; justify-content: flex-start; padding-bottom: 2px; }
   .lm-title .lm-tabs::-webkit-scrollbar { display: none; }
