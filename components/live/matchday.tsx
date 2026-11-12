@@ -14,7 +14,8 @@ import { CupPanel, type CupData } from './cup';
 import { Shell } from './kit';
 import { ProfileTabs } from './profile-tabs';
 import { R1_2027 } from '@/lib/mens-round';
-import { rtCol } from './mens';
+import { liveOf, rtCol } from './mens';
+import type { MGame, MPlayer } from '@/lib/mens-round';
 
 const POS_COL: Record<Pos, string> = { DEF: 'var(--def)', MID: 'var(--mid)', RUC: 'var(--ruc)', FWD: 'var(--fwd)' };
 const empty = (r: Rules): MdLineup => ({ slots: Object.fromEntries(r.slots.map((s) => [s.key, []])), c: null, vc: null });
@@ -93,8 +94,10 @@ function SquadSheet({ p, slot, cap, vc, onClose, clubName, gameName }: { p: MdPl
 
 /* ---------------- squad selector (left) ---------------- */
 type Pick = { pid: number; from: string | null } | null;
-function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange }: {
-  clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
+/** Live scores for the mobile list: this round's simulated men's games (same source as Live Matchups). */
+export interface LiveSrc { now: number; games: MGame[]; players: MPlayer[] }
+function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange, liveSrc }: {
+  liveSrc?: LiveSrc | null; clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
 }) {
   const router = useRouter();
   const byId = useMemo(() => new Map(squad.map((p) => [p.id, p])), [squad]);
@@ -252,9 +255,111 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
   const shown = squad.filter((p) => (filter === 'ALL' || p.pos.includes(filter)) && (!q || p.name.toLowerCase().includes(q.toLowerCase()))).slice(0, big ? 400 : 120);
   const where = (pid: number) => { const k = slotOf.get(pid); if (!k) return null; const r = rule(k); return r.bench ? 'EMG' : r.key === 'UTIL' ? 'UTIL' : r.key === 'PICK' ? 'PICK' : 'IN'; };
 
+
+  /* ---------- phones: one scrolling list, tap a player then tap who to swap him with ---------- */
+  const gameByClub = useMemo(() => { const m = new Map<string, MGame>(); for (const g of liveSrc?.games ?? []) { m.set(g.home, g); m.set(g.away, g); } return m; }, [liveSrc]);
+  const liveById = useMemo(() => new Map((liveSrc?.players ?? []).map((p) => [p.id, p])), [liveSrc]);
+  const liveFor = (id: number) => { const mp = liveById.get(id); if (!mp || !liveSrc) return null; const l = liveOf(mp, gameByClub, liveSrc.now); return l.ph.state === 'pre' ? null : l; };
+  const isStarter = (pid: number) => { const k = slotOf.get(pid); return !!k && !rule(k).bench; };
+  const mTotal = Math.round(lines.reduce((t, s) => t + (lineup.slots[s.key] ?? []).reduce((a, id) => { const l = liveFor(id); return a + (l ? l.proj : proj(id)) * (rules.captain && lineup.c === id ? 2 : 1); }, 0), 0));
+  const tapPlayer = (pid: number) => {
+    if (swap == null) { setSwap(pid); setPicked(null); return; }
+    if (swap === pid) { setSwap(null); return; }
+    if (swapOk(swap, pid)) doSwap(pid); else setSwap(pid);
+  };
+  const swapP = swap != null ? byId.get(swap) : undefined;
+  const POS_ORDER: Pos[] = ['DEF', 'MID', 'RUC', 'FWD'];
+  const extended = squad.filter((p) => !slotOf.has(p.id)).sort((a, b) => POS_ORDER.indexOf(a.pos[0]) - POS_ORDER.indexOf(b.pos[0]) || b.proj - a.proj).slice(0, big ? 400 : 60);
+  const LINE_TITLE: Record<string, string> = { DEF: 'Defenders', MID: 'Midfielders', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility', PICK: 'Your pick' };
+  const mRow = (p: MdPlayer | undefined, s: SlotRule | null, i: number) => {
+    const key = s ? `${s.key}:${i}` : `x:${p?.id}`;
+    if (!p) {
+      const ok = swapP != null && s != null && !blocked(swapP.id) && fits(swapP, s, rules);
+      return (
+        <button key={key} type="button" className={`sqm-row empty ${ok ? 'target' : swap != null ? 'fade' : ''}`} onClick={() => { if (s && swap != null) swapTo(s.key, i); }}>
+          <span className="sqm-bar" style={{ background: s && s.fits !== 'any' ? POS_COL[s.fits[0]] : 'var(--rh-dim)' }} />
+          <span className="sqm-main"><b>Empty {s?.bench ? 'emergency' : s?.fits === 'any' ? 'spot' : `${s?.fits[0]} spot`}</b><span className="sqm-sub">{swap != null ? (ok ? 'Tap to move him here' : 'He can’t play here') : 'Tap a player below, then tap here'}</span></span>
+          {ok && <span className="sqm-swap">Move</span>}
+        </button>
+      );
+    }
+    const onField = s != null && !s.bench;
+    const capd = onField && rules.captain && lineup.c === p.id, vcd = onField && rules.vc && lineup.vc === p.id;
+    const mult = capd ? 2 : 1;
+    const l = s ? liveFor(p.id) : null;
+    const isSel = swap === p.id, target = swap != null && !isSel && swapOk(swap, p.id);
+    const off = used.includes(p.id) || !!tied[p.id] || (!!rules.eligible && !rules.eligible(p));
+    const sub = [s?.bench ? s.label : null, p.pos.join('/'), l ? `${l.ph.label} · ${fixtureOf(p.club).split(' · ')[0]}` : fixtureOf(p.club)].filter(Boolean).join(' · ');
+    return (
+      <button key={key} type="button" aria-pressed={isSel} className={`sqm-row ${isSel ? 'sel' : ''} ${target ? 'target' : ''} ${swap != null && !isSel && !target ? 'fade' : ''} ${capd ? 'cap' : ''} ${off ? 'off' : ''}`}
+        onClick={() => tapPlayer(p.id)}>
+        <span className="sqm-bar" style={{ background: POS_COL[p.pos[0]] }} />
+        <Disc p={p} size={30} />
+        <span className="sqm-main">
+          <span className="sqm-nm"><b>{p.name}</b><Form p={p} size={14} />{capd && <i className="sqm-c">C</i>}{vcd && <i className="sqm-vc">VC</i>}{p.keeper && <em>{p.keeper}</em>}</span>
+          <span className="sqm-sub" suppressHydrationWarning>{sub}{tied[p.id] ? ' · cup-tied' : used.includes(p.id) ? ' · used' : ''}</span>
+        </span>
+        {target ? <span className="sqm-swap">Swap</span> : <>
+          {l?.rating != null && <span className="sqm-rat" style={{ background: rtCol(l.rating) }} title="Live match rating">{l.rating.toFixed(1)}</span>}
+          <span className="sqm-num">
+            <b className={l ? '' : 'est'}>{!s ? '–' : l ? l.score * mult : p.proj * mult}</b>
+            <small>{l ? `proj ${l.proj * mult}` : `avg ${p.avg != null ? Math.round(p.avg) : 'new'}`}</small>
+          </span>
+        </>}
+      </button>
+    );
+  };
+  const section = (title: string, note: string, tone: string, rows: React.ReactNode[]) => rows.length ? (
+    <section className="sqm-sec" key={title} aria-label={title}>
+      <h3 className="sqm-h" style={{ color: tone }}><span>{title}</span><small>{note}</small></h3>
+      <div className="sqm-list">{rows}</div>
+    </section>
+  ) : null;
+  const mobile = (
+    <div className="sqm">
+      <div className="sqm-top">
+        <label className="sqm-game"><span className="sr-only">Game</span>
+          <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
+            {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
+          </select>
+        </label>
+        <div className="sqm-stats">
+          <span><small>{liveSrc ? 'Live proj' : 'Projected'}</small><b className="rh-mono">{mTotal}</b></span>
+          <span><small>On field</small><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}/{need}</b></span>
+          <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
+          <button type="button" className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set([...used, ...Object.keys(tied).map(Number)])))}>Auto-pick</button>
+        </div>
+      </div>
+      {swapP && (
+        <div className="sqm-swapbar" role="status">
+          <div className="sqm-swapbar-top">
+            <span>Swap <b>{swapP.name}</b> <span className="sqm-dimw">({swapP.pos.join('/')})</span><br /><span className="sqm-dimw">Tap a highlighted player to swap them</span></span>
+            <button type="button" onClick={() => setSwap(null)}>Cancel</button>
+          </div>
+          <div className="sqm-swapbar-acts">
+            {rules.captain && isStarter(swapP.id) && <button type="button" className="gold" onClick={() => { role(swapP.id, 'c'); setSwap(null); }}>{lineup.c === swapP.id ? 'Remove captain' : 'Make captain'}</button>}
+            {rules.vc && isStarter(swapP.id) && <button type="button" onClick={() => { role(swapP.id, 'vc'); setSwap(null); }}>{lineup.vc === swapP.id ? 'Remove vice' : 'Make vice-captain'}</button>}
+            {slotOf.has(swapP.id) && <button type="button" onClick={() => { remove(swapP.id); setSwap(null); }}>Take out</button>}
+            <button type="button" onClick={() => { setSheet(swapP); setSwap(null); }}>Profile</button>
+          </div>
+        </div>
+      )}
+      {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`} style={{ margin: '8px 0 0' }}>{msg.text}</div>}
+      {lines.map((s) => section(LINE_TITLE[s.key] ?? s.label, s.n > 1 ? `${s.n} on field` : '1 on field', s.fits === 'any' ? 'var(--ink)' : `var(--${s.fits[0].toLowerCase()})`,
+        Array.from({ length: s.n }, (_, i) => { const id = lineup.slots[s.key]?.[i]; return mRow(id != null ? byId.get(id) : undefined, s, i); })))}
+      {section('Bench · emergencies', bench.length > 1 && bench.every((b) => b.n === 1) ? 'one per line' : `${benchSpots.length}`, 'var(--ink)', benchSpots.map(({ s, i }) => { const id = lineup.slots[s.key]?.[i]; return mRow(id != null ? byId.get(id) : undefined, s, i); }))}
+      {section(rules.key === 'survivor' ? 'Everyone else' : 'Extended bench', 'don’t score', 'var(--muted)', extended.map((p) => mRow(p, null, 0)))}
+      <p className="sqm-hint">Tap a player, then tap who you want to swap him with: only players who fit each other’s spots light up. Once his game starts you see his live score (captain ×2) and live match rating; before that his projection in grey. Arrow = form, last 5 v average.</p>
+      <div className="sqm-save">
+        <span>{dirty ? 'Changes not saved' : initial ? 'Team saved' : 'Not saved yet'}</span>
+        <button className="rh-btn go lg" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
+      </div>
+    </div>
+  );
+
   return (
     <>
-      <div className="sq-top">
+      <div className="sq-top sq-desk">
         <label className="sq-game"><span className="sr-only">Game</span>
           <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
             {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
@@ -274,9 +379,11 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           </div>
         </div>
       </div>
-      {msg && <div className={`rh-toast ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
+      {msg && <div className={`rh-toast sq-desk ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
 
-      <div className="sq-body">
+      {mobile}
+
+      <div className="sq-body sq-desk">
         <div className={`sq-list ${drag?.from ? 'drop-ok' : ''}`}
           onDragOver={(e) => { if (drag?.from) e.preventDefault(); }}
           onDrop={(e) => { e.preventDefault(); const pid = Number(e.dataTransfer.getData('text/plain')); setDrag(null); setOver(null); if (pid && slotOf.has(pid)) remove(pid); }}>
@@ -335,7 +442,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
               </div>
             )}
           </div>
-          <span className="sq-hint">Faded number = projected score{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · Rat = average match rating · drag onto a spot, or tap the swap arrows on two players · drag back to the list to remove · {rules.summary}</span>
+          <span className="sq-hint sq-desk">Faded number = projected score{rules.captain ? ' (captain ×2)' : ''} · form arrows: last 5 v average · Rat = average match rating · drag onto a spot, or tap the swap arrows on two players · drag back to the list to remove · {rules.summary}</span>
         </div>
       </div>
       {sheet && <SquadSheet p={sheet} slot={(() => { const w = where(sheet.id); return w === 'IN' ? rule(slotOf.get(sheet.id)!).key : w; })()} cap={lineup.c === sheet.id} vc={lineup.vc === sheet.id} onClose={() => setSheet(null)} clubName={clubName} gameName={rules.name} />}
@@ -471,7 +578,7 @@ function Lineups({ games, savedIds, locks, current, onPick, minis = [] }: { game
 }
 
 /* ---------------- page ---------------- */
-export function Matchday({ data, cup, minis = [] }: { data: MatchdayData; cup: CupData; minis?: MiniLink[] }) {
+export function Matchday({ data, cup, minis = [], liveSrc = null }: { data: MatchdayData; cup: CupData; minis?: MiniLink[]; liveSrc?: LiveSrc | null }) {
   const [gid, setGid] = useState(data.games[0]?.id ?? '');
   const game = data.games.find((g) => g.id === gid) ?? data.games[0];
   const rules = RULES[game.key];
@@ -498,7 +605,7 @@ export function Matchday({ data, cup, minis = [] }: { data: MatchdayData; cup: C
       <div className="sq-grid" ref={gridRef} style={fit ? { height: fit } : undefined}>
         <section className="rh-card sq-card" aria-label="Set your team">
           <Selector key={game.id} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
-            used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
+            used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} liveSrc={liveSrc} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
         <div className="sq-right">
           <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} minis={minis} />

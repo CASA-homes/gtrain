@@ -323,6 +323,101 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
   );
 }
 
+/* ---------------- phones: head-to-head list (mockup signed off 12 Nov 2026) ---------------- */
+const shortName = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
+function TeamBadge({ t, colour }: { t: MTeam; colour: string }) {
+  const [bad, setBad] = useState(false);
+  return t.logo && !bad
+    ? <img className="mxm-logo" src={t.logo} alt="" onError={() => setBad(true)} />
+    : <span className="mxm-logo" style={{ background: colour }} aria-hidden="true">{t.short.slice(0, 3)}</span>;
+}
+function MobileHalf({ p, side, gameByClub, now, onOpen }: { p?: MPlayer; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: () => void }) {
+  if (!p) return <div className={`mxm-half ${side} none`} />;
+  const l = liveOf(p, gameByClub, now), pre = l.ph.state === 'pre', x = p.cap === 'C' ? 2 : 1;
+  const tag = p.cap === 'C' ? (pre ? 'C' : 'C×2') : p.cap === 'VC' ? 'VC' : '';
+  const c = CLUBS[p.club];
+  const disc = <span className="mxm-disc" style={{ background: c ? (c.m ? `linear-gradient(90deg, ${c.a} 0 40%, ${c.m} 40% 60%, ${c.b} 60%)` : `linear-gradient(90deg, ${c.a} 0 50%, ${c.b} 50%)`) : '#c9cfc7' }} title={c?.name ?? p.club} />;
+  const who = (
+    <span className="mxm-who">
+      <span className="mxm-nm">{side === 'b' && tag && <i>{tag}</i>}<b>{shortName(p.name)}</b>{side === 'a' && tag && <i>{tag}</i>}</span>
+      <span className={`mxm-res ${l.ph.state === 'live' ? 'live' : ''}`}>{l.injured ? 'Injured · ' : ''}{tip(l)}</span>
+    </span>
+  );
+  const num = (
+    <span className="mxm-num">
+      <b className={pre ? 'pre' : ''}>{pre ? '–' : l.score * x}</b>
+      <small>{l.proj * x}</small>
+    </span>
+  );
+  return (
+    <button type="button" className={`mxm-half ${side} ${p.cap === 'C' && !pre ? 'cap' : ''}`} onClick={onOpen} aria-label={`${p.name} profile`}>
+      {side === 'a' ? <>{disc}{who}{num}</> : <>{num}{who}{disc}</>}
+    </button>
+  );
+}
+function MobileH2H({ A, B, sa, sb, cols, gameByClub, now, onOpen, view, setView, nav }: {
+  A: MTeam; B: MTeam; sa: { score: number; proj: number }; sb: { score: number; proj: number }; cols: [string, string];
+  gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void; view: string; setView: (v: 'preview' | 'live' | 'graph') => void; nav: React.ReactNode;
+}) {
+  const played = (t: MTeam) => t.players.filter((p) => p.line !== 'BENCH' && liveOf(p, gameByClub, now).ph.state !== 'pre').length;
+  const field = (t: MTeam) => t.players.filter((p) => p.line !== 'BENCH').length;
+  const pa = played(A), pb = played(B), fa = field(A) || 1, fb = field(B) || 1;
+  const lead = sa.score === sb.score ? 0 : sa.score > sb.score ? 1 : -1;
+  return (
+    <div className="mxm">
+      {nav}
+      <section className="mxm-card" aria-label="Score">
+        <div className="mxm-teams">
+          <div className="mxm-team a"><TeamBadge t={A} colour={cols[0]} /><b className="mxm-tn">{A.name}</b><span className={`mxm-big ${lead < 0 ? 'behind' : ''}`}>{sa.score}</span></div>
+          <span className="mxm-v">v</span>
+          <div className="mxm-team b"><TeamBadge t={B} colour={cols[1]} /><b className="mxm-tn">{B.name}</b><span className={`mxm-big ${lead > 0 ? 'behind' : ''}`}>{sb.score}</span></div>
+        </div>
+        <div className="mxm-meta">
+          <span>{sa.proj}</span><em>Projected</em><span>{sb.proj}</span>
+          <span>{pa}/{fa}</span><em>Played</em><span>{pb}/{fb}</span>
+        </div>
+        <div className="mxm-bars" aria-hidden="true"><i><b style={{ width: `${(pa / fa) * 100}%` }} /></i><i><b style={{ width: `${(pb / fb) * 100}%` }} /></i></div>
+      </section>
+      <div className="mxm-tabs" role="tablist" aria-label="Matchup view">
+        {([['preview', 'Preview'], ['live', 'Live'], ['graph', 'Graph']] as const).map(([k, label]) => (
+          <button key={k} type="button" role="tab" aria-selected={view === k} className={view === k ? 'on' : ''} onClick={() => setView(k)}>{label}</button>
+        ))}
+      </div>
+      {view === 'live' && <>
+        <h2 className="mxm-h">Starters</h2>
+        <div className="mxm-list">
+          {(['DEF', 'MID', 'RUC', 'FWD'] as const).flatMap((ln) => {
+            const xs = A.players.filter((p) => p.line === ln), ys = B.players.filter((p) => p.line === ln);
+            return Array.from({ length: Math.max(xs.length, ys.length) }, (_, i) => (
+              <div key={`${ln}${i}`} className="mxm-row">
+                <MobileHalf p={xs[i]} side="a" gameByClub={gameByClub} now={now} onOpen={() => xs[i] && onOpen({ p: xs[i], team: A })} />
+                <span className={`mxm-pos ${ln}`}>{ln}</span>
+                <MobileHalf p={ys[i]} side="b" gameByClub={gameByClub} now={now} onOpen={() => ys[i] && onOpen({ p: ys[i], team: B })} />
+              </div>
+            ));
+          })}
+        </div>
+        {(() => {
+          const xs = A.players.filter((p) => p.line === 'BENCH'), ys = B.players.filter((p) => p.line === 'BENCH');
+          if (!xs.length && !ys.length) return null;
+          return <>
+            <h2 className="mxm-h sm">Bench</h2>
+            <div className="mxm-list bench">
+              {Array.from({ length: Math.max(xs.length, ys.length) }, (_, i) => (
+                <div key={`B${i}`} className="mxm-row">
+                  <MobileHalf p={xs[i]} side="a" gameByClub={gameByClub} now={now} onOpen={() => xs[i] && onOpen({ p: xs[i], team: A })} />
+                  <span className="mxm-pos">EMG</span>
+                  <MobileHalf p={ys[i]} side="b" gameByClub={gameByClub} now={now} onOpen={() => ys[i] && onOpen({ p: ys[i], team: B })} />
+                </div>
+              ))}
+            </div>
+          </>;
+        })()}
+      </>}
+    </div>
+  );
+}
+
 /* ---------------- page ---------------- */
 export function MensRound({ round, myTeamId, compact = false }: { round: MRound; myTeamId: number; compact?: boolean }) {
   const gameByClub = useMemo(() => { const m = new Map<string, MGame>(); for (const g of round.games) { m.set(g.home, g); m.set(g.away, g); } return m; }, [round.games]);
@@ -358,10 +453,25 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
   const live = round.games.filter((g) => phase((now - Date.parse(g.start)) / 60e3).state === 'live');
   const nowLabel = new Date(now).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });
 
+  const n = round.matchups.length;
+  const mnav = (
+    <div className="mxm-nav">
+      <div className="mxm-pill">
+        <button type="button" aria-label="Previous matchup" onClick={() => setSel((sel - 1 + n) % n)}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg></button>
+        <span><b>Round {round.round}</b><small>Matchup {sel + 1} of {n}</small></span>
+        <button type="button" aria-label="Next matchup" onClick={() => setSel((sel + 1) % n)}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg></button>
+      </div>
+      <div className="mxm-test">
+        <span>Test round · <span className="rh-mono">{nowLabel}</span></span>
+        <button type="button" onClick={() => { if (now >= t1) setNow(t0); setPlaying((p) => !p); }}>{playing ? 'Pause' : now >= t1 ? 'Replay' : 'Play'}</button>
+        <button type="button" onClick={() => { setPlaying(false); setNow(nowDefault); }}>Now</button>
+      </div>
+    </div>
+  );
   const chip = live.length ? <span className="rh-chip live"><span className="rh-pulse" />{live.map((g) => `${g.home} v ${g.away}`).join(', ')}</span> : <span className="rh-chip">{now >= t1 ? 'Round complete' : 'No games on'}</span>;
   const body = (
     <>
-      <div className="mx-toprow">
+      <div className="mx-toprow mx-desk">
       <div className="mx-scrub rh-card">
         <div className="mx-scrubtop">
           <span className="rh-k">{compact ? <>Test round · <span className="rh-mono">{nowLabel}</span></> : 'Replay the round'}</span>
@@ -402,7 +512,9 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
 
       </div>
 
-      <section className="rh-card mx-hero">
+      <MobileH2H A={A} B={B} sa={sa} sb={sb} cols={[A_COL, B_COL]} gameByClub={gameByClub} now={now} onOpen={setProf} view={view} setView={setView} nav={mnav} />
+
+      <section className="rh-card mx-hero mx-desk">
         <div className="mx-sb">
           <div className="mx-sbt a">
             <span className="rh-k">{A.coach}</span>
@@ -438,7 +550,7 @@ export function MensRound({ round, myTeamId, compact = false }: { round: MRound;
         </section>
       )}
       {view === 'live' && (
-        <div className="mx-teams">
+        <div className="mx-teams mx-desk">
           <div className="mx-side a"><h2 className="rh-h2" style={{ color: A_COL }}>{A.name}</h2><TeamCol t={A} side="a" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
           <div className="mx-side b"><h2 className="rh-h2" style={{ color: B_COL }}>{B.name}</h2><TeamCol t={B} side="b" gameByClub={gameByClub} now={now} onOpen={setProf} top={round.top} /></div>
         </div>
