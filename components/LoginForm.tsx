@@ -4,7 +4,9 @@ import { createClient } from '@/lib/supabase/client';
 
 type State = { kind: 'idle' } | { kind: 'sending' } | { kind: 'sent'; email: string; codeError?: string; checking?: boolean } | { kind: 'error'; message: string };
 
-export function LoginForm({ linkError }: { linkError?: boolean }) {
+/** mode 'start': someone starting a new league, so any email can sign up and they land on league setup. */
+export function LoginForm({ linkError, mode = 'login' }: { linkError?: boolean; mode?: 'login' | 'start' }) {
+  const after = mode === 'start' ? '/setup' : '/auth/league?next=/clubhouse';
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [state, setState] = useState<State>(linkError
@@ -17,12 +19,14 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
     if (!clean) return;
     setState({ kind: 'sending' });
     const supabase = createClient();
-    const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
-    if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
-    if (!allowed) return setState({ kind: 'error', message: 'That email isn’t on the league list. Ask the commish to add it.' });
+    if (mode === 'login') {
+      const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
+      if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
+      if (!allowed) return setState({ kind: 'error', message: 'That email isn’t in a league yet. Ask your commish to add it, or start your own league.' });
+    }
     const { error } = await supabase.auth.signInWithOtp({
       email: clean,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: { emailRedirectTo: `${window.location.origin}/auth/callback${mode === 'start' ? '?next=/setup' : ''}` },
     });
     if (error) return setState({ kind: 'error', message: error.message });
     setState({ kind: 'sent', email: clean });
@@ -37,7 +41,7 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
     setState({ ...state, checking: true, codeError: undefined });
     const { error } = await createClient().auth.verifyOtp({ email: state.email, token, type: 'email' });
     if (error) return setState({ ...state, checking: false, codeError: 'That code didn’t work. Check it, or send a fresh email.' });
-    window.location.href = '/clubhouse';
+    window.location.href = after;
   }
 
   if (state.kind === 'sent') {

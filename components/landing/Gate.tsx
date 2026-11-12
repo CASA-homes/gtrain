@@ -1,12 +1,12 @@
 'use client';
 // Sign-in page actions for someone who isn't signed in: Start your league / Log in.
-// New leagues can't be created yet, so "Start your league" explains that rather than showing a form that does nothing.
+// Start your league: sign up with any email, then the setup wizard (/setup) creates the league and makes you commish.
 import { useEffect, useState } from 'react';
 import { LoginForm } from '@/components/LoginForm';
 
 type Pane = 'choose' | 'login' | 'start';
 
-export function Gate({ linkError }: { linkError: boolean }) {
+export function Gate({ linkError, signedIn = false }: { linkError: boolean; signedIn?: boolean }) {
   const [pane, setPane] = useState<Pane>(linkError ? 'login' : 'choose');
   // The header's Log in / Start a league buttons switch panes too.
   useEffect(() => {
@@ -16,10 +16,17 @@ export function Gate({ linkError }: { linkError: boolean }) {
   }, []);
   const back = <button type="button" className="kl-link" onClick={() => setPane('choose')}>← Back</button>;
   if (pane === 'login') return <div className="kl-gate"><LoginForm linkError={linkError} /><p className="kl-note">{back}</p></div>;
+  if (pane === 'start' && signedIn) return (
+    <div className="kl-gate">
+      <a href="/setup" className="kl-btn"><i />Set up your league</a>
+      <p className="kl-note">You’re signed in. Set up the league, add the clubs and invite your coaches. {back}</p>
+    </div>
+  );
   if (pane === 'start') return (
     <div className="kl-gate">
-      <div className="kl-soon"><b>New leagues are coming soon.</b> Keeper HQ is invite-only for now. If your league is already here, ask your commish to add your email, then log in.</div>
-      <p className="kl-note">{back} · <button type="button" className="kl-link" onClick={() => setPane('login')}>Log in</button></p>
+      <p className="kl-note" style={{ marginTop: 0 }}><b>Start your league.</b> Enter your email and we’ll send a sign-in link. Then you set up the league, add the clubs and invite your coaches. You’ll be the commish.</p>
+      <LoginForm mode="start" />
+      <p className="kl-note">{back} · Already in a league? <button type="button" className="kl-link" onClick={() => setPane('login')}>Log in</button></p>
     </div>
   );
   return (

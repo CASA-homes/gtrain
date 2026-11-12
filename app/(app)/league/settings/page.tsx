@@ -7,6 +7,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { CUP_NAME } from '@/lib/cup';
 import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { LeagueNameForm } from '@/components/LeagueNameForm';
+import { CoachInvites } from '@/components/league/CoachInvites';
 
 export const metadata = { title: 'League settings' };
 
@@ -27,6 +28,7 @@ export default async function LeagueSettingsPage() {
       <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
+        {me?.is_commish && <CoachInvites teams={league.teams.filter((t) => !(t as { is_guest?: boolean }).is_guest).map((t) => ({ id: t.id, name: t.name }))} leagueName={leagueName} />}
         <Group title="Team structure" rows={[
           ['Squad size', '33 players: 18 starters, 5 emergencies, 10 bench'],
           ['On field', '5 DEF · 7 MID · 1 RUC · 5 FWD'],

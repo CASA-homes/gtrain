@@ -29,8 +29,16 @@ const LINKS = [
   { href: '/live', label: 'Matchday', short: 'Match', icon: 'live' },
 ];
 
-export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null }) {
+export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], leagueId }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null; leagues?: { id: number; name: string }[]; leagueId?: number }) {
   const path = usePathname();
+  // League switcher: only when you're in more than one league. Switching goes through /auth/league, which checks membership.
+  const switcher = leagues.length > 1 && (
+    <label className="nav-league"><span className="sr-only">League</span>
+      <select value={leagueId} onChange={(e) => { window.location.href = `/auth/league?id=${e.target.value}&next=${encodeURIComponent(path.startsWith('/clubhouse/') ? '/clubhouse' : path)}`; }}>
+        {leagues.map((l) => <option key={l.id} value={l.id}>{l.name}</option>)}
+      </select>
+    </label>
+  );
   return (
     <nav className="nav" aria-label="Keeper HQ">
       <div className="nav-in">
@@ -45,6 +53,7 @@ export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: nu
             </Link>
           ))}
         </div>
+        {switcher}
         <NavSearch />
         <Link href={guest ? '/live' : `/clubhouse/${myTeamId}`} className="nav-me" aria-label={guest ? 'Guest' : 'My club'}>
           {logo && !guest

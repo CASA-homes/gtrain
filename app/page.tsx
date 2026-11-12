@@ -3,6 +3,7 @@ import { Gate, GateLink } from '@/components/landing/Gate';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { CardFan, type FanData, type HeatGame } from '@/components/landing/CardFan';
 import { getMe } from '@/lib/data';
+import { createClient } from '@/lib/supabase/server';
 import { AFL_LANDING_2026 } from '@/lib/afl-landing-2026';
 import LEAGUE from '@/data/league.json';
 import GAMES from '@/lib/player-games.json';
@@ -44,6 +45,8 @@ const WIRE = (() => {
 
 export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const [me, sp] = await Promise.all([getMe(), searchParams]);
+  // Signed in but in no league yet (just signed up): Start your league goes straight to setup.
+  const signedIn = !me && !!(await (await createClient()).auth.getClaims()).data?.claims?.sub;
   return (
     <main className="kl">
       <header className="kl-ribbon">
@@ -70,11 +73,14 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
         <p className="kl-slogan">Keep your stars. <b>Build your dynasty.</b></p>
         <div className="kl-form">
           {me ? (
+            <>
             <Link href="/live" className="kl-enter">
               Enter Matchday
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
-          ) : <Gate linkError={sp.error === 'link'} />}
+            <p className="kl-note"><Link href="/setup" className="kl-link">Start another league</Link></p>
+            </>
+          ) : <Gate linkError={sp.error === 'link'} signedIn={signedIn} />}
         </div>
         </div>
       </section>

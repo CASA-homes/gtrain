@@ -28,3 +28,16 @@ export async function createClient() {
 export async function currentLeagueId(): Promise<number> {
   return parseLeagueId((await cookies()).get(LEAGUE_COOKIE)?.value);
 }
+
+/** A client whose queries are scoped to a specific league (e.g. a league just created, before the cookie switches). */
+export async function createClientForLeague(leagueId: number) {
+  const cookieStore = await cookies();
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      global: { headers: { 'x-league-id': String(leagueId) } },
+      cookies: { getAll: () => cookieStore.getAll(), setAll: () => { /* read-only here */ } },
+    },
+  );
+}
