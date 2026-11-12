@@ -35,6 +35,7 @@ begin
   end loop;
 end $$;
 
+grant create on schema public to khq_definer;   -- needed only while taking ownership; revoked below
 do $$
 declare f record;
 begin
@@ -48,6 +49,7 @@ begin
     execute format('alter function %s owner to khq_definer', f.sig);
   end loop;
 end $$;
+revoke create on schema public from khq_definer;
 
 -- 2. League keys --------------------------------------------------------------------------------------------------
 alter table public.draft_room drop constraint if exists draft_room_pkey;
