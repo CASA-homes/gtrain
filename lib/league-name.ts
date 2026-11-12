@@ -1,4 +1,4 @@
-// The league's name, set by the commish in League settings (supabase/migrations/0026_league_name.sql).
+// The current league's name, set by the commish in League settings (leagues.name, supabase/migrations/0027_multi_league.sql).
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 
