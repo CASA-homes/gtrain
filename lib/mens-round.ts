@@ -6,6 +6,7 @@ import type { League } from '@/lib/data';
 import { best22, type PlayerRow } from '@/lib/ratings';
 import { projected2027 } from '@/lib/projection';
 import { photoUrl } from '@/lib/photos';
+import { baseAverage, positionPars, ratingBasis, ratingPos, type PosPars, type RatingBasis } from '@/lib/match-rating';
 
 export interface MGame { id: number; home: string; away: string; start: string; venue: string }
 export interface MStats { k: number; h: number; m: number; t: number; g: number; b: number; ho: number }
@@ -13,6 +14,8 @@ export interface MPlayer {
   id: number; name: string; club: string; line: 'DEF' | 'MID' | 'RUC' | 'FWD' | 'BENCH'; cap: 'C' | 'VC' | null; photo: string | null;
   proj: number; final: number; path: number[]; injAt: number | null; tog: number; st: MStats;
   prof: MProfile;
+  /** what his score is rated against (see lib/match-rating) */
+  rb: RatingBasis;
 }
 /** Condensed profile for the pop-up: 2026 game-by-game scores, season stat line, career by season. */
 export interface MProfile {
@@ -34,7 +37,7 @@ export function profileOf(p: PlayerRow): MProfile {
   };
 }
 export interface MTeam { id: number; name: string; short: string; coach: string; logo: string | null; colour?: string | null; players: MPlayer[] }
-export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][]; top: TopPerformer | null }
+export interface MRound { round: number; season: number; now: string; start: string; end: string; games: MGame[]; teams: MTeam[]; matchups: [number, number][]; top: TopPerformer | null; pars: PosPars }
 
 // Round One 2027 (afl.com.au, 27 Oct 2026). Start times carry the venue's UTC offset.
 export const R1_2027: MGame[] = [
@@ -55,7 +58,7 @@ function rng(seed: number) {
 }
 const normal = (r: () => number) => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
 
-function simPlayer(p: PlayerRow, line: MPlayer['line'], cap: MPlayer['cap'], proj: number): MPlayer {
+function simPlayer(p: PlayerRow, line: MPlayer['line'], cap: MPlayer['cap'], proj: number, pars: PosPars): MPlayer {
   const r = rng(p.id * 7919 + 2027);
   const injured = r() < 0.03;
   const injAt = injured ? 0.15 + r() * 0.6 : null;
@@ -81,11 +84,13 @@ function simPlayer(p: PlayerRow, line: MPlayer['line'], cap: MPlayer['cap'], pro
   while (rest < 0 && (m > 0 || t > 0)) { if (m > 0) { m--; rest += 3; } else { t--; rest += 4; } }
   const k = Math.max(0, Math.round((Math.max(0, rest) * (0.55 + r() * 0.15)) / 3));
   const h = Math.max(0, Math.round((Math.max(0, rest) - 3 * k) / 2));
-  return { id: p.id, name: p.full_name ?? p.name, club: p.afl_club ?? '', line, cap, photo: photoUrl(p), proj: Math.round(proj), final, path: norm, injAt, tog, st: { k, h, m, t, g, b, ho }, prof: profileOf(p) };
+  return { id: p.id, name: p.full_name ?? p.name, club: p.afl_club ?? '', line, cap, photo: photoUrl(p), proj: Math.round(proj), final, path: norm, injAt, tog, st: { k, h, m, t, g, b, ho }, prof: profileOf(p),
+    rb: ratingBasis(baseAverage({ prevAvg: p.average, prevGames: p.games, proj }), ratingPos(line, p.positions, pars), pars) };
 }
 
 export function buildMensRound(league: League): MRound {
   const pool = new Map<number, PlayerRow>([...league.players, ...league.freeAgents].map((p) => [p.id, p]));
+  const pars = positionPars([...pool.values()]);
   const clubs = new Set(R1_2027.flatMap((g) => [g.home, g.away]));
   const teams: MTeam[] = [];
   for (const [id, t] of league.byTeam) {
@@ -98,8 +103,8 @@ export function buildMensRound(league: League): MRound {
     const ranked = [...starters].sort((x, y) => proj.get(y.p.id)! - proj.get(x.p.id)!);
     const capOf = (pid: number) => (ranked[0]?.p.id === pid ? 'C' : ranked[1]?.p.id === pid ? 'VC' : null);
     const players = [
-      ...starters.map(({ p, l }) => simPlayer(p, l, capOf(p.id), proj.get(p.id)!)),
-      ...b.bench.map((p) => simPlayer(p, 'BENCH', null, proj.get(p.id)!)),
+      ...starters.map(({ p, l }) => simPlayer(p, l, capOf(p.id), proj.get(p.id)!, pars)),
+      ...b.bench.map((p) => simPlayer(p, 'BENCH', null, proj.get(p.id)!, pars)),
     ];
     teams.push({ id, name: t.team.name, short: t.team.short_code, coach: t.team.coach_name, logo: t.team.logo_url ?? null, colour: t.team.colour ?? null, players });
   }
@@ -113,5 +118,5 @@ export function buildMensRound(league: League): MRound {
   const lastStart = Math.max(...R1_2027.map((g) => Date.parse(g.start)));
   // Last week's top performer: for this test round, the top scorer of the last 2026 round.
   const top = topFromLogs([...pool.values()], 2026);
-  return { round: 1, season: 2027, now: '2027-03-20T21:05:00+11:00', start, end: new Date(lastStart + GAME_MINUTES * 60e3).toISOString(), games: R1_2027, teams, matchups, top };
+  return { round: 1, season: 2027, now: '2027-03-20T21:05:00+11:00', start, end: new Date(lastStart + GAME_MINUTES * 60e3).toISOString(), games: R1_2027, teams, matchups, top, pars };
 }

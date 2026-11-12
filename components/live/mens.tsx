@@ -7,6 +7,7 @@ import { ProfileTabs } from './profile-tabs';
 import { GAME_MINUTES, type MGame, type MPlayer, type MRound, type MTeam } from '@/lib/mens-round';
 import { Shell } from './kit';
 import { plateVars, type TopPerformer } from '@/lib/top-performer';
+import { matchRating, scoreFor } from '@/lib/match-rating';
 
 const PERTH = 'Australia/Perth';
 export const A_COL = '#2563c9', B_COL = '#e0780f';
@@ -48,7 +49,7 @@ export function liveOf(p: MPlayer, gameByClub: Map<string, MGame>, now: number):
   const injured = p.injAt != null && ph.play >= p.injAt;
   const remain = injured ? 0 : p.proj * (1 - ph.play);
   let rating: number | null = null;
-  if (ph.play > 0) { const exp = p.proj * ph.play, r = (score + p.proj * 0.12) / (exp + p.proj * 0.12); rating = Math.round(clamp(7 + (r - 1) * 5, 3, 10) * 10) / 10; }
+  if (ph.play > 0) rating = matchRating(score, p.rb, ph.play);
   const f = p.final ? score / p.final : 0;
   const st = Object.fromEntries(Object.entries(p.st).map(([k, v]) => [k, Math.round(v * f)])) as unknown as MPlayer['st'];
   return { score, play: ph.play, ph, rating, proj: Math.round(score + remain), injured, st, game };
@@ -184,7 +185,7 @@ function PlayerRow({ p, l, side, onOpen, top }: { p: MPlayer; l: Live; side: 'a'
     </div>
   );
   const tog = <span className={`mx-tog rh-mono ${l.injured ? 'inj' : ''}`} title={pre ? 'Not played yet' : `${l.injured ? 'Injured, ' : ''}${p.tog}% time on ground`}>{pre ? '' : `${p.tog}%`}</span>;
-  const rate = <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>;
+  const rate = <div className="mx-rate">{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating) }} title={`Par ${Math.round(p.rb.par)} for him at ${p.rb.pos} (avg ${Math.round(p.rb.avg)}) · 9.0 needs ${scoreFor(9, p.rb)}`}>{l.rating.toFixed(1)}</span> : <span className="rh-dim rh-mono">–</span>}</div>;
   const projN = <span className="mx-projn rh-mono" title="Projected">{Math.round(p.proj) * (p.cap === 'C' ? 2 : 1)}</span>;
   const x = p.cap === 'C' ? 2 : 1;
   const act = <b className={`rh-mono ${pre ? 'mx-dash' : l.score >= 100 ? 'ton' : ''} ${star ? 'tp-plate' : ''}`} style={star ? plateVars(p.club) : undefined} title={x === 2 && !pre ? `${l.score} doubled as captain` : undefined}>{pre ? '–' : l.score * x}</b>;
@@ -196,6 +197,18 @@ function PlayerRow({ p, l, side, onOpen, top }: { p: MPlayer; l: Live; side: 'a'
   );
 }
 
+/** Line label plus the line's average rating so far (players whose game has started). */
+function LineHead({ ln, ps, gameByClub, now }: { ln: MPlayer['line']; ps: MPlayer[]; gameByClub: Map<string, MGame>; now: number }) {
+  const rs = ln === 'BENCH' ? [] : ps.map((p) => liveOf(p, gameByClub, now).rating).filter((r): r is number => r != null);
+  const avg = rs.length ? Math.round((rs.reduce((a, b) => a + b, 0) / rs.length) * 10) / 10 : null;
+  return (
+    <span className="rh-k mx-linehead">
+      <span>{LINE_NAME[ln]}{ln === 'BENCH' ? ' · emergencies' : ''}</span>
+      {avg != null && <span className="mx-lineavg" title={`Average rating of ${rs.length} ${LINE_NAME[ln].toLowerCase()} who have played`}><i style={{ background: rtCol(avg) }} />{avg.toFixed(1)}</span>}
+    </span>
+  );
+}
+
 function TeamCol({ t, side, gameByClub, now, onOpen, top }: { t: MTeam; side: 'a' | 'b'; gameByClub: Map<string, MGame>; now: number; onOpen: (o: ProfileOpen) => void; top?: TopPerformer | null }) {
   return (
     <div className="mx-col">
@@ -204,7 +217,7 @@ function TeamCol({ t, side, gameByClub, now, onOpen, top }: { t: MTeam; side: 'a
         if (!ps.length) return null;
         return (
           <div key={ln} className="mx-line">
-            <span className="rh-k">{LINE_NAME[ln]}{ln === 'BENCH' ? ' · emergencies' : ''}</span>
+            <LineHead ln={ln} ps={ps} gameByClub={gameByClub} now={now} />
             {ps.map((p) => <PlayerRow key={p.id} p={p} l={liveOf(p, gameByClub, now)} side={side} top={top} onOpen={() => onOpen({ p, team: t })} />)}
           </div>
         );
@@ -258,7 +271,7 @@ export function PlayerSheet({ open, onClose, gameByClub, now }: { open: ProfileO
         <ProfileTabs roundLabel="This round" defaultTab="season" prof={pr} proj={p.proj} clubName={team.name} fullName={p.name} round={<>
         <div className="mx-sh-now">
           <div><span className="rh-k">Round 1</span><b className="rh-mono">{pre ? '–' : l.score}</b><span className="rh-dim">{pre ? `plays ${new Date(l.game!.start).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH })}` : l.ph.label}</span></div>
-          <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">vs projection</span></div>
+          <div><span className="rh-k">Rating</span>{l.rating != null ? <span className="mx-chip" style={{ background: rtCol(l.rating), alignSelf: 'flex-start', fontSize: 15 }}>{l.rating.toFixed(1)}</span> : <b className="rh-mono rh-dim">–</b>}<span className="rh-dim">par {Math.round(p.rb.par)} at {p.rb.pos} · 9 needs {scoreFor(9, p.rb)}</span></div>
           <div><span className="rh-k">2027 proj</span><b className="rh-mono">{p.proj}</b><span className="rh-dim">{pre ? 'not played yet' : `on track for ${l.proj}`}</span></div>
         </div>
         {!pre && <div className="mx-statline">{([['K', l.st.k], ['HB', l.st.h], ['D', l.st.k + l.st.h], ['M', l.st.m], ['T', l.st.t], ['G', l.st.g], ['B', l.st.b], ['HO', l.st.ho], ['TOG%', p.tog]] as [string, number][]).filter(([k, v]) => k !== 'HO' || v).map(([k, v]) => <span key={k}><b className="rh-mono">{v}</b><em>{k}</em></span>)}</div>}

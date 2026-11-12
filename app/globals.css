@@ -854,6 +854,10 @@ body:has(.rh) { background: var(--bg); }
 .mx-col { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
 .mx-line { display: flex; flex-direction: column; gap: 2px; }
 .mx-line .rh-k { padding: 0 2px 4px; }
+.mx-linehead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mx-side.b .mx-linehead { flex-direction: row-reverse; }
+.mx-lineavg { display: inline-flex; align-items: center; gap: 5px; font-family: var(--rh-mono, ui-monospace, monospace); font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--rh-ink, #121513); }
+.mx-lineavg i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .mx-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) 74px 42px 64px; gap: 10px; align-items: center; padding: 8px 10px; border-radius: 12px; background: var(--rh-1); border: 1px solid var(--rh-line); }
 .mx-row.bench { opacity: .7; }
 .mx-who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
