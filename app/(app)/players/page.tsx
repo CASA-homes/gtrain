@@ -62,7 +62,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     return (r as unknown as Record<string, number>)[key] ?? null;
   };
 
-  const own = sp.own === 'free' ? 'free' : sp.own === 'all' ? 'all' : sp.own === 'watch' ? 'watch' : 'owned';
+  const own = sp.own === 'free' ? 'free' : sp.own === 'owned' ? 'owned' : sp.own === 'watch' ? 'watch' : 'all';   // default: every player
   const club = sp.club && CLUBS[sp.club] ? sp.club : null;
   const status = sp.status === 'playing' || sp.status === 'injured' ? sp.status : null;
   const period = PERIODS.some(([k]) => k === sp.period) ? sp.period! : 'season';
@@ -122,8 +122,8 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     </th>
   );
   const active = (preset: Record<string, string>) => Object.entries(preset).every(([k, v]) => sp[k as keyof SP] === v);
-  const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'owned' ? { own } : {}), ...(y25 ? { yr: '2025' } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
-  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'owned' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}), ...(y25 ? { yr: '2025' } : {}) }).toString()}`;
+  const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'all' ? { own } : {}), ...(y25 ? { yr: '2025' } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
+  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'all' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}), ...(y25 ? { yr: '2025' } : {}) }).toString()}`;
   const activeFilters = [line, club, status, team && own !== 'free' ? 'team' : null, sp.mine, period !== 'season' ? period : null, sp.agemin, sp.agemax, sp.avgmax, ...filters.map((f) => f[0])].filter(Boolean).length;
   const periodLabel = PERIODS.find(([k]) => k === period)![1];
   const groups = ['Rating', 'Fantasy profile', 'Game attributes'] as const;
@@ -152,7 +152,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
       <AskPlayers />
 
       <form className="card players-filter" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {own !== 'owned' && <input type="hidden" name="own" value={own} />}
+        {own !== 'all' && <input type="hidden" name="own" value={own} />}
         {y25 && <input type="hidden" name="yr" value="2025" />}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input name="q" defaultValue={sp.q} placeholder="Search a player" className="input" style={{ flex: 1, minWidth: 0 }} aria-label="Search a player" />
@@ -173,7 +173,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               })}
             </span>
             <span className="own-toggle own-main" role="tablist" aria-label="Ownership">
-              {([['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size], ['all', 'All', null]] as const).map(([k, lab, n]) => (
+              {([['all', 'All', null], ['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size]] as const).map(([k, lab, n]) => (
                 <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
                   {lab}{n != null && <span>{n}</span>}
                 </Link>
