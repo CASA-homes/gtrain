@@ -177,6 +177,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <span className="muted">Coach {a.team.coach_name}{isMine ? ' · your club' : ''}</span>
             </div>
           </div>
+          <div className="club-head-rank"><b>#{a.rank}</b><span>Power rank</span></div>
           <ClubHeadMore>
           <div className="club-head-kpis">
             <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>

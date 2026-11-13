@@ -53,14 +53,14 @@ export function PlayerHighlights({ players, all, clubName }: { players: PlayerRo
             </div>
             <dl className="hl-stats">
               <div className="hl-name"><dt className="sr-only">Player</dt><dd>{p.full_name ?? p.name}<small>{club?.name ?? p.afl_club ?? ''}</small></dd></div>
-              <div className="hl-avg"><dt>2026 average</dt><dd>{p.average!.toFixed(1)}</dd></div>
-              <div><dt>Games</dt><dd>{p.games ?? '–'}</dd></div>
+              <div className="hl-avg"><dt><span className="hl-dl">2026 average</span><span className="hl-ds">Avg</span></dt><dd>{p.average!.toFixed(1)}</dd></div>
+              <div><dt><span className="hl-dl">Games</span><span className="hl-ds">Gms</span></dt><dd>{p.games ?? '–'}</dd></div>
               <div><dt>Age</dt><dd>{a ?? '–'}</dd></div>
               <div><dt>Pos</dt><dd>{p.positions.join('/')}</dd></div>
             </dl>
             <div className="hl-why">
               <span className="hl-k">{kind === 'star' ? 'Why he’s the best' : 'Why he’s the one to watch'}</span>
-              <p><b>{why}</b> {note}</p>
+              <p><b>{why}</b> <span className="hl-note">{note}</span></p>
             </div>
           </Link>
         );
