@@ -1,6 +1,7 @@
 'use client';
 // Matchday · Squad Selector. Left: your whole list beside the field (3-2 / 4-3 / 1 / 3-2 + emergencies), drag and drop
 // or tap to place. Right: the matchup for whichever game is picked in the dropdown, and the Knockout Cup.
+import { HOLO, HOLO_FOIL } from '@/lib/holo';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -23,9 +24,12 @@ const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('
 const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
 export const shortGame = (g: GameOpt) => `${g.label.replace('Knockout Cup · Round ', 'Cup R').replace(' · Round ', ' R')}${g.opp ? ` · v ${g.opp.name}` : ''}`;
 
-export function Disc({ p, size = 16, label = false }: { p: MdPlayer; size?: number; label?: boolean }) {
+export function Disc({ p, size = 16, label = false, ring = false }: { p: MdPlayer; size?: number; label?: boolean; ring?: boolean }) {
+  const holo = ring ? HOLO[short(p.name)] : undefined;
+  const f = holo ? HOLO_FOIL[holo.palette] : undefined;
   return (
-    <span className="sq-disc" style={{ width: size, height: size, background: jumper(p.club) }} title={p.club ? CLUBS[p.club]?.name ?? p.club : undefined} aria-hidden="true">
+    <span className={`sq-disc ${ring ? 'ring' : ''} ${f ? 'holo' : ''}`} style={{ width: size, height: size, background: jumper(p.club) }} title={p.club ? CLUBS[p.club]?.name ?? p.club : undefined} aria-hidden="true">
+      {f && <><i className="sq-holo holo-anim" style={{ background: f.sweep, backgroundSize: '280% 280%' }} /><i className="sq-holo-glint holo-anim" style={{ background: `radial-gradient(circle, ${f.glint[0]} 0 0.7px, transparent 1.2px) 0 0 / 7px 7px, radial-gradient(circle, ${f.glint[1]} 0 0.6px, transparent 1.1px) 3px 4px / 9px 9px` }} /></>}
       {label && <b style={{ fontSize: Math.round(size * 0.32) }}>{initials(p.name)}</b>}
     </span>
   );
@@ -96,8 +100,8 @@ function SquadSheet({ p, slot, cap, vc, onClose, clubName, gameName }: { p: MdPl
 type Pick = { pid: number; from: string | null } | null;
 /** Live scores for the mobile list: this round's simulated men's games (same source as Live Matchups). */
 export interface LiveSrc { now: number; games: MGame[]; players: MPlayer[] }
-function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange, liveSrc }: {
-  liveSrc?: LiveSrc | null; clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
+function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange, liveSrc, round }: {
+  round?: number; liveSrc?: LiveSrc | null; clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
 }) {
   const router = useRouter();
   const byId = useMemo(() => new Map(squad.map((p) => [p.id, p])), [squad]);
@@ -294,7 +298,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
       <div key={key} role="button" tabIndex={0} aria-pressed={isSel} className={`sqm-row ${isSel ? 'sel' : ''} ${target ? 'target' : ''} ${swap != null && !isSel && !target ? 'fade' : ''} ${capd ? 'cap' : ''} ${off ? 'off' : ''}`}
         onClick={() => tapPlayer(p.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tapPlayer(p.id); } }}>
         <span className="sqm-bar" style={{ background: POS_COL[p.pos[0]] }} />
-        <Disc p={p} size={24} />
+        <Disc p={p} size={26} ring />
         <span className="sqm-main">
           <span className="sqm-nm">
             <b>{short(p.name)}</b><Form p={p} size={12} />
@@ -324,9 +328,9 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
   const mobile = (
     <div className="sqm">
       <div className="sqm-top">
-        <label className="sqm-game"><span className="sr-only">Game</span>
+        <label className="sqm-game">{round != null && <span className="sqm-rnd">R{round}</span>}<span className="sr-only">Game</span>
           <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
-            {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
+            {games.map((g) => <option key={g.id} value={g.id}>{round != null ? shortGame(g).replace(new RegExp(` R${round}(?= ·|$)`), '') : shortGame(g)}</option>)}
           </select>
         </label>
         <div className="sqm-stats">
@@ -610,7 +614,7 @@ export function Matchday({ data, cup, minis = [], liveSrc = null }: { data: Matc
       {!data.ready && <div className="rh-card md-warn">Saving teams needs <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code>. You can still build and preview.</div>}
       <div className="sq-grid" ref={gridRef} style={fit ? { height: fit } : undefined}>
         <section className="rh-card sq-card" aria-label="Set your team">
-          <Selector key={game.id} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
+          <Selector key={game.id} round={data.round} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
             used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} liveSrc={liveSrc} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
         </section>
         <div className="sq-right">
