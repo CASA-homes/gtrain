@@ -63,7 +63,7 @@ const avgRating = (rs: Row[]) => { const xs = rs.filter((r) => r.rating != null)
 const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
 
 function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPlayer) => void }) {
-  const chip = <span className="cl-chip" style={{ background: r.rating != null ? rtCol(r.rating) : 'var(--rh-2)' }}>{r.rating != null ? r.rating.toFixed(1) : '–'}</span>;
+  const chip = r.rating != null ? <span className="lv-rt" style={{ borderColor: rtCol(r.rating) }} title="Live match rating">{r.rating.toFixed(1)}</span> : null;
   const sc = <span className={`cl-sc ${r.score == null ? 'proj' : ''} ${(r.score ?? 0) >= 100 ? 'ton' : ''}`} title={r.score == null ? 'Projected' : r.st === 'live' ? `Live · on track for ${r.proj}` : 'Final'}>{r.score ?? r.proj}</span>;
   const who = (
     <span className="cl-who">
@@ -73,8 +73,8 @@ function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPla
         : <>{r.p.club}{r.slot === 'UTIL' ? ' · UTIL' : ''} · <span className={r.st === 'live' ? 'cl-live' : ''}>{r.when}</span></>}</span>
     </span>
   );
-  const disc = <Disc p={r.p} size={30} />;
-  return <div className={`cl-pc ${side} ${r.slot === 'UTIL' ? 'util' : ''}`} title={r.p.club ? CLUBS[r.p.club]?.name : undefined}>{side === 'a' ? <>{chip}{who}{sc}{disc}</> : <>{disc}{sc}{who}{chip}</>}</div>;
+  const disc = <Disc p={r.p} size={26} />;
+  return <div className={`cl-pc lv-pc ${side} ${r.slot === 'UTIL' ? 'util' : ''}`} title={r.p.club ? CLUBS[r.p.club]?.name : undefined}>{side === 'a' ? <>{disc}{who}{chip}{sc}</> : <>{sc}{chip}{who}{disc}</>}</div>;
 }
 
 export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void }) {
@@ -148,7 +148,6 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
 
       {view === 'live' && (
         <div className="cl-board">
-          <div className="cl-grp cl-heads"><span className="rh-k" style={{ textAlign: 'right' }}>{myName} · on field</span><span className="rh-k">{oppName} · on field</span></div>
           {lines.map((l) => (
             <div key={l.k}>
               <div className="cl-lhead">

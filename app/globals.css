@@ -2385,3 +2385,36 @@ button.md-slot:hover { border-color: #cdd2cb; }
 }
 @media (max-width: 640px) { .page:has(> .rh) { padding-top: 10px; } }
 @media (max-width: 640px) { .mxm-team.a, .mxm-team.b { align-items: center; } .mxm-team .mxm-big { justify-self: start; } .mxm-team.b .mxm-big { justify-self: end; } .mxm .mxm-h { font-size: 15px; margin: 4px 0 0; padding: 0 12px; } }
+
+/* Live Matchups cards (G-Train phones + Knockout Cup): club circle, name, bordered live rating, live score; mirrored for the opponent */
+.lv-rt { flex: none; font: 600 10.5px/1 var(--mono); padding: 3px 3px; min-width: 27px; text-align: center; border: 1.5px solid; border-radius: 5px; background: transparent; color: var(--ink); }
+.cl-pc.a .cl-who { align-items: flex-start; text-align: left; }
+.cl-pc.b .cl-who { align-items: flex-end; text-align: right; }
+.cl-pc.b .cl-sc { text-align: left; }
+.cl-pc.a .cl-sc { text-align: right; }
+@media (max-width: 640px) {
+  .mxm .lv-line { padding: 0 8px; }
+  .lv-bub { display: flex; align-items: baseline; gap: 7px; width: max-content; margin: 8px auto 6px; padding: 3px 12px; border-radius: 99px; background: #eef0ee; border: 1px solid #d5d9d6; color: #4b524d; }
+  .lv-bub span { font: 800 10px/1.4 var(--font); letter-spacing: .1em; text-transform: uppercase; }
+  .lv-bub b { font: 700 14px/1 var(--mono); letter-spacing: -.02em; }
+  .lv-bub em { font-style: normal; font-size: 11px; }
+  .lv-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 5px; margin-bottom: 5px; }
+  .mxm-half.lv-pc { border: 1px solid var(--line); border-radius: 10px; padding: 6px; gap: 5px; min-height: 44px; }
+  .mxm-half.lv-pc.b { padding: 6px; }
+  .mxm-half.lv-pc.none { border-style: dashed; background: transparent; }
+  .lv-pc .mxm-nm b { font-size: 12.5px; }
+  .lv-pc .mxm-res { font-size: 10.5px; }
+  .lv-sc { flex: none; font: 700 15px/1 var(--mono); min-width: 26px; text-align: right; letter-spacing: -.02em; }
+  .lv-pc.b .lv-sc { text-align: left; }
+  .lv-sc.pre { color: #a6aca7; font-weight: 600; }
+  .lv-line.bench .lv-pc { opacity: .8; }
+  /* cup: same cards, gold line bubble kept but smaller */
+  .cl-lhead { margin: 8px 0 6px; gap: 6px; }
+  .cl-strip { padding: 3px 12px; gap: 7px; border-radius: 99px; flex-wrap: nowrap; white-space: nowrap; }
+  .cl-strip .cl-sep, .cl-strip .cl-sep ~ * { display: none !important; }
+  .cl-ln { font-size: 10px; } .cl-v { font-size: 14px; } .cl-won { font-size: 10px; }
+  .cl-grp { column-gap: 5px; } .cl-stack { gap: 5px; }
+  .cl-pc { padding: 6px; gap: 5px; border-radius: 10px; min-height: 44px; }
+  .cl-nm { font-size: 12.5px; } .cl-sub { font-size: 10.5px; }
+  .cl-sc { font-size: 15px; min-width: 26px; } .cl-sc.proj { font-size: 14px; }
+}

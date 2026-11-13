@@ -344,15 +344,11 @@ function MobileHalf({ p, side, gameByClub, now, onOpen }: { p?: MPlayer; side: '
       <span className={`mxm-res ${l.ph.state === 'live' ? 'live' : ''}`}>{l.injured ? 'Injured · ' : ''}{tip(l)}</span>
     </span>
   );
-  const num = (
-    <span className="mxm-num">
-      <b className={pre ? 'pre' : ''}>{pre ? '–' : l.score * x}</b>
-      <small>{l.proj * x}</small>
-    </span>
-  );
+  const num = <b className={`lv-sc ${pre ? 'pre' : ''}`} title={pre ? 'Projected' : `On track for ${l.proj * x}`}>{pre ? l.proj * x : l.score * x}</b>;
+  const rat = l.rating != null ? <span className="lv-rt" style={{ borderColor: rtCol(l.rating) }} title="Live match rating">{l.rating.toFixed(1)}</span> : null;
   return (
-    <button type="button" className={`mxm-half ${side} ${p.cap === 'C' && !pre ? 'cap' : ''}`} onClick={onOpen} aria-label={`${p.name} profile`}>
-      {side === 'a' ? <>{disc}{who}{num}</> : <>{num}{who}{disc}</>}
+    <button type="button" className={`mxm-half lv-pc ${side} ${p.cap === 'C' && !pre ? 'cap' : ''}`} onClick={onOpen} aria-label={`${p.name} profile`}>
+      {side === 'a' ? <>{disc}{who}{rat}{num}</> : <>{num}{rat}{who}{disc}</>}
     </button>
   );
 }
@@ -385,34 +381,35 @@ function MobileH2H({ A, B, sa, sb, cols, gameByClub, now, onOpen, view, setView,
         ))}
       </div>
       {view === 'live' && <>
-        <h2 className="mxm-h">Starters</h2>
-        <div className="mxm-list">
-          {(['DEF', 'MID', 'RUC', 'FWD'] as const).flatMap((ln) => {
-            const xs = A.players.filter((p) => p.line === ln), ys = B.players.filter((p) => p.line === ln);
-            return Array.from({ length: Math.max(xs.length, ys.length) }, (_, i) => (
-              <div key={`${ln}${i}`} className="mxm-row">
-                <MobileHalf p={xs[i]} side="a" gameByClub={gameByClub} now={now} onOpen={() => xs[i] && onOpen({ p: xs[i], team: A })} />
-                <span className={`mxm-pos ${ln}`}>{ln}</span>
-                <MobileHalf p={ys[i]} side="b" gameByClub={gameByClub} now={now} onOpen={() => ys[i] && onOpen({ p: ys[i], team: B })} />
-              </div>
-            ));
-          })}
-        </div>
-        {(() => {
-          const xs = A.players.filter((p) => p.line === 'BENCH'), ys = B.players.filter((p) => p.line === 'BENCH');
-          if (!xs.length && !ys.length) return null;
-          return <>
-            <h2 className="mxm-h sm">Bench</h2>
-            <div className="mxm-list bench">
+        {(['DEF', 'MID', 'RUC', 'FWD'] as const).map((ln) => {
+          const xs = A.players.filter((p) => p.line === ln), ys = B.players.filter((p) => p.line === ln);
+          const tot = (ps: MPlayer[]) => ps.reduce((t, p) => { const l = liveOf(p, gameByClub, now); return t + (l.ph.state === 'pre' ? 0 : l.score) * (p.cap === 'C' ? 2 : 1); }, 0);
+          return (
+            <section key={ln} className="lv-line" aria-label={LINE_NAME[ln]}>
+              <div className="lv-bub"><span>{LINE_NAME[ln]}</span><b style={{ color: cols[0] }}>{tot(xs)}</b><em>v</em><b style={{ color: cols[1] }}>{tot(ys)}</b></div>
               {Array.from({ length: Math.max(xs.length, ys.length) }, (_, i) => (
-                <div key={`B${i}`} className="mxm-row">
+                <div key={i} className="lv-row">
                   <MobileHalf p={xs[i]} side="a" gameByClub={gameByClub} now={now} onOpen={() => xs[i] && onOpen({ p: xs[i], team: A })} />
-                  <span className="mxm-pos">EMG</span>
                   <MobileHalf p={ys[i]} side="b" gameByClub={gameByClub} now={now} onOpen={() => ys[i] && onOpen({ p: ys[i], team: B })} />
                 </div>
               ))}
-            </div>
-          </>;
+            </section>
+          );
+        })}
+        {(() => {
+          const xs = A.players.filter((p) => p.line === 'BENCH'), ys = B.players.filter((p) => p.line === 'BENCH');
+          if (!xs.length && !ys.length) return null;
+          return (
+            <section className="lv-line bench" aria-label="Bench">
+              <div className="lv-bub"><span>Bench</span></div>
+              {Array.from({ length: Math.max(xs.length, ys.length) }, (_, i) => (
+                <div key={`B${i}`} className="lv-row">
+                  <MobileHalf p={xs[i]} side="a" gameByClub={gameByClub} now={now} onOpen={() => xs[i] && onOpen({ p: xs[i], team: A })} />
+                  <MobileHalf p={ys[i]} side="b" gameByClub={gameByClub} now={now} onOpen={() => ys[i] && onOpen({ p: ys[i], team: B })} />
+                </div>
+              ))}
+            </section>
+          );
         })()}
       </>}
     </div>
