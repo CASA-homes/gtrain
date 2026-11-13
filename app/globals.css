@@ -2345,5 +2345,5 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .gsy.holo .gsy-ring { box-shadow: inset 0 0 0 1.5px #e9cf7a, inset 0 0 0 2.5px rgb(255 255 255 / .8); }
 .gsy.holo { box-shadow: 0 0 6px rgb(212 166 42 / .6); overflow: visible; }
 .gsy-foil, .gsy-glint { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; }
-.gsy-foil { mix-blend-mode: color-dodge; opacity: .75; animation: holoSweep 4s ease-in-out infinite; }
+.gsy-foil { mix-blend-mode: overlay; opacity: .9; animation: holoSweep 4s ease-in-out infinite; }
 .gsy-glint { mix-blend-mode: screen; animation: holoTwinkle 2.6s ease-in-out infinite; }
