@@ -5,6 +5,18 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'G. Wardlaw', tag: 'Injury', date: '2026-11-13', title: 'Wardlaw nursing a minor MCL sprain',
+    body: 'North say Wardlaw picked up a low-grade MCL sprain over the break and should rejoin the main group within a fortnight. It’s a small one, but after his run of hamstring dramas any missed pre-season is worth noting. Ram Dawgs will want him banking a full summer before trusting him as a keeper.',
+  },
+  {
+    player: 'N. Blakey', tag: 'Injury', date: '2026-11-13', title: 'Blakey back to group skills in December',
+    body: 'Blakey had an off-season procedure on his AC joint and the Roos expect him to move into group skills in December. That leaves plenty of time before round 1, so there’s no real alarm for a defender who averaged 86 in 2026.',
+  },
+  {
+    player: 'T. Powell', tag: 'Injury', date: '2026-11-13', title: 'Powell stays on a modified program',
+    body: 'Powell has joined some team skills but North have him on a modified program for roughly another six weeks. He only managed eight games in 2026, so a clean run into January matters if he’s going to push for regular midfield minutes.',
+  },
+  {
     player: 'S. Pendlebury', tag: 'Trade', date: '2026-11-12', title: 'Pendlebury flags the No.7 at the Suns',
     body: 'The games record holder, traded to Gold Coast on a two-year deal after Collingwood moved on, has added a 7 to his Instagram bio, a strong hint he’ll wear the Suns’ No.7 in 2027. He’s 39 in January but still averaged 79 this year. Released by his G-Train side, so he’s a cheap draft option if the Suns give him real midfield minutes.',
   },
@@ -63,17 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'J. Cameron', tag: 'Injury', date: '2026-10-29', title: 'Cameron’s arm still in a splint',
     body: 'Cameron had more surgery on the forearm he broke in last year’s grand final, and he admits he might have retired if he’d sat out 2026. The arm is in a splint until a 12-week review, so his pre-season will be interrupted. Hold off counting on a full-strength start.',
-  },
-  {
-    player: 'T. Greene', tag: 'Trade', date: '2026-10-29', title: 'Greene joins Geelong as a free agent',
-    body: 'Greene has left GWS and signed with Geelong as an unrestricted free agent, reuniting with Jeremy Cameron in the Cats’ forward line. Fantasy-wise expect a forward-first role in a deep side, so his midfield minutes and scoring ceiling may shrink.',
-  },
-  {
-    player: 'B. Maynard', tag: 'Injury', date: '2026-10-29', title: 'Maynard: shoulder rebuilt, back in the new year',
-    body: 'Collingwood’s Maynard had a shoulder reconstruction after the season and isn’t expected back in full training until the new year. A shortened pre-season makes him a slow-start risk for round 1.',
-  },
-  {
-    player: 'J. Short', tag: 'Role', title: 'Short’s Collingwood move falls over',
-    body: 'Short tried to get to Collingwood in the trade period, but the clubs couldn’t agree on the final day and he’s back at Richmond for the last year of his contract. Fantasy-wise that’s good news: he keeps his spot as the Tigers’ main half-back ball user and kick-in taker, with a new deal to play for.',
   },
 ];
