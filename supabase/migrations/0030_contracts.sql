@@ -17,9 +17,9 @@ create table if not exists public.kc_settings (
   league_id        int primary key default public.current_league() references public.leagues(id) on delete cascade,
   season           int not null default 2027,
   shadow           boolean not null default true,
-  keeper_cap_k     int not null default 800  check (keeper_cap_k between 50 and 100000),
-  season_cap_k     int not null default 1000 check (season_cap_k between 50 and 100000),
-  tax_line_k       int not null default 900  check (tax_line_k between 50 and 100000),
+  keeper_cap_k     int not null default 1000 check (keeper_cap_k between 50 and 100000),
+  season_cap_k     int not null default 1250 check (season_cap_k between 50 and 100000),
+  tax_line_k       int not null default 1100 check (tax_line_k between 50 and 100000),
   tax_kt_per_k     int not null default 10   check (tax_kt_per_k between 0 and 1000),
   start_kt         int not null default 10000 check (start_kt between 0 and 1000000),
   max_years        int not null default 5    check (max_years between 1 and 10),
@@ -274,7 +274,7 @@ $$;
 -- Rookie deals (debuted 2024 or later, 23 or under) get the cheap draft scale and are marked home-grown.
 -- Everyone else signs at market rate for a length set by age; the best three young players per club get 4 years.
 create or replace function public.kc_seed() returns int language plpgsql security definer set search_path = public as $$
-declare k kc_settings; n int;
+declare k kc_settings; n int; top int;
 begin
   if not public.is_commish() then raise exception 'Only the commish can set up contracts'; end if;
   insert into kc_settings (league_id, season) values (public.current_league(), coalesce((select season from leagues where id = public.current_league()), 2027))
@@ -312,6 +312,14 @@ begin
 
   insert into kc_ledger (team_id, delta, reason)
   select id, k.start_kt, k.season || ' starting bank' from teams where league_id = public.current_league() and not coalesce(is_guest, false);
+  -- Every club starts under the keeper cap: if one wouldn't, lift the caps (rounded up to the next $50k) until they fit.
+  select max(public.kc_salary(team_id, k.season)) into top from (select distinct team_id from kc_contracts where league_id = public.current_league()) x;
+  if top > k.keeper_cap_k then
+    update kc_settings set keeper_cap_k = ceil(top / 50.0) * 50,
+                           season_cap_k = greatest(season_cap_k, ceil(top / 50.0) * 50 + 250),
+                           tax_line_k   = greatest(tax_line_k, ceil(top / 50.0) * 50 + 100)
+     where league_id = public.current_league();
+  end if;
   update kc_settings set seeded_at = now(), updated_at = now() where league_id = public.current_league();
   perform public.kc_log(null::int, null, null, 'seed', 0, 0, n || ' contracts set up for the ' || k.season || ' shadow season');
   return n;
