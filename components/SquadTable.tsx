@@ -189,11 +189,11 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: -12 }}>
+      <div className="sq-headrow" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: -12 }}>
         {/* The Starting 22 heading sits on the same row as the buttons, level with the panel beside it. */}
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px 12px', flexWrap: 'wrap', marginRight: 'auto', minWidth: 0 }}>
+        <div className="sq-headtitle" style={{ display: 'flex', alignItems: 'baseline', gap: '4px 12px', flexWrap: 'wrap', marginRight: 'auto', minWidth: 0 }}>
           <h2 className="h2">{blocks[0].title}</h2>
-          <span className="muted" style={{ fontSize: 13 }}>{blocks[0].sub}</span>
+          <span className="muted sq-headsub" style={{ fontSize: 13 }}>{blocks[0].sub}</span>
           {msg && <span role="status" style={{ fontSize: 13, color: msg.bad ? C.redFg : C.muted }}>{msg.text}</span>}
         </div>
         {editable && saved && !dirty && <button type="button" className="btn" onClick={reset} disabled={pending}>Auto-pick</button>}

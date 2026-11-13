@@ -23,6 +23,7 @@ import { ClubGames } from '@/components/ClubGames';
 import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
 import { PlayerHighlights } from '@/components/PlayerHighlights';
+import { ClubHeadMore } from '@/components/ClubHeadMore';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -137,6 +138,17 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
 
   const hiddenSet = new Set(a.team.clubhouse_hide ?? []);
   const show = (k: (typeof CLUBHOUSE_SECTIONS)[number]['key']) => !hiddenSet.has(k);
+  const lineStrength = <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <h2 className="h2" style={{ fontSize: 17 }}>Line strength</h2>
+          {LINES.map((l) => (
+            <div key={l} style={{ display: 'grid', gridTemplateColumns: '40px minmax(0, 1fr) 64px', gap: 8, alignItems: 'center' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
+              <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
+              <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
+            </div>
+          ))}
+        </section>;
+  const highlights = <PlayerHighlights players={a.players} all={league.players} clubName={a.team.name} />;
   return (
     <div className="wrap">
       <header className={`club-head ${a.team.colour ? 'has-colour' : ''}`} style={a.team.colour ? ({ '--club': a.team.colour } as React.CSSProperties) : undefined}>
@@ -151,7 +163,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           <div className="club-head-id">
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none' }}>
               <TeamBadge code={a.team.short_code} logo={a.team.logo_url} />
-              {(isMine || me?.is_commish) && <ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} />}
+              {(isMine || me?.is_commish) && <span className="club-logo-desk"><ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} /></span>}
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
@@ -165,6 +177,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
               <span className="muted">Coach {a.team.coach_name}{isMine ? ' · your club' : ''}</span>
             </div>
           </div>
+          <ClubHeadMore>
           <div className="club-head-kpis">
             <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>
             <div className="kpi"><span className="eyebrow">Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
@@ -172,23 +185,18 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
           </div>
           {(isMine || me?.is_commish) && <div className="club-head-acts"><ClubSettings teamId={a.team.id} colour={a.team.colour ?? null} hidden={a.team.clubhouse_hide ?? []} /><Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link></div>}
+          {(isMine || me?.is_commish) && <div className="club-logo-mob"><ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} /></div>}
+          </ClubHeadMore>
         </div>
       </header>
 
+      {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
+
       <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
-        {show('highlights') && <PlayerHighlights players={a.players} all={league.players} clubName={a.team.name} />}
+        {show('highlights') && <div className="ch-desk">{highlights}</div>}
 
         {(show('lines') || show('ages')) && (<div className="ch-pair">
-        {show('lines') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <h2 className="h2" style={{ fontSize: 17 }}>Line strength</h2>
-          {LINES.map((l) => (
-            <div key={l} style={{ display: 'grid', gridTemplateColumns: '40px minmax(0, 1fr) 64px', gap: 8, alignItems: 'center' }}>
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, font: '500 11px var(--mono)' }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span>
-              <RankBar rank={a.lineStrength[l].rank} label={`${l} line strength`} />
-              <span className="muted" style={{ textAlign: 'right', fontSize: 12 }}>{ordinal(a.lineStrength[l].rank)} of 10</span>
-            </div>
-          ))}
-        </section>)}
+        {show('lines') && <div className="ch-desk">{lineStrength}</div>}
 
         {show('ages') && (<section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <div className="card" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>

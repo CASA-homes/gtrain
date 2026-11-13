@@ -2245,3 +2245,25 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .lm-right { justify-content: space-between; width: 100%; }
   .lm-right .lm-round { flex: 1 1 auto; min-width: 0; }
 }
+
+/* ---------- Clubhouse on phones: compact header with a dropdown, highlights + line strength above the squad ---------- */
+.club-head-toggle, .club-logo-mob, .ch-mtop { display: none; }
+@media (max-width: 640px) {
+  .club-head-body { padding: 12px 52px 12px 14px; gap: 10px; }
+  .club-head-id > span:first-child > *:first-child { width: 40px !important; height: 40px !important; font-size: 14px !important; border-radius: 11px !important; }
+  .club-head-id > div:first-child { width: 40px !important; height: 40px !important; }
+  .club-head-name { font-size: 21px; }
+  .club-logo-desk { display: none; }
+  .club-head-toggle { display: inline-flex; align-items: center; justify-content: center; position: absolute; top: 10px; right: 8px; width: 40px; height: 40px; border-radius: 50%; border: 1px solid #d3dccb; background: rgb(255 255 255 / .7); color: var(--ink); cursor: pointer; }
+  .club-head-band ~ .club-head-body .club-head-toggle { top: 10px; }
+  .club-head-more { display: none; flex-direction: column; gap: 10px; margin-right: -38px; }
+  .club-head-more.open { display: flex; }
+  .club-logo-mob { display: flex; gap: 12px; font-size: 13px; }
+  .ch-desk { display: none; }
+  .ch-mtop { display: flex; flex-direction: column; gap: 16px; margin: 16px 0 4px; }
+  .sq-headrow { flex-wrap: nowrap !important; gap: 6px !important; }
+  .sq-headtitle { flex-wrap: nowrap !important; gap: 8px !important; flex: 1 1 auto; overflow: hidden; }
+  .sq-headtitle .h2 { white-space: nowrap; font-size: 18px; }
+  .sq-headsub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px !important; min-width: 0; }
+  .sq-headrow > .btn { flex: none; min-height: 36px; padding: 0 10px; font-size: 12.5px; gap: 4px; }
+}
