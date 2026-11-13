@@ -2347,3 +2347,39 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .gsy-foil, .gsy-glint { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; }
 .gsy-foil { mix-blend-mode: overlay; opacity: .9; animation: holoSweep 4s ease-in-out infinite; }
 .gsy-glint { mix-blend-mode: screen; animation: holoTwinkle 2.6s ease-in-out infinite; }
+
+/* Live Matchups on phones: competition pills and round picker in one row, compact score card */
+.lm-ts { display: none; }
+@media (max-width: 640px) {
+  .rh:has(.lm-title) { gap: 8px; }
+  .rh-head:has(.lm-title) { flex-direction: row !important; align-items: center !important; flex-wrap: nowrap !important; gap: 8px; }
+  .rh-head:has(.lm-title) > div:first-child { flex: 1 1 auto; min-width: 0; }
+  .rh-head:has(.lm-title) .rh-dim:has(.lm-sub), .lm-tt, .lm-set, .lm-tl, .lm-title .lm-tab > span { display: none !important; }
+  .lm-title .lm-tabs { gap: 5px; padding: 0; }
+  .lm-title .lm-tab { flex-direction: row; align-items: center; padding: 0 12px; min-height: 34px; border-radius: 99px; }
+  .lm-ts { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; }
+  .lm-ts i { width: 7px; height: 7px; border-radius: 50%; background: #d0a23a; }
+  .lm-ts i.ok { background: #7fc497; }
+  .lm-right { width: auto; flex: none; }
+  .lm-right .lm-round { min-height: 34px; max-width: 150px; font-size: 12.5px; border-radius: 99px; }
+  .mxm { gap: 8px; }
+  .mxm-nav { flex-direction: row; justify-content: space-between; gap: 6px; padding: 0 12px; }
+  .mxm-pill { padding: 1px; }
+  .mxm-pill button { width: 30px; height: 30px; }
+  .mxm-pill span { min-width: 92px; }
+  .mxm-pill b { font-size: 13px; } .mxm-pill small { font-size: 10px; }
+  .mxm-test { gap: 5px; font-size: 11px; min-width: 0; }
+  .mxm-test > span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .mxm-test button { min-height: 28px; padding: 0 10px; font-size: 11.5px; flex: none; }
+  .mxm-card { padding: 10px 12px; gap: 8px; border-radius: 14px; }
+  .mxm-teams { grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr); align-items: center; }
+  .mxm-team { display: grid; grid-template-columns: 30px minmax(0, 1fr); grid-template-areas: "logo name" "big big"; align-items: center; column-gap: 7px; row-gap: 4px; }
+  .mxm-team.b { grid-template-columns: minmax(0, 1fr) 30px; grid-template-areas: "name logo" "big big"; }
+  .mxm-team .mxm-logo { grid-area: logo; width: 30px; height: 30px; font-size: 10px; }
+  .mxm-team .mxm-tn { grid-area: name; font-size: 13px; }
+  .mxm-team .mxm-big { grid-area: big; font-size: 30px; }
+  .mxm-meta { font-size: 12px; gap: 1px 8px; }
+  .mxm-bars i { height: 4px; }
+  .mxm-tabs { margin: 0 12px; padding: 3px; border-radius: 12px; }
+  .mxm-tabs button { min-height: 32px; font-size: 13.5px; border-radius: 9px; }
+}

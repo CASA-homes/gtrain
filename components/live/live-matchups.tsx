@@ -24,7 +24,8 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
         <div className="lm-tabs" role="tablist" aria-label="Your games this week">
         {md.games.map((g) => (
           <button key={g.id} role="tab" aria-selected={g.id === game?.id} className={`lm-tab ${g.id === game?.id ? 'on' : ''} ${g.key}`} onClick={() => setGid(g.id)}>
-            <b>{shortGame(g)}</b>
+            <b className="lm-tl">{shortGame(g)}</b>
+            <b className="lm-ts">{g.key === 'gtrain' ? 'G-Train' : g.key === 'cup' ? 'Cup' : shortGame(g).split(' · ')[0].replace(/ R\d+$/, '')}<i className={md.savedIds.includes(g.id) ? 'ok' : ''} title={md.savedIds.includes(g.id) ? 'Team saved' : 'Team not saved'} /></b>
             <span>{md.savedIds.includes(g.id) ? 'Team saved' : 'Team not saved'}</span>
           </button>
         ))}
@@ -40,8 +41,8 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
   );
   const rightEl = <div className="lm-right">{roundSel}{!history && <Link href="/live" className="lm-set">Set teams in Squad Selector →</Link>}</div>;
   return (
-    <Shell compact title={<span className="lm-title">Live Matchups{history ? <span className="lm-done">Completed</span> : tabsEl}</span>}
-      sub={history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>} right={rightEl}>
+    <Shell compact title={<span className="lm-title"><span className="lm-tt">Live Matchups</span>{history ? <span className="lm-done">Completed</span> : tabsEl}</span>}
+      sub={<span className="lm-sub">{history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>}</span>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
