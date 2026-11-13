@@ -1,6 +1,7 @@
 'use client';
 // Men's matchday TEST view: G-Train round 1, 2027 (mocked). Live ratings vs projection, TOG bars, and a worm
 // graph of the live and projected margin across the AFL round. A time slider replays the round.
+import { Guernsey } from '@/components/Guernsey';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CLUBS } from '@/lib/clubs';
 import { ProfileTabs } from './profile-tabs';
@@ -336,7 +337,7 @@ function MobileHalf({ p, side, gameByClub, now, onOpen }: { p?: MPlayer; side: '
   const l = liveOf(p, gameByClub, now), pre = l.ph.state === 'pre', x = p.cap === 'C' ? 2 : 1;
   const tag = p.cap === 'C' ? (pre ? 'C' : 'C×2') : p.cap === 'VC' ? 'VC' : '';
   const c = CLUBS[p.club];
-  const disc = <span className="mxm-disc" style={{ background: c ? (c.m ? `linear-gradient(90deg, ${c.a} 0 40%, ${c.m} 40% 60%, ${c.b} 60%)` : `linear-gradient(90deg, ${c.a} 0 50%, ${c.b} 50%)`) : '#c9cfc7' }} title={c?.name ?? p.club} />;
+  const disc = <Guernsey club={p.club} size={20} name={p.name} title={c?.name ?? p.club} />;
   const who = (
     <span className="mxm-who">
       <span className="mxm-nm">{side === 'b' && tag && <i>{tag}</i>}<b>{shortName(p.name)}</b>{side === 'a' && tag && <i>{tag}</i>}</span>

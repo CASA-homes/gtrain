@@ -1,11 +1,11 @@
 'use client';
+import { Guernsey } from '@/components/Guernsey';
 import { CupPrizes } from '@/components/live/cup-prizes';
 import type { CupPrizeSettings } from '@/app/(app)/live/cup-actions';
 // G-Train Knockout Cup: the home-page panel and the full cup page (tables, fixture, knockout bracket, cup lineup).
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { CONF_NAMES, CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_NAME, CUP_SLOT_ORDER, DRAW_AT, FINAL_ROUND, GROUP_ROUNDS, ON_FIELD, QF_ROUND, SAFE, SEMI_ROUND, STAGE_NAME, WILDCARD_ROUND, fitsSlot, roundWeek, standings, type CupLineup, type CupMatch, type CupResult, type CupSlot, type StandRow } from '@/lib/cup';
-import { jumper } from '@/lib/jumpers';
 import { Shell } from './kit';
 
 export interface CupSquadPlayer { id: number; name: string; pos: string[]; club: string | null; proj: number; a26: number | null; keeper: boolean }
@@ -277,7 +277,7 @@ function H2H({ data, name }: { data: CupData; name: (id: number | null) => strin
     if (!p) return <span className={`h2h-p ${side} empty`}><span className="rh-dim">–</span></span>;
     return (
       <span className={`h2h-p ${side}`}>
-        <i className="h2h-disc" style={{ background: jumper(p.club) }} />
+        <span className="h2h-disc"><Guernsey club={p.club} size={14} name={p.name} ring={false} /></span>
         <span className="rh-ellip">{p.name.replace(/^(\S)\S*\s/, '$1. ')}</span>
         <b className="rh-mono">{p.proj}</b>
       </span>

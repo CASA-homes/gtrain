@@ -1,5 +1,6 @@
 'use client';
 // Header search: a button in the top ribbon (or Ctrl/⌘ K, or /) opens a quick search over clubs, coaches, players and pages.
+import { Guernsey } from '@/components/Guernsey';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { SearchHit } from '@/app/api/search/route';
@@ -66,8 +67,8 @@ export function NavSearch() {
     return PAGES.filter((p) => norm(`${p.title} ${p.words}`).includes(s)).slice(0, 4);
   }, [q]);
   const results = useMemo(() => [
-    ...hits.map((h) => ({ group: h.kind === 'club' ? 'Clubs' : h.kind === 'coach' ? 'Coaches' : 'Players', title: h.title, sub: h.sub, href: h.href, avg: h.avg ?? null, kind: h.kind })),
-    ...pages.map((p) => ({ group: 'Pages', title: p.title, sub: p.sub, href: p.href, avg: null, kind: 'page' as const })),
+    ...hits.map((h) => ({ group: h.kind === 'club' ? 'Clubs' : h.kind === 'coach' ? 'Coaches' : 'Players', title: h.title, sub: h.sub, href: h.href, avg: h.avg ?? null, kind: h.kind, club: h.club ?? null, short: h.short ?? null })),
+    ...pages.map((p) => ({ group: 'Pages', title: p.title, sub: p.sub, href: p.href, avg: null, kind: 'page' as const, club: null, short: null })),
   ], [hits, pages]);
 
   const go = (href: string) => { setOpen(false); router.push(href); };
@@ -105,7 +106,7 @@ export function NavSearch() {
                     {head && <div className="ns-group">{head}{head === 'Pages' && !q.trim() ? ' · quick links' : ''}</div>}
                     <button type="button" id={`ns-${i}`} role="option" aria-selected={i === active} className={`ns-row ${i === active ? 'on' : ''}`}
                       onMouseEnter={() => setActive(i)} onClick={() => go(r.href)}>
-                      <span className={`nsr-ic ${r.kind}`} aria-hidden="true">{r.kind === 'club' ? '◆' : r.kind === 'coach' ? '●' : r.kind === 'player' ? '▲' : '↗'}</span>
+                      {r.kind === 'player' && r.club ? <Guernsey club={r.club} name={r.short} size={24} /> : <span className={`nsr-ic ${r.kind}`} aria-hidden="true">{r.kind === 'club' ? '◆' : r.kind === 'coach' ? '●' : r.kind === 'player' ? '▲' : '↗'}</span>}
                       <span className="ns-t"><b>{r.title}</b><small>{r.sub}</small></span>
                       {r.avg != null && <em className="ns-avg">{r.avg.toFixed(1)}</em>}
                     </button>

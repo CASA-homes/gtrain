@@ -3,7 +3,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { CLUBS } from '@/lib/clubs';
 
 // Header search: clubs, coaches and players (rostered and unowned). Signed-in members only.
-export type SearchHit = { kind: 'club' | 'coach' | 'player'; id: number; title: string; sub: string; href: string; avg?: number | null };
+export type SearchHit = { kind: 'club' | 'coach' | 'player'; id: number; title: string; sub: string; href: string; avg?: number | null; club?: string | null; short?: string | null };
 
 const norm = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’']/g, '').trim();
 /** 3 = starts with the query, 2 = a word starts with it, 1 = contains it, 0 = no match. */
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
     const club = p.afl_club ? CLUBS[p.afl_club]?.name ?? p.afl_club : 'No AFL club';
     const where = p.team_id ? owner.get(p.team_id) ?? 'League club' : 'Unowned';
     hits.push({
-      kind: 'player', id: p.id, title: p.full_name ?? p.name, href: `/players/${p.id}`, avg: p.average,
+      kind: 'player', id: p.id, title: p.full_name ?? p.name, href: `/players/${p.id}`, avg: p.average, club: p.afl_club, short: p.name,
       sub: `${p.positions.join('/')} · ${club} · ${where}${p.list_status ? ` · ${p.list_status}` : ''}`,
       // Better scorers first among equal matches, so "Smith" finds Bailey Smith before the rest.
       s: s + Math.min(0.9, (p.average ?? 0) / 150),

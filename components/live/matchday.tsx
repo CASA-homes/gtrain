@@ -1,7 +1,7 @@
 'use client';
 // Matchday · Squad Selector. Left: your whole list beside the field (3-2 / 4-3 / 1 / 3-2 + emergencies), drag and drop
 // or tap to place. Right: the matchup for whichever game is picked in the dropdown, and the Knockout Cup.
-import { HOLO, HOLO_FOIL } from '@/lib/holo';
+import { Guernsey } from '@/components/Guernsey';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -24,15 +24,8 @@ const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('
 const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
 export const shortGame = (g: GameOpt) => `${g.label.replace('Knockout Cup · Round ', 'Cup R').replace(' · Round ', ' R')}${g.opp ? ` · v ${g.opp.name}` : ''}`;
 
-export function Disc({ p, size = 16, label = false, ring = false }: { p: MdPlayer; size?: number; label?: boolean; ring?: boolean }) {
-  const holo = ring ? HOLO[short(p.name)] : undefined;
-  const f = holo ? HOLO_FOIL[holo.palette] : undefined;
-  return (
-    <span className={`sq-disc ${ring ? 'ring' : ''} ${f ? 'holo' : ''}`} style={{ width: size, height: size, background: jumper(p.club) }} title={p.club ? CLUBS[p.club]?.name ?? p.club : undefined} aria-hidden="true">
-      {f && <><i className="sq-holo holo-anim" style={{ background: f.sweep, backgroundSize: '280% 280%' }} /><i className="sq-holo-glint holo-anim" style={{ background: `radial-gradient(circle, ${f.glint[0]} 0 0.7px, transparent 1.2px) 0 0 / 7px 7px, radial-gradient(circle, ${f.glint[1]} 0 0.6px, transparent 1.1px) 3px 4px / 9px 9px` }} /></>}
-      {label && <b style={{ fontSize: Math.round(size * 0.32) }}>{initials(p.name)}</b>}
-    </span>
-  );
+export function Disc({ p, size = 16 }: { p: MdPlayer; size?: number; label?: boolean; ring?: boolean }) {
+  return <Guernsey club={p.club} size={size} name={p.name} title={p.club ? CLUBS[p.club]?.name ?? p.club : undefined} />;
 }
 
 export function Form({ p, size = 14 }: { p: MdPlayer; size?: number }) {

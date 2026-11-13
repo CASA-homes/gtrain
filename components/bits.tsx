@@ -1,24 +1,11 @@
 // Small presentational pieces shared by every page.
+import { Guernsey } from '@/components/Guernsey';
 import { CLUBS } from '@/lib/clubs';
 import { avgColour, C, scale20, scoreColour, type Form, type Line } from '@/lib/ratings';
 
-export function ClubDot({ code, size = 18 }: { code: string | null; size?: number }) {
+export function ClubDot({ code, size = 18, name }: { code: string | null; size?: number; name?: string | null }) {
   const c = code ? CLUBS[code] : null;
-  const label = c?.name ?? 'Club not set yet';
-  return (
-    <span
-      role="img"
-      aria-label={label}
-      title={label}
-      style={{
-        display: 'inline-block', verticalAlign: 'middle', width: size, height: size, borderRadius: '50%', flex: 'none',
-        background: !c ? '#d9ddd6' : c.m
-          ? `linear-gradient(135deg, ${c.a} 0 40%, ${c.m} 40% 60%, ${c.b} 60% 100%)`
-          : `linear-gradient(135deg, ${c.a} 50%, ${c.b} 50%)`,
-        boxShadow: 'inset 0 0 0 1px rgb(21 26 22 / .18)',
-      }}
-    />
-  );
+  return <Guernsey club={code} size={size} name={name} title={c?.name ?? 'Club not set yet'} />;
 }
 
 export function PosDots({ positions }: { positions: Line[] }) {

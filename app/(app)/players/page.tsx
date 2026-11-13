@@ -241,7 +241,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                 <tr key={p.id}>
                   <td className="mono muted">{i + 1}</td>
                   <td><PosDots positions={posOf(p)} /></td>
-                  <td><ClubDot code={p.afl_club} /></td>
+                  <td><ClubDot code={p.afl_club} name={p.name} size={20} /></td>
                   <td style={{ whiteSpace: 'nowrap' }}>
                     <Link href={`/players/${p.id}`}>{p.name}</Link>{(p.is_keeper || p.is_rookie_keeper) && <span className="keeper-tag">K</span>}{watch.ids.has(p.id) && <span title="On your watchlist" aria-label="On your watchlist" style={{ color: '#e2b100', marginLeft: 4 }}>★</span>}
                     {p.status && <span className="pill" title={STATUS_LABEL[p.status] ?? p.status} style={{ marginLeft: 6, background: '#f3c2b9', color: '#7a1d12' }}>{p.status}</span>}
