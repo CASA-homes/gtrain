@@ -2383,3 +2383,4 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .mxm-tabs { margin: 0 12px; padding: 3px; border-radius: 12px; }
   .mxm-tabs button { min-height: 32px; font-size: 13.5px; border-radius: 9px; }
 }
+@media (max-width: 640px) { .page:has(> .rh) { padding-top: 10px; } }
