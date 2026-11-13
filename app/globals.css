@@ -2384,3 +2384,4 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .mxm-tabs button { min-height: 32px; font-size: 13.5px; border-radius: 9px; }
 }
 @media (max-width: 640px) { .page:has(> .rh) { padding-top: 10px; } }
+@media (max-width: 640px) { .mxm-team.a, .mxm-team.b { align-items: center; } .mxm-team .mxm-big { justify-self: start; } .mxm-team.b .mxm-big { justify-self: end; } .mxm .mxm-h { font-size: 15px; margin: 4px 0 0; padding: 0 12px; } }
