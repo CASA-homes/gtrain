@@ -291,27 +291,33 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
     const off = used.includes(p.id) || !!tied[p.id] || (!!rules.eligible && !rules.eligible(p));
     const sub = [s?.bench ? s.label : null, p.pos.join('/'), l ? `${l.ph.label} · ${fixtureOf(p.club).split(' · ')[0]}` : fixtureOf(p.club)].filter(Boolean).join(' · ');
     return (
-      <button key={key} type="button" aria-pressed={isSel} className={`sqm-row ${isSel ? 'sel' : ''} ${target ? 'target' : ''} ${swap != null && !isSel && !target ? 'fade' : ''} ${capd ? 'cap' : ''} ${off ? 'off' : ''}`}
-        onClick={() => tapPlayer(p.id)}>
+      <div key={key} role="button" tabIndex={0} aria-pressed={isSel} className={`sqm-row ${isSel ? 'sel' : ''} ${target ? 'target' : ''} ${swap != null && !isSel && !target ? 'fade' : ''} ${capd ? 'cap' : ''} ${off ? 'off' : ''}`}
+        onClick={() => tapPlayer(p.id)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tapPlayer(p.id); } }}>
         <span className="sqm-bar" style={{ background: POS_COL[p.pos[0]] }} />
-        <Disc p={p} size={30} />
+        <Disc p={p} size={24} />
         <span className="sqm-main">
-          <span className="sqm-nm"><b>{p.name}</b><Form p={p} size={14} />{capd && <i className="sqm-c">C</i>}{vcd && <i className="sqm-vc">VC</i>}{p.keeper && <em>{p.keeper}</em>}</span>
+          <span className="sqm-nm">
+            <b>{short(p.name)}</b><Form p={p} size={12} />
+            {onField && rules.captain && <button type="button" className={`sqm-role c ${capd ? 'on' : ''}`} aria-label={`Captain ${p.name}`} aria-pressed={capd} onClick={(e) => { e.stopPropagation(); role(p.id, 'c'); }}>C</button>}
+            {onField && rules.vc && <button type="button" className={`sqm-role vc ${vcd ? 'on' : ''}`} aria-label={`Vice-captain ${p.name}`} aria-pressed={vcd} onClick={(e) => { e.stopPropagation(); role(p.id, 'vc'); }}>VC</button>}
+            {!target && <span className="sqm-sw">{swapBtn(p.id)}</span>}
+          </span>
           <span className="sqm-sub" suppressHydrationWarning>{sub}{tied[p.id] ? ' · cup-tied' : used.includes(p.id) ? ' · used' : ''}</span>
         </span>
         {target ? <span className="sqm-swap">Swap</span> : <>
-          {l?.rating != null && <span className="sqm-rat" style={{ background: rtCol(l.rating) }} title="Live match rating">{l.rating.toFixed(1)}</span>}
+          <span className="sqm-rat" style={l?.rating != null ? { borderColor: rtCol(l.rating) } : undefined} title="Live match rating">{l?.rating != null ? l.rating.toFixed(1) : ''}</span>
+          <span className="sqm-l5" title="Average of his last 5 games">{p.l5 ?? '–'}</span>
           <span className="sqm-num">
             <b className={l ? '' : 'est'}>{!s ? '–' : l ? l.score * mult : p.proj * mult}</b>
             <small>{l ? `proj ${l.proj * mult}` : `avg ${p.avg != null ? Math.round(p.avg) : 'new'}`}</small>
           </span>
         </>}
-      </button>
+      </div>
     );
   };
   const section = (title: string, note: string, tone: string, rows: React.ReactNode[]) => rows.length ? (
     <section className="sqm-sec" key={title} aria-label={title}>
-      <h3 className="sqm-h" style={{ color: tone }}><span>{title}</span><small>{note}</small></h3>
+      <h3 className="sqm-h" style={{ color: tone }}><span>{title} <small>{note}</small></span><span className="sqm-cols" aria-hidden="true"><i>Rat</i><i>L5</i><i>Score</i></span></h3>
       <div className="sqm-list">{rows}</div>
     </section>
   ) : null;
