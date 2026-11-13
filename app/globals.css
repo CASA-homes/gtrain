@@ -2418,3 +2418,13 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .cl-nm { font-size: 12.5px; } .cl-sub { font-size: 10.5px; }
   .cl-sc { font-size: 15px; min-width: 26px; } .cl-sc.proj { font-size: 14px; }
 }
+@media (max-width: 640px) {
+  .mxm .lv-line { padding: 0 4px; }
+  .lv-row { gap: 4px; margin-bottom: 4px; }
+  .mxm-half.lv-pc, .mxm-half.lv-pc.b, .cl-pc { padding: 5px 4px; gap: 3px; }
+  .lv-pc .mxm-nm { gap: 2px; }
+  .lv-pc .mxm-nm b, .cl-nm { font-size: 12px; letter-spacing: -.01em; }
+  .lv-sc, .cl-sc { min-width: 24px; }
+  .lv-rt { min-width: 25px; padding: 3px 2px; }
+  .cl-grp { column-gap: 4px; } .cl-stack { gap: 4px; }
+}
