@@ -2295,20 +2295,20 @@ button.md-slot:hover { border-color: #cdd2cb; }
 
 /* Phones: compact squad selector rows with Rat / L5 / Score columns and C, VC, swap on each row */
 @media (max-width: 640px) {
-  .sqm-h { padding: 14px 12px 6px 16px; align-items: center; }
+  .sqm-h { padding: 14px 10px 6px 16px; align-items: center; }
   .sqm-h > span:first-child small { margin-left: 6px; }
   .sqm-cols { display: flex; gap: 6px; }
   .sqm-cols i { font: 600 9.5px var(--mono); font-style: normal; letter-spacing: .06em; color: var(--muted); text-align: center; }
   .sqm-cols i:nth-child(1) { width: 32px; }
   .sqm-cols i:nth-child(2) { width: 28px; }
   .sqm-cols i:nth-child(3) { width: 46px; text-align: right; }
-  .sqm-row { gap: 8px; padding: 6px 12px 6px 10px; min-height: 50px; }
+  .sqm-row { gap: 6px; padding: 6px 10px 6px 8px; min-height: 50px; }
   .sqm-row .sqm-bar { width: 3px; }
   .sqm-main { gap: 1px; }
-  .sqm-nm { gap: 5px; }
+  .sqm-nm { gap: 4px; }
   .sqm-nm b { font-size: 14px; }
   .sqm-sub { font-size: 11.5px; }
-  .sqm-role { flex: none; min-width: 22px; height: 20px; padding: 0 5px; border-radius: 99px; border: 1.5px solid #d6cdb8; background: #fff; color: #9c8a63; font: 800 10px/1 var(--font); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .sqm-role { flex: none; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 99px; border: 1.5px solid #d6cdb8; background: #fff; color: #9c8a63; font: 800 10px/1 var(--font); cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
   .sqm-role.c.on { background: #c09a4b; border-color: #c09a4b; color: #151a16; }
   .sqm-role.vc.on { border-color: #c09a4b; color: #80622a; background: #fbf4e2; }
   .sqm-sw { flex: none; display: inline-flex; }
