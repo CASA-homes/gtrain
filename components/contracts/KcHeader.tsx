@@ -30,7 +30,7 @@ export function KcHeader({ settings, title, crumb, sub, kpis, tab, myTeamId, isC
         <div className="kc-hero-in" style={{ marginTop: 18, alignItems: 'center' }}>
           <nav className="kc-tabs" aria-label="Contracts">
             <Link href="/contracts" aria-current={tab === 'overview' ? 'page' : undefined} style={tab === 'overview' ? undefined : { color: '#c9d4cb' }}>League</Link>
-            {myTeamId ? <Link href={`/contracts/${myTeamId}`} aria-current={tab === 'club' ? 'page' : undefined} style={tab === 'club' ? undefined : { color: '#c9d4cb' }}>My contracts</Link> : null}
+            {myTeamId ? <Link href={`/clubhouse/${myTeamId}?view=contracts`} aria-current={tab === 'club' ? 'page' : undefined} style={tab === 'club' ? undefined : { color: '#c9d4cb' }}>My contracts</Link> : null}
             <Link href="/contracts/market" aria-current={tab === 'market' ? 'page' : undefined} style={tab === 'market' ? undefined : { color: '#c9d4cb' }}>Transfer Market</Link>
             {isCommish && <Link href="/contracts/admin" aria-current={tab === 'admin' ? 'page' : undefined} style={tab === 'admin' ? undefined : { color: '#c9d4cb' }}>Commish</Link>}
           </nav>
@@ -40,7 +40,7 @@ export function KcHeader({ settings, title, crumb, sub, kpis, tab, myTeamId, isC
       <div className="kc-strip">
         <div className="kc-strip-in">
           {settings?.shadow && <span className="kc-shadow">SHADOW SEASON</span>}
-          <span className={`kc-live${open ? '' : ' off'}`}><i />{open ? `${settings?.window_kind === 'midseason' ? 'MID-SEASON' : 'PRE-SEASON'} WINDOW OPEN` : 'WINDOW CLOSED'}</span>
+          <span className={`kc-live${open ? '' : ' off'}`}><i />{open ? 'MID-SEASON WINDOW OPEN' : settings?.midseason_at ? 'WINDOW CLOSED · PENDING FREE AGENCY ON' : 'WINDOW CLOSED'}</span>
           {open && settings?.window_closes_at && <span style={{ color: '#c9d4cb' }}>Closes in <KcClock endsAt={settings.window_closes_at} /></span>}
           <span style={{ color: '#a9b5aa' }}>
             {settings?.shadow ? 'Paper league: moves here never change real lists, tokens or picks.' : 'Contracts are live.'}

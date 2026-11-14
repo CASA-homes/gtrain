@@ -1,4 +1,4 @@
-// Contracts, salary cap and the transfer market (shadow season). The database (migration 0030) is the source of
+// Contracts, salary cap and the transfer market (shadow season). The database (migrations 0030–0033) is the source of
 // truth for every rule and price; the helpers here only mirror its maths so pages can show previews.
 // Salaries are cap dollars in thousands ($98,000 = 98). Tokens here are paper KT, separate from real tokens.
 import { cache } from 'react';
@@ -14,8 +14,8 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; pot_dollars: number;
-  window_open: boolean; window_kind: 'preseason' | 'midseason' | null; window_opened_at: string | null; window_closes_at: string | null;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null;
+  window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
 
@@ -25,8 +25,8 @@ export interface Contract {
   dead_k: number; dead_season: number | null;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
-export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; offers: number }
-export interface MyOffer { id: number; fa_id: number; years: number; salary_k: number; tier: Tier; sweet_kt: number; pick_ids: number[]; score: number; status: string }
+export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending'; offers: number }
+export interface MyOffer { id: number; fa_id: number; team_id: number; years: number; salary_k: number; tier: Tier; sweet_kt: number; pick_ids: number[]; score: number; status: string }
 export interface Transfer { id: number; player_id: number | null; from_team: number | null; to_team: number | null; kind: string; fee_kt: number; levy_kt: number; note: string | null; created_at: string }
 
 export const TIER_LABEL: Record<Tier, string> = { standard: 'Standard', high: 'High', none: 'No clause', protected: 'Protected (yr 1)' };
@@ -41,12 +41,15 @@ export const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
 export function premium(s: KcSettings, tier: Tier) {
   return 1 + (tier === 'high' ? s.high_pct : tier === 'none' ? s.none_pct : 0) / 100;
 }
-/** Release clause in KT, as the database works it out. Null = can't be bought. */
-export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'>, rate: number): number | null {
-  if (c.tier === 'none' || c.tier === 'protected') return null;
+/** Release clause in KT, as the database works it out. Null = can't be bought: no clause, or final year (final-year
+ *  players become pending free agents at mid-season instead). Pass pending = true for a pending free agent. */
+export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'>, rate: number, pending = false): number | null {
+  if (c.tier === 'none' || c.tier === 'protected' || c.end_season <= s.season || pending) return null;
   const mult = c.tier === 'high' ? s.clause_high : s.clause_std;
-  return Math.trunc(rate * mult * s.kt_per_k * (c.end_season <= s.season ? 0.5 : 1));
+  return Math.trunc(rate * mult * s.kt_per_k);
 }
+export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string }
+export interface CapAdjust { team_id: number; season: number; amount_k: number; reason: string }
 /** Per-year salary of a new deal: rate × length factor (× home-grown discount), then the clause premium. */
 export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier, homeGrown = false) {
   const base = Math.max(5, Math.round(rate * lengthFactor(years) * (homeGrown ? (100 - s.home_grown_pct) / 100 : 1)));
@@ -66,6 +69,7 @@ export const yearsLeft = (s: KcSettings, c: Contract) => c.end_season - Math.max
 export interface ClubCap {
   team: Team; salary: number; nextSalary: number; bank: number; contracts: number; dead: number;
   overKeeper: number; overTax: number; taxKt: number; list: Set<number>; fit: Record<Line, number>;
+  keeperCapNext: number; keptNext: number; deficitUsed: boolean;
 }
 
 export interface ContractsData {
@@ -74,8 +78,9 @@ export interface ContractsData {
   contracts: Contract[]; active: Contract[]; pending: Contract[];
   byPlayer: Map<number, Contract>; pendingByPlayer: Map<number, Contract>;
   banks: Map<number, number>; clubs: Map<number, ClubCap>;
-  auctions: Auction[]; freeAgents: FreeAgent[]; myOffers: MyOffer[]; transfers: Transfer[];
-  ladderRank: Map<number, number>; totalKt: number; windupCents: number | null; finesDollars: number;
+  auctions: Auction[]; freeAgents: FreeAgent[]; myOffers: MyOffer[]; offersOnMine: MyOffer[]; transfers: Transfer[];
+  claims: Claim[]; capAdjust: CapAdjust[]; pendingFa: Set<number>; midseason: boolean;
+  ladderRank: Map<number, number>; totalKt: number;
   ready: boolean; error: string | null;
 }
 
@@ -84,7 +89,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const supabase = await createClient();
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const players = new Map(league.players.map((p) => [p.id, p]));
-  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, fineQ] = await Promise.all([
+  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),
     supabase.from('kc_contracts').select('*').in('status', ['active', 'pending', 'released']),
     supabase.from('kc_ledger').select('team_id, delta'),
@@ -94,7 +99,8 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
     supabase.from('kc_offers').select('*').eq('status', 'tabled'),
     supabase.from('kc_transfers').select('*').order('created_at', { ascending: false }).limit(40),
     supabase.rpc('kc_rates'),
-    supabase.from('fines').select('amount, paid'),
+    supabase.from('kc_claims').select('*').order('created_at', { ascending: false }).limit(60),
+    supabase.from('kc_cap_adjust').select('team_id, season, amount_k, reason'),
   ]);
   const settings = (setQ.data as KcSettings | null) ?? null;
   const error = setQ.error?.message ?? conQ.error?.message ?? null;
@@ -106,6 +112,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   for (const r of (ledQ.data ?? []) as { team_id: number; delta: number }[]) banks.set(r.team_id, (banks.get(r.team_id) ?? 0) + r.delta);
   const counts = new Map(((cntQ.data ?? []) as { fa_id: number; offers: number }[]).map((r) => [Number(r.fa_id), r.offers]));
   const season = settings?.season ?? 2027;
+  const capAdjust = (adjQ.data ?? []) as CapAdjust[];
   const latestLadder = Math.max(0, ...league.ladder.map((l) => l.season));
   const ladderRank = new Map(league.ladder.filter((l) => l.season === latestLadder).map((l) => [l.team_id, l.rank]));
 
@@ -131,21 +138,28 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
       contracts: active.filter((c) => c.team_id === team.id).length,
       overKeeper: k ? Math.max(0, salary - k.keeper_cap_k) : 0, overTax: k ? Math.max(0, salary - k.tax_line_k) : 0,
       taxKt: k ? Math.max(0, salary - k.tax_line_k) * k.tax_kt_per_k : 0, list, fit,
+      keeperCapNext: (k?.keeper_cap_k ?? 0) - capAdjust.filter((x) => x.team_id === team.id && x.season === season + 1).reduce((t, x) => t + x.amount_k, 0),
+      keptNext: new Set(contracts.filter((c) => c.team_id === team.id && (c.status === 'active' || c.status === 'pending') && c.start_season <= season + 1 && c.end_season >= season + 1).map((c) => c.player_id)).size,
+      deficitUsed: capAdjust.some((x) => x.team_id === team.id && x.season === season + 1),
     });
   }
   const totalKt = [...banks.values()].reduce((a, b) => a + Math.max(0, b), 0);
-  const finesDollars = ((fineQ.data ?? []) as { amount: number; paid: boolean }[]).filter((f) => f.paid).reduce((a, f) => a + (f.amount ?? 0), 0);
-  const pot = settings ? settings.pot_dollars + finesDollars : 0;
+  const freeAgents = ((faQ.data ?? []) as FreeAgent[]).map((f) => ({ ...f, id: Number(f.id), kind: f.kind ?? 'open', offers: counts.get(Number(f.id)) ?? 0 }));
+  const allOffers = ((offQ.data ?? []) as MyOffer[]).map((o) => ({ ...o, id: Number(o.id), fa_id: Number(o.fa_id) }));
+  const myFaIds = new Set(freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === me?.team_id).map((f) => f.id));
   return {
     me, settings, seasonLabel: settings?.shadow ? `${season} shadow season` : `${season} season`,
     teams: league.teams, players, rates, contracts, active, pending,
     byPlayer: new Map(active.map((c) => [c.player_id, c])), pendingByPlayer: new Map(pending.map((c) => [c.player_id, c])),
     banks, clubs,
     auctions: ((aucQ.data ?? []) as (Auction & { kc_bids: Auction['bids'] })[]).map((a) => ({ ...a, id: Number(a.id), contract_id: Number(a.contract_id), bids: [...(a.kc_bids ?? [])].sort((x, y) => y.amount_kt - x.amount_kt) })),
-    freeAgents: ((faQ.data ?? []) as FreeAgent[]).map((f) => ({ ...f, id: Number(f.id), offers: counts.get(Number(f.id)) ?? 0 })),
-    myOffers: ((offQ.data ?? []) as (MyOffer & { team_id: number })[]).filter((o) => o.team_id === me?.team_id).map((o) => ({ ...o, id: Number(o.id), fa_id: Number(o.fa_id) })),
+    freeAgents,
+    myOffers: allOffers.filter((o) => o.team_id === me?.team_id),
+    offersOnMine: allOffers.filter((o) => myFaIds.has(o.fa_id)).sort((x, y) => y.score - x.score),
     transfers: ((trQ.data ?? []) as Transfer[]),
-    ladderRank, totalKt, windupCents: totalKt ? (pot * 100) / totalKt : null, finesDollars,
+    claims: ((clQ.data ?? []) as Claim[]).map((c) => ({ ...c, id: Number(c.id), contract_id: Number(c.contract_id) })),
+    capAdjust, pendingFa: new Set(freeAgents.filter((f) => f.kind === 'pending').map((f) => f.player_id)), midseason: !!settings?.midseason_at,
+    ladderRank, totalKt,
     ready: !!settings?.seeded_at, error,
   };
 });

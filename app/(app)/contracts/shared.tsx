@@ -45,13 +45,14 @@ export function DealsFeed({ d, limit = 8 }: { d: ContractsData; limit?: number }
 
 export function Rules({ s }: { s: KcSettings }) {
   const items = [
-    `Keep 17 (+ rookie keeper) under the ${moneyK(s.keeper_cap_k)} keeper cap. Whole list under ${moneyK(s.season_cap_k)} in season; above ${moneyK(s.tax_line_k)} you pay ${s.tax_kt_per_k} KT per $1k in luxury tax, shared by the bottom three.`,
-    `Contracts run 1–${s.max_years} years. Longer is cheaper per year. Max ${s.long_deal_limit} deals of 4+ years per club.`,
-    `Release clauses: standard ${s.clause_std}× market rate, high ${s.clause_high}× (+${s.high_pct}% salary), none (+${s.none_pct}% salary). Halved in a player’s final year.`,
-    `Clauses can only be paid in a window, max ${s.max_buys} per club, and never if the seller would drop below the depth floor (${s.floor_def} DEF, ${s.floor_mid} MID, ${s.floor_ruc} RUC, ${s.floor_fwd} FWD fit).`,
-    `Extend in a player’s final year. Home-grown players get ${s.home_grown_pct}% off.`,
-    `Releasing a player leaves half his remaining salary as dead money (never more than one year’s salary).`,
-    `Free agents take blind offers; best score wins, ties go to the lower ladder club. ${s.levy_pct}% of every transfer fee is burned.`,
+    `Keep 17 + 1 rookie under the ${moneyK(s.keeper_cap_k)} keeper cap at lock-in. You can go up to ${moneyK(s.deficit_max_k)} over; the overage comes off next year's keeper cap, and you can't do it two years running.`,
+    `In season the whole list must fit under ${moneyK(s.season_cap_k)}. Above ${moneyK(s.tax_line_k)} you pay ${s.tax_kt_per_k} KT per $1k in luxury tax, shared by the bottom three.`,
+    `Contracts run 1–${s.max_years} years. Longer is cheaper per year. Draftees sign one-season deals priced by round (rookies half).`,
+    `Nobody changes clubs mid-season. Players only move at season end. Coach-to-coach trades still run on the Trademarket.`,
+    `Release clauses: standard ${s.clause_std}× market rate, high ${s.clause_high}× (+${s.high_pct}% salary), none (+${s.none_pct}% salary). Only in the mid-season window, max ${s.max_buys} per club. Final-year players have no clause.`,
+    `A paid clause gives his club 24 hours to match (pay the same, burned; his clause steps up a level). If they don't, they're paid now (less ${s.levy_pct}%) and he joins the buyer at season end on the rest of his contract.`,
+    `Extend in a player's final year, before mid-season week. Home-grown players get ${s.home_grown_pct}% off. At mid-season, every final-year player not extended (draftees too) becomes a pending free agent: rivals bid, his club picks one, and he moves at season end.`,
+    `Releasing a player leaves half his remaining salary as dead money (never more than one year's salary).`,
   ];
   return (
     <section className="kc-card brass" aria-labelledby="rules-h">

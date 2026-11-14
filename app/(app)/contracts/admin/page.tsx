@@ -25,15 +25,23 @@ export default async function ContractsAdmin() {
         ) : (
           <>
             <div className="kc-grid">
-              <section className="kc-card"><div className="kc-stat"><span>Contracts</span><b>{d.active.length}</b><em>{d.pending.length} extensions waiting</em></div></section>
+              <section className="kc-card"><div className="kc-stat"><span>Contracts</span><b>{d.active.length}</b><em>{d.pending.length} signed for next season</em></div></section>
               <section className="kc-card"><div className="kc-stat"><span>Open auctions</span><b>{d.auctions.length}</b><em>{d.auctions.filter((a) => new Date(a.ends_at) <= new Date()).length} ready to settle</em></div></section>
               <section className="kc-card"><div className="kc-stat"><span>Free agents</span><b>{d.freeAgents.length}</b><em>{d.freeAgents.reduce((a, f) => a + f.offers, 0)} offers tabled</em></div></section>
-              <section className="kc-card"><div className="kc-stat"><span>Tokens in the league</span><b>{kt(d.totalKt)}</b><em>{d.windupCents != null ? `${d.windupCents.toFixed(2)}c each at wind-up` : ''}</em></div></section>
+              <section className="kc-card"><div className="kc-stat"><span>Tokens in the league</span><b>{kt(d.totalKt)}</b><em>{s.start_kt.toLocaleString('en-AU')} KT a club to start</em></div></section>
             </div>
-            <section className="kc-card" aria-labelledby="w-h">
-              <h2 id="w-h">Transfer window</h2>
-              <p className="kc-sub">Release clauses can only be paid while a window is open, and clause levels are locked during it.</p>
-              <div style={{ marginTop: 12 }}><WindowControl settings={s} /></div>
+            <section className="kc-card" aria-labelledby="dr-h">
+              <h2 id="dr-h">Draft day</h2>
+              <p className="kc-sub">After the draft, put every uncontracted squad player on a one-season deal: R1 $32k, R2 $24k, R3 $18k, R4+ $12k, rookies (10 or fewer games) half. Round comes from the draft room; anyone not found is priced as R4+.</p>
+              <div style={{ marginTop: 12 }}><RunButton run="draftees" label="Sign draftees" kind="dark" confirmText="Put every uncontracted squad player on a one-season draft deal?" /></div>
+            </section>
+            <section className="kc-card" aria-labelledby="ms-h">
+              <h2 id="ms-h">Mid-season week</h2>
+              <p className="kc-sub">{s.midseason_at ? `Started ${new Date(s.midseason_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}. ${d.freeAgents.filter((f) => f.kind === 'pending').length} pending free agents.` : 'Starting it turns every un-extended final-year player (draftees too) into a pending free agent. Extensions for them close. Then open the window for release clauses and auctions.'}</p>
+              <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {!s.midseason_at && <RunButton run="midseason" label="Start mid-season week" kind="dark" confirmText="Start mid-season week? Every un-extended final-year player becomes a pending free agent. This can't be undone this season." />}
+                <WindowControl settings={s} />
+              </div>
             </section>
             <section className="kc-card" aria-labelledby="fa-h">
               <h2 id="fa-h">Free agency</h2>
@@ -57,7 +65,7 @@ export default async function ContractsAdmin() {
             </section>
             <section className="kc-card warn" aria-labelledby="ro-h">
               <h2 id="ro-h">End of season: roll over to {s.season + 1}</h2>
-              <p className="kc-sub">Contracts ending in {s.season} expire and those players become free agents; signed extensions start; every club gets its new starting bank. Close the window first. This can’t be undone.</p>
+              <p className="kc-sub">Every club must be within its keeper cap (or the allowed deficit) and 17 + 1 keepers. Contracts ending in {s.season} expire; anyone not re-signed becomes an open free agent; everyone agreed to move joins their new club; every club gets its new starting bank. Close the window first. This can’t be undone.</p>
               <div style={{ marginTop: 12 }}><RunButton run="rollover" label={`Start ${s.season + 1}`} kind="plain" confirmText={`Roll over to ${s.season + 1}? This can't be undone.`} /></div>
             </section>
           </>

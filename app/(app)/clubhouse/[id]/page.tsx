@@ -25,6 +25,7 @@ import { StadiumArt } from '@/components/StadiumArt';
 import { PlayerHighlights } from '@/components/PlayerHighlights';
 import { ClubHeadMore } from '@/components/ClubHeadMore';
 import { ContractsStrip } from '@/components/contracts/ContractsStrip';
+import { ClubContracts } from '@/components/contracts/ClubContracts';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -52,8 +53,10 @@ function trendOf(p: PlayerRow): { age: number | null; prevAvg: number | null; de
   return { age: age(p.birth_date), prevAvg, delta, trend };
 }
 
-export default async function Clubhouse({ params }: { params: Promise<{ id: string }> }) {
+export default async function Clubhouse({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
+  const { view } = await searchParams;
+  const contractsView = view === 'contracts';
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
@@ -192,6 +195,12 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
         </div>
       </header>
 
+      <nav className="ch-viewtog" aria-label="Clubhouse view">
+        <Link href={`/clubhouse/${a.team.id}`} aria-current={contractsView ? undefined : 'page'}>Lineup & squad</Link>
+        <Link href={`/clubhouse/${a.team.id}?view=contracts`} aria-current={contractsView ? 'page' : undefined}>Contracts</Link>
+      </nav>
+
+      {contractsView ? <ClubContracts teamId={a.team.id} /> : <>
       <ContractsStrip teamId={a.team.id} mine={isMine} />
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
@@ -357,6 +366,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           current={a.players.map((p) => nameKey(p.full_name ?? p.name))}
           links={Object.fromEntries([...league.freeAgents, ...league.players].flatMap((p) => { const v = { id: p.id, afl_club: p.afl_club, photo_path: p.photo_path, dfs_id: p.dfs_id }; return [[nameKey(p.name), v], [nameKey(p.full_name ?? p.name), v]]; }))} />)}
       </ClubhouseSplit>
+      </>}
     </div>
   );
 }

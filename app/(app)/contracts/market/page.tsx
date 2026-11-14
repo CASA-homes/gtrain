@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { KcHeader, } from '@/components/contracts/KcHeader';
 import { BidControl, KcClock, RunButton } from '@/components/contracts/client';
-import { clauseKt, floorFor, getContracts, isFinalYear, kt, money, moneyK, playerAge, TIER_LABEL } from '@/lib/contracts';
+import { clauseKt, getContracts, isFinalYear, kt, money, moneyK, playerAge, TIER_LABEL } from '@/lib/contracts';
 import { LINES, type Line } from '@/lib/ratings';
 import { DealsFeed } from '../shared';
 
@@ -17,7 +17,9 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
   const team = (id: number | null) => d.teams.find((t) => t.id === id)?.name ?? '—';
   const now = new Date();
   const windowOpen = !!s?.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > now;
-  const buysUsed = meId && s?.window_opened_at ? d.transfers.filter((t) => t.kind === 'clause' && t.to_team === meId && new Date(t.created_at) >= new Date(s.window_opened_at!)).length : 0;
+  const buysUsed = meId && s?.window_opened_at ? d.claims.filter((c) => c.buyer_team === meId && c.status !== 'cancelled' && new Date(c.created_at) >= new Date(s.window_opened_at!)).length : 0;
+  const claimed = new Set(d.claims.filter((c) => c.status === 'pending').map((c) => c.contract_id));
+  const spoken = new Set(d.pending.map((p) => p.player_id));
 
   if (!s || !d.ready) {
     return (
@@ -29,15 +31,12 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
   }
 
   const clauseRows = d.active
-    .filter((c) => c.team_id !== meId)
+    .filter((c) => c.team_id !== meId && !isFinalYear(s, c) && !spoken.has(c.player_id))
     .map((c) => {
       const p = d.players.get(c.player_id); const rate = d.rates.get(c.player_id) ?? 0;
-      const clause = clauseKt(s, c, rate); const l = p?.positions[0] as Line | undefined;
-      const seller = d.clubs.get(c.team_id);
-      const floorBlocked = !!(l && seller && seller.fit[l] - (p && !['LONG', 'SEASON', 'OUT', 'SUSP', 'DEL'].includes(p.status ?? '') ? 1 : 0) < floorFor(s, l));
-      return { c, p, rate, clause, l, floorBlocked };
+      const clause = clauseKt(s, c, rate, d.pendingFa.has(c.player_id));
+      return { c, p, rate, clause };
     })
-    .filter((r) => r.clause != null || r.c.tier === 'none')
     .filter((r) => !line || r.p?.positions.includes(line))
     .sort((a, b) => (b.p?.average ?? 0) - (a.p?.average ?? 0));
 
@@ -45,7 +44,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
     <div className="kc-page">
       <KcHeader settings={s} tab="market" myTeamId={meId} isCommish={d.me?.is_commish}
         crumb="Keeper HQ / Contracts" title="Transfer Market"
-        sub={<>Owners’ auctions, free agents and release clauses. Coach-to-coach trades still happen on the <Link href="/market" style={{ color: '#e5c98a' }}>Trademarket</Link>.</>}
+        sub={<>Release clauses, pending and open free agents, and owners’ auctions. Players bought here move at season end. Coach-to-coach trades happen on the <Link href="/market" style={{ color: '#e5c98a' }}>Trademarket</Link>.</>}
         kpis={myClub ? [
           { label: 'Your bank', value: kt(myClub.bank) },
           { label: 'Season cap room', value: moneyK(s.season_cap_k - myClub.salary), note: `${moneyK(Math.max(0, s.tax_line_k - myClub.salary))} before tax line` },
@@ -54,8 +53,8 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
 
       <div className="kc-wrap">
         <section className="kc-card" aria-labelledby="auc-h">
-          <div className="row-between"><h2 id="auc-h">Auctions</h2><span className="kc-sub">Listed by their owners · the buyer takes the contract · {s.levy_pct}% of the price is burned</span></div>
-          {d.auctions.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>No auctions running. List a player from your Contracts page.</p> : (
+          <div className="row-between"><h2 id="auc-h">Auctions</h2><span className="kc-sub">Mid-season window only · the winner takes the rest of his contract from next season · {s.levy_pct}% of the price is burned</span></div>
+          {d.auctions.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>No auctions running. During the mid-season window, list a player from your Clubhouse contracts.</p> : (
             <div className="kc-auctions" style={{ marginTop: 14 }}>
               {d.auctions.map((a) => {
                 const c = d.contracts.find((x) => x.id === a.contract_id); const p = d.players.get(a.player_id);
@@ -85,42 +84,49 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
 
         <div className="kc-row">
           <div className="kc-main">
-            <section className="kc-card" aria-labelledby="fa-h">
-              <div className="row-between"><h2 id="fa-h">Free agents</h2><span className="kc-sub">Blind offers · best score wins · ties go to the lower ladder club</span></div>
-              {d.freeAgents.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>No free agents right now. Players land here when they’re released, or when their contract runs out at the end of the season.</p> : (
-                <div className="kc-table-box" style={{ marginTop: 8 }}>
-                  <table className="kc-table" style={{ minWidth: 760 }}>
-                    <thead><tr><th>Player</th><th>Ex-club</th><th className="r">Age</th><th className="r">Avg</th><th className="r">Market rate</th><th className="r">Offers</th><th>Closes</th><th><span className="sr-only">Action</span></th></tr></thead>
-                    <tbody>
-                      {d.freeAgents.map((f) => {
-                        const p = d.players.get(f.player_id); const mineO = d.myOffers.find((o) => o.fa_id === f.id);
-                        const closed = !!f.closes_at && new Date(f.closes_at) <= now;
-                        return (
-                          <tr key={f.id}>
-                            <td><span className="name">{p?.name ?? `Player ${f.player_id}`}</span> <span className="meta">{p?.positions.join('/')}</span></td>
-                            <td className="meta">{team(f.ex_team)}</td>
-                            <td className="r">{playerAge(p) ?? '–'}</td>
-                            <td className="r">{p?.average?.toFixed(1) ?? '–'}</td>
-                            <td className="r" style={{ fontWeight: 700 }}>{money(d.rates.get(f.player_id) ?? 0)}</td>
-                            <td className="r"><span className={`kc-tag ${f.offers ? 'rook' : 'std'}`}>{f.offers}</span></td>
-                            <td className="meta">{f.closes_at ? (closed ? 'Closed' : <KcClock endsAt={f.closes_at} />) : 'Set by commish'}</td>
-                            <td className="r"><span style={{ display: 'inline-flex', gap: 6 }}>
-                              {meId && !closed && <Link href={`/contracts/offer/${f.id}`} className="kc-btn small dark">{mineO ? `Raise offer (${mineO.score})` : 'Offer contract'}</Link>}
-                              {(d.me?.is_commish || closed) && <RunButton run="close-fa" id={f.id} small kind="plain" label="Close offers" confirmText="Close offers now? The best offer signs him." />}
-                            </span></td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </section>
+            {(['pending', 'open'] as const).map((kind) => {
+              const list = d.freeAgents.filter((f) => f.kind === kind);
+              return (
+                <section key={kind} className="kc-card" aria-labelledby={`fa-${kind}`}>
+                  <div className="row-between"><h2 id={`fa-${kind}`}>{kind === 'pending' ? 'Pending free agents' : 'Open free agents'}</h2>
+                    <span className="kc-sub">{kind === 'pending' ? 'Last six months of their deal. Offer a contract plus a fee; his club picks one. He moves at season end.' : 'Out of contract. Blind offers, best score wins, ties go to the lower ladder club.'}</span></div>
+                  {list.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>{kind === 'pending' ? (d.midseason ? 'None left.' : 'Final-year players who aren’t extended land here at mid-season week.') : 'Nobody right now. Released players, and pending free agents nobody signed, land here.'}</p> : (
+                    <div className="kc-table-box" style={{ marginTop: 8 }}>
+                      <table className="kc-table" style={{ minWidth: 760 }}>
+                        <thead><tr><th>Player</th><th>{kind === 'pending' ? 'Club' : 'Ex-club'}</th><th className="r">Age</th><th className="r">Avg</th><th className="r">Market rate</th><th className="r">Offers</th><th>{kind === 'pending' ? 'Decided by' : 'Closes'}</th><th><span className="sr-only">Action</span></th></tr></thead>
+                        <tbody>
+                          {list.map((f) => {
+                            const p = d.players.get(f.player_id); const mineO = d.myOffers.find((o) => o.fa_id === f.id);
+                            const closed = !!f.closes_at && new Date(f.closes_at) <= now; const own = f.ex_team === meId;
+                            return (
+                              <tr key={f.id}>
+                                <td><Link href={`/players/${f.player_id}`} className="name" style={{ color: 'inherit' }}>{p?.name ?? `Player ${f.player_id}`}</Link> <span className="meta">{p?.positions.join('/')}</span></td>
+                                <td className="meta">{team(f.ex_team)}</td>
+                                <td className="r">{playerAge(p) ?? '–'}</td>
+                                <td className="r">{p?.average?.toFixed(1) ?? '–'}</td>
+                                <td className="r" style={{ fontWeight: 700 }}>{money(d.rates.get(f.player_id) ?? 0)}</td>
+                                <td className="r"><span className={`kc-tag ${f.offers ? 'rook' : 'std'}`}>{f.offers}</span></td>
+                                <td className="meta">{kind === 'pending' ? 'His club, by season end' : f.closes_at ? (closed ? 'Closed' : <KcClock endsAt={f.closes_at} />) : 'Set by commish'}</td>
+                                <td className="r"><span style={{ display: 'inline-flex', gap: 6 }}>
+                                  {own ? <Link href={`/clubhouse/${meId}?view=contracts`} className="kc-btn small">Your player · see offers</Link>
+                                    : meId && !closed && <Link href={`/contracts/offer/${f.id}`} className="kc-btn small dark">{mineO ? `Raise offer (${mineO.score})` : 'Make offer'}</Link>}
+                                  {kind === 'open' && (d.me?.is_commish || closed) && <RunButton run="close-fa" id={f.id} small kind="plain" label="Close offers" confirmText="Close offers now? The best offer signs him." />}
+                                </span></td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
 
             <section className="kc-card" aria-labelledby="cl-h">
               <div className="row-between">
                 <div><h2 id="cl-h">Release clauses</h2>
-                  <p className="kc-sub">Pay the clause in a window and he’s yours on his contract. Max {s.max_buys} per window. The seller’s depth floor must still hold.</p></div>
+                  <p className="kc-sub">Mid-season window only, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he finishes the season there and joins you on the rest of his contract. Final-year players aren’t here: they’re pending free agents.</p></div>
                 <div className="kc-tabs">
                   {(['All', ...LINES] as const).map((l) => (
                     <Link key={l} href={l === 'All' ? '/contracts/market' : `/contracts/market?line=${l}`} aria-current={(l === 'All' && !line) || l === line ? 'page' : undefined}>{l}</Link>
@@ -131,10 +137,10 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                 <table className="kc-table" style={{ minWidth: 860 }}>
                   <thead><tr><th>Player</th><th>Owner</th><th className="r">Age</th><th className="r">Avg</th><th className="r">Salary</th><th>Contract</th><th className="r">Clause</th><th><span className="sr-only">Action</span></th></tr></thead>
                   <tbody>
-                    {clauseRows.map(({ c, p, clause, floorBlocked }) => {
-                      const fits = myClub ? myClub.salary + c.salary_k <= s.season_cap_k : false;
+                    {clauseRows.map(({ c, p, clause }) => {
+                      const fits = myClub ? myClub.nextSalary + c.salary_k <= s.season_cap_k : false;
                       const affordable = myClub ? clause != null && myClub.bank >= clause : false;
-                      const reason = clause == null ? 'No clause' : floorBlocked ? `Blocked · ${p?.positions[0]} depth floor` : !windowOpen ? 'Window closed'
+                      const reason = clause == null ? 'No clause' : claimed.has(c.id) ? 'Clause paid · 24h' : !windowOpen ? 'Mid-season window only'
                         : !fits ? 'Over your cap' : !affordable ? 'Not enough KT' : buysUsed >= s.max_buys ? 'Buys used' : null;
                       return (
                         <tr key={c.id}>
@@ -143,10 +149,10 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                           <td className="r">{playerAge(p) ?? '–'}</td>
                           <td className="r">{p?.average?.toFixed(1) ?? '–'}</td>
                           <td className="r">{money(c.salary_k)}</td>
-                          <td className="meta">{isFinalYear(s, c) ? 'Final year (½ clause)' : `To ${c.end_season} · ${TIER_LABEL[c.tier].toLowerCase()}`}</td>
+                          <td className="meta">{`To ${c.end_season} · ${TIER_LABEL[c.tier].toLowerCase()}`}</td>
                           <td className="r" style={{ fontWeight: 700 }}>{clause == null ? '—' : kt(clause)}</td>
                           <td className="r">{meId && (reason ? <span className="kc-btn small ghost" aria-disabled="true">{reason}</span>
-                            : <RunButton run="buy" id={c.id} small kind="sage" label={`Buy for ${kt(clause!)}`} confirmText={`Pay ${kt(clause!)} for ${p?.name}? He joins you on ${money(c.salary_k)} a year to ${c.end_season}.`} />)}</td>
+                            : <RunButton run="buy" id={c.id} small kind="sage" label={`Buy for ${kt(clause!)}`} confirmText={`Pay ${kt(clause!)} for ${p?.name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />)}</td>
                         </tr>
                       );
                     })}
@@ -177,11 +183,12 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
             )}
             <DealsFeed d={d} />
             <section className="kc-card brass" aria-labelledby="mid-h">
-              <h2 id="mid-h">Mid-season week</h2>
-              <div className="kc-kv" style={{ borderTop: 0 }}><span>Day 1</span><strong>Release at least 3</strong></div>
-              <div className="kc-kv"><span>Day 1–3</span><strong>Window: clauses, auctions, free agents</strong></div>
-              <div className="kc-kv"><span>Day 4</span><strong>Mid-season draft, reverse ladder</strong></div>
-              <p className="kc-sub" style={{ color: '#6e5220' }}>Every club brings in 3 new players, bought or drafted. Mid-season draft salaries are half the national scale.</p>
+              <h2 id="mid-h">How the year runs</h2>
+              <div className="kc-kv" style={{ borderTop: 0 }}><span>Off-season</span><strong>Extend, sign free agents, lock in keepers</strong></div>
+              <div className="kc-kv"><span>Draft day</span><strong>Draftees on one-season deals</strong></div>
+              <div className="kc-kv"><span>Mid-season week</span><strong>Clause window · pending free agency opens</strong></div>
+              <div className="kc-kv"><span>Season end</span><strong>Everyone agreed moves</strong></div>
+              <p className="kc-sub" style={{ color: '#6e5220' }}>No pre-season window. Nobody signed here joins a new club mid-season.</p>
             </section>
           </aside>
         </div>

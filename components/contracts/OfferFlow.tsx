@@ -12,10 +12,10 @@ const LF: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 
 const STEPS = ['Player', 'Contract', 'Release clause', 'Sweeteners', 'Review'];
 type ClauseTier = 'standard' | 'high' | 'none';
 
-export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUsed, picks, existing }: {
-  fa: { id: number; offers: number; closesAt: string | null; exTeam: string | null; exRank: number | null };
+export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, existing }: {
+  fa: { id: number; offers: number; closesAt: string | null; exTeam: string | null; exRank: number | null; pending: boolean };
   player: { name: string; positions: string[]; club: string | null; age: number | null; average: number | null; games: number | null };
-  rate: number; settings: KcSettings; bank: number; salary: number; longUsed: number;
+  rate: number; settings: KcSettings; bank: number; salary: number;
   picks: { id: number; label: string; overall: number }[]; existing: MyOffer | null;
 }) {
   const router = useRouter();
@@ -39,7 +39,6 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
   const pickScore = useMemo(() => picks.filter((p) => pickIds.includes(p.id)).reduce((a, p) => a + Math.round(3000 * Math.exp(-0.07 * (p.overall - 1)) / 50), 0), [picks, pickIds]);
   const score = years * base + Math.trunc(sweet / 50) + pickScore;
   const escrowNeeded = sweet - (existing?.sweet_kt ?? 0);
-  const longBlocked = years >= 4 && longUsed >= s.long_deal_limit;
   const overCap = after > s.season_cap_k;
   const tooPoor = escrowNeeded > bank;
   const belowExisting = !!existing && score < existing.score;
@@ -76,8 +75,13 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
           <p className="kc-sub" style={{ fontSize: 15 }}>{player.name} now has {fa.offers + (existing ? 0 : 1)} offer{fa.offers + (existing ? 0 : 1) > 1 ? 's' : ''}. Nobody can see the amounts, including yours.</p>
           <ol style={{ margin: '18px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
             <li><strong>Tabled</strong>: score {score}{sweet ? `, ${kt(sweet)} held until offers close` : ''}.</li>
-            <li><strong>Offers close</strong>{fa.closesAt ? ' when the clock runs out' : ' when the commish closes them'}. You can raise your offer until then, but not lower it.</li>
-            <li><strong>Best score wins</strong>; ties go to the lower ladder club. Lose and your tokens come back.</li>
+            {fa.pending ? <>
+              <li><strong>{fa.exTeam} decides</strong>: they can accept any offer until season end. You can raise yours, but not lower it.</li>
+              <li><strong>If they accept</strong>, your fee goes to them and he joins you at season end. If not, your tokens come back and he goes to open free agency.</li>
+            </> : <>
+              <li><strong>Offers close</strong>{fa.closesAt ? ' when the clock runs out' : ' when the commish closes them'}. You can raise your offer until then, but not lower it.</li>
+              <li><strong>Best score wins</strong>; ties go to the lower ladder club. Lose and your tokens come back.</li>
+            </>}
           </ol>
         </div>
         <Side />
@@ -87,7 +91,9 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
           <h3 style={{ font: '600 20px var(--font)' }}>Is he worth chasing?</h3>
-          <p className="kc-sub" style={{ marginBottom: 16 }}>{fa.exTeam ? `Out of contract at ${fa.exTeam}.` : 'Free agent.'} Offers are blind; the best offer score wins when offers close.</p>
+          <p className="kc-sub" style={{ marginBottom: 16 }}>{fa.pending
+            ? `In his last six months at ${fa.exTeam}. ${fa.exTeam} picks which offer to take, and the token fee goes to them. He finishes ${s.season} there and joins the winner at season end, so your deal starts in ${s.season + 1}.`
+            : `${fa.exTeam ? `Out of contract at ${fa.exTeam}.` : 'Free agent.'} Offers are blind; the best offer score wins when offers close.`}</p>
           <div className="kc-grid" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 10 }}>
             {[['Average', player.average?.toFixed(1) ?? '–'], ['Age', player.age ?? '–'], ['Games', player.games ?? '–'], ['Market rate', money(rate)]].map(([l, v], i) => (
               <div key={l as string} className="kc-card" style={{ padding: 14, background: i === 3 ? '#f3ebd9' : 'var(--sunk)', border: 0 }}><div className="kc-stat"><span>{l}</span><b style={{ fontSize: 22 }}>{v}</b></div></div>
@@ -111,7 +117,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
           <p className="kc-sub" style={{ marginBottom: 14 }}>Longer deals are cheaper each year. You carry the risk if he drops off.</p>
           <div className="kc-opts" style={{ gridTemplateColumns: `repeat(${s.max_years}, minmax(0, 1fr))` }}>
             {Array.from({ length: s.max_years }, (_, i) => i + 1).map((y) => {
-              const blocked = y >= 4 && longUsed >= s.long_deal_limit;
+              const blocked = false;
               return (
                 <button key={y} type="button" className="kc-opt" aria-pressed={years === y} disabled={blocked} onClick={() => setYears(y)}>
                   <small style={{ fontWeight: 600 }}>{y} year{y > 1 ? 's' : ''}</small><b>{money(minFor(y))}</b>
@@ -126,7 +132,6 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
             <label className="kc-field" htmlFor="kc-extra" style={{ flexDirection: 'row', justifyContent: 'space-between' }}><span>Go above his rate to beat rival offers</span><span className="num">+{money(extra)} a year</span></label>
             <input id="kc-extra" type="range" min={0} max={40} step={1} value={extra} onChange={(e) => setExtra(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--khq-sage)', height: 28 }} />
           </div>
-          <p className="kc-sub" style={{ marginTop: 12 }}>Long-deal slots used: <strong>{longUsed} of {s.long_deal_limit}</strong>. 4- and 5-year deals use one.</p>
         </div>
         <Side />
       </div>
@@ -211,7 +216,6 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
           {overCap && <p className="kc-msg err" style={{ marginTop: 12 }}>That takes you over the {money(s.season_cap_k)} season cap.</p>}
           {tooPoor && <p className="kc-msg err" style={{ marginTop: 12 }}>You don’t have enough tokens for that sweetener.</p>}
           {belowExisting && <p className="kc-msg err" style={{ marginTop: 12 }}>A tabled offer can only go up. Yours scores {existing!.score}.</p>}
-          {longBlocked && <p className="kc-msg err" style={{ marginTop: 12 }}>You’ve used all {s.long_deal_limit} long-deal slots.</p>}
           {error && <p className="kc-msg err" style={{ marginTop: 12 }}>{error}</p>}
           <label style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 14, fontSize: 14 }}>
             <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} style={{ width: 20, height: 20, accentColor: 'var(--khq-sage)' }} />
@@ -248,8 +252,8 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, longUse
             {step === 0 ? <Link href="/contracts/market" className="kc-btn">Cancel</Link> : <button type="button" className="kc-btn" onClick={() => setStep(step - 1)}>Back</button>}
             <span className="kc-sub">Step {step + 1} of 5</span>
             {step < 4
-              ? <button type="button" className="kc-btn dark" disabled={step === 1 && longBlocked} onClick={() => setStep(step + 1)}>{step === 0 ? 'Build offer' : `Next: ${STEPS[step + 1].toLowerCase()}`}</button>
-              : <button type="button" className="kc-btn dark" disabled={pending || !ack || overCap || tooPoor || belowExisting || longBlocked} onClick={submit}>{pending ? 'Tabling…' : existing ? 'Raise offer' : 'Table offer'}</button>}
+              ? <button type="button" className="kc-btn dark" onClick={() => setStep(step + 1)}>{step === 0 ? 'Build offer' : `Next: ${STEPS[step + 1].toLowerCase()}`}</button>
+              : <button type="button" className="kc-btn dark" disabled={pending || !ack || overCap || tooPoor || belowExisting} onClick={submit}>{pending ? 'Tabling…' : existing ? 'Raise offer' : 'Table offer'}</button>}
           </>}
         </div>
       </div>

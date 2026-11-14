@@ -19,7 +19,7 @@ export default async function ContractsHome() {
         kpis={s ? [
           { label: 'Keeper cap', value: moneyK(s.keeper_cap_k) },
           { label: 'Season cap', value: moneyK(s.season_cap_k), note: `Tax line ${moneyK(s.tax_line_k)}` },
-          { label: 'Wind-up rate', value: d.windupCents != null ? `${d.windupCents.toFixed(2)}c` : '–', note: `per KT · pot $${(s.pot_dollars + d.finesDollars).toLocaleString('en-AU')}` },
+          { label: 'Tokens in play', value: kt(d.totalKt), note: `${s.start_kt.toLocaleString('en-AU')} KT a club` },
         ] : []} />
 
       <div className="kc-wrap">
@@ -50,7 +50,7 @@ export default async function ContractsHome() {
                       const mine = c.team.id === d.me?.team_id;
                       return (
                         <tr key={c.team.id} style={mine ? { background: '#f4f7f3' } : undefined}>
-                          <td><Link href={`/contracts/${c.team.id}`} className="name" style={{ color: 'inherit' }}>{c.team.name}</Link><div className="meta">{d.ladderRank.get(c.team.id) ? `${ordinal(d.ladderRank.get(c.team.id)!)} last season` : ''}</div></td>
+                          <td><Link href={`/clubhouse/${c.team.id}?view=contracts`} className="name" style={{ color: 'inherit' }}>{c.team.name}</Link><div className="meta">{d.ladderRank.get(c.team.id) ? `${ordinal(d.ladderRank.get(c.team.id)!)} last season` : ''}</div></td>
                           <td style={{ minWidth: 200 }}>
                             <div className="row-between" style={{ fontSize: 13 }}><strong>{moneyK(c.salary)}</strong><span className="muted">of {moneyK(s.keeper_cap_k)}</span></div>
                             <div className="kc-bar"><i className={c.overKeeper ? 'over' : ''} style={{ width: `${pct}%` }} /><s style={{ left: `${(s.keeper_cap_k / s.season_cap_k) * 100}%` }} /></div>

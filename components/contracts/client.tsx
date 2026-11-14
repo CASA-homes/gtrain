@@ -4,8 +4,8 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  bid, buyClause, cancelAuction, chargeTax, closeFreeAgent, extendPlayer, faDeadline, grantTokens, listAuction,
-  releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, type Result,
+  acceptOffer, bid, buyClause, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
+  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 
@@ -36,7 +36,7 @@ function useRun() {
 
 export function RunButton({ label, kind = 'dark', small, confirmText, run, disabled, id = 0 }: {
   label: string; kind?: 'dark' | 'sage' | 'plain' | 'ghost'; small?: boolean; confirmText?: string; disabled?: boolean;
-  run: 'buy' | 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover'; id?: number;
+  run: 'buy' | 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover' | 'match' | 'complete' | 'accept' | 'midseason' | 'draftees' | 'lockin'; id?: number;
 }) {
   const { pending, go, note } = useRun();
   const fn = () => {
@@ -47,6 +47,12 @@ export function RunButton({ label, kind = 'dark', small, confirmText, run, disab
       case 'close-fa': return closeFreeAgent(id);
       case 'seed': return seedContracts();
       case 'tax': return chargeTax();
+      case 'match': return matchClaim(id);
+      case 'complete': return completeClaim(id);
+      case 'accept': return acceptOffer(id);
+      case 'midseason': return startMidseason();
+      case 'draftees': return signDraftees();
+      case 'lockin': return lockIn(id);
       default: return rollover();
     }
   };
@@ -59,8 +65,8 @@ export function RunButton({ label, kind = 'dark', small, confirmText, run, disab
 }
 
 /** Extend a final-year player: pick a length and a clause, see the price, confirm. */
-export function ExtendControl({ contractId, name, rate, homeGrown, settings, longUsed }: {
-  contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings; longUsed: number;
+export function ExtendControl({ contractId, name, rate, homeGrown, settings }: {
+  contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings;
 }) {
   const { pending, go, note, msg } = useRun();
   const [years, setYears] = useState(3);
@@ -68,7 +74,6 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, lon
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
   const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1)));
   const sal = Math.round(base * (1 + (tier === 'high' ? settings.high_pct : tier === 'none' ? settings.none_pct : 0) / 100));
-  const longBlocked = years >= 4 && longUsed >= settings.long_deal_limit;
   if (msg?.ok) return note;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -85,8 +90,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, lon
         </label>
       </div>
       <div className="kc-kv"><span>{homeGrown ? `Home-grown (${settings.home_grown_pct}% off)` : 'Per year'}</span><strong>{money(sal)}</strong></div>
-      {longBlocked && <p className="kc-msg err">You already have {settings.long_deal_limit} deals of 4+ years.</p>}
-      <button type="button" className="kc-btn dark" disabled={pending || longBlocked} onClick={() => go(() => extendPlayer(contractId, years, tier), `Extend ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from next season?`)}>
+      <button type="button" className="kc-btn dark" disabled={pending} onClick={() => go(() => extendPlayer(contractId, years, tier), `Extend ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from next season?`)}>
         {pending ? 'Working…' : `Extend ${years} yr${years > 1 ? 's' : ''}`}
       </button>
       {note}
@@ -164,14 +168,13 @@ export function BidControl({ auctionId, minBid, name }: { auctionId: number; min
 // ---------- Commish ----------
 export function WindowControl({ settings }: { settings: KcSettings }) {
   const { pending, go, note } = useRun();
-  const [kind, setKind] = useState<'preseason' | 'midseason'>(settings.window_kind ?? 'preseason');
+  const kind = 'midseason';
   const [hours, setHours] = useState(72);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div className="kc-inline">
-        <label className="kc-field">Window<select value={kind} onChange={(e) => setKind(e.target.value as 'preseason')}><option value="preseason">Pre-season</option><option value="midseason">Mid-season</option></select></label>
         <label className="kc-field" style={{ width: 110 }}>Hours<input type="number" min={1} value={hours} onChange={(e) => setHours(Number(e.target.value))} /></label>
-        <button type="button" className="kc-btn sage" disabled={pending} onClick={() => go(() => setWindow(true, kind, hours))}>{settings.window_open ? 'Reopen' : 'Open window'}</button>
+        <button type="button" className="kc-btn sage" disabled={pending} onClick={() => go(() => setWindow(true, kind, hours))}>{settings.window_open ? 'Extend window' : 'Open mid-season window'}</button>
         {settings.window_open && <button type="button" className="kc-btn" disabled={pending} onClick={() => go(() => setWindow(false, kind, 0), 'Close the window now?')}>Close window</button>}
       </div>
       {note}
@@ -213,10 +216,10 @@ export function FaDeadlineControl() {
 
 const FIELDS: [keyof KcSettings, string][] = [
   ['keeper_cap_k', 'Keeper cap ($k)'], ['season_cap_k', 'Season cap ($k)'], ['tax_line_k', 'Luxury tax line ($k)'], ['tax_kt_per_k', 'Tax KT per $1k over'],
-  ['start_kt', 'Starting bank (KT)'], ['max_years', 'Max contract years'], ['long_deal_limit', '4–5 year deals per club'],
+  ['start_kt', 'Starting bank (KT)'], ['max_years', 'Max contract years'], ['deficit_max_k', 'Lock-in deficit allowed ($k)'], ['hold_back_k', 'Draft hold-back per spot ($k)'],
   ['floor_def', 'Depth floor DEF'], ['floor_mid', 'Depth floor MID'], ['floor_ruc', 'Depth floor RUC'], ['floor_fwd', 'Depth floor FWD'],
   ['clause_std', 'Standard clause (× rate)'], ['clause_high', 'High clause (× rate)'], ['high_pct', 'High clause salary +%'], ['none_pct', 'No clause salary +%'],
-  ['home_grown_pct', 'Home-grown discount %'], ['levy_pct', 'Transfer levy %'], ['max_buys', 'Clause buys per window'], ['pot_dollars', 'Wind-up pot ($)'],
+  ['home_grown_pct', 'Home-grown discount %'], ['levy_pct', 'Transfer levy %'], ['max_buys', 'Clause buys per window'],
 ];
 export function SettingsForm({ settings }: { settings: KcSettings }) {
   const { pending, go, note } = useRun();

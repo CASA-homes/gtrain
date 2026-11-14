@@ -18,6 +18,7 @@ import { DRAFTEES } from '@/lib/draft-history';
 import { WatchStar } from '@/components/WatchStar';
 import { playerSummary } from '@/lib/player-summary';
 import { getWatchlist } from '@/lib/watchlist';
+import { PlayerContractBits } from '@/components/contracts/PlayerContract';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
@@ -89,6 +90,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             <div className="ph-sub">
               <span className="ph-club"><ClubDot code={p.afl_club} size={13} />{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
               {owner ? <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
+              {owner && <span className="muted">Coach {owner.coach_name}</span>}
+              <PlayerContractBits playerId={p.id} ownerTeamId={owner?.id ?? null} name={p.full_name ?? p.name} />
             </div>
             <div className="ph-rating">
               <div className="ph-value" title={`${valueRank} of ${league.players.length} in the league · valued as ${r.line}, No.${r.lineRank} ${r.line}${r.statusRisk ? ' · status at risk' : ''}`}>
