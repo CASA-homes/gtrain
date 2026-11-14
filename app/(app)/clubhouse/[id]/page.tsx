@@ -24,6 +24,7 @@ import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
 import { PlayerHighlights } from '@/components/PlayerHighlights';
 import { ClubHeadMore } from '@/components/ClubHeadMore';
+import { ContractsStrip } from '@/components/contracts/ContractsStrip';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -190,6 +191,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           </ClubHeadMore>
         </div>
       </header>
+
+      <ContractsStrip teamId={a.team.id} mine={isMine} />
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
 
