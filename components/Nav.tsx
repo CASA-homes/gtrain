@@ -13,6 +13,7 @@ const ICONS: Record<string, React.ReactNode> = {
   rankings: <><path d="M4 20.5h16" /><path d="M9 20.5V9.5h6v11" /><path d="M4.5 20.5v-6h4.5M15 20.5v-8h4.5v8" /><path d="m12 3.6.8 1.6 1.7.2-1.3 1.2.3 1.7-1.5-.8-1.5.8.3-1.7-1.3-1.2 1.7-.2Z" /></>,
   draft: <><circle cx="10.5" cy="10.5" r="6" /><path d="m15 15 5 5" /></>,
   live: <><path d="M13.5 3 5.5 13.5h6L10.5 21l8-10.5h-6Z" /></>,
+  contracts: <><path d="M7 3.5h7.5L18 7v13.5H7Z" /><path d="M14.5 3.5V7H18" /><path d="M9.5 12h6M9.5 15.5h6" /></>,
   signout: <><path d="M14 4.5H6.5v15H14" /><path d="M10.5 12h10M17 8.5l3.5 3.5-3.5 3.5" /></>,
 };
 const Icon = ({ name }: { name: string }) => (
@@ -23,6 +24,7 @@ const LINKS = [
   { href: '/clubhouse', label: 'Clubhouse', short: 'Club', icon: 'clubhouse' },
   { href: '/players', label: 'Players', short: 'Players', icon: 'players' },
   { href: '/market', label: 'Trademarket', short: 'Trade', icon: 'market' },
+  { href: '/contracts', label: 'Contracts', short: 'Cap', icon: 'contracts' },
   { href: '/league', label: 'League', short: 'League', icon: 'league' },
   { href: '/rankings', label: 'Rankings', short: 'Ranks', icon: 'rankings' },
   { href: '/draft', label: 'Draft', short: 'Draft', icon: 'draft' },
