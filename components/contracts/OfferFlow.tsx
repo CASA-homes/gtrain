@@ -21,7 +21,8 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const router = useRouter();
   const [step, setStep] = useState(existing ? 1 : 0);
   const [years, setYears] = useState(existing?.years ?? 3);
-  const minFor = (y: number) => Math.max(5, Math.round(rate * (LF[y] ?? 0.933)));
+  // Minimum is his market value, whatever the length.
+  const minFor = (_y: number) => Math.max(5, Math.round(rate));
   const [extra, setExtra] = useState(existing ? Math.max(0, existing.salary_k - minFor(existing.years)) : 0);
   const [tier, setTier] = useState<ClauseTier>((existing?.tier as ClauseTier) ?? 'standard');
   const [sweet, setSweet] = useState(existing?.sweet_kt ?? 0);
@@ -103,7 +104,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
             <div className="kc-kv"><span>Position</span><strong>{player.positions.join('/')} · {player.club ?? ''}</strong></div>
             <div className="kc-kv"><span>Former G-Train club</span><strong>{fa.exTeam ?? '—'}{fa.exRank ? ` (${fa.exRank} last season)` : ''}</strong></div>
             <div className="kc-kv"><span>Offers tabled</span><strong>{fa.offers} · amounts hidden</strong></div>
-            <div className="kc-kv"><span>Minimum offer</span><strong>{money(minFor(3))} a year over 3 years</strong></div>
+            <div className="kc-kv"><span>Minimum offer</span><strong>{money(minFor(3))} a year (his market value)</strong></div>
             {existing && <div className="kc-kv"><span>Your current offer</span><strong>{existing.years} × {money(existing.salary_k)} · score {existing.score}</strong></div>}
           </div>
         </div>

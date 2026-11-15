@@ -119,7 +119,8 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
           <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
           <li><b>If they don’t match</b>, he joins you at the end of {settings.season}, not now. He plays out the season for his current club, then moves on the rest of his contract.</li>
           <li><b>Window only.</b> Clauses can only be paid in the mid-season window, and there are none in a player’s final year.</li>
-          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used). His salary has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room).</li>
+          <li><b>His salary comes with him.</b> You take on his current contract: {r.salary != null ? k$(r.salary) : '—'} a year to {r.extEnd ?? r.end ?? '—'}, and it has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room). It’s checked again when he moves.</li>
+          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used).</li>
           <li><b>His list.</b> When he arrives you still need to be at 33 or fewer, so plan a release or trade if you’re full.</li>
         </ul>
         {blockers.length > 0 && <div className="cd-block">{blockers.map((b) => <p key={b}>{b}</p>)}</div>}
