@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
 import { ContractsTable, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
-import { clauseKt, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
+import { clauseKt, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
 
 export async function ClubContracts({ teamId }: { teamId: number }) {
@@ -51,11 +51,13 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     const p = d.players.get(c.player_id); const rate = d.rates.get(c.player_id) ?? 0; const ext = ownNext.get(c.player_id);
     const [status, statusLabel] = statusOf(c);
     return {
-      id: c.id, playerId: c.player_id, name: p?.name ?? `Player ${c.player_id}`, positions: p?.positions ?? [], club: p?.afl_club ?? null,
+      id: c.id, playerId: c.player_id, name: p?.full_name ?? p?.name ?? `Player ${c.player_id}`, positions: p?.positions ?? [], club: p?.afl_club ?? null,
       age: playerAge(p), avg: p?.average ?? null, games: p?.games ?? 0, salary: c.salary_k, base: c.base_k, rate,
       start: c.start_season, end: c.end_season, yearsLeft: yearsLeft(s, c), tier: c.tier, clause: clauseKt(s, c, rate, d.pendingFa.has(c.player_id)),
       status, statusLabel, homeGrown: c.home_grown, extEnd: ext?.end_season ?? null, extSalary: ext?.salary_k ?? null,
       onAuction: openAuction.has(c.id), dead: Math.min(Math.floor((yearsLeft(s, c) * c.salary_k) / 2), c.salary_k),
+      trend: valueTrend(p),
+      tone: status === 'pending' || status === 'moving' || status === 'claim' ? 'red' : status === 'final' || status === 'draft' ? 'amber' : null,
     };
   });
 
@@ -68,6 +70,16 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
   const years = Array.from({ length: 5 }, (_, i) => s.season + i);
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
+  const underContract = rows.filter((r) => !r.tone);
+  const outRows: CtRow[] = [
+    ...rows.filter((r) => r.tone === 'red'), ...rows.filter((r) => r.tone === 'amber'),
+    ...uncontracted.map((p) => ({
+      id: -p.id, playerId: p.id, name: p.full_name ?? p.name, positions: p.positions ?? [], club: p.afl_club ?? null, age: playerAge(p), avg: p.average ?? null,
+      games: p.games ?? 0, salary: null, base: 0, rate: d.rates.get(p.id) ?? 0, start: null, end: null, yearsLeft: 0, tier: 'standard' as const, clause: null,
+      status: 'none' as const, statusLabel: 'No contract · free agent at season end', homeGrown: false, extEnd: null, extSalary: null, onAuction: false, dead: 0,
+      trend: valueTrend(p), tone: 'red' as const,
+    })).sort((a, b) => b.rate - a.rate),
+  ];
 
   return (
     <div className="kc-stack">
@@ -153,18 +165,14 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         </section>
       )}
 
-      <section className="kc-card" aria-labelledby="ct-h">
-        <div className="row-between" style={{ marginBottom: 12 }}>
-          <div><h2 id="ct-h">Contracts · {contracts.length}</h2></div>
-          {windowOpen && <span className="kc-tag exp">Mid-season window open · clause levels locked</span>}
+      <section className="kc-card ct2-card" aria-labelledby="ct-h">
+        <div className="row-between" style={{ marginBottom: 10 }}>
+          <h2 id="ct-h">Contracts</h2>
+          {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
         </div>
-        <ContractsTable rows={rows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} />
-      </section>
-
-      <section className="kc-card" aria-labelledby="un-h">
-        <div className="row-between"><h2 id="un-h">Not on contract · {uncontracted.length}</h2><Link href={`/clubhouse/${teamId}?view=finances`} className="kc-btn small">Cap & lock-in →</Link></div>
-        <p className="kc-sub">Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that.</p>
-        <p style={{ fontSize: 13, marginTop: 8 }}>{uncontracted.length ? uncontracted.map((p) => p.name).join(', ') : 'Everyone on the list is contracted.'}</p>
+        <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} />
+        <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, extend before mid-season." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} empty="Nobody expiring." />
+        <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link></p>
       </section>
     </div>
   );
