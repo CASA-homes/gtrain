@@ -52,7 +52,7 @@ export function AddItem({ myTeamId, teams, assets, action, bank }: {
           </label>
           <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12 }} className="muted">
             Amount (KT){ktDir === 'pay' && bank != null ? ` · you have ${bank.toLocaleString('en-AU')}` : ''}
-            <input className="input" type="number" inputMode="numeric" min={100} step={100} value={kt} onChange={(e) => setKt(e.target.value)} placeholder="e.g. 2,500" required />
+            <input className="input" type="number" inputMode="numeric" min={1} step={1} value={kt} onChange={(e) => setKt(e.target.value)} placeholder="e.g. 50" required />
           </label>
         </div>
       ) : (

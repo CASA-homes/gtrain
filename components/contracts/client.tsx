@@ -164,7 +164,7 @@ export function AuctionControl({ contractId, name, suggested }: { contractId: nu
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6, minWidth: 220 }}>
       <div className="kc-inline">
-        <label className="kc-field" style={{ flex: 1 }}>Reserve (KT)<input type="number" min={0} step={100} value={reserve} onChange={(e) => setReserve(Number(e.target.value))} /></label>
+        <label className="kc-field" style={{ flex: 1 }}>Reserve (KT)<input type="number" min={0} step={1} value={reserve} onChange={(e) => setReserve(Number(e.target.value))} /></label>
         <label className="kc-field" style={{ width: 90 }}>Hours<input type="number" min={1} max={168} value={hours} onChange={(e) => setHours(Number(e.target.value))} /></label>
       </div>
       <div className="kc-inline">
@@ -183,7 +183,7 @@ export function BidControl({ auctionId, minBid, name }: { auctionId: number; min
     <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
       <div className="kc-inline">
         <label className="kc-field" style={{ flex: 1 }}><span className="sr-only">Bid for {name}</span>
-          <input type="number" min={minBid} step={100} value={amount} onChange={(e) => setAmount(Number(e.target.value))} aria-label={`Bid for ${name} in KT`} />
+          <input type="number" min={minBid} step={1} value={amount} onChange={(e) => setAmount(Number(e.target.value))} aria-label={`Bid for ${name} in KT`} />
         </label>
         <button type="button" className="kc-btn dark" disabled={pending} onClick={() => go(() => bid(auctionId, amount), `Bid ${kt(amount)} for ${name}?`)}>Bid</button>
       </div>
@@ -218,7 +218,7 @@ export function GrantControl({ teams }: { teams: { id: number; name: string }[] 
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div className="kc-inline">
         <label className="kc-field">Club<select value={team} onChange={(e) => setTeam(Number(e.target.value))}>{teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
-        <label className="kc-field" style={{ width: 120 }}>KT (− to take)<input type="number" step={100} value={amount} onChange={(e) => setAmount(Number(e.target.value))} /></label>
+        <label className="kc-field" style={{ width: 120 }}>KT (− to take)<input type="number" step={1} value={amount} onChange={(e) => setAmount(Number(e.target.value))} /></label>
         <label className="kc-field" style={{ flex: 1, minWidth: 180 }}>Reason<input value={why} onChange={(e) => setWhy(e.target.value)} placeholder="Cup prize, correction…" /></label>
         <button type="button" className="kc-btn dark" disabled={pending || !why.trim()} onClick={() => go(() => grantTokens(team, amount, why))}>Apply</button>
       </div>

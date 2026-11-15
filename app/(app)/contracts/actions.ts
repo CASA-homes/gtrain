@@ -120,7 +120,7 @@ export async function saveSettings(patch: Record<string, number | boolean>): Pro
   if (!me?.is_commish) return { ok: false, message: 'Only the commish can change settings.' };
   const allowed = ['keeper_cap_k', 'season_cap_k', 'tax_line_k', 'tax_kt_per_k', 'start_kt', 'max_years', 'floor_def', 'floor_mid', 'floor_ruc', 'floor_fwd',
     'clause_std_pct', 'clause_high_pct', 'deficit_fee_kt', 'high_pct', 'none_pct', 'home_grown_pct', 'levy_pct', 'max_buys', 'deficit_max_k', 'hold_back_k'];
-  const clean = Object.fromEntries(Object.entries(patch).filter(([k, v]) => allowed.includes(k) && Number.isFinite(Number(v))).map(([k, v]) => [k, Math.round(Number(v))]));
+  const clean = Object.fromEntries(Object.entries(patch).filter(([k, v]) => allowed.includes(k) && Number.isFinite(Number(v))).map(([k, v]) => [k, k === 'tax_kt_per_k' ? Math.round(Number(v) * 100) / 100 : Math.round(Number(v))]));
   const supabase = await createClient();
   const { error } = await supabase.from('kc_settings').update({ ...clean, updated_at: new Date().toISOString() }).eq('league_id', await currentLeagueId());
   if (error) return { ok: false, message: error.message };
