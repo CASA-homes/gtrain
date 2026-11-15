@@ -2451,3 +2451,7 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .ph-summary { grid-column: 3; grid-row: 1 / span 2; }
   .ph-kc-cells b { font-size: 14px; }
 }
+.ph-kc-cells { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ph-kc-cells > div { justify-content: space-between; gap: 2px; padding: 4px 6px; }
+.ph-kc-cells span { line-height: 1.25; }
+@media (min-width: 901px) { .ph-kc-cells > div { padding: 4px 10px; } }

@@ -58,13 +58,14 @@ export async function PlayerContractStrip({ playerId, ownerTeamId }: { playerId:
   else if (fa) { status = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'rook'; }
   else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season} at ${short(next.salary_k)}`; tone = 'high'; }
   else if (c && isFinalYear(s, c)) status = c.how === 'draft' ? 'Draft deal · final year' : 'Final year';
-  const clauseText = !c ? '—' : clause != null ? kt(clause) : c.tier === 'none' ? 'None' : isFinalYear(s, c) ? 'None · final yr' : '—';
+  const clauseText = !c ? '—' : clause != null ? kt(clause) : c.tier === 'none' ? 'None' : '—';
   return (
     <div className="ph-kc">
       <div className="ph-kc-cells">
-        <div><span>Contract</span><b>{c ? `${short(c.salary_k)} → ${c.end_season}` : holder ? 'None' : 'Unsigned'}</b></div>
-        <div><span>Market</span><b>{short(rate)}</b></div>
-        <div><span>Clause</span><b>{clauseText}</b></div>
+        <div><span>Contract value</span><b>{c ? short(c.salary_k) : holder ? 'None' : 'Unsigned'}</b></div>
+        <div><span>Until</span><b>{c ? c.end_season : '—'}</b></div>
+        <div><span>Market value</span><b>{short(rate)}</b></div>
+        <div><span>Release clause</span><b>{clauseText}</b></div>
       </div>
       {status && <span className={`kc-tag ${tone}`}>{status}</span>}
     </div>
