@@ -141,12 +141,22 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="wrap">
-      <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
+      <div className="row-between pl-head" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
-          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Players</h1>
+          <span className="eyebrow pl-eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
+          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}><span className="d-txt">Players</span><span className="m-txt">Player Search</span></h1>
         </div>
-        <Link href="/players/rather" className="btn dark">Who’d you rather? · player values →</Link>
+        <Link href="/players/rather" className="btn dark pl-rather-btn">Who’d you rather? · player values →</Link>
+        <div className="pl-sq">
+          <Link href="/players/rather" className="pl-sq-btn" aria-label="Who’d you rather?">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7" /></svg>
+            <span>Rather</span>
+          </Link>
+          <Link href="/players/rather?view=board" className="pl-sq-btn" aria-label="Player value board">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
+            <span>Values</span>
+          </Link>
+        </div>
       </div>
 
       <AskPlayers />
@@ -156,15 +166,23 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         {y25 && <input type="hidden" name="yr" value="2025" />}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input name="q" defaultValue={sp.q} placeholder="Search a player" className="input" style={{ flex: 1, minWidth: 0 }} aria-label="Search a player" />
-          <button type="submit" className="btn dark">Go</button>
+          <span className="own-toggle own-year pf-year-m" role="tablist" aria-label="Season">
+              {(['2026', '2025'] as const).map((y) => {
+                const u = new URLSearchParams();
+                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
+                if (y === '2025') u.set('yr', '2025');
+                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={(y === '2025') === y25} className={(y === '2025') === y25 ? 'on' : undefined}>{y}</Link>;
+              })}
+          </span>
+          <button type="submit" className="btn dark pf-go">Go</button>
         </div>
         <details open={activeFilters > 0 || undefined}>
           <summary className="pf-row">
             <span className="btn">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4" /></svg>
-              Filters{activeFilters ? ` · ${activeFilters}` : ''}
+              <span className="pf-lab">Filters</span>{activeFilters ? <span className="pf-n">{activeFilters}</span> : null}
             </span>
-            <span className="own-toggle own-year" role="tablist" aria-label="Season">
+            <span className="own-toggle own-year pf-year-d" role="tablist" aria-label="Season">
               {(['2026', '2025'] as const).map((y) => {
                 const u = new URLSearchParams();
                 for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
@@ -218,7 +236,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         </details>
       </form>
       {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages, games played and AFL Fantasy positions. Owners, ratings and value are still current (2026).</p>}
-      <p className="muted" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
+      <p className="muted pl-note" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
       {own === 'watch' && rows.length === 0 && (
           <div className="card muted" style={{ padding: 16 }}>Your watchlist is empty. Tap the grey star above a player’s name on his profile to add him.</div>
