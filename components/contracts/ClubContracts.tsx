@@ -3,7 +3,7 @@
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
 import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
-import { ContractsTable, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
+import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
 
@@ -69,6 +69,13 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   const departing = [...leaving.values()].filter((p) => contracts.some((c) => c.player_id === p.player_id));
 
   const years = Array.from({ length: 5 }, (_, i) => s.season + i);
+  // Another coach looking at this club can bid on release clauses.
+  const viewer = d.me && !d.me.is_guest && !mine ? d.clubs.get(d.me.team_id) : null;
+  const buy: BuyInfo | null = viewer && d.me ? {
+    bank: viewer.bank, windowOpen, maxBuys: s.max_buys, nextSeason: s.season + 1, seasonCap: s.season_cap_k, clubName: club.team.name,
+    used: d.claims.filter((c) => c.buyer_team === d.me!.team_id && c.status !== 'cancelled' && (!s.window_opened_at || c.created_at >= s.window_opened_at)).length,
+    capRoomNext: s.season_cap_k - viewer.nextSalary,
+  } : null;
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
   const underContract = rows.filter((r) => !r.tone);
   const outRows: CtRow[] = [
@@ -170,9 +177,9 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           <h2 id="ct-h">Contracts</h2>
           {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
         </div>
-        <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} />
-        <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, extend before mid-season." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} empty="Nobody expiring." />
-        <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link></p>
+        <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
+        <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, extend before mid-season." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
+        <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
     </div>
   );
