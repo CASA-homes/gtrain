@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
+import { AuctionControl, ExtendControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
@@ -185,6 +185,13 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <div><dt>2026</dt><dd>{r.avg?.toFixed(1) ?? '–'} avg · {r.games} games</dd></div>
             {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead money</dd></div>}
           </dl>
+          {r.status === 'none' && canManage && (
+            <div className="ct2-sign">
+              <b>Offer {r.name} a contract</b>
+              <span className="kc-sub">Out of contract. Sign him from {settings.season} at his priced salary: {k$(r.rate)} market value.</span>
+              <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={false} settings={settings} />
+            </div>
+          )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>

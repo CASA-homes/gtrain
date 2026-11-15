@@ -3,7 +3,7 @@
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
 import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
-import { DropDayControl, RookiePicker } from '@/components/contracts/finance-client';
+import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
@@ -158,19 +158,6 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         </section>
       )}
 
-      <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h">
-        <div className="row-between">
-          <h2 id="rk-h">{s.season} rookie slot</h2>
-          <span className={`fn-pill ${rookieLocked ? 'dn' : 'brass'}`}>{rookieLocked ? 'Locked' : dropDay ? `Locks ${dropDay}` : 'Cap-free'}</span>
-        </div>
-        <p className="kc-sub" style={{ margin: '4px 0 10px' }}>
-          {rookie ? <><b style={{ color: 'var(--ink)' }}>{name(rookie.player_id)}</b> · {money(rookie.salary_k)} off your cap this season.</> : 'Empty. Pick one player with 10 or fewer games; his salary doesn’t count to your cap this season.'}
-          {' '}Set before player drop day{dropDay ? ` (${dropDay})` : ''}.
-        </p>
-        {canManage && <RookiePicker season={s.season} current={rookie?.player_id ?? null} options={rookieOptions} locked={rookieLocked} />}
-        {d.me?.is_commish && <div style={{ marginTop: 10 }}><span className="kc-sub">Player drop day (commish)</span><DropDayControl value={s.rookie_lock_at} /></div>}
-      </section>
-
       {finalYear.length > 0 && (
         <section className="kc-card" aria-labelledby="fy-h">
           <div className="row-between">
@@ -199,6 +186,21 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
         </div>
         <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
+      </section>
+
+      <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h">
+        <div className="row-between">
+          <h2 id="rk-h">{s.season} rookie slot</h2>
+          <span className={`fn-pill ${rookieLocked ? 'dn' : 'brass'}`}>{rookieLocked ? 'Locked' : dropDay ? `Locks ${dropDay}` : 'Cap-free'}</span>
+        </div>
+        <p className="kc-sub" style={{ margin: '4px 0 10px' }}>
+          {rookie ? <><b style={{ color: 'var(--ink)' }}>{name(rookie.player_id)}</b> · {money(rookie.salary_k)} off your cap this season.</> : 'Empty. Pick one player with 10 or fewer games; his salary doesn’t count to your cap this season.'}
+          {' '}Set before player drop day{dropDay ? ` (${dropDay})` : ''}.
+        </p>
+        {canManage && <RookiePicker season={s.season} current={rookie?.player_id ?? null} options={rookieOptions} locked={rookieLocked} />}
+      </section>
+
+      <section className="kc-card ct2-card" aria-label="Expiring and free agents">
         <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, extend before mid-season." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
         <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>

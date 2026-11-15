@@ -26,11 +26,16 @@ export function SeasonSchedule() {
   const months = Array.from({ length: 12 }, (_, i) => new Date(2026, 10 + i, 1));
   const next = KEY.find((k) => D(k.date) > now);
   const days = (s: string) => Math.ceil((D(s) - now) / 86400000);
+  const phase = now < D(KEY[0].date) ? 'Off-season · 2026 season complete, signings open'
+    : now < D(KEY[1].date) ? 'Contracts expired · draft day next'
+    : now < D(SEASON.start) ? 'Pre-season · draft done'
+    : now < D(SEASON.end) ? (now >= D(MID.start) && now <= D(MID.end) ? 'Mid-season trade window open' : '2027 season in progress')
+    : now < D('2027-10-03') ? 'Finals' : 'Off-season · 2027 season complete';
   const seg = (a: string | number, b: string | number) => ({ left: `${pos(a)}%`, width: `${pos(b) - pos(a)}%` });
   return (
     <section className="ss card" aria-labelledby="ss-h">
       <div className="ss-head">
-        <div><span className="mm-eyebrow">2027 season</span><h2 id="ss-h">Season schedule</h2></div>
+        <div><span className="mm-eyebrow">2027 season</span><h2 id="ss-h">Season schedule</h2><span className="ss-now"><i />{phase}</span></div>
         {next && <span className="ss-next"><b>{days(next.date)} days</b> to {next.label.toLowerCase()}</span>}
       </div>
 

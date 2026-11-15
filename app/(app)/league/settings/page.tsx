@@ -7,6 +7,8 @@ import { getLeague, getMe } from '@/lib/data';
 import { CUP_NAME } from '@/lib/cup';
 import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { LeagueNameForm } from '@/components/LeagueNameForm';
+import { DropDayControl } from '@/components/contracts/finance-client';
+import { getContracts } from '@/lib/contracts';
 
 export const metadata = { title: 'League settings' };
 
@@ -19,7 +21,8 @@ export const dynamic = 'force-dynamic';
 export default async function LeagueSettingsPage() {
   const profile = await getLeagueProfile();
   const C = profile.charter;
-  const [me, league, prizes, leagueName] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName()]);
+  const [me, league, prizes, leagueName, kc] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName(), getContracts()]);
+  const dropDay = kc.settings?.rookie_lock_at ?? null;
   const holders = new Set(league.picks.map((p) => p.owner_team_id));
   const teams = league.teams.filter((t) => holders.has(t.id)).map((t) => ({ id: t.id, name: t.name }));
   return (
@@ -27,6 +30,14 @@ export default async function LeagueSettingsPage() {
       <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
+        {kc.settings && (
+          <section className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <h2 className="h2" style={{ fontSize: 18 }}>Player drop day</h2>
+            <p className="muted" style={{ margin: 0, fontSize: 13 }}>Rookie contracts lock on drop day. Each club picks its cap-free rookie (10 or fewer games) for the season before then.</p>
+            <b style={{ fontSize: 15 }}>{dropDay ? new Date(dropDay).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Perth' }) + ' (Perth)' : 'Not set'}</b>
+            {me?.is_commish && <DropDayControl value={dropDay} />}
+          </section>
+        )}
         <Group title="Team structure" rows={[
           ['Squad size', '33 players: 18 starters, 5 emergencies, 10 bench'],
           ['On field', '5 DEF · 7 MID · 1 RUC · 5 FWD'],
