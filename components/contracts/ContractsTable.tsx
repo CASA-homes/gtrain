@@ -4,8 +4,11 @@
 // contract details and manage actions. Used twice: players under contract, and expiring / free agents (row tint
 // shows which: light red = free agent or leaving, light yellow = expiring).
 import Link from 'next/link';
+import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ReleaseButton, TierSelect } from '@/components/contracts/client';
+import { AuctionControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
+import { buyClause } from '@/app/(app)/contracts/actions';
+import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 
 export type CtStatus = 'final' | 'pending' | 'moving' | 'extended' | 'draft' | 'rookie' | 'contract' | 'claim' | 'none';
@@ -16,42 +19,132 @@ export interface CtRow {
   onAuction: boolean; dead: number; trend: number[]; tone?: 'red' | 'amber' | null;
 }
 
+/** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club. */
+export interface BuyInfo { bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoomNext: number; nextSeason: number; seasonCap: number; clubName: string }
+
 const k$ = (k: number) => `$${Math.round(k)}k`;
+const ktShort = (n: number) => (n >= 10000 ? `${Math.round(n / 1000)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
 const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
 const TAG: Record<CtStatus, string> = { final: 'exp', pending: 'exp', moving: 'exp', claim: 'exp', extended: 'high', draft: 'rook', rookie: 'rook', contract: 'std', none: 'exp' };
 
 function Trend({ v }: { v: number[] }) {
   if (v.length < 2) return <span className="ct-trend muted">—</span>;
   const lo = Math.min(...v), hi = Math.max(...v), up = v[v.length - 1] >= v[0];
-  const pts = v.map((x, i) => `${((i / (v.length - 1)) * 44 + 1).toFixed(1)},${(20 - ((x - lo) / (hi - lo || 1)) * 17).toFixed(1)}`).join(' ');
+  const pts = v.map((x, i) => `${((i / (v.length - 1)) * 30 + 1).toFixed(1)},${(17 - ((x - lo) / (hi - lo || 1)) * 14).toFixed(1)}`).join(' ');
   const pct = v[0] > 0 ? Math.round(((v[v.length - 1] - v[0]) / v[0]) * 100) : 0;
   return (
     <span className={`ct-trend ${up ? 'up' : 'dn'}`} title={`Value ${up ? 'up' : 'down'} ${Math.abs(pct)}% this season`}>
-      <svg viewBox="0 0 46 22" width="46" height="22" aria-hidden="true"><polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg viewBox="0 0 32 18" width="32" height="18" aria-hidden="true"><polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
       <span className="sr-only">Value {up ? 'up' : 'down'} {Math.abs(pct)}%</span>
     </span>
   );
 }
 
-export function ContractsTable({ title, note, rows, settings, years, canManage, mine, windowOpen, empty }: {
-  title: string; note?: string; rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean; empty?: string;
+type SortKey = 'name' | 'len' | 'trend' | 'market' | 'clause' | 'salary';
+const COLS: [SortKey, string][] = [['name', 'Player'], ['len', 'Yrs'], ['trend', 'Trend'], ['market', 'Market'], ['clause', 'Clause'], ['salary', 'Salary']];
+const trendPct = (v: number[]) => (v.length > 1 && v[0] > 0 ? (v[v.length - 1] - v[0]) / v[0] : 0);
+const sortVal = (r: CtRow, k: SortKey): number | string => {
+  switch (k) {
+    case 'name': return r.name.toLowerCase();
+    case 'len': return r.extEnd ?? r.end ?? -1;
+    case 'trend': return trendPct(r.trend);
+    case 'market': return r.rate;
+    case 'clause': return r.clause ?? -1;
+    default: return r.salary ?? -1;
+  }
+};
+
+export function ContractsTable({ title, note, rows, settings, years, canManage, mine, windowOpen, empty, buy }: {
+  title: string; note?: string; rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean; empty?: string; buy?: BuyInfo | null;
 }) {
   const total = rows.reduce((t, r) => t + (r.salary ?? 0), 0);
+  const [sort, setSort] = useState<{ k: SortKey; dir: 1 | -1 } | null>(null);
+  const [bidOn, setBidOn] = useState<CtRow | null>(null);
+  const shown = useMemo(() => {
+    if (!sort) return rows;
+    return [...rows].sort((a, b) => {
+      const x = sortVal(a, sort.k), y = sortVal(b, sort.k);
+      return (typeof x === 'string' ? x.localeCompare(y as string) : x - (y as number)) * sort.dir;
+    });
+  }, [rows, sort]);
+  const click = (k: SortKey) => setSort((cur) => (cur?.k === k ? (cur.dir === (k === 'name' ? 1 : -1) ? { k, dir: (k === 'name' ? -1 : 1) } : null) : { k, dir: k === 'name' ? 1 : -1 }));
   return (
     <section className="ct2">
       <header className="ct2-head">
         <div><h3>{title} <span>{rows.length}</span></h3>{note && <p>{note}</p>}</div>
         {total > 0 && <b>{k$(total)}</b>}
       </header>
-      <div className="ct2-cols" aria-hidden="true"><span>Player</span><span>Length</span><span>Trend</span><span>Market</span><span>Salary</span><span /></div>
+      <div className="ct2-cols" role="toolbar" aria-label="Sort players">
+        {COLS.map(([k, label]) => (
+          <button key={k} type="button" onClick={() => click(k)} className={sort?.k === k ? 'on' : undefined} aria-pressed={sort?.k === k}
+            title={`Sort by ${label.toLowerCase()}`}>
+            {label}{sort?.k === k ? (sort.dir === -1 ? '↓' : '↑') : ''}
+          </button>
+        ))}
+        <span />
+      </div>
       {rows.length ? (
-        <ul>{rows.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} />)}</ul>
+        <ul>{shown.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} onBid={buy ? setBidOn : null} />)}</ul>
       ) : <p className="ct2-empty">{empty ?? 'Nobody here.'}</p>}
+      {bidOn && buy && <ClauseDialog r={bidOn} buy={buy} settings={settings} onClose={() => setBidOn(null)} />}
     </section>
   );
 }
 
-function Row({ r, years, settings, canManage, mine, windowOpen }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean }) {
+/** Popup for paying a release clause, with every rule spelled out, plus a lower KT offer as the alternative. */
+function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; settings: KcSettings; onClose: () => void }) {
+  const { pending, go, note, msg } = useRun();
+  const price = r.clause ?? 0;
+  const ref = useRef<HTMLDivElement>(null);
+  const blockers = [
+    !buy.windowOpen && 'Clauses can only be paid while the mid-season window is open.',
+    buy.used >= buy.maxBuys && `You’ve used your ${buy.maxBuys} clause buys this window.`,
+    buy.bank < price && `You need ${kt(price)} and have ${kt(buy.bank)}.`,
+    (r.salary ?? 0) > buy.capRoomNext && `His ${k$(r.salary ?? 0)} salary would take you over the ${k$(buy.seasonCap)} cap in ${buy.nextSeason}.`,
+  ].filter(Boolean) as string[];
+  return (
+    <div className="cd-back" role="dialog" aria-modal="true" aria-labelledby="cd-h" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="cd-card" ref={ref}>
+        <div className="cd-top">
+          <div><span className="cd-eyebrow">Release clause · {buy.clubName}</span><h3 id="cd-h">{r.name}</h3></div>
+          <button type="button" className="cd-x" onClick={onClose} aria-label="Close">×</button>
+        </div>
+        <div className="cd-price">
+          <div><span>Clause</span><b>{kt(price)}</b></div>
+          <div><span>His salary</span><b>{r.salary != null ? k$(r.salary) : '—'}</b></div>
+          <div><span>Contract to</span><b>{r.extEnd ?? r.end ?? '—'}</b></div>
+        </div>
+        <ul className="cd-rules">
+          <li><b>Full price only.</b> You pay the whole clause up front. It’s held for 24 hours.</li>
+          <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
+          <li><b>If they don’t match</b>, he joins you at the end of {settings.season}, not now. He plays out the season for his current club, then moves on the rest of his contract.</li>
+          <li><b>Window only.</b> Clauses can only be paid in the mid-season window, and there are none in a player’s final year.</li>
+          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used). His salary has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room).</li>
+          <li><b>His list.</b> When he arrives you still need to be at 33 or fewer, so plan a release or trade if you’re full.</li>
+        </ul>
+        {blockers.length > 0 && <div className="cd-block">{blockers.map((b) => <p key={b}>{b}</p>)}</div>}
+        {msg?.ok ? note : (
+          <>
+            <button type="button" className="kc-btn cd-go" disabled={pending || blockers.length > 0}
+              onClick={() => go(() => buyClause(r.id), `Pay ${kt(price)} for ${r.name}’s release clause? His club gets 24 hours to match.`)}>
+              {pending ? 'Paying…' : `Pay the clause · ${kt(price)}`}
+            </button>
+            {note}
+          </>
+        )}
+        <form action={offerKtForPlayer} className="cd-alt">
+          <input type="hidden" name="player" value={r.playerId} />
+          <span>Or make a lower offer. It opens a trade desk; his club can accept, counter or say no, any time of year.</span>
+          <div><input name="kt" type="number" inputMode="numeric" min={100} step={100} max={buy.bank || undefined} placeholder={`e.g. ${Math.round((price * 0.7) / 100) * 100}`} required aria-label="Your KT offer" />
+            <button type="submit" className="kc-btn small">Send offer</button></div>
+          <em>You have {kt(buy.bank)}.</em>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean; onBid: ((r: CtRow) => void) | null }) {
   const surplus = r.salary != null ? r.rate - r.salary : null;
   const locked = r.status === 'pending' || r.status === 'moving' || r.status === 'claim' || r.status === 'none';
   const finalYr = r.status === 'final' || r.status === 'draft' || r.status === 'pending';
@@ -68,6 +161,15 @@ function Row({ r, years, settings, canManage, mine, windowOpen }: { r: CtRow; ye
           <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
           <Trend v={r.trend} />
           <span className="ct2-c">{k$(r.rate)}{surplus != null ? <em className={surplus >= 5 ? 'kc-up' : surplus <= -5 ? 'kc-down' : ''}>{surplus > 0 ? '+' : surplus < 0 ? '−' : '±'}{k$(Math.abs(surplus))}</em> : <em>value</em>}</span>
+          {r.clause != null && onBid && r.status !== 'claim' ? (
+            <span role="button" tabIndex={0} className="ct2-c ct2-cl live" title={`Release clause ${kt(r.clause)}. Tap to bid.`}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); onBid(r); }}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onBid(r); } }}>
+              {ktShort(r.clause)}<em>bid</em>
+            </span>
+          ) : (
+            <span className="ct2-c ct2-cl">{r.clause != null ? ktShort(r.clause) : <span className="muted">n/a</span>}<em>{r.clause != null ? 'KT' : ' '}</em></span>
+          )}
           <span className="ct2-c ct2-sal">{r.salary != null ? k$(r.salary) : '—'}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.salary == null ? 'unsigned' : ' '}</em></span>
           <span className="ct2-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
           <span className="sr-only">Show contract details for {r.name}</span>
