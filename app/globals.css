@@ -2428,3 +2428,26 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .lv-rt { min-width: 25px; padding: 3px 2px; }
   .cl-grp { column-gap: 4px; } .cl-stack { gap: 4px; }
 }
+
+/* Player header: photo + name/club on top, then value/avg/stars and the contract strip, then the summary */
+.ph-top { align-items: start; row-gap: 10px; }
+.ph-main { align-self: center; }
+.ph-stats { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ph-rating { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 12px; align-items: center; margin-top: 0; }
+.ph-avg { border-left: 1px solid var(--line); padding-left: 12px; }
+.ph-avg b { color: var(--ink); }
+.ph-kc { display: flex; flex-direction: column; gap: 6px; }
+.ph-kc-cells { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; background: var(--sunk); border-radius: 12px; padding: 4px; }
+.ph-kc-cells > div { display: flex; flex-direction: column; padding: 4px 8px; min-width: 0; }
+.ph-kc-cells span { font: 500 9px var(--mono); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.ph-kc-cells b { font: 600 13px var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.ph-kc .kc-tag { align-self: flex-start; }
+.ph-main > .ph-offer, .ph-main > .ph-act { margin: 4px 0 0; align-self: flex-start; }
+@media (max-width: 900px) { .ph-summary { margin-top: 0; } }
+@media (min-width: 901px) {
+  .ph-photo, .ph-holo { grid-row: 1 / span 2; }
+  .ph-main { align-self: end; }
+  .ph-stats { grid-column: 2; max-width: 560px; }
+  .ph-summary { grid-column: 3; grid-row: 1 / span 2; }
+  .ph-kc-cells b { font-size: 14px; }
+}

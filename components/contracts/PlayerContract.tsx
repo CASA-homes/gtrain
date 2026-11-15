@@ -5,10 +5,10 @@
 import Link from 'next/link';
 import { offerForPlayer } from '@/app/(app)/contracts/actions';
 import { RunButton } from '@/components/contracts/client';
-import { clauseKt, getContracts, isFinalYear, kt, money, yearsLeft } from '@/lib/contracts';
+import { clauseKt, getContracts, isFinalYear, kt, money } from '@/lib/contracts';
 import './contracts.css';
 
-export async function PlayerContractBits({ playerId, ownerTeamId, name }: { playerId: number; ownerTeamId: number | null; name: string }) {
+async function load(playerId: number, ownerTeamId: number | null) {
   const d = await getContracts();
   const s = d.settings;
   if (!s || !d.ready) return null;
@@ -23,39 +23,50 @@ export async function PlayerContractBits({ playerId, ownerTeamId, name }: { play
   const clause = c ? clauseKt(s, c, rate, fa?.kind === 'pending') : null;
   const windowOpen = !!s.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > new Date();
   const myOffer = fa ? d.myOffers.find((o) => o.fa_id === fa.id) : null;
+  const leaving = !!(next && next.team_id !== holder);
+  return { d, s, meId, c, next, fa, claim, team, holder, rate, clause, windowOpen, myOffer, leaving };
+}
 
-  let status: string; let tone: 'exp' | 'high' | 'rook' | 'std' = 'std';
-  if (claim) { status = `Clause paid by ${team(claim.buyer_team)} · ${team(claim.seller_team)} can match`; tone = 'exp'; }
-  else if (next && next.team_id !== holder) { status = `Joins ${team(next.team_id)} at season end · ${money(next.salary_k)} to ${next.end_season}`; tone = 'exp'; }
-  else if (fa?.kind === 'pending') { status = `Pending free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'exp'; }
-  else if (fa) { status = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'rook'; }
-  else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season} at ${money(next.salary_k)}`; tone = 'high'; }
-  else if (c && isFinalYear(s, c)) { status = c.how === 'draft' ? 'Draft deal · final year' : 'Final year'; tone = 'exp'; }
-  else if (c) { status = `${yearsLeft(s, c)} years left${c.rookie ? ' · rookie deal' : ''}`; tone = c.rookie ? 'rook' : 'std'; }
-  else { status = holder ? 'Not on contract' : 'Unsigned'; }
+const short = (k: number) => `$${Math.round(k)}k`;
 
-  const isMine = meId != null && holder === meId;
+/** Offer buttons, shown inline next to the club name (only for someone else's player). */
+export async function PlayerOffer({ playerId, ownerTeamId, name }: { playerId: number; ownerTeamId: number | null; name: string }) {
+  const x = await load(playerId, ownerTeamId);
+  if (!x || x.meId == null) return null;
+  const { meId, c, fa, claim, team, holder, clause, windowOpen, myOffer, leaving } = x;
+  if (holder === meId) return fa?.kind === 'pending' ? <Link href={`/clubhouse/${meId}?view=contracts`} className="kc-btn small ph-act">See offers</Link> : null;
   return (
-    <>
-      {meId && !isMine && (
-        <span className="ph-offer">
-          {fa && (fa.kind === 'open' || fa.ex_team !== meId)
-            ? <Link href={`/contracts/offer/${fa.id}`} className="kc-btn small dark">{myOffer ? `Raise offer (${myOffer.score})` : 'Make offer'}</Link>
-            : holder && !(next && next.team_id !== holder) ? (
-              <form action={offerForPlayer.bind(null, playerId, holder, name)}><button type="submit" className="kc-btn small dark">Offer</button></form>
-            ) : null}
-          {c && clause != null && windowOpen && !claim && !(next && next.team_id !== holder) &&
-            <RunButton run="buy" id={c.id} small kind="sage" label={`Pay clause · ${kt(clause)}`} confirmText={`Pay ${kt(clause)} for ${name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />}
-        </span>
-      )}
-      {isMine && fa?.kind === 'pending' && <Link href={`/clubhouse/${meId}?view=contracts`} className="kc-btn small" style={{ marginLeft: 8 }}>See offers</Link>}
-      <span className="ph-contract" style={{ flexBasis: '100%' }}>
-        <span className={`kc-tag ${tone}`}>{status}</span>
-        {c && <span>Contract <b>{money(c.salary_k)}</b> a year to <b>{c.end_season}</b></span>}
-        <span>Market value <b>{money(rate)}</b></span>
-        {c && <span>Clause <b>{clause != null ? kt(clause) : c.tier === 'none' ? 'none' : isFinalYear(s, c) ? 'none (final year)' : '—'}</b></span>}
-        {holder && <Link href={`/clubhouse/${holder}?view=contracts`} style={{ fontSize: 12 }}>{team(holder)} contracts →</Link>}
-      </span>
-    </>
+    <span className="ph-offer">
+      {fa && (fa.kind === 'open' || fa.ex_team !== meId)
+        ? <Link href={`/contracts/offer/${fa.id}`} className="kc-btn small dark">{myOffer ? `Raise offer (${myOffer.score})` : 'Make offer'}</Link>
+        : holder && !leaving ? <form action={offerForPlayer.bind(null, playerId, holder, name)}><button type="submit" className="kc-btn small dark">Offer</button></form> : null}
+      {c && clause != null && windowOpen && !claim && !leaving &&
+        <RunButton run="buy" id={c.id} small kind="sage" label={`Pay clause · ${kt(clause)}`} confirmText={`Pay ${kt(clause)} for ${name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />}
+    </span>
+  );
+}
+
+/** Contract / market value / clause in three aligned cells, plus a status line only when something is happening. */
+export async function PlayerContractStrip({ playerId, ownerTeamId }: { playerId: number; ownerTeamId: number | null }) {
+  const x = await load(playerId, ownerTeamId);
+  if (!x) return null;
+  const { s, c, next, fa, claim, team, holder, rate, clause, leaving } = x;
+  let status: string | null = null; let tone = 'exp';
+  if (claim) status = `Clause paid by ${team(claim.buyer_team)}. ${team(claim.seller_team)} can match`;
+  else if (leaving && next) status = `Joins ${team(next.team_id)} at season end · ${short(next.salary_k)} to ${next.end_season}`;
+  else if (fa?.kind === 'pending') status = `Pending free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`;
+  else if (fa) { status = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'rook'; }
+  else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season} at ${short(next.salary_k)}`; tone = 'high'; }
+  else if (c && isFinalYear(s, c)) status = c.how === 'draft' ? 'Draft deal · final year' : 'Final year';
+  const clauseText = !c ? '—' : clause != null ? kt(clause) : c.tier === 'none' ? 'None' : isFinalYear(s, c) ? 'None · final yr' : '—';
+  return (
+    <div className="ph-kc">
+      <div className="ph-kc-cells">
+        <div><span>Contract</span><b>{c ? `${short(c.salary_k)} → ${c.end_season}` : holder ? 'None' : 'Unsigned'}</b></div>
+        <div><span>Market</span><b>{short(rate)}</b></div>
+        <div><span>Clause</span><b>{clauseText}</b></div>
+      </div>
+      {status && <span className={`kc-tag ${tone}`}>{status}</span>}
+    </div>
   );
 }
