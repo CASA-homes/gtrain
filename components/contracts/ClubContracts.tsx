@@ -155,7 +155,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
       <section className="kc-card" aria-labelledby="ct-h">
         <div className="row-between" style={{ marginBottom: 12 }}>
-          <div><h2 id="ct-h">Contracts · {contracts.length}</h2><p className="kc-sub">Click a column to sort. Market value is what he’d cost on a new 3-year deal today.</p></div>
+          <div><h2 id="ct-h">Contracts · {contracts.length}</h2><p className="kc-sub">Market value is what he’d cost on a new 3-year deal today. Green means he’s cheaper than that.</p></div>
           {windowOpen && <span className="kc-tag exp">Mid-season window open · clause levels locked</span>}
         </div>
         <ContractsTable rows={rows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} />
