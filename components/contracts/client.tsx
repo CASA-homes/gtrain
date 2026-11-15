@@ -4,7 +4,7 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  acceptOffer, bid, buyClause, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
+  acceptOffer, bid, buyClause, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
   lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
@@ -65,9 +65,10 @@ export function RunButton({ label, kind = 'dark', small, confirmText, run, disab
 }
 
 /** Extend a final-year player: pick a length and a clause, see the price, confirm. */
-export function ExtendControl({ contractId, name, rate, homeGrown, settings }: {
-  contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings;
+export function ExtendControl({ contractId, name, rate, homeGrown, settings, signPlayerId }: {
+  contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings; signPlayerId?: number;
 }) {
+  const sign = signPlayerId != null;
   const { pending, go, note, msg } = useRun();
   const [years, setYears] = useState(3);
   const [tier, setTierV] = useState<Exclude<Tier, 'protected'>>('standard');
@@ -90,8 +91,9 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings }: {
         </label>
       </div>
       <div className="kc-kv"><span>{homeGrown ? `Home-grown (${settings.home_grown_pct}% off)` : 'Per year'}</span><strong>{money(sal)}</strong></div>
-      <button type="button" className="kc-btn dark" disabled={pending} onClick={() => go(() => extendPlayer(contractId, years, tier), `Extend ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from next season?`)}>
-        {pending ? 'Working…' : `Extend ${years} yr${years > 1 ? 's' : ''}`}
+      <button type="button" className="kc-btn dark" disabled={pending} onClick={() => go(() => (sign ? signOwn(signPlayerId!, years, tier) : extendPlayer(contractId, years, tier)),
+          sign ? `Sign ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from ${settings.season}?` : `Extend ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from next season?`)}>
+        {pending ? 'Working…' : `${sign ? 'Offer contract' : 'Extend'} · ${years} yr${years > 1 ? 's' : ''}`}
       </button>
       {note}
     </div>

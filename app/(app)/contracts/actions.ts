@@ -20,6 +20,10 @@ async function run(fn: string, args: Record<string, unknown>, done: (data: unkno
 const kt = (n: unknown) => `${Number(n).toLocaleString('en-AU')} KT`;
 
 // Coaches
+export async function signOwn(playerId: number, years: number, tier: string) {
+  if (!(await getCoach())) return { ok: false, message: 'Guests can only look.' };
+  return run('kc_sign_own', { pid: playerId, p_years: years, new_tier: tier }, (s) => `Signed: ${years} year${years > 1 ? 's' : ''} at $${Number(s)}k a year.`);
+}
 export async function extendPlayer(contractId: number, years: number, tier: string) {
   if (!(await getCoach())) return { ok: false, message: 'Guests can only look.' };
   return run('kc_extend', { cid: contractId, p_years: years, new_tier: tier }, (s) => `Extended: ${years} years at $${Number(s)}k a year from next season.`);

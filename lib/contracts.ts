@@ -169,13 +169,36 @@ export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : 
 
 /** A rough market-value line for a player: last season's rate, then a rolling 6-game rate through this season.
  *  Same shape as the database formula (without age/availability), for a sparkline only. */
+/** Market value v2, mirroring kc_rate_v2 in the database. g0/a0 = this season so far; prev = earlier seasons, latest first.
+ *  Last season and the one before (65/35) fill the games this season hasn't had yet (min 6 games' weight);
+ *  priced on experience (2nd season 60%, 3rd 70%, 4th 85%, 5th+ full) and age (8% off a year from 30). */
+export function rateV2(g0: number, a0: number, prev: [number, number][], seasons: number, age: number | null): number {
+  if (seasons <= 0 && g0 <= 0) return 5;
+  const prior = Math.max(6, 22 - g0);
+  const w = [g0, prev[0] ? 0.65 * prior * Math.min(1, prev[0][0] / 10) : 0, prev[1] ? 0.35 * prior * Math.min(1, prev[1][0] / 10) : 0];
+  const tot = w[0] + w[1] + w[2];
+  const avg = tot ? (w[0] * a0 + w[1] * (prev[0]?.[1] ?? 0) + w[2] * (prev[1]?.[1] ?? 0)) / tot : 0;
+  const k = seasons + 1;
+  const xp = k <= 1 ? 0.5 : k === 2 ? 0.6 : k === 3 ? 0.7 : k === 4 ? 0.85 : 1;
+  const agef = age == null || age < 30 ? 1 : Math.max(0.6, 1 - 0.08 * (age - 29));
+  const avail = g0 === 0 ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
+  return Math.max(5, Math.pow(Math.max(0, avg - 55), 1.3) * 0.66 * xp * agef * avail);
+}
+
+/** Market value after each game this season, from where he started the year. Moves are small: each score shifts the
+ *  blended average a little. */
 export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   if (!p) return [];
-  const rate = (a: number) => Math.max(5, Math.pow(Math.max(0, a - 55), 1.3) * 0.66);
-  const prev = (p.hist ?? []).filter((h) => h[0] < 2026 && h[1] >= 3).sort((a, b) => b[0] - a[0])[0];
+  const hist = (p.hist ?? []).filter((h) => h[1] > 0).sort((a, b) => b[0] - a[0]);
   const scores = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
-  const out: number[] = prev ? [rate(prev[2])] : [];
-  scores.forEach((_, i) => { const w = scores.slice(Math.max(0, i - 5), i + 1); out.push(rate(w.reduce((a, b) => a + b, 0) / w.length)); });
+  const curYear = hist[0] && scores.length ? hist[0][0] : null;
+  const prev = hist.filter((h) => h[0] !== curYear).map((h) => [h[1], h[2]] as [number, number]);
+  const seasons = hist.length;
+  const born = p.birth_date ? new Date(p.birth_date) : null;
+  const age = born ? Math.floor((Date.UTC(2027, 2, 1) - born.getTime()) / (365.25 * 86400000)) : null;
+  const out = [rateV2(0, 0, prev, seasons, age)];
+  let sum = 0;
+  scores.forEach((x, i) => { sum += x; out.push(rateV2(i + 1, sum / (i + 1), prev, seasons, age)); });
   if (out.length <= points) return out;
   return Array.from({ length: points }, (_, i) => out[Math.round((i * (out.length - 1)) / (points - 1))]);
 }
