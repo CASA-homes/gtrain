@@ -36,7 +36,6 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const prem = 1 + (tier === 'high' ? s.high_pct : tier === 'none' ? s.none_pct : 0) / 100;
   const capSalary = Math.round(base * prem);
   const after = salary + capSalary;
-  const taxKt = Math.round(Math.max(0, after - s.tax_line_k) * Number(s.tax_kt_per_k));
   const pickScore = useMemo(() => picks.filter((p) => pickIds.includes(p.id)).reduce((a, p) => a + Math.round(3000 * Math.exp(-0.07 * (p.overall - 1)) / 50), 0), [picks, pickIds]);
   const score = years * base + sweet + pickScore;
   const escrowNeeded = sweet - (existing?.sweet_kt ?? 0);
@@ -61,9 +60,9 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
       <div className="kc-card" style={{ padding: 16 }}>
         <p className="eyebrow" style={{ margin: 0 }}>Your cap</p>
         <div className="kc-kv"><span>Season now</span><strong>{money(salary)}</strong></div>
-        <div className="kc-kv"><span>After signing</span><strong className={overCap ? 'kc-down' : taxKt ? 'kc-brass' : ''}>{money(after)}</strong></div>
-        <div className="kc-bar"><i style={{ width: `${Math.min(100, (salary / s.season_cap_k) * 100)}%` }} /><i style={{ left: `${Math.min(100, (salary / s.season_cap_k) * 100)}%`, width: `${Math.min(100, (capSalary / s.season_cap_k) * 100)}%`, background: 'var(--khq-brass)', borderRadius: 0 }} /><s style={{ left: `${(s.tax_line_k / s.season_cap_k) * 100}%`, background: '#a8461f' }} /></div>
-        <p className="kc-sub" style={{ fontSize: 12 }}>Red mark = {money(s.tax_line_k)} luxury tax line · full bar = {money(s.season_cap_k)}</p>
+        <div className="kc-kv"><span>After signing</span><strong className={overCap ? 'kc-down' : ''}>{money(after)}</strong></div>
+        <div className="kc-bar"><i style={{ width: `${Math.min(100, (salary / s.season_cap_k) * 100)}%` }} /><i style={{ left: `${Math.min(100, (salary / s.season_cap_k) * 100)}%`, width: `${Math.min(100, (capSalary / s.season_cap_k) * 100)}%`, background: 'var(--khq-brass)', borderRadius: 0 }} /></div>
+        <p className="kc-sub" style={{ fontSize: 12 }}>Full bar = {money(s.season_cap_k)} season cap</p>
       </div>
     </aside>
   );
@@ -211,7 +210,6 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           </div>
           <div className="kc-grid" style={{ marginTop: 12, gap: 10 }}>
             <div className="kc-card" style={{ padding: 14, background: 'var(--sunk)', border: 0 }}><div className="kc-stat"><span>Season cap after</span><b style={{ fontSize: 20 }}>{money(after)}</b><em>of {money(s.season_cap_k)}</em></div></div>
-            <div className={`kc-card${taxKt ? ' warn' : ''}`} style={{ padding: 14, border: 0 }}><div className="kc-stat"><span>Luxury tax</span><b style={{ fontSize: 20 }}>{taxKt ? `${kt(taxKt)}` : 'None'}</b><em>per season</em></div></div>
             <div className="kc-card" style={{ padding: 14, background: 'var(--sunk)', border: 0 }}><div className="kc-stat"><span>Bank after</span><b style={{ fontSize: 20 }}>{kt(bank - Math.max(0, escrowNeeded))}</b><em>tokens held until close</em></div></div>
           </div>
           {overCap && <p className="kc-msg err" style={{ marginTop: 12 }}>That takes you over the {money(s.season_cap_k)} season cap.</p>}
@@ -220,7 +218,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           {error && <p className="kc-msg err" style={{ marginTop: 12 }}>{error}</p>}
           <label style={{ display: 'flex', gap: 10, alignItems: 'center', marginTop: 14, fontSize: 14 }}>
             <input type="checkbox" checked={ack} onChange={(e) => setAck(e.target.checked)} style={{ width: 20, height: 20, accentColor: 'var(--khq-sage)' }} />
-            I understand a tabled offer can only go up{taxKt ? ' and that I’ll pay luxury tax' : ''}.
+            I understand a tabled offer can only go up.
           </label>
         </div>
         <Side />

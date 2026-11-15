@@ -274,9 +274,9 @@
 .ct2-cols button.on { color: var(--ink); font-weight: 700; }
 .ct2-cols button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 3px; }
 .ct2-cl { font-size: 12px; }
-.ct2-cl.live { cursor: pointer; color: #1f3a5c; background: #eaf0f7; border-radius: 7px; padding: 3px 4px; margin: -3px -4px; }
+.ct2-cl.live { cursor: pointer; color: #1f3a5c; }
 .ct2-cl.live em { color: #1f3a5c; font-weight: 700; text-decoration: underline; }
-.ct2-cl.live:hover, .ct2-cl.live:focus-visible { background: #d9e4f1; outline: none; }
+.ct2-cl.live:hover b, .ct2-cl.live:hover { text-decoration: underline; } .ct2-cl.live:focus-visible { outline: 2px solid #1f3a5c; outline-offset: 2px; border-radius: 4px; }
 .ct2-row { padding: 9px 12px; cursor: pointer; list-style: none; }
 .ct2-row::-webkit-details-marker { display: none; }
 .ct2-who { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
@@ -529,3 +529,12 @@
 .ct2-ext summary::-webkit-details-marker { display: none; }
 .ct2-ext summary b::after { content: ' ▾'; color: var(--muted); }
 .ct2-ext[open] summary { margin-bottom: 6px; }
+
+/* Contract rows: club icon centred left of name + position/age; positions wrap rather than run into Yrs */
+.ct2-who { display: flex !important; flex-direction: row !important; align-items: center; gap: 8px; min-width: 0; }
+.ct2-who > span { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; min-width: 0; white-space: normal; font-size: inherit; color: inherit; }
+.ct2-who > span > b { font: 700 13.5px/1.2 var(--font); }
+.ct2-who > span > em { font-style: normal; font-size: 11px; color: var(--muted); line-height: 1.25; }
+.ct2-who > :first-child { flex: none; }
+.ct2-lock { display: inline-grid; place-items: center; color: #c9a227; }
+@media (min-width: 900px) { .ct2-who > span > b { font-size: 14.5px; } }

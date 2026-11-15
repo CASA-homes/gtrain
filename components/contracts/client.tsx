@@ -242,7 +242,7 @@ export function FaDeadlineControl() {
 }
 
 const FIELDS: [keyof KcSettings, string][] = [
-  ['keeper_cap_k', 'Keeper cap ($k)'], ['season_cap_k', 'Season cap ($k)'], ['tax_line_k', 'Luxury tax line ($k)'], ['tax_kt_per_k', 'Tax KT per $1k over'],
+  ['keeper_cap_k', 'Keeper cap ($k)'], ['season_cap_k', 'Season cap ($k)'], 
   ['start_kt', 'Starting bank (KT)'], ['max_years', 'Max contract years'], ['deficit_max_k', 'Lock-in deficit allowed ($k)'], ['hold_back_k', 'Draft hold-back per spot ($k)'],
   ['floor_def', 'Depth floor DEF'], ['floor_mid', 'Depth floor MID'], ['floor_ruc', 'Depth floor RUC'], ['floor_fwd', 'Depth floor FWD'],
   ['clause_std_pct', 'Standard clause (% of value)'], ['clause_high_pct', 'High clause (% of value)'], ['deficit_fee_kt', 'Deficit fee (KT)'], ['high_pct', 'High clause salary +%'], ['none_pct', 'No clause salary +%'],
