@@ -117,6 +117,18 @@ export async function saveSettings(patch: Record<string, number | boolean>): Pro
 export async function setRookieSlot(playerId: number, season: number, on: boolean) {
   return run('kc_set_rookie_slot', { pid: playerId, p_season: season, p_on: on }, (d) => (d === 'set' ? `Done. He's your cap-free rookie for ${season}.` : 'Rookie slot cleared.'));
 }
+/** Commish: set (or clear) player drop day, when rookie slots lock. */
+export async function setDropDay(iso: string | null): Promise<Result> {
+  const me = await getMe();
+  if (!me?.is_commish) return { ok: false, message: 'Only the commish can set drop day.' };
+  const when = iso ? new Date(iso) : null;
+  if (when && Number.isNaN(when.getTime())) return { ok: false, message: 'That date doesn’t look right.' };
+  const supabase = await createClient();
+  const { error } = await supabase.from('kc_settings').update({ rookie_lock_at: when ? when.toISOString() : null, updated_at: new Date().toISOString() }).eq('league_id', await currentLeagueId());
+  if (error) return { ok: false, message: error.message };
+  revalidatePath('/', 'layout');
+  return { ok: true, message: when ? 'Drop day set. Rookie slots lock then.' : 'Drop day cleared.' };
+}
 export async function makeDeposit(amount: number) {
   return run('kc_deposit', { amount }, () => `${kt(amount)} locked in a term deposit until season end.`);
 }

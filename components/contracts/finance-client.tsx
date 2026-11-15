@@ -1,7 +1,7 @@
 'use client';
 // Finances: interactive pieces. Rookie-slot assign, term deposit and loan forms, and the cap simulator.
 import { useMemo, useState } from 'react';
-import { makeDeposit, offerLoan, respondLoan, setRookieSlot } from '@/app/(app)/contracts/actions';
+import { makeDeposit, offerLoan, respondLoan, setDropDay, setRookieSlot } from '@/app/(app)/contracts/actions';
 import { useRun } from '@/components/contracts/client';
 
 const k$ = (k: number) => `$${Math.round(k).toLocaleString('en-AU')}k`;
@@ -16,6 +16,45 @@ export function RookieAssign({ playerId, season, on, label }: { playerId: number
       </button>
       {note}
     </span>
+  );
+}
+
+/** Pick this season's cap-free rookie from a dropdown of eligible players. */
+export function RookiePicker({ season, current, options, locked }: {
+  season: number; current: number | null; options: { id: number; label: string }[]; locked: boolean;
+}) {
+  const { pending, go, note } = useRun();
+  const [pick, setPick] = useState<string>(current ? String(current) : options[0] ? String(options[0].id) : '');
+  if (!options.length) return <p className="kc-sub" style={{ margin: 0 }}>No one on your list has 10 or fewer games.</p>;
+  return (
+    <div className="rk-pick">
+      <div className="rk-row">
+        <select value={pick} onChange={(e) => setPick(e.target.value)} disabled={locked || pending} aria-label={`${season} rookie`}>
+          {options.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+        </select>
+        <button type="button" className="kc-btn dark small" disabled={locked || pending || !pick || Number(pick) === current}
+          onClick={() => go(() => setRookieSlot(Number(pick), season, true))}>{pending ? '…' : current ? 'Swap' : 'Set'}</button>
+        {current && <button type="button" className="kc-btn small" disabled={locked || pending} onClick={() => go(() => setRookieSlot(current, season, false))}>Clear</button>}
+      </div>
+      {note}
+    </div>
+  );
+}
+
+/** Commish: when rookie slots lock (player drop day). */
+export function DropDayControl({ value }: { value: string | null }) {
+  const { pending, go, note } = useRun();
+  const toLocal = (iso: string) => { const d = new Date(iso); const p = (n: number) => String(n).padStart(2, '0'); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+  const [v, setV] = useState(value ? toLocal(value) : '');
+  return (
+    <div className="rk-pick">
+      <div className="rk-row">
+        <input type="datetime-local" value={v} onChange={(e) => setV(e.target.value)} aria-label="Player drop day" />
+        <button type="button" className="kc-btn small" disabled={pending || !v} onClick={() => go(() => setDropDay(new Date(v).toISOString()))}>Save</button>
+        {value && <button type="button" className="kc-btn small" disabled={pending} onClick={() => { setV(''); go(() => setDropDay(null)); }}>Clear</button>}
+      </div>
+      {note}
+    </div>
   );
 }
 

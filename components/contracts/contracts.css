@@ -424,3 +424,21 @@
 .cd-alt > div { display: flex; gap: 8px; }
 .cd-alt input { flex: 1; min-width: 0; min-height: 40px; border: 1px solid #c9cfd8; border-radius: 10px; padding: 0 10px; font: 400 14px var(--font); }
 .cd-alt em { font-style: normal; font-size: 11.5px; }
+
+/* Finances: Set link, tabs, deposits */
+.fn-set { font: 700 12px var(--font); color: #8a6a1f; text-decoration: underline; text-underline-offset: 2px; }
+.fn-tabs { padding-top: 10px; }
+.fn-tabbar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3px; padding: 3px; border-radius: 12px; background: var(--sunk); margin-bottom: 12px; }
+.fn-tabbar label { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; border-radius: 9px; font: 600 13.5px var(--font); color: var(--muted); cursor: pointer; }
+.fn-tabbar label i { font-style: normal; font: 700 10px var(--font); background: #c2462a; color: #fff; border-radius: 99px; padding: 1px 6px; }
+#fn-t1:checked ~ .fn-tabbar label[for="fn-t1"], #fn-t2:checked ~ .fn-tabbar label[for="fn-t2"], #fn-t3:checked ~ .fn-tabbar label[for="fn-t3"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.fn-pane { display: none; flex-direction: column; }
+#fn-t1:checked ~ .fn-p1, #fn-t2:checked ~ .fn-p2, #fn-t3:checked ~ .fn-p3 { display: flex; }
+.fn-dep { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line-soft); }
+.fn-dep span { display: flex; flex-direction: column; } .fn-dep small { font-size: 11px; color: var(--muted); }
+.fn-dep strong { display: flex; flex-direction: column; align-items: flex-end; font-variant-numeric: tabular-nums; }
+/* Contracts: rookie picker */
+.rk-card { border-color: #e6d6a8; }
+.rk-pick { display: flex; flex-direction: column; gap: 6px; }
+.rk-row { display: flex; gap: 8px; align-items: center; }
+.rk-row select, .rk-row input { flex: 1; min-width: 0; min-height: 40px; border: 1px solid #cfd6ca; border-radius: 10px; padding: 0 10px; font: 500 14px var(--font); background: #fff; color: var(--ink); }

@@ -3,6 +3,7 @@
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
 import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
+import { DropDayControl, RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
@@ -69,6 +70,13 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   const departing = [...leaving.values()].filter((p) => contracts.some((c) => c.player_id === p.player_id));
 
   const years = Array.from({ length: 5 }, (_, i) => s.season + i);
+  // Rookie slot: this season only, locked from player drop day.
+  const rookie = contracts.find((c) => c.rookie_slot_season === s.season) ?? null;
+  const rookieLocked = !!s.rookie_lock_at && new Date(s.rookie_lock_at) <= new Date() && !d.me?.is_commish;
+  const dropDay = s.rookie_lock_at ? new Date(s.rookie_lock_at).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Perth' }) : null;
+  const rookieOptions = contracts.filter((c) => (d.players.get(c.player_id)?.career_games ?? 99) <= 10 && c.start_season <= s.season && c.end_season >= s.season)
+    .sort((a, b) => b.salary_k - a.salary_k)
+    .map((c) => { const p = d.players.get(c.player_id); return { id: c.player_id, label: `${p?.name ?? `Player ${c.player_id}`} · ${p?.career_games ?? 0} games · ${money(c.salary_k)} off cap` }; });
   // Another coach looking at this club can bid on release clauses.
   const viewer = d.me && !d.me.is_guest && !mine ? d.clubs.get(d.me.team_id) : null;
   const buy: BuyInfo | null = viewer && d.me ? {
@@ -149,6 +157,19 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           </div>
         </section>
       )}
+
+      <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h">
+        <div className="row-between">
+          <h2 id="rk-h">{s.season} rookie slot</h2>
+          <span className={`fn-pill ${rookieLocked ? 'dn' : 'brass'}`}>{rookieLocked ? 'Locked' : dropDay ? `Locks ${dropDay}` : 'Cap-free'}</span>
+        </div>
+        <p className="kc-sub" style={{ margin: '4px 0 10px' }}>
+          {rookie ? <><b style={{ color: 'var(--ink)' }}>{name(rookie.player_id)}</b> · {money(rookie.salary_k)} off your cap this season.</> : 'Empty. Pick one player with 10 or fewer games; his salary doesn’t count to your cap this season.'}
+          {' '}Set before player drop day{dropDay ? ` (${dropDay})` : ''}.
+        </p>
+        {canManage && <RookiePicker season={s.season} current={rookie?.player_id ?? null} options={rookieOptions} locked={rookieLocked} />}
+        {d.me?.is_commish && <div style={{ marginTop: 10 }}><span className="kc-sub">Player drop day (commish)</span><DropDayControl value={s.rookie_lock_at} /></div>}
+      </section>
 
       {finalYear.length > 0 && (
         <section className="kc-card" aria-labelledby="fy-h">
