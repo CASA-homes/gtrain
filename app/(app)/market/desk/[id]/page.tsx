@@ -6,7 +6,7 @@ import { pickLabel, pickValue, playerPoints } from '@/lib/picks';
 import { C } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 import { getContracts } from '@/lib/contracts';
-import { addItem, closeDesk, deskComment, executeDesk, joinDesk, leaveDesk, removeItem, setAccepted, vetoDesk, voteLopsided } from '../actions';
+import { addDrop, removeDrop, addItem, closeDesk, deskComment, executeDesk, joinDesk, leaveDesk, removeItem, setAccepted, vetoDesk, voteLopsided } from '../actions';
 import { AddItem, type Asset } from './AddItem';
 
 const STATUS: Record<string, [string, string, string]> = {
@@ -28,12 +28,13 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
   const supabase = await createClient();
   const { data: desk } = await supabase.from('desks').select('*').eq('id', id).maybeSingle();
   if (!desk) notFound();
-  const [{ data: items }, { data: parts }, { data: comments }, { data: votes }, { data: allPicks }] = await Promise.all([
+  const [{ data: items }, { data: parts }, { data: comments }, { data: votes }, { data: allPicks }, { data: drops }] = await Promise.all([
     supabase.from('desk_items').select('*').eq('desk_id', id).order('created_at'),
     supabase.from('desk_teams').select('*').eq('desk_id', id).order('joined_at'),
     supabase.from('desk_comments').select('*').eq('desk_id', id).order('created_at'),
     supabase.from('desk_votes').select('team_id').eq('desk_id', id),
     supabase.from('picks').select('*').in('year', [2027, 2028]),
+    supabase.from('desk_drops').select('*').eq('desk_id', id),
   ]);
   const kc = await getContracts();
   const team = (tid: number) => league.teams.find((t) => t.id === tid)!;
@@ -163,6 +164,47 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
                     <span className="eyebrow">Gives</span>
                     <ul style={{ listStyle: 'none', margin: '4px 0 0', padding: 0 }}>{gives.length ? gives.map((i) => row(i, 'out')) : <li className="muted" style={{ fontSize: 12, padding: '6px 0' }}>Nothing yet</li>}</ul>
                   </div>
+                  {(() => {
+                    const myDrops = (drops ?? []).filter((x) => x.team_id === tid);
+                    const listNow = league.players.filter((p) => p.team_id === tid).length;
+                    const after = listNow + gets.filter((i) => i.player_id).length - gives.filter((i) => i.player_id).length - myDrops.length;
+                    const over = after - 33;
+                    const canDrop = isOpen && (isMe || me?.is_commish);
+                    const inTrade = new Set(list.map((i) => i.player_id).filter(Boolean));
+                    const options = league.players.filter((p) => p.team_id === tid && !inTrade.has(p.id) && !myDrops.some((x) => x.player_id === p.id))
+                      .sort((x, y) => (x.average ?? 0) - (y.average ?? 0));
+                    return (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 6, paddingTop: 8, borderTop: '1px solid var(--line)' }}>
+                        <div className="row-between" style={{ fontSize: 13 }}>
+                          <span className="muted">List after trade</span>
+                          <b style={{ color: over > 0 ? C.redFg : C.ink }}>{after} / 33</b>
+                        </div>
+                        {over > 0 && <span style={{ fontSize: 12, color: C.redFg, fontWeight: 600 }}>Release {over} more or this trade can’t go through.</span>}
+                        {myDrops.length > 0 && (
+                          <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                            {myDrops.map((x) => {
+                              const p = league.players.find((pp) => pp.id === x.player_id);
+                              return (
+                                <li key={x.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13, padding: '4px 0' }}>
+                                  <span>Releases <b>{p?.name ?? 'player'}</b> <span className="muted">· {p?.positions.join('/')} · {p?.average?.toFixed(1) ?? '–'}</span></span>
+                                  {canDrop && <form action={removeDrop.bind(null, id, x.id)}><button className="btn" aria-label={`Keep ${p?.name}`} style={{ minHeight: 26, padding: '0 8px' }}>×</button></form>}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                        {canDrop && (over > 0 || myDrops.length > 0) && options.length > 0 && (
+                          <form action={addDrop.bind(null, id, tid)} style={{ display: 'flex', gap: 6 }}>
+                            <select name="player" className="input" required defaultValue="" style={{ flex: 1, minWidth: 0 }}>
+                              <option value="" disabled>Pick someone to release…</option>
+                              {options.map((p) => <option key={p.id} value={p.id}>{p.name} · {p.positions.join('/')} · {p.average?.toFixed(1) ?? '–'}</option>)}
+                            </select>
+                            <button className="btn">Release</button>
+                          </form>
+                        )}
+                      </div>
+                    );
+                  })()}
                   <div className="row-between" style={{ fontSize: 13, paddingTop: 8, borderTop: '1px solid var(--line)' }}>
                     <span className="muted">Net</span>
                     <b style={{ color: net > 0 ? C.green5 : net < 0 ? C.redFg : C.ink }}>{net > 0 ? '+' : ''}{net.toLocaleString()} pts</b>

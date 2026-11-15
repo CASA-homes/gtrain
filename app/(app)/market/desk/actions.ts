@@ -134,3 +134,18 @@ export async function offerKtForPlayer(form: FormData) {
   revalidatePath('/market');
   redirect(`/market/desk/${desk.id}`);
 }
+
+/** Mark one of your players to be released when this trade executes (to stay within 33). */
+export async function addDrop(deskId: string, teamId: number, form: FormData) {
+  const playerId = Number(form.get('player'));
+  if (!playerId) return back(deskId, 'Pick a player to release.');
+  const supabase = await createClient();
+  const { error } = await supabase.from('desk_drops').insert({ desk_id: deskId, team_id: teamId, player_id: playerId });
+  back(deskId, error?.message);
+}
+
+export async function removeDrop(deskId: string, dropId: number) {
+  const supabase = await createClient();
+  const { error } = await supabase.from('desk_drops').delete().eq('id', dropId);
+  back(deskId, error?.message);
+}
