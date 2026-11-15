@@ -18,6 +18,7 @@ import { DRAFTEES } from '@/lib/draft-history';
 import { WatchStar } from '@/components/WatchStar';
 import { playerSummary } from '@/lib/player-summary';
 import { getWatchlist } from '@/lib/watchlist';
+import { PlayerContractStrip, PlayerOffer } from '@/components/contracts/PlayerContract';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
@@ -90,15 +91,22 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               <span className="ph-club"><ClubDot code={p.afl_club} size={13} />{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
               {owner ? <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
             </div>
+            <PlayerOffer playerId={p.id} ownerTeamId={owner?.id ?? null} name={p.full_name ?? p.name} />
+          </div>
+          <div className="ph-stats">
             <div className="ph-rating">
               <div className="ph-value" title={`${valueRank} of ${league.players.length} in the league · valued as ${r.line}, No.${r.lineRank} ${r.line}${r.statusRisk ? ' · status at risk' : ''}`}>
                 <b>{r.value}</b><span>Value<br />#{valueRank} · {r.line}{r.lineRank}</span>
+              </div>
+              <div className="ph-value ph-avg">
+                <b>{p.average != null ? p.average.toFixed(1) : '–'}</b><span>{CURRENT_SEASON} avg<br />{p.games ?? 0} games</span>
               </div>
               <div className="ph-stars">
                 <span><em>Ability</em><Stars value={r.valueStars} label="Current ability" /></span>
                 <span><em>Potential</em><Stars value={r.potential} colour={C.green5} label="Potential" /></span>
               </div>
             </div>
+            <PlayerContractStrip playerId={p.id} ownerTeamId={owner?.id ?? null} />
           </div>
           <aside className="ph-summary" aria-label="Player summary">
             <span className="eyebrow">Player summary</span>

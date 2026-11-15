@@ -24,6 +24,10 @@ import { clubGames, nameKey } from '@/lib/club-games';
 import { StadiumArt } from '@/components/StadiumArt';
 import { PlayerHighlights } from '@/components/PlayerHighlights';
 import { ClubHeadMore } from '@/components/ClubHeadMore';
+import { ContractsStrip } from '@/components/contracts/ContractsStrip';
+import { ClubContracts } from '@/components/contracts/ClubContracts';
+import { ClubFinances } from '@/components/contracts/ClubFinances';
+import { getContracts } from '@/lib/contracts';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -51,8 +55,10 @@ function trendOf(p: PlayerRow): { age: number | null; prevAvg: number | null; de
   return { age: age(p.birth_date), prevAvg, delta, trend };
 }
 
-export default async function Clubhouse({ params }: { params: Promise<{ id: string }> }) {
+export default async function Clubhouse({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
+  const { view } = await searchParams;
+  const tab = view === 'contracts' || view === 'finances' ? view : 'squad';
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
@@ -148,6 +154,8 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
             </div>
           ))}
         </section>;
+  const kc = await getContracts();
+  const bank = kc.ready ? kc.clubs.get(a.team.id)?.bank ?? null : null;
   const highlights = <PlayerHighlights players={a.players} all={league.players} clubName={a.team.name} />;
   return (
     <div className="wrap">
@@ -174,22 +182,37 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
                   </span>
                 )}
               </div>
-              <span className="muted">Coach {a.team.coach_name}{isMine ? ' · your club' : ''}</span>
             </div>
           </div>
-          <div className="club-head-rank"><b>#{a.rank}</b><span>Power rank</span></div>
+          <div className="club-head-rank"><b>#{a.rank}</b><span>Power rank</span>{bank != null && <em>{bank >= 10000 ? `${(bank / 1000).toFixed(bank % 1000 ? 1 : 0)}k` : bank.toLocaleString('en-AU')} KT</em>}</div>
           <ClubHeadMore>
           <div className="club-head-kpis">
             <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>
             <div className="kpi"><span className="eyebrow">Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
             <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
             <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
+            {bank != null && <div className="kpi"><span className="eyebrow">Bank</span><b>{bank.toLocaleString('en-AU')} KT</b></div>}
           </div>
           {(isMine || me?.is_commish) && <div className="club-head-acts"><ClubSettings teamId={a.team.id} colour={a.team.colour ?? null} hidden={a.team.clubhouse_hide ?? []} /><Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link></div>}
           {(isMine || me?.is_commish) && <div className="club-logo-mob"><ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} /></div>}
           </ClubHeadMore>
         </div>
       </header>
+
+      <nav className="ch-tabs" aria-label="Clubhouse view">
+        <Link href={`/clubhouse/${a.team.id}`} aria-current={tab === 'squad' ? 'page' : undefined}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2" /><path d="M3 20c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5" /><circle cx="17" cy="9" r="2.4" /><path d="M16.5 14.6c2.3.3 4 1.9 4.5 4.6" /></svg>Squad
+        </Link>
+        <Link href={`/clubhouse/${a.team.id}?view=contracts`} aria-current={tab === 'contracts' ? 'page' : undefined}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5M10 13h6M10 17h4" /></svg>Contracts
+        </Link>
+        <Link href={`/clubhouse/${a.team.id}?view=finances`} aria-current={tab === 'finances' ? 'page' : undefined}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5" /><path d="M3 10h18M16 15h2" /></svg>Finances
+        </Link>
+      </nav>
+
+      {tab === 'contracts' ? <ClubContracts teamId={a.team.id} /> : tab === 'finances' ? <ClubFinances teamId={a.team.id} /> : <>
+      <ContractsStrip teamId={a.team.id} mine={isMine} />
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
 
@@ -354,6 +377,7 @@ export default async function Clubhouse({ params }: { params: Promise<{ id: stri
           current={a.players.map((p) => nameKey(p.full_name ?? p.name))}
           links={Object.fromEntries([...league.freeAgents, ...league.players].flatMap((p) => { const v = { id: p.id, afl_club: p.afl_club, photo_path: p.photo_path, dfs_id: p.dfs_id }; return [[nameKey(p.name), v], [nameKey(p.full_name ?? p.name), v]]; }))} />)}
       </ClubhouseSplit>
+      </>}
     </div>
   );
 }
