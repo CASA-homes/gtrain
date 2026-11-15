@@ -6,8 +6,10 @@ import { pickPoints } from '@/lib/picks';
 import { C, LINES, type Line } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 import { closeWish, decideTrade, postWish, voteVeto } from './actions';
+import { BuyPanel } from '@/components/trade/BuyPanel';
+import '@/components/trade/trade.css';
 
-export default async function MarketPage({ searchParams }: { searchParams: Promise<{ line?: string }> }) {
+export default async function MarketPage({ searchParams }: { searchParams: Promise<{ line?: string; error?: string }> }) {
   const sp = await searchParams;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const supabase = await createClient();
@@ -34,7 +36,7 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
           <div>
             <span style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>Keeper HQ / Trademarket</span>
             <h1 style={{ font: '600 40px/1 var(--font)', letterSpacing: '-.035em' }}>Trademarket</h1>
-            <span style={{ color: '#a9b5aa' }}>No trade deadline. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
+            <span style={{ color: '#a9b5aa' }}>Buy with players, picks or KT. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
           </div>
           <div className="kpis">
             {[['Listings', regular.length], ['Live auctions', auctions.length], ['Trade desks', openDesks ?? 0], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
@@ -51,6 +53,8 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
       </div>
 
       <div className="page"><div className="wrap">
+        {sp.error && <div role="alert" className="card" style={{ padding: '10px 14px', background: C.redBg, color: C.redFg, border: 0 }}>{sp.error}</div>}
+        <BuyPanel />
         {line && <div className="muted">Showing {line} only · <Link href="/market">show everyone</Link></div>}
 
         {pendingTrades.length > 0 && (

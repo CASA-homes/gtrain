@@ -25,7 +25,7 @@ export async function openDesk(form: FormData) {
 }
 
 /**
- * Put an asset on the table. asset = "player:123" or "pick:45"; from/to are team ids.
+ * Put an asset on the table. asset = "player:123", "pick:45" or "kt:2500"; from/to are team ids.
  * The database checks ownership and that your team is on one side of the move.
  */
 export async function addItem(deskId: string, form: FormData) {
@@ -39,7 +39,7 @@ export async function addItem(deskId: string, form: FormData) {
   const supabase = await createClient();
   const { error } = await supabase.from('desk_items').insert({
     desk_id: deskId, from_team_id: from, to_team_id: to, added_by_team: me.team_id,
-    player_id: kind === 'player' ? Number(raw) : null, pick_id: kind === 'pick' ? Number(raw) : null,
+    player_id: kind === 'player' ? Number(raw) : null, pick_id: kind === 'pick' ? Number(raw) : null, kt: kind === 'kt' ? Number(raw) : null,
   });
   back(deskId, error?.message);
 }
@@ -112,4 +112,25 @@ export async function vetoDesk(deskId: string) {
   const supabase = await createClient();
   const { error } = await supabase.rpc('veto_desk', { p_desk: deskId });
   back(deskId, error?.message);
+}
+
+/** Offer tokens (and optionally ask for nothing else) for another club's player: opens a desk with both sides on it. */
+export async function offerKtForPlayer(form: FormData) {
+  const me = await getCoach();
+  if (!me) redirect('/login');
+  const playerId = Number(form.get('player'));
+  const kt = Math.floor(Number(form.get('kt')) || 0);
+  if (!playerId || kt < 1) redirect('/market?error=' + encodeURIComponent('Pick a player and an amount of KT.'));
+  const supabase = await createClient();
+  const { data: sq } = await supabase.from('squad').select('team_id, players(name)').eq('player_id', playerId).maybeSingle();
+  if (!sq || sq.team_id === me.team_id) redirect('/market?error=' + encodeURIComponent('He needs to be on another club’s list.'));
+  const name = (sq.players as unknown as { name: string } | null)?.name ?? 'a player';
+  const { data: desk, error } = await supabase.from('desks').insert({ team_id: me.team_id, title: `${kt.toLocaleString('en-AU')} KT for ${name}`, details: null }).select('id').single();
+  if (error || !desk) redirect('/market?error=' + encodeURIComponent(error?.message ?? 'Couldn’t open a desk'));
+  const a = await supabase.from('desk_items').insert({ desk_id: desk.id, from_team_id: sq.team_id, to_team_id: me.team_id, added_by_team: me.team_id, player_id: playerId });
+  const b = a.error ? a : await supabase.from('desk_items').insert({ desk_id: desk.id, from_team_id: me.team_id, to_team_id: sq.team_id, added_by_team: me.team_id, kt });
+  if (b.error) { await supabase.from('desks').update({ status: 'closed' }).eq('id', desk.id); redirect('/market?error=' + encodeURIComponent(b.error.message)); }
+  await supabase.from('desk_teams').update({ accepted: true, accepted_at: new Date().toISOString() }).eq('desk_id', desk.id).eq('team_id', me.team_id);
+  revalidatePath('/market');
+  redirect(`/market/desk/${desk.id}`);
 }

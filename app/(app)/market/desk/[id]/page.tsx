@@ -5,6 +5,7 @@ import { getLeague, getMe } from '@/lib/data';
 import { pickLabel, pickValue, playerPoints } from '@/lib/picks';
 import { C } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
+import { getContracts } from '@/lib/contracts';
 import { addItem, closeDesk, deskComment, executeDesk, joinDesk, leaveDesk, removeItem, setAccepted, vetoDesk, voteLopsided } from '../actions';
 import { AddItem, type Asset } from './AddItem';
 
@@ -34,11 +35,13 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
     supabase.from('desk_votes').select('team_id').eq('desk_id', id),
     supabase.from('picks').select('*').in('year', [2027, 2028]),
   ]);
+  const kc = await getContracts();
   const team = (tid: number) => league.teams.find((t) => t.id === tid)!;
   const pickById = new Map((allPicks ?? []).map((p) => [p.id, p]));
 
   // Label and value every asset the same way the rest of the market does.
-  const describe = (it: { player_id: number | null; pick_id: number | null }) => {
+  const describe = (it: { player_id: number | null; pick_id: number | null; kt?: number | null }) => {
+    if (it.kt) return { label: `${it.kt.toLocaleString('en-AU')} KT`, sub: 'Tokens', points: 0, club: null, href: null };
     if (it.player_id) {
       const p = league.players.find((x) => x.id === it.player_id);
       const r = p ? league.ratings.get(p.id) : null;
@@ -181,7 +184,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
       {isOpen && me && iAmIn && (
         <section className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h2 className="h2">Add to the deal</h2>
-          <AddItem myTeamId={myId} teams={league.teams.map((t) => ({ id: t.id, name: t.name }))} assets={assets} action={addItem.bind(null, id)} />
+          <AddItem myTeamId={myId} teams={league.teams.map((t) => ({ id: t.id, name: t.name }))} assets={assets} action={addItem.bind(null, id)} bank={kc.ready && me ? kc.clubs.get(me.team_id)?.bank ?? null : null} />
         </section>
       )}
       {isOpen && me && !iAmIn && (
