@@ -57,7 +57,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       age: playerAge(p), avg: p?.average ?? null, games: p?.games ?? 0, salary: c.salary_k, base: c.base_k, rate,
       start: c.start_season, end: c.end_season, yearsLeft: yearsLeft(s, c), tier: c.tier, clause: clauseKt(s, c, rate, d.pendingFa.has(c.player_id)),
       status, statusLabel, homeGrown: c.home_grown, extEnd: ext?.end_season ?? null, extSalary: ext?.salary_k ?? null,
-      onAuction: openAuction.has(c.id), ...(() => { const rc = releaseCost(s, c); return { dead: rc.now, deadLater: rc.later, deadYears: rc.laterYears, releaseFee: rc.fee }; })(),
+      onAuction: openAuction.has(c.id), lockedUntil: c.locked_until, ...(() => { const rc = releaseCost(s, c); return { dead: rc.now, deadLater: rc.later, deadYears: rc.laterYears, releaseFee: rc.fee }; })(),
       trend: valueTrend(p),
       tone: status === 'pending' || status === 'moving' || status === 'claim' ? 'red' : status === 'final' || status === 'draft' ? 'amber' : null,
     };

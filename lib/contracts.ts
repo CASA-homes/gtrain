@@ -14,7 +14,7 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
@@ -23,7 +23,7 @@ export interface Contract {
   id: number; player_id: number; team_id: number; base_k: number; salary_k: number; start_season: number; end_season: number;
   tier: Tier; rookie: boolean; home_grown: boolean; how: string; status: 'active' | 'pending' | 'released' | 'expired' | 'voided';
   dead_k: number; dead_season: number | null;
-  rookie_slot_season: number | null; clause_kt: number | null;
+  rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
 export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending'; offers: number }

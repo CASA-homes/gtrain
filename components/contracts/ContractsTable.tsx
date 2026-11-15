@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ExtendControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
+import { AuctionControl, ExtendControl, ReleaseButton, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
@@ -16,7 +16,7 @@ export interface CtRow {
   id: number; playerId: number; name: string; positions: string[]; club: string | null; age: number | null; avg: number | null; games: number;
   salary: number | null; base: number; rate: number; start: number | null; end: number | null; yearsLeft: number; tier: Tier; clause: number | null;
   status: CtStatus; statusLabel: string; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
-  onAuction: boolean; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | null;
+  onAuction: boolean; lockedUntil?: string | null; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | null;
 }
 
 /** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club. */
@@ -198,16 +198,16 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={false} settings={settings} />
             </div>
           )}
-          {canManage && r.extEnd == null && r.end != null && r.salary != null && ['contract', 'final', 'rookie', 'draft'].includes(r.status) && r.end < settings.season + settings.max_years - 1 && (
+          {canManage && r.lockedUntil && new Date(r.lockedUntil) > new Date() && <p className="kc-sub" style={{ margin: 0 }}>Extended recently: locked until {new Date(r.lockedUntil).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}.</p>}
+          {canManage && !(r.lockedUntil && new Date(r.lockedUntil) > new Date()) && r.extEnd == null && r.end != null && r.salary != null && ['contract', 'final', 'rookie', 'draft'].includes(r.status) && r.end < settings.season + settings.max_years - 1 && (
             <details className="ct2-sign ct2-ext">
-              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''}.</span></summary>
+              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''} +{settings.ext_premium_pct}%, plus a {kt(settings.ext_fee_kt)} fee.</span></summary>
               <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
             </details>
           )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>
-              {!finalYr && r.salary != null && <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={windowOpen} />}
               {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
               <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />
             </>}

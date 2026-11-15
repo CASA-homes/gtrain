@@ -78,7 +78,9 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
   const [open, setOpen] = useState(false);
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
   // Signings use the length factor; extensions are market value (less home-grown discount).
-  const base = Math.max(5, Math.round(rate * (sign ? lf[years] ?? 0.933 : 1) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1)));
+  const extPct = sign ? 0 : settings.ext_premium_pct ?? 10;
+  const fee = sign ? 0 : settings.ext_fee_kt ?? 10;
+  const base = Math.max(5, Math.round(rate * (sign ? lf[years] ?? 0.933 : 1) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
   const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
   const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
   const sal = salOf(tier);
@@ -101,7 +103,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
           </button>
         ))}
       </div>
-      <p className="kc-sub" style={{ margin: 0 }}>Clause is set now at {tier === 'high' ? settings.clause_high_pct : settings.clause_std_pct}% of his {money(rate)} market value and doesn’t change during the deal.{homeGrown ? ` Home-grown: ${settings.home_grown_pct}% off.` : ''}</p>
+      <p className="kc-sub" style={{ margin: 0 }}>{sign ? 'Priced at his market value.' : `Priced at his ${money(rate)} market value${homeGrown ? `, less ${settings.home_grown_pct}% home-grown` : ''}, plus a ${extPct}% extension premium and a ${kt(fee)} fee. He’s then locked for 12 months.`} The clause is fixed for the deal.</p>
       <button type="button" className="kc-btn dark" onClick={() => setOpen(true)}>
         {sign ? 'Offer contract' : 'Extend'} · +{years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
       </button>
@@ -116,6 +118,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
             ['Total', money(sal * years)],
             ['Release clause', clause != null ? `${tier === 'high' ? 'High' : 'Standard'} · ${kt(clause)}` : 'None'],
             ['Market value', money(rate)],
+            ...(sign ? [] : [['Extension fee', `${kt(fee)} + ${extPct}% premium`], ['Locked', '12 months, no further extension']] as [string, string][]),
           ]}
           confirm={() => (sign ? signOwn(signPlayerId!, years, tier) : extendPlayer(contractId, years, tier))}
           onClose={() => { setOpen(false); }}
