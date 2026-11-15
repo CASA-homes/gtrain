@@ -8,6 +8,7 @@ import {
   lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
+import { SignSheet } from '@/components/contracts/SignSheet';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const money = (k: number) => `$${(Math.round(k) * 1000).toLocaleString('en-AU')}`;
@@ -69,33 +70,53 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
   contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings; signPlayerId?: number;
 }) {
   const sign = signPlayerId != null;
-  const { pending, go, note, msg } = useRun();
   const [years, setYears] = useState(3);
   const [tier, setTierV] = useState<Exclude<Tier, 'protected'>>('standard');
+  const [open, setOpen] = useState(false);
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
   const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1)));
-  const sal = Math.round(base * (1 + (tier === 'high' ? settings.high_pct : tier === 'none' ? settings.none_pct : 0) / 100));
-  if (msg?.ok) return note;
+  const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
+  const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
+  const sal = salOf(tier);
+  const from = sign ? settings.season : settings.season + 1;
+  const to = from + years - 1;
+  const clause = clauseOf(tier);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div className="kc-inline">
-        <label className="kc-field" style={{ flex: 1 }}>Length
-          <select value={years} onChange={(e) => setYears(Number(e.target.value))} aria-label={`Extension length for ${name}`}>
-            {Array.from({ length: settings.max_years }, (_, i) => i + 1).map((y) => <option key={y} value={y}>{y} yr{y > 1 ? 's' : ''}</option>)}
-          </select>
-        </label>
-        <label className="kc-field" style={{ flex: 1 }}>Clause
-          <select value={tier} onChange={(e) => setTierV(e.target.value as 'standard')} aria-label={`Release clause for ${name}`}>
-            <option value="standard">Standard</option><option value="high">High (+{settings.high_pct}%)</option><option value="none">None (+{settings.none_pct}%)</option>
-          </select>
-        </label>
+      <label className="kc-field">Length
+        <select value={years} onChange={(e) => setYears(Number(e.target.value))} aria-label={`Contract length for ${name}`}>
+          {Array.from({ length: settings.max_years }, (_, i) => i + 1).map((y) => <option key={y} value={y}>{y} yr{y > 1 ? 's' : ''} · {from}–{from + y - 1}</option>)}
+        </select>
+      </label>
+      <div className="sgn-tiers" role="radiogroup" aria-label={`Release clause for ${name}`}>
+        {(['standard', 'high', 'none'] as const).map((t) => (
+          <button key={t} type="button" role="radio" aria-checked={tier === t} className={tier === t ? 'on' : undefined} onClick={() => setTierV(t)}>
+            <b>{t === 'standard' ? 'Standard' : t === 'high' ? 'High' : 'No clause'}</b>
+            <span>{clauseOf(t) != null ? `Clause ${kt(clauseOf(t)!)}` : 'Can’t be poached'}</span>
+            <em>{money(salOf(t))}/yr{t !== 'standard' ? ` (+${t === 'high' ? settings.high_pct : settings.none_pct}%)` : ''}</em>
+          </button>
+        ))}
       </div>
-      <div className="kc-kv"><span>{homeGrown ? `Home-grown (${settings.home_grown_pct}% off)` : 'Per year'}</span><strong>{money(sal)}</strong></div>
-      <button type="button" className="kc-btn dark" disabled={pending} onClick={() => go(() => (sign ? signOwn(signPlayerId!, years, tier) : extendPlayer(contractId, years, tier)),
-          sign ? `Sign ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from ${settings.season}?` : `Extend ${name} for ${years} year${years > 1 ? 's' : ''} at ${money(sal)} a year from next season?`)}>
-        {pending ? 'Working…' : `${sign ? 'Offer contract' : 'Extend'} · ${years} yr${years > 1 ? 's' : ''}`}
+      <p className="kc-sub" style={{ margin: 0 }}>Clause is set now at {tier === 'high' ? settings.clause_high_pct : settings.clause_std_pct}% of his {money(rate)} market value and doesn’t change during the deal.{homeGrown ? ` Home-grown: ${settings.home_grown_pct}% off.` : ''}</p>
+      <button type="button" className="kc-btn dark" onClick={() => setOpen(true)}>
+        {sign ? 'Offer contract' : 'Extend'} · {years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
       </button>
-      {note}
+      {open && (
+        <SignSheet
+          title={sign ? `Sign ${name}` : `Extend ${name}`} name={name} verb={sign ? 'sign' : 'extend'}
+          headline={`${years} yr${years > 1 ? 's' : ''} · ${money(sal)} a year · ${from}–${to}`}
+          terms={[
+            ['Player', name],
+            ['Length', `${years} season${years > 1 ? 's' : ''} (${from}–${to})`],
+            ['Salary', `${money(sal)} a year`],
+            ['Total', money(sal * years)],
+            ['Release clause', clause != null ? `${tier === 'high' ? 'High' : 'Standard'} · ${kt(clause)}` : 'None'],
+            ['Market value', money(rate)],
+          ]}
+          confirm={() => (sign ? signOwn(signPlayerId!, years, tier) : extendPlayer(contractId, years, tier))}
+          onClose={() => { setOpen(false); }}
+        />
+      )}
     </div>
   );
 }
@@ -220,7 +241,7 @@ const FIELDS: [keyof KcSettings, string][] = [
   ['keeper_cap_k', 'Keeper cap ($k)'], ['season_cap_k', 'Season cap ($k)'], ['tax_line_k', 'Luxury tax line ($k)'], ['tax_kt_per_k', 'Tax KT per $1k over'],
   ['start_kt', 'Starting bank (KT)'], ['max_years', 'Max contract years'], ['deficit_max_k', 'Lock-in deficit allowed ($k)'], ['hold_back_k', 'Draft hold-back per spot ($k)'],
   ['floor_def', 'Depth floor DEF'], ['floor_mid', 'Depth floor MID'], ['floor_ruc', 'Depth floor RUC'], ['floor_fwd', 'Depth floor FWD'],
-  ['clause_std', 'Standard clause (× rate)'], ['clause_high', 'High clause (× rate)'], ['high_pct', 'High clause salary +%'], ['none_pct', 'No clause salary +%'],
+  ['clause_std_pct', 'Standard clause (% of value)'], ['clause_high_pct', 'High clause (% of value)'], ['deficit_fee_kt', 'Deficit fee (KT)'], ['high_pct', 'High clause salary +%'], ['none_pct', 'No clause salary +%'],
   ['home_grown_pct', 'Home-grown discount %'], ['levy_pct', 'Transfer levy %'], ['max_buys', 'Clause buys per window'],
 ];
 export function SettingsForm({ settings }: { settings: KcSettings }) {

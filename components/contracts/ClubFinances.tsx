@@ -229,9 +229,9 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
             <div className="kc-kv"><span>Deficit allowed</span><strong>{club.deficitUsed ? 'None (used last year)' : `Up to ${moneyK(s.deficit_max_k)}`}</strong></div>
           </div>
           <p className={`kc-msg ${nextOver <= 0 ? 'ok' : 'err'}`} style={{ marginTop: 10 }}>
-            {nextOver <= 0 ? `Under the cap with ${moneyK(-nextOver)} spare.` : nextOver <= allow ? `${moneyK(nextOver)} over: allowed as a deficit, but ${season + 2}'s keeper cap drops by ${moneyK(nextOver)}.` : `${moneyK(nextOver)} over. Keep fewer, release, or let a final-year player walk.`}
+            {nextOver <= 0 ? `Under the cap with ${moneyK(-nextOver)} spare.` : nextOver <= allow ? `⚠ ${moneyK(nextOver)} over. On deadline day (17 Feb) you can carry it as a deficit for ${kt(s.deficit_fee_kt)}, and ${season + 2}'s keeper cap drops by ${moneyK(nextOver)}.` : `⚠ ${moneyK(nextOver)} over. The most you can carry is ${moneyK(allow)}. Release, trade or sell a player before deadline day (17 Feb), or the commish will release one.`}
           </p>
-          {canManage && nextOver > 0 && nextOver <= allow && <div style={{ marginTop: 10 }}><RunButton run="lockin" id={teamId} small kind="dark" label="Lock in with deficit" confirmText={`Lock in ${moneyK(nextOver)} over? ${season + 2}'s keeper cap drops by that.`} /></div>}
+          {canManage && nextOver > 0 && nextOver <= allow && <div style={{ marginTop: 10 }}><RunButton run="lockin" id={teamId} small kind="dark" label={`Take the deficit · ${kt(s.deficit_fee_kt)}`} confirmText={`Carry ${moneyK(nextOver)} over as a deficit? It costs ${kt(s.deficit_fee_kt)} and ${season + 2}'s keeper cap drops by ${moneyK(nextOver)}.`} /></div>}
         </section>
         <section className="kc-card" aria-labelledby="db-h">
           <h2 id="db-h">Draft budget</h2>

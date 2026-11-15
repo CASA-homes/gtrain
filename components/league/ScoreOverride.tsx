@@ -29,8 +29,8 @@ const btn = (kind: 'go' | 'dark' | 'alt' | 'line'): React.CSSProperties => ({
   color: kind === 'go' || kind === 'dark' ? '#fff' : kind === 'alt' ? '#234836' : C.ink,
 });
 
-export function ScoreOverride({ comp, round, feedError, state, overrides, log, ready, isCommish }: {
-  comp: string; round: LRound | null; feedError: string | null; state: { paused: boolean; lockedAt: string | null } | null;
+export function ScoreOverride({ comp, round, feedError, state, overrides, log, ready, isCommish, nav }: {
+  nav?: React.ReactNode; comp: string; round: LRound | null; feedError: string | null; state: { paused: boolean; lockedAt: string | null } | null;
   overrides: OverrideRow[]; log: LogRow[]; ready: boolean; isCommish: boolean;
 }) {
   const router = useRouter();
@@ -122,7 +122,7 @@ export function ScoreOverride({ comp, round, feedError, state, overrides, log, r
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           <Link href="/league" style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: C.dim, textDecoration: 'none' }}>← The League · Commish tools</Link>
-          <h1 style={{ margin: 0, font: '600 40px/1.05 var(--font)', letterSpacing: '-.035em' }}>Score override</h1>
+          <h1 style={{ margin: 0, font: '600 40px/1.05 var(--font)', letterSpacing: '-.035em' }}>Overrides</h1>
           <p style={{ margin: 0, fontSize: 15, color: C.dim, maxWidth: 640 }}>Fix or fill in a player&rsquo;s score when the feed is wrong or down. An override counts everywhere live scores are used.</p>
         </div>
         {round && (
@@ -133,6 +133,7 @@ export function ScoreOverride({ comp, round, feedError, state, overrides, log, r
           </label>
         )}
       </div>
+      {nav}
 
       {!ready && <div role="alert" style={{ ...card, padding: 16, background: '#fbf4e4', borderColor: '#ecdcb4' }}>The override tables aren&rsquo;t set up yet: run <code>supabase/migrations/0029_score_overrides.sql</code> in Supabase.</div>}
       {!isCommish && <div style={{ ...card, padding: '12px 16px', fontSize: 14, color: C.dim }}>Only the commish can change scores. You can see every override and why it was made.</div>}
