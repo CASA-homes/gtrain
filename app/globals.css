@@ -2477,3 +2477,57 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .club-head-more { margin-right: -42px; }
   .club-head-stats { width: calc(100% + 42px); margin-right: -42px; }
 }
+
+/* ---------- Mobile tidy: player search, draft home, trade market ---------- */
+.m-txt, .pl-sq, .pf-year-m, .dt-mob, .dr-sq { display: none; }
+.pf-n { font: 600 10.5px var(--mono); padding: 1px 6px; border-radius: 99px; background: var(--ink); color: #fff; }
+@media (max-width: 760px) {
+  .d-txt, .pl-eyebrow, .pl-rather-btn, .pl-note, .pf-year-d, .pf-go, .dt-desk, .dr-eyebrow, .dr-years, .dr-note { display: none !important; }
+  .m-txt { display: inline; }
+
+  /* Player search */
+  .pl-head { align-items: center !important; flex-wrap: nowrap !important; gap: 10px !important; }
+  .pl-head h1 { font-size: 28px !important; line-height: 1.1; }
+  .pl-sq { display: flex; gap: 6px; flex: none; }
+  .pl-sq-btn { width: 50px; height: 50px; border-radius: 12px; background: var(--ink); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-decoration: none; }
+  .pl-sq-btn span { font: 600 9.5px var(--font); letter-spacing: .02em; color: #d9dfd5; }
+  .pl-sq-btn:nth-child(2) svg { color: #e2b23f; }
+  .ask-box { padding: 8px; gap: 8px; }
+  .ask-box .input, .ask-box .btn { min-height: 40px; }
+  .ask-spark { width: 40px; }
+  .players-filter { padding: 8px !important; gap: 8px !important; }
+  .players-filter .input { min-height: 40px; }
+  .pf-year-m { display: inline-flex; flex: none !important; }
+  .pf-year-m a { flex: none; padding: 0 9px; min-height: 34px; }
+  .players-filter .pf-row { flex-wrap: nowrap; }
+  .players-filter .pf-row .btn { width: 40px; height: 40px; min-height: 40px; padding: 0; justify-content: center; flex: none; position: relative; }
+  .pf-lab { display: none; }
+  .pf-row .pf-n { position: absolute; top: -5px; right: -5px; }
+  .players-filter .own-toggle.own-main { flex: 1 1 auto; order: 0; }
+  .players-filter .own-main a { padding: 0 4px; min-height: 34px; font-size: 12px; }
+
+  /* Draft: four tabs, sub-tabs, year squares */
+  .dt-mob { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+  .dt-four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; padding: 3px; border-radius: 12px; background: var(--line); }
+  .dt-four a { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; padding: 2px 4px; border-radius: 9px; font: 600 12px/1.15 var(--font); color: var(--muted); text-decoration: none; }
+  .dt-four a.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+  .dt-subs { display: flex; gap: 6px; overflow-x: auto; }
+  .dt-subs a { flex: none; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font: 600 12.5px var(--font); color: var(--muted); text-decoration: none; background: #fff; }
+  .dt-subs a.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .dr-sq { display: flex; gap: 6px; margin-left: auto; }
+  .dr-sq a { display: grid; place-items: center; width: 52px; height: 34px; border-radius: 9px; border: 1px solid var(--line); background: #fff; font: 600 12.5px var(--mono); color: var(--ink); text-decoration: none; }
+
+  /* Trade market */
+  .tm-hero { padding: 18px 16px 0 !important; }
+  .tm-hero-in { gap: 12px !important; align-items: stretch !important; flex-direction: column; }
+  .tm-crumb, .tm-sub, .tm-kpi-x { display: none !important; }
+  .tm-hero h1 { font-size: 32px !important; }
+  .tm-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+  .tm-kpis .kpi { padding: 0 8px; }
+  .tm-kpis .kpi:first-child { padding-left: 0; border-left: 0; }
+  .tm-kpis .kpi .eyebrow { font-size: 9.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tm-kpis .kpi b { font-size: 20px; }
+  .tm-tabs { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px !important; margin-top: 4px; }
+  .tm-tabs .btn { min-height: 46px; padding: 4px 6px; justify-content: center; text-align: center; font-size: 12px; line-height: 1.15; border-radius: 14px 14px 0 0 !important; border-bottom: 0 !important; }
+  .tm-tabs .btn:last-child { background: var(--market-bg, #eef1ea) !important; color: var(--forest) !important; }
+}

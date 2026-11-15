@@ -46,11 +46,11 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
     <div className="wrap">
       <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow">From the Keeper draft board · 16 rounds, round 16 is the keeper/rookie round</span>
-          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Draft picks</h1>
+          <span className="eyebrow dr-eyebrow">From the Keeper draft board · 16 rounds, round 16 is the keeper/rookie round</span>
+          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}><span className="d-txt">Draft picks</span><span className="m-txt">Draft Home</span></h1>
         </div>
         <DraftTabs active="picks" />
-        <div role="tablist" aria-label="Draft year" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
+        <div role="tablist" aria-label="Draft year" className="dr-years" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
           {[2026, 2027, 2028].map((yr) => (
             <Link key={yr} href={`/draft?year=${yr}`} role="tab" aria-selected={yr === year}
               style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: yr === year ? '#fff' : 'transparent', color: yr === year ? C.ink : C.muted }}>
@@ -66,7 +66,8 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
         <section style={{ flex: '1 1 420px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
           <div className="row-between">
             <h2 className="h2">{year} draft order</h2>
-            <span className="muted" style={{ fontSize: 12 }}>{year === 2028 ? 'Indicative: pick numbers are set in Dec 2027' : 'Indicative: straight order, not a snake'}</span>
+            <YearSquares year={year} />
+            <span className="muted dr-note" style={{ fontSize: 12 }}>{year === 2028 ? 'Indicative: pick numbers are set in Dec 2027' : 'Indicative: straight order, not a snake'}</span>
           </div>
           <div className="table-box" style={{ maxHeight: '72vh', overflowY: 'auto' }}>
             <table className="squad">
@@ -142,6 +143,17 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
   );
 }
 
+/** Mobile: the other draft years as small squares beside the heading. */
+function YearSquares({ year }: { year: number }) {
+  return (
+    <nav aria-label="Draft year" className="dr-sq">
+      {[2026, 2027, 2028].filter((y) => y !== year).map((y) => (
+        <Link key={y} href={`/draft?year=${y}`} title={y === 2026 ? '2026 results' : `${y} draft`}>{y}</Link>
+      ))}
+    </nav>
+  );
+}
+
 /** Draft-day board for the 2026 G-Train redraft: every selection from pick 1 down, grouped by round. */
 function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof getLeague>>; myTeam: number | null }) {
   const teamByName = new Map(league.teams.map((t) => [norm(t.name), t]));
@@ -155,7 +167,8 @@ function Results2026({ league, myTeam }: { league: Awaited<ReturnType<typeof get
     <section style={{ display: 'flex', flexDirection: 'column', gap: 10, minWidth: 0 }}>
       <div className="row-between" style={{ flexWrap: 'wrap', gap: 6 }}>
         <h2 className="h2">2026 draft day</h2>
-        <span className="muted" style={{ fontSize: 12 }}>21 Feb 2026 · {picks.length} selections · gaps are passed picks</span>
+        <YearSquares year={2026} />
+        <span className="muted dr-note" style={{ fontSize: 12 }}>21 Feb 2026 · {picks.length} selections · gaps are passed picks</span>
       </div>
       <div className="table-box">
         <table className="squad">

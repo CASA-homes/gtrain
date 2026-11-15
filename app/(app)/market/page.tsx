@@ -31,19 +31,19 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
 
   return (
     <div style={{ margin: '-28px -16px 0', background: 'var(--market-bg)', minHeight: '100dvh' }}>
-      <div style={{ background: 'var(--forest)', color: 'var(--cream)', padding: '28px max(16px, 2vw) 24px' }}>
-        <div style={{ maxWidth: 1360, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+      <div className="tm-hero" style={{ background: 'var(--forest)', color: 'var(--cream)', padding: '28px max(16px, 2vw) 24px' }}>
+        <div className="tm-hero-in" style={{ maxWidth: 1360, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
-            <span style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>Keeper HQ / Trademarket</span>
+            <span className="tm-crumb" style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>Keeper HQ / Trademarket</span>
             <h1 style={{ font: '600 40px/1 var(--font)', letterSpacing: '-.035em' }}>Trademarket</h1>
-            <span style={{ color: '#a9b5aa' }}>Buy with players, picks or KT. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
+            <span className="tm-sub" style={{ color: '#a9b5aa' }}>Buy with players, picks or KT. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
           </div>
-          <div className="kpis">
-            {[['Listings', regular.length], ['Live auctions', auctions.length], ['Trade desks', openDesks ?? 0], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
-              <div key={l} className="kpi" style={{ borderColor: '#33443a' }}><span className="eyebrow" style={{ color: '#a9b5aa' }}>{l}</span><b>{v}</b></div>
+          <div className="kpis tm-kpis">
+            {[['Listings', regular.length], ['Auctions', auctions.length], ['Trade desks', openDesks ?? 0], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
+              <div key={l} className={`kpi${l === 'Awaiting commish' ? ' tm-kpi-x' : ''}`} style={{ borderColor: '#33443a' }}><span className="eyebrow" style={{ color: '#a9b5aa' }}>{l}</span><b>{v}</b></div>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
+          <div className="tm-tabs" style={{ display: 'flex', gap: 8 }}>
             <Link href="/contracts/market" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Transfer Market</Link>
             <Link href="/market/planner" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade planner</Link>
             <Link href="/market/desk" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade desk</Link>

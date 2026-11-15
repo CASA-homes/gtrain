@@ -42,12 +42,12 @@ function Card({ it, value, onPick, side }: { it: VItem; value: number; onPick: (
   );
 }
 
-export function RatherGame({ ready, items, values, totals, myTeamId, teams }: {
-  ready: boolean; items: VItem[]; myTeamId: number; teams: { id: number; short: string }[];
+export function RatherGame({ ready, items, values, totals, myTeamId, teams, initialTab = 'play' }: {
+  initialTab?: 'play' | 'board'; ready: boolean; items: VItem[]; myTeamId: number; teams: { id: number; short: string }[];
   values: Record<ValueMode, Valued[]>; totals: { votes: number; mine: number; voters: number };
 }) {
   const [mode, setMode] = useState<ValueMode>('dynasty');
-  const [tab, setTab] = useState<'play' | 'board'>('play');
+  const [tab, setTab] = useState<'play' | 'board'>(initialTab);
   const val = useMemo(() => new Map(values[mode].map((v) => [v.id, v.value])), [values, mode]);
   const byId = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
   const pool = useMemo(() => values[mode].map((v) => byId.get(v.id)!).filter((x) => x && (mode === 'dynasty' || x.kind === 'player')), [values, mode, byId]);

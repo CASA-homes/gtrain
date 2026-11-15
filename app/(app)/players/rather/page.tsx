@@ -7,7 +7,8 @@ import { buildItems, valuesFor, type Vote } from '@/lib/values';
 export const metadata = { title: 'Who’d you rather' };
 export const dynamic = 'force-dynamic';
 
-export default async function RatherPage() {
+export default async function RatherPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
+  const { view } = await searchParams;
   const me = await getMe();
   if (!me) redirect('/');
   const supabase = await createClient();
@@ -15,7 +16,7 @@ export default async function RatherPage() {
   const votes = (vq.data ?? []) as Vote[];
   const items = buildItems(league);
   return (
-    <RatherGame
+    <RatherGame initialTab={view === 'board' ? 'board' : 'play'}
       ready={!vq.error} items={items} myTeamId={me.team_id}
       values={{ dynasty: valuesFor(items, votes, 'dynasty'), now: valuesFor(items, votes, 'now') }}
       totals={{ votes: votes.length, mine: votes.filter((v) => v.voter_id === me.team_id).length, voters: new Set(votes.map((v) => v.voter_id)).size }}

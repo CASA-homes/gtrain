@@ -22,3 +22,20 @@
 .bp-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
 .bp-form select, .bp-form input { min-height: 42px; border: 1px solid #c9cfd8; border-radius: 10px; padding: 0 10px; font: 400 14px var(--font); background: #fff; color: var(--ink); width: 100%; }
 .bp-form .btn { justify-content: center; }
+/* Free agents + expiring in one card */
+.bp-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.bp-fa { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+.bp-tabs { display: none; }
+@media (max-width: 1000px) {
+  .bp-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .bp-fa { display: flex; }
+  .bp-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 3px; border-radius: 10px; background: var(--sunk); margin-bottom: 4px; }
+  .bp-tabs label { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; border-radius: 8px; font: 600 13px var(--font); color: var(--muted); cursor: pointer; }
+  .bp-tabs .bp-n { margin-left: 0; }
+  #bp-fa-now:checked ~ .bp-tabs label[for="bp-fa-now"], #bp-fa-up:checked ~ .bp-tabs label[for="bp-fa-up"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+  .bp-pane .bp-head, .bp-note { display: none; }
+  .bp-pane { display: none; flex-direction: column; }
+  #bp-fa-now:checked ~ .bp-pane-now, #bp-fa-up:checked ~ .bp-pane-up { display: flex; }
+}
