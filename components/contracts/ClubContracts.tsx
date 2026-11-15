@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
 import { ContractsTable, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
-import { clauseKt, getContracts, isFinalYear, kt, money, moneyK, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
+import { clauseKt, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
 
 export async function ClubContracts({ teamId }: { teamId: number }) {
@@ -67,35 +67,10 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   const departing = [...leaving.values()].filter((p) => contracts.some((c) => c.player_id === p.player_id));
 
   const years = Array.from({ length: 5 }, (_, i) => s.season + i);
-  const committed = years.map((y) => ({
-    y,
-    k: d.contracts.filter((c) => c.team_id === teamId && (c.status === 'active' || c.status === 'pending') && c.start_season <= y && c.end_season >= y).reduce((a, c) => a + c.salary_k, 0)
-      + d.contracts.filter((c) => c.team_id === teamId && c.dead_season === y).reduce((a, c) => a + c.dead_k, 0),
-    cap: y === s.season + 1 ? club.keeperCapNext : s.keeper_cap_k,
-  }));
-  const totalRate = rows.reduce((t, r) => t + r.rate, 0);
-  const nextOver = club.nextSalary - club.keeperCapNext;
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
-  const emptySpots = Math.max(0, 33 - club.list.size);
-  const draftBudget = s.season_cap_k - club.salary - emptySpots * s.hold_back_k;
 
   return (
     <div className="kc-stack">
-      <div className="kc-tiles">
-        <div className="kc-tile">
-          <span>{s.season} salary</span><b>{moneyK(club.salary)}</b>
-          <div className="kc-bar"><i className={club.salary > s.season_cap_k ? 'over' : ''} style={{ width: `${Math.min(100, (club.salary / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(s.tax_line_k / s.season_cap_k) * 100}%` }} /></div>
-          <em>{moneyK(s.season_cap_k - club.salary)} room under the {moneyK(s.season_cap_k)} season cap{club.taxKt ? ` · ${kt(club.taxKt)} tax` : ''}</em>
-        </div>
-        <div className="kc-tile">
-          <span>{s.season + 1} keepers</span><b className={nextOver > 0 ? 'kc-down' : undefined}>{moneyK(club.nextSalary)}</b>
-          <div className="kc-bar"><i className={nextOver > 0 ? 'over' : ''} style={{ width: `${Math.min(100, (club.nextSalary / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(club.keeperCapNext / s.season_cap_k) * 100}%` }} /></div>
-          <em>{club.keptNext} of 17 + 1 signed · {nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`} the {moneyK(club.keeperCapNext)} keeper cap</em>
-        </div>
-        <div className="kc-tile"><span>Bank</span><b>{kt(club.bank)}</b><em>{d.claims.filter((c) => c.status === 'pending' && c.buyer_team === teamId).reduce((t, c) => t + c.price_kt, 0) > 0 ? 'Some held for clauses you’ve paid' : 'Clauses, offers and transfer fees'}</em></div>
-        <div className="kc-tile"><span>List vs market</span><b className={totalRate >= club.salary ? 'kc-up' : 'kc-down'}>{totalRate >= club.salary ? '+' : '−'}{moneyK(Math.abs(totalRate - club.salary))}</b><em>{moneyK(totalRate)} market value on {moneyK(club.salary)} of salary</em></div>
-      </div>
-
       {canManage && incomingClaims.length > 0 && (
         <section className="kc-card warn" aria-labelledby="clm-h">
           <h2 id="clm-h">Release clause paid · decide within 24 hours</h2>
@@ -186,42 +161,11 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         <ContractsTable rows={rows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} />
       </section>
 
-      <div className="kc-row">
-        <section className="kc-card kc-main" aria-labelledby="yr-h">
-          <h2 id="yr-h">Committed salary by season</h2>
-          <p className="kc-sub">Against the keeper cap. Includes extensions, players arriving at season end, and dead money.</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginTop: 14 }}>
-            {committed.map(({ y, k, cap }) => (
-              <div key={y}>
-                <div className="row-between" style={{ fontSize: 13 }}><strong>{y}{cap !== s.keeper_cap_k ? ' · deficit carried' : ''}</strong><span className="num">{moneyK(k)} / {moneyK(cap)}</span></div>
-                <div className="kc-bar" style={{ height: 22, borderRadius: 8 }}><i className={k > cap ? 'over' : ''} style={{ width: `${Math.min(100, (k / s.season_cap_k) * 100)}%`, borderRadius: 8 }} /><s style={{ left: `${(cap / s.season_cap_k) * 100}%` }} /></div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <aside className="kc-side">
-          <section className="kc-card" aria-labelledby="lk-h">
-            <h2 id="lk-h">{s.season + 1} keeper lock-in</h2>
-            <div style={{ marginTop: 8 }}>
-              <div className="kc-kv"><span>Signed for {s.season + 1}</span><strong className={club.keptNext > 18 ? 'kc-down' : undefined}>{club.keptNext} / 17 + 1</strong></div>
-              <div className="kc-kv"><span>Salary</span><strong>{moneyK(club.nextSalary)}</strong></div>
-              <div className="kc-kv"><span>Keeper cap</span><strong>{moneyK(club.keeperCapNext)}</strong></div>
-              <div className="kc-kv"><span>Deficit allowed</span><strong>{club.deficitUsed ? 'None (used last year)' : `Up to ${moneyK(s.deficit_max_k)}`}</strong></div>
-            </div>
-            <p className={`kc-msg ${nextOver <= 0 ? 'ok' : nextOver <= (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'err'}`} style={{ marginTop: 10 }}>
-              {nextOver <= 0 ? `Under the cap with ${moneyK(-nextOver)} spare.`
-                : nextOver <= (club.deficitUsed ? 0 : s.deficit_max_k) ? `${moneyK(nextOver)} over: allowed as a deficit, but ${s.season + 2}'s keeper cap drops by ${moneyK(nextOver)}.`
-                : `${moneyK(nextOver)} over. Keep fewer, release, or let a final-year player walk.`}
-            </p>
-          </section>
-          <section className="kc-card" aria-labelledby="un-h">
-            <h2 id="un-h">Not on contract · {uncontracted.length}</h2>
-            <p className="kc-sub">Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. Draft budget: <b>{moneyK(Math.max(0, draftBudget))}</b> after {moneyK(s.hold_back_k)} held back for each of {emptySpots} empty spots.</p>
-            <p style={{ fontSize: 13, marginTop: 8 }}>{uncontracted.slice(0, 24).map((p) => p.name).join(', ')}{uncontracted.length > 24 ? '…' : ''}</p>
-          </section>
-        </aside>
-      </div>
+      <section className="kc-card" aria-labelledby="un-h">
+        <div className="row-between"><h2 id="un-h">Not on contract · {uncontracted.length}</h2><Link href={`/clubhouse/${teamId}?view=finances`} className="kc-btn small">Cap & lock-in →</Link></div>
+        <p className="kc-sub">Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that.</p>
+        <p style={{ fontSize: 13, marginTop: 8 }}>{uncontracted.length ? uncontracted.map((p) => p.name).join(', ') : 'Everyone on the list is contracted.'}</p>
+      </section>
     </div>
   );
 }

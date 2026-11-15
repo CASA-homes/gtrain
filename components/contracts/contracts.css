@@ -178,3 +178,30 @@
 .ph-offer form { margin: 0; }
 .ph-contract { color: var(--muted); }
 .ph-contract b { color: var(--ink); }
+
+/* Clubhouse tabs under the header panel */
+.ch-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; margin-top: -6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.ch-tabs a { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-height: 40px; border-radius: 10px; text-decoration: none; color: var(--muted); font: 600 14px var(--font); }
+.ch-tabs a:hover { color: var(--ink); background: var(--sunk); }
+.ch-tabs a[aria-current='page'] { background: var(--ink); color: #fff; }
+.ch-tabs svg { flex: none; }
+@media (min-width: 901px) { .ch-tabs { max-width: 520px; } }
+
+/* Important news */
+.ch-news { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
+.ch-news-more { font-size: 12px; font-weight: 600; color: var(--muted); text-decoration: none; }
+.ch-alert { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; color: var(--ink); background: #fbf3e2; }
+.ch-alert i { width: 8px; height: 8px; border-radius: 50%; background: #c08a1e; flex: none; }
+.ch-alert.err { background: #f8e6dc; } .ch-alert.err i { background: #a8461f; }
+.ch-alert span { margin-left: auto; color: var(--muted); font-size: 16px; }
+.ch-news .kc-news > div { grid-template-columns: 68px minmax(0, 1fr) auto; padding: 7px 0; font-size: 12.5px; }
+.ch-news-txt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Finances ledger */
+.kc-ledger { display: flex; flex-direction: column; margin-top: 8px; }
+.kc-ledger > div { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line-soft); font-size: 13px; align-items: baseline; }
+.kc-ledger > div:first-child { border-top: 0; }
+.kc-ledger b { font-variant-numeric: tabular-nums; }
+
+/* Header: KT under the power rank on phones */
+.club-head-rank em { font: 700 10px/1 var(--font); font-style: normal; margin-top: 5px; padding: 2px 5px; border-radius: 5px; background: rgb(255 255 255 / .7); white-space: nowrap; }
