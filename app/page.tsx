@@ -38,7 +38,7 @@ const WIRE = (() => {
   return [
     `${last.year} premiers: ${last.premier}`, `${last.year} runners-up: ${last.runner_up}`, last.medal ? `${last.year} league medal: ${last.medal}` : null,
     `Wooden spoon ${last.year}: ${last.spoon}`, 'Knockout Cup winners take a round 2 pick into next year’s draft', 'Future picks tradeable through 2028',
-    'Ethan Drever tipped to go pick 2 in the AFL draft', '18 keepers a club, the 18th must be a rookie',
+    'Ethan Drever tipped to go pick 2 in the AFL draft', '18 keepers a club, the 18th must be a rookie', 'Every keeper on a contract under a $1.25M cap', 'Deadline day: the mid-season window opens clauses and free agency',
   ].filter(Boolean) as string[];
 })();
 
@@ -59,11 +59,11 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
         <div className="kl-mid">
         <h1 className="kl-hl">The home of your<br /><b>AFL keeper league.</b></h1>
         <ul className="kl-sell">
-          <li><b>Custom everything</b> your rules, lists, scoring and comps</li>
-          <li><b>Pick trading</b> future and mid-season picks</li>
-          <li><b>Cup competitions</b> with draft-pick prizes</li>
-          <li><b>Deep rookie research</b> boards, junior data, star chance</li>
-          <li><b>History and records</b> every flag, spoon and medal</li>
+          <li><b>Player contracts</b> salaries, lengths and release clauses</li>
+          <li><b>A real salary cap</b> keep 17 + 1 and stay under it</li>
+          <li><b>Signings</b> bid on free agents, pay or match clauses</li>
+          <li><b>Deadline day</b> the mid-season window, every move live</li>
+          <li><b>Trade anything</b> players, future picks and KT</li>
         </ul>
         </div>
         <div className="kl-bottom">
