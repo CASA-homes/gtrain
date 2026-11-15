@@ -116,6 +116,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         </div>
       </section>
 
+      {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
       <section className="kc-card" aria-labelledby="inv-h">
         <div className="row-between"><h2 id="inv-h">Investments</h2><span className="kc-sub">Paper tokens (KT)</span></div>
         <div className="fn-net"><div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + deposits + loans out − loans owed</em></div></div>
@@ -231,6 +232,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           {!ledger.length && <p className="kc-sub">No movements yet.</p>}
         </div>
       </section>
+      </>}
     </div>
   );
 }

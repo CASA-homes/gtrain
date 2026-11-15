@@ -62,8 +62,7 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
   const isMine = me?.team_id === a.team.id;
-  // Finances are private: only the club's own coach sees them.
-  const tab = view === 'contracts' || (view === 'finances' && isMine) ? view : 'squad';
+  const tab = view === 'contracts' || view === 'finances' ? view : 'squad';
   const gq = await (await createClient()).from('club_games').select('season, player_name, games').eq('team_id', a.team.id);
   const gamesReady = !gq.error;
   const games = clubGames((await isLegacyLeague()) ? a.team.name : '', gq.data ?? []);
@@ -213,9 +212,9 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
         <Link href={`/clubhouse/${a.team.id}?view=contracts`} aria-current={tab === 'contracts' ? 'page' : undefined}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5M10 13h6M10 17h4" /></svg>Contracts
         </Link>
-        {isMine && <Link href={`/clubhouse/${a.team.id}?view=finances`} aria-current={tab === 'finances' ? 'page' : undefined}>
+        <Link href={`/clubhouse/${a.team.id}?view=finances`} aria-current={tab === 'finances' ? 'page' : undefined}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2.5" /><path d="M3 10h18M16 15h2" /></svg>Finances
-        </Link>}
+        </Link>
       </nav>
 
       {tab === 'contracts' ? <ClubContracts teamId={a.team.id} /> : tab === 'finances' ? <ClubFinances teamId={a.team.id} /> : <>

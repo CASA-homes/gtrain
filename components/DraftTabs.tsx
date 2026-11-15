@@ -30,7 +30,7 @@ export function DraftTabs({ active, showCrystal = true }: { active: Key; showCry
           const on = key === active;
           return (
             <Link key={key} href={href} role="tab" aria-selected={on}
-              style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: on ? '#fff' : 'transparent', color: on ? C.ink : C.muted, boxShadow: on ? '0 1px 2px rgb(0 0 0 / .08)' : 'none' }}>
+              style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: on ? '#fff' : 'transparent', color: on ? C.ink : C.muted, boxShadow: on ? (key === 'crystal' ? 'inset 0 0 0 2px #c9a227, 0 1px 2px rgb(0 0 0 / .08)' : '0 1px 2px rgb(0 0 0 / .08)') : 'none' }}>
               {key === 'crystal' ? '🔮 ' : ''}{label}
             </Link>
           );
@@ -39,7 +39,7 @@ export function DraftTabs({ active, showCrystal = true }: { active: Key; showCry
       <div className="dt-mob">
         <nav role="tablist" aria-label="Draft section" className="dt-four">
           {GROUPS.filter((g) => g.key !== 'crystal' || showCrystal).map((g) => (
-            <Link key={g.key} href={g.href} role="tab" aria-selected={g === group} className={g === group ? 'on' : undefined}>
+            <Link key={g.key} href={g.href} role="tab" aria-selected={g === group} className={`${g === group ? 'on' : ''}${g.key === 'crystal' ? ' gold' : ''}`.trim() || undefined}>
               {g.label}
             </Link>
           ))}
