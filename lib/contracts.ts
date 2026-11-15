@@ -165,3 +165,16 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
 });
 
 export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : null);
+
+/** A rough market-value line for a player: last season's rate, then a rolling 6-game rate through this season.
+ *  Same shape as the database formula (without age/availability), for a sparkline only. */
+export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
+  if (!p) return [];
+  const rate = (a: number) => Math.max(5, Math.pow(Math.max(0, a - 55), 1.3) * 0.66);
+  const prev = (p.hist ?? []).filter((h) => h[0] < 2026 && h[1] >= 3).sort((a, b) => b[0] - a[0])[0];
+  const scores = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
+  const out: number[] = prev ? [rate(prev[2])] : [];
+  scores.forEach((_, i) => { const w = scores.slice(Math.max(0, i - 5), i + 1); out.push(rate(w.reduce((a, b) => a + b, 0) / w.length)); });
+  if (out.length <= points) return out;
+  return Array.from({ length: points }, (_, i) => out[Math.round((i * (out.length - 1)) / (points - 1))]);
+}

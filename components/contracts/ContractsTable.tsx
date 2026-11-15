@@ -1,106 +1,96 @@
 'use client';
-// A club's contracts as a compact list, split into: leaving / free agency, coming out of contract, under contract.
-// Every row shows contract value and length. Line filter and a sort; manage actions tuck into each row.
+// A club's contracts as a compact table. One row per player: full name, club and position/age, contract length,
+// a market-value trend line (green rising, red falling), market value and salary, and an arrow that opens the full
+// contract details and manage actions. Used twice: players under contract, and expiring / free agents (row tint
+// shows which: light red = free agent or leaving, light yellow = expiring).
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { ClubDot } from '@/components/bits';
 import { AuctionControl, ReleaseButton, TierSelect } from '@/components/contracts/client';
 import type { KcSettings, Tier } from '@/lib/contracts';
 
-export type CtStatus = 'final' | 'pending' | 'moving' | 'extended' | 'draft' | 'rookie' | 'contract' | 'claim';
+export type CtStatus = 'final' | 'pending' | 'moving' | 'extended' | 'draft' | 'rookie' | 'contract' | 'claim' | 'none';
 export interface CtRow {
   id: number; playerId: number; name: string; positions: string[]; club: string | null; age: number | null; avg: number | null; games: number;
-  salary: number; base: number; rate: number; start: number; end: number; yearsLeft: number; tier: Tier; clause: number | null;
+  salary: number | null; base: number; rate: number; start: number | null; end: number | null; yearsLeft: number; tier: Tier; clause: number | null;
   status: CtStatus; statusLabel: string; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
-  onAuction: boolean; dead: number;
+  onAuction: boolean; dead: number; trend: number[]; tone?: 'red' | 'amber' | null;
 }
 
 const k$ = (k: number) => `$${Math.round(k)}k`;
 const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
-const GROUPS: { key: string; title: string; note: string; tone: 'red' | 'amber' | 'green'; has: (r: CtRow) => boolean }[] = [
-  { key: 'out', title: 'Leaving or heading to free agency', note: 'Pending free agents, players agreed to move at season end, and clauses waiting on you.', tone: 'red', has: (r) => r.status === 'pending' || r.status === 'moving' || r.status === 'claim' },
-  { key: 'final', title: 'Coming out of contract', note: 'Final year, draftees included. Extend before mid-season week or rivals can bid on them.', tone: 'amber', has: (r) => r.status === 'final' || r.status === 'draft' },
-  { key: 'in', title: 'Under contract', note: 'Signed beyond this season, including extensions.', tone: 'green', has: () => true },
-];
-const TAG: Record<CtStatus, string> = { final: 'exp', pending: 'exp', moving: 'exp', claim: 'exp', extended: 'high', draft: 'rook', rookie: 'rook', contract: 'std' };
+const TAG: Record<CtStatus, string> = { final: 'exp', pending: 'exp', moving: 'exp', claim: 'exp', extended: 'high', draft: 'rook', rookie: 'rook', contract: 'std', none: 'exp' };
 
-export function ContractsTable({ rows, settings, years, canManage, mine, windowOpen }: {
-  rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean;
-}) {
-  const groups = useMemo(() => {
-    const pool = [...rows].sort((a, b) => b.salary - a.salary);
-    const used = new Set<number>();
-    return GROUPS.map((g) => {
-      const list = pool.filter((r) => !used.has(r.id) && g.has(r));
-      list.forEach((r) => used.add(r.id));
-      return { ...g, list };
-    });
-  }, [rows]);
-
-  const total = rows.reduce((t, r) => t + r.salary, 0);
-  const totalRate = rows.reduce((t, r) => t + r.rate, 0);
-
+function Trend({ v }: { v: number[] }) {
+  if (v.length < 2) return <span className="ct-trend muted">—</span>;
+  const lo = Math.min(...v), hi = Math.max(...v), up = v[v.length - 1] >= v[0];
+  const pts = v.map((x, i) => `${((i / (v.length - 1)) * 44 + 1).toFixed(1)},${(20 - ((x - lo) / (hi - lo || 1)) * 17).toFixed(1)}`).join(' ');
+  const pct = v[0] > 0 ? Math.round(((v[v.length - 1] - v[0]) / v[0]) * 100) : 0;
   return (
-    <div className="ct">
-      <div className="ct-sum">
-        <span><b>{rows.length}</b> contracts</span>
-        <span><b>{k$(total)}</b> salary</span>
-        <span className={totalRate >= total ? 'kc-up' : 'kc-down'}><b>{totalRate >= total ? '+' : '−'}{k$(Math.abs(totalRate - total))}</b> vs market</span>
-      </div>
-
-      {groups.map((g) => g.list.length > 0 && (
-        <section key={g.key} className={`ct-group ${g.tone}`} aria-labelledby={`ctg-${g.key}`}>
-          <header>
-            <h3 id={`ctg-${g.key}`}>{g.title} <span>{g.list.length}</span></h3>
-            <p>{g.note}</p>
-          </header>
-          <div className="ct-head" aria-hidden="true"><span>Player</span><span>Length</span><span>Clause</span><span>Market</span><span>Salary</span></div>
-          <ul>
-            {g.list.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} />)}
-          </ul>
-        </section>
-      ))}
-    </div>
+    <span className={`ct-trend ${up ? 'up' : 'dn'}`} title={`Value ${up ? 'up' : 'down'} ${Math.abs(pct)}% this season`}>
+      <svg viewBox="0 0 46 22" width="46" height="22" aria-hidden="true"><polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <span className="sr-only">Value {up ? 'up' : 'down'} {Math.abs(pct)}%</span>
+    </span>
   );
 }
 
-const ktShort = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : `${n}`);
+export function ContractsTable({ title, note, rows, settings, years, canManage, mine, windowOpen, empty }: {
+  title: string; note?: string; rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean; empty?: string;
+}) {
+  const total = rows.reduce((t, r) => t + (r.salary ?? 0), 0);
+  return (
+    <section className="ct2">
+      <header className="ct2-head">
+        <div><h3>{title} <span>{rows.length}</span></h3>{note && <p>{note}</p>}</div>
+        {total > 0 && <b>{k$(total)}</b>}
+      </header>
+      <div className="ct2-cols" aria-hidden="true"><span>Player</span><span>Length</span><span>Trend</span><span>Market</span><span>Salary</span><span /></div>
+      {rows.length ? (
+        <ul>{rows.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} />)}</ul>
+      ) : <p className="ct2-empty">{empty ?? 'Nobody here.'}</p>}
+    </section>
+  );
+}
 
 function Row({ r, years, settings, canManage, mine, windowOpen }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean }) {
-  const surplus = r.rate - r.salary;
-  const locked = r.status === 'pending' || r.status === 'moving' || r.status === 'claim';
+  const surplus = r.salary != null ? r.rate - r.salary : null;
+  const locked = r.status === 'pending' || r.status === 'moving' || r.status === 'claim' || r.status === 'none';
   const finalYr = r.status === 'final' || r.status === 'draft' || r.status === 'pending';
   const until = r.extEnd ?? r.end;
-  const yrs = Math.max(1, until - years[0] + 1);
-  const showTag = r.status !== 'contract';
+  const yrs = until != null ? Math.max(1, until - years[0] + 1) : null;
   return (
-    <li>
-      <details className="ct-item">
-        <summary className="ct-line">
-          <span className="ct-who">
+    <li className={r.tone ? `tone-${r.tone}` : undefined}>
+      <details className="ct2-item">
+        <summary className="ct2-row">
+          <span className="ct2-who">
             <b>{r.name}</b>
-            <span>{r.positions.join('/')} · {r.age ?? '–'}y · {r.avg?.toFixed(1) ?? '–'}</span>
-            {showTag && <i className={`ct-flag ${TAG[r.status]}`}>{r.statusLabel}</i>}
+            <span><ClubDot code={r.club} size={13} />{r.positions.join('/')} · {r.age ?? '–'}</span>
           </span>
-          <span className="ct-c ct-len">{yrs}y<em>{until}</em></span>
-          <span className="ct-c">{r.clause != null ? ktShort(r.clause) : <span className="muted">{finalYr ? '—' : r.tier === 'none' ? 'None' : '—'}</span>}<em>{r.clause != null ? 'KT' : r.tier === 'high' ? 'high' : ''}</em></span>
-          <span className={`ct-c ${surplus >= 5 ? 'kc-up' : surplus <= -5 ? 'kc-down' : ''}`}>{k$(r.rate)}<em>{surplus > 0 ? '+' : surplus < 0 ? '−' : '±'}{k$(Math.abs(surplus))}</em></span>
-          <span className="ct-c ct-sal">{k$(r.salary)}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.homeGrown ? 'HG' : '\u00a0'}</em></span>
+          <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
+          <Trend v={r.trend} />
+          <span className="ct2-c">{k$(r.rate)}{surplus != null ? <em className={surplus >= 5 ? 'kc-up' : surplus <= -5 ? 'kc-down' : ''}>{surplus > 0 ? '+' : surplus < 0 ? '−' : '±'}{k$(Math.abs(surplus))}</em> : <em>value</em>}</span>
+          <span className="ct2-c ct2-sal">{r.salary != null ? k$(r.salary) : '—'}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.salary == null ? 'unsigned' : ' '}</em></span>
+          <span className="ct2-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
+          <span className="sr-only">Show contract details for {r.name}</span>
         </summary>
-        <div className="ct-more">
-          <div className="ct-more-row">
-            <span className="kc-pips" role="img" aria-label={`Contracted to ${until}`}>
-              {years.map((y) => <i key={y} className={r.end >= y && r.start <= y ? 'on' : r.extEnd && r.extEnd >= y && y > r.end ? 'next' : ''} />)}
-            </span>
-            <span>{r.club ?? ''}{r.homeGrown ? ' · home-grown' : ''} · clause {r.tier === 'none' ? 'off' : r.tier}{r.clause != null ? ` (${kt(r.clause)})` : finalYr ? ' (none in final year)' : ''}</span>
-            <Link href={`/players/${r.playerId}`} className="kc-link">Profile →</Link>
-          </div>
-          {canManage && !locked && (
-            <div className="ct-acts">
-              {!finalYr && <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={windowOpen} />}
+        <div className="ct2-more">
+          <div className="ct2-status"><span className={`kc-tag ${TAG[r.status]}`}>{r.statusLabel}</span>{r.homeGrown && <span className="kc-tag high">Home-grown</span>}</div>
+          <dl className="ct2-dl">
+            <div><dt>Salary</dt><dd>{r.salary != null ? `${k$(r.salary)} a year` : 'Not contracted'}</dd></div>
+            <div><dt>Contract</dt><dd>{r.start != null && r.end != null ? `${r.start}–${r.end}` : '—'}{yrs != null && <span className="kc-pips" style={{ marginLeft: 8 }}>{years.map((y) => <i key={y} className={r.end != null && r.start != null && r.end >= y && r.start <= y ? 'on' : r.extEnd && r.extEnd >= y && r.end != null && y > r.end ? 'next' : ''} />)}</span>}</dd></div>
+            {r.extSalary != null && <div><dt>Extension</dt><dd>{k$(r.extSalary)} a year to {r.extEnd}</dd></div>}
+            <div><dt>Release clause</dt><dd>{r.clause != null ? `${kt(r.clause)} (${r.tier})` : r.salary == null ? '—' : finalYr ? 'None in final year' : r.tier === 'none' ? 'No clause' : '—'}</dd></div>
+            <div><dt>Market value</dt><dd>{k$(r.rate)}{surplus != null ? ` · ${surplus >= 0 ? `${k$(surplus)} under` : `${k$(-surplus)} over`} his salary` : ''}</dd></div>
+            <div><dt>2026</dt><dd>{r.avg?.toFixed(1) ?? '–'} avg · {r.games} games</dd></div>
+            {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead money</dd></div>}
+          </dl>
+          <div className="ct2-acts">
+            <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
+            {canManage && !locked && <>
+              {!finalYr && r.salary != null && <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={windowOpen} />}
               {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.round(((r.clause ?? r.rate * 100) * 0.4) / 100) * 100} /> : null}
               <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} />
-            </div>
-          )}
+            </>}
+          </div>
         </div>
       </details>
     </li>
