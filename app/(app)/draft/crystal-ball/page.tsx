@@ -3,6 +3,7 @@ import { isLegacyLeague } from '@/lib/league-scope';
 import Link from 'next/link';
 import { DraftTabs } from '@/components/DraftTabs';
 import { InfoPopover } from '@/components/InfoPopover';
+import { ExpandRow } from '@/components/ExpandRow';
 import { HighlightsLink, ProfileSheet } from '@/components/ProfileSheet';
 import { draftProfileByName, draftProfileFor } from '@/lib/draft-profiles';
 import { YearSelect } from '@/components/YearSelect';
@@ -47,6 +48,9 @@ type Past = {
 };
 
 const base = D.meta.trainHits / D.meta.trainN;
+/** One short position label: KEY FWD, KEY DEF, MID, WING, FWD, DEF, RUC. */
+const SHORT_POS: Record<string, string> = { 'Key position utility': 'KEY FWD', 'Key FWD': 'KEY FWD', 'Tall FWD': 'KEY FWD', 'Tall forward': 'KEY FWD', 'Key DEF': 'KEY DEF', 'Tall DEF': 'KEY DEF' };
+const shortPos = (p: string) => SHORT_POS[p] ?? (p.split('/')[0].replace(/^Small /, '').toUpperCase() || '–');
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 
 function reasonText(r: Reason, p: Prospect) {
@@ -231,7 +235,7 @@ const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
 function Header({ view, info }: { view: 'next' | 'past' | 'fa'; info?: React.ReactNode }) {
   return (
     <div className="cb-head">
-      <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
+      <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>Crystal ball <span aria-hidden="true">🔮</span></h1>
       <DraftTabs active="crystal" showCrystal />
       <div className="cb-pick">
         <CrystalViewSelect view={view} />
@@ -509,25 +513,38 @@ function CrystalBallView() {
           <h2 className="h2 cb-h2">All prospects, by star chance</h2>
           <div className="table-box">
             <table className="squad cb-table">
-              <thead><tr><th style={{ width: 28 }}>#</th><th>Prospect</th><th style={{ width: 62, textAlign: 'center' }}>Star 90+</th><th style={{ width: 52, textAlign: 'center' }}>80+</th><th style={{ width: 52, textAlign: 'center' }} title="Star chance from draft slot alone">Slot</th><th style={{ width: 46, textAlign: 'center' }}>Jr FP</th><th>Why</th></tr></thead>
+              <thead><tr><th style={{ width: 28 }}>#</th><th>Prospect</th><th style={{ width: 62, textAlign: 'center' }}>Star</th><th style={{ width: 52, textAlign: 'center' }}>80+</th><th style={{ width: 52, textAlign: 'center' }} title="Star chance from draft slot alone">Slot</th><th className="cb-d" style={{ width: 46, textAlign: 'center' }}>Jr FP</th><th className="cb-d">Why</th><th className="xr-btn"><span className="sr-only">Details</span></th></tr></thead>
               <tbody>
-                {ranked.map((p, i) => (
-                  <tr key={p.name}>
-                    <td className="mono muted">{i + 1}</td>
-                    <td style={{ fontWeight: 600, whiteSpace: 'nowrap' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>{p.name}<InfoPopover title={p.name}><WhyDetails p={p} /></InfoPopover></span>
-                      <div className="muted" style={{ fontWeight: 400, fontSize: 11 }}>
-                        {p.drafted ? `Pick ${p.rank}` : `Board #${p.slot ?? p.rank}`} · {p.position}{p.height ? ` · ${p.height}cm` : ''}{p.role !== 'Midfielder' ? ` · ${p.role}` : ''}
-                        {(() => { const prof = draftProfileFor(2026, p.name); return prof ? <> · <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `Consensus #${p.slot ?? p.rank}`} · 2026 draft`} /></> : null; })()}
+                {ranked.map((p, i) => {
+                  const prof = draftProfileFor(2026, p.name);
+                  const where = p.drafted ? `Pick ${p.rank}${p.club ? ` · ${p.club}` : ''}` : `AFL #${p.slot ?? p.rank}`;
+                  const why = <>{p.ceiling && <><CeilingPill small />{' '}</>}{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</>;
+                  return (
+                    <ExpandRow key={p.name} cols={8} label={p.name} cells={<>
+                      <td className="mono muted">{i + 1}</td>
+                      <td className="cb-who">
+                        <b>{p.name}</b>
+                        <div className="muted">
+                          {where} · {shortPos(p.position)}{p.height ? ` · ${p.height}cm` : ''} ·{' '}
+                          {prof
+                            ? <ProfileSheet name={p.name} profile={prof} highlights={2026} context={`${where} · 2026 draft`} extra={<WhyDetails p={p} />} />
+                            : <InfoPopover title={p.name} label="Draft profile"><WhyDetails p={p} /></InfoPopover>}
+                        </div>
+                      </td>
+                      <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={14} /></td>
+                      <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
+                      <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
+                      <td className="mono cb-d" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
+                      <td className="cb-d" style={{ fontSize: 11, lineHeight: 1.35 }}>{why}</td>
+                    </>} detail={
+                      <div className="cb-more">
+                        <span><b>Junior fantasy</b> {p.jFP?.toFixed(0) ?? '–'}{p.jT != null ? ` · ${p.jT.toFixed(1)} tackles` : ''}{p.jD != null ? ` · ${p.jD.toFixed(1)} disposals` : ''}</span>
+                        <span>{why}</span>
+                        <span className="muted">{p.junior}{p.role ? ` · ${p.role}` : ''}</span>
                       </div>
-                    </td>
-                    <td style={{ textAlign: 'center' }}><Chance value={p.chance} size={14} /></td>
-                    <td className="mono" style={{ textAlign: 'center' }}>{Math.round(p.relevant)}%</td>
-                    <td className="mono muted" style={{ textAlign: 'center' }}>{Math.round(p.positionOnly)}%</td>
-                    <td className="mono" style={{ textAlign: 'center' }}>{p.jFP?.toFixed(0) ?? '–'}</td>
-                    <td style={{ fontSize: 11, lineHeight: 1.35 }}>{p.ceiling && <><CeilingPill small />{' '}</>}{p.reasons.slice(0, 3).map((r) => `${r.effect > 0 ? '▲' : '▼'} ${reasonText(r, p)}`).join('  ')}</td>
-                  </tr>
-                ))}
+                    } />
+                  );
+                })}
               </tbody>
             </table>
           </div>

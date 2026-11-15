@@ -18,8 +18,8 @@ export function HighlightsLink({ name, year = 2026 }: { name: string; year?: num
 }
 
 /** The "Draft profile" link and its pop-up sheet: pick line, optional highlights button, then the Rookie Me profile. */
-export function ProfileSheet({ name, profile, context, label = 'Draft profile', highlights }: {
-  name: string; profile: DraftProfile; context: string; label?: string; highlights?: number;
+export function ProfileSheet({ name, profile, context, label = 'Draft profile', highlights, extra }: {
+  name: string; profile: DraftProfile; context: string; label?: string; highlights?: number; extra?: React.ReactNode;
 }) {
   return (
     <InfoPopover title={name} label={label}>
@@ -30,6 +30,7 @@ export function ProfileSheet({ name, profile, context, label = 'Draft profile', 
           {highlights === 2026 && RM[name] && <JuniorStats comps={RM[name]} name={name} />}
         </div>
       )}
+      {extra}
       <DraftProfileCard d={profile} />
     </InfoPopover>
   );

@@ -26,19 +26,22 @@ function Spark({ v, up }: { v: number[]; up: boolean }) {
 export async function MarketMovers() {
   const league = await getLeague();
   const team = new Map(league.teams.map((t) => [t.id, t.short_code]));
-  const movers: Mover[] = [];
+  const week: Mover[] = [], season: Mover[] = [];
   for (const p of [...league.players, ...league.freeAgents]) {
     if ((p.games ?? 0) < 5) continue;
     const full = valueTrend(p, 999);
     if (full.length < 3) continue;
-    const now = full[full.length - 1], prev = full[full.length - 2];
-    if (prev < 6) continue;
-    movers.push({ p, now, prev, diff: now - prev, pct: (now - prev) / prev, spark: full.slice(-8), owner: p.team_id ? team.get(p.team_id) ?? null : null });
+    const now = full[full.length - 1], prev = full[full.length - 2], start = full[0];
+    const owner = p.team_id ? team.get(p.team_id) ?? null : null;
+    if (prev >= 6) week.push({ p, now, prev, diff: now - prev, pct: (now - prev) / prev, spark: full.slice(-8), owner });
+    if (start >= 6) {
+      const step = Math.max(1, Math.floor((full.length - 1) / 11));
+      const spark = full.filter((_, i) => i % step === 0 || i === full.length - 1);
+      season.push({ p, now, prev: start, diff: now - start, pct: (now - start) / start, spark, owner });
+    }
   }
-  const risers = movers.filter((m) => m.diff > 0).sort((a, b) => b.diff - a.diff).slice(0, 5);
-  const fallers = movers.filter((m) => m.diff < 0).sort((a, b) => a.diff - b.diff).slice(0, 5);
-  if (!risers.length && !fallers.length) return null;
-  const up = movers.filter((m) => m.diff > 0).length, dn = movers.filter((m) => m.diff < 0).length;
+  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, 5);
+  if (!week.length && !season.length) return null;
 
   const List = ({ title, rows, rise }: { title: string; rows: Mover[]; rise: boolean }) => (
     <div className="mm-col">
@@ -50,20 +53,30 @@ export async function MarketMovers() {
           <span className="mm-num"><b>${Math.round(m.now)}k</b><em className={rise ? 'up' : 'dn'}>{rise ? '+' : '−'}{Math.abs(Math.round(m.pct * 100))}%</em></span>
         </Link>
       ))}
+      {!rows.length && <p className="mm-foot" style={{ padding: '8px 0' }}>Nobody.</p>}
+    </div>
+  );
+  const Pane = ({ xs, cls }: { xs: Mover[]; cls: string }) => (
+    <div className={`mm-pane ${cls}`}>
+      <span className="mm-breadth"><b className="up">▲ {xs.filter((m) => m.diff > 0).length} up</b><b className="dn">▼ {xs.filter((m) => m.diff < 0).length} down</b></span>
+      <div className="mm-grid">
+        <List title="Top risers" rows={top(xs, true)} rise />
+        <List title="Top fallers" rows={top(xs, false)} rise={false} />
+      </div>
     </div>
   );
 
   return (
     <section className="mm card" aria-labelledby="mm-h">
+      <input type="radio" name="mm-t" id="mm-wk" defaultChecked hidden />
+      <input type="radio" name="mm-t" id="mm-ss" hidden />
       <div className="mm-head">
-        <div><span className="mm-eyebrow">Market report · last round</span><h2 id="mm-h">Risers &amp; fallers</h2></div>
-        <span className="mm-breadth"><b className="up">▲ {up}</b><b className="dn">▼ {dn}</b></span>
+        <div><span className="mm-eyebrow">Market report</span><h2 id="mm-h">Risers &amp; fallers</h2></div>
+        <div className="mm-tabs" role="tablist"><label htmlFor="mm-wk" role="tab">Last week</label><label htmlFor="mm-ss" role="tab">Season</label></div>
       </div>
-      <div className="mm-grid">
-        <List title="Top risers" rows={risers} rise />
-        <List title="Top fallers" rows={fallers} rise={false} />
-      </div>
-      <p className="mm-foot">Market value = contract rate from a rolling six-game average. Tap a player for his profile.</p>
+      <Pane xs={week} cls="mm-p-wk" />
+      <Pane xs={season} cls="mm-p-ss" />
+      <p className="mm-foot">Market value = contract rate from a rolling six-game average. Season compares with where he started the year.</p>
     </section>
   );
 }
