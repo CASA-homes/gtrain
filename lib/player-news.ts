@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'T. Greene', tag: 'Role', date: '2026-11-14', title: 'Greene settles in at Geelong',
+    body: 'Fresh off his free agency move from GWS, Greene says he expects a similar role at the Cats: mostly forward with a bit of midfield, and high half-forward an option. He’s 33 but still averaged 86 in 2026. If he gets those midfield minutes under Chris Scott, Serong So’Right have a handy forward-line keeper.',
+  },
+  {
+    player: 'I. Heeney', tag: 'Off-field', date: '2026-11-14', title: 'Police drop Pullman matter, civil claims loom',
+    body: 'Victoria Police confirmed no criminal charges will be laid over the Pullman Hotel incident, citing insufficient evidence, though civil claims are still being prepared. The AFL says it could revisit things if new information surfaces. No 2027 sanction has been announced, so Heeney, last season’s Swans best and fairest, looks set for round 1.',
+  },
+  {
     player: 'G. Wardlaw', tag: 'Injury', date: '2026-11-13', title: 'Wardlaw nursing a minor MCL sprain',
     body: 'North say Wardlaw picked up a low-grade MCL sprain over the break and should rejoin the main group within a fortnight. It’s a small one, but after his run of hamstring dramas any missed pre-season is worth noting. Ram Dawgs will want him banking a full summer before trusting him as a keeper.',
   },
@@ -67,13 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'J. Worrell', tag: 'Off-field', date: '2026-11-04', title: 'Worrell fined after court appearance',
     body: 'Adelaide’s Worrell pleaded guilty to driving without due care over hitting a pedestrian in July, and was convicted and fined $2,400 with no licence disqualification. He’s said he accepts full responsibility. No club or AFL ban has been reported, so as it stands his 2027 availability isn’t affected.',
-  },
-  {
-    player: 'I. Heeney', tag: 'Off-field', date: '2026-11-04', title: 'Pullman saga takes a legal turn',
-    body: 'Lawyers for two women involved in the Pullman Hotel incident have reportedly sent legal letters to Sydney and the five players stood down, Heeney included. Police laid no charges, and Heeney remains eligible for round 1 after winning the Swans best and fairest. Worth watching, but no new sanction has been announced.',
-  },
-  {
-    player: 'J. Cameron', tag: 'Injury', date: '2026-10-29', title: 'Cameron’s arm still in a splint',
-    body: 'Cameron had more surgery on the forearm he broke in last year’s grand final, and he admits he might have retired if he’d sat out 2026. The arm is in a splint until a 12-week review, so his pre-season will be interrupted. Hold off counting on a full-strength start.',
   },
 ];
