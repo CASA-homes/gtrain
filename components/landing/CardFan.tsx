@@ -1,6 +1,6 @@
 'use client';
-// Sign-in page showcase: six app cards held like a hand. One lifts at a time with a caption (Smith first, then
-// Anderson's heat map, then the rest); hover or tap picks one. Anderson's heat map steps through his recent
+// Sign-in page showcase: app cards held like a hand. One lifts at a time with a caption (a player contract first,
+// then deadline day, then the rest); hover or tap picks one. Anderson's heat map steps through his recent
 // rounds on its own until someone taps a round.
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,11 +15,13 @@ export interface FanData {
 const TONE = (x: number): [string, string] => x >= 120 ? ['#1f6b3a', '#fff'] : x >= 100 ? ['#4f9a5f', '#fff'] : x >= 80 ? ['#9ccb84', '#151a16'] : x >= 70 ? ['#d6e49a', '#151a16'] : x >= 50 ? ['#f1e8a8', '#151a16'] : ['#f3c2b9', '#7a1d12'];
 const RND = (r: number) => (r === 0 ? 'OR' : r >= 25 ? (['QF', 'SF', 'PF', 'GF'][r - 25] ?? `R${r}`) : `R${r}`);
 
-const CARDS = ['history', 'rookie', 'profile', 'heat', 'trade', 'cup'] as const;
+const CARDS = ['history', 'rookie', 'profile', 'contract', 'deadline', 'heat', 'trade', 'cup'] as const;
 type Key = typeof CARDS[number];
-const ORDER: Key[] = ['profile', 'heat', 'cup', 'trade', 'rookie', 'history'];
-const HERO: Partial<Record<Key, number>> = { profile: 0, heat: 1 };
+const ORDER: Key[] = ['contract', 'deadline', 'profile', 'heat', 'trade', 'cup', 'rookie', 'history'];
+const HERO: Partial<Record<Key, number>> = { contract: 0, deadline: 1 };
 const CAPTION: Record<Key, [string, string]> = {
+  contract: ['Player contracts', 'Every keeper on a contract: salary, length, release clause and live market value.'],
+  deadline: ['Deadline day', 'The mid-season window. Clauses paid, matches, signings and trades, all live.'],
   profile: ['Player profiles', 'Every attribute out of 20, and a keeper value rating for each player.'],
   heat: ['Heat maps', 'A heat map for every game. Tap any round in his form line to see where he played.'],
   cup: ['Knockout Cup', 'Run a cup alongside the season, with draft picks for the winner and runner-up.'],
@@ -137,6 +139,48 @@ function HistoryCard({ rows }: { rows: Honour[] }) {
   );
 }
 
+function ContractCard() {
+  const vals = [62, 64, 63, 68, 71, 70, 76, 80, 84, 83, 88, 93];
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const pts = vals.map((v, i) => `${(i / (vals.length - 1)) * 230 + 2},${44 - ((v - lo) / (hi - lo)) * 38}`).join(' ');
+  return (
+    <>
+      <div className="kl-pf"><span className="kl-face">MH</span><div><b>Max Hall</b><small>St Kilda · MID · 24</small></div><div className="kl-avg"><b>$81k</b><small>a year</small></div></div>
+      <div className="kl-body">
+        <div className="kl-cg">
+          <div><span>Until</span><b>2029</b><i className="kl-pips"><em className="on" /><em className="on" /><em className="on" /><em /><em /></i></div>
+          <div><span>Release clause</span><b>12,150 KT</b><small>Standard</small></div>
+          <div><span>Market value</span><b>$93k</b><small className="kl-up">▲ $12k under market</small></div>
+          <div><span>Status</span><b>Bargain</b><small>3 yrs left</small></div>
+        </div>
+        <div className="kl-spark">
+          <svg viewBox="0 0 234 48" aria-hidden="true"><polyline points={`2,48 ${pts} 232,48`} fill="rgb(31 107 58 / .12)" stroke="none" /><polyline points={pts} fill="none" stroke="#1f6b3a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <span>Market value this season</span>
+        </div>
+        <div className="kl-acts"><span>Extend</span><span>Set clause</span><span>Offer</span></div>
+      </div>
+    </>
+  );
+}
+
+function DeadlineCard() {
+  const feed: [string, string, string][] = [
+    ['11:02', 'Ram Dawgs paid Max Hall’s clause', '12,150 KT'],
+    ['11:40', 'Bodega Boys matched. Clause now High', 'Kept'],
+    ['12:15', 'Coastal Kings signed L. Whitfield', '2 yrs · $78k'],
+    ['12:31', 'Sparrow traded for pick 4', '+2,000 KT'],
+  ];
+  return (
+    <>
+      <div className="kl-h"><b>Deadline day</b><span className="kl-live"><i />Window open</span></div>
+      <div className="kl-body">
+        <div className="kl-count"><div><b>01</b><span>day</span></div><div><b>04</b><span>hrs</span></div><div><b>22</b><span>mins</span></div></div>
+        <ul className="kl-feed">{feed.map(([t, a, b]) => <li key={t}><span>{t}</span><p>{a}</p><b>{b}</b></li>)}</ul>
+      </div>
+    </>
+  );
+}
+
 function TradeCard() {
   return (
     <>
@@ -169,7 +213,7 @@ function CupCard() {
 }
 
 export function CardFan({ data }: { data: FanData }) {
-  const [cur, setCur] = useState<Key>('profile');
+  const [cur, setCur] = useState<Key>('contract');
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -184,11 +228,11 @@ export function CardFan({ data }: { data: FanData }) {
           const back = !(k in HERO), up = cur === k, off = i - mid;
           const z = up ? 30 : k in HERO ? 20 - HERO[k]! : 10 - Math.abs(off);
           const base = `translate(-50%,-50%) translateX(calc(${off} * var(--spread))) translateY(${Math.abs(off) * 16 + (back ? 18 : 0)}px) rotate(${off * 6}deg)`;
-          const transform = up ? `${base} translateY(-56px) rotate(${-off * 6}deg) scale(1.08)` : `${base}${back ? ' scale(.88)' : k === 'profile' ? ' scale(1.06)' : ''}`;
+          const transform = up ? `${base} translateY(-56px) rotate(${-off * 6}deg) scale(1.08)` : `${base}${back ? ' scale(.88)' : k === 'contract' ? ' scale(1.06)' : ''}`;
           return (
-            <div key={k} className={`kl-card ${back ? 'back' : ''} ${up ? 'up' : ''} ${k === 'heat' || k === 'profile' ? 'tall' : ''}`} style={{ transform, zIndex: z }}
+            <div key={k} className={`kl-card ${back ? 'back' : ''} ${up ? 'up' : ''} ${k === 'heat' || k === 'profile' || k === 'contract' || k === 'deadline' ? 'tall' : ''}`} style={{ transform, zIndex: z }}
               onMouseEnter={() => { setPaused(true); setCur(k); }} onClick={() => { setPaused(true); setCur(k); }}>
-              {k === 'profile' ? <ProfileCard /> : k === 'heat' ? <HeatCard d={data.anderson} active={cur === 'heat'} /> : k === 'rookie' ? <RookieCard d={data.drever} />
+              {k === 'contract' ? <ContractCard /> : k === 'deadline' ? <DeadlineCard /> : k === 'profile' ? <ProfileCard /> : k === 'heat' ? <HeatCard d={data.anderson} active={cur === 'heat'} /> : k === 'rookie' ? <RookieCard d={data.drever} />
                 : k === 'history' ? <HistoryCard rows={data.honours} /> : k === 'trade' ? <TradeCard /> : <CupCard />}
             </div>
           );
