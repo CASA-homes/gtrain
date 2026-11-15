@@ -3,6 +3,7 @@
 // Cap numbers live in the Finances tab. Shows nothing until the commish has set contracts up.
 import Link from 'next/link';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
+import { NewsTicker } from '@/components/contracts/NewsTicker';
 import './contracts.css';
 
 const ago = (iso: string) => {
@@ -31,7 +32,7 @@ export async function ContractsStrip({ teamId, mine }: { teamId: number; mine: b
     const over = club.nextSalary - club.keeperCapNext;
     if (over > 0) alerts.push({ text: `${moneyK(over)} over the ${s.season + 1} keeper cap.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
   }
-  const news = d.transfers.filter((t) => t.from_team === teamId || t.to_team === teamId || t.kind === 'pending' || t.kind === 'draft').slice(0, 4);
+  const news = d.transfers.filter((t) => t.from_team === teamId || t.to_team === teamId || t.kind === 'pending' || t.kind === 'draft').slice(0, 8);
   if (!alerts.length && !news.length) return null;
 
   return (
@@ -43,17 +44,11 @@ export async function ContractsStrip({ teamId, mine }: { teamId: number; mine: b
       {alerts.map((a, i) => (
         <Link key={i} href={a.href} className={`ch-alert ${a.tone}`}><i aria-hidden="true" />{a.text}<span aria-hidden="true">›</span></Link>
       ))}
-      {news.length > 0 && (
-        <div className="kc-news">
-          {news.map((t) => (
-            <div key={t.id}>
-              <span className="kc-kind">{KIND[t.kind] ?? t.kind}</span>
-              <span className="ch-news-txt">{t.player_id ? <b>{name(t.player_id)}</b> : null}{t.player_id && t.from_team && t.to_team && t.from_team !== t.to_team ? ` ${team(t.from_team)} → ${team(t.to_team)}` : ''}{t.note ? `${t.player_id ? ' · ' : ''}${t.note}` : ''}</span>
-              <span className="muted" style={{ fontSize: 11 }}>{ago(t.created_at)}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      <NewsTicker items={news.map((t) => ({
+        kind: KIND[t.kind] ?? t.kind,
+        text: `${t.player_id ? name(t.player_id) : ''}${t.player_id && t.from_team && t.to_team && t.from_team !== t.to_team ? ` ${team(t.from_team)} → ${team(t.to_team)}` : ''}${t.note ? `${t.player_id ? ' · ' : ''}${t.note}` : ''}`,
+        ago: ago(t.created_at),
+      }))} />
     </section>
   );
 }

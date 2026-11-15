@@ -1,0 +1,140 @@
+'use client';
+// Finances: interactive pieces. Rookie-slot assign, term deposit and loan forms, and the cap simulator.
+import { useMemo, useState } from 'react';
+import { makeDeposit, offerLoan, respondLoan, setRookieSlot } from '@/app/(app)/contracts/actions';
+import { useRun } from '@/components/contracts/client';
+
+const k$ = (k: number) => `$${Math.round(k).toLocaleString('en-AU')}k`;
+const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
+
+export function RookieAssign({ playerId, season, on, label }: { playerId: number; season: number; on: boolean; label?: string }) {
+  const { pending, go, note } = useRun();
+  return (
+    <span style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
+      <button type="button" className={`kc-btn small ${on ? '' : 'sage'}`} disabled={pending} onClick={() => go(() => setRookieSlot(playerId, season, !on))}>
+        {pending ? '…' : on ? 'Remove' : label ?? 'Assign'}
+      </button>
+      {note}
+    </span>
+  );
+}
+
+export function DepositForm({ bank, rate }: { bank: number; rate: number }) {
+  const { pending, go, note } = useRun();
+  const [amt, setAmt] = useState('1000');
+  const n = Math.floor(Number(amt) || 0);
+  return (
+    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => makeDeposit(n), `Lock ${kt(n)} until season end? You get ${kt(n + Math.floor((n * rate) / 100))} back at rollover.`); }}>
+      <label>Amount<input type="number" min={100} step={100} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
+      <div className="fn-calc"><span>Back at season end</span><b>{kt(n + Math.floor((n * rate) / 100))}</b><em>+{rate}%</em></div>
+      <button type="submit" className="kc-btn sage" disabled={pending || n < 100 || n > bank}>Lock it in</button>
+      {note}
+    </form>
+  );
+}
+
+export function LoanForm({ bank, teams, maxRate }: { bank: number; teams: { id: number; name: string }[]; maxRate: number }) {
+  const { pending, go, note } = useRun();
+  const [to, setTo] = useState(teams[0]?.id ?? 0);
+  const [amt, setAmt] = useState('1000');
+  const [rate, setRate] = useState(String(Math.min(10, maxRate)));
+  const n = Math.floor(Number(amt) || 0), r = Math.floor(Number(rate) || 0);
+  return (
+    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => offerLoan(to, n, r)); }}>
+      <label>Lend to<select value={to} onChange={(e) => setTo(Number(e.target.value))}>{teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
+      <div className="fn-two">
+        <label>Amount<input type="number" min={100} step={100} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
+        <label>Interest %<input type="number" min={0} max={maxRate} value={rate} onChange={(e) => setRate(e.target.value)} inputMode="numeric" /></label>
+      </div>
+      <div className="fn-calc"><span>Repaid at season end</span><b>{kt(n + Math.floor((n * r) / 100))}</b><em>+{kt(Math.floor((n * r) / 100))}</em></div>
+      <button type="submit" className="kc-btn dark" disabled={pending || n < 100 || n > bank}>Offer the loan</button>
+      {note}
+    </form>
+  );
+}
+
+export function LoanRespond({ id, accept, label, kind = 'sage' }: { id: number; accept: boolean; label: string; kind?: 'sage' | 'plain' }) {
+  const { pending, go, note } = useRun();
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}><button type="button" className={`kc-btn small ${kind === 'sage' ? 'sage' : ''}`} disabled={pending} onClick={() => go(() => respondLoan(id, accept))}>{label}</button>{note}</span>;
+}
+
+/** The cap bar: salary, cap-free rookie, room, keeper hard cap and the in-season soft cap, with brackets under it. */
+export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }: { salary: number; rookie: number; keeperCap: number; seasonCap: number; taxLine: number; label: string }) {
+  const max = seasonCap;
+  const pc = (v: number) => `${Math.max(0, Math.min(100, (v / max) * 100))}%`;
+  const over = salary > keeperCap;
+  return (
+    <div className="fn-cap">
+      <div className="fn-cap-top">
+        <span style={{ left: 0 }}><b>{k$(salary)}</b>{label}</span>
+        <span style={{ left: pc(Math.min(salary, keeperCap) + (keeperCap - Math.min(salary, keeperCap)) / 2), transform: 'translateX(-50%)' }} className={over ? 'dn' : 'up'}><b>{over ? k$(salary - keeperCap) : k$(keeperCap - salary)}</b>{over ? 'over keeper cap' : 'under keeper cap'}</span>
+      </div>
+      <div className="fn-bar">
+        <i className="sal" style={{ width: pc(Math.min(salary, max)) }} />
+        {rookie > 0 && <i className="rook" style={{ left: pc(Math.min(salary, max)), width: pc(rookie) }} title={`${k$(rookie)} cap-free rookie`} />}
+        <i className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }} />
+        <s className="hard" style={{ left: pc(keeperCap) }} />
+        <s className="tax" style={{ left: pc(taxLine) }} title={`Tax line ${k$(taxLine)}`} />
+      </div>
+      <div className="fn-brackets">
+        <div style={{ left: 0, width: pc(keeperCap) }}><span>Keeper hard cap · {k$(keeperCap)}</span></div>
+        <div className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }}><span>In-season +{k$(seasonCap - keeperCap)}</span></div>
+      </div>
+      <div className="fn-legend"><span><i className="sal" />Salary</span>{rookie > 0 && <span><i className="rook" />Cap-free rookie</span>}<span><i className="soft" />Soft cap zone</span><span><i className="tax" />Tax {k$(taxLine)}</span></div>
+    </div>
+  );
+}
+
+export interface SimPlayer { id: number; name: string; salary: number; next: number | null; final: boolean; games: number; rate: number; rookieNow: boolean; dead: number; homeGrown: boolean }
+type Move = { kind: 'rookie' | 'release' | 'walk' | 'extend'; id: number };
+
+/** Cap simulator: toggle moves and watch next season's keeper salary. Nothing is saved. */
+export function CapSimulator({ players, keeperCap, nextSalary, kept, deficitMax, homeGrownPct, seasonCap, season }: {
+  players: SimPlayer[]; keeperCap: number; nextSalary: number; kept: number; deficitMax: number; homeGrownPct: number; seasonCap: number; season: number;
+}) {
+  const [moves, setMoves] = useState<Move[]>([]);
+  const has = (kind: Move['kind'], id: number) => moves.some((m) => m.kind === kind && m.id === id);
+  const toggle = (kind: Move['kind'], id: number) => setMoves((ms) => {
+    if (ms.some((m) => m.kind === kind && m.id === id)) return ms.filter((m) => !(m.kind === kind && m.id === id));
+    let out = ms.filter((m) => m.id !== id);
+    if (kind === 'rookie') out = out.filter((m) => m.kind !== 'rookie');
+    return [...out, { kind, id }];
+  });
+  const result = useMemo(() => {
+    let sal = nextSalary, keepers = kept, dead = 0;
+    for (const m of moves) {
+      const p = players.find((x) => x.id === m.id)!;
+      if (m.kind === 'rookie' && p.next != null) sal -= p.next;
+      if (m.kind === 'release' && p.next != null) { sal -= p.next; keepers -= 1; dead += p.dead; }
+      if (m.kind === 'walk' && p.next != null) { sal -= p.next; keepers -= 1; }
+      if (m.kind === 'extend') { const v = Math.round(p.rate * (p.homeGrown ? (100 - homeGrownPct) / 100 : 1)); sal += v; keepers += 1; }
+    }
+    return { sal, keepers, dead };
+  }, [moves, players, nextSalary, kept, homeGrownPct]);
+  const over = result.sal - keeperCap;
+  const status = over <= 0 ? ['ok', `${k$(-over)} under the ${k$(keeperCap)} keeper cap`] : over <= deficitMax ? ['warn', `${k$(over)} over: allowed as a deficit`] : ['bad', `${k$(over)} over: keep fewer`];
+  const rookieOptions = players.filter((p) => p.games <= 10 && p.next != null);
+  const keepers = players.filter((p) => p.next != null && !p.final).sort((a, b) => (b.next ?? 0) - (a.next ?? 0));
+  const finals = players.filter((p) => p.final && p.next == null).sort((a, b) => b.rate - a.rate);
+  const Row = ({ kind, p, label, effect }: { kind: Move['kind']; p: SimPlayer; label: string; effect: string }) => (
+    <button type="button" className={`sim-row ${has(kind, p.id) ? 'on' : ''}`} onClick={() => toggle(kind, p.id)} aria-pressed={has(kind, p.id)}>
+      <i className="sim-sw" aria-hidden="true" /><span><b>{p.name}</b><small>{label}</small></span><em className={effect.startsWith('+') ? 'up' : 'dn'}>{effect}</em>
+    </button>
+  );
+  return (
+    <div className="sim">
+      <div className={`sim-result ${status[0]}`}>
+        <span className="eyebrow">{season + 1} keeper salary · test only</span>
+        <div className="sim-big"><b>{k$(result.sal)}</b>{moves.length > 0 && <em>was {k$(nextSalary)}</em>}</div>
+        <p>{status[1]} · {result.keepers} keepers{result.keepers > 18 ? ' (max 18)' : ''}</p>
+        <CapBar salary={result.sal} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
+        <div className="sim-kpis"><div><span>Moves</span><b>{moves.length}</b></div><div><span>Dead money</span><b>{k$(result.dead)}</b></div><div><span>Draft budget</span><b>{k$(Math.max(0, seasonCap - result.sal - (33 - result.keepers) * 12))}</b></div></div>
+        {moves.length > 0 && <button type="button" className="kc-link" onClick={() => setMoves([])}>Reset</button>}
+      </div>
+      {rookieOptions.length > 0 && <div className="sim-group"><h4>Rookie slot <small>cap-free for {season + 1}</small></h4>{rookieOptions.map((p) => <Row key={`r${p.id}`} kind="rookie" p={p} label={`${p.games} games · ${k$(p.next ?? 0)}`} effect={`+${k$(p.next ?? 0)}`} />)}</div>}
+      {finals.length > 0 && <div className="sim-group"><h4>Final year <small>extend at market rate</small></h4>{finals.map((p) => <Row key={`e${p.id}`} kind="extend" p={p} label={`now ${k$(p.salary)}${p.homeGrown ? ' · home-grown −' + homeGrownPct + '%' : ''}`} effect={`−${k$(Math.round(p.rate * (p.homeGrown ? (100 - homeGrownPct) / 100 : 1)))}`} />)}</div>}
+      <div className="sim-group"><h4>Release or let go <small>signed for {season + 1}</small></h4>{keepers.map((p) => <Row key={`x${p.id}`} kind="release" p={p} label={`${k$(p.next ?? 0)}${p.dead ? ` · ${k$(p.dead)} dead money` : ''}`} effect={`+${k$(p.next ?? 0)}`} />)}</div>
+      <p className="kc-sub">Nothing here is saved. Make the real moves from Contracts and the rookie slot above.</p>
+    </div>
+  );
+}

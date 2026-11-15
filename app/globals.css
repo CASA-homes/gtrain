@@ -2455,3 +2455,25 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .ph-kc-cells > div { justify-content: space-between; gap: 2px; padding: 4px 6px; }
 .ph-kc-cells span { line-height: 1.25; }
 @media (min-width: 901px) { .ph-kc-cells > div { padding: 4px 10px; } }
+
+/* Club header: no top stripe; current premiers get a shiny gold panel; power rank / KT / salary as three equal boxes */
+.club-head.has-colour::before { display: none; }
+.club-head.is-premier { background: linear-gradient(135deg, #f7e7b0 0%, #e9c96a 38%, #f6e3a1 55%, #d9b04c 100%); border-color: #d2ab4c; }
+.club-head.is-premier::after { content: ''; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / .55) 48%, transparent 60%); background-size: 250% 100%; animation: chshine 5s ease-in-out infinite; pointer-events: none; }
+@keyframes chshine { 0% { background-position: 150% 0; } 60%, 100% { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .club-head.is-premier::after { animation: none; } }
+.club-head.is-premier .club-head-band { background: rgb(122 90 10 / .14); color: #5c4306; }
+.club-head.is-premier .club-head-art { color: #7a5a0a; opacity: .14; }
+.club-head.is-premier .club-head-name { text-decoration-color: #7a5a0a; }
+.club-head-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; position: relative; z-index: 1; }
+.club-head-stats > div { background: rgb(255 255 255 / .62); border: 1px solid rgb(0 0 0 / .06); border-radius: 12px; padding: 7px 8px; display: flex; flex-direction: column; align-items: center; text-align: center; backdrop-filter: blur(4px); }
+.club-head-stats b { font: 700 18px/1.1 var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.club-head-stats span { font: 600 9px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.club-head-rank { display: none !important; }
+@media (min-width: 641px) { .club-head-stats { min-width: 330px; } .club-head-stats b { font-size: 22px; } }
+
+@media (max-width: 640px) {
+  .club-head-body { padding-right: 56px; }
+  .club-head-more { margin-right: -42px; }
+  .club-head-stats { width: calc(100% + 42px); margin-right: -42px; }
+}
