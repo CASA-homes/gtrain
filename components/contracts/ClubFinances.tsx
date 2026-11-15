@@ -1,11 +1,13 @@
 // Clubhouse › Finances: the club's money in one place.
 //  1. Cap: this season's salary against the keeper hard cap and in-season soft cap, with the cap-free rookie shown.
-//  2. Investments: where KT has come from and gone, term deposits and loans.
-//  3. Assistant coach: suggested moves (rules for now; the chat is a template until an AI key is added).
-//  4. Rookie slot, cap simulator, money by line, cap runway, lock-in, draft budget and the token ledger.
+//     Other coaches see only this panel.
+//  2. Future seasons: committed salary against the keeper cap.
+//  3. Trades / Investments / Loans tabs: KT sales and purchases, term deposits, loans.
+//  4. Assistant coach, cap simulator, money by line, lock-in, draft budget and the token ledger.
+//  The rookie slot itself is set on the Contracts tab (this season only, before drop day).
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
-import { CapBar, CapSimulator, DepositForm, LoanForm, LoanRespond, RookieAssign, type SimPlayer } from '@/components/contracts/finance-client';
+import { CapBar, CapSimulator, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
@@ -45,15 +47,16 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
   // Cap
   const rookieNow = covers(season).find((c) => c.rookie_slot_season === season);
-  const rookieNext = covers(season + 1).find((c) => c.rookie_slot_season === season + 1);
   const nextOver = club.nextSalary - club.keeperCapNext;
   const allow = club.deficitUsed ? 0 : s.deficit_max_k;
 
   // Investments
   const flows = new Map<string, number>();
   for (const l of ledger) flows.set(bucket(l.reason), (flows.get(bucket(l.reason)) ?? 0) + l.delta);
-  const earned = ledger.filter((l) => l.delta > 0 && !/starting bank/i.test(l.reason)).reduce((t, l) => t + l.delta, 0);
-  const spent = -ledger.filter((l) => l.delta < 0).reduce((t, l) => t + l.delta, 0);
+  const TRADE_B = ['Sales and fees', 'Players bought', 'Refunds'];
+  const trades = ledger.filter((l) => TRADE_B.includes(bucket(l.reason)) || /trade/i.test(l.reason));
+  const tradeIn = trades.filter((l) => l.delta > 0).reduce((t, l) => t + l.delta, 0);
+  const tradeOut = -trades.filter((l) => l.delta < 0).reduce((t, l) => t + l.delta, 0);
   const openDeps = deposits.filter((x) => x.status === 'open');
   const locked = openDeps.reduce((t, x) => t + x.amount, 0);
   const depReturn = openDeps.reduce((t, x) => t + Math.floor((x.amount * x.rate_pct) / 100), 0);
@@ -65,11 +68,9 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const offersOut = loans.filter((l) => l.status === 'offered' && l.lender === teamId);
   const netWorth = club.bank + locked + depReturn + dueBack - dueOut;
 
-  // Rookie slot candidates (10 or fewer games, contract covering next season or this season)
-  const candidates = contracts.filter((c) => (d.players.get(c.player_id)?.career_games ?? 99) <= 10)
-    .filter((c, i, a) => a.findIndex((x) => x.player_id === c.player_id) === i)
-    .map((c) => ({ c, p: d.players.get(c.player_id), next: covers(season + 1).find((x) => x.player_id === c.player_id) }))
-    .sort((a, b) => (b.next?.salary_k ?? 0) - (a.next?.salary_k ?? 0));
+  // Rookie slot candidates: 10 or fewer games, contract covering this season.
+  const rookieLocked = !!s.rookie_lock_at && new Date(s.rookie_lock_at) <= new Date();
+  const candidates = covers(season).filter((c) => (d.players.get(c.player_id)?.career_games ?? 99) <= 10).sort((a, b) => b.salary_k - a.salary_k);
 
   // Money by line, runway
   const byLine = new Map<string, number>();
@@ -94,8 +95,8 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
   // Assistant coach (rules for now)
   const tips: { t: string; d: string; v: string }[] = [];
-  const bestRookie = candidates.find((x) => x.next && x.next.rookie_slot_season !== season + 1);
-  if (!rookieNext && bestRookie?.next) tips.push({ t: `Make ${bestRookie.p?.name ?? 'him'} your ${season + 1} rookie keeper`, d: `${bestRookie.p?.career_games ?? 0} games, so he qualifies. His ${moneyK(bestRookie.next.salary_k)} comes off your ${season + 1} cap.`, v: `+${moneyK(bestRookie.next.salary_k)}` });
+  const bestRookie = candidates[0];
+  if (!rookieNow && !rookieLocked && bestRookie) tips.push({ t: `Make ${name(bestRookie.player_id)} your ${season} rookie`, d: `${d.players.get(bestRookie.player_id)?.career_games ?? 0} games, so he qualifies. His ${moneyK(bestRookie.salary_k)} comes off your cap this season. Set it on the Contracts tab before drop day.`, v: `+${moneyK(bestRookie.salary_k)}` });
   if (nextOver > 0) {
     const cut = covers(season + 1).filter((c) => c.rookie_slot_season !== season + 1).sort((a, b) => ((d.rates.get(a.player_id) ?? 0) - a.salary_k) - ((d.rates.get(b.player_id) ?? 0) - b.salary_k))[0];
     if (cut) tips.push({ t: `Move on ${name(cut.player_id)}`, d: `Your most overpaid keeper: ${moneyK(cut.salary_k)} against a ${moneyK(d.rates.get(cut.player_id) ?? 0)} market value. Trade or release to clear ${s.season + 1} room.`, v: `+${moneyK(cut.salary_k)}` });
@@ -111,42 +112,82 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" />
         <div className="fn-kpis">
           <div><span>{season + 1} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
-          <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}</b></div>
+          <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}{canManage && !rookieLocked && <> · <Link href={`/clubhouse/${teamId}?view=contracts#rookie`} className="fn-set">{rookieNow ? 'Change' : 'Set'}</Link></>}</b></div>
           <div><span>Bank</span><b>{kt(club.bank)}</b></div>
         </div>
       </section>
 
       {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
-      <section className="kc-card" aria-labelledby="inv-h">
-        <div className="row-between"><h2 id="inv-h">Investments</h2><span className="kc-sub">Paper tokens (KT)</span></div>
-        <div className="fn-net"><div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + deposits + loans out − loans owed</em></div></div>
-        <div className="fn-split">
-          <div><span>Earned</span><b className="up">+{kt(earned)}</b></div>
-          <div><span>Spent</span><b className="dn">−{kt(spent)}</b></div>
-          <div><span>Locked</span><b>{kt(locked)}</b></div>
-          <div><span>Lent out</span><b>{kt(lent.reduce((t, l) => t + l.amount, 0))}</b></div>
+      <section className="kc-card" aria-labelledby="yr-h">
+        <div className="row-between"><h2 id="yr-h">Future seasons</h2><span className="kc-sub">Committed vs keeper cap</span></div>
+        <div className="fn-runway">
+          {committed.map(({ y, k, cap }) => (
+            <div key={y}><b>{y}</b><span className="fn-rbar"><i className={k > cap ? 'dn' : ''} style={{ width: `${Math.min(100, (k / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(cap / s.season_cap_k) * 100}%` }} /></span><em>{moneyK(k)} <span>/ {moneyK(cap)}</span></em></div>
+          ))}
         </div>
-        <div className="fn-flows">
-          {BUCKETS.map(([b]) => b).concat('Other').filter((b) => flows.get(b)).map((b) => {
-            const v = flows.get(b)!; const w = Math.min(100, (Math.abs(v) / Math.max(...[...flows.values()].map(Math.abs))) * 100);
-            return <div key={b}><span>{b}</span><span className="fn-flowbar"><i className={v >= 0 ? 'up' : 'dn'} style={{ width: `${w}%` }} /></span><b className={v >= 0 ? 'up' : 'dn'}>{v >= 0 ? '+' : '−'}{Math.abs(v).toLocaleString('en-AU')}</b></div>;
-          })}
+      </section>
+
+      <section className="kc-card fn-tabs" aria-label="Trades, investments and loans">
+        <input type="radio" name="fn-tab" id="fn-t1" defaultChecked hidden />
+        <input type="radio" name="fn-tab" id="fn-t2" hidden />
+        <input type="radio" name="fn-tab" id="fn-t3" hidden />
+        <div className="fn-tabbar" role="tablist">
+          <label htmlFor="fn-t1" role="tab">Trades</label>
+          <label htmlFor="fn-t2" role="tab">Investments</label>
+          <label htmlFor="fn-t3" role="tab">Loans{offersIn.length ? <i>{offersIn.length}</i> : null}</label>
         </div>
 
-        <div className="fn-products">
-          <div className="fn-product">
-            <div className="row-between"><b>Term deposit</b><span className="fn-pill up">{s.deposit_pct}% p.s.</span></div>
+        <div className="fn-pane fn-p1">
+          <div className="fn-split">
+            <div><span>Sales &amp; fees</span><b className="up">+{kt(tradeIn)}</b></div>
+            <div><span>Players bought</span><b className="dn">−{kt(tradeOut)}</b></div>
+          </div>
+          <div className="fn-flows">
+            {BUCKETS.map(([b]) => b).concat('Other').filter((b) => flows.get(b)).map((b) => {
+              const v = flows.get(b)!; const w = Math.min(100, (Math.abs(v) / Math.max(...[...flows.values()].map(Math.abs))) * 100);
+              return <div key={b}><span>{b}</span><span className="fn-flowbar"><i className={v >= 0 ? 'up' : 'dn'} style={{ width: `${w}%` }} /></span><b className={v >= 0 ? 'up' : 'dn'}>{v >= 0 ? '+' : '−'}{Math.abs(v).toLocaleString('en-AU')}</b></div>;
+            })}
+          </div>
+          <div className="kc-ledger" style={{ marginTop: 12 }}>
+            {trades.length ? trades.slice(0, 30).map((l) => (
+              <div key={l.id}><span className="muted">{new Date(l.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span><span>{l.reason}</span><b className={l.delta >= 0 ? 'kc-up' : 'kc-down'}>{l.delta >= 0 ? '+' : '−'}{Math.abs(l.delta).toLocaleString('en-AU')}</b></div>
+            )) : <p className="kc-sub">No sales or purchases yet. Clause buys, trades paid in KT, transfer fees and auction wins show here.</p>}
+          </div>
+        </div>
+
+        <div className="fn-pane fn-p2">
+          <div className="fn-net"><div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + deposits + loans out − loans owed</em></div></div>
+          <div className="fn-split">
+            <div><span>In the bank</span><b>{kt(club.bank)}</b></div>
+            <div><span>Locked in deposits</span><b>{kt(locked)}</b></div>
+          </div>
+          <div className="fn-product" style={{ marginTop: 12 }}>
+            <div className="row-between"><b>Term deposits</b><span className="fn-pill up">{s.deposit_pct}% p.s.</span></div>
             <p className="kc-sub">Lock KT until season end and get it back with {s.deposit_pct}% interest at rollover. You can’t touch it until then.</p>
-            {openDeps.map((x) => <div key={x.id} className="kc-kv"><span>{kt(x.amount)} locked</span><strong className="kc-up">→ {kt(x.amount + Math.floor((x.amount * x.rate_pct) / 100))}</strong></div>)}
+            {deposits.length ? deposits.map((x) => (
+              <div key={x.id} className="fn-dep">
+                <span><b>{kt(x.amount)}</b><small>{x.status === 'open' ? `Locked ${new Date(x.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })} · released at end of ${x.season}` : `Paid out at end of ${x.season}`}</small></span>
+                <strong className={x.status === 'open' ? 'kc-up' : undefined}>{x.status === 'open' ? '→ ' : ''}{kt(x.amount + Math.floor((x.amount * x.rate_pct) / 100))}<small>+{x.rate_pct}%</small></strong>
+              </div>
+            )) : <p className="kc-sub" style={{ margin: '6px 0' }}>No deposits yet.</p>}
             {mine && <DepositForm bank={club.bank} rate={s.deposit_pct} />}
           </div>
-          <div className="fn-product">
+        </div>
+
+        <div className="fn-pane fn-p3">
+          <div className="fn-split">
+            <div><span>Lent out</span><b className="up">{kt(lent.reduce((t, l) => t + l.amount, 0))}</b></div>
+            <div><span>Owed</span><b className={owed.length ? 'dn' : ''}>{kt(owed.reduce((t, l) => t + l.amount, 0))}</b></div>
+          </div>
+          <div className="fn-product" style={{ marginTop: 12 }}>
             <div className="row-between"><b>Loans</b><span className="fn-pill">up to {s.loan_max_pct}%</span></div>
             <p className="kc-sub">Lend KT to another club. They accept, the KT moves, and it’s repaid with interest at season end. Borrowers can go into the red.</p>
             {offersIn.map((l) => <div key={l.id} className="fn-loan"><span><b>{team(l.lender)}</b> offers {kt(l.amount)} at {l.rate_pct}%</span>{mine && <span style={{ display: 'flex', gap: 6 }}><LoanRespond id={l.id} accept label="Accept" /><LoanRespond id={l.id} accept={false} label="Decline" kind="plain" /></span>}</div>)}
             {offersOut.map((l) => <div key={l.id} className="fn-loan"><span>Offered {kt(l.amount)} to <b>{team(l.borrower)}</b> at {l.rate_pct}%</span>{mine && <LoanRespond id={l.id} accept={false} label="Withdraw" kind="plain" />}</div>)}
-            {lent.map((l) => <div key={l.id} className="kc-kv"><span>Lent to {team(l.borrower)}</span><strong className="kc-up">{kt(l.amount + Math.floor((l.amount * l.rate_pct) / 100))} due</strong></div>)}
-            {owed.map((l) => <div key={l.id} className="kc-kv"><span>Owed to {team(l.lender)}</span><strong className="kc-down">{kt(l.amount + Math.floor((l.amount * l.rate_pct) / 100))}</strong></div>)}
+            {lent.map((l) => <div key={l.id} className="kc-kv"><span>Lent to {team(l.borrower)} · repaid end of {l.season}</span><strong className="kc-up">{kt(l.amount + Math.floor((l.amount * l.rate_pct) / 100))} due</strong></div>)}
+            {owed.map((l) => <div key={l.id} className="kc-kv"><span>Owed to {team(l.lender)} · due end of {l.season}</span><strong className="kc-down">{kt(l.amount + Math.floor((l.amount * l.rate_pct) / 100))}</strong></div>)}
+            {loans.filter((l) => l.status === 'repaid').map((l) => <div key={l.id} className="kc-kv"><span className="muted">{l.lender === teamId ? `Lent to ${team(l.borrower)}` : `Borrowed from ${team(l.lender)}`} · repaid</span><strong className="muted">{kt(l.amount)}</strong></div>)}
+            {!offersIn.length && !offersOut.length && !lent.length && !owed.length && <p className="kc-sub" style={{ margin: '6px 0' }}>No loans.</p>}
             {mine && <LoanForm bank={club.bank} teams={d.teams.filter((t) => t.id !== teamId).map((t) => ({ id: t.id, name: t.name }))} maxRate={s.loan_max_pct} />}
           </div>
         </div>
@@ -158,21 +199,6 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           <div key={t.t} className="fn-tip"><b>{t.t}</b><em>{t.v}</em><p>{t.d}</p></div>
         ))}
         <div className="fn-ask" aria-disabled="true"><span>Ask: “Can I fit Daicos next year?”</span><em>Chat coming soon</em></div>
-      </section>
-
-      <section className="kc-card" aria-labelledby="rk-h">
-        <div className="row-between"><h2 id="rk-h">Rookie keeper slot</h2><span className="fn-pill brass">CAP-FREE</span></div>
-        <p className="kc-sub">One player with 10 or fewer games. His contract doesn’t count to your cap for his keeper season.</p>
-        <div className="kc-kv"><span>{season} rookie</span><strong>{rookieNow ? `${name(rookieNow.player_id)} · ${moneyK(rookieNow.salary_k)} off` : 'None'}</strong></div>
-        <div className="kc-kv"><span>{season + 1} rookie</span><strong>{rookieNext ? `${name(rookieNext.player_id)} · ${moneyK(rookieNext.salary_k)} off` : 'Not set'}</strong></div>
-        <div className="fn-rk">
-          {candidates.length ? candidates.map(({ c, p, next }) => (
-            <div key={c.player_id}>
-              <span><b>{p?.full_name ?? p?.name}</b><small>{p?.positions.join('/')} · {p?.career_games ?? 0} games · {next ? `${moneyK(next.salary_k)} in ${season + 1}` : `no ${season + 1} contract yet`}</small></span>
-              {canManage && next ? <RookieAssign playerId={c.player_id} season={season + 1} on={next.rookie_slot_season === season + 1} label={`Set for ${season + 1}`} /> : null}
-            </div>
-          )) : <p className="kc-sub">No one on your list has 10 or fewer games.</p>}
-        </div>
       </section>
 
       <details className="kc-card fn-simbox" open>
@@ -192,14 +218,6 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         </div>
       </section>
 
-      <section className="kc-card" aria-labelledby="yr-h">
-        <div className="row-between"><h2 id="yr-h">Cap runway</h2><span className="kc-sub">Committed vs keeper cap</span></div>
-        <div className="fn-runway">
-          {committed.map(({ y, k, cap }) => (
-            <div key={y}><b>{y}</b><span className="fn-rbar"><i className={k > cap ? 'dn' : ''} style={{ width: `${Math.min(100, (k / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(cap / s.season_cap_k) * 100}%` }} /></span><em>{moneyK(k)} <span>/ {moneyK(cap)}</span></em></div>
-          ))}
-        </div>
-      </section>
 
       <div className="fn-two-col">
         <section className="kc-card" aria-labelledby="lk-h">

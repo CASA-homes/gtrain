@@ -14,7 +14,7 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
