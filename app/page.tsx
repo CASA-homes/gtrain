@@ -42,6 +42,12 @@ const WIRE = (() => {
   ].filter(Boolean) as string[];
 })();
 
+// Keeper market ribbon: market value and change this season (illustrative).
+const TAPE: [string, string, string][] = [
+  ['HALL', '$93k', '+38'], ['GARCIA', '$66k', '+843'], ['SMITH', '$145k', '+6'], ['DAICOS', '$162k', '+11'], ['WILSON', '$49k', '+250'],
+  ['ANDERSON', '$97k', '+4'], ['ENGLISH', '$46k', '-8'], ['RANKINE', '$84k', '+9'], ['WHITFIELD', '$65k', '-14'], ['SHEEZEL', '$128k', '+19'],
+];
+
 export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const [me, sp] = await Promise.all([getMe(), searchParams]);
   return (
@@ -55,15 +61,18 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
           )}
         </nav>
       </header>
+      <div className="kl-tape" aria-label="Keeper market"><div className="kl-tape-in">{[...TAPE, ...TAPE].map(([n, v, c], i) => (
+        <span key={i}><b>{n}</b>{v}<em className={c.startsWith('-') ? 'dn' : 'up'}>{c.startsWith('-') ? '▼' : '▲'} {c.replace(/^[-+]/, '')}%</em></span>
+      ))}</div></div>
       <section className="kl-left">
         <div className="kl-mid">
         <h1 className="kl-hl">The home of your<br /><b>AFL keeper league.</b></h1>
         <ul className="kl-sell">
-          <li><b>Player contracts</b> salaries, lengths and release clauses</li>
-          <li><b>A real salary cap</b> keep 17 + 1 and stay under it</li>
-          <li><b>Signings</b> bid on free agents, pay or match clauses</li>
-          <li><b>Deadline day</b> the mid-season window, every move live</li>
-          <li><b>Trade anything</b> players, future picks and KT</li>
+          <li><b>Own the market</b> buy low, sell high</li>
+          <li><b>Contracts &amp; signings</b> sign, extend, match</li>
+          <li><b>A real salary cap</b> 17 + 1 under it</li>
+          <li><b>Deadline day</b> the mid-season window</li>
+          <li><b>Trade anything</b> players, picks, <i className="kl-kt">KT</i></li>
         </ul>
         </div>
         <div className="kl-bottom">

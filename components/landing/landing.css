@@ -205,3 +205,54 @@
   .kl-mid { margin-top: 0; padding-top: 22px; }
   .kl-fan { height: 440px; }
 }
+
+/* Keeper market ribbon under the header */
+.kl { grid-template-rows: auto auto 1fr auto; }
+.kl-tape { grid-column: 1 / -1; overflow: hidden; white-space: nowrap; border-bottom: 1px solid var(--khq-line); padding: 9px 0; mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.kl-tape-in { display: inline-block; animation: kltape 40s linear infinite; }
+.kl-tape span { display: inline-flex; align-items: baseline; gap: 7px; padding: 0 18px; border-right: 1px solid var(--khq-line); font: 500 13px var(--font); font-variant-numeric: tabular-nums; }
+.kl-tape b { font: 800 14px var(--display); letter-spacing: .04em; }
+.kl-tape em { font-style: normal; font-weight: 700; font-size: 12px; }
+.kl-tape em.up { color: #1f6b3a; } .kl-tape em.dn { color: #b5462a; }
+@keyframes kltape { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .kl-tape-in { animation: none; } }
+
+/* Value props: one line each */
+.kl-sell li { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+.kl-sell li::before { display: inline-block; vertical-align: -3px; margin-right: 10px; }
+.kl-sell li b { margin-right: 8px; }
+.kl-kt { font-style: normal; font: 700 11px var(--font); background: var(--khq-brass); color: #fff; border-radius: 99px; padding: 1px 7px; vertical-align: 1px; }
+
+/* The deck: a faded contracts page behind the cards */
+.kl-deck { position: absolute; left: 50%; top: 50%; width: min(620px, 118%); transform: translate(-50%, -50%) rotate(-7deg); background: var(--surface); border: 1px solid var(--khq-line); border-radius: 18px; padding: 10px 14px; opacity: .42; pointer-events: none;
+  mask-image: radial-gradient(85% 75% at 50% 50%, #000 45%, transparent 100%); }
+.kl-deck-head { display: flex; justify-content: space-between; padding: 4px 4px 10px; font: 800 15px var(--display); text-transform: uppercase; letter-spacing: .03em; }
+.kl-deck-head span { font: 600 12px var(--font); color: var(--muted); }
+.kl-deck-row { display: grid; grid-template-columns: minmax(0, 1.6fr) 1fr .9fr .8fr .6fr; gap: 8px; align-items: center; padding: 7px 4px; border-top: 1px solid var(--khq-line); font-size: 12px; white-space: nowrap; }
+.kl-deck-row.th { font: 700 9.5px var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.kl-deck-row > span:first-child { display: flex; flex-direction: column; min-width: 0; }
+.kl-deck-row small { font-size: 10px; color: var(--muted); }
+.kl-deck-row > span:last-child { text-align: right; }
+.kl-deck-row i { font-style: normal; font: 700 10px var(--font); padding: 2px 6px; border-radius: 5px; background: var(--khq-line); }
+.kl-deck-row i.t-pending, .kl-deck-row i.t-final { background: #f6e3d8; color: #8a3816; }
+.kl-deck-row i.t-extended, .kl-deck-row i.t-high { background: #e4ebe3; color: #2f4536; }
+.kl-deck-row i.t-rookie, .kl-deck-row i.t-draft { background: #f3ebd9; color: #6e5220; }
+/* Upright cards: the front one pops out of the deck */
+.kl-card { transition: transform .55s cubic-bezier(.34, 1.56, .64, 1), box-shadow .4s, filter .4s; }
+.kl-card.back { filter: saturate(.8) brightness(.98); }
+.kl-card.up { box-shadow: 0 34px 70px -26px rgb(20 45 30 / .6); }
+.kl-fan { --spread: 150px; }
+@media (max-width: 1100px) { .kl-fan { --spread: 120px; } }
+@media (max-width: 860px) {
+  .kl-fan { --spread: 78px; height: 430px; }
+  .kl-deck { width: 150%; }
+  .kl-tape { margin: 0 calc(-1 * max(18px, env(safe-area-inset-left, 0px))); mask-image: none; }
+  .kl-sell li { font-size: 14px; }
+  .kl-right { margin-top: 18px !important; }
+}
+.kl-deck { max-height: 520px; overflow: hidden; }
+@media (max-width: 860px) {
+  .kl-mid, .kl-bottom { position: relative; z-index: 2; }
+  .kl-deck { width: 128%; max-height: 380px; opacity: .45; }
+  .kl-sell li { font-size: 14.5px; }
+}
