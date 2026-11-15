@@ -193,6 +193,12 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={false} settings={settings} />
             </div>
           )}
+          {canManage && r.extEnd == null && r.end != null && r.salary != null && ['contract', 'final', 'rookie', 'draft'].includes(r.status) && r.end < settings.season + settings.max_years - 1 && (
+            <details className="ct2-sign ct2-ext">
+              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''}.</span></summary>
+              <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
+            </details>
+          )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>

@@ -525,3 +525,7 @@
 .cp-val { text-align: right; font: 600 13px var(--mono); color: var(--muted); }
 .cp-out { margin: 0; font-size: 12px; color: #a8461f; }
 .cp-more { font-size: 13px; font-weight: 600; align-self: flex-start; }
+.ct2-ext summary { display: flex; flex-direction: column; gap: 2px; cursor: pointer; list-style: none; }
+.ct2-ext summary::-webkit-details-marker { display: none; }
+.ct2-ext summary b::after { content: ' ▾'; color: var(--muted); }
+.ct2-ext[open] summary { margin-bottom: 6px; }

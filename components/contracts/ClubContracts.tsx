@@ -2,7 +2,7 @@
 // the coach (a clause paid on one of their players, offers on their pending free agents), final-year decisions, the
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
-import { ExtendControl, KcClock, RunButton } from '@/components/contracts/client';
+import { KcClock, RunButton } from '@/components/contracts/client';
 import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
@@ -62,7 +62,6 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     };
   });
 
-  const finalYear = contracts.filter((c) => isFinalYear(s, c) && !ownNext.has(c.player_id) && !leaving.has(c.player_id) && !faOf.has(c.player_id));
   const incomingClaims = d.claims.filter((c) => c.status === 'pending' && c.seller_team === teamId);
   const outgoingClaims = d.claims.filter((c) => c.status === 'pending' && c.buyer_team === teamId);
   const myPendingFas = d.freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === teamId);
@@ -158,27 +157,6 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         </section>
       )}
 
-      {finalYear.length > 0 && (
-        <section className="kc-card" aria-labelledby="fy-h">
-          <div className="row-between">
-            <div><h2 id="fy-h">Final year · {finalYear.length} player{finalYear.length > 1 ? 's' : ''}</h2>
-              <p className="kc-sub">{d.midseason ? 'Mid-season has passed: these players are pending free agents.' : `Extend before mid-season week or they become pending free agents and rivals can bid. Draftees included. Final-year players have no release clause.`}</p></div>
-          </div>
-          <div className="kc-grid" style={{ marginTop: 14 }}>
-            {finalYear.map((c) => {
-              const p = d.players.get(c.player_id); const rate = d.rates.get(c.player_id) ?? 0;
-              return (
-                <div key={c.id} className="kc-fy">
-                  <div className="row-between"><Link href={`/players/${c.player_id}`} style={{ fontSize: 15, fontWeight: 700, color: 'inherit' }}>{p?.name}</Link><span className="muted" style={{ fontSize: 12 }}>{playerAge(p) ?? '–'} · avg {p?.average?.toFixed(1) ?? '–'}</span></div>
-                  <div className="kc-kv"><span>Now</span><strong>{money(c.salary_k)}{c.how === 'draft' ? ' · draft deal' : ''}</strong></div>
-                  <div className="kc-kv"><span>Market rate</span><strong>{money(rate)}</strong></div>
-                  {canManage && !d.midseason ? <ExtendControl contractId={c.id} name={p?.name ?? 'him'} rate={rate} homeGrown={c.home_grown} settings={s} /> : <p className="kc-sub">Not extended.</p>}
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
 
       <section className="kc-card ct2-card" aria-labelledby="ct-h">
         <div className="row-between" style={{ marginBottom: 10 }}>

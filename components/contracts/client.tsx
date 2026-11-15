@@ -66,26 +66,30 @@ export function RunButton({ label, kind = 'dark', small, confirmText, run, disab
 }
 
 /** Extend a final-year player: pick a length and a clause, see the price, confirm. */
-export function ExtendControl({ contractId, name, rate, homeGrown, settings, signPlayerId }: {
+export function ExtendControl({ contractId, name, rate, homeGrown, settings, signPlayerId, startYear, maxYears }: {
   contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings; signPlayerId?: number;
+  /** Extensions: first added season (current end + 1) and how many years can be added. */
+  startYear?: number; maxYears?: number;
 }) {
   const sign = signPlayerId != null;
-  const [years, setYears] = useState(3);
+  const most = Math.max(1, maxYears ?? settings.max_years);
+  const [years, setYears] = useState(Math.min(3, most));
   const [tier, setTierV] = useState<Exclude<Tier, 'protected'>>('standard');
   const [open, setOpen] = useState(false);
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
-  const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1)));
+  // Signings use the length factor; extensions are market value (less home-grown discount).
+  const base = Math.max(5, Math.round(rate * (sign ? lf[years] ?? 0.933 : 1) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1)));
   const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
   const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
   const sal = salOf(tier);
-  const from = sign ? settings.season : settings.season + 1;
+  const from = sign ? settings.season : startYear ?? settings.season + 1;
   const to = from + years - 1;
   const clause = clauseOf(tier);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <label className="kc-field">Length
         <select value={years} onChange={(e) => setYears(Number(e.target.value))} aria-label={`Contract length for ${name}`}>
-          {Array.from({ length: settings.max_years }, (_, i) => i + 1).map((y) => <option key={y} value={y}>{y} yr{y > 1 ? 's' : ''} · {from}–{from + y - 1}</option>)}
+          {Array.from({ length: most }, (_, i) => i + 1).map((y) => <option key={y} value={y}>{y} yr{y > 1 ? 's' : ''} · {from}–{from + y - 1}</option>)}
         </select>
       </label>
       <div className="sgn-tiers" role="radiogroup" aria-label={`Release clause for ${name}`}>
@@ -99,7 +103,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
       </div>
       <p className="kc-sub" style={{ margin: 0 }}>Clause is set now at {tier === 'high' ? settings.clause_high_pct : settings.clause_std_pct}% of his {money(rate)} market value and doesn’t change during the deal.{homeGrown ? ` Home-grown: ${settings.home_grown_pct}% off.` : ''}</p>
       <button type="button" className="kc-btn dark" onClick={() => setOpen(true)}>
-        {sign ? 'Offer contract' : 'Extend'} · {years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
+        {sign ? 'Offer contract' : 'Extend'} · +{years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
       </button>
       {open && (
         <SignSheet
