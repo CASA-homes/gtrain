@@ -112,3 +112,17 @@ export async function saveSettings(patch: Record<string, number | boolean>): Pro
   revalidatePath('/', 'layout');
   return { ok: true, message: 'Settings saved.' };
 }
+
+// Rookie slot, term deposits, loans
+export async function setRookieSlot(playerId: number, season: number, on: boolean) {
+  return run('kc_set_rookie_slot', { pid: playerId, p_season: season, p_on: on }, (d) => (d === 'set' ? `Done. He's your cap-free rookie for ${season}.` : 'Rookie slot cleared.'));
+}
+export async function makeDeposit(amount: number) {
+  return run('kc_deposit', { amount }, () => `${kt(amount)} locked in a term deposit until season end.`);
+}
+export async function offerLoan(borrower: number, amount: number, rate: number) {
+  return run('kc_loan_offer', { p_borrower: borrower, amount, p_rate: rate }, () => `Loan of ${kt(amount)} offered at ${rate}%. It goes through when they accept.`);
+}
+export async function respondLoan(loanId: number, accept: boolean) {
+  return run('kc_loan_respond', { lid: loanId, p_accept: accept }, (d) => (d === 'active' ? 'Loan accepted. The KT is in your bank.' : d === 'cancelled' ? 'Loan offer withdrawn.' : 'Loan declined.'));
+}

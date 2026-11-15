@@ -22,7 +22,7 @@ export function KcClock({ endsAt }: { endsAt: string }) {
 }
 
 /** Run an action, show its message, refresh the page's data. */
-function useRun() {
+export function useRun() {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<Result | null>(null);
