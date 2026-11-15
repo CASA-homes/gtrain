@@ -30,7 +30,7 @@ export async function ContractsStrip({ teamId, mine }: { teamId: number; mine: b
     const finalYear = d.active.filter((c) => c.team_id === teamId && c.end_season <= s.season && !d.pending.some((p) => p.player_id === c.player_id) && !d.pendingFa.has(c.player_id)).length;
     if (finalYear && !d.midseason) alerts.push({ text: `${finalYear} in their final year. Extend before mid-season or rivals can bid.`, href: `${base}?view=contracts`, tone: 'warn' });
     const over = club.nextSalary - club.keeperCapNext;
-    if (over > 0) alerts.push({ text: `${moneyK(over)} over the ${s.season + 1} keeper cap.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
+    if (over > 0) alerts.push({ text: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? `${moneyK(over)} over the ${s.season + 1} keeper cap. Fix it by deadline day or the commish releases a player.` : `${moneyK(over)} over the ${s.season + 1} keeper cap. Deficit allowed on deadline day for ${s.deficit_fee_kt.toLocaleString('en-AU')} KT.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
   }
   const news = d.transfers.filter((t) => t.from_team === teamId || t.to_team === teamId || t.kind === 'pending' || t.kind === 'draft').slice(0, 8);
   if (!alerts.length && !news.length) return null;

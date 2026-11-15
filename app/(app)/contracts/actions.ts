@@ -20,6 +20,17 @@ async function run(fn: string, args: Record<string, unknown>, done: (data: unkno
 const kt = (n: unknown) => `${Number(n).toLocaleString('en-AU')} KT`;
 
 // Coaches
+/** Commish: void, restore or edit a contract. */
+export async function adminContract(contractId: number, action: 'void' | 'restore' | 'edit', salary?: number | null, end?: number | null) {
+  return run('kc_admin_contract', { cid: contractId, p_action: action, p_salary: salary ?? null, p_end: end ?? null },
+    (r) => (r === 'voided' ? 'Contract voided.' : r === 'restored' ? 'Contract restored.' : 'Contract updated.'));
+}
+/** Commish: release a player (e.g. a club still over the cap after deadline day). */
+export async function adminRelease(contractId: number) {
+  const me = await getMe();
+  if (!me?.is_commish) return { ok: false, message: 'Only the commish can do that.' };
+  return run('kc_release', { cid: contractId }, (d) => `Released. $${Number(d)}k dead money.`);
+}
 export async function signOwn(playerId: number, years: number, tier: string) {
   if (!(await getCoach())) return { ok: false, message: 'Guests can only look.' };
   return run('kc_sign_own', { pid: playerId, p_years: years, new_tier: tier }, (s) => `Signed: ${years} year${years > 1 ? 's' : ''} at $${Number(s)}k a year.`);
@@ -108,7 +119,7 @@ export async function saveSettings(patch: Record<string, number | boolean>): Pro
   const me = await getMe();
   if (!me?.is_commish) return { ok: false, message: 'Only the commish can change settings.' };
   const allowed = ['keeper_cap_k', 'season_cap_k', 'tax_line_k', 'tax_kt_per_k', 'start_kt', 'max_years', 'floor_def', 'floor_mid', 'floor_ruc', 'floor_fwd',
-    'clause_std', 'clause_high', 'high_pct', 'none_pct', 'home_grown_pct', 'levy_pct', 'max_buys', 'deficit_max_k', 'hold_back_k'];
+    'clause_std_pct', 'clause_high_pct', 'deficit_fee_kt', 'high_pct', 'none_pct', 'home_grown_pct', 'levy_pct', 'max_buys', 'deficit_max_k', 'hold_back_k'];
   const clean = Object.fromEntries(Object.entries(patch).filter(([k, v]) => allowed.includes(k) && Number.isFinite(Number(v))).map(([k, v]) => [k, Math.round(Number(v))]));
   const supabase = await createClient();
   const { error } = await supabase.from('kc_settings').update({ ...clean, updated_at: new Date().toISOString() }).eq('league_id', await currentLeagueId());

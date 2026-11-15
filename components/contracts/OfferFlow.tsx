@@ -42,7 +42,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const overCap = after > s.season_cap_k;
   const tooPoor = escrowNeeded > bank;
   const belowExisting = !!existing && score < existing.score;
-  const clauseKt = (t: ClauseTier) => (t === 'none' ? null : rate * (t === 'high' ? s.clause_high : s.clause_std) * s.kt_per_k * (years === 1 ? 0.5 : 1));
+  const clauseKt = (t: ClauseTier) => (t === 'none' ? null : Math.round((rate * s.kt_per_k * (t === 'high' ? s.clause_high_pct : s.clause_std_pct)) / 100));
 
   const submit = () => start(async () => {
     setError(null);
@@ -150,7 +150,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
                   <span style={{ fontWeight: 700, fontSize: 15 }}>{t === 'standard' ? 'Standard' : t === 'high' ? 'High' : 'No clause'}</span>
                   <small>Salary <strong style={{ color: 'var(--ink)' }}>{money(sal)}</strong></small>
                   <small>Clause <strong style={{ color: 'var(--ink)' }}>{c == null ? 'Can’t be bought' : kt(c)}</strong></small>
-                  <small>{t === 'standard' ? `${s.clause_std}× his rate. Halves in his final year.` : t === 'high' ? `${s.clause_high}× his rate. Costs ${s.high_pct}% more salary.` : `Only leaves in a trade you agree to. Costs ${s.none_pct}% more salary.`}</small>
+                  <small>{t === 'standard' ? `${s.clause_std_pct}% of his market value, set now.` : t === 'high' ? `${s.clause_high_pct}% of his market value. Costs ${s.high_pct}% more salary.` : `Only leaves in a trade you agree to. Costs ${s.none_pct}% more salary.`}</small>
                 </button>
               );
             })}
