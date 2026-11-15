@@ -1,0 +1,24 @@
+.bp { display: flex; flex-direction: column; gap: 12px; }
+.bp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+@media (max-width: 1000px) { .bp-grid { grid-template-columns: 1fr; } }
+.bp-card { padding: 14px 16px; border-radius: 16px; display: flex; flex-direction: column; }
+.bp-head { display: flex; align-items: center; gap: 8px; }
+.bp-head h3 { margin: 0; font: 600 16px var(--font); }
+.bp-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.bp-n { margin-left: auto; font: 700 11px var(--font); background: var(--sunk); border-radius: 99px; padding: 2px 8px; }
+.bp-note { margin: 4px 0 8px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+.bp-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); text-decoration: none; color: inherit; }
+.bp-row:hover b { text-decoration: underline; }
+.bp-who { display: flex; flex-direction: column; min-width: 0; }
+.bp-who b { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bp-who span { font-size: 11.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bp-who i { font-style: normal; font: 700 10px var(--font); align-self: flex-start; margin-top: 3px; padding: 1px 6px; border-radius: 5px; background: #fbf3e2; color: #6e5220; }
+.bp-num { display: flex; flex-direction: column; align-items: flex-end; font: 700 14px var(--font); font-variant-numeric: tabular-nums; }
+.bp-num em { font-style: normal; font: 500 11px var(--font); color: var(--muted); }
+.bp-empty { margin: 0; padding: 10px 0; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+.bp-more { padding-top: 8px; font-size: 13px; font-weight: 600; }
+.bp-kt { background: #f3f5f8; border-color: #dbe2ec; }
+.bp-form { display: flex; flex-direction: column; gap: 10px; }
+.bp-form label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); font-weight: 600; }
+.bp-form select, .bp-form input { min-height: 42px; border: 1px solid #c9cfd8; border-radius: 10px; padding: 0 10px; font: 400 14px var(--font); background: #fff; color: var(--ink); width: 100%; }
+.bp-form .btn { justify-content: center; }
