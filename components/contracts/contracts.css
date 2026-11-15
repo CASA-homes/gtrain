@@ -538,3 +538,24 @@
 .ct2-who > :first-child { flex: none; }
 .ct2-lock { display: inline-grid; place-items: center; color: #c9a227; }
 @media (min-width: 900px) { .ct2-who > span > b { font-size: 14.5px; } }
+
+/* Contract rows, three lines: icon + name / pos, yrs, trend, market, clause, salary / age and the sub figures under each */
+.ct2-cols, .ct2-row { grid-template-columns: repeat(6, minmax(0, 1fr)) 16px !important; gap: 2px 4px !important; }
+.ct2-row { padding: 8px 10px !important; align-items: start; }
+.ct2-cols { padding: 6px 10px !important; }
+.ct2-cols button, .ct2-cols button:first-child, .ct2-cols button:nth-child(3) { text-align: center !important; }
+.ct2-who { grid-column: 1 / 7; grid-row: 1; display: flex !important; flex-direction: row !important; align-items: center; gap: 8px; min-width: 0; }
+.ct2-who > b { font: 700 14px/1.2 var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ct2-row .ct2-arrow { grid-column: 7; grid-row: 1; align-self: center; }
+.ct2-row > .ct2-c, .ct2-row > .ct-trend { grid-row: 2; align-items: center !important; text-align: center; justify-self: stretch; min-width: 0; }
+.ct2-row > .ct-trend { display: flex; justify-content: center; padding-top: 1px; }
+.ct2-c { font-size: 13px; }
+.ct2-c em { display: block; margin-top: 1px; white-space: nowrap; }
+.ct2-pa { font: 600 11.5px var(--font) !important; color: var(--muted); overflow-wrap: anywhere; }
+.ct2-pa em { font: 500 11px var(--font) !important; }
+.ct2-sal { font-size: 13.5px !important; }
+.ct2-row .ct2-lock { height: 18px; }
+@media (min-width: 900px) {
+  .ct2-row { padding: 10px 16px !important; } .ct2-cols { padding: 7px 16px !important; }
+  .ct2-who > b { font-size: 15px; } .ct2-c { font-size: 14px; } .ct2-pa { font-size: 12.5px !important; }
+}
