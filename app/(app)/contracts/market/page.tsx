@@ -47,7 +47,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
         sub={<>Release clauses, pending and open free agents, and owners’ auctions. Players bought here move at season end. Coach-to-coach trades happen on the <Link href="/market" style={{ color: '#e5c98a' }}>Trademarket</Link>.</>}
         kpis={myClub ? [
           { label: 'Your bank', value: kt(myClub.bank) },
-          { label: 'Season cap room', value: moneyK(s.season_cap_k - myClub.salary), note: `${moneyK(Math.max(0, s.tax_line_k - myClub.salary))} before tax line` },
+          { label: 'Season cap room', value: moneyK(s.season_cap_k - myClub.salary) },
           { label: 'Clause buys', value: `${buysUsed} / ${s.max_buys}`, note: windowOpen ? 'this window' : 'window closed' },
         ] : []} />
 
@@ -169,7 +169,6 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                 <div style={{ marginTop: 8 }}>
                   <div className="kc-kv"><span>Bank</span><strong>{kt(myClub.bank)}</strong></div>
                   <div className="kc-kv"><span>Season cap room</span><strong>{moneyK(s.season_cap_k - myClub.salary)}</strong></div>
-                  <div className="kc-kv"><span>Room before tax line</span><strong className="kc-brass">{moneyK(Math.max(0, s.tax_line_k - myClub.salary))}</strong></div>
                   <div className="kc-kv"><span>Clause buys used</span><strong>{buysUsed} / {s.max_buys}</strong></div>
                 </div>
                 {d.myOffers.length > 0 && <>

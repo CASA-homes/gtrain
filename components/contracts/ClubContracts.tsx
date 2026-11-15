@@ -21,7 +21,8 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     );
   }
   const mine = !!d.me && !d.me.is_guest && d.me.team_id === teamId;
-  const canManage = mine || !!d.me?.is_commish;
+  // Only the club's own coach acts on its contracts. The commish fixes things from League › Overrides.
+  const canManage = mine;
   const windowOpen = !!s.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > new Date();
   const team = (id: number | null) => d.teams.find((t) => t.id === id)?.name ?? '—';
   const name = (pid: number) => d.players.get(pid)?.name ?? `Player ${pid}`;

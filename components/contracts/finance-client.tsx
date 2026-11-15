@@ -113,13 +113,12 @@ export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }:
         {rookie > 0 && <i className="rook" style={{ left: pc(Math.min(salary, max)), width: pc(rookie) }} title={`${k$(rookie)} cap-free rookie`} />}
         <i className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }} />
         <s className="hard" style={{ left: pc(keeperCap) }} />
-        <s className="tax" style={{ left: pc(taxLine) }} title={`Tax line ${k$(taxLine)}`} />
       </div>
       <div className="fn-brackets">
         <div style={{ left: 0, width: pc(keeperCap) }}><span>Keeper hard cap · {k$(keeperCap)}</span></div>
         <div className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }}><span>In-season +{k$(seasonCap - keeperCap)}</span></div>
       </div>
-      <div className="fn-legend"><span><i className="sal" />Salary</span>{rookie > 0 && <span><i className="rook" />Cap-free rookie</span>}<span><i className="soft" />Soft cap zone</span><span><i className="tax" />Tax {k$(taxLine)}</span></div>
+      <div className="fn-legend"><span><i className="sal" />Salary</span>{rookie > 0 && <span><i className="rook" />Cap-free rookie</span>}<span><i className="soft" />Soft cap zone</span></div>
     </div>
   );
 }

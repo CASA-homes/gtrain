@@ -19,7 +19,7 @@ type Loan = { id: number; lender: number; borrower: number; amount: number; rate
 
 const BUCKETS: [string, RegExp][] = [
   ['Starting bank', /starting bank/i], ['Sales and fees', /sold|transfer fee|compensation|received/i], ['Refunds', /refund/i],
-  ['Players bought', /clause paid|won auction|offer held|trade: paid|matched/i], ['Deposits', /term deposit/i], ['Loans', /loan/i], ['Tax and fines', /tax|fine/i],
+  ['Players bought', /clause paid|won auction|offer held|trade: paid|matched/i], ['Deposits', /term deposit/i], ['Loans', /loan/i], ['Fees and fines', /fee|fine/i],
 ];
 const bucket = (r: string) => BUCKETS.find(([, re]) => re.test(r))?.[0] ?? 'Other';
 
@@ -38,7 +38,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const deposits = (depQ ?? []) as Deposit[];
   const loans = (loanQ ?? []) as Loan[];
   const mine = !!d.me && !d.me.is_guest && d.me.team_id === teamId;
-  const canManage = mine || !!d.me?.is_commish;
+  const canManage = mine;
   const team = (id: number) => d.teams.find((t) => t.id === id)?.name ?? '—';
   const name = (pid: number) => d.players.get(pid)?.full_name ?? d.players.get(pid)?.name ?? `Player ${pid}`;
   const season = s.season;
@@ -214,7 +214,6 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           <div><span>Top 3 salaries</span><b>{moneyK(top3)} · {Math.round((top3 / Math.max(1, club.salary)) * 100)}%</b></div>
           <div><span>Value vs market</span><b className={rateTotal >= club.salary ? 'up' : 'dn'}>{rateTotal >= club.salary ? '+' : '−'}{moneyK(Math.abs(rateTotal - club.salary))}</b></div>
           <div><span>Dead money</span><b>{moneyK(club.dead)}</b></div>
-          <div><span>Luxury tax</span><b>{club.taxKt ? kt(club.taxKt) : 'None'}</b></div>
         </div>
       </section>
 

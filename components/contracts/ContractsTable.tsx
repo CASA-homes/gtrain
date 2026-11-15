@@ -156,8 +156,8 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
       <details className="ct2-item">
         <summary className="ct2-row">
           <span className="ct2-who">
-            <b>{r.name}</b>
-            <span><ClubDot code={r.club} size={13} />{r.positions.join('/')} · {r.age ?? '–'}</span>
+            <ClubDot code={r.club} size={18} />
+            <span><b>{r.name}</b><em>{r.positions.join('/\u200b')} · {r.age ?? '–'}</em></span>
           </span>
           <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
           <Trend v={r.trend} />
@@ -169,7 +169,11 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               {ktShort(r.clause)}<em>bid</em>
             </span>
           ) : (
-            <span className="ct2-c ct2-cl">{r.clause != null ? ktShort(r.clause) : <span className="muted">n/a</span>}<em>{r.clause != null ? 'KT' : ' '}</em></span>
+            <span className="ct2-c ct2-cl">{r.clause != null ? <>{ktShort(r.clause)}<em>KT</em></> : (
+              <span className="ct2-lock" title="No release clause" aria-label="No release clause">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="currentColor" fillOpacity=".18" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
+              </span>
+            )}</span>
           )}
           <span className="ct2-c ct2-sal">{r.salary != null ? k$(r.salary) : '—'}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.salary == null ? 'unsigned' : ' '}</em></span>
           <span className="ct2-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>

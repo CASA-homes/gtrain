@@ -18,7 +18,7 @@ export default async function ContractsHome() {
         sub={<>Every keeper on a contract, a salary cap for every club, and a Transfer Market for buying and selling. {d.seasonLabel}.</>}
         kpis={s ? [
           { label: 'Keeper cap', value: moneyK(s.keeper_cap_k) },
-          { label: 'Season cap', value: moneyK(s.season_cap_k), note: `Tax line ${moneyK(s.tax_line_k)}` },
+          { label: 'Season cap', value: moneyK(s.season_cap_k) },
           { label: 'Tokens in play', value: kt(d.totalKt), note: `${s.start_kt.toLocaleString('en-AU')} KT a club` },
         ] : []} />
 
@@ -43,7 +43,7 @@ export default async function ContractsHome() {
               <div className="row-between"><h2 id="clubs-h">Every club’s cap</h2><span className="kc-sub">Ordered by last season’s ladder</span></div>
               <div className="kc-table-box">
                 <table className="kc-table" style={{ minWidth: 760 }}>
-                  <thead><tr><th>Club</th><th>{s.season} salary</th><th className="r">Room</th><th className="r">{s.season + 1} committed</th><th className="r">Bank</th><th className="r">Players</th><th>Tax</th></tr></thead>
+                  <thead><tr><th>Club</th><th>{s.season} salary</th><th className="r">Room</th><th className="r">{s.season + 1} committed</th><th className="r">Bank</th><th className="r">Players</th></tr></thead>
                   <tbody>
                     {clubs.map((c) => {
                       const pct = Math.min(100, (c.salary / s.season_cap_k) * 100);
@@ -59,7 +59,6 @@ export default async function ContractsHome() {
                           <td className="r">{moneyK(c.nextSalary)}</td>
                           <td className="r">{kt(c.bank)}</td>
                           <td className="r">{c.contracts}</td>
-                          <td>{c.taxKt ? <span className="kc-tag exp">{kt(c.taxKt)}</span> : <span className="kc-tag std">Under</span>}</td>
                         </tr>
                       );
                     })}
@@ -72,7 +71,7 @@ export default async function ContractsHome() {
             <aside className="kc-side">
               <section className="kc-card" aria-labelledby="banks-h">
                 <h2 id="banks-h">League banks</h2>
-                <p className="kc-sub">Luxury tax and selling players move tokens down the ladder.</p>
+                <p className="kc-sub">Selling players, clauses and fees move tokens between clubs.</p>
                 <div style={{ marginTop: 10 }}>
                   {[...clubs].sort((a, b) => b.bank - a.bank).map((c) => (
                     <div key={c.team.id} className="kc-bank-row">

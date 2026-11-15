@@ -10,7 +10,6 @@ export default async function ContractsAdmin() {
   const d = await getContracts();
   if (!d.me?.is_commish) redirect('/contracts');
   const s = d.settings;
-  const taxable = [...d.clubs.values()].filter((c) => c.taxKt > 0);
   return (
     <div className="kc-page">
       <KcHeader settings={s} tab="admin" myTeamId={d.me.team_id} isCommish crumb="Keeper HQ / Contracts" title="Commish controls"
@@ -47,11 +46,6 @@ export default async function ContractsAdmin() {
               <h2 id="fa-h">Free agency</h2>
               <p className="kc-sub">Give every open free agent a closing time. After it passes anyone can close a player’s offers; you can close any time from the <Link href="/contracts/market">market</Link>.</p>
               <div style={{ marginTop: 12 }}><FaDeadlineControl /></div>
-            </section>
-            <section className="kc-card" aria-labelledby="tax-h">
-              <h2 id="tax-h">Luxury tax · {s.season}</h2>
-              <p className="kc-sub">{taxable.length ? taxable.map((c) => `${c.team.name} ${kt(c.taxKt)} (${moneyK(c.overTax)} over)`).join(' · ') : `No club is over the ${moneyK(s.tax_line_k)} tax line right now.`} Charge once per season, after the draft.</p>
-              <div style={{ marginTop: 12 }}><RunButton run="tax" label="Charge luxury tax" kind="plain" confirmText="Charge this season's luxury tax now? It can only be charged once." /></div>
             </section>
             <section className="kc-card" aria-labelledby="g-h">
               <h2 id="g-h">Give or take tokens</h2>
