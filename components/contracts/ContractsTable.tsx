@@ -16,7 +16,7 @@ export interface CtRow {
   id: number; playerId: number; name: string; positions: string[]; club: string | null; age: number | null; avg: number | null; games: number;
   salary: number | null; base: number; rate: number; start: number | null; end: number | null; yearsLeft: number; tier: Tier; clause: number | null;
   status: CtStatus; statusLabel: string; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
-  onAuction: boolean; dead: number; trend: number[]; tone?: 'red' | 'amber' | null;
+  onAuction: boolean; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | null;
 }
 
 /** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club. */
@@ -189,7 +189,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <div><dt>Release clause</dt><dd>{r.clause != null ? `${kt(r.clause)} (${r.tier})` : r.salary == null ? '—' : finalYr ? 'None in his last 6 months' : r.tier === 'none' ? 'No clause' : '—'}</dd></div>
             <div><dt>Market value</dt><dd>{k$(r.rate)}{surplus != null ? ` · ${surplus >= 0 ? `${k$(surplus)} under` : `${k$(-surplus)} over`} his salary` : ''}</dd></div>
             <div><dt>2026</dt><dd>{r.avg?.toFixed(1) ?? '–'} avg · {r.games} games</dd></div>
-            {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead money</dd></div>}
+            {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead now{r.deadLater ? `, ${k$(r.deadLater)} × ${r.deadYears} later` : ''}{r.releaseFee ? ` + ${kt(r.releaseFee)}` : ''}</dd></div>}
           </dl>
           {r.status === 'none' && canManage && (
             <div className="ct2-sign">
@@ -209,7 +209,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             {canManage && !locked && <>
               {!finalYr && r.salary != null && <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={windowOpen} />}
               {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
-              <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} />
+              <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />
             </>}
           </div>
         </div>

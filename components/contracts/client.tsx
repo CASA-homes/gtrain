@@ -143,12 +143,12 @@ export function TierSelect({ contractId, tier, base, settings, locked }: { contr
   );
 }
 
-export function ReleaseButton({ contractId, name, dead }: { contractId: number; name: string; dead: number }) {
+export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0 }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number }) {
   const { pending, go, note } = useRun();
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
       <button type="button" className="kc-btn small" disabled={pending}
-        onClick={() => go(() => releasePlayer(contractId), `Release ${name}? ${money(dead)} of dead money stays on your cap and he becomes a free agent.`)}>Release</button>
+        onClick={() => go(() => releasePlayer(contractId), `Release ${name}? It costs ${kt(fee)} now, ${money(dead)} of dead money on this season's cap${laterYears ? ` and ${money(later)} a season for the next ${laterYears}` : ''}. He becomes a free agent.`)}>Release</button>
       {note}
     </span>
   );

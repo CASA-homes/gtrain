@@ -14,7 +14,7 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
@@ -57,6 +57,12 @@ export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'>
 }
 export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string }
 export interface CapAdjust { team_id: number; season: number; amount_k: number; reason: string }
+/** Cost of releasing a contract now: 50% of salary dead this season, 20% a season after that, and a KT fee of
+ *  release_fee_pct of what's left on the deal (1 KT = $1k). Mirrors kc_release. */
+export function releaseCost(s: KcSettings, c: Pick<Contract, 'salary_k' | 'start_season' | 'end_season'>) {
+  const years = Math.max(1, c.end_season - Math.max(c.start_season, s.season) + 1);
+  return { now: Math.round(c.salary_k * 0.5), later: years > 1 ? Math.round(c.salary_k * 0.2) : 0, laterYears: years - 1, fee: Math.round((c.salary_k * years * (s.release_fee_pct ?? 10)) / 100) };
+}
 /** Per-year salary of a new deal: rate × length factor (× home-grown discount), then the clause premium. */
 export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier, homeGrown = false) {
   const base = Math.max(5, Math.round(rate * lengthFactor(years) * (homeGrown ? (100 - s.home_grown_pct) / 100 : 1)));
@@ -87,6 +93,8 @@ export interface ContractsData {
   banks: Map<number, number>; clubs: Map<number, ClubCap>;
   auctions: Auction[]; freeAgents: FreeAgent[]; myOffers: MyOffer[]; offersOnMine: MyOffer[]; transfers: Transfer[];
   claims: Claim[]; capAdjust: CapAdjust[]; pendingFa: Set<number>; midseason: boolean;
+  /** Dead money in later seasons from releases (the first season sits on the contract). */
+  deadLater: { team_id: number; season: number; amount_k: number }[];
   ladderRank: Map<number, number>; totalKt: number;
   ready: boolean; error: string | null;
 }
@@ -96,7 +104,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const supabase = await createClient();
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const players = new Map(league.players.map((p) => [p.id, p]));
-  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ] = await Promise.all([
+  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),
     supabase.from('kc_contracts').select('*').in('status', ['active', 'pending', 'released']),
     supabase.from('kc_ledger').select('team_id, delta'),
@@ -108,7 +116,9 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
     supabase.rpc('kc_rates'),
     supabase.from('kc_claims').select('*').order('created_at', { ascending: false }).limit(60),
     supabase.from('kc_cap_adjust').select('team_id, season, amount_k, reason'),
+    supabase.from('kc_dead').select('team_id, season, amount_k'),
   ]);
+  const deadLater = (deadQ.data ?? []) as { team_id: number; season: number; amount_k: number }[];
   const settings = (setQ.data as KcSettings | null) ?? null;
   const error = setQ.error?.message ?? conQ.error?.message ?? null;
   const contracts = ((conQ.data ?? []) as Contract[]).map((c) => ({ ...c, id: Number(c.id) }));
@@ -136,7 +146,8 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
       if (p && line && !NOT_FIT.has(p.status ?? '')) fit[line]++;
     }
     const salaryIn = (s: number) => contracts.filter((c) => c.team_id === team.id && (c.status === 'active' || c.status === 'pending') && c.start_season <= s && c.end_season >= s && c.rookie_slot_season !== s).reduce((a, c) => a + c.salary_k, 0)
-      + contracts.filter((c) => c.team_id === team.id && c.dead_season === s).reduce((a, c) => a + c.dead_k, 0);
+      + contracts.filter((c) => c.team_id === team.id && c.dead_season === s).reduce((a, c) => a + c.dead_k, 0)
+      + deadLater.filter((x) => x.team_id === team.id && x.season === s).reduce((a, x) => a + x.amount_k, 0);
     const salary = salaryIn(season);
     const dead = contracts.filter((c) => c.team_id === team.id && c.dead_season === season).reduce((a, c) => a + c.dead_k, 0);
     const k = settings;
@@ -155,6 +166,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const allOffers = ((offQ.data ?? []) as MyOffer[]).map((o) => ({ ...o, id: Number(o.id), fa_id: Number(o.fa_id) }));
   const myFaIds = new Set(freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === me?.team_id).map((f) => f.id));
   return {
+    deadLater,
     me, settings, seasonLabel: settings?.shadow ? `${season} shadow season` : `${season} season`,
     teams: league.teams, players, rates, contracts, active, pending,
     byPlayer: new Map(active.map((c) => [c.player_id, c])), pendingByPlayer: new Map(pending.map((c) => [c.player_id, c])),

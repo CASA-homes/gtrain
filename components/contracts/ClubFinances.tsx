@@ -8,7 +8,7 @@
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
 import { CapBar, CapSimulator, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
-import { getContracts, kt, moneyK } from '@/lib/contracts';
+import { getContracts, kt, moneyK, releaseCost } from '@/lib/contracts';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
 
@@ -80,7 +80,8 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const rateTotal = d.active.filter((c) => c.team_id === teamId).reduce((t, c) => t + (d.rates.get(c.player_id) ?? 0), 0);
   const years = Array.from({ length: 5 }, (_, i) => season + i);
   const committed = years.map((y) => ({
-    y, k: covers(y).filter((c) => c.rookie_slot_season !== y).reduce((a, c) => a + c.salary_k, 0) + d.contracts.filter((c) => c.team_id === teamId && c.dead_season === y).reduce((a, c) => a + c.dead_k, 0),
+    y, k: covers(y).filter((c) => c.rookie_slot_season !== y).reduce((a, c) => a + c.salary_k, 0) + d.contracts.filter((c) => c.team_id === teamId && c.dead_season === y).reduce((a, c) => a + c.dead_k, 0)
+      + d.deadLater.filter((x) => x.team_id === teamId && x.season === y).reduce((a, x) => a + x.amount_k, 0),
     cap: y === season + 1 ? club.keeperCapNext : s.keeper_cap_k,
   }));
   const emptySpots = Math.max(0, 33 - club.list.size);
@@ -90,7 +91,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const sim: SimPlayer[] = d.active.filter((c) => c.team_id === teamId).map((c) => {
     const p = d.players.get(c.player_id); const nx = covers(season + 1).find((x) => x.player_id === c.player_id);
     return { id: c.player_id, name: p?.full_name ?? p?.name ?? '', salary: c.salary_k, next: nx ? nx.salary_k : null, final: c.end_season <= season, games: p?.career_games ?? 99,
-      rate: d.rates.get(c.player_id) ?? 0, rookieNow: c.rookie_slot_season === season, dead: Math.min(Math.floor(((c.end_season - season + 1) * c.salary_k) / 2), c.salary_k), homeGrown: c.home_grown };
+      rate: d.rates.get(c.player_id) ?? 0, rookieNow: c.rookie_slot_season === season, dead: releaseCost(s, c).later, homeGrown: c.home_grown };
   });
 
   // Assistant coach (rules for now)
