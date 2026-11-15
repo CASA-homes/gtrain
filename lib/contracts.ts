@@ -49,9 +49,10 @@ export function clauseFor(s: KcSettings, tier: Tier, rate: number): number | nul
   if (tier !== 'standard' && tier !== 'high') return null;
   return Math.round((rate * s.kt_per_k * (tier === 'high' ? s.clause_high_pct ?? 100 : s.clause_std_pct ?? 50)) / 100);
 }
-/** A contract's clause: fixed at signing (clause_kt). None in the final year, for no-clause deals or pending free agents. */
+/** A contract's clause: fixed at signing (clause_kt). None in his last 6 months (final year, once the mid-season window
+ *  has closed), for no-clause deals or pending free agents. */
 export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'> & { clause_kt?: number | null }, rate: number, pending = false): number | null {
-  if (c.tier === 'none' || c.tier === 'protected' || c.end_season <= s.season || pending) return null;
+  if (c.tier === 'none' || c.tier === 'protected' || (c.end_season <= s.season && !!s.midseason_at) || pending) return null;
   return c.clause_kt ?? clauseFor(s, c.tier, rate);
 }
 export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string }

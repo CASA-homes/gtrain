@@ -104,7 +104,7 @@ export async function chargeTax() {
   return run('kc_charge_tax', {}, (d) => `Luxury tax charged: ${kt(d)} shared among the bottom three.`);
 }
 export async function startMidseason() {
-  return run('kc_start_midseason', {}, (n) => `Mid-season week started. ${n} final-year players are now pending free agents.`);
+  return run('kc_start_midseason', {}, (n) => `Done. ${n} final-year players are now free agents.`);
 }
 export async function signDraftees() {
   return run('kc_sign_draftees', {}, (n) => `${n} draftees signed on one-season deals.`);

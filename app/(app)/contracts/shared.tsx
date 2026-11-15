@@ -49,9 +49,9 @@ export function Rules({ s }: { s: KcSettings }) {
     `In season the whole list must fit under ${moneyK(s.season_cap_k)}.`,
     `Contracts run 1–${s.max_years} years. Longer is cheaper per year. Draftees sign one-season deals priced by round (rookies half).`,
     `Nobody changes clubs mid-season. Players only move at season end. Coach-to-coach trades still run on the Trademarket.`,
-    `Release clauses are set at signing: standard ${s.clause_std_pct}% of market value, high ${s.clause_high_pct}% (+${s.high_pct}% salary), none (+${s.none_pct}% salary). Only in the mid-season window, max ${s.max_buys} per club. Final-year players have no clause.`,
+    `Release clauses are set at signing: standard ${s.clause_std_pct}% of market value, high ${s.clause_high_pct}% (+${s.high_pct}% salary), none (+${s.none_pct}% salary). Paid only in the mid-season window, max ${s.max_buys} per club. A player has a clause right up to his last 6 months: final-year players keep theirs through the window.`,
     `A paid clause gives his club 24 hours to match (pay the same, burned; his clause steps up a level). If they don't, they're paid now (less ${s.levy_pct}%) and he joins the buyer at season end on the rest of his contract.`,
-    `Extend in a player's final year, before mid-season week. Home-grown players get ${s.home_grown_pct}% off. At mid-season, every final-year player not extended (draftees too) becomes a pending free agent: rivals bid, his club picks one, and he moves at season end.`,
+    `Extend a player any time, up to ${s.max_years} seasons out. Home-grown players get ${s.home_grown_pct}% off. When the mid-season window closes, every final-year player not re-signed (draftees too) becomes a free agent: rivals bid, his club picks one, and he moves at season end.`,
     `Releasing a player leaves half his remaining salary as dead money (never more than one year's salary).`,
   ];
   return (

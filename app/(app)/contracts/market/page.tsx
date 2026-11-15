@@ -90,7 +90,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                 <section key={kind} className="kc-card" aria-labelledby={`fa-${kind}`}>
                   <div className="row-between"><h2 id={`fa-${kind}`}>{kind === 'pending' ? 'Pending free agents' : 'Open free agents'}</h2>
                     <span className="kc-sub">{kind === 'pending' ? 'Last six months of their deal. Offer a contract plus a fee; his club picks one. He moves at season end.' : 'Out of contract. Blind offers, best score wins, ties go to the lower ladder club.'}</span></div>
-                  {list.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>{kind === 'pending' ? (d.midseason ? 'None left.' : 'Final-year players who aren’t extended land here at mid-season week.') : 'Nobody right now. Released players, and pending free agents nobody signed, land here.'}</p> : (
+                  {list.length === 0 ? <p className="kc-sub" style={{ marginTop: 10 }}>{kind === 'pending' ? (d.midseason ? 'None left.' : 'Final-year players who aren’t re-signed land here when the mid-season window closes.') : 'Nobody right now. Released players, and pending free agents nobody signed, land here.'}</p> : (
                     <div className="kc-table-box" style={{ marginTop: 8 }}>
                       <table className="kc-table" style={{ minWidth: 760 }}>
                         <thead><tr><th>Player</th><th>{kind === 'pending' ? 'Club' : 'Ex-club'}</th><th className="r">Age</th><th className="r">Avg</th><th className="r">Market rate</th><th className="r">Offers</th><th>{kind === 'pending' ? 'Decided by' : 'Closes'}</th><th><span className="sr-only">Action</span></th></tr></thead>
@@ -126,7 +126,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
             <section className="kc-card" aria-labelledby="cl-h">
               <div className="row-between">
                 <div><h2 id="cl-h">Release clauses</h2>
-                  <p className="kc-sub">Mid-season window only, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he finishes the season there and joins you on the rest of his contract. Final-year players aren’t here: they’re pending free agents.</p></div>
+                  <p className="kc-sub">Mid-season window only, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he finishes the season there and joins you on the rest of his contract. Final-year players count too, until the window closes: buy one and he joins you at season end on a one-season deal at his current salary.</p></div>
                 <div className="kc-tabs">
                   {(['All', ...LINES] as const).map((l) => (
                     <Link key={l} href={l === 'All' ? '/contracts/market' : `/contracts/market?line=${l}`} aria-current={(l === 'All' && !line) || l === line ? 'page' : undefined}>{l}</Link>
@@ -185,7 +185,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
               <h2 id="mid-h">How the year runs</h2>
               <div className="kc-kv" style={{ borderTop: 0 }}><span>Off-season</span><strong>Extend, sign free agents, lock in keepers</strong></div>
               <div className="kc-kv"><span>Draft day</span><strong>Draftees on one-season deals</strong></div>
-              <div className="kc-kv"><span>Mid-season week</span><strong>Clause window · pending free agency opens</strong></div>
+              <div className="kc-kv"><span>Mid-season window</span><strong>Clauses can be paid · free agency opens when it closes</strong></div>
               <div className="kc-kv"><span>Season end</span><strong>Everyone agreed moves</strong></div>
               <p className="kc-sub" style={{ color: '#6e5220' }}>No pre-season window. Nobody signed here joins a new club mid-season.</p>
             </section>

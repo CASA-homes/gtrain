@@ -180,7 +180,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       </section>
 
       <section className="kc-card ct2-card" aria-label="Expiring and free agents">
-        <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, extend before mid-season." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
+        <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, re-sign before the mid-season window closes." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
         <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
     </div>
