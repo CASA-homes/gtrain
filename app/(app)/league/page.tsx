@@ -15,6 +15,7 @@ import { isLegacyLeague } from '@/lib/league-scope';
 import { CupTables } from '@/components/live/cup';
 import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
+import { MarketMovers } from '@/components/MarketMovers';
 
 export default async function LeaguePage() {
   const legacy = await isLegacyLeague();
@@ -42,23 +43,25 @@ export default async function LeaguePage() {
 
   return (
     <div className="wrap">
-      <header style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'center', justifyContent: 'space-between', padding: '22px 24px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: 18 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <header className="lg-hero" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'center', justifyContent: 'space-between', padding: '22px 24px', background: 'var(--ink)', color: 'var(--cream)', borderRadius: 18 }}>
+        <div className="lg-title" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <span style={{ font: '500 12px var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', color: '#9ccb84' }}>Keeper HQ</span>
           <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>{leagueTitle(leagueName)}</h1>
-          <span style={{ color: '#b9c0b8' }}>10 coaches · est. 2022 · {league.seasons.length} seasons</span>
+          <span className="lg-sub" style={{ color: '#b9c0b8' }}>10 coaches · est. 2022 · {league.seasons.length} seasons</span>
         </div>
-        <div className="kpis">
-          <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}</b></div>
-          <div className="kpi" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} wooden spoon</span><b>{latest?.spoon_id ? name(latest.spoon_id) : '–'}</b></div>
+        <div className="kpis lg-kpis">
+          <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}</b></div>
+          <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} wooden spoon</span><b>{latest?.spoon_id ? name(latest.spoon_id) : '–'}</b></div>
           <nav className="kpi league-links" style={{ borderColor: '#333b35' }} aria-label="League">
-            <Link href="/league/settings">League settings <span aria-hidden>→</span></Link>
-            <Link href="#history">League history <span aria-hidden>→</span></Link>
-            <Link href="/league/bets">League bets <span aria-hidden>→</span></Link>
+            <Link href="/league/settings">Settings <span aria-hidden>→</span></Link>
+            <Link href="#history">History <span aria-hidden>→</span></Link>
+            <Link href="/league/bets">Bets <span aria-hidden>→</span></Link>
             <Link href="/league/scores">Score override <span aria-hidden>→</span></Link>
           </nav>
         </div>
       </header>
+
+      <MarketMovers />
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <h2 className="h2" style={{ fontSize: 20 }}>News board</h2>

@@ -6,10 +6,11 @@ import { InfoPopover } from '@/components/InfoPopover';
 import { HighlightsLink, ProfileSheet } from '@/components/ProfileSheet';
 import { draftProfileByName, draftProfileFor } from '@/lib/draft-profiles';
 import { YearSelect } from '@/components/YearSelect';
+import { CrystalViewSelect } from '@/components/CrystalViewSelect';
 import { TableSearch } from '@/components/TableSearch';
 import { crystalUnlocked } from '@/lib/crystal-access';
 import { getMe } from '@/lib/data';
-import { lockCrystal, unlockCrystal } from './actions';
+import { unlockCrystal } from './actions';
 import data from '@/lib/crystal-ball.json';
 import freeAgents from '@/lib/free-agents.json';
 import seconds from '@/lib/fa-seconds.json';
@@ -227,22 +228,14 @@ const STATUS: Record<Past['status'], { bg: string; fg: string }> = {
   'Long shot': { bg: '#f4ead0', fg: C.ink }, Unlikely: { bg: '#f3d9d2', fg: C.ink }, 'Yet to debut': { bg: C.empty, fg: C.muted }, 'Too early': { bg: C.yellow, fg: C.ink },
 };
 
-function Header({ view }: { view: 'next' | 'past' | 'fa' }) {
+function Header({ view, info }: { view: 'next' | 'past' | 'fa'; info?: React.ReactNode }) {
   return (
-    <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
-      <div>
-        <span className="eyebrow">{view === 'next' ? 'What the draft profiles of today’s stars had in common, and who in 2026 has it' : view === 'fa' ? 'Every unowned player in the league, and who is worth a pick' : 'What we would have said on draft night, and how they’re tracking'}</span>
-        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
-      </div>
-      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-        <DraftTabs active="crystal" showCrystal />
-        <form action={lockCrystal}><button className="btn" type="submit" style={{ fontSize: 12 }}>Lock</button></form>
-      </div>
-      <div role="tablist" aria-label="Crystal ball view" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2, flexWrap: 'wrap', maxWidth: '100%', flexBasis: '100%', width: 'fit-content' }}>
-        {([['next', '2026 prospects', '/draft/crystal-ball'], ['past', 'Previous drafts: how they’re tracking', '/draft/crystal-ball?view=past'], ['fa', '2027 free agents', '/draft/crystal-ball?view=fa']] as const).map(([k, label, href]) => (
-          <Link key={k} href={href} role="tab" aria-selected={view === k}
-            style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: view === k ? '#fff' : 'transparent', color: view === k ? C.ink : C.muted }}>{label}</Link>
-        ))}
+    <div className="cb-head">
+      <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>Crystal ball</h1>
+      <DraftTabs active="crystal" showCrystal />
+      <div className="cb-pick">
+        <CrystalViewSelect view={view} />
+        {info && <InfoPopover title="How the crystal ball works">{info}</InfoPopover>}
       </div>
     </div>
   );
@@ -397,10 +390,7 @@ function PastView({ year }: { year: number }) {
 
   return (
     <div className="wrap">
-      <Header view="past" />
-
-      <section className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <p style={{ margin: 0, lineHeight: 1.55, maxWidth: '80ch' }}>
+      <Header view="past" info={<p style={{ margin: 0, lineHeight: 1.55, fontSize: 14 }}>
           <b>Draft night</b> is the chance the crystal ball would have given each player before he was picked, worked out without his own draft year in the data.
           <b> Tracking</b> compares his best season so far with the path today’s stars took: eventual {D.meta.hitBar}+ players averaged about
           {' '}{Object.entries(path).slice(0, 4).map(([n, v]) => `${Math.round(v)} in year ${n}`).join(', ')}.
@@ -414,8 +404,7 @@ function PastView({ year }: { year: number }) {
           so in year one his chance leans on his draft-night rating until he gets a run. By year two, still stuck there is close to fatal (1 of 115), so there’s no allowance then: the label just flags it.
           <b> Sidelined</b> means he barely played all year (injury or not picked), too little to judge, so his chance leans on his draft rating.
           Small samples are discounted, so 79 from 6 games counts for a lot less than 79 from 22.
-        </p>
-      </section>
+        </p>} />
 
       <Drop title="Beat the crystal ball" count={surprises.length} blurb="Draft-age picks we gave under a 20% chance who are already stars or ahead of the star path. Mature-age and re-drafted veterans left out.">
         {surprises.map((r) => <PastCard key={r.name + r.year} r={r} path={path} />)}
@@ -505,22 +494,19 @@ function CrystalBallView() {
   const ruck = D.meta.ruckTime ?? [];
   return (
     <div className="wrap" style={{ maxWidth: 1480 }}>
-      <Header view="next" />
-
-      <section className="card" style={{ padding: '12px 16px', display: 'flex', flexWrap: 'wrap', gap: '6px 22px', alignItems: 'baseline', fontSize: 13 }}>
-        <span style={{ maxWidth: '86ch', lineHeight: 1.5 }}>
+      <Header view="next" info={<>
+        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.55 }}>
           Trained on {D.meta.trainN} national draft picks from 2016–2024: the scouts’ strengths and work-ons, junior numbers, role and combine results, against who went on to a <b>{D.meta.hitBar}+ AFL Fantasy season</b>.
           Recent drafts count a little more (the game now rewards classy ball users), but a recent pick who hasn’t hit yet only counts as a weak “no”, because stars usually arrive in years 4–6.
-        </span>
-        <span>Picks stars better than draft slot alone: <b>{D.meta.auc}</b> vs {D.meta.aucPositionOnly} (AUC) · picks 15+: <b>{D.meta.aucLate}</b> vs {D.meta.aucLatePositionOnly}</span>
-      </section>
+        </p>
+        <p style={{ margin: 0, fontSize: 14 }}>Picks stars better than draft slot alone: <b>{D.meta.auc}</b> vs {D.meta.aucPositionOnly} (AUC) · picks 15+: <b>{D.meta.aucLate}</b> vs {D.meta.aucLatePositionOnly}</p>
+        <p style={{ margin: 0, fontSize: 14 }}>Board = consensus rank (Twomey 40%, Rookie Me 35%, Zero Hanger 25%). <b>Star 90+</b> is his chance of a 90+ season, <b>80+</b> a fantasy-relevant season, <b>Slot</b> what draft position alone would say.</p>
+        <p className="muted" style={{ margin: 0, fontSize: 12 }}>Sources: Rookie Me Central draft profiles and rankings (2016–2026), Matt Balmer’s 2016 power rankings, AFL.com.au Phantom Form Guides, combine results; AFL careers from DFS Australia.</p>
+      </>} />
 
       <div className="cb-layout">
         <section style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 0 }}>
-          <div className="row-between" style={{ alignItems: 'baseline' }}>
-            <h2 className="h2">All 2026 prospects, by star chance</h2>
-            <span className="muted" style={{ fontSize: 12 }}>Board = consensus rank (Twomey 40%, Rookie Me 35%, Zero Hanger 25%)</span>
-          </div>
+          <h2 className="h2 cb-h2">All prospects, by star chance</h2>
           <div className="table-box">
             <table className="squad cb-table">
               <thead><tr><th style={{ width: 28 }}>#</th><th>Prospect</th><th style={{ width: 62, textAlign: 'center' }}>Star 90+</th><th style={{ width: 52, textAlign: 'center' }}>80+</th><th style={{ width: 52, textAlign: 'center' }} title="Star chance from draft slot alone">Slot</th><th style={{ width: 46, textAlign: 'center' }}>Jr FP</th><th>Why</th></tr></thead>
@@ -545,9 +531,7 @@ function CrystalBallView() {
               </tbody>
             </table>
           </div>
-          <span className="muted" style={{ fontSize: 11 }}>
-            Tap ⓘ for the full read on a player. Sources: Rookie Me Central draft profiles and rankings (2016–2026), Matt Balmer’s 2016 power rankings, AFL.com.au Phantom Form Guides, combine results; AFL careers from DFS Australia.
-          </span>
+          <span className="muted" style={{ fontSize: 11 }}>Tap ⓘ for the full read on a player.</span>
         </section>
 
         <aside className="cb-side">

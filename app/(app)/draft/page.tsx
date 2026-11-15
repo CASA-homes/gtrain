@@ -143,12 +143,13 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
   );
 }
 
-/** Mobile: the other draft years as small squares beside the heading. */
+/** Mobile: draft years as small squares beside the heading. 2027 (the current draft) is always outlined in gold. */
 function YearSquares({ year }: { year: number }) {
   return (
     <nav aria-label="Draft year" className="dr-sq">
-      {[2026, 2027, 2028].filter((y) => y !== year).map((y) => (
-        <Link key={y} href={`/draft?year=${y}`} title={y === 2026 ? '2026 results' : `${y} draft`}>{y}</Link>
+      {[2026, 2027, 2028].map((y) => (
+        <Link key={y} href={`/draft?year=${y}`} title={y === 2026 ? '2026 results' : `${y} draft`} aria-current={y === year ? 'page' : undefined}
+          className={`${y === 2027 ? 'now' : ''}${y === year ? ' on' : ''}`.trim() || undefined}>{y}</Link>
       ))}
     </nav>
   );

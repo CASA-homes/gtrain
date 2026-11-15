@@ -2531,3 +2531,55 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .tm-tabs .btn { min-height: 46px; padding: 4px 6px; justify-content: center; text-align: center; font-size: 12px; line-height: 1.15; border-radius: 14px 14px 0 0 !important; border-bottom: 0 !important; }
   .tm-tabs .btn:last-child { background: var(--market-bg, #eef1ea) !important; color: var(--forest) !important; }
 }
+
+/* League hero: tidy on mobile (links top-right, premiers + spoon side by side) */
+@media (max-width: 760px) {
+  .lg-hero { position: relative; padding: 18px 18px !important; gap: 14px !important; }
+  .lg-title { padding-right: 118px; }
+  .lg-title h1 { font-size: 44px !important; }
+  .lg-sub { font-size: 13px; }
+  .lg-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 0; width: 100%; }
+  .lg-kpis .lg-k { padding: 0 12px; }
+  .lg-kpis .lg-k:first-child { padding-left: 0; border-left: 0; }
+  .lg-kpis .lg-k b { font-size: 19px; line-height: 1.15; }
+  .lg-hero .league-links { position: absolute; top: 18px; right: 18px; padding: 0; border: 0; align-items: flex-end; gap: 6px; }
+  .lg-hero .league-links a { font-size: 12.5px; }
+}
+
+/* Market report: weekly risers and fallers */
+.mm { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; border-radius: 18px; }
+.mm-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.mm-head h2 { margin: 2px 0 0; font: 600 20px var(--font); letter-spacing: -.02em; }
+.mm-eyebrow { font: 500 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mm-breadth { display: flex; gap: 8px; font: 700 12px var(--mono); }
+.mm .up { color: #2e8a55; } .mm .dn { color: #c2462a; }
+.mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+@media (max-width: 760px) { .mm-grid { grid-template-columns: 1fr; gap: 12px; } }
+.mm-col h3 { margin: 0 0 2px; font: 700 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; }
+.mm-row { display: grid; grid-template-columns: minmax(0, 1fr) 64px 62px; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid var(--line); color: inherit; text-decoration: none; }
+.mm-row:hover b { text-decoration: underline; }
+.mm-who { display: flex; flex-direction: column; min-width: 0; }
+.mm-who b { font: 600 14px var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mm-who span { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--muted); white-space: nowrap; }
+.mm-num { display: flex; flex-direction: column; align-items: flex-end; font-variant-numeric: tabular-nums; }
+.mm-num b { font: 700 14px var(--font); }
+.mm-num em { font-style: normal; font: 700 11px var(--mono); }
+.mm-foot { margin: 0; font-size: 11px; color: var(--muted); }
+
+/* Draft year squares: current draft always gold-outlined */
+.dr-sq a.now { border: 2px solid #c9a227; }
+.dr-sq a.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.dr-sq a.now.on { border-color: #c9a227; }
+@media (max-width: 760px) { .dr-sq a { width: 46px; font-size: 11.5px; } }
+.dt-four a.gold.on { box-shadow: inset 0 0 0 2px #c9a227, 0 1px 2px rgb(0 0 0 / .08); }
+
+/* Crystal ball header: title, tabs, one dropdown + info */
+.cb-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.cb-head h1 { margin: 0; }
+.cb-pick { display: flex; align-items: center; gap: 8px; flex-basis: 100%; }
+.cb-view { min-height: 40px; font-weight: 600; max-width: 360px; flex: 1; }
+.cb-h2 { font-size: 18px !important; margin: 0; }
+@media (max-width: 760px) {
+  .cb-head { gap: 8px; }
+  .cb-head h1 { font-size: 26px !important; }
+}
