@@ -1,6 +1,6 @@
 'use client';
-// Sign-in page showcase: app cards held like a hand. One lifts at a time with a caption (a player contract first,
-// then deadline day, then the rest); hover or tap picks one. Anderson's heat map steps through his recent
+// Sign-in page showcase: three player cards standing in front of a faded contracts page. One pops forward at a
+// time with a caption (Smith, then Anderson's heat map, then Drever); hover or tap picks one. Anderson's heat map steps through his recent
 // rounds on its own until someone taps a round.
 import { useEffect, useRef, useState } from 'react';
 
@@ -15,19 +15,13 @@ export interface FanData {
 const TONE = (x: number): [string, string] => x >= 120 ? ['#1f6b3a', '#fff'] : x >= 100 ? ['#4f9a5f', '#fff'] : x >= 80 ? ['#9ccb84', '#151a16'] : x >= 70 ? ['#d6e49a', '#151a16'] : x >= 50 ? ['#f1e8a8', '#151a16'] : ['#f3c2b9', '#7a1d12'];
 const RND = (r: number) => (r === 0 ? 'OR' : r >= 25 ? (['QF', 'SF', 'PF', 'GF'][r - 25] ?? `R${r}`) : `R${r}`);
 
-const CARDS = ['history', 'rookie', 'profile', 'contract', 'deadline', 'heat', 'trade', 'cup'] as const;
+const CARDS = ['rookie', 'profile', 'heat'] as const;
 type Key = typeof CARDS[number];
-const ORDER: Key[] = ['contract', 'deadline', 'profile', 'heat', 'trade', 'cup', 'rookie', 'history'];
-const HERO: Partial<Record<Key, number>> = { contract: 0, deadline: 1 };
+const ORDER: Key[] = ['profile', 'heat', 'rookie'];
 const CAPTION: Record<Key, [string, string]> = {
-  contract: ['Player contracts', 'Every keeper on a contract: salary, length, release clause and live market value.'],
-  deadline: ['Deadline day', 'The mid-season window. Clauses paid, matches, signings and trades, all live.'],
   profile: ['Player profiles', 'Every attribute out of 20, and a keeper value rating for each player.'],
   heat: ['Heat maps', 'A heat map for every game. Tap any round in his form line to see where he played.'],
-  cup: ['Knockout Cup', 'Run a cup alongside the season, with draft picks for the winner and runner-up.'],
-  trade: ['Pick trading', 'Trade players, future picks and mid-season picks, with a fairness meter.'],
   rookie: ['Rookie scouting', 'Draft boards, junior scores, traits and the chance he becomes a star.'],
-  history: ['History and records', 'Every premiership, spoon and medal, plus league records.'],
 };
 
 /** An AFL guernsey in club colours (no logos), in place of a player photo. */
@@ -123,117 +117,55 @@ function RookieCard({ d }: { d: FanData['drever'] }) {
   );
 }
 
-function HistoryCard({ rows }: { rows: Honour[] }) {
-  const flags = rows.reduce<Record<string, number>>((a, r) => { a[r.premier] = (a[r.premier] ?? 0) + 1; return a; }, {});
-  const [top, n] = Object.entries(flags).sort((a, b) => b[1] - a[1])[0] ?? ['', 0];
-  return (
-    <>
-      <div className="kl-h"><b>Honour roll</b><span>Since {rows[rows.length - 1]?.year}</span></div>
-      <div className="kl-body kl-hon">
-        {rows.slice(0, 4).map((r) => (
-          <div key={r.year}><b>{r.year}</b><span className="pr">🏆 {r.premier}</span><span className="kl-dim">{r.medal ? `Medal: ${r.medal}` : r.spoon ? `Spoon: ${r.spoon}` : ''}</span></div>
-        ))}
-        <div className="rec"><span>Most flags</span><b>{top} · {n}</b></div>
-      </div>
-    </>
-  );
-}
 
-function ContractCard() {
-  const vals = [62, 64, 63, 68, 71, 70, 76, 80, 84, 83, 88, 93];
-  const lo = Math.min(...vals), hi = Math.max(...vals);
-  const pts = vals.map((v, i) => `${(i / (vals.length - 1)) * 230 + 2},${44 - ((v - lo) / (hi - lo)) * 38}`).join(' ');
-  return (
-    <>
-      <div className="kl-pf"><span className="kl-face">MH</span><div><b>Max Hall</b><small>St Kilda · MID · 24</small></div><div className="kl-avg"><b>$81k</b><small>a year</small></div></div>
-      <div className="kl-body">
-        <div className="kl-cg">
-          <div><span>Until</span><b>2029</b><i className="kl-pips"><em className="on" /><em className="on" /><em className="on" /><em /><em /></i></div>
-          <div><span>Release clause</span><b>12,150 KT</b><small>Standard</small></div>
-          <div><span>Market value</span><b>$93k</b><small className="kl-up">▲ $12k under market</small></div>
-          <div><span>Status</span><b>Bargain</b><small>3 yrs left</small></div>
-        </div>
-        <div className="kl-spark">
-          <svg viewBox="0 0 234 48" aria-hidden="true"><polyline points={`2,48 ${pts} 232,48`} fill="rgb(31 107 58 / .12)" stroke="none" /><polyline points={pts} fill="none" stroke="#1f6b3a" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          <span>Market value this season</span>
-        </div>
-        <div className="kl-acts"><span>Extend</span><span>Set clause</span><span>Offer</span></div>
-      </div>
-    </>
-  );
-}
 
-function DeadlineCard() {
-  const feed: [string, string, string][] = [
-    ['11:02', 'Ram Dawgs paid Max Hall’s clause', '12,150 KT'],
-    ['11:40', 'Bodega Boys matched. Clause now High', 'Kept'],
-    ['12:15', 'Coastal Kings signed L. Whitfield', '2 yrs · $78k'],
-    ['12:31', 'Sparrow traded for pick 4', '+2,000 KT'],
-  ];
-  return (
-    <>
-      <div className="kl-h"><b>Deadline day</b><span className="kl-live"><i />Window open</span></div>
-      <div className="kl-body">
-        <div className="kl-count"><div><b>01</b><span>day</span></div><div><b>04</b><span>hrs</span></div><div><b>22</b><span>mins</span></div></div>
-        <ul className="kl-feed">{feed.map(([t, a, b]) => <li key={t}><span>{t}</span><p>{a}</p><b>{b}</b></li>)}</ul>
-      </div>
-    </>
-  );
-}
 
-function TradeCard() {
-  return (
-    <>
-      <div className="kl-h"><b>Trade planner</b><span>Mid-season</span></div>
-      <div className="kl-body">
-        <div className="kl-tr"><div><span>You give</span>Tom Sparrow<br />George Hewett<br />Dayne Zorko</div><em>⇄</em><div><span>You get</span>Lachie O’Sullivan<br /><b>2028 R2 pick</b><br /><b>Mid-season R1</b></div></div>
-        <div className="kl-meter"><span><i /></span><div><span>Fair to them</span><b>Slight win for you</b></div></div>
-      </div>
-    </>
-  );
-}
 
-function CupCard() {
+
+/** The backdrop: a faded slice of a club's contracts page, the deck the cards pop out of. */
+const ROWS: [string, string, string, string, string, string][] = [
+  ['Bailey Smith', 'MID · GEE', '4 yrs → 2030', 'No clause', '—', '$154k'], ['Nick Daicos', 'MID · COL', '5 yrs → 2031', 'High', '40.5k KT', '$162k'],
+  ['Noah Anderson', 'MID · GCS', '4 yrs → 2030', 'No clause', '—', '$113k'], ['Max Hall', 'MID · STK', '3 yrs → 2029', 'Standard', '12.2k KT', '$81k'],
+  ['Harley Garcia', 'MID · STK', '4 yrs → 2030', 'Extended', '—', '$56k'], ['Lachie Whitfield', 'DEF · CAR', '1 yr → 2027', 'Pending FA', '—', '$69k'],
+  ['Izak Rankine', 'MID · ADE', '4 yrs → 2030', 'Standard', '12.6k KT', '$84k'], ['Darcy Wilmot', 'DEF · BRL', '3 yrs → 2029', 'No clause', '—', '$67k'],
+  ['Tim English', 'RUC · WBD', '2 yrs → 2028', 'Standard', '6.9k KT', '$47k'], ['Dan Wilson', 'MID · STK', '4 yrs → 2030', 'Rookie', '—', '$14k'],
+  ['Sam Bolton', 'MID · FRE', '2 yrs → 2028', 'High', '12.5k KT', '$50k'], ['Ethan Drever', 'MID · GWV', '1 yr → 2027', 'Draft', '—', '$32k'],
+  ['Jarrod Berry', 'MID · BRL', '1 yr → 2027', 'Final year', '—', '$29k'], ['Tom Sparrow', 'MID · MEL', '2 yrs → 2028', 'No clause', '—', '$86k'],
+];
+function Backdrop() {
   return (
-    <>
-      <div className="kl-h"><b>Knockout Cup</b><span>Semis → final</span></div>
-      <div className="kl-body">
-        <div className="kl-br">
-          <div className="col">
-            <div className="m"><div className="w"><span>Bodega Boys</span><b>1,812</b></div><div><span>Ram Dawgs</span><b>1,746</b></div></div>
-            <div className="m"><div><span>Such Is Fyfe</span><b>1,690</b></div><div className="w"><span>NSW-ACT Academy</span><b>1,734</b></div></div>
-          </div>
-          <span className="join" />
-          <div className="col"><div className="m"><div><span>Bodega Boys</span><b>–</b></div><div><span>NSW-ACT Academy</span><b>–</b></div></div><span className="kl-dim" style={{ textAlign: 'center', fontSize: 11 }}>Final</span></div>
-        </div>
-        <div className="kl-prize">🏆 <span>Winner: <b>round 2 pick</b> · runner-up: round 4</span></div>
-      </div>
-    </>
+    <div className="kl-deck" aria-hidden="true">
+      <div className="kl-deck-head"><b>Bodega Boys · Contracts</b><span>$953k / $1.25M</span></div>
+      <div className="kl-deck-row th"><span>Player</span><span>Length</span><span>Type</span><span>Clause</span><span>Cost</span></div>
+      {ROWS.map(([n, m, l, t, c, v]) => (
+        <div key={n} className="kl-deck-row"><span><b>{n}</b><small>{m}</small></span><span>{l}</span><span><i className={`t-${t.split(' ')[0].toLowerCase()}`}>{t}</i></span><span>{c}</span><span><b>{v}</b></span></div>
+      ))}
+    </div>
   );
 }
 
 export function CardFan({ data }: { data: FanData }) {
-  const [cur, setCur] = useState<Key>('contract');
+  const [cur, setCur] = useState<Key>('profile');
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const t = setTimeout(() => setCur((c) => ORDER[(ORDER.indexOf(c) + 1) % ORDER.length]), cur in HERO ? 4200 : 3000);
+    const t = setTimeout(() => setCur((c) => ORDER[(ORDER.indexOf(c) + 1) % ORDER.length]), 4200);
     return () => clearTimeout(t);
   }, [cur, paused]);
-  const mid = (CARDS.length - 1) / 2;
+  const i0 = ORDER.indexOf(cur);
+  const slot = (k: Key) => (ORDER.indexOf(k) - i0 + ORDER.length) % ORDER.length; // 0 front, 1 right, 2 left
   return (
     <div className="kl-fanwrap">
       <div className="kl-fan" onMouseLeave={() => setPaused(false)} aria-label="What's inside Keeper HQ">
-        {CARDS.map((k, i) => {
-          const back = !(k in HERO), up = cur === k, off = i - mid;
-          const z = up ? 30 : k in HERO ? 20 - HERO[k]! : 10 - Math.abs(off);
-          const base = `translate(-50%,-50%) translateX(calc(${off} * var(--spread))) translateY(${Math.abs(off) * 16 + (back ? 18 : 0)}px) rotate(${off * 6}deg)`;
-          const transform = up ? `${base} translateY(-56px) rotate(${-off * 6}deg) scale(1.08)` : `${base}${back ? ' scale(.88)' : k === 'contract' ? ' scale(1.06)' : ''}`;
+        <Backdrop />
+        {CARDS.map((k) => {
+          const sl = slot(k), up = sl === 0;
+          const transform = up ? 'translate(-50%,-50%) translateY(-8px) scale(1)'
+            : `translate(-50%,-50%) translateX(calc(${sl === 1 ? 1 : -1} * var(--spread))) translateY(26px) scale(.84)`;
           return (
-            <div key={k} className={`kl-card ${back ? 'back' : ''} ${up ? 'up' : ''} ${k === 'heat' || k === 'profile' || k === 'contract' || k === 'deadline' ? 'tall' : ''}`} style={{ transform, zIndex: z }}
+            <div key={k} className={`kl-card tall ${up ? 'up' : 'back'}`} style={{ transform, zIndex: up ? 30 : 10 }}
               onMouseEnter={() => { setPaused(true); setCur(k); }} onClick={() => { setPaused(true); setCur(k); }}>
-              {k === 'contract' ? <ContractCard /> : k === 'deadline' ? <DeadlineCard /> : k === 'profile' ? <ProfileCard /> : k === 'heat' ? <HeatCard d={data.anderson} active={cur === 'heat'} /> : k === 'rookie' ? <RookieCard d={data.drever} />
-                : k === 'history' ? <HistoryCard rows={data.honours} /> : k === 'trade' ? <TradeCard /> : <CupCard />}
+              {k === 'profile' ? <ProfileCard /> : k === 'heat' ? <HeatCard d={data.anderson} active={cur === 'heat'} /> : <RookieCard d={data.drever} />}
             </div>
           );
         })}
