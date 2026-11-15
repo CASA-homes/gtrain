@@ -119,7 +119,8 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
           <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
           <li><b>If they don’t match</b>, he joins you at the end of {settings.season}, not now. He plays out the season for his current club, then moves on the rest of his contract.</li>
           <li><b>Window only.</b> Clauses can only be paid in the mid-season window, and there are none in a player’s final year.</li>
-          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used). His salary has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room).</li>
+          <li><b>His salary comes with him.</b> You take on his current contract: {r.salary != null ? k$(r.salary) : '—'} a year to {r.extEnd ?? r.end ?? '—'}, and it has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room). It’s checked again when he moves.</li>
+          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used).</li>
           <li><b>His list.</b> When he arrives you still need to be at 33 or fewer, so plan a release or trade if you’re full.</li>
         </ul>
         {blockers.length > 0 && <div className="cd-block">{blockers.map((b) => <p key={b}>{b}</p>)}</div>}
@@ -191,6 +192,12 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <span className="kc-sub">Out of contract. Sign him from {settings.season} at his priced salary: {k$(r.rate)} market value.</span>
               <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={false} settings={settings} />
             </div>
+          )}
+          {canManage && r.extEnd == null && r.end != null && r.salary != null && ['contract', 'final', 'rookie', 'draft'].includes(r.status) && r.end < settings.season + settings.max_years - 1 && (
+            <details className="ct2-sign ct2-ext">
+              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''}.</span></summary>
+              <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
+            </details>
           )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>

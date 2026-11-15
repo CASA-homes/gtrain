@@ -27,6 +27,7 @@ import { ClubHeadMore } from '@/components/ClubHeadMore';
 import { ContractsStrip } from '@/components/contracts/ContractsStrip';
 import { ClubContracts } from '@/components/contracts/ClubContracts';
 import { ClubFinances } from '@/components/contracts/ClubFinances';
+import { ClubPicks } from '@/components/ClubPicks';
 import { getContracts } from '@/lib/contracts';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
@@ -62,7 +63,7 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
   const isMine = me?.team_id === a.team.id;
-  const tab = view === 'contracts' || view === 'finances' ? view : 'squad';
+  const tab = view === 'contracts' || view === 'finances' || view === 'picks' ? view : 'squad';
   const gq = await (await createClient()).from('club_games').select('season, player_name, games').eq('team_id', a.team.id);
   const gamesReady = !gq.error;
   const games = clubGames((await isLegacyLeague()) ? a.team.name : '', gq.data ?? []);
@@ -209,6 +210,9 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
         <Link href={`/clubhouse/${a.team.id}`} aria-current={tab === 'squad' ? 'page' : undefined}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2" /><path d="M3 20c.6-3.4 3-5.5 6-5.5s5.4 2.1 6 5.5" /><circle cx="17" cy="9" r="2.4" /><path d="M16.5 14.6c2.3.3 4 1.9 4.5 4.6" /></svg>Squad
         </Link>
+        <Link href={`/clubhouse/${a.team.id}?view=picks`} aria-current={tab === 'picks' ? 'page' : undefined}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5" /><path d="M8 8h8M8 12h8M8 16h5" /></svg>Picks
+        </Link>
         <Link href={`/clubhouse/${a.team.id}?view=contracts`} aria-current={tab === 'contracts' ? 'page' : undefined}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5M10 13h6M10 17h4" /></svg>Contracts
         </Link>
@@ -217,7 +221,7 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
         </Link>
       </nav>
 
-      {tab === 'contracts' ? <ClubContracts teamId={a.team.id} /> : tab === 'finances' ? <ClubFinances teamId={a.team.id} /> : <>
+      {tab === 'picks' ? <ClubPicks teamId={a.team.id} /> : tab === 'contracts' ? <ClubContracts teamId={a.team.id} /> : tab === 'finances' ? <ClubFinances teamId={a.team.id} /> : <>
       <ContractsStrip teamId={a.team.id} mine={isMine} />
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}

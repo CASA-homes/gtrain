@@ -503,3 +503,29 @@
 .co-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: var(--sunk); align-self: flex-start; }
 .co-tabs a { padding: 7px 14px; border-radius: 8px; font: 600 13px var(--font); color: var(--muted); text-decoration: none; }
 .co-tabs a[aria-current='page'] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+
+/* Clubhouse tabs: four across */
+@media (max-width: 520px) {
+  .ch-tabs { gap: 2px; padding: 3px; }
+  .ch-tabs a { flex-direction: column; gap: 2px; min-height: 48px; font-size: 12px; }
+  .ch-tabs a svg { width: 17px; height: 17px; }
+}
+/* Clubhouse › Picks */
+.cp { display: flex; flex-direction: column; gap: 14px; }
+.cp-card { padding: 14px 16px; border-radius: 16px; display: flex; flex-direction: column; gap: 10px; }
+.cp-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; }
+.cp-head h2 { margin: 0; font: 600 19px var(--font); letter-spacing: -.02em; }
+.cp-head span { font-size: 12px; color: var(--muted); }
+.cp-cap { display: flex; flex-direction: column; align-items: flex-end; } .cp-cap b { font: 700 20px var(--font); font-variant-numeric: tabular-nums; }
+.cp-list { list-style: none; margin: 0; padding: 0; }
+.cp-list li { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto 56px; gap: 10px; align-items: center; padding: 8px 0; border-top: 1px solid var(--line-soft); }
+.cp-no { display: grid; place-items: center; height: 32px; border-radius: 9px; background: var(--sunk); font: 700 13px var(--mono); }
+.cp-list li.hi .cp-no { background: #2f5d46; color: #fff; }
+.cp-what { display: flex; flex-direction: column; min-width: 0; } .cp-what b { font: 600 14px var(--font); } .cp-what small { font-size: 11.5px; color: var(--muted); }
+.cp-val { text-align: right; font: 600 13px var(--mono); color: var(--muted); }
+.cp-out { margin: 0; font-size: 12px; color: #a8461f; }
+.cp-more { font-size: 13px; font-weight: 600; align-self: flex-start; }
+.ct2-ext summary { display: flex; flex-direction: column; gap: 2px; cursor: pointer; list-style: none; }
+.ct2-ext summary::-webkit-details-marker { display: none; }
+.ct2-ext summary b::after { content: ' ▾'; color: var(--muted); }
+.ct2-ext[open] summary { margin-bottom: 6px; }
