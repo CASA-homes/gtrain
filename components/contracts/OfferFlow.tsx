@@ -36,9 +36,9 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const prem = 1 + (tier === 'high' ? s.high_pct : tier === 'none' ? s.none_pct : 0) / 100;
   const capSalary = Math.round(base * prem);
   const after = salary + capSalary;
-  const taxKt = Math.max(0, after - s.tax_line_k) * s.tax_kt_per_k;
+  const taxKt = Math.round(Math.max(0, after - s.tax_line_k) * Number(s.tax_kt_per_k));
   const pickScore = useMemo(() => picks.filter((p) => pickIds.includes(p.id)).reduce((a, p) => a + Math.round(3000 * Math.exp(-0.07 * (p.overall - 1)) / 50), 0), [picks, pickIds]);
-  const score = years * base + Math.trunc(sweet / 50) + pickScore;
+  const score = years * base + sweet + pickScore;
   const escrowNeeded = sweet - (existing?.sweet_kt ?? 0);
   const overCap = after > s.season_cap_k;
   const tooPoor = escrowNeeded > bank;
@@ -170,7 +170,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           <p className="kc-sub" style={{ marginBottom: 14 }}>Optional compensation to his former club. It adds to your offer score. Tokens are held until offers close and come back if you lose.</p>
           <div className="kc-card" style={{ padding: 16 }}>
             <label className="kc-field" htmlFor="kc-sweet" style={{ flexDirection: 'row', justifyContent: 'space-between' }}><span>Tokens</span><span className="num">{kt(sweet)}</span></label>
-            <input id="kc-sweet" type="range" min={0} max={Math.max(existing?.sweet_kt ?? 0, Math.min(bank + (existing?.sweet_kt ?? 0), 5000))} step={100} value={sweet} onChange={(e) => setSweet(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--khq-sage)', height: 28 }} />
+            <input id="kc-sweet" type="range" min={0} max={Math.max(existing?.sweet_kt ?? 0, Math.min(bank + (existing?.sweet_kt ?? 0), 100))} step={1} value={sweet} onChange={(e) => setSweet(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--khq-sage)', height: 28 }} />
             <p className="kc-sub" style={{ fontSize: 12 }}>50 KT = 1 score point · you have {kt(bank)}</p>
           </div>
           <p className="kc-field" style={{ marginTop: 14 }}>Draft picks</p>
@@ -190,7 +190,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           {s.shadow && <p className="kc-sub" style={{ marginTop: 10 }}>Shadow season: picks count toward your score but no real pick moves.</p>}
           <div className="kc-card" style={{ padding: '6px 16px', marginTop: 14, background: 'var(--sunk)', border: 0 }}>
             <div className="kc-kv"><span>Contract: {years} × {money(base)}</span><strong>{years * base}</strong></div>
-            <div className="kc-kv"><span>Tokens: {kt(sweet)}</span><strong>{Math.trunc(sweet / 50)}</strong></div>
+            <div className="kc-kv"><span>Tokens: {kt(sweet)}</span><strong>{sweet}</strong></div>
             <div className="kc-kv"><span>Picks</span><strong>{pickScore}</strong></div>
             <div className="kc-kv" style={{ fontWeight: 700 }}><span style={{ color: 'var(--ink)' }}>Offer score</span><strong>{score}</strong></div>
           </div>

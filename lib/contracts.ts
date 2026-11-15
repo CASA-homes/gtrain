@@ -64,7 +64,7 @@ export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier
 export const minimumFor = (rate: number, years: number) => Math.max(5, Math.round(rate * lengthFactor(years)));
 export const pickPointsScore = (overall: number) => Math.round(3000 * Math.exp(-0.07 * (overall - 1)) / 50);
 export function offerScore(years: number, salary: number, sweet: number, pickOveralls: number[]) {
-  return years * salary + Math.trunc(sweet / 50) + pickOveralls.reduce((a, o) => a + pickPointsScore(o), 0);
+  return years * salary + sweet + pickOveralls.reduce((a, o) => a + pickPointsScore(o), 0);
 }
 export function floorFor(s: KcSettings, line: Line) {
   return line === 'DEF' ? s.floor_def : line === 'MID' ? s.floor_mid : line === 'RUC' ? s.floor_ruc : s.floor_fwd;
@@ -143,7 +143,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
       team, salary, nextSalary: salaryIn(season + 1), bank: banks.get(team.id) ?? 0, dead,
       contracts: active.filter((c) => c.team_id === team.id).length,
       overKeeper: k ? Math.max(0, salary - k.keeper_cap_k) : 0, overTax: k ? Math.max(0, salary - k.tax_line_k) : 0,
-      taxKt: k ? Math.max(0, salary - k.tax_line_k) * k.tax_kt_per_k : 0, list, fit,
+      taxKt: k ? Math.round(Math.max(0, salary - k.tax_line_k) * Number(k.tax_kt_per_k)) : 0, list, fit,
       keeperCapNext: (k?.keeper_cap_k ?? 0) - capAdjust.filter((x) => x.team_id === team.id && x.season === season + 1).reduce((t, x) => t + x.amount_k, 0),
       keptNext: new Set(contracts.filter((c) => c.team_id === team.id && (c.status === 'active' || c.status === 'pending') && c.start_season <= season + 1 && c.end_season >= season + 1).map((c) => c.player_id)).size,
       deficitUsed: capAdjust.some((x) => x.team_id === team.id && x.season === season + 1),

@@ -19,7 +19,7 @@ export default async function ContractsAdmin() {
         {!d.ready || !s ? (
           <section className="kc-card brass">
             <h2>1. Set up the shadow season</h2>
-            <p className="kc-sub" style={{ color: '#6e5220' }}>Creates a contract for every kept player and a 10,000 KT starting bank for every club. If any club would start over the keeper cap, the caps rise until everyone fits.</p>
+            <p className="kc-sub" style={{ color: '#6e5220' }}>Creates a contract for every kept player and a 200 KT starting bank for every club. If any club would start over the keeper cap, the caps rise until everyone fits.</p>
             <div style={{ marginTop: 12 }}><RunButton run="seed" label="Set up contracts" confirmText="Set up contracts for every club now?" /></div>
           </section>
         ) : (

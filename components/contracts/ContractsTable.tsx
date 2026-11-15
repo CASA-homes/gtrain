@@ -136,7 +136,7 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
         <form action={offerKtForPlayer} className="cd-alt">
           <input type="hidden" name="player" value={r.playerId} />
           <span>Or make a lower offer. It opens a trade desk; his club can accept, counter or say no, any time of year.</span>
-          <div><input name="kt" type="number" inputMode="numeric" min={100} step={100} max={buy.bank || undefined} placeholder={`e.g. ${Math.round((price * 0.7) / 100) * 100}`} required aria-label="Your KT offer" />
+          <div><input name="kt" type="number" inputMode="numeric" min={1} step={1} max={buy.bank || undefined} placeholder={`e.g. ${Math.max(1, Math.round(price * 0.7))}`} required aria-label="Your KT offer" />
             <button type="submit" className="kc-btn small">Send offer</button></div>
           <em>You have {kt(buy.bank)}.</em>
         </form>
@@ -203,7 +203,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>
               {!finalYr && r.salary != null && <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={windowOpen} />}
-              {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.round(((r.clause ?? r.rate * 100) * 0.4) / 100) * 100} /> : null}
+              {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
               <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} />
             </>}
           </div>
