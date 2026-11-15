@@ -301,7 +301,8 @@ begin
   if exists (select 1 from unnest(coalesce(picks_in, '{}')) pid where not exists (select 1 from picks where id = pid and owner_team_id = me)) then
     raise exception 'You can only offer picks you own';
   end if;
-  check_season := case when f.kind = 'pending' then k.season + 1 else k.season end;
+  check_season := k.season;
+  if f.kind = 'pending' then check_season := k.season + 1; end if;
   if public.kc_salary(me, check_season) + round(p_salary * public.kc_premium(new_tier)) > k.season_cap_k then
     raise exception 'That salary would take you over the $%k season cap in %', k.season_cap_k, check_season;
   end if;
@@ -421,15 +422,16 @@ end $$;
 
 -- Rollover: every club must be within its keeper cap (+ allowed deficit). Unclaimed pending free agents go open.
 create or replace function public.kc_rollover() returns int language plpgsql security definer set search_path = public as $$
-declare k kc_settings; r record; n int := 0; bad text := '';
+declare k kc_settings; r record; n int := 0; bad text := ''; allow int;
 begin
   if not public.is_commish() then raise exception 'Only the commish can roll the season over'; end if;
   select * into k from kc_settings where league_id = public.current_league() for update;
   if k.window_open then raise exception 'Close the window first'; end if;
   for r in select id, name from teams where league_id = public.current_league() and not coalesce(is_guest, false) loop
+    allow := k.deficit_max_k;
+    if exists (select 1 from kc_cap_adjust where team_id = r.id and season = k.season + 1 and league_id = public.current_league()) then allow := 0; end if;
     if public.kc_kept_count(r.id, k.season + 1) > 18
-       or public.kc_salary(r.id, k.season + 1) > public.kc_keeper_cap(r.id, k.season + 1)
-          + case when exists (select 1 from kc_cap_adjust where team_id = r.id and season = k.season + 1 and league_id = public.current_league()) then 0 else k.deficit_max_k end then
+       or public.kc_salary(r.id, k.season + 1) > public.kc_keeper_cap(r.id, k.season + 1) + allow then
       bad := bad || r.name || ', ';
     end if;
   end loop;
