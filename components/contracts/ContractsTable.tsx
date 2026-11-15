@@ -118,7 +118,7 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
           <li><b>Full price only.</b> You pay the whole clause up front. It’s held for 24 hours.</li>
           <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
           <li><b>If they don’t match</b>, he joins you at the end of {settings.season}, not now. He plays out the season for his current club, then moves on the rest of his contract.</li>
-          <li><b>Window only.</b> Clauses can only be paid in the mid-season window, and there are none in a player’s final year.</li>
+          <li><b>Window only.</b> Clauses can only be paid in the mid-season window. A player has a clause until his last 6 months, so final-year players count until the window closes; buy one and he joins you on a one-season deal at his current salary.</li>
           <li><b>His salary comes with him.</b> You take on his current contract: {r.salary != null ? k$(r.salary) : '—'} a year to {r.extEnd ?? r.end ?? '—'}, and it has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room). It’s checked again when he moves.</li>
           <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used).</li>
           <li><b>His list.</b> When he arrives you still need to be at 33 or fewer, so plan a release or trade if you’re full.</li>
@@ -186,7 +186,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <div><dt>Salary</dt><dd>{r.salary != null ? `${k$(r.salary)} a year` : 'Not contracted'}</dd></div>
             <div><dt>Contract</dt><dd>{r.start != null && r.end != null ? `${r.start}–${r.end}` : '—'}{yrs != null && <span className="kc-pips" style={{ marginLeft: 8 }}>{years.map((y) => <i key={y} className={r.end != null && r.start != null && r.end >= y && r.start <= y ? 'on' : r.extEnd && r.extEnd >= y && r.end != null && y > r.end ? 'next' : ''} />)}</span>}</dd></div>
             {r.extSalary != null && <div><dt>Extension</dt><dd>{k$(r.extSalary)} a year to {r.extEnd}</dd></div>}
-            <div><dt>Release clause</dt><dd>{r.clause != null ? `${kt(r.clause)} (${r.tier})` : r.salary == null ? '—' : finalYr ? 'None in final year' : r.tier === 'none' ? 'No clause' : '—'}</dd></div>
+            <div><dt>Release clause</dt><dd>{r.clause != null ? `${kt(r.clause)} (${r.tier})` : r.salary == null ? '—' : finalYr ? 'None in his last 6 months' : r.tier === 'none' ? 'No clause' : '—'}</dd></div>
             <div><dt>Market value</dt><dd>{k$(r.rate)}{surplus != null ? ` · ${surplus >= 0 ? `${k$(surplus)} under` : `${k$(-surplus)} over`} his salary` : ''}</dd></div>
             <div><dt>2026</dt><dd>{r.avg?.toFixed(1) ?? '–'} avg · {r.games} games</dd></div>
             {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead money</dd></div>}

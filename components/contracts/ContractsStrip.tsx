@@ -28,7 +28,7 @@ export async function ContractsStrip({ teamId, mine }: { teamId: number; mine: b
     const offers = d.freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === teamId && f.offers > 0);
     if (offers.length) alerts.push({ text: `${offers.reduce((t, f) => t + f.offers, 0)} offers on your pending free agents.`, href: `${base}?view=contracts`, tone: 'warn' });
     const finalYear = d.active.filter((c) => c.team_id === teamId && c.end_season <= s.season && !d.pending.some((p) => p.player_id === c.player_id) && !d.pendingFa.has(c.player_id)).length;
-    if (finalYear && !d.midseason) alerts.push({ text: `${finalYear} in their final year. Extend before mid-season or rivals can bid.`, href: `${base}?view=contracts`, tone: 'warn' });
+    if (finalYear && !d.midseason) alerts.push({ text: `${finalYear} in their final year. Re-sign before the mid-season window closes or they become free agents.`, href: `${base}?view=contracts`, tone: 'warn' });
     const over = club.nextSalary - club.keeperCapNext;
     if (over > 0) alerts.push({ text: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? `${moneyK(over)} over the ${s.season + 1} keeper cap. Fix it by deadline day or the commish releases a player.` : `${moneyK(over)} over the ${s.season + 1} keeper cap. Deficit allowed on deadline day for ${s.deficit_fee_kt.toLocaleString('en-AU')} KT.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
   }

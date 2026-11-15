@@ -35,10 +35,10 @@ export default async function ContractsAdmin() {
               <div style={{ marginTop: 12 }}><RunButton run="draftees" label="Sign draftees" kind="dark" confirmText="Put every uncontracted squad player on a one-season draft deal?" /></div>
             </section>
             <section className="kc-card" aria-labelledby="ms-h">
-              <h2 id="ms-h">Mid-season week</h2>
-              <p className="kc-sub">{s.midseason_at ? `Started ${new Date(s.midseason_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}. ${d.freeAgents.filter((f) => f.kind === 'pending').length} pending free agents.` : 'Starting it turns every un-extended final-year player (draftees too) into a pending free agent. Extensions for them close. Then open the window for release clauses and auctions.'}</p>
+              <h2 id="ms-h">End of mid-season window</h2>
+              <p className="kc-sub">{s.midseason_at ? `Started ${new Date(s.midseason_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}. ${d.freeAgents.filter((f) => f.kind === 'pending').length} pending free agents.` : 'Happens automatically when you close the mid-season window: every final-year player not re-signed (draftees too) becomes a free agent and loses his clause. Use this only if the window closed on its timer.'}</p>
               <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {!s.midseason_at && <RunButton run="midseason" label="Start mid-season week" kind="dark" confirmText="Start mid-season week? Every un-extended final-year player becomes a pending free agent. This can't be undone this season." />}
+                {!s.midseason_at && <RunButton run="midseason" label="Make final-year players free agents" kind="dark" confirmText="Make every un-signed final-year player a free agent now? This can't be undone this season." />}
                 <WindowControl settings={s} />
               </div>
             </section>
