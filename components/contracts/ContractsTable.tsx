@@ -40,12 +40,13 @@ function Trend({ v }: { v: number[] }) {
   );
 }
 
-type SortKey = 'name' | 'len' | 'trend' | 'market' | 'clause' | 'salary';
-const COLS: [SortKey, string][] = [['name', 'Pos'], ['len', 'Yrs'], ['trend', 'Trend'], ['market', 'Market'], ['clause', 'Clause'], ['salary', 'Salary']];
+type SortKey = 'name' | 'age' | 'len' | 'trend' | 'market' | 'clause' | 'salary';
+const COLS: [SortKey, string][] = [['age', 'Age'], ['len', 'Yrs'], ['trend', 'Trend'], ['market', 'Market'], ['clause', 'Clause'], ['salary', 'Salary']];
 const trendPct = (v: number[]) => (v.length > 1 && v[0] > 0 ? (v[v.length - 1] - v[0]) / v[0] : 0);
 const sortVal = (r: CtRow, k: SortKey): number | string => {
   switch (k) {
     case 'name': return r.name.toLowerCase();
+    case 'age': return r.age ?? 99;
     case 'len': return r.extEnd ?? r.end ?? -1;
     case 'trend': return trendPct(r.trend);
     case 'market': return r.rate;
@@ -75,6 +76,7 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
         {total > 0 && <b>{k$(total)}</b>}
       </header>
       <div className="ct2-cols" role="toolbar" aria-label="Sort players">
+        <span />
         {COLS.map(([k, label]) => (
           <button key={k} type="button" onClick={() => click(k)} className={sort?.k === k ? 'on' : undefined} aria-pressed={sort?.k === k}
             title={`Sort by ${label.toLowerCase()}`}>
@@ -155,11 +157,9 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
     <li className={r.tone ? `tone-${r.tone}` : undefined}>
       <details className="ct2-item">
         <summary className="ct2-row">
-          <span className="ct2-who">
-            <ClubDot code={r.club} size={18} />
-            <b>{r.name}</b>
-          </span>
-          <span className="ct2-c ct2-pa">{r.positions.join('/')}<em>{r.age ?? '–'}</em></span>
+          <span className="ct2-ic"><ClubDot code={r.club} size={20} /></span>
+          <span className="ct2-who"><b>{r.name}</b><i>{r.positions.join('/')}</i></span>
+          <span className="ct2-c ct2-pa">{r.age ?? '–'}<em>yrs</em></span>
           <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
           <Trend v={r.trend} />
           <span className="ct2-c">{k$(r.rate)}{surplus != null ? <em className={surplus >= 5 ? 'kc-up' : surplus <= -5 ? 'kc-down' : ''}>{surplus > 0 ? '+' : surplus < 0 ? '−' : '±'}{k$(Math.abs(surplus))}</em> : <em>value</em>}</span>
