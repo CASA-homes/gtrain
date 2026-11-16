@@ -73,7 +73,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
         <div style={{ flex: '1 1 360px' }}>
           <h3 style={{ font: '600 26px var(--font)' }}>Offer tabled</h3>
-          <p className="kc-sub" style={{ fontSize: 15 }}>{player.name} now has {fa.offers + (existing ? 0 : 1)} offer{fa.offers + (existing ? 0 : 1) > 1 ? 's' : ''}. Nobody can see the amounts, including yours.</p>
+          <p className="kc-sub" style={{ fontSize: 15 }}>{player.name} now has {fa.offers + (existing ? 0 : 1)} offer{fa.offers + (existing ? 0 : 1) > 1 ? 's' : ''}. Nobody can see the amounts, including yours. It waits in your <Link href="/market">Trademarket</Link> under “Your free-agent offers” while they decide.</p>
           <ol style={{ margin: '18px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
             <li><strong>Tabled</strong>: score {score}{sweet ? `, ${kt(sweet)} held until offers close` : ''}.</li>
             {fa.offseason ? <>
@@ -252,7 +252,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           {done ? <>
             <Link href="/contracts/market" className="kc-btn">Back to market</Link>
             <span className="kc-sub">Raise any time before offers close</span>
-            <Link href="/contracts" className="kc-btn dark">Done</Link>
+            <Link href="/market" className="kc-btn dark">View in Trademarket</Link>
           </> : <>
             {step === 0 ? <Link href="/contracts/market" className="kc-btn">Cancel</Link> : <button type="button" className="kc-btn" onClick={() => setStep(step - 1)}>Back</button>}
             <span className="kc-sub">Step {step + 1} of 5</span>

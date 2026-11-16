@@ -7,6 +7,7 @@ import { C, LINES, type Line } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 import { closeWish, decideTrade, postWish, voteVeto } from './actions';
 import { BuyPanel } from '@/components/trade/BuyPanel';
+import { MyFaOffers } from '@/components/trade/MyFaOffers';
 import '@/components/trade/trade.css';
 
 export default async function MarketPage({ searchParams }: { searchParams: Promise<{ line?: string; error?: string }> }) {
@@ -55,6 +56,7 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
       <div className="page"><div className="wrap">
         {sp.error && <div role="alert" className="card" style={{ padding: '10px 14px', background: C.redBg, color: C.redFg, border: 0 }}>{sp.error}</div>}
         <BuyPanel />
+        <MyFaOffers />
         {line && <div className="muted">Showing {line} only · <Link href="/market">show everyone</Link></div>}
 
         {pendingTrades.length > 0 && (
