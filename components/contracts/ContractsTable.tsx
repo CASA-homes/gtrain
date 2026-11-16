@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ExtendControl, ProvisionalControls, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
+import { AuctionControl, ExtendControl, ProvisionalControls, ReleaseButton, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import { openUnsigned } from '@/app/(app)/contracts/actions';
@@ -223,13 +223,6 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''} +{settings.ext_premium_pct}%{setup ? ', no fee until deadline day' : `, plus a ${kt(settings.ext_fee_kt)} fee`}.</span></summary>
               <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
             </details>
-          )}
-          {canManage && settings.setup_until && new Date(settings.setup_until) > new Date() && r.salary != null && r.tier !== 'protected' && ['contract', 'final', 'rookie', 'draft', 'extended'].includes(r.status) && (
-            <div className="ct2-sign">
-              <b>Set his release clause</b>
-              <span className="kc-sub">Open until deadline day ({new Date(settings.setup_until).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}). After that it’s fixed for the deal.</span>
-              <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={false} />
-            </div>
           )}
           {canManage && prov && (
             <div className="ct2-sign">
