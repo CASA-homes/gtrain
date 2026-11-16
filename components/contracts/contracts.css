@@ -597,3 +597,40 @@
   .ct2-head > div { grid-column: 1 / 8; }
   .ct2-head > b { grid-column: 8; text-align: center; }
 }
+
+/* Cap simulator v2: one panel, Contracted / Expiring tabs, three-way switch per player */
+.sim2 { display: flex; flex-direction: column; gap: 10px; }
+.sim2 .sim-result { position: sticky; top: 8px; z-index: 2; }
+.sim-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0; }
+.sim-two > div { display: flex; flex-direction: column; }
+.sim-two span { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.sim-two b { font: 700 26px/1.1 var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.sim-two em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.sim-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; padding: 3px; border-radius: 12px; background: var(--sunk); }
+.sim-tabs button { all: unset; cursor: pointer; text-align: center; padding: 8px; border-radius: 9px; font: 600 13.5px var(--font); color: var(--muted); }
+.sim-tabs button i { font-style: normal; font: 700 10.5px var(--mono); margin-left: 4px; opacity: .7; }
+.sim-tabs button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.sim-list { max-height: 460px; overflow-y: auto; border: 1px solid var(--khq-line, #e3e6df); border-radius: 12px; }
+.sim-p { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 10px; align-items: center; padding: 9px 12px; border-top: 1px solid var(--line-soft); width: 100%; box-sizing: border-box; text-align: left; }
+.sim-p:first-child { border-top: 0; }
+.sim-p.release { background: #fdf3ef; } .sim-p.trade { background: #eef3fa; }
+.sim-who { display: flex; flex-direction: column; min-width: 0; }
+.sim-who b { font: 600 13.5px var(--font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sim-who small { font-size: 11.5px; color: var(--muted); }
+.sim3 { display: inline-grid; grid-template-columns: repeat(3, auto); gap: 2px; padding: 2px; border-radius: 99px; background: var(--sunk); }
+.sim3 button { all: unset; cursor: pointer; padding: 5px 9px; border-radius: 99px; font: 600 11.5px var(--font); color: var(--muted); }
+.sim3 button.on.keep { background: #2f5d46; color: #fff; }
+.sim3 button.on.release { background: #b4512a; color: #fff; }
+.sim3 button.on.trade { background: #1f3a5c; color: #fff; }
+.sim3 button:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+.sim-eff { grid-column: 1 / -1; font-size: 11.5px; color: #5b625c; }
+.sim-x { all: unset; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 9px 12px; border-top: 1px solid var(--line-soft); cursor: pointer; box-sizing: border-box; width: 100%; }
+.sim-x.on { background: #eef6f0; }
+.sim-tog { display: inline-flex; align-items: center; gap: 8px; font: 600 12px var(--font); color: var(--muted); }
+.sim-x.on .sim-tog { color: #2f5d46; }
+.sim-tog i { width: 34px; height: 20px; border-radius: 99px; background: #cfd6ca; position: relative; flex: none; transition: background .2s; }
+.sim-tog i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .2s; box-shadow: 0 1px 2px rgb(0 0 0 / .2); }
+.sim-x.on .sim-tog i { background: #2f5d46; } .sim-x.on .sim-tog i::after { transform: translateX(14px); }
+.sim-x:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+@media (max-width: 520px) { .sim3 button { padding: 5px 7px; font-size: 11px; } }
+@media (max-width: 760px) { .sim2 .sim-result { position: static; } }
