@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ExtendControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
+import { AuctionControl, ExtendControl, ProvisionalControls, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import { openUnsigned } from '@/app/(app)/contracts/actions';
@@ -16,7 +16,7 @@ export type CtStatus = 'final' | 'pending' | 'moving' | 'extended' | 'draft' | '
 export interface CtRow {
   id: number; playerId: number; name: string; positions: string[]; club: string | null; age: number | null; avg: number | null; games: number;
   salary: number | null; base: number; rate: number; start: number | null; end: number | null; yearsLeft: number; tier: Tier; clause: number | null;
-  status: CtStatus; statusLabel: string; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
+  status: CtStatus; statusLabel: string; provisional?: boolean; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
   onAuction: boolean; lockedUntil?: string | null; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | null;
 }
 
@@ -159,6 +159,8 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
 
 function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean; onBid: ((r: CtRow) => void) | null }) {
   const surplus = r.salary != null ? r.rate - r.salary : null;
+  const setup = !!settings.setup_until && new Date(settings.setup_until) > new Date();
+  const prov = setup && !!r.provisional;
   const locked = r.status === 'pending' || r.status === 'moving' || r.status === 'claim' || r.status === 'none';
   const finalYr = r.status === 'final' || r.status === 'draft' || r.status === 'pending';
   const until = r.extEnd ?? r.end;
@@ -198,7 +200,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
           <span className="sr-only">Show contract details for {r.name}</span>
         </summary>
         <div className="ct2-more">
-          <div className="ct2-status"><span className={`kc-tag ${TAG[r.status]}`}>{r.statusLabel}</span>{r.homeGrown && <span className="kc-tag high">Home-grown</span>}</div>
+          <div className="ct2-status"><span className={`kc-tag ${TAG[r.status]}`}>{r.statusLabel}</span>{r.homeGrown && <span className="kc-tag high">Home-grown</span>}{prov && <span className="kc-tag exp">Provisional</span>}</div>
           <dl className="ct2-dl">
             <div><dt>Salary</dt><dd>{r.salary != null ? `${k$(r.salary)} a year` : 'Not contracted'}</dd></div>
             <div><dt>Contract</dt><dd>{r.start != null && r.end != null ? `${r.start}–${r.end}` : '—'}{yrs != null && <span className="kc-pips" style={{ marginLeft: 8 }}>{years.map((y) => <i key={y} className={r.end != null && r.start != null && r.end >= y && r.start <= y ? 'on' : r.extEnd && r.extEnd >= y && r.end != null && y > r.end ? 'next' : ''} />)}</span>}</dd></div>
@@ -211,14 +213,14 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
           {r.status === 'none' && canManage && (
             <div className="ct2-sign">
               <b>Offer {r.name} a contract</b>
-              <span className="kc-sub">Out of contract. Sign him from {settings.season} at his priced salary: {k$(r.rate)} market value.</span>
-              <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={false} settings={settings} />
+              <span className="kc-sub">{setup ? `Unsigned. Re-sign him from ${settings.season}: ${k$(r.rate)} market value, less ${settings.home_grown_pct}% home-grown. Provisional until deadline day, so you can undo it.` : `Out of contract. Sign him from ${settings.season} at his priced salary: ${k$(r.rate)} market value.`}</span>
+              <ExtendControl contractId={0} signPlayerId={r.playerId} name={r.name} rate={r.rate} homeGrown={setup} settings={settings} />
             </div>
           )}
           {canManage && r.lockedUntil && new Date(r.lockedUntil) > new Date() && <p className="kc-sub" style={{ margin: 0 }}>Extended recently: locked until {new Date(r.lockedUntil).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}.</p>}
           {canManage && !(r.lockedUntil && new Date(r.lockedUntil) > new Date()) && r.extEnd == null && r.end != null && r.salary != null && ['contract', 'final', 'rookie', 'draft'].includes(r.status) && r.end < settings.season + settings.max_years - 1 && (
             <details className="ct2-sign ct2-ext">
-              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''} +{settings.ext_premium_pct}%, plus a {kt(settings.ext_fee_kt)} fee.</span></summary>
+              <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''} +{settings.ext_premium_pct}%{setup ? ', no fee until deadline day' : `, plus a ${kt(settings.ext_fee_kt)} fee`}.</span></summary>
               <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
             </details>
           )}
@@ -229,11 +231,18 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={false} />
             </div>
           )}
+          {canManage && prov && (
+            <div className="ct2-sign">
+              <b>Provisional until deadline day</b>
+              <span className="kc-sub">Undo it for free and try something else, or lock it in. Everything becomes formal on deadline day.</span>
+              <ProvisionalControls contractId={r.id} name={r.name} />
+            </div>
+          )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>
               {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
-              <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />
+              {!prov && <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />}
             </>}
           </div>
         </div>

@@ -156,8 +156,20 @@ export async function setDropDay(iso: string | null): Promise<Result> {
   revalidatePath('/', 'layout');
   return { ok: true, message: when ? 'Drop day set. Rookie slots lock then.' : 'Drop day cleared.' };
 }
-export async function makeDeposit(amount: number) {
-  return run('kc_deposit', { amount }, () => `${kt(amount)} locked in a term deposit until season end.`);
+export async function makeDeposit(amount: number, months: number) {
+  return run('kc_deposit', { amount, p_months: months }, () => `${kt(amount)} locked in a term deposit for ${months === 6 ? '6 months' : months === 12 ? '1 year' : '2 years'}.`);
+}
+export async function collectDeposits() {
+  return run('kc_collect_deposits', {}, (n) => (Number(n) > 0 ? `${kt(Number(n))} collected.` : 'Nothing has matured yet.'));
+}
+export async function undoContract(contractId: number) {
+  return run('kc_undo_contract', { cid: contractId }, () => 'Undone. He’s unsigned again.');
+}
+export async function lockContracts(contractId: number | null, teamId: number | null) {
+  return run('kc_lock_contracts', { cid: contractId, t: teamId }, (n) => `${n} contract${n === 1 ? '' : 's'} locked.`);
+}
+export async function freshStart() {
+  return run('kc_fresh_start', {}, (n) => `${n} contracts cleared. Every list is unsigned.`);
 }
 export async function offerLoan(borrower: number, amount: number, rate: number) {
   return run('kc_loan_offer', { p_borrower: borrower, amount, p_rate: rate }, () => `Loan of ${kt(amount)} offered at ${rate}%. It goes through when they accept.`);
