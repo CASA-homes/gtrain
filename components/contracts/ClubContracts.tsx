@@ -3,6 +3,7 @@
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
 import { DraftRequest, KcClock, LockAllButton, RunButton } from '@/components/contracts/client';
+import { ContractsTour } from '@/components/contracts/ContractsTour';
 import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, inSetup, releaseCost, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
@@ -105,8 +106,9 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
   return (
     <div className="kc-stack">
+      {mine && <ContractsTour setup={setup} keeperCap={s.keeper_cap_k} softCap={s.season_cap_k - s.keeper_cap_k} deadline={deadline || 'deadline day'} />}
       {mine && setup && (
-        <section className="kc-card brass" aria-labelledby="su-h">
+        <section className="kc-card brass" aria-labelledby="su-h" data-tour="setup">
           <div className="row-between">
             <h2 id="su-h">Re-sign your list</h2>
             <span className="fn-pill brass">Formal {deadline}</span>
@@ -198,7 +200,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         </section>
       )}
 
-      <section className="kc-card ct2-card" aria-labelledby="ct-h">
+      <section className="kc-card ct2-card" aria-labelledby="ct-h" data-tour="contracts">
         <div className="row-between" style={{ marginBottom: 10 }}>
           <h2 id="ct-h">Contracts</h2>
           {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
@@ -206,7 +208,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
       </section>
 
-      <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h">
+      <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h" data-tour="rookie">
         <div className="row-between">
           <h2 id="rk-h">{s.season} rookie slot</h2>
           <span className={`fn-pill ${rookieLocked ? 'dn' : 'brass'}`}>{rookieLocked ? 'Locked' : dropDay ? `Locks ${dropDay}` : 'Cap-free'}</span>
@@ -218,7 +220,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         {canManage && <RookiePicker season={s.season} current={rookie?.player_id ?? null} options={rookieOptions} locked={rookieLocked} />}
       </section>
 
-      <section className="kc-card ct2-card" aria-label="Expiring and free agents">
+      <section className="kc-card ct2-card" aria-label="Expiring and free agents" data-tour="unsigned">
         <ContractsTable title={setup ? 'Unsigned & expiring' : 'Expiring & free agents'} note={setup ? 'Light red: unsigned. Tap a player to offer him a contract.' : 'Light red: free agent, under six months or leaving. Light yellow: final year, re-sign before the mid-season window closes.'} rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
         <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: top 10 picks $30k, rest of R1 and R2 $25k, R3 $20k, R4 $15k, R5+ $10k. Rookies (10 or fewer games) half that, on 2 years; established players on 1. No clause until the mid-season window. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
