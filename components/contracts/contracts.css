@@ -690,9 +690,9 @@
 .fn-top { display: grid; gap: 12px; }
 @media (min-width: 861px) {
   .fn-top.two { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: stretch; }
-  .fn-stack .kc-card { padding: 14px 16px; }
-  .fn-stack .fn-hero { gap: 7px; }
-  .fn-stack .fn-big b { font-size: 30px; }
-  .fn-stack .fn-runway { gap: 6px; margin-top: 8px; }
-  .fn-stack .fn-kpis { padding-top: 7px; }
+  .fin-page .kc-card { padding: 14px 16px; }
+  .fin-page .fn-hero { gap: 7px; }
+  .fin-page .fn-big b { font-size: 30px; }
+  .fin-page .fn-runway { gap: 6px; margin-top: 8px; }
+  .fin-page .fn-kpis { padding-top: 7px; }
 }
