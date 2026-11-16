@@ -152,10 +152,22 @@ export function CardFan({ data }: { data: FanData }) {
     const t = setTimeout(() => setCur((c) => ORDER[(ORDER.indexOf(c) + 1) % ORDER.length]), 4200);
     return () => clearTimeout(t);
   }, [cur, paused]);
+  // Phones: the hand fills whatever height is left between the sign-in and the wire, so the page never scrolls.
+  const wrap = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = wrap.current; const box = el?.parentElement;
+    if (!el || !box) return;
+    const mq = matchMedia('(max-width: 860px)');
+    const fit = () => { el.style.setProperty('zoom', mq.matches ? String(Math.max(0.5, Math.min(1, box.clientHeight / 400))) : ''); };
+    fit();
+    const ro = new ResizeObserver(fit); ro.observe(box);
+    mq.addEventListener('change', fit);
+    return () => { ro.disconnect(); mq.removeEventListener('change', fit); };
+  }, []);
   const i0 = ORDER.indexOf(cur);
   const slot = (k: Key) => (ORDER.indexOf(k) - i0 + ORDER.length) % ORDER.length; // 0 front, 1 right, 2 left
   return (
-    <div className="kl-fanwrap">
+    <div className="kl-fanwrap" ref={wrap}>
       <div className="kl-fan" onMouseLeave={() => setPaused(false)} aria-label="What's inside Keeper HQ">
         <Backdrop />
         {CARDS.map((k) => {
