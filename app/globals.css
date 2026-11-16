@@ -2650,3 +2650,10 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .ss-now { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; font: 600 12px var(--font); color: #2e6b47; }
 .ss-now i { width: 7px; height: 7px; border-radius: 50%; background: #2e8a55; box-shadow: 0 0 0 3px rgb(46 138 85 / .18); }
 .ct2-sign { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid #cfe0d4; background: #f4faf6; border-radius: 12px; }
+
+/* Clubhouse header, desktop: bank only in the stat boxes; settings + keepers buttons on the right under them */
+@media (min-width: 641px) {
+  .ch-kpi-bank { display: none !important; }
+  .club-head-more { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; width: 100%; flex-wrap: wrap; }
+  .club-head-more .club-head-acts { margin-left: auto; }
+}
