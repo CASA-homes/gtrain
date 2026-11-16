@@ -190,7 +190,7 @@ export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : 
 /** Market value v2, mirroring kc_rate_v2 in the database. g0/a0 = this season so far; prev = earlier seasons, latest first.
  *  Last season and the one before (65/35) fill the games this season hasn't had yet (min 6 games' weight);
  *  priced on experience (2nd season 60%, 3rd 70%, 4th 85%, 5th+ full) and age (8% off a year from 30). */
-export function rateV2(g0: number, a0: number, prev: [number, number][], seasons: number, age: number | null): number {
+export function rateV2(g0: number, a0: number, prev: [number, number][], seasons: number, age: number | null, live = false): number {
   if (seasons <= 0 && g0 <= 0) return 5;
   const prior = Math.max(6, 22 - g0);
   const w = [g0, prev[0] ? 0.65 * prior * Math.min(1, prev[0][0] / 10) : 0, prev[1] ? 0.35 * prior * Math.min(1, prev[1][0] / 10) : 0];
@@ -199,7 +199,8 @@ export function rateV2(g0: number, a0: number, prev: [number, number][], seasons
   const k = seasons + 1;
   const xp = k <= 1 ? 0.5 : k === 2 ? 0.6 : k === 3 ? 0.7 : k === 4 ? 0.85 : 1;
   const agef = age == null || age < 30 ? 1 : Math.max(0.6, 1 - 0.08 * (age - 29));
-  const avail = g0 === 0 ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
+  // Games-played discount only once a season is finished (injured players); none while it's being played.
+  const avail = g0 === 0 || live ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
   return Math.max(5, Math.pow(Math.max(0, avg - 55), 1.3) * 0.66 * xp * agef * avail);
 }
 
@@ -216,7 +217,9 @@ export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   const age = born ? Math.floor((Date.UTC(2027, 2, 1) - born.getTime()) / (365.25 * 86400000)) : null;
   const out = [rateV2(0, 0, prev, seasons, age)];
   let sum = 0;
-  scores.forEach((x, i) => { sum += x; out.push(rateV2(i + 1, sum / (i + 1), prev, seasons, age)); });
+  // In-season points carry no availability discount; the last point does if that season is finished.
+  const finished = curYear != null && curYear < 2027;
+  scores.forEach((x, i) => { sum += x; out.push(rateV2(i + 1, sum / (i + 1), prev, seasons, age, !(finished && i === scores.length - 1))); });
   if (out.length <= points) return out;
   return Array.from({ length: points }, (_, i) => out[Math.round((i * (out.length - 1)) / (points - 1))]);
 }
