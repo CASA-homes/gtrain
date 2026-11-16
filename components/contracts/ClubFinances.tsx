@@ -118,7 +118,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   if (club.bank >= 200 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} one-year term deposit returns 10%.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * 10) / 100))}` });
 
   return (
-    <div className="kc-stack fn-stack">
+    <div className="kc-stack fin-page">
       <div className={`fn-top${mine ? ' two' : ''}`}>
       <section className="kc-card fn-hero" aria-labelledby="cap-h">
         <div className="row-between"><h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
