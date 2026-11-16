@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ClubDot, Cup, RankBar, Stars } from '@/components/bits';
 import { getLeague } from '@/lib/data';
+import { FinanceRankings } from '@/components/FinanceRankings';
 import { FUTURE_CORE, FUTURE_MAX_AGE, futureScore } from '@/lib/projection';
 import { age, C, LINES } from '@/lib/ratings';
 
@@ -9,12 +10,13 @@ const STATUS_COLOUR = { 'Strong contender': C.green5, 'Top 4 contender': C.green
 export default async function RankingsPage({ searchParams }: { searchParams: Promise<{ view?: string }> }) {
   const { view } = await searchParams;
   const future = view === 'future';
+  const finance = view === 'finance';
   const league = await getLeague();
   const teams = [...league.byTeam.values()];
 
   const tabs = (
     <div role="tablist" aria-label="Ranking view" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
-      {([['Power rankings', '/rankings', !future], ['Future build', '/rankings?view=future', future]] as const).map(([label, href, on]) => (
+      {([['Power rankings', '/rankings', !future && !finance], ['Future build', '/rankings?view=future', future], ['Financials', '/rankings?view=finance', finance]] as const).map(([label, href, on]) => (
         <Link key={href} href={href} role="tab" aria-selected={on}
           style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: on ? '#fff' : 'transparent', color: on ? C.ink : C.muted, boxShadow: on ? '0 1px 2px rgb(0 0 0 / .08)' : 'none' }}>
           {label}
@@ -22,6 +24,8 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
       ))}
     </div>
   );
+
+  if (finance) return <FinanceRankings tabs={tabs} />;
 
   const lineHead = LINES.map((l) => (
     <th key={l} style={{ width: 110 }}><span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}><span className="dot" style={{ width: 7, height: 7, background: C[l] }} />{l}</span></th>
