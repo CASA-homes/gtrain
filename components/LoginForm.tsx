@@ -17,6 +17,7 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
   const [pw, setPw] = useState('');
   const [pw2, setPw2] = useState('');
   const [code, setCode] = useState('');
+  const [league, setLeague] = useState('');
   const [state, setState] = useState<State>(linkError
     ? { kind: 'error', message: 'That link has expired or was already used. Enter your email for a fresh one.' }
     : { kind: 'idle' });
@@ -33,9 +34,15 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
     }
     setState({ kind: 'sending' });
     const supabase = createClient();
-    const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
-    if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
-    if (!allowed) return setState({ kind: 'error', message: 'That email isn’t on a league list yet. Ask your commish to add it.' });
+    const lc = league.trim().toUpperCase();
+    if (mode === 'signup' && lc) {
+      const { data: lk } = await supabase.rpc('join_lookup', { p_code: lc });
+      if (!lk) return setState({ kind: 'error', message: 'That league code isn’t right. Check it with your commish.' });
+    } else {
+      const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
+      if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
+      if (!allowed) return setState({ kind: 'error', message: mode === 'signup' ? 'Enter the league code your commish sent you.' : 'That email isn’t in a league yet. Tap Sign up and enter your league code.' });
+    }
     if (mode === 'login' && usePw) {
       const { error } = await supabase.auth.signInWithPassword({ email: clean, password: pw });
       if (error) return setState({ kind: 'error', message: 'Wrong email or password. No password yet? Tap Sign up to create one.' });
@@ -60,6 +67,7 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
     if (mode === 'signup') {
       const { error: pwErr } = await supabase.auth.updateUser({ password: pw });
       if (pwErr) return setState({ ...state, checking: false, codeError: `You’re signed in, but the password didn’t save: ${pwErr.message}. Set it from the lock icon.` });
+      if (league.trim()) { window.location.href = `/join/${encodeURIComponent(league.trim().toUpperCase())}`; return; }
     }
     window.location.href = '/clubhouse';
   }
@@ -103,6 +111,8 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
         <>
           <label htmlFor="pw2" className="lg-lab">Type it again</label>
           <input id="pw2" className="lg-in" type="password" autoComplete="new-password" required minLength={8} value={pw2} onChange={(e) => setPw2(e.target.value)} />
+          <label htmlFor="lc" className="lg-lab">League code</label>
+          <input id="lc" className="lg-in lg-mono" autoCapitalize="characters" autoComplete="off" value={league} onChange={(e) => setLeague(e.target.value)} placeholder="e.g. GTRAIN-4KX9 (from your commish)" />
         </>
       )}
       <button type="submit" className="lg-btn" disabled={sending}><i aria-hidden="true" />
@@ -111,7 +121,7 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
       {mode === 'login' && <button type="button" className="lg-alt" onClick={() => { setUsePw(!usePw); setState({ kind: 'idle' }); }}>{usePw ? 'No password? Email me a sign-in link' : 'Log in with a password'}</button>}
       <span role="status" className={state.kind === 'error' ? 'lg-err' : 'lg-note'}>
         {state.kind === 'error' ? state.message
-          : mode === 'signup' ? 'Use the email your commish invited. We’ll email a 6-digit code to confirm it’s you, then you’re in.'
+          : mode === 'signup' ? 'Enter the league code from your commish (not needed if they added your email). We’ll email a 6-digit code to confirm it’s you.'
           : 'New here? Tap Sign up to create your password.'}
       </span>
     </form>

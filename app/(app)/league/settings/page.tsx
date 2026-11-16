@@ -10,6 +10,7 @@ import { LeagueNameForm } from '@/components/LeagueNameForm';
 import { DropDayControl } from '@/components/contracts/finance-client';
 import { getContracts } from '@/lib/contracts';
 import { StatsSources } from '@/components/StatsSources';
+import { InviteCoaches } from '@/components/InviteCoaches';
 import { createClient } from '@/lib/supabase/server';
 
 export const metadata = { title: 'League settings' };
@@ -27,12 +28,14 @@ export default async function LeagueSettingsPage() {
   const dropDay = kc.settings?.rookie_lock_at ?? null;
   const statsSeason = (kc.settings?.season ?? 2027) - 1;
   const statsCompare = me?.is_commish ? ((await (await createClient()).rpc('stats_compare', { p_season: statsSeason })).data ?? null) : null;
+  const joinAdmin = me?.is_commish ? ((await (await createClient()).rpc('join_admin')).data ?? null) : null;
   const holders = new Set(league.picks.map((p) => p.owner_team_id));
   const teams = league.teams.filter((t) => holders.has(t.id)).map((t) => ({ id: t.id, name: t.name }));
   return (
     <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
+        {joinAdmin && <InviteCoaches admin={joinAdmin} />}
         {me?.is_commish && <StatsSources season={statsSeason} compare={statsCompare} />}
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
         {kc.settings && (
