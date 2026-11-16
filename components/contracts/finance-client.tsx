@@ -146,17 +146,18 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
     let now = salaryNow, next = nextSalary, keepers = kept, dead = 0, fees = 0, moves = 0;
     for (const p of players) {
       const st = state[p.id] ?? 'keep';
-      if (st !== 'keep') {
-        moves++;
+      if (!p.final && st !== 'keep') {
+        moves++; keepers -= 1;
         now -= p.cur;
-        if (p.next != null) { next -= p.next; keepers -= 1; }
+        if (p.next != null) next -= p.next;
         if (st === 'release') { now += p.deadNow; dead += p.deadNow; fees += p.fee; if (p.end > season) { next += p.deadLater; dead += p.deadLater; } }
       }
-      if (p.final && resign[p.id] && p.next == null && st === 'keep') { next += p.extPrice; keepers += 1; moves++; }
+      // Signing an out-of-contract player: two-year deal at about his value, counts this season and next.
+      if (p.final && resign[p.id]) { now += p.extPrice; next += p.extPrice; keepers += 1; moves++; }
     }
     return { now, next, keepers, dead, fees, moves };
   }, [players, state, resign, salaryNow, nextSalary, kept, season]);
-  const over = r.next - keeperCap;
+  const over = r.now - keeperCap;
   const status = over <= 0 ? ['ok', `${k$(-over)} under the ${k$(keeperCap)} keeper cap`] : over <= deficitMax ? ['warn', `${k$(over)} over: a deficit is allowed`] : ['bad', `${k$(over)} over: release or trade more`];
   const reset = () => { setState({}); setResign({}); };
   const Seg = ({ p }: { p: SimPlayer }) => {
@@ -176,19 +177,19 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
     if (st === 'keep') return null;
     const freed = (p.next ?? 0) - (st === 'release' && p.end > season ? p.deadLater : 0);
     return <span className="sim-eff">{st === 'release'
-      ? <>Frees {k$(freed)} in {season + 1}. Legacy: {k$(p.deadNow)} dead in {season}{p.end > season ? `, ${k$(p.deadLater)} a year to ${p.end}` : ''} · {p.fee.toLocaleString('en-AU')} KT fee</>
-      : <>Frees {k$(p.next ?? 0)} in {season + 1} and {k$(p.cur)} in {season}. No dead money.</>}</span>;
+      ? <>Frees {k$(p.cur - p.deadNow)} in {season}{p.next != null ? ` and ${k$(freed)} in ${season + 1}` : ''}. Legacy: {k$(p.deadNow)} dead in {season}{p.end > season ? `, ${k$(p.deadLater)} a year to ${p.end}` : ''} · {p.fee.toLocaleString('en-AU')} KT fee</>
+      : <>Frees {k$(p.cur)} in {season}{p.next != null ? ` and ${k$(p.next)} in ${season + 1}` : ''}. No dead money.</>}</span>;
   };
   return (
     <div className="sim2">
       <div className={`sim-result ${status[0]}`}>
         <span className="eyebrow">Test only · nothing is saved</span>
         <div className="sim-two">
-          <div><span>{season + 1} keepers</span><b>{k$(r.next)}</b>{r.moves > 0 && <em>was {k$(nextSalary)}</em>}</div>
-          <div><span>{season} season</span><b>{k$(r.now)}</b><em>of {k$(seasonCap)}</em></div>
+          <div><span>{season} keepers</span><b>{k$(r.now)}</b>{r.moves > 0 ? <em>was {k$(salaryNow)}</em> : <em>deadline day</em>}</div>
+          <div><span>{season + 1} committed</span><b>{k$(r.next)}</b>{r.moves > 0 && <em>was {k$(nextSalary)}</em>}</div>
         </div>
         <p>{status[1]} · {r.keepers} keepers{r.keepers > 18 ? ' (max 18)' : ''}</p>
-        <CapBar salary={r.next} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
+        <CapBar salary={r.now} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
         <div className="sim-kpis">
           <div><span>Moves</span><b>{r.moves}</b></div>
           <div><span>Dead money</span><b>{k$(r.dead)}</b></div>
@@ -198,7 +199,7 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
       </div>
       <div className="sim-tabs" role="tablist">
         <button type="button" role="tab" aria-selected={tab === 'contracted'} className={tab === 'contracted' ? 'on' : undefined} onClick={() => setTab('contracted')}>Contracted <i>{contracted.length}</i></button>
-        <button type="button" role="tab" aria-selected={tab === 'expiring'} className={tab === 'expiring' ? 'on' : undefined} onClick={() => setTab('expiring')}>Expiring <i>{expiring.length}</i></button>
+        <button type="button" role="tab" aria-selected={tab === 'expiring'} className={tab === 'expiring' ? 'on' : undefined} onClick={() => setTab('expiring')}>Out of contract <i>{expiring.length}</i></button>
       </div>
       <div className="sim-list">
         {tab === 'contracted' ? contracted.map((p) => (
@@ -211,11 +212,11 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
           const on = !!resign[p.id];
           return (
             <button key={p.id} type="button" className={`sim-p sim-x ${on ? 'on' : ''}`} aria-pressed={on} onClick={() => setResign((m) => ({ ...m, [p.id]: !on }))}>
-              <div className="sim-who"><b>{p.name}</b><small>{p.pos}{p.age != null ? ` · ${p.age}` : ''} · now {k$(p.cur)} · value {k$(p.rate)}</small></div>
-              <span className="sim-tog"><i aria-hidden="true" />{on ? `Re-signed · ${k$(p.extPrice)} in ${season + 1}` : 'Let go'}</span>
+              <div className="sim-who"><b>{p.name}</b><small>{p.pos}{p.age != null ? ` · ${p.age}` : ''} · value {k$(p.rate)}</small></div>
+              <span className="sim-tog"><i aria-hidden="true" />{on ? `Signed · ${k$(p.extPrice)} a year` : 'Not signed'}</span>
             </button>
           );
-        }) : <p className="kc-sub" style={{ padding: 12 }}>Nobody expiring.</p>}
+        }) : <p className="kc-sub" style={{ padding: 12 }}>Everyone on your list is under contract.</p>}
       </div>
     </div>
   );

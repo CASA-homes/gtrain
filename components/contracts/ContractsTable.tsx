@@ -6,7 +6,7 @@
 import Link from 'next/link';
 import { useMemo, useRef, useState } from 'react';
 import { ClubDot } from '@/components/bits';
-import { AuctionControl, ExtendControl, ReleaseButton, useRun } from '@/components/contracts/client';
+import { AuctionControl, ExtendControl, ReleaseButton, TierSelect, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
 import { openUnsigned } from '@/app/(app)/contracts/actions';
@@ -21,7 +21,7 @@ export interface CtRow {
 }
 
 /** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club. */
-export interface BuyInfo { bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoomNext: number; nextSeason: number; seasonCap: number; clubName: string }
+export interface BuyInfo { dropOptions: { id: number; label: string }[]; bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoomNext: number; nextSeason: number; seasonCap: number; clubName: string }
 
 const k$ = (k: number) => `$${Math.round(k)}k`;
 const ktShort = (n: number) => (n >= 10000 ? `${Math.round(n / 1000)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
@@ -98,6 +98,7 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
 /** Popup for paying a release clause, with every rule spelled out, plus a lower KT offer as the alternative. */
 function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; settings: KcSettings; onClose: () => void }) {
   const { pending, go, note, msg } = useRun();
+  const [drop, setDrop] = useState<string>('');
   const price = r.clause ?? 0;
   const ref = useRef<HTMLDivElement>(null);
   const blockers = [
@@ -105,6 +106,7 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
     buy.used >= buy.maxBuys && `You’ve used your ${buy.maxBuys} clause buys this window.`,
     buy.bank < price && `You need ${kt(price)} and have ${kt(buy.bank)}.`,
     (r.salary ?? 0) > buy.capRoomNext && `His ${k$(r.salary ?? 0)} salary would take you over the ${k$(buy.seasonCap)} cap in ${buy.nextSeason}.`,
+    !drop && 'Pick a player to drop.',
   ].filter(Boolean) as string[];
   return (
     <div className="cd-back" role="dialog" aria-modal="true" aria-labelledby="cd-h" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -121,17 +123,23 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
         <ul className="cd-rules">
           <li><b>Full price only.</b> You pay the whole clause up front. It’s held for 24 hours.</li>
           <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
-          <li><b>If they don’t match</b>, he joins you at the end of {settings.season}, not now. He plays out the season for his current club, then moves on the rest of his contract.</li>
-          <li><b>Window only.</b> Clauses can only be paid in the mid-season window. A player has a clause until his last 6 months, so final-year players count until the window closes; buy one and he joins you on a one-season deal at his current salary.</li>
+          <li><b>If they don’t match</b>, he’s yours straight away on the rest of his contract.</li>
+          <li><b>You drop a player.</b> Pick who goes below. If he’s under contract it’s a normal release (dead money and fee); either way he leaves your list when the deal completes.</li>
+          <li><b>Window only.</b> Clauses can only be paid while a window is open: pre-season (deadline day to draft day) or mid-season. A player has a clause until his last 6 months.</li>
           <li><b>His salary comes with him.</b> You take on his current contract: {r.salary != null ? k$(r.salary) : '—'} a year to {r.extEnd ?? r.end ?? '—'}, and it has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room). It’s checked again when he moves.</li>
           <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used).</li>
-          <li><b>His list.</b> When he arrives you still need to be at 33 or fewer, so plan a release or trade if you’re full.</li>
         </ul>
         {blockers.length > 0 && <div className="cd-block">{blockers.map((b) => <p key={b}>{b}</p>)}</div>}
         {msg?.ok ? note : (
           <>
+            <label className="cd-drop">Drop a player to make room
+              <select value={drop} onChange={(e) => setDrop(e.target.value)} aria-label="Player to drop">
+                <option value="">Choose…</option>
+                {buy.dropOptions.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
+              </select>
+            </label>
             <button type="button" className="kc-btn cd-go" disabled={pending || blockers.length > 0}
-              onClick={() => go(() => buyClause(r.id), `Pay ${kt(price)} for ${r.name}’s release clause? His club gets 24 hours to match.`)}>
+              onClick={() => go(() => buyClause(r.id, Number(drop)), `Pay ${kt(price)} for ${r.name}’s release clause? His club gets 24 hours to match; then he joins you and your dropped player goes.`)}>
               {pending ? 'Paying…' : `Pay the clause · ${kt(price)}`}
             </button>
             {note}
@@ -213,6 +221,13 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               <summary><b>Extend {r.name}</b><span className="kc-sub">Add up to {settings.season + settings.max_years - 1 - r.end} year{settings.season + settings.max_years - 1 - r.end > 1 ? 's' : ''} after {r.end}, at today’s market value {k$(r.rate)}{r.homeGrown ? ` less ${settings.home_grown_pct}% home-grown` : ''} +{settings.ext_premium_pct}%, plus a {kt(settings.ext_fee_kt)} fee.</span></summary>
               <ExtendControl contractId={r.id} name={r.name} rate={r.rate} homeGrown={r.homeGrown} settings={settings} startYear={r.end + 1} maxYears={settings.season + settings.max_years - 1 - r.end} />
             </details>
+          )}
+          {canManage && settings.setup_until && new Date(settings.setup_until) > new Date() && r.salary != null && r.tier !== 'protected' && ['contract', 'final', 'rookie', 'draft', 'extended'].includes(r.status) && (
+            <div className="ct2-sign">
+              <b>Set his release clause</b>
+              <span className="kc-sub">Open until deadline day ({new Date(settings.setup_until).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}). After that it’s fixed for the deal.</span>
+              <TierSelect contractId={r.id} tier={r.tier} base={r.base} settings={settings} locked={false} />
+            </div>
           )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>

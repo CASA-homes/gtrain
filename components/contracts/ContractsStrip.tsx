@@ -29,8 +29,8 @@ export async function ContractsStrip({ teamId, mine }: { teamId: number; mine: b
     if (offers.length) alerts.push({ text: `${offers.reduce((t, f) => t + f.offers, 0)} offers on your pending free agents.`, href: `${base}?view=contracts`, tone: 'warn' });
     const finalYear = d.active.filter((c) => c.team_id === teamId && c.end_season <= s.season && !d.pending.some((p) => p.player_id === c.player_id) && !d.pendingFa.has(c.player_id)).length;
     if (finalYear && !d.midseason) alerts.push({ text: `${finalYear} in their final year. Re-sign before the mid-season window closes or they become free agents.`, href: `${base}?view=contracts`, tone: 'warn' });
-    const over = club.nextSalary - club.keeperCapNext;
-    if (over > 0) alerts.push({ text: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? `${moneyK(over)} over the ${s.season + 1} keeper cap. Fix it by deadline day or the commish releases a player.` : `${moneyK(over)} over the ${s.season + 1} keeper cap. Deficit allowed on deadline day for ${s.deficit_fee_kt.toLocaleString('en-AU')} KT.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
+    const over = club.salary - club.keeperCapNow;
+    if (over > 0) alerts.push({ text: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? `${moneyK(over)} over the ${s.season} keeper cap. Fix it by deadline day or the commish releases a player.` : `${moneyK(over)} over the ${s.season} keeper cap. Deficit allowed on deadline day for ${s.deficit_fee_kt.toLocaleString('en-AU')} KT.`, href: `${base}?view=finances`, tone: over > (club.deficitUsed ? 0 : s.deficit_max_k) ? 'err' : 'warn' });
   }
   const news = d.transfers.filter((t) => t.from_team === teamId || t.to_team === teamId || t.kind === 'pending' || t.kind === 'draft').slice(0, 8);
   if (!alerts.length && !news.length) return null;

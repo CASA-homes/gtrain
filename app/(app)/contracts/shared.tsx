@@ -50,7 +50,7 @@ export function Rules({ s }: { s: KcSettings }) {
     `Contracts run 1–${s.max_years} years. Longer is cheaper per year. Draftees sign one-season deals priced by round (rookies half).`,
     `Nobody changes clubs mid-season. Players only move at season end. Coach-to-coach trades still run on the Trademarket.`,
     `Release clauses are set at signing: standard ${s.clause_std_pct}% of market value, high ${s.clause_high_pct}% (+${s.high_pct}% salary), none (+${s.none_pct}% salary). Paid only in the mid-season window, max ${s.max_buys} per club. A player has a clause right up to his last 6 months: final-year players keep theirs through the window.`,
-    `A paid clause gives his club 24 hours to match (pay the same, burned; his clause steps up a level). If they don't, they're paid now (less ${s.levy_pct}%) and he joins the buyer at season end on the rest of his contract.`,
+    `A paid clause gives his club 24 hours to match (pay the same, burned; his clause steps up a level). If they don't, they're paid now (less ${s.levy_pct}%) and he joins the buyer straight away on the rest of his contract; the buyer drops a player to make room.`,
     `Extend a player any time, up to ${s.max_years} seasons out. Added years cost his market value now (home-grown players ${s.home_grown_pct}% off) plus ${s.ext_premium_pct}%, and a ${s.ext_fee_kt} KT fee. He's then locked for 12 months. When the mid-season window closes, every final-year player not re-signed (draftees too) becomes a free agent: rivals bid, his club picks one, and he moves at season end.`,
     `Releasing a player under contract costs a KT fee of ${s.release_fee_pct}% of what's left on his deal, plus dead money on your cap: 50% of his salary this season and 20% for each season after that.`,
   ];

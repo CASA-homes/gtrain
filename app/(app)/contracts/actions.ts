@@ -57,8 +57,8 @@ export async function bid(auctionId: number, amount: number) {
 export async function settleAuction(auctionId: number) {
   return run('kc_settle', { aid: auctionId }, (d) => (d === 'sold' ? 'Sold. He joins the winner at season end.' : d === 'unsold' ? 'No valid bids: he stays put.' : 'Auction closed.'));
 }
-export async function buyClause(contractId: number) {
-  return run('kc_buy', { cid: contractId }, () => 'Clause paid. His club has 24 hours to match. If they don’t, he joins you at season end on the rest of his contract.');
+export async function buyClause(contractId: number, dropPlayerId: number) {
+  return run('kc_buy', { cid: contractId, p_drop: dropPlayerId }, () => 'Clause paid. His club has 24 hours to match. If they don’t, he joins you straight away and your dropped player goes.');
 }
 export async function matchClaim(claimId: number) {
   return run('kc_match', { claim_id: claimId }, (t) => `Matched. He stays, the buyer gets their tokens back, and his clause is now ${t === 'high' ? 'High' : 'off (no clause)'}.`);

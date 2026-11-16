@@ -126,7 +126,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
             <section className="kc-card" aria-labelledby="cl-h">
               <div className="row-between">
                 <div><h2 id="cl-h">Release clauses</h2>
-                  <p className="kc-sub">Mid-season window only, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he finishes the season there and joins you on the rest of his contract. Final-year players count too, until the window closes: buy one and he joins you at season end on a one-season deal at his current salary.</p></div>
+                  <p className="kc-sub">Pre-season (deadline day to draft day) and mid-season windows, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he joins you straight away on the rest of his contract and you drop a player.</p></div>
                 <div className="kc-tabs">
                   {(['All', ...LINES] as const).map((l) => (
                     <Link key={l} href={l === 'All' ? '/contracts/market' : `/contracts/market?line=${l}`} aria-current={(l === 'All' && !line) || l === line ? 'page' : undefined}>{l}</Link>
@@ -138,7 +138,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                   <thead><tr><th>Player</th><th>Owner</th><th className="r">Age</th><th className="r">Avg</th><th className="r">Salary</th><th>Contract</th><th className="r">Clause</th><th><span className="sr-only">Action</span></th></tr></thead>
                   <tbody>
                     {clauseRows.map(({ c, p, clause }) => {
-                      const fits = myClub ? myClub.nextSalary + c.salary_k <= s.season_cap_k : false;
+                      const fits = myClub ? myClub.salary + c.salary_k <= s.season_cap_k : false;
                       const affordable = myClub ? clause != null && myClub.bank >= clause : false;
                       const reason = clause == null ? 'No clause' : claimed.has(c.id) ? 'Clause paid · 24h' : !windowOpen ? 'Mid-season window only'
                         : !fits ? 'Over your cap' : !affordable ? 'Not enough KT' : buysUsed >= s.max_buys ? 'Buys used' : null;
@@ -152,7 +152,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
                           <td className="meta">{`To ${c.end_season} · ${TIER_LABEL[c.tier].toLowerCase()}`}</td>
                           <td className="r" style={{ fontWeight: 700 }}>{clause == null ? '—' : kt(clause)}</td>
                           <td className="r">{meId && (reason ? <span className="kc-btn small ghost" aria-disabled="true">{reason}</span>
-                            : <RunButton run="buy" id={c.id} small kind="sage" label={`Buy for ${kt(clause!)}`} confirmText={`Pay ${kt(clause!)} for ${p?.name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />)}</td>
+                            : <Link href={`/clubhouse/${c.team_id}?view=contracts`} className="kc-btn small sage">Buy for {kt(clause!)}</Link>)}</td>
                         </tr>
                       );
                     })}

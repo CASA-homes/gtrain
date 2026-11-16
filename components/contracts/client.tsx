@@ -4,7 +4,7 @@
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  acceptOffer, bid, buyClause, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
+  acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
   lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
@@ -37,12 +37,11 @@ export function useRun() {
 
 export function RunButton({ label, kind = 'dark', small, confirmText, run, disabled, id = 0 }: {
   label: string; kind?: 'dark' | 'sage' | 'plain' | 'ghost'; small?: boolean; confirmText?: string; disabled?: boolean;
-  run: 'buy' | 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover' | 'match' | 'complete' | 'accept' | 'midseason' | 'draftees' | 'lockin'; id?: number;
+  run: 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover' | 'match' | 'complete' | 'accept' | 'midseason' | 'draftees' | 'lockin'; id?: number;
 }) {
   const { pending, go, note } = useRun();
   const fn = () => {
     switch (run) {
-      case 'buy': return buyClause(id);
       case 'settle': return settleAuction(id);
       case 'cancel': return cancelAuction(id);
       case 'close-fa': return closeFreeAgent(id);

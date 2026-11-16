@@ -19,17 +19,17 @@ export async function ContractOverrides() {
   const team = (id: number) => d.teams.find((t) => t.id === id)?.short_code ?? '—';
   const name = (pid: number) => d.players.get(pid)?.name ?? `Player ${pid}`;
   const next = s.season + 1;
-  const breaches = [...d.clubs.values()].map((c) => ({ c, over: c.nextSalary - c.keeperCapNext })).filter((x) => x.over > 0).sort((a, b) => b.over - a.over);
+  const breaches = [...d.clubs.values()].map((c) => ({ c, over: c.salary - c.keeperCapNow })).filter((x) => x.over > 0).sort((a, b) => b.over - a.over);
   const ago = (iso: string) => new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 
   return (
     <div className="co">
       <section className="kc-card">
-        <div className="row-between"><h2>Over the {next} keeper cap</h2><span className="kc-sub">Deficit up to {moneyK(s.deficit_max_k)} for {s.deficit_fee_kt.toLocaleString('en-AU')} KT</span></div>
-        <p className="kc-sub">On deadline day a club can carry up to {moneyK(s.deficit_max_k)} over as a deficit (fee {s.deficit_fee_kt.toLocaleString('en-AU')} KT, and {next + 1}’s keeper cap drops by the amount). Anything more and, if they haven’t released, traded or sold a player, you release one.</p>
+        <div className="row-between"><h2>Over the {s.season} keeper cap</h2><span className="kc-sub">Deficit up to {moneyK(s.deficit_max_k)} for {s.deficit_fee_kt.toLocaleString('en-AU')} KT</span></div>
+        <p className="kc-sub">On deadline day a club can carry up to {moneyK(s.deficit_max_k)} over as a deficit (fee {s.deficit_fee_kt.toLocaleString('en-AU')} KT, and {next}’s keeper cap drops by the amount). Anything more and, if they haven’t released, traded or sold a player, you release one.</p>
         {breaches.length ? breaches.map(({ c, over }) => {
           const big = over > (c.deficitUsed ? 0 : s.deficit_max_k);
-          const covering = d.active.filter((x) => x.team_id === c.team.id && x.end_season >= next && x.rookie_slot_season !== next).sort((a, b) => b.salary_k - a.salary_k).slice(0, 6);
+          const covering = d.active.filter((x) => x.team_id === c.team.id && x.end_season >= s.season && x.rookie_slot_season !== s.season).sort((a, b) => b.salary_k - a.salary_k).slice(0, 6);
           return (
             <details key={c.team.id} className="co-club">
               <summary><b>{c.team.name}</b><span className={big ? 'kc-down' : 'kc-up'}>{moneyK(over)} over · {big ? 'must fix' : 'deficit allowed'}</span></summary>
