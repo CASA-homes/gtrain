@@ -9,23 +9,31 @@ const ORANGE = '#f0a35a';
 /** Salary colour: dark green under $700k, then mid green, light green, yellow, orange, red over $1m. */
 const salColour = (k: number) => (k < 700 ? C.green5 : k < 800 ? C.green4 : k < 900 ? C.green3 : k < 950 ? C.yellow : k <= 1000 ? ORANGE : '#d9534f');
 
-function SalaryBars({ k, keeperCap, seasonCap, label }: { k: number; keeperCap: number; seasonCap: number; label: string }) {
+function SalaryBars({ k, keeperCap, label }: { k: number; keeperCap: number; label: string }) {
   const hard = Math.min(12, Math.ceil(Math.max(0, k) / 100));
-  const softRange = Math.max(1, seasonCap - keeperCap);
-  const over = Math.max(0, k - keeperCap);
-  const soft = Math.min(3, Math.ceil((over / softRange) * 3));
   const colour = salColour(k);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <div style={{ display: 'flex', gap: 6, alignItems: 'flex-end' }}>
-        <div className="bars" role="img" aria-label={`${label}: $${k}k of $${keeperCap}k`} style={{ flex: '0 0 auto' }}>
-          {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard ? colour : C.empty, marginLeft: i === 10 ? 3 : 0 }} />)}
-        </div>
-        <div className="bars" role="img" aria-label={`Soft cap: $${over}k of $${softRange}k used`} style={{ flex: '0 0 auto' }}>
-          {Array.from({ length: 3 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < soft ? '#d9534f' : C.empty, opacity: i < soft ? 1 : 0.6 }} />)}
-        </div>
+      <div className="bars" role="img" aria-label={`${label}: $${k}k of $${keeperCap}k`} style={{ alignSelf: 'flex-start' }}>
+        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard ? colour : C.empty, marginLeft: i === 10 ? 3 : 0 }} />)}
       </div>
-      <span className="mono muted" style={{ fontSize: 10 }}>${k.toLocaleString('en-AU')}k{over > 0 ? ` · $${over}k into soft cap` : ` · $${keeperCap - k}k room`}</span>
+      <span className="mono muted" style={{ fontSize: 10 }}>${k.toLocaleString('en-AU')}k{k > keeperCap ? ` · $${k - keeperCap}k over` : ` · $${keeperCap - k}k room`}</span>
+    </div>
+  );
+}
+
+/** Soft cap: the room above the keeper cap a club can run in season, 3 blocks. */
+function SoftBar({ k, keeperCap, seasonCap }: { k: number; keeperCap: number; seasonCap: number }) {
+  const range = Math.max(1, seasonCap - keeperCap);
+  const over = Math.min(range, Math.max(0, k - keeperCap));
+  const n = Math.min(3, Math.ceil((over / range) * 3));
+  const colour = n >= 3 ? '#d9534f' : n === 2 ? ORANGE : C.yellow;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <div className="bars" role="img" aria-label={`Soft cap: $${over}k of $${range}k used`} style={{ alignSelf: 'flex-start' }}>
+        {Array.from({ length: 3 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 16px', background: i < n ? colour : C.empty }} />)}
+      </div>
+      <span className="mono muted" style={{ fontSize: 10 }}>${over}k of ${range}k</span>
     </div>
   );
 }
@@ -79,7 +87,7 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
         <table className="squad" style={{ minWidth: 1120 }}>
           <thead>
             <tr>
-              <th style={{ width: 40 }}>#</th><th>Team</th><th style={{ width: 170 }}>{season} salary</th><th style={{ width: 170 }}>{season + 1} salary</th>
+              <th style={{ width: 40 }}>#</th><th>Team</th><th style={{ width: 150 }}>{season} salary</th><th style={{ width: 100 }}>{season} soft cap</th><th style={{ width: 150 }}>{season + 1} salary</th>
               <th style={{ textAlign: 'right', width: 90 }}>KT bank</th><th style={{ width: 130 }}>KT, last 2 seasons</th>
               {[1, 2, 3, 4, 5].map((n) => <th key={n} style={{ textAlign: 'right', width: 52 }} title={`Players signed for ${n} or more seasons from ${season}`}>{n}+ yr{n > 1 ? 's' : ''}</th>)}
             </tr>
@@ -89,8 +97,9 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
               <tr key={c.team.id}>
                 <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{i + 1}</td>
                 <td style={{ whiteSpace: 'nowrap' }}><Link href={`/clubhouse/${c.team.id}?view=finances`}>{c.team.name}</Link><div className="muted" style={{ fontSize: 12 }}>{c.team.coach_name}</div></td>
-                <td><SalaryBars k={c.salary} keeperCap={c.keeperCapNow || keeperCap} seasonCap={seasonCap} label={`${season} salary`} /></td>
-                <td><SalaryBars k={c.nextSalary} keeperCap={c.keeperCapNext || keeperCap} seasonCap={seasonCap} label={`${season + 1} salary`} /></td>
+                <td><SalaryBars k={c.salary} keeperCap={c.keeperCapNow || keeperCap} label={`${season} salary`} /></td>
+                <td><SoftBar k={c.salary} keeperCap={c.keeperCapNow || keeperCap} seasonCap={seasonCap} /></td>
+                <td><SalaryBars k={c.nextSalary} keeperCap={c.keeperCapNext || keeperCap} label={`${season + 1} salary`} /></td>
                 <td style={{ textAlign: 'right', fontWeight: 600 }} className="mono">{c.bank.toLocaleString('en-AU')}</td>
                 <td><Spark points={pts} /></td>
                 {plus.map((n, j) => <td key={j} className="mono" style={{ textAlign: 'right', color: n ? C.ink : C.muted }}>{n}</td>)}
@@ -101,7 +110,7 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
       </div>
       <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
         The main bar has 12 blocks of $100k against the ${keeperCap.toLocaleString('en-AU')}k keeper (hard) cap: dark green under $700k, mid green to $800k, light green to $900k, yellow to $950k, orange to $1m, red over.
-        The three small red blocks are the soft cap: the ${(seasonCap - keeperCap).toLocaleString('en-AU')}k a club can run over the hard cap in season.
+        The soft cap column shows how much of the ${(seasonCap - keeperCap).toLocaleString('en-AU')}k a club can run over the hard cap in season it’s using (yellow, orange, red as it fills).
         The year columns count players signed for at least that many seasons from {season}, extensions included.
       </p>
     </div>
