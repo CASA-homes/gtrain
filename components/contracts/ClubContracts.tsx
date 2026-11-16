@@ -80,9 +80,10 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   // Another coach looking at this club can bid on release clauses.
   const viewer = d.me && !d.me.is_guest && !mine ? d.clubs.get(d.me.team_id) : null;
   const buy: BuyInfo | null = viewer && d.me ? {
-    bank: viewer.bank, windowOpen, maxBuys: s.max_buys, nextSeason: s.season + 1, seasonCap: s.season_cap_k, clubName: club.team.name,
+    dropOptions: [...viewer.list].map((id) => { const p = d.players.get(id); const c = d.byPlayer.get(id); return { id, sal: c?.salary_k ?? 0, label: `${p?.name ?? id}${c ? ` · $${c.salary_k}k to ${c.end_season}` : ' · no contract'}` }; }).sort((a, b) => a.sal - b.sal).map(({ id, label }) => ({ id, label })),
+    bank: viewer.bank, windowOpen, maxBuys: s.max_buys, nextSeason: s.season, seasonCap: s.season_cap_k, clubName: club.team.name,
     used: d.claims.filter((c) => c.buyer_team === d.me!.team_id && c.status !== 'cancelled' && (!s.window_opened_at || c.created_at >= s.window_opened_at)).length,
-    capRoomNext: s.season_cap_k - viewer.nextSalary,
+    capRoomNext: s.season_cap_k - viewer.salary,
   } : null;
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
   const underContract = rows.filter((r) => !r.tone);

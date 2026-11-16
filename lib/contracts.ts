@@ -14,7 +14,7 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; fee_kt_per_k: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; setup_until: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; fee_kt_per_k: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
@@ -55,7 +55,7 @@ export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'>
   if (c.tier === 'none' || c.tier === 'protected' || (c.end_season <= s.season && !!s.midseason_at) || pending) return null;
   return c.clause_kt ?? clauseFor(s, c.tier, rate);
 }
-export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string }
+export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string; drop_player?: number | null }
 export interface CapAdjust { team_id: number; season: number; amount_k: number; reason: string }
 /** Cost of releasing a contract now: 50% of salary dead this season, 20% a season after that, and a KT fee of
  *  release_fee_pct of what's left on the deal (1 KT = $1k). Mirrors kc_release. */
@@ -83,6 +83,8 @@ export interface ClubCap {
   team: Team; salary: number; nextSalary: number; bank: number; contracts: number; dead: number;
   overKeeper: number; overTax: number; taxKt: number; list: Set<number>; fit: Record<Line, number>;
   keeperCapNext: number; keptNext: number; deficitUsed: boolean;
+  /** Deadline day checks the coming season: keeper cap (less any deficit carried in) and players signed for it. */
+  keeperCapNow: number; keptNow: number;
 }
 
 export interface ContractsData {
@@ -156,6 +158,8 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
       contracts: active.filter((c) => c.team_id === team.id).length,
       overKeeper: k ? Math.max(0, salary - k.keeper_cap_k) : 0, overTax: k ? Math.max(0, salary - k.tax_line_k) : 0,
       taxKt: k ? Math.round(Math.max(0, salary - k.tax_line_k) * Number(k.tax_kt_per_k)) : 0, list, fit,
+      keeperCapNow: (k?.keeper_cap_k ?? 0) - capAdjust.filter((x) => x.team_id === team.id && x.season === season).reduce((t, x) => t + x.amount_k, 0),
+      keptNow: new Set(contracts.filter((c) => c.team_id === team.id && c.status === 'active' && c.start_season <= season && c.end_season >= season).map((c) => c.player_id)).size,
       keeperCapNext: (k?.keeper_cap_k ?? 0) - capAdjust.filter((x) => x.team_id === team.id && x.season === season + 1).reduce((t, x) => t + x.amount_k, 0),
       keptNext: new Set(contracts.filter((c) => c.team_id === team.id && (c.status === 'active' || c.status === 'pending') && c.start_season <= season + 1 && c.end_season >= season + 1).map((c) => c.player_id)).size,
       deficitUsed: capAdjust.some((x) => x.team_id === team.id && x.season === season + 1),

@@ -46,7 +46,7 @@ export async function PlayerOffer({ playerId, ownerTeamId, name }: { playerId: n
           ? <form action={openUnsigned.bind(null, playerId)}><button type="submit" className="kc-btn small dark">Offer contract</button></form>
           : <span className="kc-btn small dark" aria-disabled="true" title="Only free agents and out-of-contract players can be offered a contract">Offer contract</span>}
       {c && clause != null && windowOpen && !claim && !leaving &&
-        <RunButton run="buy" id={c.id} small kind="sage" label={`Pay clause · ${kt(clause)}`} confirmText={`Pay ${kt(clause)} for ${name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />}
+        <Link href={`/clubhouse/${c.team_id}?view=contracts`} className="kc-btn small sage">Pay clause · {kt(clause)}</Link>}
     </span>
   );
 }

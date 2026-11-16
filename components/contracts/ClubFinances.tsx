@@ -47,7 +47,8 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
   // Cap
   const rookieNow = covers(season).find((c) => c.rookie_slot_season === season);
-  const nextOver = club.nextSalary - club.keeperCapNext;
+  // Deadline day checks the coming season against the keeper cap.
+  const nextOver = club.salary - club.keeperCapNow;
   const allow = club.deficitUsed ? 0 : s.deficit_max_k;
 
   // Investments
@@ -82,7 +83,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const committed = years.map((y) => ({
     y, k: covers(y).filter((c) => c.rookie_slot_season !== y).reduce((a, c) => a + c.salary_k, 0) + d.contracts.filter((c) => c.team_id === teamId && c.dead_season === y).reduce((a, c) => a + c.dead_k, 0)
       + d.deadLater.filter((x) => x.team_id === teamId && x.season === y).reduce((a, x) => a + x.amount_k, 0),
-    cap: y === season + 1 ? club.keeperCapNext : s.keeper_cap_k,
+    cap: y === season ? club.keeperCapNow : y === season + 1 ? club.keeperCapNext : s.keeper_cap_k,
   }));
   const emptySpots = Math.max(0, 33 - club.list.size);
   const draftBudget = Math.max(0, s.season_cap_k - club.salary - emptySpots * s.hold_back_k);
@@ -94,9 +95,16 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
     const rc = releaseCost(s, c); const rate = d.rates.get(c.player_id) ?? 0;
     return { id: c.player_id, name: p?.full_name ?? p?.name ?? '', pos: p?.positions.join('/') ?? '', age: playerAge(p),
       cur: c.rookie_slot_season === season ? 0 : c.salary_k, next: nx ? nx.salary_k : null, end: ext ? ext.end_season : c.end_season,
-      final: c.end_season <= season && !ext, rate, deadNow: rc.now, deadLater: rc.later, fee: rc.fee,
-      extPrice: Math.round(rate * (c.home_grown ? (100 - s.home_grown_pct) / 100 : 1) * (1 + (s.ext_premium_pct ?? 10) / 100)) };
+      final: false, rate, deadNow: rc.now, deadLater: rc.later, fee: rc.fee, extPrice: 0 };
   });
+  // Out of contract on the list: off by default; switch on to sign him at his market value.
+  const contractedIds = new Set(sim.map((x) => x.id));
+  for (const id of club.list) {
+    if (contractedIds.has(id)) continue;
+    const p = d.players.get(id); const rate = d.rates.get(id) ?? 0;
+    sim.push({ id, name: p?.full_name ?? p?.name ?? '', pos: p?.positions.join('/') ?? '', age: playerAge(p), cur: 0, next: null, end: season,
+      final: true, rate, deadNow: 0, deadLater: 0, fee: 0, extPrice: Math.round(rate * 1.03) });
+  }
 
   // Assistant coach (rules for now)
   const tips: { t: string; d: string; v: string }[] = [];
@@ -116,7 +124,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <div className="fn-big"><b>{moneyK(club.salary)}</b><span>of {moneyK(s.season_cap_k)}</span></div>
         <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" />
         <div className="fn-kpis">
-          <div><span>{season + 1} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
+          <div><span>{season} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
           <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}{canManage && !rookieLocked && <> · <Link href={`/clubhouse/${teamId}?view=contracts#rookie`} className="fn-set">{rookieNow ? 'Change' : 'Set'}</Link></>}</b></div>
           <div><span>Bank</span><b>{kt(club.bank)}</b></div>
         </div>
@@ -208,7 +216,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
       <details className="kc-card fn-simbox" open>
         <summary><h2>Cap simulator</h2><span className="kc-sub">Test moves for your {season + 1} lock-in</span></summary>
-        <CapSimulator players={sim} keeperCap={club.keeperCapNext} seasonCap={s.season_cap_k} salaryNow={club.salary} nextSalary={club.nextSalary} kept={club.keptNext} deficitMax={allow} season={season} bank={club.bank} />
+        <CapSimulator players={sim} keeperCap={club.keeperCapNow} seasonCap={s.season_cap_k} salaryNow={club.salary} nextSalary={club.nextSalary} kept={club.keptNow} deficitMax={allow} season={season} bank={club.bank} />
       </details>
 
       <section className="kc-card" aria-labelledby="ln-h">
@@ -227,9 +235,9 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <section className="kc-card" aria-labelledby="lk-h">
           <h2 id="lk-h">{season + 1} keeper lock-in</h2>
           <div style={{ marginTop: 8 }}>
-            <div className="kc-kv"><span>Signed for {season + 1}</span><strong className={club.keptNext > 18 ? 'kc-down' : undefined}>{club.keptNext} / 17 + 1</strong></div>
-            <div className="kc-kv"><span>Salary (rookie excluded)</span><strong>{moneyK(club.nextSalary)}</strong></div>
-            <div className="kc-kv"><span>Keeper cap</span><strong>{moneyK(club.keeperCapNext)}</strong></div>
+            <div className="kc-kv"><span>Signed for {season}</span><strong className={club.keptNow > 18 ? 'kc-down' : undefined}>{club.keptNow} / 17 + 1</strong></div>
+            <div className="kc-kv"><span>Salary (rookie excluded)</span><strong>{moneyK(club.salary)}</strong></div>
+            <div className="kc-kv"><span>Keeper cap</span><strong>{moneyK(club.keeperCapNow)}</strong></div>
             <div className="kc-kv"><span>Deficit allowed</span><strong>{club.deficitUsed ? 'None (used last year)' : `Up to ${moneyK(s.deficit_max_k)}`}</strong></div>
           </div>
           <p className={`kc-msg ${nextOver <= 0 ? 'ok' : 'err'}`} style={{ marginTop: 10 }}>
