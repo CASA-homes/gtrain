@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { LoginForm } from '@/components/LoginForm';
 
-type Pane = 'choose' | 'login' | 'start';
+type Pane = 'choose' | 'login' | 'signup' | 'start';
 
 export function Gate({ linkError }: { linkError: boolean }) {
   const [pane, setPane] = useState<Pane>(linkError ? 'login' : 'choose');
@@ -15,7 +15,7 @@ export function Gate({ linkError }: { linkError: boolean }) {
     return () => window.removeEventListener('kl-gate', on);
   }, []);
   const back = <button type="button" className="kl-link" onClick={() => setPane('choose')}>← Back</button>;
-  if (pane === 'login') return <div className="kl-gate"><LoginForm linkError={linkError} /><p className="kl-note">{back}</p></div>;
+  if (pane === 'login' || pane === 'signup') return <div className="kl-gate"><LoginForm key={pane} linkError={linkError} initialMode={pane === 'signup' ? 'signup' : 'login'} /><p className="kl-note">{back}</p></div>;
   if (pane === 'start') return (
     <div className="kl-gate">
       <div className="kl-soon"><b>New leagues are coming soon.</b> Keeper HQ is invite-only for now. If your league is already here, ask your commish to add your email, then log in.</div>
@@ -28,7 +28,7 @@ export function Gate({ linkError }: { linkError: boolean }) {
         <button type="button" className="kl-btn" onClick={() => setPane('start')}><i />Start your league</button>
         <button type="button" className="kl-btn ghost" onClick={() => setPane('login')}>Log in</button>
       </div>
-      <p className="kl-note">Got an invite from your commish? Log in with that email. No password needed.</p>
+      <p className="kl-note">Got an invite from your commish? <button type="button" className="kl-link" onClick={() => setPane('signup')}>Sign up</button> with that email to set your password.</p>
     </div>
   );
 }
