@@ -2,7 +2,7 @@
 // the coach (a clause paid on one of their players, offers on their pending free agents), final-year decisions, the
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
-import { KcClock, RunButton } from '@/components/contracts/client';
+import { DraftRequest, KcClock, RunButton } from '@/components/contracts/client';
 import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, releaseCost, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
@@ -63,6 +63,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     };
   });
 
+  const draftRequests = contracts.filter((c) => c.status === 'active' && c.draft_review);
   const incomingClaims = d.claims.filter((c) => c.status === 'pending' && c.seller_team === teamId);
   const outgoingClaims = d.claims.filter((c) => c.status === 'pending' && c.buyer_team === teamId);
   const myPendingFas = d.freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === teamId);
@@ -160,6 +161,22 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       )}
 
 
+      {mine && draftRequests.length > 0 && (
+        <section className="kc-card brass" aria-labelledby="dr-h">
+          <div className="row-between">
+            <h2 id="dr-h">Contract requests</h2>
+            <span className="fn-pill brass">{draftRequests.length} draftee{draftRequests.length === 1 ? '' : 's'}</span>
+          </div>
+          <p className="kc-sub" style={{ margin: '4px 0 10px' }}>Your draftees have no clause until the mid-season window. Set each one before it opens, or he defaults to a standard clause priced off his market value then.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {draftRequests.map((c) => (
+              <DraftRequest key={c.id} contractId={c.id} name={name(c.player_id)} rookie={c.rookie} base={c.base_k} rate={d.rates.get(c.player_id) ?? 0}
+                years={`${c.end_season - c.start_season + 1} yr${c.end_season > c.start_season ? 's' : ''} to ${c.end_season}`} settings={s} />
+            ))}
+          </div>
+        </section>
+      )}
+
       <section className="kc-card ct2-card" aria-labelledby="ct-h">
         <div className="row-between" style={{ marginBottom: 10 }}>
           <h2 id="ct-h">Contracts</h2>
@@ -182,7 +199,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
       <section className="kc-card ct2-card" aria-label="Expiring and free agents">
         <ContractsTable title="Expiring & free agents" note="Light red: free agent, under six months or leaving. Light yellow: final year, re-sign before the mid-season window closes." rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
-        <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: R1 $32k, R2 $24k, R3 $18k, R4+ $12k. Rookies (10 or fewer games) half that. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
+        <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: top 10 picks $30k, rest of R1 and R2 $25k, R3 $20k, R4 $15k, R5+ $10k. Rookies (10 or fewer games) half that, on 2 years; established players on 1. No clause until the mid-season window. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
     </div>
   );
