@@ -14,6 +14,7 @@ const ICONS: Record<string, React.ReactNode> = {
   draft: <><circle cx="10.5" cy="10.5" r="6" /><path d="m15 15 5 5" /></>,
   live: <><path d="M13.5 3 5.5 13.5h6L10.5 21l8-10.5h-6Z" /></>,
   contracts: <><path d="M7 3.5h7.5L18 7v13.5H7Z" /><path d="M14.5 3.5V7H18" /><path d="M9.5 12h6M9.5 15.5h6" /></>,
+  account: <><rect x="5" y="10.5" width="14" height="10" rx="2" /><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3" /></>,
   signout: <><path d="M14 4.5H6.5v15H14" /><path d="M10.5 12h10M17 8.5l3.5 3.5-3.5 3.5" /></>,
 };
 const Icon = ({ name }: { name: string }) => (
@@ -53,6 +54,7 @@ export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: nu
             ? <img src={logo} alt={shortCode} className="nav-me-logo" />
             : <span>{shortCode}</span>}<em>{guest ? 'Guest' : 'My club'}</em>
         </Link>
+        {!guest && <Link href="/account" className="nav-out nav-acct" aria-label="Account and password" title="Account and password"><span><Icon name="account" /></span></Link>}
         <form action="/auth/signout" method="post" className="nav-out">
           <button type="submit" aria-label="Sign out" title="Sign out"><Icon name="signout" /><span className="nav-label">Sign out</span></button>
         </form>

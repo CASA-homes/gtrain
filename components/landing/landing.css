@@ -280,3 +280,5 @@
 @media (max-width: 860px) {
   .kl-gate.choose .kl-two, .kl-form .kl-enter { display: none; }
 }
+
+.lg-alt { background: none; border: 0; padding: 2px 0; font: 600 13px var(--font); color: var(--khq-sage, #2f5d45); text-decoration: underline; cursor: pointer; justify-self: start; text-align: left; }

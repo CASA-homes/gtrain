@@ -7,6 +7,8 @@ type State = { kind: 'idle' } | { kind: 'sending' } | { kind: 'sent'; email: str
 export function LoginForm({ linkError }: { linkError?: boolean }) {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
+  const [usePw, setUsePw] = useState(false);
+  const [pw, setPw] = useState('');
   const [state, setState] = useState<State>(linkError
     ? { kind: 'error', message: 'That link has expired or was already used. Enter your email for a fresh one.' }
     : { kind: 'idle' });
@@ -20,6 +22,12 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
     const { data: allowed, error: checkErr } = await supabase.rpc('email_is_allowed', { check_email: clean });
     if (checkErr) return setState({ kind: 'error', message: 'Could not reach the league server. Try again in a minute.' });
     if (!allowed) return setState({ kind: 'error', message: 'That email isn’t on the league list. Ask the commish to add it.' });
+    if (usePw) {
+      const { error: pwErr } = await supabase.auth.signInWithPassword({ email: clean, password: pw });
+      if (pwErr) return setState({ kind: 'error', message: 'Wrong email or password. No password yet? Sign in with a link, then set one from the lock icon.' });
+      window.location.href = '/clubhouse';
+      return;
+    }
     const { error } = await supabase.auth.signInWithOtp({
       email: clean,
       options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
@@ -61,9 +69,16 @@ export function LoginForm({ linkError }: { linkError?: boolean }) {
     <form onSubmit={submit} className="lg">
       <label htmlFor="email" className="lg-lab">Email</label>
       <input id="email" className="lg-in" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
-      <button type="submit" className="lg-btn" disabled={state.kind === 'sending'}><i aria-hidden="true" />{state.kind === 'sending' ? 'Sending…' : 'Send sign-in link'}</button>
+      {usePw && (
+        <>
+          <label htmlFor="pw" className="lg-lab">Password</label>
+          <input id="pw" className="lg-in" type="password" autoComplete="current-password" required value={pw} onChange={(e) => setPw(e.target.value)} />
+        </>
+      )}
+      <button type="submit" className="lg-btn" disabled={state.kind === 'sending'}><i aria-hidden="true" />{state.kind === 'sending' ? (usePw ? 'Signing in…' : 'Sending…') : usePw ? 'Sign in' : 'Send sign-in link'}</button>
+      <button type="button" className="lg-alt" onClick={() => { setUsePw(!usePw); setState({ kind: 'idle' }); }}>{usePw ? 'Email me a sign-in link instead' : 'Sign in with a password'}</button>
       <span role="status" className={state.kind === 'error' ? 'lg-err' : 'lg-note'}>
-        {state.kind === 'error' ? state.message : 'No password needed. New coach? Ask your commish for an invite.'}
+        {state.kind === 'error' ? state.message : usePw ? 'Set a password any time from the lock icon once you’re signed in.' : 'No password needed. New coach? Ask your commish for an invite.'}
       </span>
     </form>
   );
