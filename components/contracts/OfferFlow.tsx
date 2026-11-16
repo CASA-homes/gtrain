@@ -22,7 +22,8 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const [step, setStep] = useState(existing ? 1 : 0);
   const [years, setYears] = useState(existing?.years ?? 3);
   // Minimum is his market value, whatever the length.
-  const minFor = (_y: number) => Math.max(5, Math.round(rate));
+  // Minimum salary is his market value adjusted for length (1 yr dearest, 5 yrs cheapest), same as the server.
+  const minFor = (y: number) => Math.max(5, Math.round(rate * (LF[y] ?? 1)));
   const [extra, setExtra] = useState(existing ? Math.max(0, existing.salary_k - minFor(existing.years)) : 0);
   const [tier, setTier] = useState<ClauseTier>((existing?.tier as ClauseTier) ?? 'standard');
   const [sweet, setSweet] = useState(existing?.sweet_kt ?? 0);
