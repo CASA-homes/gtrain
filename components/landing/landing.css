@@ -282,3 +282,6 @@
 }
 
 .lg-alt { background: none; border: 0; padding: 2px 0; font: 600 13px var(--font); color: var(--khq-sage, #2f5d45); text-decoration: underline; cursor: pointer; justify-self: start; text-align: left; }
+.lg-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; border-radius: 12px; background: rgb(0 0 0 / .05); margin-bottom: 4px; }
+.lg-tabs button { border: 0; background: transparent; padding: 9px 10px; border-radius: 9px; font: 700 14px var(--font); color: var(--muted, #6b756e); cursor: pointer; }
+.lg-tabs button[aria-selected="true"] { background: #fff; color: var(--ink, #1d2a22); box-shadow: 0 1px 3px rgb(0 0 0 / .12); }

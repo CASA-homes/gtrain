@@ -57,7 +57,7 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
         <span className="kl-eyebrow">The all-in-one AFL keeper league platform</span>
         <nav className="kl-nav">
           {me ? <Link href="/live" className="kl-btn sm">Enter Matchday</Link> : (
-            <><GateLink to="login" className="kl-link strong">Log in</GateLink><GateLink to="start" className="kl-btn sm">Start a league</GateLink></>
+            <><GateLink to="login" className="kl-link strong">Log in</GateLink><GateLink to="signup" className="kl-btn sm">Sign up</GateLink></>
           )}
         </nav>
       </header>
