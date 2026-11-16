@@ -2,6 +2,7 @@ import { getWatchlist } from '@/lib/watchlist';
 import Link from 'next/link';
 import { AvgChip, Bar20, ClubDot, FormArrow, PosDots, Stars } from '@/components/bits';
 import { getLeague, getMe, FREE_AGENTS_UPDATED } from '@/lib/data';
+import { getRates } from '@/lib/contracts';
 import { age, C, form, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 import { ATTRS } from '@/lib/scouting';
 import { CLUBS } from '@/lib/clubs';
@@ -22,7 +23,7 @@ const PROFILE = [
 const STATS: { key: string; label: string; group: 'Rating' | 'Fantasy profile' | 'Game attributes' }[] = [
   { key: 'avg', label: 'Average (chosen period)', group: 'Rating' },
   { key: 'last', label: 'Last score', group: 'Rating' },
-  { key: 'value', label: 'Value / current ability (0–100)', group: 'Rating' },
+  { key: 'value', label: 'Market value ($k)', group: 'Rating' },
   { key: 'potential', label: 'Potential stars', group: 'Rating' },
   { key: 'age', label: 'Age (youngest first)', group: 'Rating' },
   ...PROFILE.map(([key, label]) => ({ key, label, group: 'Fantasy profile' as const })),
@@ -41,7 +42,7 @@ const PRESETS: { name: string; hint: string; q: Record<string, string> }[] = [
 
 export default async function PlayersPage({ searchParams }: { searchParams: Promise<SP> }) {
   const sp = await searchParams;
-  const [league, me, watch] = await Promise.all([getLeague(), getMe(), getWatchlist()]);
+  const [league, me, watch, rates] = await Promise.all([getLeague(), getMe(), getWatchlist(), getRates()]);
   const q = (sp.q ?? '').toLowerCase();
   const line = LINES.includes(sp.line as Line) ? (sp.line as Line) : null;
   const team = sp.team ? Number(sp.team) : null;
@@ -53,7 +54,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
 
   const stat = (p: PlayerRow, key: string): number | null => {
     const r = league.ratings.get(p.id)!;
-    if (key === 'value') return r.value;
+    if (key === 'value') return rates.get(p.id) ?? null;
     if (key === 'avg') return periodAvg(p);
     if (key === 'potential') return r.potential;
     if (key === 'last') return lastScore(p);
@@ -104,7 +105,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     .sort((a, b) => {
       const x = stat(a, sort), y = stat(b, sort);
       if (sort === 'age') return (x ?? 99) - (y ?? 99);
-      return (y ?? -1) - (x ?? -1) || (league.ratings.get(b.id)!.value - league.ratings.get(a.id)!.value);
+      return (y ?? -1) - (x ?? -1) || ((rates.get(b.id) ?? 0) - (rates.get(a.id) ?? 0));
     });
 
   // Extra columns: the sort stat and any filtered stats, as bars.
@@ -248,7 +249,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               <th style={{ width: 40 }}>#</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>{own === 'free' ? 'Owned' : 'Owner'}</th>
               <th style={{ width: 44, textAlign: 'center' }}>Age</th><SortTh k="avg" title={`${periodLabel} · sort`} style={{ width: 60, textAlign: 'center' }}>{y25 ? "'25 Avg" : period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</SortTh><SortTh k="last" style={{ width: 54, textAlign: 'center' }}>Last</SortTh><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>{y25 ? "'25 Apps" : 'Apps'}</th>
               {extra.map((k) => <th key={k} style={{ width: 150 }}>{label(k)}</th>)}
-              <SortTh k="value" style={{ width: 60, textAlign: 'center' }}>Value</SortTh><SortTh k="value" style={{ width: 110 }}>Ability</SortTh><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
+              <SortTh k="value" style={{ width: 70, textAlign: 'right' }}>Market</SortTh><th style={{ width: 110 }}>Ability</th><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
             </tr>
           </thead>
           <tbody>
@@ -284,7 +285,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                       </td>
                     );
                   })}
-                  <td style={{ textAlign: 'center' }} className="mono">{r.value}</td>
+                  <td style={{ textAlign: 'right', fontWeight: 600 }} className="mono">{rates.has(p.id) ? `$${rates.get(p.id)}k` : '–'}</td>
                   <td><Stars value={r.valueStars} label="Current ability" /></td>
                   <td><Stars value={r.potential} colour={C.green5} label="Potential" /></td>
                 </tr>

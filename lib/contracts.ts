@@ -105,6 +105,13 @@ export interface ContractsData {
 }
 
 /** Everything the contracts pages need, loaded once per request. */
+/** Market value ($k) for every player, from the contract pricing. */
+export const getRates = cache(async (): Promise<Map<number, number>> => {
+  const supabase = await createClient();
+  const { data } = await supabase.rpc('kc_rates');
+  return new Map(((data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k]));
+});
+
 export const getContracts = cache(async (): Promise<ContractsData> => {
   const supabase = await createClient();
   const [league, me] = await Promise.all([getLeague(), getMe()]);

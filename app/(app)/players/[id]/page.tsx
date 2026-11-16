@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { AvgChip, Bar20, ClubDot, ScoreChip, Stars } from '@/components/bits';
 import { CLUBS } from '@/lib/clubs';
 import { getLeague, CURRENT_SEASON } from '@/lib/data';
+import { getRates } from '@/lib/contracts';
 import { age, C, form, played } from '@/lib/ratings';
 import { scoutingReport } from '@/lib/scouting';
 import { photoUrl } from '@/lib/photos';
@@ -23,7 +24,7 @@ import { PlayerContractStrip, PlayerOffer } from '@/components/contracts/PlayerC
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
   const { view } = await searchParams;
-  const [league, watch] = await Promise.all([getLeague(), getWatchlist()]);
+  const [league, watch, rates] = await Promise.all([getLeague(), getWatchlist(), getRates()]);
   const p = league.players.find((x) => x.id === Number(id)) ?? league.freeAgents.find((x) => x.id === Number(id));
   if (!p) notFound();
   const r = league.ratings.get(p.id)!;
@@ -31,7 +32,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const owner = league.teams.find((t) => t.id === p.team_id) ?? null;
   const line = r.line;
   const xs = played(p.last5);
-  const valueRank = league.players.filter((x) => (league.ratings.get(x.id)?.value ?? 0) > r.value).length + 1;
+  const mv = rates.get(p.id) ?? null;
+  const valueRank = league.players.filter((x) => (rates.get(x.id) ?? 0) > (mv ?? 0)).length + 1;
   const f = form(p);
   const a = age(p.birth_date);
   const report = scoutingReport(p, r, attrs);
@@ -95,8 +97,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
           </div>
           <div className="ph-stats">
             <div className="ph-rating">
-              <div className="ph-value" title={`${valueRank} of ${league.players.length} in the league · valued as ${r.line}, No.${r.lineRank} ${r.line}${r.statusRisk ? ' · status at risk' : ''}`}>
-                <b>{r.value}</b><span>Value<br />#{valueRank} · {r.line}{r.lineRank}</span>
+              <div className="ph-value" title={`Market value: No.${valueRank} of ${league.players.length} in the league`}>
+                <b>{mv != null ? `$${mv}k` : '–'}</b><span>Market value<br />#{valueRank} in league</span>
               </div>
               <div className="ph-value ph-avg">
                 <b>{p.average != null ? p.average.toFixed(1) : '–'}</b><span>{CURRENT_SEASON} avg<br />{p.games ?? 0} games</span>
@@ -142,7 +144,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               <span><span className="muted">AFL games </span><b>{p.career_games ?? '–'}</b></span>
               <span><span className="muted">{CURRENT_SEASON} average </span><b>{p.average?.toFixed(1) ?? '–'}</b></span>
               <span><span className="muted">Verdict </span><b>{report.verdict}</b></span>
-              <span><span className="muted">Value </span><b>{r.value}</b></span>
+              <span><span className="muted">Market value </span><b>{mv != null ? `$${mv}k` : '–'}</b></span>
             </div>
             <CareerCurveChart c={cc} lineName={LINE_NAME[line]} name={p.name} />
           </div>
