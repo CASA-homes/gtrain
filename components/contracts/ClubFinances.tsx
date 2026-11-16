@@ -8,7 +8,7 @@
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
 import { CapBar, CapSimulator, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
-import { getContracts, kt, moneyK, releaseCost } from '@/lib/contracts';
+import { getContracts, kt, moneyK, playerAge, releaseCost } from '@/lib/contracts';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
 
@@ -90,8 +90,12 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   // Simulator inputs
   const sim: SimPlayer[] = d.active.filter((c) => c.team_id === teamId).map((c) => {
     const p = d.players.get(c.player_id); const nx = covers(season + 1).find((x) => x.player_id === c.player_id);
-    return { id: c.player_id, name: p?.full_name ?? p?.name ?? '', salary: c.salary_k, next: nx ? nx.salary_k : null, final: c.end_season <= season, games: p?.career_games ?? 99,
-      rate: d.rates.get(c.player_id) ?? 0, rookieNow: c.rookie_slot_season === season, dead: releaseCost(s, c).later, homeGrown: c.home_grown };
+    const ext = d.pending.find((x) => x.player_id === c.player_id && x.team_id === teamId);
+    const rc = releaseCost(s, c); const rate = d.rates.get(c.player_id) ?? 0;
+    return { id: c.player_id, name: p?.full_name ?? p?.name ?? '', pos: p?.positions.join('/') ?? '', age: playerAge(p),
+      cur: c.rookie_slot_season === season ? 0 : c.salary_k, next: nx ? nx.salary_k : null, end: ext ? ext.end_season : c.end_season,
+      final: c.end_season <= season && !ext, rate, deadNow: rc.now, deadLater: rc.later, fee: rc.fee,
+      extPrice: Math.round(rate * (c.home_grown ? (100 - s.home_grown_pct) / 100 : 1) * (1 + (s.ext_premium_pct ?? 10) / 100)) };
   });
 
   // Assistant coach (rules for now)
@@ -204,7 +208,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
       <details className="kc-card fn-simbox" open>
         <summary><h2>Cap simulator</h2><span className="kc-sub">Test moves for your {season + 1} lock-in</span></summary>
-        <CapSimulator players={sim} keeperCap={club.keeperCapNext} nextSalary={club.nextSalary} kept={club.keptNext} deficitMax={allow} homeGrownPct={s.home_grown_pct} seasonCap={s.season_cap_k} season={season} />
+        <CapSimulator players={sim} keeperCap={club.keeperCapNext} seasonCap={s.season_cap_k} salaryNow={club.salary} nextSalary={club.nextSalary} kept={club.keptNext} deficitMax={allow} season={season} bank={club.bank} />
       </details>
 
       <section className="kc-card" aria-labelledby="ln-h">

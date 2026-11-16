@@ -123,56 +123,100 @@ export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }:
   );
 }
 
-export interface SimPlayer { id: number; name: string; salary: number; next: number | null; final: boolean; games: number; rate: number; rookieNow: boolean; dead: number; homeGrown: boolean }
-type Move = { kind: 'rookie' | 'release' | 'walk' | 'extend'; id: number };
+export interface SimPlayer {
+  id: number; name: string; pos: string; age: number | null;
+  /** This season's salary as it counts now (0 if he's the cap-free rookie). */ cur: number;
+  /** Next season's salary if signed for it (incl. an extension), else null. */ next: number | null;
+  end: number; final: boolean; rate: number;
+  deadNow: number; deadLater: number; fee: number; extPrice: number;
+}
+type SimState = 'keep' | 'release' | 'trade';
 
-/** Cap simulator: toggle moves and watch next season's keeper salary. Nothing is saved. */
-export function CapSimulator({ players, keeperCap, nextSalary, kept, deficitMax, homeGrownPct, seasonCap, season }: {
-  players: SimPlayer[]; keeperCap: number; nextSalary: number; kept: number; deficitMax: number; homeGrownPct: number; seasonCap: number; season: number;
+/** Cap simulator: every contracted player starts kept; set each to Keep, Release or Trade and watch this season's
+ *  salary and next season's keeper salary move. Expiring players start off; switch one on to re-sign him. Nothing is saved. */
+export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSalary, kept, deficitMax, season, bank }: {
+  players: SimPlayer[]; keeperCap: number; seasonCap: number; salaryNow: number; nextSalary: number; kept: number; deficitMax: number; season: number; bank: number;
 }) {
-  const [moves, setMoves] = useState<Move[]>([]);
-  const has = (kind: Move['kind'], id: number) => moves.some((m) => m.kind === kind && m.id === id);
-  const toggle = (kind: Move['kind'], id: number) => setMoves((ms) => {
-    if (ms.some((m) => m.kind === kind && m.id === id)) return ms.filter((m) => !(m.kind === kind && m.id === id));
-    let out = ms.filter((m) => m.id !== id);
-    if (kind === 'rookie') out = out.filter((m) => m.kind !== 'rookie');
-    return [...out, { kind, id }];
-  });
-  const result = useMemo(() => {
-    let sal = nextSalary, keepers = kept, dead = 0;
-    for (const m of moves) {
-      const p = players.find((x) => x.id === m.id)!;
-      if (m.kind === 'rookie' && p.next != null) sal -= p.next;
-      if (m.kind === 'release' && p.next != null) { sal -= p.next; keepers -= 1; dead += p.dead; }
-      if (m.kind === 'walk' && p.next != null) { sal -= p.next; keepers -= 1; }
-      if (m.kind === 'extend') { const v = Math.round(p.rate * (p.homeGrown ? (100 - homeGrownPct) / 100 : 1)); sal += v; keepers += 1; }
+  const [tab, setTab] = useState<'contracted' | 'expiring'>('contracted');
+  const [state, setState] = useState<Record<number, SimState>>({});
+  const [resign, setResign] = useState<Record<number, boolean>>({});
+  const contracted = useMemo(() => players.filter((p) => !p.final).sort((a, b) => (b.next ?? b.cur) - (a.next ?? a.cur)), [players]);
+  const expiring = useMemo(() => players.filter((p) => p.final).sort((a, b) => b.rate - a.rate), [players]);
+  const r = useMemo(() => {
+    let now = salaryNow, next = nextSalary, keepers = kept, dead = 0, fees = 0, moves = 0;
+    for (const p of players) {
+      const st = state[p.id] ?? 'keep';
+      if (st !== 'keep') {
+        moves++;
+        now -= p.cur;
+        if (p.next != null) { next -= p.next; keepers -= 1; }
+        if (st === 'release') { now += p.deadNow; dead += p.deadNow; fees += p.fee; if (p.end > season) { next += p.deadLater; dead += p.deadLater; } }
+      }
+      if (p.final && resign[p.id] && p.next == null && st === 'keep') { next += p.extPrice; keepers += 1; moves++; }
     }
-    return { sal, keepers, dead };
-  }, [moves, players, nextSalary, kept, homeGrownPct]);
-  const over = result.sal - keeperCap;
-  const status = over <= 0 ? ['ok', `${k$(-over)} under the ${k$(keeperCap)} keeper cap`] : over <= deficitMax ? ['warn', `${k$(over)} over: allowed as a deficit`] : ['bad', `${k$(over)} over: keep fewer`];
-  const rookieOptions = players.filter((p) => p.games <= 10 && p.next != null);
-  const keepers = players.filter((p) => p.next != null && !p.final).sort((a, b) => (b.next ?? 0) - (a.next ?? 0));
-  const finals = players.filter((p) => p.final && p.next == null).sort((a, b) => b.rate - a.rate);
-  const Row = ({ kind, p, label, effect }: { kind: Move['kind']; p: SimPlayer; label: string; effect: string }) => (
-    <button type="button" className={`sim-row ${has(kind, p.id) ? 'on' : ''}`} onClick={() => toggle(kind, p.id)} aria-pressed={has(kind, p.id)}>
-      <i className="sim-sw" aria-hidden="true" /><span><b>{p.name}</b><small>{label}</small></span><em className={effect.startsWith('+') ? 'up' : 'dn'}>{effect}</em>
-    </button>
-  );
-  return (
-    <div className="sim">
-      <div className={`sim-result ${status[0]}`}>
-        <span className="eyebrow">{season + 1} keeper salary · test only</span>
-        <div className="sim-big"><b>{k$(result.sal)}</b>{moves.length > 0 && <em>was {k$(nextSalary)}</em>}</div>
-        <p>{status[1]} · {result.keepers} keepers{result.keepers > 18 ? ' (max 18)' : ''}</p>
-        <CapBar salary={result.sal} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
-        <div className="sim-kpis"><div><span>Moves</span><b>{moves.length}</b></div><div><span>Dead money</span><b>{k$(result.dead)}</b></div><div><span>Draft budget</span><b>{k$(Math.max(0, seasonCap - result.sal - (33 - result.keepers) * 12))}</b></div></div>
-        {moves.length > 0 && <button type="button" className="kc-link" onClick={() => setMoves([])}>Reset</button>}
+    return { now, next, keepers, dead, fees, moves };
+  }, [players, state, resign, salaryNow, nextSalary, kept, season]);
+  const over = r.next - keeperCap;
+  const status = over <= 0 ? ['ok', `${k$(-over)} under the ${k$(keeperCap)} keeper cap`] : over <= deficitMax ? ['warn', `${k$(over)} over: a deficit is allowed`] : ['bad', `${k$(over)} over: release or trade more`];
+  const reset = () => { setState({}); setResign({}); };
+  const Seg = ({ p }: { p: SimPlayer }) => {
+    const st = state[p.id] ?? 'keep';
+    return (
+      <div className="sim3" role="radiogroup" aria-label={`${p.name}: keep, release or trade`}>
+        {(['keep', 'release', 'trade'] as const).map((k) => (
+          <button key={k} type="button" role="radio" aria-checked={st === k} className={`${k}${st === k ? ' on' : ''}`} onClick={() => setState((m) => ({ ...m, [p.id]: k }))}>
+            {k === 'keep' ? 'Contracted' : k === 'release' ? 'Released' : 'Traded'}
+          </button>
+        ))}
       </div>
-      {rookieOptions.length > 0 && <div className="sim-group"><h4>Rookie slot <small>cap-free for {season + 1}</small></h4>{rookieOptions.map((p) => <Row key={`r${p.id}`} kind="rookie" p={p} label={`${p.games} games · ${k$(p.next ?? 0)}`} effect={`+${k$(p.next ?? 0)}`} />)}</div>}
-      {finals.length > 0 && <div className="sim-group"><h4>Final year <small>extend at market rate</small></h4>{finals.map((p) => <Row key={`e${p.id}`} kind="extend" p={p} label={`now ${k$(p.salary)}${p.homeGrown ? ' · home-grown −' + homeGrownPct + '%' : ''}`} effect={`−${k$(Math.round(p.rate * (p.homeGrown ? (100 - homeGrownPct) / 100 : 1)))}`} />)}</div>}
-      <div className="sim-group"><h4>Release or let go <small>signed for {season + 1}</small></h4>{keepers.map((p) => <Row key={`x${p.id}`} kind="release" p={p} label={`${k$(p.next ?? 0)}${p.dead ? ` · ${k$(p.dead)} dead money` : ''}`} effect={`+${k$(p.next ?? 0)}`} />)}</div>
-      <p className="kc-sub">Nothing here is saved. Make the real moves from Contracts and the rookie slot above.</p>
+    );
+  };
+  const effect = (p: SimPlayer) => {
+    const st = state[p.id] ?? 'keep';
+    if (st === 'keep') return null;
+    const freed = (p.next ?? 0) - (st === 'release' && p.end > season ? p.deadLater : 0);
+    return <span className="sim-eff">{st === 'release'
+      ? <>Frees {k$(freed)} in {season + 1}. Legacy: {k$(p.deadNow)} dead in {season}{p.end > season ? `, ${k$(p.deadLater)} a year to ${p.end}` : ''} · {p.fee.toLocaleString('en-AU')} KT fee</>
+      : <>Frees {k$(p.next ?? 0)} in {season + 1} and {k$(p.cur)} in {season}. No dead money.</>}</span>;
+  };
+  return (
+    <div className="sim2">
+      <div className={`sim-result ${status[0]}`}>
+        <span className="eyebrow">Test only · nothing is saved</span>
+        <div className="sim-two">
+          <div><span>{season + 1} keepers</span><b>{k$(r.next)}</b>{r.moves > 0 && <em>was {k$(nextSalary)}</em>}</div>
+          <div><span>{season} season</span><b>{k$(r.now)}</b><em>of {k$(seasonCap)}</em></div>
+        </div>
+        <p>{status[1]} · {r.keepers} keepers{r.keepers > 18 ? ' (max 18)' : ''}</p>
+        <CapBar salary={r.next} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
+        <div className="sim-kpis">
+          <div><span>Moves</span><b>{r.moves}</b></div>
+          <div><span>Dead money</span><b>{k$(r.dead)}</b></div>
+          <div><span>Release fees</span><b className={r.fees > bank ? 'dn' : undefined}>{r.fees.toLocaleString('en-AU')} KT</b></div>
+        </div>
+        {r.moves > 0 && <button type="button" className="kc-link" onClick={reset}>Reset</button>}
+      </div>
+      <div className="sim-tabs" role="tablist">
+        <button type="button" role="tab" aria-selected={tab === 'contracted'} className={tab === 'contracted' ? 'on' : undefined} onClick={() => setTab('contracted')}>Contracted <i>{contracted.length}</i></button>
+        <button type="button" role="tab" aria-selected={tab === 'expiring'} className={tab === 'expiring' ? 'on' : undefined} onClick={() => setTab('expiring')}>Expiring <i>{expiring.length}</i></button>
+      </div>
+      <div className="sim-list">
+        {tab === 'contracted' ? contracted.map((p) => (
+          <div key={p.id} className={`sim-p ${state[p.id] ?? 'keep'}`}>
+            <div className="sim-who"><b>{p.name}</b><small>{p.pos}{p.age != null ? ` · ${p.age}` : ''} · {k$(p.next ?? p.cur)} to {p.end}</small></div>
+            <Seg p={p} />
+            {effect(p)}
+          </div>
+        )) : expiring.length ? expiring.map((p) => {
+          const on = !!resign[p.id];
+          return (
+            <button key={p.id} type="button" className={`sim-p sim-x ${on ? 'on' : ''}`} aria-pressed={on} onClick={() => setResign((m) => ({ ...m, [p.id]: !on }))}>
+              <div className="sim-who"><b>{p.name}</b><small>{p.pos}{p.age != null ? ` · ${p.age}` : ''} · now {k$(p.cur)} · value {k$(p.rate)}</small></div>
+              <span className="sim-tog"><i aria-hidden="true" />{on ? `Re-signed · ${k$(p.extPrice)} in ${season + 1}` : 'Let go'}</span>
+            </button>
+          );
+        }) : <p className="kc-sub" style={{ padding: 12 }}>Nobody expiring.</p>}
+      </div>
     </div>
   );
 }
