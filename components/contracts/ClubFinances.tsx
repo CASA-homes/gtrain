@@ -102,7 +102,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
     const cut = covers(season + 1).filter((c) => c.rookie_slot_season !== season + 1).sort((a, b) => ((d.rates.get(a.player_id) ?? 0) - a.salary_k) - ((d.rates.get(b.player_id) ?? 0) - b.salary_k))[0];
     if (cut) tips.push({ t: `Move on ${name(cut.player_id)}`, d: `Your most overpaid keeper: ${moneyK(cut.salary_k)} against a ${moneyK(d.rates.get(cut.player_id) ?? 0)} market value. Trade or release to clear ${s.season + 1} room.`, v: `+${moneyK(cut.salary_k)}` });
   }
-  if (club.bank >= 40 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} term deposit returns ${s.deposit_pct}% at season end.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * s.deposit_pct) / 100))}` });
+  if (club.bank >= 200 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} term deposit returns ${s.deposit_pct}% at season end.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * s.deposit_pct) / 100))}` });
 
   return (
     <div className="kc-stack">

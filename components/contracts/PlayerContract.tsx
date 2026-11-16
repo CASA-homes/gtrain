@@ -3,7 +3,7 @@
 //  - Under contract at another club → open a trade desk for him; pay his clause too in the mid-season window
 //  - On a club list but not contracted → open a trade desk
 import Link from 'next/link';
-import { offerForPlayer } from '@/app/(app)/contracts/actions';
+import { offerForPlayer, openUnsigned } from '@/app/(app)/contracts/actions';
 import { RunButton } from '@/components/contracts/client';
 import { clauseKt, getContracts, isFinalYear, kt, money } from '@/lib/contracts';
 import './contracts.css';
@@ -37,9 +37,14 @@ export async function PlayerOffer({ playerId, ownerTeamId, name }: { playerId: n
   if (holder === meId) return fa?.kind === 'pending' ? <Link href={`/clubhouse/${meId}?view=contracts`} className="kc-btn small ph-act">See offers</Link> : null;
   return (
     <span className="ph-offer">
+      {holder && !leaving
+        ? <form action={offerForPlayer.bind(null, playerId, holder, name)}><button type="submit" className="kc-btn small">Trade</button></form>
+        : <span className="kc-btn small" aria-disabled="true">Trade</span>}
       {fa && (fa.kind === 'open' || fa.ex_team !== meId)
-        ? <Link href={`/contracts/offer/${fa.id}`} className="kc-btn small dark">{myOffer ? `Raise offer (${myOffer.score})` : 'Make offer'}</Link>
-        : holder && !leaving ? <form action={offerForPlayer.bind(null, playerId, holder, name)}><button type="submit" className="kc-btn small dark">Offer</button></form> : null}
+        ? <Link href={`/contracts/offer/${fa.id}`} className="kc-btn small dark">{myOffer ? `Raise offer (${myOffer.score})` : 'Offer contract'}</Link>
+        : !c && holder
+          ? <form action={openUnsigned.bind(null, playerId)}><button type="submit" className="kc-btn small dark">Offer contract</button></form>
+          : <span className="kc-btn small dark" aria-disabled="true" title="Only free agents and out-of-contract players can be offered a contract">Offer contract</span>}
       {c && clause != null && windowOpen && !claim && !leaving &&
         <RunButton run="buy" id={c.id} small kind="sage" label={`Pay clause · ${kt(clause)}`} confirmText={`Pay ${kt(clause)} for ${name}? ${team(c.team_id)} get 24 hours to match. If they don't, he joins you at season end on ${money(c.salary_k)} a year to ${c.end_season}.`} />}
     </span>

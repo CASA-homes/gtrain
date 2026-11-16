@@ -83,6 +83,15 @@ export async function offerForPlayer(playerId: number, ownerTeamId: number, name
   revalidatePath('/market/desk');
   redirect(`/market/desk/${data.id}`);
 }
+/** Rival coach: open offers on an out-of-contract player on another list, then go to the offer screen. */
+export async function openUnsigned(playerId: number) {
+  const me = await getCoach();
+  if (!me) redirect('/login');
+  const supabase = await createClient();
+  const { data, error } = await supabase.rpc('kc_open_unsigned', { pid: playerId });
+  if (error) redirect(`/players/${playerId}?error=${encodeURIComponent(error.message)}`);
+  redirect(`/contracts/offer/${Number(data)}`);
+}
 export async function tableOffer(faId: number, years: number, salary: number, tier: string, sweet: number, pickIds: number[]) {
   return run('kc_offer', { faid: faId, p_years: years, p_salary: Math.round(salary), new_tier: tier, sweet: Math.round(sweet), picks_in: pickIds }, (d) => `Offer tabled. Score ${d}.`);
 }

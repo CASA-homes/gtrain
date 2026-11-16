@@ -80,7 +80,7 @@ export async function BuyPanel() {
                 </select>
               </label>
               <label>Your offer (KT)
-                <input name="kt" type="number" inputMode="numeric" min={1} step={1} max={bank || undefined} placeholder="e.g. 60" required />
+                <input name="kt" type="number" inputMode="numeric" min={1} step={1} max={bank || undefined} placeholder="e.g. 300" required />
               </label>
               <button type="submit" className="btn dark">Make the offer</button>
               <span className="muted" style={{ fontSize: 12 }}>You have {kt(bank)}. Add players or picks on the desk too.</span>

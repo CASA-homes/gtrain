@@ -13,7 +13,7 @@ const STEPS = ['Player', 'Contract', 'Release clause', 'Sweeteners', 'Review'];
 type ClauseTier = 'standard' | 'high' | 'none';
 
 export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, existing }: {
-  fa: { id: number; offers: number; closesAt: string | null; exTeam: string | null; exRank: number | null; pending: boolean };
+  fa: { id: number; offers: number; closesAt: string | null; exTeam: string | null; exRank: number | null; pending: boolean; offseason?: boolean };
   player: { name: string; positions: string[]; club: string | null; age: number | null; average: number | null; games: number | null };
   rate: number; settings: KcSettings; bank: number; salary: number;
   picks: { id: number; label: string; overall: number }[]; existing: MyOffer | null;
@@ -37,7 +37,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   const capSalary = Math.round(base * prem);
   const after = salary + capSalary;
   const pickScore = useMemo(() => picks.filter((p) => pickIds.includes(p.id)).reduce((a, p) => a + Math.round(3000 * Math.exp(-0.07 * (p.overall - 1)) / 50), 0), [picks, pickIds]);
-  const score = years * base + sweet + pickScore;
+  const score = years * base + Math.trunc(sweet / 5) + pickScore;
   const escrowNeeded = sweet - (existing?.sweet_kt ?? 0);
   const overCap = after > s.season_cap_k;
   const tooPoor = escrowNeeded > bank;
@@ -75,7 +75,10 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           <p className="kc-sub" style={{ fontSize: 15 }}>{player.name} now has {fa.offers + (existing ? 0 : 1)} offer{fa.offers + (existing ? 0 : 1) > 1 ? 's' : ''}. Nobody can see the amounts, including yours.</p>
           <ol style={{ margin: '18px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
             <li><strong>Tabled</strong>: score {score}{sweet ? `, ${kt(sweet)} held until offers close` : ''}.</li>
-            {fa.pending ? <>
+            {fa.offseason ? <>
+              <li><strong>{fa.exTeam} reviews</strong> every offer and picks one. You can raise yours, but not lower it.</li>
+              <li><strong>If they accept</strong>, your KT fee goes to them and he’s yours from the start of {s.season}. If not, your tokens come back.</li>
+            </> : fa.pending ? <>
               <li><strong>{fa.exTeam} decides</strong>: they can accept any offer until season end. You can raise yours, but not lower it.</li>
               <li><strong>If they accept</strong>, your fee goes to them and he joins you at season end. If not, your tokens come back and he goes to open free agency.</li>
             </> : <>
@@ -91,7 +94,9 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
           <h3 style={{ font: '600 20px var(--font)' }}>Is he worth chasing?</h3>
-          <p className="kc-sub" style={{ marginBottom: 16 }}>{fa.pending
+          <p className="kc-sub" style={{ marginBottom: 16 }}>{fa.offseason
+            ? `Out of contract at ${fa.exTeam}. Place your best offer: salary, length, clause, and a KT fee if you want to sweeten it. ${fa.exTeam} reviews the offers and picks one. If they accept, he’s yours from the start of ${s.season}.`
+            : fa.pending
             ? `In his last six months at ${fa.exTeam}. ${fa.exTeam} picks which offer to take, and the token fee goes to them. He finishes ${s.season} there and joins the winner at season end, so your deal starts in ${s.season + 1}.`
             : `${fa.exTeam ? `Out of contract at ${fa.exTeam}.` : 'Free agent.'} Offers are blind; the best offer score wins when offers close.`}</p>
           <div className="kc-grid" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 10 }}>
@@ -169,7 +174,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           <p className="kc-sub" style={{ marginBottom: 14 }}>Optional compensation to his former club. It adds to your offer score. Tokens are held until offers close and come back if you lose.</p>
           <div className="kc-card" style={{ padding: 16 }}>
             <label className="kc-field" htmlFor="kc-sweet" style={{ flexDirection: 'row', justifyContent: 'space-between' }}><span>Tokens</span><span className="num">{kt(sweet)}</span></label>
-            <input id="kc-sweet" type="range" min={0} max={Math.max(existing?.sweet_kt ?? 0, Math.min(bank + (existing?.sweet_kt ?? 0), 100))} step={1} value={sweet} onChange={(e) => setSweet(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--khq-sage)', height: 28 }} />
+            <input id="kc-sweet" type="range" min={0} max={Math.max(existing?.sweet_kt ?? 0, Math.min(bank + (existing?.sweet_kt ?? 0), 500))} step={5} value={sweet} onChange={(e) => setSweet(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--khq-sage)', height: 28 }} />
             <p className="kc-sub" style={{ fontSize: 12 }}>50 KT = 1 score point · you have {kt(bank)}</p>
           </div>
           <p className="kc-field" style={{ marginTop: 14 }}>Draft picks</p>
@@ -189,7 +194,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           {s.shadow && <p className="kc-sub" style={{ marginTop: 10 }}>Shadow season: picks count toward your score but no real pick moves.</p>}
           <div className="kc-card" style={{ padding: '6px 16px', marginTop: 14, background: 'var(--sunk)', border: 0 }}>
             <div className="kc-kv"><span>Contract: {years} × {money(base)}</span><strong>{years * base}</strong></div>
-            <div className="kc-kv"><span>Tokens: {kt(sweet)}</span><strong>{sweet}</strong></div>
+            <div className="kc-kv"><span>Tokens: {kt(sweet)}</span><strong>{Math.trunc(sweet / 5)}</strong></div>
             <div className="kc-kv"><span>Picks</span><strong>{pickScore}</strong></div>
             <div className="kc-kv" style={{ fontWeight: 700 }}><span style={{ color: 'var(--ink)' }}>Offer score</span><strong>{score}</strong></div>
           </div>

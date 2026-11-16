@@ -60,11 +60,11 @@ export function DropDayControl({ value }: { value: string | null }) {
 
 export function DepositForm({ bank, rate }: { bank: number; rate: number }) {
   const { pending, go, note } = useRun();
-  const [amt, setAmt] = useState('20');
+  const [amt, setAmt] = useState('100');
   const n = Math.floor(Number(amt) || 0);
   return (
     <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => makeDeposit(n), `Lock ${kt(n)} until season end? You get ${kt(n + Math.floor((n * rate) / 100))} back at rollover.`); }}>
-      <label>Amount<input type="number" min={2} step={1} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
+      <label>Amount<input type="number" min={10} step={5} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
       <div className="fn-calc"><span>Back at season end</span><b>{kt(n + Math.floor((n * rate) / 100))}</b><em>+{rate}%</em></div>
       <button type="submit" className="kc-btn sage" disabled={pending || n < 100 || n > bank}>Lock it in</button>
       {note}
@@ -75,14 +75,14 @@ export function DepositForm({ bank, rate }: { bank: number; rate: number }) {
 export function LoanForm({ bank, teams, maxRate }: { bank: number; teams: { id: number; name: string }[]; maxRate: number }) {
   const { pending, go, note } = useRun();
   const [to, setTo] = useState(teams[0]?.id ?? 0);
-  const [amt, setAmt] = useState('20');
+  const [amt, setAmt] = useState('100');
   const [rate, setRate] = useState(String(Math.min(10, maxRate)));
   const n = Math.floor(Number(amt) || 0), r = Math.floor(Number(rate) || 0);
   return (
     <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => offerLoan(to, n, r)); }}>
       <label>Lend to<select value={to} onChange={(e) => setTo(Number(e.target.value))}>{teams.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
       <div className="fn-two">
-        <label>Amount<input type="number" min={2} step={1} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
+        <label>Amount<input type="number" min={10} step={5} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
         <label>Interest %<input type="number" min={0} max={maxRate} value={rate} onChange={(e) => setRate(e.target.value)} inputMode="numeric" /></label>
       </div>
       <div className="fn-calc"><span>Repaid at season end</span><b>{kt(n + Math.floor((n * r) / 100))}</b><em>+{kt(Math.floor((n * r) / 100))}</em></div>
