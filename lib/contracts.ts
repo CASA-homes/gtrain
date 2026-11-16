@@ -14,7 +14,7 @@ export interface KcSettings {
   max_years: number; long_deal_limit: number;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
-  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
+  levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; fee_kt_per_k: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
@@ -26,7 +26,7 @@ export interface Contract {
   rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
-export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending'; offers: number }
+export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending' | 'offseason'; offers: number }
 export interface MyOffer { id: number; fa_id: number; team_id: number; years: number; salary_k: number; tier: Tier; sweet_kt: number; pick_ids: number[]; score: number; status: string }
 export interface Transfer { id: number; player_id: number | null; from_team: number | null; to_team: number | null; kind: string; fee_kt: number; levy_kt: number; note: string | null; created_at: string }
 
@@ -61,7 +61,7 @@ export interface CapAdjust { team_id: number; season: number; amount_k: number; 
  *  release_fee_pct of what's left on the deal (1 KT = $1k). Mirrors kc_release. */
 export function releaseCost(s: KcSettings, c: Pick<Contract, 'salary_k' | 'start_season' | 'end_season'>) {
   const years = Math.max(1, c.end_season - Math.max(c.start_season, s.season) + 1);
-  return { now: Math.round(c.salary_k * 0.5), later: years > 1 ? Math.round(c.salary_k * 0.2) : 0, laterYears: years - 1, fee: Math.round((c.salary_k * years * (s.release_fee_pct ?? 10)) / 100) };
+  return { now: Math.round(c.salary_k * 0.5), later: years > 1 ? Math.round(c.salary_k * 0.2) : 0, laterYears: years - 1, fee: Math.round(((c.salary_k * years * (s.release_fee_pct ?? 10)) / 100) * (s.fee_kt_per_k ?? 5)) };
 }
 /** Per-year salary of a new deal: rate × length factor (× home-grown discount), then the clause premium. */
 export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier, homeGrown = false) {
@@ -71,7 +71,7 @@ export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier
 export const minimumFor = (rate: number, years: number) => Math.max(5, Math.round(rate * lengthFactor(years)));
 export const pickPointsScore = (overall: number) => Math.round(3000 * Math.exp(-0.07 * (overall - 1)) / 50);
 export function offerScore(years: number, salary: number, sweet: number, pickOveralls: number[]) {
-  return years * salary + sweet + pickOveralls.reduce((a, o) => a + pickPointsScore(o), 0);
+  return years * salary + Math.trunc(sweet / 5) + pickOveralls.reduce((a, o) => a + pickPointsScore(o), 0);
 }
 export function floorFor(s: KcSettings, line: Line) {
   return line === 'DEF' ? s.floor_def : line === 'MID' ? s.floor_mid : line === 'RUC' ? s.floor_ruc : s.floor_fwd;
@@ -164,7 +164,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const totalKt = [...banks.values()].reduce((a, b) => a + Math.max(0, b), 0);
   const freeAgents = ((faQ.data ?? []) as FreeAgent[]).map((f) => ({ ...f, id: Number(f.id), kind: f.kind ?? 'open', offers: counts.get(Number(f.id)) ?? 0 }));
   const allOffers = ((offQ.data ?? []) as MyOffer[]).map((o) => ({ ...o, id: Number(o.id), fa_id: Number(o.fa_id) }));
-  const myFaIds = new Set(freeAgents.filter((f) => f.kind === 'pending' && f.ex_team === me?.team_id).map((f) => f.id));
+  const myFaIds = new Set(freeAgents.filter((f) => (f.kind === 'pending' || f.kind === 'offseason') && f.ex_team === me?.team_id).map((f) => f.id));
   return {
     deadLater,
     me, settings, seasonLabel: settings?.shadow ? `${season} shadow season` : `${season} season`,

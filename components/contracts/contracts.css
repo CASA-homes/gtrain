@@ -570,3 +570,9 @@
 .ct2-row > .ct2-pa { grid-column: 2; align-items: flex-start !important; text-align: left; font: 600 13px var(--font) !important; color: var(--ink); }
 .ct2-row > .ct2-pa em { font: 500 10px var(--font) !important; color: var(--muted); }
 .ct2-cols > button:first-of-type { text-align: left !important; }
+
+.ct2-sort { font-style: normal; margin-left: 2px; font-size: 8px; opacity: .45; vertical-align: 1px; }
+.ct2-cols button.on .ct2-sort { opacity: 1; }
+.ct2-offer button { all: unset; cursor: pointer; font: 700 11px/1.15 var(--font); color: #fff; background: #2f5d46; border-radius: 8px; padding: 4px 6px; text-align: center; }
+.ct2-offer button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.ph-offer .kc-btn[aria-disabled='true'] { opacity: .4; pointer-events: none; }

@@ -9,6 +9,7 @@ import { ClubDot } from '@/components/bits';
 import { AuctionControl, ExtendControl, ReleaseButton, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
 import { offerKtForPlayer } from '@/app/(app)/market/desk/actions';
+import { openUnsigned } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 
 export type CtStatus = 'final' | 'pending' | 'moving' | 'extended' | 'draft' | 'rookie' | 'contract' | 'claim' | 'none';
@@ -80,7 +81,7 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
         {COLS.map(([k, label]) => (
           <button key={k} type="button" onClick={() => click(k)} className={sort?.k === k ? 'on' : undefined} aria-pressed={sort?.k === k}
             title={`Sort by ${label.toLowerCase()}`}>
-            {label}{sort?.k === k ? (sort.dir === -1 ? '↓' : '↑') : ''}
+            {label}<i className="ct2-sort" aria-hidden="true">{sort?.k === k ? (sort.dir === -1 ? '▼' : '▲') : '⇅'}</i>
           </button>
         ))}
         <span />
@@ -176,7 +177,14 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
               </span>
             )}</span>
           )}
-          <span className="ct2-c ct2-sal">{r.salary != null ? k$(r.salary) : '—'}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.salary == null ? 'unsigned' : ' '}</em></span>
+          {r.status === 'none' && onBid ? (
+            <span className="ct2-c ct2-sal ct2-offer">
+              <button type="button" onClick={(e) => { e.preventDefault(); e.stopPropagation(); (e.currentTarget.nextElementSibling as HTMLFormElement | null)?.requestSubmit(); }}>Offer<br />contract</button>
+              <form action={openUnsigned.bind(null, r.playerId)} hidden />
+            </span>
+          ) : (
+            <span className="ct2-c ct2-sal">{r.salary != null ? k$(r.salary) : '—'}<em>{r.extSalary != null ? `then ${k$(r.extSalary)}` : r.salary == null ? (canManage ? 'tap to offer' : 'unsigned') : ' '}</em></span>
+          )}
           <span className="ct2-arrow" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
           <span className="sr-only">Show contract details for {r.name}</span>
         </summary>

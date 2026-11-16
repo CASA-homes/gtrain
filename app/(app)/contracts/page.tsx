@@ -29,7 +29,7 @@ export default async function ContractsHome() {
             <h2>Not set up yet</h2>
             <p className="kc-sub" style={{ color: '#6e5220' }}>
               Setting up gives every kept player (17 + rookie keeper) a contract priced from his market rate, cheap rookie deals for young players,
-              and every club a starting bank of 200 KT (1 KT = $1k). Every club starts under the keeper cap. Nothing on your real lists changes.
+              and every club a starting bank of 1,000 KT. Every club starts under the keeper cap. Nothing on your real lists changes.
             </p>
             {d.me?.is_commish
               ? <div style={{ marginTop: 14 }}><RunButton run="seed" label="Set up the shadow season" confirmText="Create contracts for every kept player and give every club its starting bank?" /></div>
