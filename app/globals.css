@@ -2660,3 +2660,19 @@ button.md-slot:hover { border-color: #cdd2cb; }
 
 .nav-acct span { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 10px; color: var(--muted); }
 .nav-acct:hover span, .nav-acct[aria-current] span { color: var(--ink); }
+
+/* Clubhouse header, desktop: same layout, compact */
+@media (min-width: 861px) {
+  .club-head-band { height: 26px; }
+  .club-head-body { padding: 10px 22px 12px; gap: 6px 28px; }
+  .club-head-id { gap: 12px; }
+  .club-head-name { font-size: 28px; }
+  .club-head-art { width: 360px; top: -24px; }
+  .club-head-kpis .kpi { padding: 0 18px; }
+  .club-head-kpis .kpi:first-child { padding-left: 0; }
+  .club-head-kpis .kpi b { font-size: 18px; }
+  .club-head-kpis .kpi .eyebrow { font-size: 9px; }
+  .club-head-stats > div { padding: 4px 8px; }
+  .club-head-stats b { font-size: 19px !important; }
+  .club-head-acts .btn, .club-head-acts button { padding-top: 7px; padding-bottom: 7px; }
+}

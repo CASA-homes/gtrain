@@ -674,3 +674,25 @@
 .su-kv em { font-style: normal; font-weight: 600; font-size: 13px; }
 .su-lock { margin-left: auto; }
 @media (max-width: 640px) { .su-lock { margin-left: 0; width: 100%; display: flex; justify-content: flex-end; } }
+
+/* Compact first-season panel + tour button inside it */
+.su-card { padding: 10px 16px; gap: 6px; }
+.su-head h2 { font-size: 16px; }
+.su-acts { display: inline-flex; align-items: center; gap: 8px; }
+.kc-btn.su-tour { padding: 4px 10px; font-size: 12px; min-height: 0; }
+.su-text { font-size: 12.5px; line-height: 1.35; }
+.su-row { padding-top: 6px; gap: 6px 20px; }
+.su-kv b { font-size: 15px; }
+.su-lock .kc-btn { padding: 5px 12px; }
+@media (min-width: 861px) { .kc-stack { gap: 12px; } }
+
+/* Finances: cap + future seasons side by side on desktop, tighter panels */
+.fn-top { display: grid; gap: 12px; }
+@media (min-width: 861px) {
+  .fn-top.two { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); align-items: stretch; }
+  .fn-stack .kc-card { padding: 14px 16px; }
+  .fn-stack .fn-hero { gap: 7px; }
+  .fn-stack .fn-big b { font-size: 30px; }
+  .fn-stack .fn-runway { gap: 6px; margin-top: 8px; }
+  .fn-stack .fn-kpis { padding-top: 7px; }
+}
