@@ -5,12 +5,16 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
-    player: 'T. Greene', tag: 'Role', date: '2026-11-14', title: 'Greene settles in at Geelong',
-    body: 'Fresh off his free agency move from GWS, Greene says he expects a similar role at the Cats: mostly forward with a bit of midfield, and high half-forward an option. He’s 33 but still averaged 86 in 2026. If he gets those midfield minutes under Chris Scott, Serong So’Right have a handy forward-line keeper.',
+    player: 'I. Heeney', tag: 'Off-field', date: '2026-11-16', title: 'Heeney back training with the Swans',
+    body: 'Three days after police ruled out charges over the Pullman Hotel incident, Heeney trained with Swans teammates at Centennial Park on Monday. His club suspension only covered the rest of 2026 and no 2027 sanction has been announced. The reigning Swans best and fairest looks on track for a full summer, great news for Muzza’s Murabito’s.',
   },
   {
-    player: 'I. Heeney', tag: 'Off-field', date: '2026-11-14', title: 'Police drop Pullman matter, civil claims loom',
-    body: 'Victoria Police confirmed no criminal charges will be laid over the Pullman Hotel incident, citing insufficient evidence, though civil claims are still being prepared. The AFL says it could revisit things if new information surfaces. No 2027 sanction has been announced, so Heeney, last season’s Swans best and fairest, looks set for round 1.',
+    player: 'C. Warner', tag: 'Off-field', date: '2026-11-16', title: 'Warner rejoins Swans teammates',
+    body: 'Warner was also at Monday’s session after police confirmed he won’t be charged, and says he’s just planning to get back into footy. His club ban was for the rest of 2026 only, so nothing is stopping a normal pre-season. Such Is Fyfe can pencil in a mid who averaged 92 last year for round 1.',
+  },
+  {
+    player: 'T. Greene', tag: 'Role', date: '2026-11-14', title: 'Greene settles in at Geelong',
+    body: 'Fresh off his free agency move from GWS, Greene says he expects a similar role at the Cats: mostly forward with a bit of midfield, and high half-forward an option. He’s 33 but still averaged 86 in 2026. If he gets those midfield minutes under Chris Scott, Serong So’Right have a handy forward-line keeper.',
   },
   {
     player: 'G. Wardlaw', tag: 'Injury', date: '2026-11-13', title: 'Wardlaw nursing a minor MCL sprain',
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'J. Gunston', tag: 'Role', date: '2026-11-05', title: 'Gunston faces a crowded Hawks forward line',
     body: 'Ben King’s arrival from Gold Coast means more competition up forward at Hawthorn, and the 35-year-old Gunston says it’s healthy and the coaches will sort the structure. He’s kicked 73 and 66 goals the last two years, but sharing the marking load with King could trim his scoring ceiling.',
-  },
-  {
-    player: 'J. Worrell', tag: 'Off-field', date: '2026-11-04', title: 'Worrell fined after court appearance',
-    body: 'Adelaide’s Worrell pleaded guilty to driving without due care over hitting a pedestrian in July, and was convicted and fined $2,400 with no licence disqualification. He’s said he accepts full responsibility. No club or AFL ban has been reported, so as it stands his 2027 availability isn’t affected.',
   },
 ];
