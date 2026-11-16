@@ -659,3 +659,18 @@
 .tour-dots i { width: 6px; height: 6px; border-radius: 6px; background: var(--khq-line); transition: width .2s; }
 .tour-dots i.on { width: 16px; background: var(--khq-brass); }
 @media (prefers-reduced-motion: reduce) { .tour-card { animation: none; } }
+
+/* First off-season: Re-sign your list (compact) */
+.su-card { padding: 14px 18px; display: grid; gap: 8px; }
+.su-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.su-head h2 { margin: 0; font-size: 18px; }
+.su-text { margin: 0; font-size: 13px; line-height: 1.4; color: var(--muted); }
+.su-text b { color: var(--ink); }
+.su-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 22px; padding-top: 8px; border-top: 1px solid #e8dcc0; }
+.su-kv { display: inline-flex; align-items: baseline; gap: 8px; font-size: 13px; }
+.su-kv > span { color: var(--muted); }
+.su-kv b { font: 700 16px var(--font); }
+.su-kv b small { font-weight: 500; font-size: 13px; color: var(--muted); }
+.su-kv em { font-style: normal; font-weight: 600; font-size: 13px; }
+.su-lock { margin-left: auto; }
+@media (max-width: 640px) { .su-lock { margin-left: 0; width: 100%; display: flex; justify-content: flex-end; } }

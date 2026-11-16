@@ -6,7 +6,7 @@ import { DraftRequest, KcClock, LockAllButton, RunButton } from '@/components/co
 import { ContractsTour } from '@/components/contracts/ContractsTour';
 import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
-import { clauseKt, inSetup, releaseCost, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
+import { clauseKt, inSetup, moneyK, releaseCost, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
 import './contracts.css';
 
 export async function ClubContracts({ teamId }: { teamId: number }) {
@@ -95,7 +95,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     ...uncontracted.map((p) => ({
       id: -p.id, playerId: p.id, name: p.full_name ?? p.name, positions: p.positions ?? [], club: p.afl_club ?? null, age: playerAge(p), avg: p.average ?? null,
       games: p.games ?? 0, salary: null, base: 0, rate: d.rates.get(p.id) ?? 0, start: null, end: null, yearsLeft: 0, tier: 'standard' as const, clause: null,
-      status: 'none' as const, statusLabel: setup ? 'Unsigned · re-sign before deadline day' : 'No contract · free agent at season end', homeGrown: false, extEnd: null, extSalary: null, onAuction: false, dead: 0,
+      status: 'none' as const, statusLabel: setup ? 'Unsigned · expires on deadline day' : 'No contract · free agent at season end', homeGrown: false, extEnd: null, extSalary: null, onAuction: false, dead: 0,
       trend: valueTrend(p), tone: 'red' as const,
     })).sort((a, b) => b.rate - a.rate),
   ];
@@ -108,19 +108,18 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     <div className="kc-stack">
       {mine && <ContractsTour setup={setup} keeperCap={s.keeper_cap_k} softCap={s.season_cap_k - s.keeper_cap_k} deadline={deadline || 'deadline day'} />}
       {mine && setup && (
-        <section className="kc-card brass" aria-labelledby="su-h" data-tour="setup">
-          <div className="row-between">
+        <section className="kc-card brass su-card" aria-labelledby="su-h" data-tour="setup">
+          <div className="su-head">
             <h2 id="su-h">Re-sign your list</h2>
             <span className="fn-pill brass">Formal {deadline}</span>
           </div>
-          <p className="kc-sub" style={{ margin: '4px 0 10px' }}>First off-season: every player starts unsigned. Offer each one a contract, choosing the length and the clause (standard, high or no clause). Everything stays provisional until deadline day, so undo and try alternatives freely. No KT fees until then.</p>
-          <div className="kc-grid">
-            <div className="kc-kv"><span>Signed</span><strong>{contracts.length} of {club.list.size}</strong></div>
-            <div className="kc-kv"><span>{s.season} salary</span><strong>{money(club.salary)}</strong></div>
-            <div className="kc-kv"><span>Keeper cap</span><strong className={room < 0 ? 'kc-down' : 'kc-up'}>{room < 0 ? `${money(-room)} over` : `${money(room)} room`}</strong></div>
-            <div className="kc-kv"><span>Provisional</span><strong>{provCount}</strong></div>
+          <p className="su-text">Every player starts unsigned. Offer contracts (length and clause) to the players you want for {s.season} and beyond: they become your <b>17 + 1 keepers</b>. Anyone still unsigned <b>expires on deadline day</b>. Everything is provisional until then, with no KT fees, so undo and try alternatives freely.</p>
+          <div className="su-row">
+            <span className="su-kv"><span>Signed</span><b className={contracts.length > 18 ? 'kc-down' : undefined}>{contracts.length} / 17 + 1</b></span>
+            <span className="su-kv"><span>{s.season} salary</span><b>{moneyK(club.salary)}<small> / {moneyK(club.keeperCapNow)}</small></b><em className={room < 0 ? 'kc-down' : 'kc-up'}>{room < 0 ? `${moneyK(-room)} over` : `${moneyK(room)} room`}</em></span>
+            <span className="su-kv"><span>Provisional</span><b>{provCount}</b></span>
+            <span className="su-lock"><LockAllButton teamId={teamId} count={provCount} /></span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 10 }}><LockAllButton teamId={teamId} count={provCount} /></div>
         </section>
       )}
       {canManage && incomingClaims.length > 0 && (

@@ -18,7 +18,7 @@ function steps(setup: boolean, keeperCap: number, softCap: number, deadline: str
     ...(setup ? [{
       target: 'setup',
       title: 'Re-sign your list',
-      body: <>First off-season: <b>every player starts unsigned</b>. This card tracks how many you’ve signed, your salary, and your room under the <b>${keeperCap}k keeper cap</b>. Everything is provisional until <b>{deadline}</b> (deadline day), so experiment freely.</>,
+      body: <>First off-season: <b>every player starts unsigned</b>. The players you sign become your <b>17 + 1 keepers</b>; anyone unsigned expires on deadline day. This card tracks how many you’ve signed and your room under the <b>${keeperCap}k keeper cap</b>. Everything is provisional until <b>{deadline}</b> (deadline day), so experiment freely.</>,
     }] : []),
     {
       target: 'unsigned',
