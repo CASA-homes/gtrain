@@ -88,11 +88,17 @@ function steps(setup: boolean, keeperCap: number, softCap: number, deadline: str
   ];
 }
 
-export function ContractsTour({ setup, keeperCap, softCap, deadline }: { setup: boolean; keeperCap: number; softCap: number; deadline: string }) {
+/** A small "How contracts work" button that opens the tour from anywhere on the page. */
+export function TourButton({ className = 'kc-btn small' }: { className?: string }) {
+  return <button type="button" className={className} onClick={() => window.dispatchEvent(new Event('khq-tour-open'))}>How contracts work</button>;
+}
+
+export function ContractsTour({ setup, keeperCap, softCap, deadline, showButton = true }: { setup: boolean; keeperCap: number; softCap: number; deadline: string; showButton?: boolean }) {
   const list = useMemo(() => steps(setup, keeperCap, softCap, deadline), [setup, keeperCap, softCap, deadline]);
   const [i, setI] = useState<number | null>(null);
   useEffect(() => { try { if (!localStorage.getItem(KEY)) setI(0); } catch { /* storage blocked: skip the auto tour */ } }, []);
 
+  useEffect(() => { const o = () => setI(0); window.addEventListener('khq-tour-open', o); return () => window.removeEventListener('khq-tour-open', o); }, []);
   const close = useCallback(() => { setI(null); try { localStorage.setItem(KEY, '1'); } catch { /* ignore */ } }, []);
 
   // Spotlight the current step's section and bring it into view.
@@ -116,9 +122,11 @@ export function ContractsTour({ setup, keeperCap, softCap, deadline }: { setup: 
   const spot = !!step?.target && typeof document !== 'undefined' && !!document.querySelector(`[data-tour="${step.target}"]`);
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <button type="button" className="kc-btn small" onClick={() => setI(0)}>How contracts work</button>
-      </div>
+      {showButton && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <button type="button" className="kc-btn small" onClick={() => setI(0)}>How contracts work</button>
+        </div>
+      )}
       {step && (
         <>
           {!spot && <div className="tour-dim" onClick={close} aria-hidden="true" />}

@@ -3,7 +3,7 @@
 // full filterable list, committed salary by season and players not yet on contract.
 import Link from 'next/link';
 import { DraftRequest, KcClock, LockAllButton, RunButton } from '@/components/contracts/client';
-import { ContractsTour } from '@/components/contracts/ContractsTour';
+import { ContractsTour, TourButton } from '@/components/contracts/ContractsTour';
 import { RookiePicker } from '@/components/contracts/finance-client';
 import { ContractsTable, type BuyInfo, type CtRow, type CtStatus } from '@/components/contracts/ContractsTable';
 import { clauseKt, inSetup, moneyK, releaseCost, valueTrend, getContracts, isFinalYear, kt, money, playerAge, yearsLeft, type Contract } from '@/lib/contracts';
@@ -106,12 +106,12 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
   return (
     <div className="kc-stack">
-      {mine && <ContractsTour setup={setup} keeperCap={s.keeper_cap_k} softCap={s.season_cap_k - s.keeper_cap_k} deadline={deadline || 'deadline day'} />}
+      {mine && <ContractsTour setup={setup} keeperCap={s.keeper_cap_k} softCap={s.season_cap_k - s.keeper_cap_k} deadline={deadline || 'deadline day'} showButton={!setup} />}
       {mine && setup && (
         <section className="kc-card brass su-card" aria-labelledby="su-h" data-tour="setup">
           <div className="su-head">
             <h2 id="su-h">Re-sign your list</h2>
-            <span className="fn-pill brass">Formal {deadline}</span>
+            <span className="su-acts"><span className="fn-pill brass">Formal {deadline}</span><TourButton className="kc-btn small su-tour" /></span>
           </div>
           <p className="su-text">Every player starts unsigned. Offer contracts (length and clause) to the players you want for {s.season} and beyond: they become your <b>17 + 1 keepers</b>. Anyone still unsigned <b>expires on deadline day</b>. Everything is provisional until then, with no KT fees, so undo and try alternatives freely.</p>
           <div className="su-row">

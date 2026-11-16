@@ -118,7 +118,8 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   if (club.bank >= 200 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} one-year term deposit returns 10%.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * 10) / 100))}` });
 
   return (
-    <div className="kc-stack">
+    <div className="kc-stack fn-stack">
+      <div className={`fn-top${mine ? ' two' : ''}`}>
       <section className="kc-card fn-hero" aria-labelledby="cap-h">
         <div className="row-between"><h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
           <span className={`fn-pill ${club.salary > s.season_cap_k ? 'dn' : 'up'}`}>{moneyK(s.season_cap_k - club.salary)} room</span></div>
@@ -131,7 +132,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         </div>
       </section>
 
-      {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
+      {mine && (
       <section className="kc-card" aria-labelledby="yr-h">
         <div className="row-between"><h2 id="yr-h">Future seasons</h2><span className="kc-sub">Committed vs keeper cap</span></div>
         <div className="fn-runway">
@@ -140,6 +141,10 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           ))}
         </div>
       </section>
+      )}
+      </div>
+
+      {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
 
       <section className="kc-card fn-tabs" aria-label="Trades, investments and loans">
         <input type="radio" name="fn-tab" id="fn-t1" defaultChecked hidden />
