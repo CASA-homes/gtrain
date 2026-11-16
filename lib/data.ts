@@ -1,6 +1,6 @@
 import { positionsFor } from '@/lib/position-overrides';
 import { cache } from 'react';
-import { createClient } from '@/lib/supabase/server';
+import { createClient, currentLeagueId } from '@/lib/supabase/server';
 import freeAgentData from '@/lib/free-agent-players.json';
 import { buildAttrs, type Attr } from '@/lib/scouting';
 import { FUTURE_CORE, FUTURE_PIN, FUTURE_MAX_AGE, FUTURE_PICKS, prospectScore, futureScore, lineTotals, simulate2027, type Projection } from '@/lib/projection';
@@ -95,8 +95,27 @@ async function loadTeams(supabase: Awaited<ReturnType<typeof createClient>>): Pr
 }
 
 /** Everything the clubhouse, player and league pages need, in one round trip per table. */
+// League data is the same for every member of a league, so it's kept in memory between requests and reused while the
+// database's data stamp (bumped by any change to teams, lists, players, stats, ladder or picks) hasn't moved.
+// data_stamp() is null for non-members, who always get a fresh, RLS-filtered load. Treat the result as read-only.
+type LeagueCacheEntry = { v: number; league: League };
+const leagueMemo: Map<number, LeagueCacheEntry> = ((globalThis as unknown as { __khqLeague?: Map<number, LeagueCacheEntry> }).__khqLeague ??= new Map());
+
 export const getLeague = cache(async (): Promise<League> => {
   const supabase = await createClient();
+  const lid = await currentLeagueId();
+  const { data: stamp } = await supabase.rpc('data_stamp');
+  const v = typeof stamp === 'number' ? stamp : stamp != null ? Number(stamp) : null;
+  if (v != null) {
+    const hit = leagueMemo.get(lid);
+    if (hit && hit.v === v) return hit.league;
+  }
+  const league = await buildLeague(supabase);
+  if (v != null) leagueMemo.set(lid, { v, league });
+  return league;
+});
+
+async function buildLeague(supabase: Awaited<ReturnType<typeof createClient>>): Promise<League> {
   const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
     loadTeams(supabase),
     (() => {
@@ -225,6 +244,6 @@ export const getLeague = cache(async (): Promise<League> => {
 
   const attrs = buildAttrs(players, freeAgents);
   return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
-});
+}
 
 export { primaryLine };
