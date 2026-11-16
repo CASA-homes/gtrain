@@ -23,7 +23,7 @@ export interface Contract {
   id: number; player_id: number; team_id: number; base_k: number; salary_k: number; start_season: number; end_season: number;
   tier: Tier; rookie: boolean; home_grown: boolean; how: string; status: 'active' | 'pending' | 'released' | 'expired' | 'voided';
   dead_k: number; dead_season: number | null;
-  rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null; draft_review?: boolean;
+  rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null; draft_review?: boolean; provisional?: boolean;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
 export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending' | 'offseason'; offers: number }
@@ -59,9 +59,12 @@ export interface Claim { id: number; contract_id: number; player_id: number; buy
 export interface CapAdjust { team_id: number; season: number; amount_k: number; reason: string }
 /** Cost of releasing a contract now: 50% of salary dead this season, 20% a season after that, and a KT fee of
  *  release_fee_pct of what's left on the deal (1 KT = $1k). Mirrors kc_release. */
+/** First off-season, until deadline day: signings are provisional and there are no KT fees. */
+export const inSetup = (s: Pick<KcSettings, 'setup_until'>) => !!s.setup_until && new Date(s.setup_until) > new Date();
+export const DEPOSIT_TERMS = [{ months: 6, pct: 4, label: '6 months' }, { months: 12, pct: 10, label: '1 year' }, { months: 24, pct: 25, label: '2 years' }] as const;
 export function releaseCost(s: KcSettings, c: Pick<Contract, 'salary_k' | 'start_season' | 'end_season'>) {
   const years = Math.max(1, c.end_season - Math.max(c.start_season, s.season) + 1);
-  return { now: Math.round(c.salary_k * 0.5), later: years > 1 ? Math.round(c.salary_k * 0.2) : 0, laterYears: years - 1, fee: Math.round(((c.salary_k * years * (s.release_fee_pct ?? 10)) / 100) * (s.fee_kt_per_k ?? 5)) };
+  return { now: Math.round(c.salary_k * 0.5), later: years > 1 ? Math.round(c.salary_k * 0.2) : 0, laterYears: years - 1, fee: inSetup(s) ? 0 : Math.round(((c.salary_k * years * (s.release_fee_pct ?? 10)) / 100) * (s.fee_kt_per_k ?? 5)) };
 }
 /** Per-year salary of a new deal: rate × length factor (× home-grown discount), then the clause premium. */
 export function priceDeal(s: KcSettings, rate: number, years: number, tier: Tier, homeGrown = false) {

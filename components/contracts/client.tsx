@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
-  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, type Result,
+  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 import { SignSheet } from '@/components/contracts/SignSheet';
@@ -108,7 +108,8 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
   // Both price by length (1 yr dearest, 5 yrs cheapest); extensions add the premium and fee.
   const extPct = sign ? 0 : settings.ext_premium_pct ?? 10;
-  const fee = sign ? 0 : settings.ext_fee_kt ?? 10;
+  const setup = !!settings.setup_until && new Date(settings.setup_until) > new Date();
+  const fee = sign || setup ? 0 : settings.ext_fee_kt ?? 10;
   const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
   const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
   const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
@@ -132,7 +133,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
           </button>
         ))}
       </div>
-      <p className="kc-sub" style={{ margin: 0 }}>{sign ? `Priced at his market value, ${lenNote(years)}.` : `Priced at his ${money(rate)} market value${homeGrown ? `, less ${settings.home_grown_pct}% home-grown` : ''}, ${lenNote(years)}, plus a ${extPct}% extension premium and a ${kt(fee)} fee. He’s then locked for 12 months.`} The clause is fixed for the deal.</p>
+      <p className="kc-sub" style={{ margin: 0 }}>{sign ? `Priced at his market value, ${lenNote(years)}.` : `Priced at his ${money(rate)} market value${homeGrown ? `, less ${settings.home_grown_pct}% home-grown` : ''}, ${lenNote(years)}, plus a ${extPct}% extension premium${fee ? ` and a ${kt(fee)} fee. He’s then locked for 12 months.` : '. No fee until deadline day.'}`} The clause is fixed for the deal.</p>
       <button type="button" className="kc-btn dark" onClick={() => setOpen(true)}>
         {sign ? 'Offer contract' : 'Extend'} · +{years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
       </button>
@@ -173,6 +174,23 @@ export function TierSelect({ contractId, tier, base, settings, locked }: { contr
       {note}
     </span>
   );
+}
+
+/** Provisional contract (first off-season): undo it for free, or lock it in. */
+export function ProvisionalControls({ contractId, name }: { contractId: number; name: string }) {
+  const { pending, go, note } = useRun();
+  return (
+    <span style={{ display: 'inline-flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+      <button type="button" className="kc-btn small" disabled={pending} onClick={() => go(() => undoContract(contractId), `Undo ${name}’s contract? He goes back to unsigned, no cost.`)}>Undo</button>
+      <button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => lockContracts(contractId, null), `Lock ${name}’s contract? You can’t undo it after this.`)}>Lock</button>
+      {note}
+    </span>
+  );
+}
+
+export function LockAllButton({ teamId, count }: { teamId: number; count: number }) {
+  const { pending, go, note } = useRun();
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Lock all ${count} provisional contracts? None of them can be undone after this.`)}>Lock all ({count})</button>{note}</span>;
 }
 
 export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0 }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number }) {

@@ -1,7 +1,7 @@
 'use client';
 // Finances: interactive pieces. Rookie-slot assign, term deposit and loan forms, and the cap simulator.
 import { useMemo, useState } from 'react';
-import { makeDeposit, offerLoan, respondLoan, setDropDay, setRookieSlot } from '@/app/(app)/contracts/actions';
+import { collectDeposits, makeDeposit, offerLoan, respondLoan, setDropDay, setRookieSlot } from '@/app/(app)/contracts/actions';
 import { useRun } from '@/components/contracts/client';
 
 const k$ = (k: number) => `$${Math.round(k).toLocaleString('en-AU')}k`;
@@ -58,18 +58,36 @@ export function DropDayControl({ value }: { value: string | null }) {
   );
 }
 
-export function DepositForm({ bank, rate }: { bank: number; rate: number }) {
+const TERMS = [{ months: 6, pct: 4, label: '6 months' }, { months: 12, pct: 10, label: '1 year' }, { months: 24, pct: 25, label: '2 years' }];
+export function DepositForm({ bank }: { bank: number }) {
   const { pending, go, note } = useRun();
   const [amt, setAmt] = useState('100');
+  const [months, setMonths] = useState(12);
   const n = Math.floor(Number(amt) || 0);
+  const term = TERMS.find((t) => t.months === months) ?? TERMS[1];
+  const back = n + Math.floor((n * term.pct) / 100);
+  const due = new Date(); due.setMonth(due.getMonth() + months);
+  const dueTxt = due.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
   return (
-    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => makeDeposit(n), `Lock ${kt(n)} until season end? You get ${kt(n + Math.floor((n * rate) / 100))} back at rollover.`); }}>
+    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => makeDeposit(n, months), `Lock ${kt(n)} for ${term.label}? You can’t touch it until ${dueTxt}, then you get ${kt(back)} back.`); }}>
+      <div className="sgn-tiers" role="radiogroup" aria-label="Deposit term">
+        {TERMS.map((t) => (
+          <button key={t.months} type="button" role="radio" aria-checked={months === t.months} className={months === t.months ? 'on' : undefined} onClick={() => setMonths(t.months)}>
+            <b>{t.label}</b><span>+{t.pct}%</span>
+          </button>
+        ))}
+      </div>
       <label>Amount<input type="number" min={10} step={5} max={bank} value={amt} onChange={(e) => setAmt(e.target.value)} inputMode="numeric" /></label>
-      <div className="fn-calc"><span>Back at season end</span><b>{kt(n + Math.floor((n * rate) / 100))}</b><em>+{rate}%</em></div>
+      <div className="fn-calc"><span>Back on {dueTxt}</span><b>{kt(back)}</b><em>+{term.pct}%</em></div>
       <button type="submit" className="kc-btn sage" disabled={pending || n < 100 || n > bank}>Lock it in</button>
       {note}
     </form>
   );
+}
+
+export function CollectDeposits() {
+  const { pending, go, note } = useRun();
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}><button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => collectDeposits())}>Collect</button>{note}</span>;
 }
 
 export function LoanForm({ bank, teams, maxRate }: { bank: number; teams: { id: number; name: string }[]; maxRate: number }) {

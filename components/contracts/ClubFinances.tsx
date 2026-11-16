@@ -7,14 +7,14 @@
 //  The rookie slot itself is set on the Contracts tab (this season only, before drop day).
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
-import { CapBar, CapSimulator, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
+import { CapBar, CapSimulator, CollectDeposits, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
 import { getContracts, kt, moneyK, playerAge, releaseCost } from '@/lib/contracts';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
 
 const LINE_COL: Record<string, string> = { MID: '#2f5d46', DEF: '#7fb08f', FWD: '#c9a04a', RUC: '#a9bcd3' };
 type Ledger = { id: number; delta: number; reason: string; created_at: string };
-type Deposit = { id: number; team_id: number; amount: number; rate_pct: number; season: number; status: string; created_at: string };
+type Deposit = { id: number; team_id: number; amount: number; rate_pct: number; season: number; status: string; created_at: string; term_months?: number; matures_at?: string | null };
 type Loan = { id: number; lender: number; borrower: number; amount: number; rate_pct: number; season: number; status: string; created_at: string };
 
 const BUCKETS: [string, RegExp][] = [
@@ -114,7 +114,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
     const cut = covers(season + 1).filter((c) => c.rookie_slot_season !== season + 1).sort((a, b) => ((d.rates.get(a.player_id) ?? 0) - a.salary_k) - ((d.rates.get(b.player_id) ?? 0) - b.salary_k))[0];
     if (cut) tips.push({ t: `Move on ${name(cut.player_id)}`, d: `Your most overpaid keeper: ${moneyK(cut.salary_k)} against a ${moneyK(d.rates.get(cut.player_id) ?? 0)} market value. Trade or release to clear ${s.season + 1} room.`, v: `+${moneyK(cut.salary_k)}` });
   }
-  if (club.bank >= 200 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} term deposit returns ${s.deposit_pct}% at season end.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * s.deposit_pct) / 100))}` });
+  if (club.bank >= 200 && !openDeps.length) tips.push({ t: 'Put idle KT to work', d: `A ${kt(Math.floor(club.bank / 2))} one-year term deposit returns 10%.`, v: `+${kt(Math.floor((Math.floor(club.bank / 2) * 10) / 100))}` });
 
   return (
     <div className="kc-stack">
@@ -175,15 +175,16 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
             <div><span>Locked in deposits</span><b>{kt(locked)}</b></div>
           </div>
           <div className="fn-product" style={{ marginTop: 12 }}>
-            <div className="row-between"><b>Term deposits</b><span className="fn-pill up">{s.deposit_pct}% p.s.</span></div>
-            <p className="kc-sub">Lock KT until season end and get it back with {s.deposit_pct}% interest at rollover. You can’t touch it until then.</p>
+            <div className="row-between"><b>Term deposits</b><span className="fn-pill up">4–25%</span></div>
+            <p className="kc-sub">Lock KT away for 6 months (+4%), 1 year (+10%) or 2 years (+25%). You can’t touch it until it matures; the longer you lock it, the better the return.</p>
             {deposits.length ? deposits.map((x) => (
               <div key={x.id} className="fn-dep">
-                <span><b>{kt(x.amount)}</b><small>{x.status === 'open' ? `Locked ${new Date(x.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })} · released at end of ${x.season}` : `Paid out at end of ${x.season}`}</small></span>
+                <span><b>{kt(x.amount)}</b><small>{x.status === 'open' ? `${x.term_months === 6 ? '6 months' : x.term_months === 24 ? '2 years' : '1 year'} · ${x.matures_at ? (new Date(x.matures_at) <= new Date() ? 'matured' : `matures ${new Date(x.matures_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })}`) : `released at end of ${x.season}`}` : 'Paid out'}</small></span>
+                {mine && x.status === 'open' && x.matures_at && new Date(x.matures_at) <= new Date() && <CollectDeposits />}
                 <strong className={x.status === 'open' ? 'kc-up' : undefined}>{x.status === 'open' ? '→ ' : ''}{kt(x.amount + Math.floor((x.amount * x.rate_pct) / 100))}<small>+{x.rate_pct}%</small></strong>
               </div>
             )) : <p className="kc-sub" style={{ margin: '6px 0' }}>No deposits yet.</p>}
-            {mine && <DepositForm bank={club.bank} rate={s.deposit_pct} />}
+            {mine && <DepositForm bank={club.bank} />}
           </div>
         </div>
 
