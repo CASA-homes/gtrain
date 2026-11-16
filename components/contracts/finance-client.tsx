@@ -116,7 +116,7 @@ export function LoanRespond({ id, accept, label, kind = 'sage' }: { id: number; 
 }
 
 /** The cap bar: salary, cap-free rookie, room, keeper hard cap and the in-season soft cap, with brackets under it. */
-export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }: { salary: number; rookie: number; keeperCap: number; seasonCap: number; taxLine: number; label: string }) {
+export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label, dead = 0 }: { salary: number; rookie: number; keeperCap: number; seasonCap: number; taxLine: number; label: string; dead?: number }) {
   const max = seasonCap;
   const pc = (v: number) => `${Math.max(0, Math.min(100, (v / max) * 100))}%`;
   const over = salary > keeperCap;
@@ -128,6 +128,7 @@ export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }:
       </div>
       <div className="fn-bar">
         <i className="sal" style={{ width: pc(Math.min(salary, max)) }} />
+        {dead > 0 && <i className="dead" style={{ left: pc(Math.max(0, Math.min(salary, max) - dead)), width: pc(Math.min(dead, salary)) }} title={`${k$(dead)} dead money: released players you’re still paying`} />}
         {rookie > 0 && <i className="rook" style={{ left: pc(Math.min(salary, max)), width: pc(rookie) }} title={`${k$(rookie)} cap-free rookie`} />}
         <i className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }} />
         <s className="hard" style={{ left: pc(keeperCap) }} />
@@ -136,7 +137,7 @@ export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label }:
         <div style={{ left: 0, width: pc(keeperCap) }}><span>Keeper hard cap · {k$(keeperCap)}</span></div>
         <div className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }}><span>In-season +{k$(seasonCap - keeperCap)}</span></div>
       </div>
-      <div className="fn-legend"><span><i className="sal" />Salary</span>{rookie > 0 && <span><i className="rook" />Cap-free rookie</span>}<span><i className="soft" />Soft cap zone</span></div>
+      <div className="fn-legend"><span><i className="sal" />Salary</span>{dead > 0 && <span><i className="dead" />Dead money {k$(dead)}</span>}{rookie > 0 && <span><i className="rook" />Cap-free rookie</span>}<span><i className="soft" />Soft cap zone</span></div>
     </div>
   );
 }
@@ -152,8 +153,8 @@ type SimState = 'keep' | 'release' | 'trade';
 
 /** Cap simulator: every contracted player starts kept; set each to Keep, Release or Trade and watch this season's
  *  salary and next season's keeper salary move. Expiring players start off; switch one on to re-sign him. Nothing is saved. */
-export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSalary, kept, deficitMax, season, bank }: {
-  players: SimPlayer[]; keeperCap: number; seasonCap: number; salaryNow: number; nextSalary: number; kept: number; deficitMax: number; season: number; bank: number;
+export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSalary, kept, deficitMax, season, bank, deadNow = 0 }: {
+  deadNow?: number; players: SimPlayer[]; keeperCap: number; seasonCap: number; salaryNow: number; nextSalary: number; kept: number; deficitMax: number; season: number; bank: number;
 }) {
   const [tab, setTab] = useState<'contracted' | 'expiring'>('contracted');
   const [state, setState] = useState<Record<number, SimState>>({});
@@ -161,19 +162,19 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
   const contracted = useMemo(() => players.filter((p) => !p.final).sort((a, b) => (b.next ?? b.cur) - (a.next ?? a.cur)), [players]);
   const expiring = useMemo(() => players.filter((p) => p.final).sort((a, b) => b.rate - a.rate), [players]);
   const r = useMemo(() => {
-    let now = salaryNow, next = nextSalary, keepers = kept, dead = 0, fees = 0, moves = 0;
+    let now = salaryNow, next = nextSalary, keepers = kept, dead = 0, deadCur = 0, fees = 0, moves = 0;
     for (const p of players) {
       const st = state[p.id] ?? 'keep';
       if (!p.final && st !== 'keep') {
         moves++; keepers -= 1;
         now -= p.cur;
         if (p.next != null) next -= p.next;
-        if (st === 'release') { now += p.deadNow; dead += p.deadNow; fees += p.fee; if (p.end > season) { next += p.deadLater; dead += p.deadLater; } }
+        if (st === 'release') { now += p.deadNow; dead += p.deadNow; deadCur += p.deadNow; fees += p.fee; if (p.end > season) { next += p.deadLater; dead += p.deadLater; } }
       }
       // Signing an out-of-contract player: two-year deal at about his value, counts this season and next.
       if (p.final && resign[p.id]) { now += p.extPrice; next += p.extPrice; keepers += 1; moves++; }
     }
-    return { now, next, keepers, dead, fees, moves };
+    return { now, next, keepers, dead, deadCur, fees, moves };
   }, [players, state, resign, salaryNow, nextSalary, kept, season]);
   const over = r.now - keeperCap;
   const status = over <= 0 ? ['ok', `${k$(-over)} under the ${k$(keeperCap)} keeper cap`] : over <= deficitMax ? ['warn', `${k$(over)} over: a deficit is allowed`] : ['bad', `${k$(over)} over: release or trade more`];
@@ -207,7 +208,7 @@ export function CapSimulator({ players, keeperCap, seasonCap, salaryNow, nextSal
           <div><span>{season + 1} committed</span><b>{k$(r.next)}</b>{r.moves > 0 && <em>was {k$(nextSalary)}</em>}</div>
         </div>
         <p>{status[1]} · {r.keepers} keepers{r.keepers > 18 ? ' (max 18)' : ''}</p>
-        <CapBar salary={r.now} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" />
+        <CapBar salary={r.now} rookie={0} keeperCap={keeperCap} seasonCap={seasonCap} taxLine={keeperCap} label="keepers" dead={deadNow + r.deadCur} />
         <div className="sim-kpis">
           <div><span>Moves</span><b>{r.moves}</b></div>
           <div><span>Dead money</span><b>{k$(r.dead)}</b></div>

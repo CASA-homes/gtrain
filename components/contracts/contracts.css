@@ -641,3 +641,5 @@
 .cp-list li.cp-cond { opacity: .45; }
 .cp-list li.cp-cond .cp-no { background: transparent; border: 1px dashed var(--muted); }
 .cp-spare { margin: 0; font-size: 12px; color: var(--muted); }
+.fn-bar i.dead { background: repeating-linear-gradient(45deg, #c0392b, #c0392b 3px, #f3c2b9 3px, #f3c2b9 6px); }
+.fn-legend i.dead { background: repeating-linear-gradient(45deg, #c0392b, #c0392b 2px, #f3c2b9 2px, #f3c2b9 4px); }

@@ -9,16 +9,18 @@ const ORANGE = '#f0a35a';
 /** Salary colour against the hard cap: dark green 300k+ under, mid green, light green, yellow within 100k, orange within 50k, red over. */
 const salColour = (k: number, cap: number) => (k < cap - 300 ? C.green5 : k < cap - 200 ? C.green4 : k < cap - 100 ? C.green3 : k < cap - 50 ? C.yellow : k <= cap ? ORANGE : '#d9534f');
 
-function SalaryBars({ k, keeperCap, label }: { k: number; keeperCap: number; label: string }) {
+const HATCH = 'repeating-linear-gradient(45deg, #c0392b, #c0392b 2px, #f3c2b9 2px, #f3c2b9 4px)';
+function SalaryBars({ k, keeperCap, label, dead = 0 }: { k: number; keeperCap: number; label: string; dead?: number }) {
   const hard = Math.min(12, Math.ceil(Math.max(0, k) / 100));
   const colour = salColour(k, keeperCap);
   const mark = Math.round(keeperCap / 100);
+  const deadBlocks = dead > 0 ? Math.min(hard, Math.max(1, Math.round(dead / 100))) : 0;
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <div className="bars" role="img" aria-label={`${label}: $${k}k of $${keeperCap}k`} style={{ alignSelf: 'flex-start' }}>
-        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard ? colour : C.empty, marginLeft: i === mark ? 3 : 0 }} />)}
+        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard - deadBlocks ? colour : i < hard ? HATCH : C.empty, marginLeft: i === mark ? 3 : 0 }} />)}
       </div>
-      <span className="mono muted" style={{ fontSize: 10 }}>${k.toLocaleString('en-AU')}k{k > keeperCap ? ` · $${k - keeperCap}k over` : ` · $${keeperCap - k}k room`}</span>
+      <span className="mono muted" style={{ fontSize: 10 }}>${k.toLocaleString('en-AU')}k{dead > 0 ? <span style={{ color: '#c0392b' }}> · ${dead}k dead</span> : null}{k > keeperCap ? ` · $${k - keeperCap}k over` : ` · $${keeperCap - k}k room`}</span>
     </div>
   );
 }
@@ -72,7 +74,8 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
     for (const x of [...d.active, ...d.pending]) if (x.team_id === c.team.id) ends.set(x.player_id, Math.max(ends.get(x.player_id) ?? 0, x.end_season));
     const yrs = [...ends.values()].map((e) => e - season + 1);
     const plus = [1, 2, 3, 4, 5].map((n) => yrs.filter((y) => y >= n).length);
-    return { c, pts, plus };
+    const deadIn = (y: number) => d.contracts.filter((x) => x.team_id === c.team.id && x.dead_season === y).reduce((a, x) => a + x.dead_k, 0) + d.deadLater.filter((x) => x.team_id === c.team.id && x.season === y).reduce((a, x) => a + x.amount_k, 0);
+    return { c, pts, plus, deadNow: deadIn(season), deadNext: deadIn(season + 1) };
   }).sort((a, b) => b.c.bank - a.c.bank);
 
   return (
@@ -94,13 +97,13 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
             </tr>
           </thead>
           <tbody>
-            {rows.map(({ c, pts, plus }, i) => (
+            {rows.map(({ c, pts, plus, deadNow, deadNext }, i) => (
               <tr key={c.team.id}>
                 <td className="mono" style={{ fontSize: 16, fontWeight: 600 }}>{i + 1}</td>
                 <td style={{ whiteSpace: 'nowrap' }}><Link href={`/clubhouse/${c.team.id}?view=finances`}>{c.team.name}</Link><div className="muted" style={{ fontSize: 12 }}>{c.team.coach_name}</div></td>
-                <td><SalaryBars k={c.salary} keeperCap={c.keeperCapNow || keeperCap} label={`${season} salary`} /></td>
+                <td><SalaryBars k={c.salary} keeperCap={c.keeperCapNow || keeperCap} label={`${season} salary`} dead={deadNow} /></td>
                 <td><SoftBar k={c.salary} keeperCap={c.keeperCapNow || keeperCap} seasonCap={seasonCap} /></td>
-                <td><SalaryBars k={c.nextSalary} keeperCap={c.keeperCapNext || keeperCap} label={`${season + 1} salary`} /></td>
+                <td><SalaryBars k={c.nextSalary} keeperCap={c.keeperCapNext || keeperCap} label={`${season + 1} salary`} dead={deadNext} /></td>
                 <td style={{ textAlign: 'right', fontWeight: 600 }} className="mono">{c.bank.toLocaleString('en-AU')}</td>
                 <td><Spark points={pts} /></td>
                 {plus.map((n, j) => <td key={j} className="mono" style={{ textAlign: 'right', color: n ? C.ink : C.muted }}>{n}</td>)}
@@ -112,7 +115,7 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
       <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
         The main bar has 12 blocks of $100k against the ${keeperCap.toLocaleString('en-AU')}k keeper (hard) cap, with a gap at the cap: dark green under ${(keeperCap - 300).toLocaleString('en-AU')}k, mid green to ${(keeperCap - 200).toLocaleString('en-AU')}k, light green to ${(keeperCap - 100).toLocaleString('en-AU')}k, yellow to ${(keeperCap - 50).toLocaleString('en-AU')}k, orange to the cap, red over.
         The soft cap column shows how much of its ${(seasonCap - keeperCap).toLocaleString('en-AU')}k in-season allowance over the hard cap each club is using: yellow, then orange, then red when full.
-        The year columns count players signed for at least that many seasons from {season}, extensions included.
+        Red hatched blocks are dead money: released players a club is still paying. The year columns count players signed for at least that many seasons from {season}, extensions included.
       </p>
     </div>
   );
