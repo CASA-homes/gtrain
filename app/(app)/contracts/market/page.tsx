@@ -126,7 +126,7 @@ export default async function TransferMarket({ searchParams }: { searchParams: P
             <section className="kc-card" aria-labelledby="cl-h">
               <div className="row-between">
                 <div><h2 id="cl-h">Release clauses</h2>
-                  <p className="kc-sub">Mid-season window only, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he finishes the season there and joins you on the rest of his contract. Final-year players count too, until the window closes: buy one and he joins you at season end on a one-season deal at his current salary.</p></div>
+                  <p className="kc-sub">Pre-season (deadline day to draft day) and mid-season windows, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he joins you straight away on the rest of his contract and you drop a player.</p></div>
                 <div className="kc-tabs">
                   {(['All', ...LINES] as const).map((l) => (
                     <Link key={l} href={l === 'All' ? '/contracts/market' : `/contracts/market?line=${l}`} aria-current={(l === 'All' && !line) || l === line ? 'page' : undefined}>{l}</Link>
