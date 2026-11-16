@@ -275,3 +275,8 @@
   .kl-card { top: 51%; }
   .kl-wire { order: 4; padding-top: 8px; }
 }
+
+/* Phones: Log in / Start a league (and Enter Matchday) live in the header ribbon, so the big buttons go. */
+@media (max-width: 860px) {
+  .kl-gate.choose .kl-two, .kl-form .kl-enter { display: none; }
+}

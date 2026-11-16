@@ -23,7 +23,7 @@ export function Gate({ linkError }: { linkError: boolean }) {
     </div>
   );
   return (
-    <div className="kl-gate">
+    <div className="kl-gate choose">
       <div className="kl-two">
         <button type="button" className="kl-btn" onClick={() => setPane('start')}><i />Start your league</button>
         <button type="button" className="kl-btn ghost" onClick={() => setPane('login')}>Log in</button>

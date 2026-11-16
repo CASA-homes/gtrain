@@ -77,13 +77,13 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           <ol style={{ margin: '18px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 10, fontSize: 14 }}>
             <li><strong>Tabled</strong>: score {score}{sweet ? `, ${kt(sweet)} held until offers close` : ''}.</li>
             {fa.offseason ? <>
-              <li><strong>{fa.exTeam} reviews</strong> every offer and picks one. You can raise yours, but not lower it.</li>
+              <li><strong>{fa.exTeam} reviews</strong> every offer and picks one. You can raise yours, or cancel it from your Trademarket.</li>
               <li><strong>If they accept</strong>, your KT fee goes to them and he’s yours from the start of {s.season}. If not, your tokens come back.</li>
             </> : fa.pending ? <>
-              <li><strong>{fa.exTeam} decides</strong>: they can accept any offer until season end. You can raise yours, but not lower it.</li>
+              <li><strong>{fa.exTeam} decides</strong>: they can accept any offer until season end. You can raise yours, or cancel it from your Trademarket.</li>
               <li><strong>If they accept</strong>, your fee goes to them and he joins you at season end. If not, your tokens come back and he goes to open free agency.</li>
             </> : <>
-              <li><strong>Offers close</strong>{fa.closesAt ? ' when the clock runs out' : ' when the commish closes them'}. You can raise your offer until then, but not lower it.</li>
+              <li><strong>Offers close</strong>{fa.closesAt ? ' when the clock runs out' : ' when the commish closes them'}. Until then you can raise your offer, or cancel it from your Trademarket.</li>
               <li><strong>Best score wins</strong>; ties go to the lower ladder club. Lose and your tokens come back.</li>
             </>}
           </ol>
@@ -207,7 +207,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
         <div style={{ flex: '1 1 420px', minWidth: 0 }}>
           <h3 style={{ font: '600 20px var(--font)' }}>Check and table it</h3>
-          <p className="kc-sub" style={{ marginBottom: 14 }}>Once tabled you can raise it until offers close, but you can’t cut it.</p>
+          <p className="kc-sub" style={{ marginBottom: 14 }}>Once tabled you can raise it until offers close, or cancel it, but not cut it.</p>
           <div className="kc-card" style={{ padding: '6px 16px' }}>
             <div className="kc-kv"><span>Contract</span><strong>{years} year{years > 1 ? 's' : ''} · {money(capSalary)} a year</strong></div>
             <div className="kc-kv"><span>Release clause</span><strong>{tier === 'none' ? 'None' : `${tier === 'high' ? 'High' : 'Standard'} · ${kt(clauseKt(tier)!)}`}</strong></div>

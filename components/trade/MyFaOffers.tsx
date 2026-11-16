@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { getContracts, money } from '@/lib/contracts';
 import { createClient } from '@/lib/supabase/server';
+import { WithdrawOffer } from '@/components/trade/WithdrawOffer';
 
 export async function MyFaOffers() {
   const d = await getContracts();
@@ -16,7 +17,7 @@ export async function MyFaOffers() {
   const clause = (t: string) => (t === 'none' ? 'no clause' : `${t} clause`);
   return (
     <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }} aria-labelledby="fao-h">
-      <div className="row-between"><h2 id="fao-h" className="h2" style={{ fontSize: 20 }}>Your free-agent offers</h2><span className="muted" style={{ fontSize: 13 }}>Waiting on a decision. You can raise an offer, not lower it.</span></div>
+      <div className="row-between"><h2 id="fao-h" className="h2" style={{ fontSize: 20 }}>Your free-agent offers</h2><span className="muted" style={{ fontSize: 13 }}>Waiting on a decision. Raise it, or cancel it to get any KT back.</span></div>
       {tabled.map((o) => {
         const f = d.freeAgents.find((x) => x.id === o.fa_id);
         const pid = f?.player_id ?? 0;
@@ -33,6 +34,7 @@ export async function MyFaOffers() {
               <span className="pill" style={{ background: '#f1e8a8', color: '#5b4a10' }}>Waiting{rivals ? ` · ${rivals} rival offer${rivals > 1 ? 's' : ''}` : ''}</span>
               {f?.closes_at && <span className="muted" style={{ fontSize: 12 }}>Closes {new Date(f.closes_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', timeZone: 'Australia/Perth' })}</span>}
               <Link href={`/contracts/offer/${o.fa_id}`} className="btn">Review / raise</Link>
+              <WithdrawOffer offerId={o.id} name={name(pid)} sweet={o.sweet_kt} />
             </span>
           </div>
         );

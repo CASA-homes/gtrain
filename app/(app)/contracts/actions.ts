@@ -159,6 +159,9 @@ export async function setDropDay(iso: string | null): Promise<Result> {
 export async function makeDeposit(amount: number, months: number) {
   return run('kc_deposit', { amount, p_months: months }, () => `${kt(amount)} locked in a term deposit for ${months === 6 ? '6 months' : months === 12 ? '1 year' : '2 years'}.`);
 }
+export async function withdrawOffer(offerId: number) {
+  return run('kc_withdraw_offer', { oid: offerId }, (kt0) => (Number(kt0) > 0 ? `Offer cancelled. ${kt(Number(kt0))} back in your bank.` : 'Offer cancelled.'));
+}
 export async function collectDeposits() {
   return run('kc_collect_deposits', {}, (n) => (Number(n) > 0 ? `${kt(Number(n))} collected.` : 'Nothing has matured yet.'));
 }
