@@ -78,6 +78,7 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
       </header>
       <div className="ct2-cols" role="toolbar" aria-label="Sort players">
         <span />
+        <span className="ct2-ph">Player</span>
         {COLS.map(([k, label]) => (
           <button key={k} type="button" onClick={() => click(k)} className={sort?.k === k ? 'on' : undefined} aria-pressed={sort?.k === k}
             title={`Sort by ${label.toLowerCase()}`}>
