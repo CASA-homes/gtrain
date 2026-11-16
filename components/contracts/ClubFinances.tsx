@@ -42,6 +42,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const team = (id: number) => d.teams.find((t) => t.id === id)?.name ?? '—';
   const name = (pid: number) => d.players.get(pid)?.full_name ?? d.players.get(pid)?.name ?? `Player ${pid}`;
   const season = s.season;
+  const deadThisSeason = club.dead + d.deadLater.filter((x) => x.team_id === club.team.id && x.season === season).reduce((a, x) => a + x.amount_k, 0);
   const contracts = d.contracts.filter((c) => c.team_id === teamId && (c.status === 'active' || c.status === 'pending'));
   const covers = (y: number) => contracts.filter((c) => c.start_season <= y && c.end_season >= y);
 
@@ -122,7 +123,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <div className="row-between"><h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
           <span className={`fn-pill ${club.salary > s.season_cap_k ? 'dn' : 'up'}`}>{moneyK(s.season_cap_k - club.salary)} room</span></div>
         <div className="fn-big"><b>{moneyK(club.salary)}</b><span>of {moneyK(s.season_cap_k)}</span></div>
-        <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" />
+        <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" dead={deadThisSeason} />
         <div className="fn-kpis">
           <div><span>{season} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
           <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}{canManage && !rookieLocked && <> · <Link href={`/clubhouse/${teamId}?view=contracts#rookie`} className="fn-set">{rookieNow ? 'Change' : 'Set'}</Link></>}</b></div>
@@ -217,7 +218,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
       <details className="kc-card fn-simbox" open>
         <summary><h2>Cap simulator</h2><span className="kc-sub">Test moves for your {season + 1} lock-in</span></summary>
-        <CapSimulator players={sim} keeperCap={club.keeperCapNow} seasonCap={s.season_cap_k} salaryNow={club.salary} nextSalary={club.nextSalary} kept={club.keptNow} deficitMax={allow} season={season} bank={club.bank} />
+        <CapSimulator players={sim} keeperCap={club.keeperCapNow} seasonCap={s.season_cap_k} salaryNow={club.salary} nextSalary={club.nextSalary} kept={club.keptNow} deficitMax={allow} season={season} bank={club.bank} deadNow={deadThisSeason} />
       </details>
 
       <section className="kc-card" aria-labelledby="ln-h">
