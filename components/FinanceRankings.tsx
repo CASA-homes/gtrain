@@ -6,16 +6,17 @@ import { C } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 
 const ORANGE = '#f0a35a';
-/** Salary colour: dark green under $700k, then mid green, light green, yellow, orange, red over $1m. */
-const salColour = (k: number) => (k < 700 ? C.green5 : k < 800 ? C.green4 : k < 900 ? C.green3 : k < 950 ? C.yellow : k <= 1000 ? ORANGE : '#d9534f');
+/** Salary colour against the hard cap: dark green 300k+ under, mid green, light green, yellow within 100k, orange within 50k, red over. */
+const salColour = (k: number, cap: number) => (k < cap - 300 ? C.green5 : k < cap - 200 ? C.green4 : k < cap - 100 ? C.green3 : k < cap - 50 ? C.yellow : k <= cap ? ORANGE : '#d9534f');
 
 function SalaryBars({ k, keeperCap, label }: { k: number; keeperCap: number; label: string }) {
   const hard = Math.min(12, Math.ceil(Math.max(0, k) / 100));
-  const colour = salColour(k);
+  const colour = salColour(k, keeperCap);
+  const mark = Math.round(keeperCap / 100);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <div className="bars" role="img" aria-label={`${label}: $${k}k of $${keeperCap}k`} style={{ alignSelf: 'flex-start' }}>
-        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard ? colour : C.empty, marginLeft: i === 10 ? 3 : 0 }} />)}
+        {Array.from({ length: 12 }, (_, i) => <span key={i} style={{ height: 8, flex: '0 0 7px', background: i < hard ? colour : C.empty, marginLeft: i === mark ? 3 : 0 }} />)}
       </div>
       <span className="mono muted" style={{ fontSize: 10 }}>${k.toLocaleString('en-AU')}k{k > keeperCap ? ` · $${k - keeperCap}k over` : ` · $${keeperCap - k}k room`}</span>
     </div>
@@ -109,7 +110,7 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
         </table>
       </div>
       <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-        The main bar has 12 blocks of $100k against the ${keeperCap.toLocaleString('en-AU')}k keeper (hard) cap: dark green under $700k, mid green to $800k, light green to $900k, yellow to $950k, orange to $1m, red over.
+        The main bar has 12 blocks of $100k against the ${keeperCap.toLocaleString('en-AU')}k keeper (hard) cap, with a gap at the cap: dark green under ${(keeperCap - 300).toLocaleString('en-AU')}k, mid green to ${(keeperCap - 200).toLocaleString('en-AU')}k, light green to ${(keeperCap - 100).toLocaleString('en-AU')}k, yellow to ${(keeperCap - 50).toLocaleString('en-AU')}k, orange to the cap, red over.
         The soft cap column shows how much of its ${(seasonCap - keeperCap).toLocaleString('en-AU')}k in-season allowance over the hard cap each club is using: yellow, then orange, then red when full.
         The year columns count players signed for at least that many seasons from {season}, extensions included.
       </p>
