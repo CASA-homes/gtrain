@@ -110,7 +110,7 @@ export async function FinanceRankings({ tabs }: { tabs: React.ReactNode }) {
       </div>
       <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
         The main bar has 12 blocks of $100k against the ${keeperCap.toLocaleString('en-AU')}k keeper (hard) cap: dark green under $700k, mid green to $800k, light green to $900k, yellow to $950k, orange to $1m, red over.
-        The soft cap column shows how much of the ${(seasonCap - keeperCap).toLocaleString('en-AU')}k a club can run over the hard cap in season it’s using (yellow, orange, red as it fills).
+        The soft cap column shows how much of its ${(seasonCap - keeperCap).toLocaleString('en-AU')}k in-season allowance over the hard cap each club is using: yellow, then orange, then red when full.
         The year columns count players signed for at least that many seasons from {season}, extensions included.
       </p>
     </div>
