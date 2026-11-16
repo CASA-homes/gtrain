@@ -3,6 +3,7 @@ import { Gate, GateLink } from '@/components/landing/Gate';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { CardFan, type FanData, type HeatGame } from '@/components/landing/CardFan';
 import { getMe } from '@/lib/data';
+import { createClient } from '@/lib/supabase/server';
 import { AFL_LANDING_2026 } from '@/lib/afl-landing-2026';
 import LEAGUE from '@/data/league.json';
 import GAMES from '@/lib/player-games.json';
@@ -50,6 +51,14 @@ const TAPE: [string, string, string][] = [
 
 export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const [me, sp] = await Promise.all([getMe(), searchParams]);
+  // Signed in but not in a league yet (joined by code, waiting for the commish).
+  type Joining = { league: string; club: string | null; status: string; code: string };
+  let joining: Joining[] | null = null as Joining[] | null;
+  if (!me) {
+    const sb = await createClient();
+    const { data: cl } = await sb.auth.getClaims();
+    if (cl?.claims?.sub) joining = ((await sb.rpc('my_join_status')).data ?? []) as Joining[];
+  }
   return (
     <main className="kl">
       <header className="kl-ribbon">
@@ -83,6 +92,19 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
               Enter Matchday
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
+          ) : joining ? (
+            <div className="kl-gate">
+              {joining.length
+                ? joining.slice(0, 1).map((j) => (
+                    <div key={j.code} className="kl-soon">
+                      {j.status === 'pending' ? <><b>Waiting for your commish.</b> You’ve asked to join {j.league}{j.club ? ` as ${j.club}` : ''}. You’ll get in as soon as they approve.</>
+                        : j.status === 'declined' ? <><b>Your request to join {j.league} wasn’t approved.</b> Check with your commish, then open their invite link again.</>
+                        : <><b>You’re approved.</b> <Link href="/clubhouse">Go to your clubhouse</Link></>}
+                    </div>
+                  ))
+                : <div className="kl-soon"><b>You’re signed in, but not in a league yet.</b> Open the invite link your commish sent you, or ask them for the league code.</div>}
+              <form action="/auth/signout" method="post"><button type="submit" className="kl-link">Sign out</button></form>
+            </div>
           ) : <Gate linkError={sp.error === 'link'} />}
         </div>
         </div>
