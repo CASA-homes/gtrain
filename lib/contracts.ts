@@ -23,14 +23,14 @@ export interface Contract {
   id: number; player_id: number; team_id: number; base_k: number; salary_k: number; start_season: number; end_season: number;
   tier: Tier; rookie: boolean; home_grown: boolean; how: string; status: 'active' | 'pending' | 'released' | 'expired' | 'voided';
   dead_k: number; dead_season: number | null;
-  rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null;
+  rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null; draft_review?: boolean;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
 export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending' | 'offseason'; offers: number }
 export interface MyOffer { id: number; fa_id: number; team_id: number; years: number; salary_k: number; tier: Tier; sweet_kt: number; pick_ids: number[]; score: number; status: string }
 export interface Transfer { id: number; player_id: number | null; from_team: number | null; to_team: number | null; kind: string; fee_kt: number; levy_kt: number; note: string | null; created_at: string }
 
-export const TIER_LABEL: Record<Tier, string> = { standard: 'Standard', high: 'High', none: 'No clause', protected: 'Protected (yr 1)' };
+export const TIER_LABEL: Record<Tier, string> = { standard: 'Standard', high: 'High', none: 'No clause', protected: 'Protected to mid-season' };
 export const LENGTH_FACTOR: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1.0, 4: 0.967, 5: 0.933 };
 export const lengthFactor = (years: number) => LENGTH_FACTOR[years] ?? 0.933;
 export const NOT_FIT = new Set(['LONG', 'SEASON', 'OUT', 'SUSP', 'DEL']);

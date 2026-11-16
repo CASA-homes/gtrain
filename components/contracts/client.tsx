@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
-  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, type Result,
+  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 import { SignSheet } from '@/components/contracts/SignSheet';
@@ -34,6 +34,8 @@ export function useRun() {
   const note = msg ? <p className={`kc-msg ${msg.ok ? 'ok' : 'err'}`} role="status">{msg.message}</p> : null;
   return { pending, go, note, msg };
 }
+
+const lenNote = (y: number) => (y === 3 ? 'flat for 3 yrs' : y < 3 ? `+${y === 1 ? 6 : 3}% for a short deal` : `−${y === 4 ? '3.3' : '6.7'}% for a long deal`);
 
 export function RunButton({ label, kind = 'dark', small, confirmText, run, disabled, id = 0 }: {
   label: string; kind?: 'dark' | 'sage' | 'plain' | 'ghost'; small?: boolean; confirmText?: string; disabled?: boolean;
@@ -64,6 +66,34 @@ export function RunButton({ label, kind = 'dark', small, confirmText, run, disab
   );
 }
 
+/** A draftee's contract request: the club picks his clause before the mid-season window. */
+export function DraftRequest({ contractId, name, rookie, base, rate, years, settings }: {
+  contractId: number; name: string; rookie: boolean; base: number; rate: number; years: string; settings: KcSettings;
+}) {
+  const { pending, go, note } = useRun();
+  const [tier, setTierV] = useState<'standard' | 'high' | 'none'>('standard');
+  const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
+  const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
+  return (
+    <div className="dr-item">
+      <div className="row-between"><strong>{name}</strong><span className="kc-sub">{rookie ? 'Rookie' : 'Established'} · {years} · market {money(rate)}</span></div>
+      <p className="kc-sub" style={{ margin: '2px 0 8px' }}>He’s asking for his contract to be finalised. Pick his clause; he’s protected until then.</p>
+      <div className="sgn-tiers" role="radiogroup" aria-label={`Release clause for ${name}`}>
+        {(['standard', 'high', 'none'] as const).map((t) => (
+          <button key={t} type="button" role="radio" aria-checked={tier === t} className={tier === t ? 'on' : undefined} onClick={() => setTierV(t)}>
+            <b>{t === 'standard' ? 'Standard' : t === 'high' ? 'High' : 'No clause'} · {money(salOf(t))}</b>
+            <span>{clauseOf(t) != null ? `Clause ${kt(clauseOf(t)!)}` : 'Can’t be poached'}</span>
+          </button>
+        ))}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 8, gap: 8, alignItems: 'center' }}>
+        {note}
+        <button type="button" className="kc-btn sage small" disabled={pending} onClick={() => go(() => draftReview(contractId, tier), `Set ${name} on ${money(salOf(tier))} with ${tier === 'none' ? 'no clause' : `a ${clauseOf(tier)} KT clause`}? This is fixed for the deal.`)}>{pending ? 'Working…' : 'Confirm'}</button>
+      </div>
+    </div>
+  );
+}
+
 /** Extend a final-year player: pick a length and a clause, see the price, confirm. */
 export function ExtendControl({ contractId, name, rate, homeGrown, settings, signPlayerId, startYear, maxYears }: {
   contractId: number; name: string; rate: number; homeGrown: boolean; settings: KcSettings; signPlayerId?: number;
@@ -76,10 +106,10 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
   const [tier, setTierV] = useState<Exclude<Tier, 'protected'>>('standard');
   const [open, setOpen] = useState(false);
   const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
-  // Signings use the length factor; extensions are market value (less home-grown discount).
+  // Both price by length (1 yr dearest, 5 yrs cheapest); extensions add the premium and fee.
   const extPct = sign ? 0 : settings.ext_premium_pct ?? 10;
   const fee = sign ? 0 : settings.ext_fee_kt ?? 10;
-  const base = Math.max(5, Math.round(rate * (sign ? lf[years] ?? 0.933 : 1) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
+  const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
   const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
   const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
   const sal = salOf(tier);
@@ -102,7 +132,7 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
           </button>
         ))}
       </div>
-      <p className="kc-sub" style={{ margin: 0 }}>{sign ? 'Priced at his market value.' : `Priced at his ${money(rate)} market value${homeGrown ? `, less ${settings.home_grown_pct}% home-grown` : ''}, plus a ${extPct}% extension premium and a ${kt(fee)} fee. He’s then locked for 12 months.`} The clause is fixed for the deal.</p>
+      <p className="kc-sub" style={{ margin: 0 }}>{sign ? `Priced at his market value, ${lenNote(years)}.` : `Priced at his ${money(rate)} market value${homeGrown ? `, less ${settings.home_grown_pct}% home-grown` : ''}, ${lenNote(years)}, plus a ${extPct}% extension premium and a ${kt(fee)} fee. He’s then locked for 12 months.`} The clause is fixed for the deal.</p>
       <button type="button" className="kc-btn dark" onClick={() => setOpen(true)}>
         {sign ? 'Offer contract' : 'Extend'} · +{years} yr{years > 1 ? 's' : ''} · {money(sal)}/yr
       </button>

@@ -116,7 +116,10 @@ export async function startMidseason() {
   return run('kc_start_midseason', {}, (n) => `Done. ${n} final-year players are now free agents.`);
 }
 export async function signDraftees() {
-  return run('kc_sign_draftees', {}, (n) => `${n} draftees signed on one-season deals.`);
+  return run('kc_sign_draftees', {}, (n) => `${n} draftees signed: rookies on 2 years, established on 1, protected until the mid-season window.`);
+}
+export async function draftReview(contractId: number, tier: string) {
+  return run('kc_draft_review', { cid: contractId, new_tier: tier }, (sal) => `Done. He's on $${sal}k with ${tier === 'none' ? 'no clause' : `a ${tier} clause`}.`);
 }
 export async function rollover() {
   return run('kc_rollover', {}, (n) => `New season started. ${n} players are now free agents.`);
