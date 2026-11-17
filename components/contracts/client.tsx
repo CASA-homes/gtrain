@@ -182,7 +182,7 @@ export function ProvisionalControls({ contractId, name }: { contractId: number; 
   return (
     <span style={{ display: 'inline-flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
       <button type="button" className="kc-btn small" disabled={pending} onClick={() => go(() => undoContract(contractId), `Undo ${name}’s contract? He goes back to unsigned, no cost.`)}>Undo</button>
-      <button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => lockContracts(contractId, null), `Lock ${name}’s contract? You can’t undo it after this.`)}>Lock</button>
+      <button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => lockContracts(contractId, null), `Lock ${name}’s contract now? You won’t be able to undo or change it yourself. Only the commish can unlock it. Contracts become formal on deadline day anyway.`)}>Lock</button>
       {note}
     </span>
   );
@@ -190,7 +190,7 @@ export function ProvisionalControls({ contractId, name }: { contractId: number; 
 
 export function LockAllButton({ teamId, count }: { teamId: number; count: number }) {
   const { pending, go, note } = useRun();
-  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Lock all ${count} provisional contracts? None of them can be undone after this.`)}>Lock all ({count})</button>{note}</span>;
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Lock all ${count} contracts now? Once locked you can’t undo or re-sign them yourself before deadline day. Only the commish can unlock them. They all become formal on deadline day anyway, so you don’t need to lock them.`)}>Lock all ({count})</button>{note}</span>;
 }
 
 export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0 }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number }) {
