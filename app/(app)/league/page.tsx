@@ -62,8 +62,8 @@ export default async function LeaguePage() {
         </div>
       </header>
 
-      <div className="lg-top">
-        <section className="card" aria-labelledby="lad-h">
+      <div className="lg-top card">
+        <section className="lg-col" aria-labelledby="lad-h">
           <div className="card-h"><div><span className="mm-eyebrow">{CURRENT_SEASON} season</span><h2 id="lad-h">League table</h2></div><span className="muted" style={{ fontSize: 12 }}>Home and away</span></div>
           <table className="lg-ladder">
             <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>Points</th><th>Prem pts</th></tr></thead>
@@ -86,11 +86,11 @@ export default async function LeaguePage() {
             </tbody>
           </table>
         </section>
-        <section className="card" aria-labelledby="cup-h">
+        <section className="lg-col lg-fit" aria-labelledby="cup-h">
           <div className="card-h"><div><span className="mm-eyebrow">Group stage · rounds 5 to 8</span><h2 id="cup-h">{CUP_NAME} {CUP_SEASON}</h2></div><Link href="/live/cup" className="muted" style={{ fontSize: 12 }}>Full cup →</Link></div>
           <CupTables data={cup} />
         </section>
-        <MarketMovers compact />
+        <div className="lg-col lg-fit"><MarketMovers compact /></div>
       </div>
       <SeasonSchedule />
 

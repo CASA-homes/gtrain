@@ -40,7 +40,7 @@ export async function MarketMovers({ compact = false }: { compact?: boolean } = 
       season.push({ p, now, prev: start, diff: now - start, pct: (now - start) / start, spark, owner });
     }
   }
-  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, compact ? 4 : 5);
+  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, compact ? 3 : 5);
   if (!week.length && !season.length) return null;
 
   const List = ({ title, rows, rise }: { title: string; rows: Mover[]; rise: boolean }) => (
@@ -67,7 +67,7 @@ export async function MarketMovers({ compact = false }: { compact?: boolean } = 
   );
 
   return (
-    <section className={`mm card${compact ? ' compact' : ''}`} aria-labelledby="mm-h">
+    <section className={compact ? 'mm compact' : 'mm card'} aria-labelledby="mm-h">
       <input type="radio" name="mm-t" id="mm-wk" defaultChecked hidden />
       <input type="radio" name="mm-t" id="mm-ss" hidden />
       <div className="mm-head">
@@ -76,7 +76,7 @@ export async function MarketMovers({ compact = false }: { compact?: boolean } = 
       </div>
       <Pane xs={week} cls="mm-p-wk" />
       <Pane xs={season} cls="mm-p-ss" />
-      <p className="mm-foot">Market value = contract rate from a rolling six-game average. Season compares with where he started the year.</p>
+      {!compact && <p className="mm-foot">Market value = contract rate from a rolling six-game average. Season compares with where he started the year.</p>}
     </section>
   );
 }
