@@ -1,5 +1,5 @@
 'use client';
-// Live Matchups · Knockout Cup. Both 15s slot against slot, one position at a time: a gold break line per position
+// Live Matchups head to head (Knockout Cup in gold, G-Train in green). Both teams slot against slot, one position at a time: a gold break line per position
 // carries the line score, who leads, each side's average rating and the projected line totals. Utility is on field;
 // emergencies sit underneath, not counting. Tabs: Preview, Live scores, Run home.
 // Before 2027 scores exist every player shows his projection (faded). "Test scores" fills in a seeded, simulated
@@ -13,31 +13,31 @@ import { Disc } from './matchday';
 import { rtCol } from './mens';
 
 const A_COL = '#2563c9', B_COL = '#e0780f';
-const LINES = ['DEF', 'MID', 'RUC', 'FWD', 'UTIL'] as const;
-type Line = (typeof LINES)[number];
-const LINE_NAME: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility' };
+const LINE_NAME: Record<string, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility' };
 const PERTH = 'Australia/Perth';
 const GAME_MIN = 165;
 
 type Fx = { home: string; away: string; start: string };
 type State = 'pre' | 'live' | 'final';
-interface Row { p: MdPlayer; slot: Line | 'EMG'; st: State; score: number | null; proj: number; rating: number | null; when: string }
+interface Row { p: MdPlayer; slot: string; cap?: 'C' | 'VC'; st: State; score: number | null; proj: number; rating: number | null; when: string }
 
 function rng(seed: number) { return () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const normal = (r: () => number) => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
 const timeLabel = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', hour: 'numeric', minute: '2-digit', timeZone: PERTH });
 
-function basisOf(p: MdPlayer, slot: Line | 'EMG'): RatingBasis {
+function basisOf(p: MdPlayer, slot: string): RatingBasis {
   const avg = baseAverage({ prevAvg: p.avg ?? null, prevGames: p.avg != null ? 10 : 0, proj: p.proj || null });
-  return ratingBasis(avg, ratingPos(slot === 'UTIL' || slot === 'EMG' ? null : slot, p.pos, DEFAULT_PARS), DEFAULT_PARS);
+  return ratingBasis(avg, ratingPos(slot === 'UTIL' || slot === 'EMG' ? null : (slot as 'DEF' | 'MID' | 'RUC' | 'FWD'), p.pos, DEFAULT_PARS), DEFAULT_PARS);
 }
 
-/** Every player's state at `now`. Without test scores nothing has been played yet. */
-function rowsFor(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], test: boolean, now: number): Record<Line | 'EMG', Row[]> {
+/** Every player's state at `now`. Without test scores nothing has been played yet. Bench slots all land in EMG;
+ *  with captains on, the captain's score and projection count double. */
+function rowsFor(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], test: boolean, now: number, lineKeys: string[], benchKeys: string[], captain: boolean): Record<string, Row[]> {
   const gameOf = (club: string | null) => fx.find((g) => g.home === club || g.away === club);
-  const out = Object.fromEntries([...LINES, 'EMG'].map((k) => [k, [] as Row[]])) as Record<Line | 'EMG', Row[]>;
-  for (const k of [...LINES, 'EMG'] as const) {
-    for (const id of l.slots[k] ?? []) {
+  const out = Object.fromEntries([...lineKeys, 'EMG'].map((k) => [k, [] as Row[]])) as Record<string, Row[]>;
+  for (const slot of [...lineKeys, ...benchKeys]) {
+    const k = lineKeys.includes(slot) ? slot : 'EMG';
+    for (const id of l.slots[slot] ?? []) {
       const p = look(id); if (!p) continue;
       const g = gameOf(p.club);
       const proj = Math.round(p.proj || p.avg || 0);
@@ -52,7 +52,9 @@ function rowsFor(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx
       const played = st === 'final' ? 1 : st === 'live' ? Math.min(1, (now - Date.parse(g!.start)) / 60e3 / GAME_MIN) : 0;
       const projNow = st === 'final' ? score! : st === 'live' ? Math.round(score! + proj * (1 - played)) : proj;
       const rating = score != null && played > 0 ? matchRating(score, basisOf(p, k), played) : null;
-      out[k].push({ p, slot: k, st, score, proj: projNow, rating, when });
+      const cap = captain && k !== 'EMG' ? (l.c === id ? 'C' : l.vc === id ? 'VC' : undefined) : undefined;
+      const x = cap === 'C' ? 2 : 1;
+      out[k].push({ p, slot: k, cap, st, score: score == null ? null : score * x, proj: projNow * x, rating, when });
     }
   }
   return out;
@@ -63,11 +65,12 @@ const avgRating = (rs: Row[]) => { const xs = rs.filter((r) => r.rating != null)
 const short = (n: string) => { const w = n.split(' '); return w.length > 1 ? `${w[0][0]}. ${w.slice(1).join(' ')}` : n; };
 
 function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPlayer) => void }) {
+  const capB = r.cap ? <i className={`cl-cap ${r.cap === 'VC' ? 'vc' : ''}`} title={r.cap === 'C' ? 'Captain: counts double' : 'Vice-captain'}>{r.cap}</i> : null;
   const chip = r.rating != null ? <span className="lv-rt" style={{ borderColor: rtCol(r.rating) }} title="Live match rating">{r.rating.toFixed(1)}</span> : null;
   const sc = <span className={`cl-sc ${r.score == null ? 'proj' : ''} ${(r.score ?? 0) >= 100 ? 'ton' : ''}`} title={r.score == null ? 'Projected' : r.st === 'live' ? `Live · on track for ${r.proj}` : 'Final'}>{r.score ?? r.proj}</span>;
   const who = (
     <span className="cl-who">
-      <span className="cl-nm" data-pid={r.p.id} role="link" tabIndex={0} onClick={() => onOpen?.(r.p)}>{short(r.p.name)}</span>
+      <span className="cl-nm" data-pid={r.p.id} role="link" tabIndex={0} onClick={() => onOpen?.(r.p)}>{side === 'b' && capB}{short(r.p.name)}{side === 'a' && capB}</span>
       <span className="cl-sub">{side === 'a'
         ? <><span className={r.st === 'live' ? 'cl-live' : ''}>{r.when}</span> · {r.p.club}{r.slot === 'UTIL' ? ' · UTIL' : ''}</>
         : <>{r.p.club}{r.slot === 'UTIL' ? ' · UTIL' : ''} · <span className={r.st === 'live' ? 'cl-live' : ''}>{r.when}</span></>}</span>
@@ -77,7 +80,10 @@ function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPla
   return <div className={`cl-pc lv-pc ${side} ${r.slot === 'UTIL' ? 'util' : ''}`} title={r.p.club ? CLUBS[r.p.club]?.name : undefined}>{side === 'a' ? <>{disc}{who}{chip}{sc}</> : <>{sc}{chip}{who}{disc}</>}</div>;
 }
 
-export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void }) {
+export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, theme = 'gold' }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void; theme?: 'gold' | 'green' }) {
+  const lineKeys = rules.slots.filter((x) => !x.bench).map((x) => x.key);
+  const benchKeys = rules.slots.filter((x) => x.bench).map((x) => x.key);
+  const onFieldN = rules.slots.filter((x) => !x.bench).reduce((t, x) => t + x.n, 0);
   const [view, setView] = useState<'preview' | 'live' | 'home'>('live');
   const [test, setTest] = useState(false);
   // test "now": partway through the round, so some games are done, one is live and the rest are still to come
@@ -88,12 +94,12 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
     return ts[i] + 0.68 * GAME_MIN * 60e3;
   }, [fixtures]);
   const trim = (l: MdLineup): MdLineup => ({ ...l, slots: Object.fromEntries(rules.slots.map((s) => [s.key, (l.slots[s.key] ?? []).slice(0, s.n)])) });
-  const A = useMemo(() => rowsFor(trim(mine), look, fixtures, test, now), [mine, look, fixtures, test, now]); // eslint-disable-line react-hooks/exhaustive-deps
+  const A = useMemo(() => rowsFor(trim(mine), look, fixtures, test, now, lineKeys, benchKeys, rules.captain), [mine, look, fixtures, test, now, rules]); // eslint-disable-line react-hooks/exhaustive-deps
   const opp = game.opp;
-  const B = useMemo(() => (opp ? rowsFor(trim(opp.lineup), look, fixtures, test, now) : null), [opp, look, fixtures, test, now]); // eslint-disable-line react-hooks/exhaustive-deps
-  if (!opp || !B) return <section className="rh-card"><span className="rh-dim">No cup opponent this round.</span></section>;
+  const B = useMemo(() => (opp ? rowsFor(trim(opp.lineup), look, fixtures, test, now, lineKeys, benchKeys, rules.captain) : null), [opp, look, fixtures, test, now, rules]); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!opp || !B) return <section className="rh-card"><span className="rh-dim">No opponent this round.</span></section>;
 
-  const field = (x: Record<string, Row[]>) => LINES.flatMap((k) => x[k]);
+  const field = (x: Record<string, Row[]>) => lineKeys.flatMap((k) => x[k] ?? []);
   const aTot = sum(field(A), (r) => r.score ?? 0), bTot = sum(field(B), (r) => r.score ?? 0);
   const aProj = sum(field(A), (r) => r.proj), bProj = sum(field(B), (r) => r.proj);
   const aLeft = field(A).filter((r) => r.st !== 'final').length, bLeft = field(B).filter((r) => r.st !== 'final').length;
@@ -101,7 +107,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
   const sd = Math.max(8, Math.sqrt(field(A).concat(field(B)).filter((r) => r.st !== 'final').reduce((t, r) => t + (0.24 * r.proj) ** 2, 0)));
   const win = 1 / (1 + Math.exp(-1.702 * ((aProj - bProj) / sd)));
   const started = test;
-  const lines = LINES.map((k) => {
+  const lines = lineKeys.map((k) => {
     const a = sum(A[k], (r) => r.score ?? 0), b = sum(B[k], (r) => r.score ?? 0);
     const pa = sum(A[k], (r) => r.proj), pb = sum(B[k], (r) => r.proj);
     const done = [...A[k], ...B[k]].every((r) => r.st === 'final');
@@ -117,28 +123,29 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
     .filter((g) => g.a.length || g.b.length).sort((x, y) => Date.parse(x.f.start) - Date.parse(y.f.start));
 
   return (
-    <div className="cl">
+    <div className={`cl ${theme}`}>
       <section className="cl-plate">
         <div className="cl-side a">
           <b>{myName}</b>
           <span className="cl-big rh-mono" style={{ color: A_COL }}>{started ? aTot : aProj}</span>
-          <span className="rh-dim rh-mono">{started ? `projected ${aProj} · ${aLeft} to play` : 'projected'}</span>
+          <span className="rh-dim rh-mono">{started ? `proj ${aProj} · ${aLeft} to play` : 'projected'}</span>
         </div>
         <div className="cl-mid">
-          <svg width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><path fill="#c9a13a" d="M18 8h28v6h10v6c0 8-6 14-13 15-2 5-6 8-9 9v8h8v6H22v-6h8v-8c-3-1-7-4-9-9C14 34 8 28 8 20v-6h10V8zm-4 12c0 4 2 7 5 8-1-3-1-5-1-8h-4zm36 0h-4c0 3 0 5-1 8 3-1 5-4 5-8z" /></svg>
-          <span className="rh-k cl-gold">{game.label}{game.note ? ` · ${game.note}` : ''}</span>
-          <span className="rh-mono" style={{ fontSize: 13 }}><b style={{ color: A_COL }}>{Math.round(win * 100)}%</b> win chance <b style={{ color: B_COL }}>{Math.round((1 - win) * 100)}%</b></span>
-          <span className="rh-dim" style={{ fontSize: 12 }}>Lines {started ? 'won' : 'projected'} <b className="rh-mono" style={{ color: A_COL }}>{linesA}</b>–<b className="rh-mono" style={{ color: B_COL }}>{linesB}</b> · {aProj === bProj ? 'level' : `${aProj > bProj ? 'you' : oppName} by ${Math.abs(aProj - bProj)} projected`}</span>
+          {theme === 'gold' && <svg className="cl-cup" width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><path fill="#c9a13a" d="M18 8h28v6h10v6c0 8-6 14-13 15-2 5-6 8-9 9v8h8v6H22v-6h8v-8c-3-1-7-4-9-9C14 34 8 28 8 20v-6h10V8zm-4 12c0 4 2 7 5 8-1-3-1-5-1-8h-4zm36 0h-4c0 3 0 5-1 8 3-1 5-4 5-8z" /></svg>}
+          <span className="rh-k cl-gold">{game.label}{theme === 'gold' && game.note ? ` · ${game.note}` : ''}</span>
+          <span className="rh-mono cl-odds"><b style={{ color: A_COL }}>{Math.round(win * 100)}%</b> <span className="cl-wc">win chance</span> <b style={{ color: B_COL }}>{Math.round((1 - win) * 100)}%</b></span>
+          <span className="cl-wbar" aria-hidden="true"><i style={{ width: `${win * 100}%` }} /></span>
+          <span className="rh-dim cl-lines">Lines {started ? 'won' : 'projected'} <b className="rh-mono" style={{ color: A_COL }}>{linesA}</b>–<b className="rh-mono" style={{ color: B_COL }}>{linesB}</b> · {aProj === bProj ? 'level' : `${aProj > bProj ? 'you' : oppName} by ${Math.abs(aProj - bProj)} projected`}</span>
         </div>
         <div className="cl-side b">
           <b>{oppName}</b>
           <span className="cl-big rh-mono" style={{ color: B_COL }}>{started ? bTot : bProj}</span>
-          <span className="rh-dim rh-mono">{started ? `projected ${bProj} · ${bLeft} to play` : opp.saved ? 'projected' : 'projected · best guess team'}</span>
+          <span className="rh-dim rh-mono">{started ? `proj ${bProj} · ${bLeft} to play` : opp.saved ? 'projected' : 'best guess team'}</span>
         </div>
       </section>
 
       <div className="cl-bar">
-        <div className="mx-views" role="tablist" aria-label="Cup matchup view">
+        <div className="mx-views" role="tablist" aria-label="Matchup view">
           {([['preview', 'Preview'], ['live', 'Live scores'], ['home', 'Run home']] as const).map(([k, label]) => (
             <button key={k} role="tab" aria-selected={view === k} className={view === k ? 'on' : ''} onClick={() => setView(k)}>{label}</button>
           ))}
@@ -153,7 +160,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
               <div className="cl-lhead">
                 <span className="cl-rule" />
                 <div className="cl-strip">
-                  <span className="cl-ln">{LINE_NAME[l.k]}</span>
+                  <span className="cl-ln">{LINE_NAME[l.k] ?? l.k}</span>
                   <span className="cl-v rh-mono" style={{ color: A_COL }}>{started ? l.a : l.pa}</span><span className="rh-k">v</span><span className="cl-v rh-mono" style={{ color: B_COL }}>{started ? l.b : l.pb}</span>
                   {started && <span className={`cl-won ${l.lead > 0 ? 'a' : l.lead < 0 ? 'b' : ''} ${l.done ? 'done' : ''}`}>{l.lead === 0 ? 'Level' : l.done ? `${l.lead > 0 ? 'You' : 'They'} won` : `${l.lead > 0 ? 'You' : 'They'} +${Math.abs(l.a - l.b)}`}</span>}
                   {started && <><span className="cl-sep" /><span className="rh-k" style={{ fontSize: 9.5 }}>Rating</span>
@@ -175,7 +182,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
             <div className="cl-stack">{A.EMG.map((r) => <Card key={r.p.id} r={r} side="a" onOpen={onOpen} />)}</div>
             <div className="cl-stack">{B.EMG.map((r) => <Card key={r.p.id} r={r} side="b" onOpen={onOpen} />)}</div>
           </div>
-          <span className="rh-dim cl-foot">15 on field each: {rules.summary} Line scores and lines won are a way to read the game; the cup is decided on total points. Faded numbers are projections for players yet to play.{test ? ' Test scores are simulated.' : ''}</span>
+          <span className="rh-dim cl-foot">{onFieldN} on field each: {rules.summary} Line scores and lines won are a way to read the game; it’s decided on total points. Faded numbers are projections for players yet to play.{test ? ' Test scores are simulated.' : ''}{theme === 'green' && game.note ? ` ${game.note}` : ''}</span>
         </div>
       )}
 
@@ -217,7 +224,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen }: {
             const best = (rs: Row[]) => [...rs].sort((x, y) => y.proj - x.proj)[0];
             const rows: [string, React.ReactNode, React.ReactNode][] = [
               ['Projected', <b key="a" className="rh-mono" style={{ color: A_COL }}>{sum(fA, (r) => r.proj)}</b>, <b key="b" className="rh-mono" style={{ color: B_COL }}>{sum(fB, (r) => r.proj)}</b>],
-              ...lines.map((l) => [LINE_NAME[l.k], <span key="a" className="rh-mono" style={{ fontWeight: l.pa > l.pb ? 800 : 500 }}>{l.pa}</span>, <span key="b" className="rh-mono" style={{ fontWeight: l.pb > l.pa ? 800 : 500 }}>{l.pb}</span>] as [string, React.ReactNode, React.ReactNode]),
+              ...lines.map((l) => [LINE_NAME[l.k] ?? l.k, <span key="a" className="rh-mono" style={{ fontWeight: l.pa > l.pb ? 800 : 500 }}>{l.pa}</span>, <span key="b" className="rh-mono" style={{ fontWeight: l.pb > l.pa ? 800 : 500 }}>{l.pb}</span>] as [string, React.ReactNode, React.ReactNode]),
               ['Top projected', best(fA) ? `${short(best(fA).p.name)} · ${best(fA).proj}` : '–', best(fB) ? `${short(best(fB).p.name)} · ${best(fB).proj}` : '–'],
               ['Avg rating 2026', rat(fA), rat(fB)],
               ['Avg age', age(fA), age(fB)],
