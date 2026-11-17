@@ -47,17 +47,9 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
       <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
           <span className="eyebrow dr-eyebrow">From the Keeper draft board · 16 rounds, round 16 is the keeper/rookie round</span>
-          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}><span className="d-txt">Draft picks</span><span className="m-txt">Draft Home</span></h1>
+          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Draft Home</h1>
         </div>
         <DraftTabs active="picks" />
-        <div role="tablist" aria-label="Draft year" className="dr-years" style={{ display: 'inline-flex', padding: 3, borderRadius: 10, background: 'var(--line)', gap: 2 }}>
-          {[2026, 2027, 2028].map((yr) => (
-            <Link key={yr} href={`/draft?year=${yr}`} role="tab" aria-selected={yr === year}
-              style={{ padding: '6px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none', background: yr === year ? '#fff' : 'transparent', color: yr === year ? C.ink : C.muted }}>
-              {yr === 2026 ? '2026 results' : `${yr} draft`}
-            </Link>
-          ))}
-        </div>
       </div>
 
       {year === 2026 && legacy ? <Results2026 league={league} myTeam={me?.team_id ?? null} /> : (
@@ -143,7 +135,7 @@ export default async function DraftPage({ searchParams }: { searchParams: Promis
   );
 }
 
-/** Mobile: draft years as small squares beside the heading. 2027 (the current draft) is always outlined in gold. */
+/** Draft years as small squares beside the heading. 2027 (the current draft) is always outlined in gold. */
 function YearSquares({ year }: { year: number }) {
   return (
     <nav aria-label="Draft year" className="dr-sq">
