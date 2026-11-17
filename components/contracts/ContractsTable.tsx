@@ -234,7 +234,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>
-              {r.onAuction ? <Link href="/contracts/market" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
+              {r.onAuction ? <Link href="/market/auctions" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
               {!prov && <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />}
             </>}
           </div>

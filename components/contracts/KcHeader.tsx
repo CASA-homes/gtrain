@@ -31,7 +31,7 @@ export function KcHeader({ settings, title, crumb, sub, kpis, tab, myTeamId, isC
           <nav className="kc-tabs" aria-label="Contracts">
             <Link href="/contracts" aria-current={tab === 'overview' ? 'page' : undefined} style={tab === 'overview' ? undefined : { color: '#c9d4cb' }}>League</Link>
             {myTeamId ? <Link href={`/clubhouse/${myTeamId}?view=contracts`} aria-current={tab === 'club' ? 'page' : undefined} style={tab === 'club' ? undefined : { color: '#c9d4cb' }}>My contracts</Link> : null}
-            <Link href="/contracts/market" aria-current={tab === 'market' ? 'page' : undefined} style={tab === 'market' ? undefined : { color: '#c9d4cb' }}>Transfer Market</Link>
+            <Link href="/market" style={{ color: "#c9d4cb" }}>Trademarket</Link>
             {isCommish && <Link href="/contracts/admin" aria-current={tab === 'admin' ? 'page' : undefined} style={tab === 'admin' ? undefined : { color: '#c9d4cb' }}>Commish</Link>}
           </nav>
           {children}

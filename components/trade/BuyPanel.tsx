@@ -53,7 +53,7 @@ export async function BuyPanel() {
             {now.length ? now.slice(0, 8).map(({ f, p, rate }) => (
               <Row key={f.id} href={`/contracts/offer/${f.id}`} name={p?.name ?? `Player ${f.player_id}`} meta={`${p?.positions.join('/') ?? ''} · ${playerAge(p) ?? '–'}y · ${p?.average?.toFixed(1) ?? '–'} · ex ${team(f.ex_team)}`} right={k$(rate)} sub={`${f.offers} offer${f.offers === 1 ? '' : 's'}`} />
             )) : <p className="bp-empty">Nobody right now. Released players land here.</p>}
-            {now.length > 8 && <Link href="/contracts/market" className="bp-more">All {now.length} free agents →</Link>}
+            {now.length > 8 && <Link href="/market/free-agents" className="bp-more">All {now.length} free agents →</Link>}
           </div>
           <div className="bp-pane bp-pane-up">
             <div className="bp-head"><span className="bp-dot" style={{ background: '#c08a1e' }} /><h3>Upcoming free agents</h3><span className="bp-n">{pending.length + finalYear.length}</span></div>
