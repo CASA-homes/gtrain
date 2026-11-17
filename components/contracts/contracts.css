@@ -696,3 +696,35 @@
   .fin-page .fn-runway { gap: 6px; margin-top: 8px; }
   .fin-page .fn-kpis { padding-top: 7px; }
 }
+
+/* Contract summary: one compact panel, the explainer behind an info icon */
+.cs-card { padding: 10px 14px; display: grid; gap: 8px; }
+.cs-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cs-head h2 { margin: 0; font-size: 16px; }
+.cs-dl { font-size: 11px; }
+.cs-lock { margin-left: auto; }
+.cs-lock .kc-btn { padding: 5px 12px; min-height: 0; font-size: 12.5px; }
+.cs-info { position: relative; }
+.cs-info summary { list-style: none; cursor: pointer; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--muted); color: var(--muted); display: grid; place-items: center; font: italic 700 12px/1 Georgia, serif; }
+.cs-info summary::-webkit-details-marker { display: none; }
+.cs-info[open] summary, .cs-info summary:hover { border-color: var(--ink); color: var(--ink); }
+.cs-pop { position: absolute; z-index: 20; top: 28px; left: -8px; width: min(340px, 80vw); padding: 12px 14px; border-radius: 12px; background: #fff; border: 1px solid var(--khq-line, #e4e7e1); box-shadow: 0 10px 30px rgb(0 0 0 / .12); font-size: 13px; line-height: 1.45; display: grid; gap: 8px; }
+.cs-pop p { margin: 0; color: var(--muted); }
+.cs-pop b { color: var(--ink); }
+.cs-pop .kc-btn { justify-self: start; }
+.cs-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--khq-line, #e8e8e2); padding-top: 8px; }
+.cs-k { display: flex; flex-direction: column; gap: 1px; padding: 0 10px; min-width: 0; }
+.cs-k:first-child { padding-left: 0; }
+.cs-k + .cs-k { border-left: 1px solid var(--khq-line, #e8e8e2); }
+.cs-k > span { font: 500 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cs-k b { font: 700 18px/1.15 var(--font); white-space: nowrap; }
+.cs-k b small { font-weight: 500; font-size: 12px; color: var(--muted); }
+.cs-k em { font-style: normal; font-size: 11px; color: var(--muted); white-space: nowrap; }
+.cs-k em.kc-up { color: var(--khq-sage, #2f5d46); font-weight: 600; } .cs-k em.kc-down { font-weight: 600; }
+@media (max-width: 640px) {
+  .cs-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 8px; }
+  .cs-k:nth-child(4) { padding-left: 0; border-left: 0; }
+  .cs-k:nth-child(5) { grid-column: span 2; }
+  .cs-k b { font-size: 16px; }
+  .cs-dl { order: 3; }
+}

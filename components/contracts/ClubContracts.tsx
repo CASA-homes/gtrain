@@ -107,21 +107,30 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   return (
     <div className="kc-stack">
       {mine && <ContractsTour setup={setup} keeperCap={s.keeper_cap_k} softCap={s.season_cap_k - s.keeper_cap_k} deadline={deadline || 'deadline day'} showButton={!setup} />}
-      {mine && setup && (
-        <section className="kc-card brass su-card" aria-labelledby="su-h" data-tour="setup">
-          <div className="su-head">
-            <h2 id="su-h">Re-sign your list</h2>
-            <span className="su-acts"><span className="fn-pill brass">Formal {deadline}</span><TourButton className="kc-btn small su-tour" /></span>
-          </div>
-          <p className="su-text">Every player starts unsigned. Offer contracts (length and clause) to the players you want for {s.season} and beyond: they become your <b>17 + 1 keepers</b>. Anyone still unsigned <b>expires on deadline day</b>. Everything is provisional until then, with no KT fees, so undo and try alternatives freely.</p>
-          <div className="su-row">
-            <span className="su-kv"><span>Signed</span><b className={contracts.length > 18 ? 'kc-down' : undefined}>{contracts.length} / 17 + 1</b></span>
-            <span className="su-kv"><span>{s.season} salary</span><b>{moneyK(club.salary)}<small> / {moneyK(club.keeperCapNow)}</small></b><em className={room < 0 ? 'kc-down' : 'kc-up'}>{room < 0 ? `${moneyK(-room)} over` : `${moneyK(room)} room`}</em></span>
-            <span className="su-kv"><span>Provisional</span><b>{provCount}</b></span>
-            <span className="su-lock"><LockAllButton teamId={teamId} count={provCount} /></span>
-          </div>
-        </section>
-      )}
+      <section className="kc-card cs-card" aria-labelledby="cs-h" data-tour="setup">
+        <div className="cs-head">
+          <h2 id="cs-h">Contract summary</h2>
+          <details className="cs-info">
+            <summary aria-label="How contracts work">i</summary>
+            <div className="cs-pop">
+              {setup ? <>
+                <p>Every player starts unsigned. Offer contracts (length and clause) to the players you want for {s.season} and beyond: they become your <b>17 + 1 keepers</b>.</p>
+                <p>Anyone still unsigned <b>expires on deadline day{deadline ? `, ${deadline}` : ''}</b>. Until then everything is provisional with no KT fees, so undo and try alternatives freely. Lock a contract to make it final.</p>
+              </> : <p>Keep 17 + 1 under the {moneyK(club.keeperCapNow)} keeper cap. Final-year players can be extended; anyone not re-signed becomes a pending free agent when the mid-season window closes.</p>}
+              {mine && <TourButton className="kc-btn small" />}
+            </div>
+          </details>
+          {setup && deadline && <span className="fn-pill brass cs-dl">Deadline {deadline}</span>}
+          {mine && setup && provCount > 0 && <span className="cs-lock"><LockAllButton teamId={teamId} count={provCount} /></span>}
+        </div>
+        <div className="cs-grid">
+          <div className="cs-k"><span>Keeper spots</span><b className={contracts.length > 18 ? 'kc-down' : undefined}>{contracts.length}<small> / 17 + 1</small></b>{setup && provCount > 0 && <em>{provCount} provisional</em>}</div>
+          <div className="cs-k"><span>Expiring {s.season}</span><b>{contracts.filter((c) => c.end_season <= s.season).length}</b><em>final year</em></div>
+          <div className="cs-k"><span>{s.season + 1} and beyond</span><b>{contracts.filter((c) => c.end_season > s.season).length}</b><em>through {s.season + 1}+</em></div>
+          <div className="cs-k"><span>Rookies</span><b>{contracts.filter((c) => c.rookie || c.rookie_slot_season === s.season).length}</b><em>on contract</em></div>
+          <div className="cs-k"><span>{s.season} salary</span><b>{moneyK(club.salary)}<small> / {moneyK(club.keeperCapNow)}</small></b><em className={room < 0 ? 'kc-down' : 'kc-up'}>{room < 0 ? `${moneyK(-room)} over` : `${moneyK(room)} room`}</em></div>
+        </div>
+      </section>
       {canManage && incomingClaims.length > 0 && (
         <section className="kc-card warn" aria-labelledby="clm-h">
           <h2 id="clm-h">Release clause paid · decide within 24 hours</h2>
