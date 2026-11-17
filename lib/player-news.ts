@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'E. Tsatas', tag: 'Injury', date: '2026-11-17', title: 'Tsatas close to training at North',
+    body: 'The former Bomber, delisted by Essendon and now at North Melbourne, is reportedly on the verge of training again after an ACL rupture wiped out his 2026. He’s played 83 games. Released by Ram Dawgs, so he’s a cheap late flier if he gets midfield time at Arden Street.',
+  },
+  {
     player: 'I. Heeney', tag: 'Off-field', date: '2026-11-16', title: 'Heeney back training with the Swans',
     body: 'Three days after police ruled out charges over the Pullman Hotel incident, Heeney trained with Swans teammates at Centennial Park on Monday. His club suspension only covered the rest of 2026 and no 2027 sanction has been announced. The reigning Swans best and fairest looks on track for a full summer, great news for Muzza’s Murabito’s.',
   },
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'L. Pedlar', tag: 'Role', date: '2026-11-06', title: 'Pedlar wants midfield minutes at Port',
     body: 'Fresh from crossing from the Crows, Pedlar says he’s keen to train more as a midfielder under Josh Carr while still growing his forward game. Injuries have limited him to 49 games in six years, so a full pre-season is the priority. More midfield time would lift his ceiling, but he’s a speculative pick until his body holds up.',
-  },
-  {
-    player: 'J. Gunston', tag: 'Role', date: '2026-11-05', title: 'Gunston faces a crowded Hawks forward line',
-    body: 'Ben King’s arrival from Gold Coast means more competition up forward at Hawthorn, and the 35-year-old Gunston says it’s healthy and the coaches will sort the structure. He’s kicked 73 and 66 goals the last two years, but sharing the marking load with King could trim his scoring ceiling.',
   },
 ];
