@@ -45,6 +45,7 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
       sub={<span className="lm-sub">{history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>}</span>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
+        : game.key === 'gtrain' && game.opp ? <CupLive game={game} rules={RULES.gtrain} mine={md.lineups[game.id] ?? autoFill(RULES.gtrain, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : game.key === 'cup' ? <CupLive game={game} rules={RULES.cup} mine={md.lineups[game.id] ?? autoFill(RULES.cup, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} />
         : (
