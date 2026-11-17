@@ -2479,10 +2479,20 @@ button.md-slot:hover { border-color: #cdd2cb; }
 }
 
 /* ---------- Mobile tidy: player search, draft home, trade market ---------- */
-.m-txt, .pl-sq, .pf-year-m, .dt-mob, .dr-sq { display: none; }
+.m-txt, .pl-sq, .pf-year-m { display: none; }
+/* Draft: four sections, sub-tabs for the section you're in, and year squares, on every screen size. */
+.dt-mob { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.dt-four { display: inline-grid; grid-template-columns: repeat(4, auto); gap: 2px; padding: 3px; border-radius: 12px; background: var(--line); }
+.dt-four a { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 36px; padding: 2px 16px; border-radius: 9px; font: 600 13px/1.15 var(--font); color: var(--muted); text-decoration: none; white-space: nowrap; }
+.dt-four a.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.dt-subs { display: flex; gap: 6px; overflow-x: auto; }
+.dt-subs a { flex: none; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font: 600 12.5px var(--font); color: var(--muted); text-decoration: none; background: #fff; }
+.dt-subs a.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+.dr-sq { display: flex; gap: 6px; margin-left: auto; }
+.dr-sq a { display: grid; place-items: center; width: 52px; height: 34px; border-radius: 9px; border: 1px solid var(--line); background: #fff; font: 600 12.5px var(--mono); color: var(--ink); text-decoration: none; }
 .pf-n { font: 600 10.5px var(--mono); padding: 1px 6px; border-radius: 99px; background: var(--ink); color: #fff; }
 @media (max-width: 760px) {
-  .d-txt, .pl-eyebrow, .pl-rather-btn, .pl-note, .pf-year-d, .pf-go, .dt-desk, .dr-eyebrow, .dr-years, .dr-note { display: none !important; }
+  .d-txt, .pl-eyebrow, .pl-rather-btn, .pl-note, .pf-year-d, .pf-go, .dr-eyebrow, .dr-note { display: none !important; }
   .m-txt { display: inline; }
 
   /* Player search */
@@ -2506,16 +2516,10 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .players-filter .own-toggle.own-main { flex: 1 1 auto; order: 0; }
   .players-filter .own-main a { padding: 0 4px; min-height: 34px; font-size: 12px; }
 
-  /* Draft: four tabs, sub-tabs, year squares */
-  .dt-mob { display: flex; flex-direction: column; gap: 6px; width: 100%; }
-  .dt-four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; padding: 3px; border-radius: 12px; background: var(--line); }
-  .dt-four a { display: flex; align-items: center; justify-content: center; text-align: center; min-height: 40px; padding: 2px 4px; border-radius: 9px; font: 600 12px/1.15 var(--font); color: var(--muted); text-decoration: none; }
-  .dt-four a.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
-  .dt-subs { display: flex; gap: 6px; overflow-x: auto; }
-  .dt-subs a { flex: none; padding: 6px 12px; border-radius: 99px; border: 1px solid var(--line); font: 600 12.5px var(--font); color: var(--muted); text-decoration: none; background: #fff; }
-  .dt-subs a.on { background: var(--ink); border-color: var(--ink); color: #fff; }
-  .dr-sq { display: flex; gap: 6px; margin-left: auto; }
-  .dr-sq a { display: grid; place-items: center; width: 52px; height: 34px; border-radius: 9px; border: 1px solid var(--line); background: #fff; font: 600 12.5px var(--mono); color: var(--ink); text-decoration: none; }
+  /* Draft: tabs fill the width on phones */
+  .dt-mob { width: 100%; align-items: stretch; gap: 6px; }
+  .dt-four { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .dt-four a { min-height: 40px; padding: 2px 4px; font-size: 12px; white-space: normal; }
 
   /* Trade market */
   .tm-hero { padding: 18px 16px 0 !important; }
