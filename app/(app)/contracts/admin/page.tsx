@@ -44,7 +44,7 @@ export default async function ContractsAdmin() {
             </section>
             <section className="kc-card" aria-labelledby="fa-h">
               <h2 id="fa-h">Free agency</h2>
-              <p className="kc-sub">Give every open free agent a closing time. After it passes anyone can close a player’s offers; you can close any time from the <Link href="/contracts/market">market</Link>.</p>
+              <p className="kc-sub">Give every open free agent a closing time. After it passes anyone can close a player’s offers; you can close any time from the <Link href="/market/free-agents">free agents page</Link>.</p>
               <div style={{ marginTop: 12 }}><FaDeadlineControl /></div>
             </section>
             <section className="kc-card" aria-labelledby="g-h">

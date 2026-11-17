@@ -261,7 +261,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
       </div>
 
       <section className="kc-card" aria-labelledby="led-h">
-        <div className="row-between"><h2 id="led-h">Token ledger · {kt(club.bank)}</h2><Link href="/contracts/market" className="kc-sub">Transfer market →</Link></div>
+        <div className="row-between"><h2 id="led-h">Token ledger · {kt(club.bank)}</h2><Link href="/market" className="kc-sub">Trademarket →</Link></div>
         <div className="kc-ledger">
           {ledger.slice(0, 40).map((l) => (
             <div key={l.id}><span className="muted">{new Date(l.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span><span>{l.reason}</span><b className={l.delta >= 0 ? 'kc-up' : 'kc-down'}>{l.delta >= 0 ? '+' : '−'}{Math.abs(l.delta).toLocaleString('en-AU')}</b></div>

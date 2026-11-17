@@ -1,79 +1,221 @@
+// Trademarket home: the ticker, the featured auction, your desk, clauses, next free agents, the deal log,
+// risers and fallers, and the trade block, all on one page. Each list has an "All" page for the full thing.
 import Link from 'next/link';
-import { ClubDot, Stars } from '@/components/bits';
 import { Countdown } from '@/components/Countdown';
-import { getLeague, getMe } from '@/lib/data';
-import { pickPoints } from '@/lib/picks';
-import { C, LINES, type Line } from '@/lib/ratings';
-import { createClient } from '@/lib/supabase/server';
-import { closeWish, decideTrade, postWish, voteVeto } from './actions';
-import { BuyPanel } from '@/components/trade/BuyPanel';
-import { MyFaOffers } from '@/components/trade/MyFaOffers';
-import '@/components/trade/trade.css';
+import { MarketMovers } from '@/components/MarketMovers';
+import { MarketTicker } from '@/components/trade/MarketTicker';
+import { WithdrawOffer } from '@/components/trade/WithdrawOffer';
+import { clauseKt, isFinalYear, kt, moneyK, playerAge, TIER_LABEL, valueTrend } from '@/lib/contracts';
+import { ago, getMarket, shortName, windowLine } from '@/lib/market';
+import { decideTrade, voteVeto } from './actions';
+import '@/components/trade/home.css';
 
-export default async function MarketPage({ searchParams }: { searchParams: Promise<{ line?: string; error?: string }> }) {
+export const dynamic = 'force-dynamic';
+
+const pct = (x: number) => `${x >= 0 ? '▲' : '▼'} ${Math.abs(Math.round(x * 100))}%`;
+
+export default async function MarketHome({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const sp = await searchParams;
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
-  const supabase = await createClient();
-  const [{ data: listings }, { data: wishes }, { data: trades }, { data: votes }, { count: openDesks }] = await Promise.all([
-    supabase.from('listings').select('id, kind, asking, minimum, open_to, ends_at, status, team_id, player_id, created_at, offers(id, offer, points, team_id, created_at)').in('status', ['open', 'pending']).order('created_at', { ascending: false }),
-    supabase.from('wishes').select('*, wish_replies(count)').eq('status', 'open').order('created_at', { ascending: false }).limit(12),
-    supabase.from('trades').select('*').order('created_at', { ascending: false }).limit(10),
-    supabase.from('trade_votes').select('trade_id, team_id'),
-    supabase.from('desks').select('id', { count: 'exact', head: true }).in('status', ['open', 'agreed']),
-  ]);
-  const team = (id: number) => league.teams.find((t) => t.id === id);
-  const player = (id: number) => league.players.find((p) => p.id === id);
-  const line = LINES.includes(sp.line as Line) ? (sp.line as Line) : null;
-  const all = (listings ?? []).filter((l) => !line || player(l.player_id)?.positions.includes(line));
-  const auctions = all.filter((l) => l.kind === 'auction');
-  const regular = all.filter((l) => l.kind !== 'auction');
-  const pendingTrades = (trades ?? []).filter((t) => t.status === 'proposed');
-  const doneTrades = (trades ?? []).filter((t) => t.status === 'approved').slice(0, 5);
+  const m = await getMarket();
+  const { d, s, meId, teamName, teamCode, allPlayers, pname } = m;
+  const me = d.me;
+  const seasonPct = (pid: number) => {
+    const t = valueTrend(allPlayers.get(pid), 999);
+    return t.length > 1 && t[0] ? (t[t.length - 1] - t[0]) / t[0] : null;
+  };
+
+  // Featured: the contracts auction with the biggest bid, then an auction listing, then the best player on the block.
+  const kcAuctions = [...d.auctions].sort((a, b) => (b.bids[0]?.amount_kt ?? b.reserve_kt) - (a.bids[0]?.amount_kt ?? a.reserve_kt));
+  const listAuctions = m.listings.filter((l) => l.kind === 'auction' && l.status === 'open');
+  const block = m.listings.filter((l) => l.kind !== 'auction').sort((a, b) => (d.rates.get(b.player_id) ?? 0) - (d.rates.get(a.player_id) ?? 0));
+  const auctionCount = kcAuctions.length + listAuctions.length;
+
+  // Your desk.
+  const myClub = meId ? d.clubs.get(meId) : null;
+  const myDesks = m.desks.filter((x) => meId && (x.team_id === meId || (x.desk_teams ?? []).some((t) => t.team_id === meId)));
+  const myTrades = m.pendingTrades.filter((t) => meId && (t.team_a === meId || t.team_b === meId));
+  const claimsOnMe = d.claims.filter((c) => c.status === 'pending' && c.seller_team === meId);
+  const offersOnMine = d.offersOnMine.length;
+  const cheapest = s && meId ? d.active
+    .filter((c) => c.team_id === meId && !isFinalYear(s, c))
+    .map((c) => ({ c, rate: d.rates.get(c.player_id) ?? 0, clause: clauseKt(s, c, d.rates.get(c.player_id) ?? 0, d.pendingFa.has(c.player_id)) }))
+    .filter((r) => r.clause != null && r.rate >= 20)
+    .sort((a, b) => a.clause! / a.rate - b.clause! / b.rate)[0] : null;
+  const windowOpen = !!s?.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > new Date();
+  const buysUsed = meId && s?.window_opened_at ? d.claims.filter((c) => c.buyer_team === meId && c.status !== 'cancelled' && new Date(c.created_at) >= new Date(s.window_opened_at!)).length : 0;
+  const clubBase = meId ? `/clubhouse/${meId}` : '/clubhouse';
+
+  const openFa = d.freeAgents.filter((f) => f.kind === 'open');
 
   return (
-    <div style={{ margin: '-28px -16px 0', background: 'var(--market-bg)', minHeight: '100dvh' }}>
-      <div className="tm-hero" style={{ background: 'var(--forest)', color: 'var(--cream)', padding: '28px max(16px, 2vw) 24px' }}>
-        <div className="tm-hero-in" style={{ maxWidth: 1360, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '16px 32px', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+    <div className="th">
+      <MarketTicker items={m.ticker.map((t) => ({ id: t.id, name: t.name.split(' ').slice(-1)[0].toUpperCase(), value: Math.round(t.value), pct: Math.round(t.pct * 100) }))} />
+
+      <main className="th-main">
+        {sp.error && <div role="alert" className="th-alert">{sp.error}</div>}
+        <div className="th-head">
           <div>
-            <span className="tm-crumb" style={{ font: '400 12px var(--mono)', color: '#a9b5aa' }}>Keeper HQ / Trademarket</span>
-            <h1 style={{ font: '600 40px/1 var(--font)', letterSpacing: '-.035em' }}>Trademarket</h1>
-            <span className="tm-sub" style={{ color: '#a9b5aa' }}>Buy with players, picks or KT. Every trade needs the commish’s tick, and 6 votes vetoes a lopsided one.</span>
+            <span className="th-eb">Trademarket</span>
+            <h1>The market</h1>
+            <p>{windowLine(d)}</p>
           </div>
-          <div className="kpis tm-kpis">
-            {[['Listings', regular.length], ['Auctions', auctions.length], ['Trade desks', openDesks ?? 0], ['Wishes', wishes?.length ?? 0], ['Awaiting commish', pendingTrades.length]].map(([l, v]) => (
-              <div key={l} className={`kpi${l === 'Awaiting commish' ? ' tm-kpi-x' : ''}`} style={{ borderColor: '#33443a' }}><span className="eyebrow" style={{ color: '#a9b5aa' }}>{l}</span><b>{v}</b></div>
-            ))}
-          </div>
-          <div className="tm-tabs" style={{ display: 'flex', gap: 8 }}>
-            <Link href="/contracts/market" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Transfer Market</Link>
-            <Link href="/market/planner" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade planner</Link>
-            <Link href="/market/desk" className="btn" style={{ background: 'transparent', color: 'var(--cream)', borderColor: '#4a5d50' }}>Trade desk</Link>
-            <Link href="/market/new" className="btn" style={{ background: 'var(--cream)', color: 'var(--forest)', border: 0 }}>List a player</Link>
+          <div className="th-acts">
+            <Link href="/market/desk" className="th-btn dk">＋ Make a trade</Link>
+            <Link href="/market/new" className="th-btn">List a player</Link>
+            <Link href="/market/desk" className="th-btn">Trade desk</Link>
+            <Link href="/market/planner" className="th-btn">Planner</Link>
           </div>
         </div>
-      </div>
 
-      <div className="page"><div className="wrap">
-        {sp.error && <div role="alert" className="card" style={{ padding: '10px 14px', background: C.redBg, color: C.redFg, border: 0 }}>{sp.error}</div>}
-        <BuyPanel />
-        <MyFaOffers />
-        {line && <div className="muted">Showing {line} only · <Link href="/market">show everyone</Link></div>}
+        <div className="th-g2">
+          {/* Auction of the week */}
+          {kcAuctions[0] ? (() => {
+            const a = kcAuctions[0]; const p = allPlayers.get(a.player_id); const c = d.contracts.find((x) => x.id === a.contract_id);
+            const top = a.bids[0]; const rate = d.rates.get(a.player_id) ?? 0; const sp2 = seasonPct(a.player_id);
+            const others = kcAuctions.slice(1, 4).map((x) => shortName(pname(x.player_id)).split(' ').slice(-1)[0]);
+            return (
+              <section className="th-card th-auc" aria-labelledby="auc-h">
+                <div className="th-auc-top">
+                  <div>
+                    <span className="th-eb">Auction of the week</span>
+                    <h2 id="auc-h"><Link href={`/players/${a.player_id}`}>{p?.name ?? pname(a.player_id)}</Link></h2>
+                    <span style={{ opacity: .85 }}>{p?.positions.join('/')} · {playerAge(p) ?? '–'} · {teamName(a.seller_team)}</span>
+                  </div>
+                  <div className="th-auc-clock"><span className="th-eb">Ends in</span><b><Countdown endsAt={a.ends_at} /></b></div>
+                </div>
+                <div className="th-auc-stats">
+                  <div><span className="th-eb">Top bid</span><b>{top ? kt(top.amount_kt) : '—'}</b><small>{top ? `${teamName(top.team_id)} · ${a.bids.length} bid${a.bids.length > 1 ? 's' : ''}` : `Reserve ${kt(a.reserve_kt)}`}</small></div>
+                  <div><span className="th-eb">Contract</span><b>{c ? moneyK(c.salary_k) : '—'}</b><small>{c ? `to ${c.end_season} · ${TIER_LABEL[c.tier].toLowerCase()}` : ''}</small></div>
+                  <div><span className="th-eb">Market value</span><b>{moneyK(rate)}</b>{sp2 != null && <small className={sp2 >= 0 ? 'th-up' : 'th-dn'}>{pct(sp2)} this season</small>}</div>
+                  <div><span className="th-eb">Average</span><b>{p?.average?.toFixed(1) ?? '–'}</b><small>{p?.games ?? 0} games</small></div>
+                </div>
+                <div className="th-auc-foot">
+                  {meId && a.seller_team !== meId && <Link href="/market/auctions" className="th-btn gr">Bid {kt(Math.max(a.reserve_kt, (top?.amount_kt ?? 0) + 100))}</Link>}
+                  <Link href={`/players/${a.player_id}`} className="th-btn">Player profile</Link>
+                  <span className="th-mut">{others.length ? <>Also on the block: {others.join(' · ')} · </> : null}<Link href="/market/auctions">All {auctionCount} →</Link></span>
+                </div>
+              </section>
+            );
+          })() : listAuctions[0] ? (() => {
+            const l = listAuctions[0]; const p = allPlayers.get(l.player_id);
+            const bids = [...(l.offers ?? [])].sort((x, y) => (y.points ?? 0) - (x.points ?? 0));
+            return (
+              <section className="th-card th-auc" aria-labelledby="auc-h">
+                <div className="th-auc-top">
+                  <div>
+                    <span className="th-eb">Auction of the week</span>
+                    <h2 id="auc-h"><Link href={`/market/${l.id}`}>{p?.name ?? pname(l.player_id)}</Link></h2>
+                    <span style={{ opacity: .85 }}>{p?.positions.join('/')} · {playerAge(p) ?? '–'} · {teamName(l.team_id)}</span>
+                  </div>
+                  {l.ends_at && <div className="th-auc-clock"><span className="th-eb">Ends in</span><b><Countdown endsAt={l.ends_at} /></b></div>}
+                </div>
+                <div className="th-auc-stats">
+                  <div><span className="th-eb">Top bid</span><b style={{ fontSize: 16 }}>{bids[0]?.offer ?? 'None yet'}</b><small>{bids.length} bid{bids.length === 1 ? '' : 's'}</small></div>
+                  <div><span className="th-eb">Start</span><b style={{ fontSize: 16 }}>{l.asking ?? 'Open'}</b></div>
+                  <div><span className="th-eb">Market value</span><b>{moneyK(d.rates.get(l.player_id) ?? 0)}</b></div>
+                  <div><span className="th-eb">Average</span><b>{p?.average?.toFixed(1) ?? '–'}</b><small>{p?.games ?? 0} games</small></div>
+                </div>
+                <div className="th-auc-foot">
+                  <Link href={`/market/${l.id}`} className="th-btn gr">Bid</Link>
+                  <span className="th-mut"><Link href="/market/auctions">All {auctionCount} →</Link></span>
+                </div>
+              </section>
+            );
+          })() : (
+            <section className="th-card th-auc" aria-labelledby="auc-h">
+              <div className="th-auc-top">
+                <div>
+                  <span className="th-eb">Auction of the week</span>
+                  <h2 id="auc-h">{block[0] ? <Link href={`/market/${block[0].id}`}>{pname(block[0].player_id)}</Link> : 'Nothing under the hammer'}</h2>
+                  <span style={{ opacity: .85 }}>{block[0] ? `No auction running · top of the trade block · ${teamName(block[0].team_id)}` : 'Auctions run in the mid-season window'}</span>
+                </div>
+              </div>
+              {block[0] ? (() => {
+                const l = block[0]; const p = allPlayers.get(l.player_id); const sp2 = seasonPct(l.player_id);
+                return <>
+                  <div className="th-auc-stats">
+                    <div><span className="th-eb">Asking</span><b style={{ fontSize: 16 }}>{l.asking ?? 'Open to offers'}</b></div>
+                    <div><span className="th-eb">Offers</span><b>{(l.offers ?? []).length}</b></div>
+                    <div><span className="th-eb">Market value</span><b>{moneyK(d.rates.get(l.player_id) ?? 0)}</b>{sp2 != null && <small className={sp2 >= 0 ? 'th-up' : 'th-dn'}>{pct(sp2)} this season</small>}</div>
+                    <div><span className="th-eb">Average</span><b>{p?.average?.toFixed(1) ?? '–'}</b><small>{p?.games ?? 0} games</small></div>
+                  </div>
+                  <div className="th-auc-foot">
+                    <Link href={`/market/${l.id}`} className="th-btn gr">Make an offer</Link>
+                    <Link href={`/players/${l.player_id}`} className="th-btn">Player profile</Link>
+                  </div>
+                </>;
+              })() : (
+                <div className="th-auc-empty">
+                  <p className="th-mut" style={{ margin: 0 }}>When a coach puts a contracted player up for auction, the biggest one shows here with the clock and the top bid. Coaches can list from their Clubhouse contracts during the mid-season window.</p>
+                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}><Link href="/market/new" className="th-btn gr">List a player</Link><Link href="/market/auctions" className="th-btn">Auctions</Link></div>
+                </div>
+              )}
+            </section>
+          )}
 
-        {pendingTrades.length > 0 && (
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <h2 className="h2" style={{ fontSize: 20 }}>Awaiting approval</h2>
-            {pendingTrades.map((t) => {
-              const n = (votes ?? []).filter((v) => v.trade_id === t.id).length;
-              const voted = (votes ?? []).some((v) => v.trade_id === t.id && v.team_id === me?.team_id);
+          {/* Your desk */}
+          <section className="th-card" aria-labelledby="desk-h" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="th-ch"><h2 id="desk-h">Your desk</h2><span className="th-mut">{meId ? teamName(meId) : ''}</span></div>
+            {!meId && <p className="th-note">Coaches see their offers, trades and bank here.</p>}
+            {claimsOnMe.map((c) => (
+              <div key={c.id} className="th-feed"><span className="th-ico rust">!</span>
+                <span><b>{teamName(c.buyer_team)} paid {pname(c.player_id)}’s clause</b><span className="s">{kt(c.price_kt)} · match it or let him go</span></span>
+                <Link href={`${clubBase}?view=contracts`} className="th-btn sm dk">Respond</Link></div>
+            ))}
+            {d.myOffers.map((o) => {
+              const f = d.freeAgents.find((x) => x.id === o.fa_id); const pid = f?.player_id ?? 0; const rivals = Math.max(0, (f?.offers ?? 1) - 1);
               return (
-                <div key={t.id} className="card" style={{ padding: '14px 18px', display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span><b>{team(t.team_a)?.name}</b> gives {t.a_gives} · <b>{team(t.team_b)?.name}</b> gives {t.b_gives}</span>
-                  <span style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                    <span className="muted" style={{ fontSize: 12 }}>{n} of 6 veto votes</span>
-                    {!voted && me && ![t.team_a, t.team_b].includes(me.team_id) && <form action={voteVeto.bind(null, t.id)}><button className="btn">Vote lopsided</button></form>}
+                <div key={o.id} className="th-feed"><span className="th-ico yellow">FA</span>
+                  <span><b>Offer for <Link href={`/players/${pid}`}>{shortName(pname(pid))}</Link></b><span className="s">{o.years} yr{o.years > 1 ? 's' : ''} × {moneyK(o.salary_k)} · waiting{rivals ? ` · ${rivals} rival offer${rivals > 1 ? 's' : ''}` : ''}</span></span>
+                  <span className="acts"><Link href={`/contracts/offer/${o.fa_id}`} className="th-btn sm">Raise</Link><WithdrawOffer offerId={o.id} name={pname(pid)} sweet={o.sweet_kt} small /></span>
+                </div>
+              );
+            })}
+            {offersOnMine > 0 && (
+              <div className="th-feed"><span className="th-ico brass">FA</span>
+                <span><b>{offersOnMine} offer{offersOnMine > 1 ? 's' : ''} on your pending free agents</b><span className="s">Pick one or keep him to season end</span></span>
+                <Link href={`${clubBase}?view=contracts`} className="th-btn sm dk">Review</Link></div>
+            )}
+            {myDesks.slice(0, 3).map((x) => (
+              <div key={x.id} className="th-feed"><span className="th-ico green">TR</span>
+                <span><b>{x.team_id === meId ? 'Your trade desk' : `Trade desk with ${teamName(x.team_id)}`}</b><span className="s">{x.title} · {(x.desk_teams ?? []).length} team{(x.desk_teams ?? []).length === 1 ? '' : 's'}{x.status === 'agreed' ? ' · agreed' : ''}</span></span>
+                <Link href={`/market/desk/${x.id}`} className="th-btn sm dk">Review</Link></div>
+            ))}
+            {myTrades.map((t) => (
+              <div key={t.id} className="th-feed"><span className="th-ico grey">TR</span>
+                <span><b>Trade with {teamName(t.team_a === meId ? t.team_b : t.team_a)}</b><span className="s">Awaiting the commish · {t.team_a === meId ? t.a_gives : t.b_gives} for {t.team_a === meId ? t.b_gives : t.a_gives}</span></span>
+                <span className="th-mut" style={{ fontSize: 12 }}>{ago(t.created_at)}</span></div>
+            ))}
+            {cheapest && (
+              <div className="th-feed"><span className="th-ico rust">!</span>
+                <span><b>{shortName(pname(cheapest.c.player_id))}’s clause is your cheapest</b><span className="s">{kt(cheapest.clause!)} for a {moneyK(cheapest.rate)} player · anyone can pay it in the window</span></span>
+                <Link href={`${clubBase}?view=contracts`} className="th-btn sm">Extend</Link></div>
+            )}
+            {myClub && s && (
+              <div className="th-feed"><span className="th-ico brass">KT</span>
+                <span><b>Bank {kt(myClub.bank)}</b><span className="s">{moneyK(s.season_cap_k - myClub.salary)} season cap room · {windowOpen ? `${buysUsed} of ${s.max_buys} clause buys used` : `max ${s.max_buys} clause buys a window`}</span></span>
+                <Link href={`${clubBase}?view=finances`} className="th-btn sm">Finances</Link></div>
+            )}
+            {meId && !d.myOffers.length && !myDesks.length && !myTrades.length && !claimsOnMe.length && !offersOnMine && (
+              <p className="th-note" style={{ marginTop: 6 }}>No offers or trades on the go. <Link href="/market/free-agents">Find a free agent</Link> or <Link href="/market/desk">start a trade</Link>.</p>
+            )}
+          </section>
+        </div>
+
+        {m.pendingTrades.length > 0 && (
+          <section className="th-card" aria-labelledby="ap-h">
+            <div className="th-ch"><h2 id="ap-h">Awaiting approval</h2><span className="th-mut">The commish ticks every trade · 6 votes vetoes a lopsided one</span></div>
+            {m.pendingTrades.map((t) => {
+              const n = m.votes.filter((v) => v.trade_id === t.id).length;
+              const voted = m.votes.some((v) => v.trade_id === t.id && v.team_id === meId);
+              return (
+                <div key={t.id} className="th-feed"><span className="th-ico brass">TR</span>
+                  <span><b>{teamName(t.team_a)} ⇄ {teamName(t.team_b)}</b><span className="s">{teamCode(t.team_a)} gives {t.a_gives} · {teamCode(t.team_b)} gives {t.b_gives} · {n} of 6 veto votes</span></span>
+                  <span className="acts">
+                    {!voted && meId && ![t.team_a, t.team_b].includes(meId) && <form action={voteVeto.bind(null, t.id)}><button className="th-btn sm">Vote lopsided</button></form>}
                     {me?.is_commish && <>
-                      <form action={decideTrade.bind(null, t.id, false)}><button className="btn">Veto</button></form>
-                      <form action={decideTrade.bind(null, t.id, true)}><button className="btn green">Approve</button></form>
+                      <form action={decideTrade.bind(null, t.id, false)}><button className="th-btn sm">Veto</button></form>
+                      <form action={decideTrade.bind(null, t.id, true)}><button className="th-btn sm gr">Approve</button></form>
                     </>}
                   </span>
                 </div>
@@ -82,124 +224,68 @@ export default async function MarketPage({ searchParams }: { searchParams: Promi
           </section>
         )}
 
-        <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          <div className="row-between"><h2 className="h2" style={{ fontSize: 20, display: 'flex', alignItems: 'center', gap: 10 }}><span className="dot" style={{ background: '#c0392b' }} />Live auctions</h2><span className="muted" style={{ fontSize: 13 }}>Highest bid when the clock hits zero wins, if it meets the reserve.</span></div>
-          {auctions.length ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 14 }}>
-              {auctions.map((a) => {
-                const p = player(a.player_id);
-                const bids = (a.offers ?? []) as { offer: string; points: number | null; team_id: number }[];
-                const top = [...bids].sort((x, y) => (y.points ?? 0) - (x.points ?? 0))[0];
-                return (
-                  <Link key={a.id} href={`/market/${a.id}`} className="card" style={{ padding: 18, display: 'flex', flexDirection: 'column', gap: 14, color: 'inherit', textDecoration: 'none', borderRadius: 16 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-                      <div style={{ display: 'flex', flexDirection: 'column' }}>
-                        <span className="mono muted" style={{ fontSize: 11 }}>{p?.positions.join('/')}</span>
-                        <span style={{ display: 'flex', gap: 8, alignItems: 'center', font: '600 20px var(--font)' }}>{p?.name} <ClubDot code={p?.afl_club ?? null} /></span>
-                        <span className="muted" style={{ fontSize: 12 }}>Seller {team(a.team_id)?.name}</span>
-                      </div>
-                      {a.ends_at && <Countdown endsAt={a.ends_at} />}
-                    </div>
-                    <div className="tiles" style={{ gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
-                      <div className="tile" style={{ background: 'var(--sunk)' }}><span className="eyebrow">Start</span><span style={{ fontWeight: 600 }}>{a.asking ?? '–'}</span></div>
-                      <div className="tile" style={{ background: 'var(--sunk)' }}><span className="eyebrow">Top bid</span><span style={{ fontWeight: 600, color: C.green5 }}>{top?.offer ?? 'None yet'}</span></div>
-                      <div className="tile" style={{ background: 'var(--sunk)' }}><span className="eyebrow">Bids</span><span style={{ fontWeight: 600 }}>{bids.length}</span></div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          ) : <div className="card muted" style={{ padding: 16 }}>No auctions running. Start one when you list a player.</div>}
-        </section>
-
-        <div className="split">
-          <section className="col-main">
-            <div className="row-between">
-              <h2 className="h2" style={{ fontSize: 20 }}>Listings</h2>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {(['All', ...LINES] as const).map((l) => (
-                  <Link key={l} href={l === 'All' ? '/market' : `/market?line=${l}`} className="pill" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', textDecoration: 'none', ...(((l === 'All' && !line) || l === line) ? { background: C.ink, color: '#fff' } : { background: '#fff', color: C.ink, border: '1px solid #d6ddd1' }) }}>
-                    {l !== 'All' && <span className="dot" style={{ width: 7, height: 7, background: C[l] }} />}{l}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="card" style={{ overflow: 'hidden', borderRadius: 16 }}>
-              {regular.length ? regular.map((l, i) => {
-                const p = player(l.player_id);
-                const r = p ? league.ratings.get(p.id) : null;
-                return (
-                  <Link key={l.id} href={`/market/${l.id}`} style={{ display: 'grid', gridTemplateColumns: '10px minmax(0, 1fr) 110px 90px', gap: 14, alignItems: 'center', padding: '13px 18px', borderTop: i ? '1px solid var(--line)' : 0, color: 'inherit', textDecoration: 'none' }}>
-                    <span className="dot" style={{ width: 10, height: 10, background: p ? C[p.positions[0]] : C.muted }} />
-                    <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-                      <span style={{ display: 'flex', gap: 8, alignItems: 'center', fontWeight: 600 }}>{p?.name} <ClubDot code={p?.afl_club ?? null} size={16} />{l.status === 'pending' && <span className="pill" style={{ background: C.yellow }}>Deal pending</span>}</span>
-                      <span className="muted" style={{ fontSize: 12 }}>{p?.positions.join('/')} · {p?.average?.toFixed(1)} avg · {team(l.team_id)?.name}</span>
-                    </div>
-                    <span style={{ fontSize: 13 }}><span className="eyebrow">Ask </span>{l.asking ?? 'Open'}</span>
-                    <span style={{ fontSize: 13 }} className="muted">{(l.offers ?? []).length} offer{(l.offers ?? []).length === 1 ? '' : 's'}{r ? <><br /><Stars value={r.valueStars} label="Current ability" /></> : null}</span>
-                  </Link>
-                );
-              }) : <div className="muted" style={{ padding: 16 }}>Nothing listed{line ? ` at ${line}` : ''} yet.</div>}
-            </div>
+        <div className="th-g3">
+          <section className="th-card" aria-labelledby="cl-h">
+            <div className="th-ch"><h2 id="cl-h">On release clauses</h2><Link href="/market/clauses">All {m.clauses.length} →</Link></div>
+            <p className="th-note">Cheapest clauses in the league. Pay it in the window and he’s yours.</p>
+            {m.clauses.length ? (
+              <table className="th-tbl">
+                <thead><tr><th>Player</th><th className="r">Clause</th><th className="r">Value</th></tr></thead>
+                <tbody>{m.clauses.slice(0, 6).map((r) => (
+                  <tr key={r.c.id}><td><Link href={`/players/${r.c.player_id}`}>{shortName(pname(r.c.player_id))}</Link> <span className="meta">{teamCode(r.c.team_id)}</span></td><td className="r tn">{kt(r.clause)}</td><td className="r tn">{moneyK(r.rate)}</td></tr>
+                ))}</tbody>
+              </table>
+            ) : <p className="th-mut" style={{ fontSize: 13 }}>No clauses on the market yet.</p>}
           </section>
 
-          <aside className="col-side">
-            <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              <div className="row-between"><h2 className="h2" style={{ fontSize: 20 }}>Wish board</h2><span className="muted" style={{ fontSize: 13 }}>What coaches are chasing</span></div>
-              {(wishes ?? []).map((w) => (
-                <article key={w.id} className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span className="muted" style={{ fontSize: 12 }}><b style={{ color: C.ink }}>{team(w.team_id)?.name}</b></span>
-                    <span className="pill" style={{ marginLeft: 'auto', background: w.tag === 'Pick' ? 'var(--forest)' : w.tag === 'Rebuild' ? C.yellow : '#e8eee5', color: w.tag === 'Pick' ? '#fff' : C.ink }}>{w.tag}</span>
-                  </div>
-                  <span style={{ font: '600 16px var(--font)' }}>{w.want}</span>
-                  {w.offering && <span className="muted" style={{ fontSize: 13 }}>Offering: <span style={{ color: C.ink }}>{w.offering}</span></span>}
-                  {(me?.team_id === w.team_id || me?.is_commish) && (
-                    <form action={closeWish.bind(null, w.id)} style={{ alignSelf: 'flex-end' }}>
-                      <button className="btn" style={{ minHeight: 28, padding: '0 10px', fontSize: 12 }}>Remove wish</button>
-                    </form>
-                  )}
-                </article>
-              ))}
-              <details className="card" style={{ padding: 14 }}>
-                <summary style={{ cursor: 'pointer', fontWeight: 600 }}>Post a wish</summary>
-                <form action={postWish} style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}>
-                  <label className="eyebrow" htmlFor="want">What are you after?</label>
-                  <input id="want" name="want" required className="input" placeholder="A pick in the top 10" />
-                  <label className="eyebrow" htmlFor="offering">What can you offer?</label>
-                  <input id="offering" name="offering" className="input" placeholder="Two second-rounders" />
-                  <label className="eyebrow" htmlFor="tag">Type</label>
-                  <select id="tag" name="tag" className="input"><option>Player</option><option>Pick</option><option>Rebuild</option></select>
-                  <button className="btn dark" style={{ alignSelf: 'flex-start' }}>Post</button>
-                </form>
-              </details>
-            </section>
-
-            <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <h2 className="h2" style={{ fontSize: 20 }}>Pick price guide</h2>
-              <div className="card" style={{ padding: '6px 16px' }}>
-                {[1, 5, 10, 15, 20, 30, 40].map((n, i) => (
-                  <div key={n} style={{ display: 'grid', gridTemplateColumns: '70px minmax(0, 1fr) 60px', gap: 12, alignItems: 'center', padding: '8px 0', borderTop: i ? '1px solid var(--line-soft)' : 0 }}>
-                    <span className="mono" style={{ fontSize: 12 }}>Pick {n}</span>
-                    <div style={{ height: 8, background: C.empty, borderRadius: 4, overflow: 'hidden' }}><div style={{ height: '100%', width: `${pickPoints(n) / 30}%`, background: pickPoints(n) >= 2000 ? C.green5 : pickPoints(n) >= 1000 ? C.green4 : pickPoints(n) >= 400 ? C.green3 : C.green2 }} /></div>
-                    <span className="mono muted" style={{ fontSize: 12, textAlign: 'right' }}>{pickPoints(n).toLocaleString()}</span>
-                  </div>
+          <section className="th-card" aria-labelledby="fa-h">
+            <div className="th-ch"><h2 id="fa-h">Coming into free agency</h2><Link href="/market/free-agents">All →</Link></div>
+            <p className="th-note">Final-year deals. Not re-signed in time? They hit the market.</p>
+            <table className="th-tbl">
+              <thead><tr><th>Player</th><th className="r">Salary</th><th className="r">Value</th></tr></thead>
+              <tbody>
+                {m.comingFa.slice(0, 6).map((r) => (
+                  <tr key={r.c.id}><td><Link href={`/players/${r.c.player_id}`}>{shortName(pname(r.c.player_id))}</Link> <span className="meta">{teamCode(r.c.team_id)}</span></td>
+                    <td className="r tn">{moneyK(r.c.salary_k)}</td><td className={`r tn${r.rate > r.c.salary_k ? ' th-up' : ''}`}>{moneyK(r.rate)}</td></tr>
                 ))}
-              </div>
-            </section>
+                {!m.comingFa.length && <tr><td colSpan={3} className="meta">Nobody in a final year.</td></tr>}
+                <tr><td colSpan={3}><span className="meta">Open free agents now: <b>{openFa.length}</b> · <Link href="/market/free-agents" style={{ color: '#1f6b3a' }}>Make an offer</Link></span></td></tr>
+              </tbody>
+            </table>
+          </section>
 
-            <section style={{ display: 'flex', flexDirection: 'column' }}>
-              <h2 className="h2" style={{ fontSize: 20, marginBottom: 6 }}>Done deals</h2>
-              {doneTrades.length ? doneTrades.map((t) => (
-                <div key={t.id} style={{ padding: '10px 0', borderTop: '1px solid #d6ddd1', fontSize: 13 }}>
-                  <b>{team(t.team_a)?.name}</b> ↔ <b>{team(t.team_b)?.name}</b>
-                  <div className="muted" style={{ fontSize: 12 }}>{t.a_gives} for {t.b_gives}</div>
-                </div>
-              )) : <span className="muted" style={{ fontSize: 13 }}>No approved trades yet this offseason.</span>}
-            </section>
-          </aside>
+          <section className="th-card" aria-labelledby="tx-h">
+            <div className="th-ch"><h2 id="tx-h">Recent transactions</h2><Link href="/market/transactions">Full log →</Link></div>
+            {m.feed.slice(0, 6).map((f) => (
+              <div key={f.id} className="th-feed"><span className={`th-ico ${f.tone}`}>{f.tag}</span>
+                <span><b>{f.player_id ? <Link href={`/players/${f.player_id}`}>{f.title}</Link> : f.title}</b><span className="s">{f.sub}</span></span>
+                <span className="th-mut" style={{ fontSize: 12 }}>{ago(f.at)}</span></div>
+            ))}
+            {!m.feed.length && <p className="th-mut" style={{ fontSize: 13 }}>Nothing yet.</p>}
+          </section>
         </div>
-      </div></div>
+
+        <div className="th-g2 even">
+          <MarketMovers />
+          <section className="th-card" aria-labelledby="li-h">
+            <div className="th-ch"><h2 id="li-h">On the trade block</h2><Link href="/market/listings">All listings →</Link></div>
+            {block.slice(0, 6).map((l) => {
+              const mine = l.team_id === meId;
+              return (
+                <div key={l.id} className="th-feed" style={{ gridTemplateColumns: 'minmax(0, 1fr) auto auto' }}>
+                  <span><b><Link href={`/market/${l.id}`}>{shortName(pname(l.player_id))}</Link></b> <span className="th-mut">{mine ? 'You' : teamName(l.team_id)}</span>
+                    <span className="s">{l.asking ? `Wants: ${l.asking}` : 'Open to offers'} · {(l.offers ?? []).length} offer{(l.offers ?? []).length === 1 ? '' : 's'}</span></span>
+                  <span className="tn">{d.rates.get(l.player_id) ? moneyK(d.rates.get(l.player_id)!) : '—'}</span>
+                  <Link href={`/market/${l.id}`} className="th-btn sm">{mine ? 'View' : 'Offer'}</Link>
+                </div>
+              );
+            })}
+            {!block.length && <p className="th-mut" style={{ fontSize: 13 }}>Nobody listed. <Link href="/market/new">List a player</Link>.</p>}
+            <p className="th-note" style={{ marginTop: 10 }}><Link href="/market/listings#wishes">Wish board</Link> · <Link href="/market/listings#picks">Pick price guide</Link></p>
+          </section>
+        </div>
+        <p className="th-note">Prices are market values: the contract rate from a rolling six-game average.</p>
+      </main>
     </div>
   );
 }
