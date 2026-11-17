@@ -26,6 +26,11 @@ export async function adminContract(contractId: number, action: 'void' | 'restor
     (r) => (r === 'voided' ? 'Contract voided.' : r === 'restored' ? 'Contract restored.' : 'Contract updated.'));
 }
 /** Commish: release a player (e.g. a club still over the cap after deadline day). */
+export async function adminUnlock(contractId: number | null, teamId: number | null) {
+  const me = await getMe();
+  if (!me?.is_commish) return { ok: false, message: 'Only the commish can do that.' };
+  return run('kc_unlock_contracts', { cid: contractId, t: teamId }, (n) => `${n} contract${Number(n) === 1 ? '' : 's'} unlocked. They’re provisional again.`);
+}
 export async function adminRelease(contractId: number) {
   const me = await getMe();
   if (!me?.is_commish) return { ok: false, message: 'Only the commish can do that.' };
