@@ -19,6 +19,8 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
   picks: { id: number; label: string; overall: number }[]; existing: MyOffer | null;
 }) {
   const router = useRouter();
+  // Close: back to wherever they opened it from (player profile, contracts, market), else the Trademarket.
+  const leave = () => { if (typeof window !== "undefined" && window.history.length > 1) router.back(); else router.push("/market"); };
   const [step, setStep] = useState(existing ? 1 : 0);
   const [years, setYears] = useState(existing?.years ?? 3);
   // Minimum is his market value, whatever the length.
@@ -241,7 +243,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
               <span className="eyebrow" style={{ color: 'var(--khq-brass-text)' }}>{existing ? 'Raise your offer' : 'Offer contract'} · free agent</span>
               <h2 id="kc-offer-h" style={{ font: '600 22px var(--font)', marginTop: 2 }}>{player.name}</h2>
             </div>
-            <Link href="/contracts/market" className="kc-btn" aria-label="Close">✕</Link>
+            <button type="button" className="kc-btn" aria-label="Close" onClick={leave}>✕</button>
           </div>
           <ol className="kc-steps">
             {STEPS.map((l, i) => <li key={l} data-n={i + 1} className={done || i < step ? 'done' : i === step ? 'now' : ''} aria-current={i === step && !done ? 'step' : undefined}>{l}</li>)}
@@ -250,11 +252,11 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
         <div className="kc-modal-body">{body()}</div>
         <div className="kc-modal-foot">
           {done ? <>
-            <Link href="/contracts/market" className="kc-btn">Back to market</Link>
+            <button type="button" className="kc-btn" onClick={leave}>Back</button>
             <span className="kc-sub">Raise any time before offers close</span>
             <Link href="/market" className="kc-btn dark">View in Trademarket</Link>
           </> : <>
-            {step === 0 ? <Link href="/contracts/market" className="kc-btn">Cancel</Link> : <button type="button" className="kc-btn" onClick={() => setStep(step - 1)}>Back</button>}
+            {step === 0 ? <button type="button" className="kc-btn" onClick={leave}>Cancel</button> : <button type="button" className="kc-btn" onClick={() => setStep(step - 1)}>Back</button>}
             <span className="kc-sub">Step {step + 1} of 5</span>
             {step < 4
               ? <button type="button" className="kc-btn dark" onClick={() => setStep(step + 1)}>{step === 0 ? 'Build offer' : `Next: ${STEPS[step + 1].toLowerCase()}`}</button>
