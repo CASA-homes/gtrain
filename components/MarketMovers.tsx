@@ -23,7 +23,7 @@ function Spark({ v, up }: { v: number[]; up: boolean }) {
   );
 }
 
-export async function MarketMovers() {
+export async function MarketMovers({ compact = false }: { compact?: boolean } = {}) {
   const league = await getLeague();
   const team = new Map(league.teams.map((t) => [t.id, t.short_code]));
   const week: Mover[] = [], season: Mover[] = [];
@@ -40,7 +40,7 @@ export async function MarketMovers() {
       season.push({ p, now, prev: start, diff: now - start, pct: (now - start) / start, spark, owner });
     }
   }
-  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, 5);
+  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, compact ? 4 : 5);
   if (!week.length && !season.length) return null;
 
   const List = ({ title, rows, rise }: { title: string; rows: Mover[]; rise: boolean }) => (
@@ -67,7 +67,7 @@ export async function MarketMovers() {
   );
 
   return (
-    <section className="mm card" aria-labelledby="mm-h">
+    <section className={`mm card${compact ? ' compact' : ''}`} aria-labelledby="mm-h">
       <input type="radio" name="mm-t" id="mm-wk" defaultChecked hidden />
       <input type="radio" name="mm-t" id="mm-ss" hidden />
       <div className="mm-head">

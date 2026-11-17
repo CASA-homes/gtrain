@@ -62,7 +62,36 @@ export default async function LeaguePage() {
         </div>
       </header>
 
-      <MarketMovers />
+      <div className="lg-top">
+        <section className="card" aria-labelledby="lad-h">
+          <div className="card-h"><div><span className="mm-eyebrow">{CURRENT_SEASON} season</span><h2 id="lad-h">League table</h2></div><span className="muted" style={{ fontSize: 12 }}>Home and away</span></div>
+          <table className="lg-ladder">
+            <thead><tr><th>#</th><th>Team</th><th>W</th><th>L</th><th>Points</th><th>Prem pts</th></tr></thead>
+            <tbody>
+              {[...ladder].sort((a, b) => b.points - a.points || b.pts_for - a.pts_for).map((l, i) => {
+                const t = league.teams.find((x) => x.id === l.team_id);
+                if (!t) return null;
+                return (
+                  <tr key={l.team_id} className={t.id === me?.team_id ? 'me' : undefined}>
+                    <td>{i + 1}</td>
+                    <td><Link href={`/clubhouse/${t.id}`}>{t.name}</Link>{latest?.premier_id === t.id && <span style={{ marginLeft: 4, verticalAlign: -3 }}><Cup size={13} /></span>}</td>
+                    <td>{l.wins}</td>
+                    <td>{l.losses}</td>
+                    <td>{Math.round(l.pts_for).toLocaleString()}</td>
+                    <td className="pp">{l.points}</td>
+                  </tr>
+                );
+              })}
+              {!ladder.length && <tr><td colSpan={6} className="muted">No games yet.</td></tr>}
+            </tbody>
+          </table>
+        </section>
+        <section className="card" aria-labelledby="cup-h">
+          <div className="card-h"><div><span className="mm-eyebrow">Group stage · rounds 5 to 8</span><h2 id="cup-h">{CUP_NAME} {CUP_SEASON}</h2></div><Link href="/live/cup" className="muted" style={{ fontSize: 12 }}>Full cup →</Link></div>
+          <CupTables data={cup} />
+        </section>
+        <MarketMovers compact />
+      </div>
       <SeasonSchedule />
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -141,32 +170,8 @@ export default async function LeaguePage() {
       </section>
 
       <div className="split" style={{ gap: 22 }}>
-        {/* Left: condensed ladder, honour roll, flags */}
+        {/* Left: honour roll, flags */}
         <div style={{ flex: '1 1 280px', minWidth: 0, maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <h2 className="h2" style={{ fontSize: 18 }}>{CURRENT_SEASON} final ladder</h2>
-            <div className="table-box">
-              <table className="squad" style={{ fontSize: 13 }}>
-                <thead><tr><th style={{ width: 26 }}>#</th><th>Team</th><th style={{ textAlign: 'center', width: 48 }}>W–L</th><th style={{ textAlign: 'right', width: 56 }}>For</th></tr></thead>
-                <tbody>
-                  {ladder.map((l) => {
-                    const t = league.teams.find((x) => x.id === l.team_id)!;
-                    return (
-                      <tr key={l.team_id}>
-                        <td className="mono" style={{ padding: '6px 8px' }}>{l.rank}</td>
-                        <td style={{ whiteSpace: 'nowrap', padding: '6px 8px' }}>
-                          <Link href={`/clubhouse/${t.id}`}>{t.name}</Link>
-                          {latest?.premier_id === t.id && <span style={{ marginLeft: 4, verticalAlign: -3 }}><Cup size={13} /></span>}
-                        </td>
-                        <td style={{ textAlign: 'center', padding: '6px 8px' }}>{l.wins}–{l.losses}</td>
-                        <td style={{ textAlign: 'right', padding: '6px 8px' }} className="mono">{(l.pts_for / 1000).toFixed(1)}k</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </section>
           <section style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <h2 className="h2" style={{ fontSize: 18 }}>Honour roll</h2>
             <div className="table-box">
@@ -227,16 +232,6 @@ export default async function LeaguePage() {
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12 }} className="muted">
               {allTeamByCoach.map(([t, n]) => <span key={t}><b style={{ color: 'var(--ink)' }}>{n}</b> {t}</span>)}
             </div>
-          </section>
-          <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div className="row-between" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 6 }}>
-              <div>
-                <span className="eyebrow">Group stage · rounds 5 to 8</span>
-                <h2 className="h2" style={{ fontSize: 22 }}>{CUP_NAME} {CUP_SEASON}</h2>
-              </div>
-              <Link href="/live/cup" className="muted" style={{ fontSize: 13 }}>Full cup →</Link>
-            </div>
-            <CupTables data={cup} />
           </section>
         </div>
       </div>
