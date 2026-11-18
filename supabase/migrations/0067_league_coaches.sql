@@ -1,0 +1,2 @@
+-- Commish: who's in the league, as which club, and when they last signed in; plus invited emails not yet signed in.
+-- Applied 18 Nov 2026 as public.league_coaches() (security definer, commish only, reads auth.users.last_sign_in_at).

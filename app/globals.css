@@ -2840,3 +2840,8 @@ button.md-slot:hover { border-color: #cdd2cb; }
 /* Dark theme (first pass): invert the light design, keep photos, logos and guernseys true to colour. */
 html.theme-dark { background: #0f1210; filter: invert(.92) hue-rotate(180deg); }
 html.theme-dark img, html.theme-dark video, html.theme-dark picture, html.theme-dark [style*="background-image"], html.theme-dark .club-dot, html.theme-dark .guernsey { filter: invert(1) hue-rotate(180deg); }
+.lc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.lc-table th { font: 500 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 6px 8px; white-space: nowrap; }
+.lc-table td { padding: 8px; border-top: 1px solid var(--line); white-space: nowrap; }
+.lc-table tr.inv td { background: #fbf7ea; }
+.lc-tag { margin-left: 6px; padding: 1px 6px; border-radius: 5px; background: #2f5d46; color: #fff; font: 600 10px var(--font); }
