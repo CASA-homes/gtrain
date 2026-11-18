@@ -236,7 +236,7 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           <Info p={p} onInfo={setSheet} />
         </span>
         <span className="sqc-b">
-          <Disc p={p} size={28} />
+          <span className="sqc-disc"><Disc p={p} size={26} /></span>
           <span className="sqc-meta"><b>{p.club ?? '–'}</b> | {p.pos.join('/')}</span>
           <span className="sqc-sub" title={`2026 average${p.l5 != null ? ` · last 5: ${p.l5}` : ''}`}>{p.avg != null ? p.avg.toFixed(1) : 'no games'}</span>
           {showProj && <span className={`sqc-proj est ${capd ? 'is-cap' : ''}`} title={capd ? `Projected ${p.proj}, doubled as captain` : 'Projected score'}>{capd ? p.proj * 2 : p.proj}</span>}

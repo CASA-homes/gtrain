@@ -2809,3 +2809,8 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .ch-acts-desk { display: flex; gap: 8px; }
   .ch-acts-desk .btn, .ch-acts-desk button { padding-top: 7px; padding-bottom: 7px; }
 }
+/* Squad selector cards: club guernsey spans both rows (club | pos above the average), never clipped */
+.sqc-b { grid-template-rows: auto auto; row-gap: 1px; padding-top: 2px; padding-bottom: 2px; overflow: visible; }
+.sqc-disc { grid-column: 1; grid-row: 1 / 3; display: flex; align-items: center; justify-content: center; align-self: center; line-height: 0; }
+.sqc-meta { grid-column: 2; grid-row: 1; align-self: end; line-height: 1.2; }
+.sqc-sub { grid-column: 2; grid-row: 2; align-self: start; line-height: 1.2; }
