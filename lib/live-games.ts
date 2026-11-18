@@ -120,11 +120,19 @@ export const PRIZE_SPLITS: Record<string, { label: string; pct: number[] }> = {
   '60-30-10': { label: '60 / 30 / 10', pct: [60, 30, 10] },
 };
 export const PRIZE_AMOUNTS = [5, 10, 20, 50];
-export interface Prize { on: boolean; entry: number; split: string; extras: string[] }
+export interface Prize { on: boolean; entry: number; split: string; extras: string[];
+  /** Played for KT: each club pays the entry from its bank, the league takes KT_CUT_PCT, the rest is paid out automatically. */
+  kt?: boolean }
+export const KT_GAME_MAX = 50;
+export const KT_CUT_PCT = 20;
+export const KT_AMOUNTS = [10, 20, 30, 50];
+/** "$40" or "40 KT". */
+export const money = (p: Prize | null | undefined, n: number) => (p?.kt ? `${n.toLocaleString()} KT` : `$${n.toLocaleString()}`);
 /** Cash for each place: the pool split by percentage, rounded to the dollar (any rounding remainder goes to 1st). */
 export function payouts(p: Prize | null | undefined, clubs: number): number[] {
   if (!p?.on || !p.entry) return [];
-  const pool = p.entry * clubs;
+  const gross = p.entry * clubs;
+  const pool = p.kt ? gross - Math.floor((gross * KT_CUT_PCT) / 100) : gross;
   const pct = (PRIZE_SPLITS[p.split] ?? PRIZE_SPLITS.wta).pct.slice(0, Math.max(1, clubs - 1));
   const tot = pct.reduce((a, b) => a + b, 0);
   const out = pct.map((x) => Math.floor((pool * x) / tot));

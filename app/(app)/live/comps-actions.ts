@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getCoach } from '@/lib/data';
+import { loadPots, KT_COMP_MAX, type KtPot, type KtEntry } from '@/lib/kt-pots';
 import { COMP_BY_KEY, COMP_SEASON, DEFAULT_SETTINGS, OPT_IN, type CompKey, type CompSettings, type Prize, type PrizeKind } from '@/lib/comps';
 
 type Res = { ok: boolean; error?: string };
@@ -10,7 +11,8 @@ const MIG = 'Side comps need supabase/migrations/0020_matchday_comps_msd_values.
 const err = (m: string): Res => ({ ok: false, error: /comp_|relation|does not exist/.test(m) ? MIG : m });
 const done = (): Res => { revalidatePath('/live/comps'); revalidatePath('/live'); return { ok: true }; };
 
-export interface CompsState { ready: boolean; settings: CompSettings; entries: { comp: CompKey; team_id: number }[]; prizes: Prize[] }
+export interface CompsState { ready: boolean; settings: CompSettings; entries: { comp: CompKey; team_id: number }[]; prizes: Prize[]; pots: KtPot[]; potEntries: KtEntry[] }
+const potRef = (comp: CompKey) => `${COMP_SEASON}:${comp}`;
 
 export async function loadComps(): Promise<CompsState> {
   const supabase = await createClient();
@@ -19,8 +21,9 @@ export async function loadComps(): Promise<CompsState> {
     supabase.from('comp_entries').select('comp, team_id').eq('season', COMP_SEASON),
     supabase.from('comp_prizes').select('*').eq('season', COMP_SEASON).order('place').order('id'),
   ]);
-  if (s.error || e.error || p.error) return { ready: false, settings: DEFAULT_SETTINGS, entries: [], prizes: [] };
-  return { ready: true, settings: (s.data as CompSettings | null) ?? DEFAULT_SETTINGS, entries: (e.data ?? []) as CompsState['entries'], prizes: (p.data ?? []) as Prize[] };
+  if (s.error || e.error || p.error) return { ready: false, settings: DEFAULT_SETTINGS, entries: [], prizes: [], pots: [], potEntries: [] };
+  const k = await loadPots('comp', OPT_IN.map(potRef));
+  return { ready: true, settings: (s.data as CompSettings | null) ?? DEFAULT_SETTINGS, entries: (e.data ?? []) as CompsState['entries'], prizes: (p.data ?? []) as Prize[], pots: k.pots, potEntries: k.entries };
 }
 
 export async function joinComp(comp: CompKey, join: boolean): Promise<Res> {
@@ -34,6 +37,11 @@ export async function joinComp(comp: CompKey, join: boolean): Promise<Res> {
   if (!join) {
     const staked = st.prizes.some((p) => p.comp === comp && p.staked_by === me.team_id && p.status === 'pool');
     if (staked) return { ok: false, error: 'Take back your stake first.' };
+    const pot = st.pots.find((x) => x.ref === potRef(comp) && x.status === 'open');
+    if (pot && st.potEntries.some((x) => x.pot_id === pot.id && x.team_id === me.team_id)) {
+      const lv = await supabase.rpc('kt_pot_leave', { p_pot: pot.id, p_team: null });
+      if (lv.error) return { ok: false, error: lv.error.message };
+    }
     const r = await supabase.from('comp_entries').delete().eq('season', COMP_SEASON).eq('comp', comp).eq('team_id', me.team_id);
     return r.error ? err(r.error.message) : done();
   }
@@ -41,7 +49,52 @@ export async function joinComp(comp: CompKey, join: boolean): Promise<Res> {
   const mine = st.entries.filter((x) => x.team_id === me.team_id && OPT_IN.includes(x.comp));
   if (mine.length >= st.settings.cap) return { ok: false, error: `You can enter ${st.settings.cap} side comp${st.settings.cap === 1 ? '' : 's'}. Leave one first.` };
   const r = await supabase.from('comp_entries').insert({ season: COMP_SEASON, comp, team_id: me.team_id });
-  return r.error && !/duplicate/.test(r.error.message) ? err(r.error.message) : done();
+  if (r.error && !/duplicate/.test(r.error.message)) return err(r.error.message);
+  // KT entry fee: pay it, or back out of the entry.
+  const pot = st.pots.find((x) => x.ref === potRef(comp) && x.status === 'open');
+  if (pot) {
+    const pay = await supabase.rpc('kt_pot_enter', { p_pot: pot.id });
+    if (pay.error) {
+      await supabase.from('comp_entries').delete().eq('season', COMP_SEASON).eq('comp', comp).eq('team_id', me.team_id);
+      return { ok: false, error: pay.error.message };
+    }
+  }
+  return done();
+}
+
+/** Commish: KT entry fee per side comp (0 = free, max 50). Can't change once someone has paid in. */
+export async function saveCompFees(fees: Partial<Record<CompKey, number>>): Promise<Res> {
+  const me = await getCoach();
+  if (!me?.is_commish) return { ok: false, error: 'Only the commish sets entry fees.' };
+  const st = await loadComps();
+  const supabase = await createClient();
+  for (const comp of OPT_IN) {
+    if (!(comp in fees)) continue;
+    const fee = Math.max(0, Math.min(KT_COMP_MAX, Math.round(Number(fees[comp]) || 0)));
+    const pot = st.pots.find((x) => x.ref === potRef(comp));
+    if (pot && pot.entry === fee) continue;
+    if (pot && pot.status !== 'open') continue;
+    if (pot && st.potEntries.some((x) => x.pot_id === pot.id)) {
+      if (pot.entry !== fee) return { ok: false, error: `${COMP_BY_KEY[comp].name}: clubs have already paid ${pot.entry} KT, so the fee is locked.` };
+      continue;
+    }
+    if (pot && !fee) { const d = await supabase.from('kt_pots').delete().eq('id', pot.id); if (d.error) return err(d.error.message); continue; }
+    if (pot) { const u = await supabase.from('kt_pots').update({ entry: fee }).eq('id', pot.id); if (u.error) return err(u.error.message); continue; }
+    if (fee) { const i = await supabase.from('kt_pots').insert({ kind: 'comp', ref: potRef(comp), label: `${COMP_SEASON} ${COMP_BY_KEY[comp].name}`, entry: fee, split: 'wta' }); if (i.error) return err(i.error.message); }
+  }
+  return done();
+}
+
+/** Commish: pay a comp's KT pot to its winner (the league keeps its cut). */
+export async function payCompPot(comp: CompKey, winner: number): Promise<Res> {
+  const me = await getCoach();
+  if (!me?.is_commish) return { ok: false, error: 'Only the commish pays out comps.' };
+  const st = await loadComps();
+  const pot = st.pots.find((x) => x.ref === potRef(comp) && x.status === 'open');
+  if (!pot) return { ok: false, error: 'No open KT pot for that comp.' };
+  const supabase = await createClient();
+  const r = await supabase.rpc('kt_pot_settle_comp', { p_pot: pot.id, p_order: [winner] });
+  return r.error ? { ok: false, error: r.error.message } : done();
 }
 
 export async function saveCompSettings(cap: number, enabled: CompKey[], locksAt: string | null): Promise<Res> {
@@ -117,7 +170,16 @@ export async function settlePrize(id: number, action: 'award' | 'transfer' | 're
   if (action === 'award') {
     if (!winner) return { ok: false, error: 'Pick a winner.' };
     const r = await supabase.from('comp_prizes').update({ winner_id: winner, status: 'awarded', settled_at: now }).eq('id', id);
-    return r.error ? err(r.error.message) : done();
+    if (r.error) return err(r.error.message);
+    // Naming the comp winner also pays out its KT pot, if the winner paid in.
+    if (p.place === 1) {
+      const pot = await supabase.from('kt_pots').select('id').eq('kind', 'comp').eq('ref', `${p.season}:${p.comp}`).eq('status', 'open').maybeSingle();
+      if (pot.data) {
+        const paidIn = await supabase.from('kt_pot_entries').select('team_id').eq('pot_id', pot.data.id).eq('team_id', winner).maybeSingle();
+        if (paidIn.data) await supabase.rpc('kt_pot_settle_comp', { p_pot: pot.data.id, p_order: [winner] });
+      }
+    }
+    return done();
   }
   if (action === 'reopen' || action === 'return' || action === 'void') {
     const r = await supabase.from('comp_prizes').update({ status: action === 'reopen' ? 'pool' : action === 'return' ? 'returned' : 'void', winner_id: null, settled_at: action === 'reopen' ? null : now }).eq('id', id);

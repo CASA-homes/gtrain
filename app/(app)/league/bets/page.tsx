@@ -28,7 +28,7 @@ function Side({ label, who, won, lost }: { label: string; who: string[]; won: bo
 type Fine = { id: string; team_id: number; amount: number; reason: string; season: number; paid: boolean; round: number | null; rule_kind: string | null; prize: boolean; created_at: string };
 type Prize = { id: number; season: number; label: string; kt: number; status: 'pledged' | 'paid' | 'cancelled'; team_id: number | null; paid_at: string | null };
 type Bank = { sources: Record<string, number>; collected: number; paid: number; pledged: number; balance: number };
-const SOURCES: [string, string][] = [['levy', 'Transfer levies (clauses, auctions)'], ['deficit', 'Over-cap deficit fees'], ['extension', 'Extension fees'], ['release', 'Release fees'], ['burned', 'Burned clause matches']];
+const SOURCES: [string, string][] = [['levy', 'Transfer levies (clauses, auctions)'], ['deficit', 'Over-cap deficit fees'], ['extension', 'Extension fees'], ['release', 'Release fees'], ['burned', 'Burned clause matches'], ['games', 'Mini game and comp pots (20% cut)']];
 const TABS = [['bets', 'Bets'], ['fines', 'Fines'], ['bank', 'League bank']] as const;
 
 export default async function LeagueBetsPage({ searchParams }: { searchParams: Promise<{ tab?: string; error?: string }> }) {

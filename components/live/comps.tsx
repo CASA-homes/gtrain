@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { COMPS, COMP_BY_KEY, MINT_PRESETS, OPT_IN, PRIZE_KIND_NAME, placeName, type CompDef, type CompKey, type Prize, type PrizeKind } from '@/lib/comps';
-import { addPrize, joinComp, removePrize, saveCompSettings, settlePrize, type CompsState } from '@/app/(app)/live/comps-actions';
+import { addPrize, joinComp, payCompPot, removePrize, saveCompFees, saveCompSettings, settlePrize, type CompsState } from '@/app/(app)/live/comps-actions';
 import { Shell } from './kit';
 
 export interface CompsProps {
@@ -125,6 +125,10 @@ function CompCard({ comp, props }: { comp: CompDef; props: CompsProps }) {
   const off = !comp.everyone && !settings.enabled.includes(comp.key);
   const pz = prizes.filter((p) => p.comp === comp.key);
   const name = (id: number) => props.teams.find((t) => t.id === id)?.short ?? '?';
+  const pot = props.state.pots.find((x) => x.ref.endsWith(`:${comp.key}`));
+  const potPaid = pot ? props.state.potEntries.filter((x) => x.pot_id === pot.id).map((x) => x.team_id) : [];
+  const fee = pot?.status === 'open' ? pot.entry : 0;
+  const [win, setWin] = useState<number>(0);
   return (
     <section className={`rh-card cp-card ${inIt ? 'in' : ''} ${off ? 'off' : ''}`} style={{ ['--hue' as string]: comp.hue }}>
       <div className="cp-top">
@@ -133,12 +137,26 @@ function CompCard({ comp, props }: { comp: CompDef; props: CompsProps }) {
           <h2 className="cp-name">{comp.name}</h2>
         </div>
         {comp.key === 'cup' ? <Link href="/live/cup" className="rh-btn alt">Open the Cup</Link>
-          : !off && <button className={`rh-btn ${inIt ? 'alt' : 'go'}`} disabled={pending || (full && !inIt) || !props.state.ready} onClick={() => run(() => joinComp(comp.key, !inIt))}>{inIt ? 'Leave' : full ? 'At your limit' : 'Enter'}</button>}
+          : !off && <button className={`rh-btn ${inIt ? 'alt' : 'go'}`} disabled={pending || (full && !inIt) || !props.state.ready} onClick={() => run(() => joinComp(comp.key, !inIt))}>{inIt ? (fee ? `Leave · refund ${fee} KT` : 'Leave') : full ? 'At your limit' : fee ? `Enter · ${fee} KT` : 'Enter'}</button>}
       </div>
       <p className="cp-blurb">{comp.blurb}</p>
       <ul className="cp-facts"><li>{comp.how}</li><li>{comp.rounds}</li><li>{comp.lineup === 'gtrain' ? 'Scored off your regular-season team: nothing extra to pick.' : 'Set its team on Matchday.'}</li></ul>
       {!comp.everyone && entrants.length > 0 && <div className="cp-entrants">{entrants.map((t) => <span key={t} className={t === props.myTeamId ? 'me' : ''}>{name(t)}</span>)}</div>}
       {msg && <span className={msg.ok ? 'rh-up' : 'rh-down'} style={{ fontSize: 12.5 }}>{msg.text}</span>}
+      {pot && (
+        <div className="cp-ktpot">
+          <span className="rh-k">KT pot</span>
+          {pot.status === 'paid' ? <span>{pot.result?.[0] ? <><b>{pot.result[0].kt} KT</b> to {name(pot.result[0].team)} · league bank +{pot.cut_kt ?? 0} KT</> : 'Settled'}</span>
+            : pot.status === 'refunded' ? <span className="rh-dim">Refunded</span>
+            : <span><b>{(pot.entry * potPaid.length).toLocaleString()} KT</b> <span className="rh-dim">· {pot.entry} KT entry · {potPaid.length} paid · winner takes {100 - pot.cut_pct}%, league {pot.cut_pct}%</span></span>}
+          {props.isCommish && pot.status === 'open' && potPaid.length > 1 && (
+            <span className="cp-ktpay">
+              <select className="md-search" value={win} onChange={(e) => setWin(Number(e.target.value))} aria-label="Winner"><option value={0}>Winner…</option>{potPaid.map((t) => <option key={t} value={t}>{name(t)}</option>)}</select>
+              <button className="rh-btn go" disabled={pending || !win} onClick={() => run(() => payCompPot(comp.key, win), 'Paid out.')}>Pay pot</button>
+            </span>
+          )}
+        </div>
+      )}
       <div className="cp-pool">
         <span className="rh-k">Prize pool</span>
         {pz.length ? pz.map((p) => <PrizeRow key={p.id} p={p} props={props} comp={comp} />) : <span className="rh-dim" style={{ fontSize: 13 }}>Nothing up for grabs yet.</span>}
@@ -154,6 +172,8 @@ function Settings({ props }: { props: CompsProps }) {
   const [cap, setCap] = useState(s.cap);
   const [on, setOn] = useState<CompKey[]>(s.enabled);
   const [locks, setLocks] = useState(s.locks_at ? s.locks_at.slice(0, 10) : '');
+  const feeOf = (k: CompKey) => props.state.pots.find((x) => x.ref.endsWith(`:${k}`) && x.status === 'open')?.entry ?? 0;
+  const [fees, setFees] = useState<Record<string, number>>(Object.fromEntries(OPT_IN.map((k) => [k, feeOf(k)])));
   return (
     <section className="rh-card cp-settings">
       <span className="rh-k">Commish · comp menu for {s.season}</span>
@@ -165,9 +185,17 @@ function Settings({ props }: { props: CompsProps }) {
       <div className="bd-chips">
         {COMPS.filter((c) => !c.everyone).map((c) => <button key={c.key} className={on.includes(c.key) ? 'on' : ''} onClick={() => setOn(on.includes(c.key) ? on.filter((x) => x !== c.key) : [...on, c.key])}>{c.name}</button>)}
       </div>
+      <div className="cp-fees">
+        <span className="rh-k">KT entry fee (0 = free, max 50) · league takes 20% of each pot</span>
+        {COMPS.filter((c) => !c.everyone).map((c) => (
+          <label key={c.key} className="cp-set-row"><span style={{ minWidth: 130 }}>{c.name}</span>
+            <input type="number" min={0} max={50} className="md-search" style={{ maxWidth: 90 }} value={fees[c.key] ?? 0}
+              onChange={(e) => setFees({ ...fees, [c.key]: Math.max(0, Math.min(50, Number(e.target.value) || 0)) })} /> KT</label>
+        ))}
+      </div>
       <label className="cp-set-row">Entries lock on <input type="date" className="md-search" style={{ maxWidth: 170 }} value={locks} onChange={(e) => setLocks(e.target.value)} /></label>
       <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-        <button className="rh-btn go" disabled={pending} onClick={() => run(() => saveCompSettings(cap, on, locks ? new Date(`${locks}T12:00:00+08:00`).toISOString() : null), 'Saved.')}>Save menu</button>
+        <button className="rh-btn go" disabled={pending} onClick={() => run(async () => { const a = await saveCompSettings(cap, on, locks ? new Date(`${locks}T12:00:00+08:00`).toISOString() : null); return a.ok ? saveCompFees(fees as Partial<Record<CompKey, number>>) : a; }, 'Saved.')}>Save menu</button>
         {msg && <span className={msg.ok ? 'rh-up' : 'rh-down'} style={{ fontSize: 12.5 }}>{msg.text}</span>}
       </div>
     </section>
