@@ -2814,3 +2814,4 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .sqc-disc { grid-column: 1; grid-row: 1 / 3; display: flex; align-items: center; justify-content: center; align-self: center; line-height: 0; }
 .sqc-meta { grid-column: 2; grid-row: 1; align-self: end; line-height: 1.2; }
 .sqc-sub { grid-column: 2; grid-row: 2; align-self: start; line-height: 1.2; }
+.pl-grow { display: inline-block; min-width: 46px; padding: 2px 6px; border-radius: 6px; font-size: 11.5px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
