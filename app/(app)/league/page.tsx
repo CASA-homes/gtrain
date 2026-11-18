@@ -51,8 +51,10 @@ export default async function LeaguePage() {
           <span className="lg-sub" style={{ color: '#b9c0b8' }}>10 coaches · est. 2022</span>
         </div>
         <div className="kpis lg-kpis">
-          <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e2c46b" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-label="Premiership cup"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z" /><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M9.5 17h5" /></svg></b></div>
-          <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} wooden spoon</span><b>{latest?.spoon_id ? name(latest.spoon_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9b28a" strokeWidth="1.9" strokeLinecap="round" aria-label="Wooden spoon"><ellipse cx="15.5" cy="7.5" rx="3.6" ry="4.6" transform="rotate(40 15.5 7.5)" /><path d="M12.6 10.6 4.5 19.5" /></svg></b></div>
+          <div className="lg-honours">
+            <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e2c46b" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-label="Premiership cup"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z" /><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M9.5 17h5" /></svg></b></div>
+            <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} wooden spoon</span><b>{latest?.spoon_id ? name(latest.spoon_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9b28a" strokeWidth="1.9" strokeLinecap="round" aria-label="Wooden spoon"><ellipse cx="15.5" cy="7.5" rx="3.6" ry="4.6" transform="rotate(40 15.5 7.5)" /><path d="M12.6 10.6 4.5 19.5" /></svg></b></div>
+          </div>
           <nav className="kpi league-links" style={{ borderColor: '#333b35' }} aria-label="League">
             <Link href="/league/settings">Settings <span aria-hidden>→</span></Link>
             <Link href="#history">History <span aria-hidden>→</span></Link>
