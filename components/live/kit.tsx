@@ -538,8 +538,8 @@ function Board({ order, picks, k, per, teamName, myTeamId }: { order: number[]; 
 
 /* ---------------- game page (draft, then results) ---------------- */
 
-export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTeamId, canManage }: {
-  initialRound: LRound; initialGame: GameRow; initialPicks: GamePick[]; teams: TeamRow[]; myTeamId: number; canManage: boolean;
+export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTeamId, canManage, pot }: {
+  initialRound: LRound; initialGame: GameRow; initialPicks: GamePick[]; teams: TeamRow[]; myTeamId: number; canManage: boolean; pot?: React.ReactNode;
 }) {
   const { data, byId, gameBySquad, liveNow } = useRound(initialRound);
   const { game, picks, refresh } = useGame({ game: initialGame, picks: initialPicks });
@@ -559,6 +559,7 @@ export function GameRoom({ initialRound, initialGame, initialPicks, teams, myTea
         </div>
         <LiveChip live={game.status === 'drafting' || liveNow} text={game.status === 'drafting' ? 'Drafting' : liveNow ? 'Live' : data.status === 'completed' ? 'Final' : 'Pre-game'} />
       </div>}>
+      {pot}
       <PrizeStrip prize={game.prize} clubs={game.order.length} final={game.status === 'done' && data.games.every((g) => g.status === 'completed')} teamName={teamName} myTeamId={myTeamId}
         standings={[...game.order].sort((x, y) => totals(lineups[y], byId, gameBySquad).score - totals(lineups[x], byId, gameBySquad).score)} />
       {tab === 'draft'
@@ -620,7 +621,7 @@ export function ScoresBoard({ initial }: { initial: LRound }) {
 
 /** The game's prize, and once it's final, who won what. `standings` = club ids best first. */
 export function PrizeStrip({ prize, clubs, standings, final, teamName, myTeamId }: { prize: Prize | null; clubs: number; standings: number[]; final: boolean; teamName: (id: number) => string; myTeamId: number }) {
-  if (!prize?.on) return null;
+  if (!prize?.on || prize.kt) return null; // KT games show the real pot (KtPot) instead
   const pay = payouts(prize, clubs);
   const place = ['1st', '2nd', '3rd'];
   const last = standings[standings.length - 1];

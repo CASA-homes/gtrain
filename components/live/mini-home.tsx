@@ -2,7 +2,7 @@
 // Mini Games home: your games this round, past results, and a short animation of how a mini game plays out.
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { lineupsFromPicks, onClock, type GamePick, type GameRow, type LRound } from '@/lib/live';
+import { lineupsFromPicks, money, onClock, type GamePick, type GameRow, type LRound } from '@/lib/live';
 import { Empty, LiveChip, Shell, totals, useRound, type TeamRow } from './kit';
 
 type Game = GameRow & { picks: GamePick[] };
@@ -109,7 +109,7 @@ export function MiniHome({ initial, games, ready, teams, myTeamId }: { initial: 
           {live ? <LiveChip live={g.status === 'drafting'} text={g.status === 'drafting' ? (onClock(g.order, g.picks.length) === myTeamId ? 'Your pick' : 'Drafting') : 'Drafted'} /> : <span className="rh-chip">Finished</span>}
         </div>
         {scored && b && <div className="mg-game-sc"><b className={`rh-mono ${a.score >= b.score ? 'rh-up' : 'rh-down'}`}>{a.score}</b><span className="rh-dim">v</span><b className="rh-mono">{b.score}</b><span className="rh-dim" style={{ fontSize: 12 }}>proj {a.proj}–{b.proj}</span></div>}
-        {g.prize?.on && <span className="rh-prizechip">🏆 {g.prize.entry ? `$${g.prize.entry * g.order.length} pool` : 'Prize'}{g.prize.extras.length ? ` · ${g.prize.extras[0]}` : ''}</span>}
+        {g.prize?.on && <span className="rh-prizechip">🏆 {g.prize.entry ? `${money(g.prize, g.prize.entry)} a club` : 'Prize'}{g.prize.extras.length ? ` · ${g.prize.extras[0]}` : ''}</span>}
       </Link>
     );
   };

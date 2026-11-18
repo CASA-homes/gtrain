@@ -1,7 +1,7 @@
 'use server';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CAP_BUDGETS, CAP_PICKS, COMP, cleanSettings, customFits, type GameSettings, type Roles, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, PICKS_PER_TEAM, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/live';
+import { CAP_BUDGETS, CAP_PICKS, COMP, cleanSettings, customFits, type GameSettings, type Roles, duelFits, picksPerTeam, PRIZE_SPLITS, type Prize, KT_GAME_MAX, PICKS_PER_TEAM, lockedIds, onClock, priceOf, slotFor, type CapEntry, type GamePick, type GameRow, type Slot } from '@/lib/live';
 import { liveRound } from '@/lib/scores/server';
 
 type Res = { ok: boolean; error?: string; id?: number };
@@ -19,10 +19,11 @@ async function selectGames(q: (cols: string) => PromiseLike<{ data: unknown; err
 }
 function cleanPrize(p?: Prize | null): Prize | null {
   if (!p?.on) return null;
-  const entry = Math.max(0, Math.min(1000, Math.round(Number(p.entry) || 0)));
+  const kt = !!p.kt;
+  const entry = Math.max(0, Math.min(kt ? KT_GAME_MAX : 1000, Math.round(Number(p.entry) || 0)));
   const extras = (p.extras ?? []).map((x) => String(x).trim().slice(0, 80)).filter(Boolean).slice(0, 5);
   if (!entry && !extras.length) return null;
-  return { on: true, entry, split: PRIZE_SPLITS[p.split] ? p.split : 'wta', extras };
+  return { on: true, entry, split: PRIZE_SPLITS[p.split] ? p.split : 'wta', extras, ...(kt && entry ? { kt: true } : {}) };
 }
 
 /** Every game in the competition, newest first, with its picks. ready=false until the tables exist. */
@@ -68,13 +69,19 @@ export async function createGame(round: number, kind: string, name: string, team
   if (kind === 'duel5') row.match_id = Number(opts.matchId);
   if (kind === 'cap5') { row.budget = CAP_BUDGETS.includes(Number(opts.budget)) ? Number(opts.budget) : 350; row.match_id = opts.matchId ? Number(opts.matchId) : null; }
   const prize = cleanPrize(opts.prize);
+  if (prize?.kt && kind === 'custom') return { ok: false, error: 'Custom games can’t be played for KT yet. Use a draft, duel or salary cap game.' };
   if (prize) row.prize = prize;
   const res = await supabase.from('mini_games').insert(row).select('id').single();
   if (res.error && prize && /prize/i.test(res.error.message)) return { ok: false, error: 'Prizes need supabase/migrations/0012_game_prizes.sql run first.' };
   if (res.error && kind === 'cap5' && /column|check/i.test(res.error.message)) return { ok: false, error: 'Salary cap needs supabase/migrations/0011_salary_cap.sql run first.' };
   if (res.error && kind === 'duel5' && /check/i.test(res.error.message)) return { ok: false, error: 'Duels need supabase/migrations/0017_duel.sql run first.' };
   if (res.error && kind === 'custom' && /check|settings|column/i.test(res.error.message)) return { ok: false, error: 'Custom games need supabase/migrations/0018_battle_desk.sql run first.' };
-  return res.error ? { ok: false, error: res.error.message } : { ok: true, id: res.data.id };
+  if (res.error) return { ok: false, error: res.error.message };
+  if (prize?.kt) {
+    const pot = await supabase.from('kt_pots').insert({ kind: 'mini', ref: String(res.data.id), label: String(row.name).slice(0, 60), entry: prize.entry, split: prize.split });
+    if (pot.error) return { ok: false, error: `Game made, but the KT pot couldn’t be opened: ${pot.error.message}` };
+  }
+  return { ok: true, id: res.data.id };
 }
 
 /** Next pick. The club on the clock picks for itself; the game's creator and the commish can pick for anyone. */
@@ -127,6 +134,17 @@ export async function undoPick(gameId: number): Promise<Res> {
 /** Creator or commish: delete the game. */
 export async function deleteGame(gameId: number): Promise<Res> {
   const supabase = await createClient();
+  // A KT game with money in it: the commish refunds everyone first; anyone else has to wait for clubs to take their KT back.
+  const pot = await supabase.from('kt_pots').select('id, status').eq('kind', 'mini').eq('ref', String(gameId)).maybeSingle();
+  if (pot.data?.status === 'open') {
+    const paid = await supabase.from('kt_pot_entries').select('team_id').eq('pot_id', pot.data.id);
+    if ((paid.data ?? []).length) {
+      const me = await getMe();
+      if (!me?.is_commish) return { ok: false, error: 'Clubs have paid KT into this game. The commish can refund it, or each club can take its KT back first.' };
+      const r = await supabase.rpc('kt_pot_refund', { p_pot: pot.data.id });
+      if (r.error) return { ok: false, error: r.error.message };
+    }
+  }
   const res = await supabase.from('mini_games').delete().eq('id', gameId).select('id');
   if (res.error) return { ok: false, error: res.error.message };
   return res.data?.length ? { ok: true } : { ok: false, error: 'Only the game’s creator or the commish can delete it.' };

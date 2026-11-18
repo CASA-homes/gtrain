@@ -2,7 +2,7 @@
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { CAP_BUDGETS, GAME_KINDS, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, picksPerTeam, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/live';
+import { CAP_BUDGETS, GAME_KINDS, KT_AMOUNTS, KT_CUT_PCT, KT_GAME_MAX, money, PRIZE_AMOUNTS, PRIZE_SPLITS, payouts, type Prize, picksPerTeam, lineupsFromPicks, onClock, type GamePick, type GameRow, type LGame, type LRound } from '@/lib/live';
 import { createGame } from '@/app/(app)/live/actions';
 import { DEFAULT_SETTINGS, type GameSettings } from '@/lib/live';
 import { GameSetup } from './battle';
@@ -95,7 +95,7 @@ export function GamesList({ round, roundName, games, ready, teams, myTeamId, rou
           <LiveChip live={s.live} text={s.text} />
         </div>
         <div className="rh-clubs">{g.order.map((t) => <span key={t} className={t === myTeamId ? 'me' : ''}>{teamName(t)}</span>)}</div>
-        {g.prize?.on && <span className="rh-prizechip">🏆 {g.prize.entry ? `$${g.prize.entry * g.order.length} pool` : 'Prize'}{g.prize.extras.length ? ` · ${g.prize.extras[0]}` : ''}</span>}
+        {g.prize?.on && <span className="rh-prizechip">🏆 {g.prize.entry ? `${money(g.prize, g.prize.entry)} a club` : 'Prize'}{g.prize.extras.length ? ` · ${g.prize.extras[0]}` : ''}</span>}
       </Link>
     );
   };
@@ -198,7 +198,7 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
           {err && <span className="rh-down">{err}</span>}
         </div>
       </section>
-      <PrizePanel prize={prize} setPrize={setPrize} clubs={sel.length} />
+      <PrizePanel prize={prize} setPrize={setPrize} clubs={sel.length} ktOk={!custom} />
       </div>
     </Shell>
   );
@@ -207,11 +207,15 @@ export function NewGame({ rounds, current, games, teams, myTeamId }: { rounds: {
 const PRIZE_IDEAS = ['Last place buys the first round', 'Winner picks next week’s game', 'Loser wears the jersey of the winner’s choice', 'Bragging rights'];
 
 /** Prizes & winnings: toggle on, set a cost per club (or none), how the pool is split, and any other prizes. */
-function PrizePanel({ prize, setPrize, clubs }: { prize: Prize; setPrize: (p: Prize) => void; clubs: number }) {
+function PrizePanel({ prize: raw, setPrize, clubs, ktOk }: { prize: Prize; setPrize: (p: Prize) => void; clubs: number; ktOk: boolean }) {
+  const prize = raw.kt && !ktOk ? { ...raw, kt: false } : raw;
   const set = (patch: Partial<Prize>) => setPrize({ ...prize, ...patch });
+  const kt = !!prize.kt;
+  const amounts = kt ? KT_AMOUNTS : PRIZE_AMOUNTS;
+  const unit = (n: number) => money(prize, n);
   const pool = prize.entry * clubs;
   const pay = payouts(prize, clubs);
-  const custom = !PRIZE_AMOUNTS.includes(prize.entry) && prize.entry !== 0;
+  const custom = !amounts.includes(prize.entry) && prize.entry !== 0;
   return (
     <aside className={`rh-card rh-prize ${prize.on ? 'on' : ''}`}>
       <label className="rh-prize-head">
@@ -221,27 +225,34 @@ function PrizePanel({ prize, setPrize, clubs }: { prize: Prize; setPrize: (p: Pr
       {prize.on && (
         <>
           <div className="rh-field">
-            <span className="rh-k">Cost per club</span>
+            <span className="rh-k">Play for</span>
+            <div className="rh-seg">
+              <button className={!kt ? 'on' : ''} onClick={() => set({ kt: false })}>Cash</button>
+              <button className={kt ? 'on' : ''} disabled={!ktOk} title={ktOk ? undefined : 'Custom games can’t be played for KT yet'} onClick={() => set({ kt: true, entry: Math.min(KT_GAME_MAX, prize.entry || 10) })}>KT</button>
+            </div>
+          </div>
+          <div className="rh-field">
+            <span className="rh-k">Cost per club{kt ? ` · max ${KT_GAME_MAX} KT` : ''}</span>
             <div className="rh-amounts">
-              <button className={prize.entry === 0 ? 'on' : ''} onClick={() => set({ entry: 0 })}>None</button>
-              {PRIZE_AMOUNTS.map((a) => <button key={a} className={prize.entry === a ? 'on' : ''} onClick={() => set({ entry: a })}>${a}</button>)}
-              <label className={`rh-amount-custom ${custom ? 'on' : ''}`}>$<input inputMode="numeric" value={custom ? prize.entry : ''} placeholder="Other"
-                onChange={(e) => set({ entry: Math.max(0, Math.min(1000, Number(e.target.value.replace(/\D/g, '')) || 0)) })} /></label>
+              {!kt && <button className={prize.entry === 0 ? 'on' : ''} onClick={() => set({ entry: 0 })}>None</button>}
+              {amounts.map((a) => <button key={a} className={prize.entry === a ? 'on' : ''} onClick={() => set({ entry: a })}>{unit(a)}</button>)}
+              <label className={`rh-amount-custom ${custom ? 'on' : ''}`}>{kt ? 'KT' : '$'}<input inputMode="numeric" value={custom ? prize.entry : ''} placeholder="Other"
+                onChange={(e) => set({ entry: Math.max(0, Math.min(kt ? KT_GAME_MAX : 1000, Number(e.target.value.replace(/\D/g, '')) || 0)) })} /></label>
             </div>
           </div>
           {prize.entry > 0 && (
             <>
               <div className="rh-potbox">
                 <span className="rh-k">Prize pool</span>
-                <b>${pool}</b>
-                <span className="rh-dim">{clubs} club{clubs === 1 ? '' : 's'} × ${prize.entry}</span>
+                <b>{unit(pool)}</b>
+                <span className="rh-dim">{clubs} club{clubs === 1 ? '' : 's'} × {unit(prize.entry)}{kt ? ` · league takes ${KT_CUT_PCT}%, each club pays in from its bank, paid out when the round is locked` : ''}</span>
               </div>
               <div className="rh-field">
                 <span className="rh-k">Payout</span>
                 <div className="rh-seg">
                   {Object.entries(PRIZE_SPLITS).map(([k, v]) => <button key={k} className={prize.split === k ? 'on' : ''} disabled={v.pct.length >= Math.max(2, clubs)} onClick={() => set({ split: k })}>{v.label}</button>)}
                 </div>
-                <div className="rh-payouts">{pay.map((x, i) => <span key={i}><em>{['1st', '2nd', '3rd'][i]}</em><b>${x}</b></span>)}</div>
+                <div className="rh-payouts">{pay.map((x, i) => <span key={i}><em>{['1st', '2nd', '3rd'][i]}</em><b>{unit(x)}</b></span>)}</div>
               </div>
             </>
           )}

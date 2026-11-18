@@ -23,8 +23,8 @@ function capTotals(e: { players: number[]; captain: number | null } | undefined,
   return { score, proj: Math.round(proj), left };
 }
 
-export function CapGame({ initialRound, game, initialEntries, ready, teams, myTeamId, canManage }: {
-  initialRound: LRound; game: GameRow; initialEntries: CapEntry[]; ready: boolean; teams: TeamRow[]; myTeamId: number; canManage: boolean;
+export function CapGame({ initialRound, game, initialEntries, ready, teams, myTeamId, canManage, pot }: {
+  initialRound: LRound; game: GameRow; initialEntries: CapEntry[]; ready: boolean; teams: TeamRow[]; myTeamId: number; canManage: boolean; pot?: React.ReactNode;
 }) {
   const router = useRouter();
   const { data, byId, gameBySquad, liveNow } = useRound(initialRound);
@@ -49,6 +49,7 @@ export function CapGame({ initialRound, game, initialEntries, ready, teams, myTe
         </div>
         <LiveChip live={status === 'Live' || status === 'Picks open'} text={status} />
       </div>}>
+      {pot}
       <PrizeStrip prize={game.prize} clubs={game.order.length} final={scopeGames.every((g) => g.status === 'completed')} teamName={teamName} myTeamId={myTeamId}
         standings={[...game.order].sort((x, y) => capTotals(entries.find((e) => e.team_id === y), byId, gameBySquad).score - capTotals(entries.find((e) => e.team_id === x), byId, gameBySquad).score)} />
       {!ready && <Empty>Run supabase/migrations/0011_salary_cap.sql in the Supabase SQL editor to switch salary-cap games on.</Empty>}
