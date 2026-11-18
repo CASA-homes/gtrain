@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'S. Pendlebury', tag: 'Role', date: '2026-11-18', title: 'Pendlebury expects midfield minutes at Gold Coast',
+    body: 'Pendlebury says Collingwood wanted him to stay in 2027 and move into coaching, but he picked the Suns’ deal of two playing years then two coaching under Damien Hardwick. Roles haven’t been locked in yet, though he expects to spend most of his time in the middle. Not kept by his G-Train side, so he’s a cheap draft punt if that midfield time is real.',
+  },
+  {
+    player: 'N. Martin', tag: 'Role', date: '2026-11-18', title: 'Nic Martin takes the Bombers’ No.5',
+    body: 'Essendon have handed Martin the No.5 for 2027, the number worn by Terry Daniher and James Hird. He switches from No.37 after further knee surgery wiped out his whole 2026. No fresh word on the knee, but if he gets a clean summer he’s a high-upside draft target since he wasn’t kept.',
+  },
+  {
     player: 'E. Tsatas', tag: 'Injury', date: '2026-11-17', title: 'Tsatas close to training at North',
     body: 'The former Bomber, delisted by Essendon and now at North Melbourne, is reportedly on the verge of training again after an ACL rupture wiped out his 2026. He’s played 83 games. Released by Ram Dawgs, so he’s a cheap late flier if he gets midfield time at Arden Street.',
   },
@@ -31,10 +39,6 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'T. Powell', tag: 'Injury', date: '2026-11-13', title: 'Powell stays on a modified program',
     body: 'Powell has joined some team skills but North have him on a modified program for roughly another six weeks. He only managed eight games in 2026, so a clean run into January matters if he’s going to push for regular midfield minutes.',
-  },
-  {
-    player: 'S. Pendlebury', tag: 'Trade', date: '2026-11-12', title: 'Pendlebury flags the No.7 at the Suns',
-    body: 'The games record holder, traded to Gold Coast on a two-year deal after Collingwood moved on, has added a 7 to his Instagram bio, a strong hint he’ll wear the Suns’ No.7 in 2027. He’s 39 in January but still averaged 79 this year. Released by his G-Train side, so he’s a cheap draft option if the Suns give him real midfield minutes.',
   },
   {
     player: 'C. Rozee', tag: 'Injury', date: '2026-11-11', title: 'Rozee in drills, Port bullish on round 1',
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'F. Callaghan', tag: 'Injury', date: '2026-11-07', title: 'Callaghan had late-season ankle surgery',
     body: 'GWS have confirmed Callaghan went under the knife on his ankle late in 2026, and he’s aiming to be back in full training around January. That’s a chunk of pre-season on the side, so temper expectations for his early-round scoring.',
-  },
-  {
-    player: 'L. Pedlar', tag: 'Role', date: '2026-11-06', title: 'Pedlar wants midfield minutes at Port',
-    body: 'Fresh from crossing from the Crows, Pedlar says he’s keen to train more as a midfielder under Josh Carr while still growing his forward game. Injuries have limited him to 49 games in six years, so a full pre-season is the priority. More midfield time would lift his ceiling, but he’s a speculative pick until his body holds up.',
   },
 ];
