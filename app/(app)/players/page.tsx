@@ -2,7 +2,7 @@ import { getWatchlist } from '@/lib/watchlist';
 import Link from 'next/link';
 import { AvgChip, Bar20, ClubDot, FormArrow, PosDots, Stars } from '@/components/bits';
 import { getLeague, getMe, FREE_AGENTS_UPDATED } from '@/lib/data';
-import { getRates } from '@/lib/contracts';
+import { getRates, valueTrend } from '@/lib/contracts';
 import { age, C, form, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 import { ATTRS } from '@/lib/scouting';
 import { CLUBS } from '@/lib/clubs';
@@ -24,6 +24,7 @@ const STATS: { key: string; label: string; group: 'Rating' | 'Fantasy profile' |
   { key: 'avg', label: 'Average (chosen period)', group: 'Rating' },
   { key: 'last', label: 'Last score', group: 'Rating' },
   { key: 'value', label: 'Market value ($k)', group: 'Rating' },
+  { key: 'growth', label: 'Value growth on the year (%)', group: 'Rating' },
   { key: 'potential', label: 'Potential stars', group: 'Rating' },
   { key: 'age', label: 'Age (youngest first)', group: 'Rating' },
   ...PROFILE.map(([key, label]) => ({ key, label, group: 'Fantasy profile' as const })),
@@ -52,9 +53,18 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     .filter((f): f is [string, number] => !!f[0] && STATS.some((s) => s.key === f[0]) && f[1] != null);
   const ageMin = num(sp.agemin), ageMax = num(sp.agemax), avgMax = num(sp.avgmax);
 
+  // Market value growth on the year: today's value against where he started the season.
+  const growthCache = new Map<number, number | null>();
+  const growth = (p: PlayerRow): number | null => {
+    if (growthCache.has(p.id)) return growthCache.get(p.id)!;
+    const now = rates.get(p.id); const t = valueTrend(p, 999); const start = t[0];
+    const g = now != null && start && start > 6 ? Math.round(((now - start) / start) * 100) : null;
+    growthCache.set(p.id, g); return g;
+  };
   const stat = (p: PlayerRow, key: string): number | null => {
     const r = league.ratings.get(p.id)!;
     if (key === 'value') return rates.get(p.id) ?? null;
+    if (key === 'growth') return growth(p);
     if (key === 'avg') return periodAvg(p);
     if (key === 'potential') return r.potential;
     if (key === 'last') return lastScore(p);
@@ -105,11 +115,12 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     .sort((a, b) => {
       const x = stat(a, sort), y = stat(b, sort);
       if (sort === 'age') return (x ?? 99) - (y ?? 99);
+      if (sort === 'growth') return (y ?? -9999) - (x ?? -9999) || ((rates.get(b.id) ?? 0) - (rates.get(a.id) ?? 0));
       return (y ?? -1) - (x ?? -1) || ((rates.get(b.id) ?? 0) - (rates.get(a.id) ?? 0));
     });
 
   // Extra columns: the sort stat and any filtered stats, as bars.
-  const extra = [...new Set([sort, ...filters.map((f) => f[0])])].filter((k) => k !== 'value' && k !== 'potential' && k !== 'age' && k !== 'avg' && k !== 'last');
+  const extra = [...new Set([sort, ...filters.map((f) => f[0])])].filter((k) => k !== 'value' && k !== 'growth' && k !== 'potential' && k !== 'age' && k !== 'avg' && k !== 'last');
   // Clickable column headers: same filters, new sort.
   const sortHref = (k: string) => {
     const u = new URLSearchParams();
@@ -249,7 +260,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               <th style={{ width: 40 }}>#</th><th style={{ width: 90 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>{own === 'free' ? 'Owned' : 'Owner'}</th>
               <th style={{ width: 44, textAlign: 'center' }}>Age</th><SortTh k="avg" title={`${periodLabel} · sort`} style={{ width: 60, textAlign: 'center' }}>{y25 ? "'25 Avg" : period === 'season' ? 'Avg' : PERIODS.find(([k]) => k === period)![1].replace(' games', '').replace('Last ', 'L').replace('Last game', 'L1')}</SortTh><SortTh k="last" style={{ width: 54, textAlign: 'center' }}>Last</SortTh><th style={{ width: 50, textAlign: 'center' }}>Form</th><th style={{ width: 50, textAlign: 'center' }}>{y25 ? "'25 Apps" : 'Apps'}</th>
               {extra.map((k) => <th key={k} style={{ width: 150 }}>{label(k)}</th>)}
-              <SortTh k="value" style={{ width: 70, textAlign: 'right' }}>Market</SortTh><th style={{ width: 110 }}>Ability</th><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
+              <SortTh k="value" style={{ width: 70, textAlign: 'right' }}>Market</SortTh><SortTh k="growth" title="Market value change on the year" style={{ width: 66, textAlign: 'center' }}>+/− yr</SortTh><th style={{ width: 110 }}>Ability</th><SortTh k="potential" style={{ width: 110 }}>Potential</SortTh>
             </tr>
           </thead>
           <tbody>
@@ -286,6 +297,9 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                     );
                   })}
                   <td style={{ textAlign: 'right', fontWeight: 600 }} className="mono">{rates.has(p.id) ? `$${rates.get(p.id)}k` : '–'}</td>
+                  <td style={{ textAlign: 'center' }}>{(() => { const g = growth(p); if (g == null) return <span className="muted">–</span>;
+                    const k = Math.max(-1, Math.min(1, g / 40)); const hue = 60 + k * 70; // red (−40%) → amber (0) → green (+40%)
+                    return <span className="pl-grow mono" style={{ background: `hsl(${hue} 62% ${92 - Math.abs(k) * 14}%)`, color: `hsl(${hue} 70% ${30 - Math.abs(k) * 8}%)` }} title={`${g >= 0 ? '+' : ''}${g}% on the year`}>{g > 0 ? '+' : g < 0 ? '−' : ''}{Math.abs(g)}%</span>; })()}</td>
                   <td><Stars value={r.valueStars} label="Current ability" /></td>
                   <td><Stars value={r.potential} colour={C.green5} label="Potential" /></td>
                 </tr>
