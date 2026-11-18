@@ -2752,3 +2752,21 @@ button.md-slot:hover { border-color: #cdd2cb; }
   .club-head-stats b { font-size: 19px !important; }
   .club-head-acts .btn, .club-head-acts button { padding-top: 7px; padding-bottom: 7px; }
 }
+
+/* League hero: premiers stacked above the wooden spoon (desktop) */
+.lg-honours { display: flex; flex-direction: column; gap: 6px; padding: 0 22px; border-left: 1px solid #333b35; }
+.lg-honours .lg-k { padding: 0; border-left: 0; }
+.lg-honours .lg-k b { font-size: 19px; line-height: 1.15; }
+@media (max-width: 760px) { .lg-honours { display: contents; } .lg-honours .lg-k + .lg-k { padding-left: 12px; border-left: 1px solid #333b35; } }
+/* League page: cup groups tight enough to sit inside the ladder's height */
+.lg-top .cup-league-g { padding: 6px 10px; gap: 2px; }
+.lg-top .cup-table { margin-top: 2px; }
+.lg-top .cup-table td { padding: 4px 6px; } .lg-top .cup-table th { padding: 2px 6px; }
+.lg-top .cup-zones { font-size: 11px; }
+/* Season schedule: one-line header so the bar sits higher */
+.ss { gap: 8px; padding-top: 12px; }
+.ss-head { align-items: center; }
+.ss-title { display: flex; align-items: baseline; gap: 6px 16px; flex-wrap: wrap; }
+.ss-title h2 { margin: 0 !important; display: flex; align-items: baseline; gap: 8px; }
+.ss-title .ss-now { margin: 0; }
+.ss-chart { padding-top: 0; }

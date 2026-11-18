@@ -40,7 +40,7 @@ export async function MarketMovers({ compact = false }: { compact?: boolean } = 
       season.push({ p, now, prev: start, diff: now - start, pct: (now - start) / start, spark, owner });
     }
   }
-  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, compact ? 3 : 5);
+  const top = (xs: Mover[], up: boolean) => xs.filter((m) => (up ? m.diff > 0 : m.diff < 0)).sort((a, b) => (up ? b.diff - a.diff : a.diff - b.diff)).slice(0, compact ? (up ? 3 : 4) : 5);
   if (!week.length && !season.length) return null;
 
   const List = ({ title, rows, rise }: { title: string; rows: Mover[]; rise: boolean }) => (

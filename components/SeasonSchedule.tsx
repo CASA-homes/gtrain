@@ -35,7 +35,7 @@ export function SeasonSchedule() {
   return (
     <section className="ss card" aria-labelledby="ss-h">
       <div className="ss-head">
-        <div><span className="mm-eyebrow">2027 season</span><h2 id="ss-h">Season schedule</h2><span className="ss-now"><i />{phase}</span></div>
+        <div className="ss-title"><h2 id="ss-h">Season schedule <span className="mm-eyebrow">2027</span></h2><span className="ss-now"><i />{phase}</span></div>
         {next && <span className="ss-next"><b>{days(next.date)} days</b> to {next.label.toLowerCase()}</span>}
       </div>
 
