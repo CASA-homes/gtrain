@@ -86,7 +86,8 @@ function LivePreview({ img, off, s, size, radius }: { img: Img; off: { x: number
   );
 }
 
-export function ClubLogoEditor({ teamId, hasLogo }: { teamId: number; hasLogo: boolean }) {
+export function ClubLogoEditor({ teamId, hasLogo, icon = false }: { teamId: number; hasLogo: boolean; icon?: boolean }) {
+  const [menu, setMenu] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [msg, setMsg] = useState<string | null>(null);
@@ -124,10 +125,23 @@ export function ClubLogoEditor({ teamId, hasLogo }: { teamId: number; hasLogo: b
   });
 
   return (
-    <span className="logo-edit">
+    <span className={icon ? 'logo-edit as-icon' : 'logo-edit'}>
       <input ref={input} type="file" accept="image/*" hidden onChange={(e) => pick(e.target.files?.[0])} />
+      {icon ? <>
+        <button type="button" className="logo-ico" disabled={pending} aria-label={hasLogo ? 'Change or remove logo' : 'Add logo'} aria-expanded={menu}
+          onClick={() => (hasLogo ? setMenu(!menu) : input.current?.click())}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z" /><path d="M14 6l4 4" /></svg>
+        </button>
+        {menu && hasLogo && (
+          <span className="logo-menu" role="menu">
+            <button type="button" role="menuitem" onClick={() => { setMenu(false); input.current?.click(); }}>Change logo</button>
+            <button type="button" role="menuitem" onClick={() => { setMenu(false); start(async () => { const r = await setClubLogo(teamId, null); if (!r.ok) setMsg(r.error ?? 'Failed'); router.refresh(); }); }}>Remove</button>
+          </span>
+        )}
+      </> : <>
       <button type="button" disabled={pending} onClick={() => input.current?.click()}>{hasLogo ? 'Change logo' : 'Add logo'}</button>
       {hasLogo && <button type="button" disabled={pending} onClick={() => start(async () => { const r = await setClubLogo(teamId, null); if (!r.ok) setMsg(r.error ?? 'Failed'); router.refresh(); })}>Remove</button>}
+      </>}
       {msg && !img && <span className="logo-edit-msg">{msg}</span>}
       {img && createPortal(
         <>
