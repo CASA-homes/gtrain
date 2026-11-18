@@ -1,6 +1,7 @@
 'use client';
 // Finances: interactive pieces. Rookie-slot assign, term deposit and loan forms, and the cap simulator.
 import { useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { collectDeposits, makeDeposit, offerLoan, respondLoan, setDropDay, setRookieSlot } from '@/app/(app)/contracts/actions';
 import { useRun } from '@/components/contracts/client';
 
@@ -68,8 +69,10 @@ export function DepositForm({ bank }: { bank: number }) {
   const back = n + Math.floor((n * term.pct) / 100);
   const due = new Date(); due.setMonth(due.getMonth() + months);
   const dueTxt = due.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+  const [ask, setAsk] = useState(false);
+  const today = new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
   return (
-    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); go(() => makeDeposit(n, months), `Lock ${kt(n)} for ${term.label}? You can’t touch it until ${dueTxt}, then you get ${kt(back)} back.`); }}>
+    <form className="fn-form" onSubmit={(e) => { e.preventDefault(); setAsk(true); }}>
       <div className="sgn-tiers" role="radiogroup" aria-label="Deposit term">
         {TERMS.map((t) => (
           <button key={t.months} type="button" role="radio" aria-checked={months === t.months} className={months === t.months ? 'on' : undefined} onClick={() => setMonths(t.months)}>
@@ -81,6 +84,29 @@ export function DepositForm({ bank }: { bank: number }) {
       <div className="fn-calc"><span>Back on {dueTxt}</span><b>{kt(back)}</b><em>+{term.pct}%</em></div>
       <button type="submit" className="kc-btn sage" disabled={pending || n < 100 || n > bank}>Lock it in</button>
       {note}
+      {ask && typeof document !== 'undefined' && createPortal(
+        <div className="sgn-back dep-back" role="dialog" aria-modal="true" aria-labelledby="dep-h" onClick={(e) => { if (e.target === e.currentTarget && !pending) setAsk(false); }}>
+          <div className="sgn-card dep-card">
+            <div className="dep-warn" role="alert"><b>Locked until {dueTxt}</b><span>Once executed, this {kt(n)} can’t be withdrawn, spent or moved until the deposit matures. It won’t count toward your bank for clause buys, offers or fees in the meantime.</span></div>
+            <div className="dep-paper" aria-label="Term deposit certificate">
+              <div className="dep-seal" aria-hidden="true">KT</div>
+              <span className="dep-eb">Keeper HQ Reserve · Term deposit</span>
+              <h3 id="dep-h">{kt(n)}</h3>
+              <dl>
+                <div><dt>Term</dt><dd>{term.label}</dd></div>
+                <div><dt>Return</dt><dd>+{term.pct}%</dd></div>
+                <div><dt>Lodged</dt><dd>{today}</dd></div>
+                <div><dt>Matures</dt><dd>{dueTxt}</dd></div>
+                <div className="tot"><dt>Paid back</dt><dd>{kt(back)}</dd></div>
+              </dl>
+              <div className="dep-sign"><span /><em>Signed by your club</em></div>
+            </div>
+            <div className="dep-acts">
+              <button type="button" className="kc-btn" disabled={pending} onClick={() => setAsk(false)}>Cancel</button>
+              <button type="button" className="kc-btn sage dep-go" disabled={pending} onClick={() => go(async () => { const r = await makeDeposit(n, months); setAsk(false); return r; })}>{pending ? 'Executing…' : 'Execute deposit'}</button>
+            </div>
+          </div>
+        </div>, document.body)}
     </form>
   );
 }

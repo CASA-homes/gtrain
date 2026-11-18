@@ -754,3 +754,33 @@
 .fn-ledger > div { display: grid !important; grid-template-columns: 52px minmax(0, 1fr) auto 64px; gap: 10px; align-items: center; }
 .fn-ledger > div > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .fn-ledger em { font-style: normal; font-size: 11.5px; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Finances desktop: tabs panel ends on the bank panel's bottom line; its panes scroll inside */
+@media (min-width: 861px) {
+  .fn-bankrow { align-items: stretch; }
+  .fn-bankrow .fn-tabs { height: 0; min-height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+  .fn-bankrow .fn-pane { max-height: none; flex: 1 1 0; min-height: 0; }
+}
+
+/* Term deposit: certificate confirmation */
+.dep-back { align-items: center; }
+.dep-card { width: min(420px, 100%); gap: 14px; }
+.dep-warn { display: flex; flex-direction: column; gap: 3px; padding: 10px 12px; border-radius: 12px; background: #fdf1e7; border: 1px solid #f0cfb2; color: #7a3a12; font-size: 12.5px; line-height: 1.4; }
+.dep-warn b { font-size: 14px; color: #8a3816; }
+.dep-paper { position: relative; padding: 18px 18px 14px; border-radius: 6px; background:
+  repeating-linear-gradient(0deg, transparent 0 23px, rgb(47 93 70 / .05) 23px 24px), linear-gradient(160deg, #fffdf6, #f6efdc);
+  border: 1px solid #e3d6b4; box-shadow: 0 1px 0 #fff inset, 0 8px 20px rgb(60 45 10 / .12); outline: 1px dashed #cdbb8a; outline-offset: -7px; display: flex; flex-direction: column; gap: 6px; transform: rotate(-.6deg); }
+.dep-eb { font: 500 9.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #8a7440; }
+.dep-paper h3 { margin: 0; font: 800 34px/1 var(--display, var(--font)); letter-spacing: -.01em; color: #2f5d46; }
+.dep-paper dl { margin: 4px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 14px; }
+.dep-paper dl div { display: flex; flex-direction: column; border-bottom: 1px dotted #cdbb8a; padding-bottom: 3px; }
+.dep-paper dl div.tot { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #2f5d46; }
+.dep-paper dt { font: 500 9.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #8a7440; }
+.dep-paper dd { margin: 0; font: 700 14px var(--font); color: #1c2a22; }
+.dep-paper .tot dd { font-size: 18px; color: #2f5d46; }
+.dep-seal { position: absolute; top: 12px; right: 14px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font: 800 13px var(--font); color: #fff; background: radial-gradient(circle at 35% 30%, #c94a3a, #8f2418); box-shadow: 0 0 0 3px #f6efdc, 0 0 0 4px #b8432f; transform: rotate(12deg); }
+.dep-sign { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; margin-top: 6px; }
+.dep-sign span { width: 120px; height: 18px; border-bottom: 1px solid #1c2a22; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 18'%3E%3Cpath d='M4 14c10-12 16 6 24-2s12-8 18 0 10 4 18-4 14 6 22 2 14-6 30-4' fill='none' stroke='%232f5d46' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain; }
+.dep-sign em { font-style: normal; font-size: 10px; color: #8a7440; }
+.dep-acts { display: flex; justify-content: flex-end; gap: 8px; }
+.dep-go { min-width: 150px; }
