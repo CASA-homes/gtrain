@@ -20,8 +20,10 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-AU">
+    <html lang="en-AU" suppressHydrationWarning>
       <head>
+        {/* Apply the saved theme before first paint, so dark mode doesn't flash light. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('khq_theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}" }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}

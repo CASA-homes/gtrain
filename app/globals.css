@@ -2815,3 +2815,28 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .sqc-meta { grid-column: 2; grid-row: 1; align-self: end; line-height: 1.2; }
 .sqc-sub { grid-column: 2; grid-row: 2; align-self: start; line-height: 1.2; }
 .pl-grow { display: inline-block; min-width: 46px; padding: 2px 6px; border-radius: 6px; font-size: 11.5px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* Header settings cog */
+.nset { position: relative; display: flex; align-items: center; }
+.nset-btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 10px; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.nset-btn:hover, .nset-btn[aria-expanded='true'] { color: var(--ink); background: rgb(0 0 0 / .04); }
+.nset-menu { position: absolute; right: 0; top: 42px; z-index: 60; width: 290px; padding: 6px; background: #fff; border: 1px solid #e2e5df; border-radius: 14px; box-shadow: 0 14px 40px rgb(0 0 0 / .16); display: flex; flex-direction: column; }
+.nset-sec { display: flex; flex-direction: column; gap: 2px; padding: 6px; }
+.nset-sec + .nset-sec { border-top: 1px solid #eef0ec; }
+.nset-h { font: 500 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 2px 6px 4px; }
+.nset-row { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 8px; border-radius: 9px; border: 0; background: none; text-align: left; color: var(--ink); text-decoration: none; cursor: pointer; font: inherit; width: 100%; }
+.nset-row:hover:not(:disabled) { background: #f2f4ef; }
+.nset-row b { font: 600 13.5px var(--font); } .nset-row span { font-size: 12px; color: var(--muted); }
+.nset-row.cur b::after { content: ' ✓'; color: #2f5d46; }
+.nset-row:disabled { cursor: default; }
+.nset-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 3px; border-radius: 10px; background: #eef0ec; }
+.nset-seg button { border: 0; background: none; padding: 6px; border-radius: 8px; font: 600 13px var(--font); color: var(--muted); cursor: pointer; }
+.nset-seg button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+.nset-join > div { display: flex; gap: 6px; padding: 0 2px; }
+.nset-join .input { flex: 1; min-width: 0; min-height: 34px; font-size: 13px; }
+.nset-join .btn { min-height: 34px; }
+@media (max-width: 760px) { .nset-menu { position: fixed; left: 10px; right: 10px; top: auto; bottom: 80px; width: auto; } }
+
+/* Dark theme (first pass): invert the light design, keep photos, logos and guernseys true to colour. */
+html.theme-dark { background: #0f1210; filter: invert(.92) hue-rotate(180deg); }
+html.theme-dark img, html.theme-dark video, html.theme-dark picture, html.theme-dark [style*="background-image"], html.theme-dark .club-dot, html.theme-dark .guernsey { filter: invert(1) hue-rotate(180deg); }
