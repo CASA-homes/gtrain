@@ -1,5 +1,6 @@
 import { positionsFor } from '@/lib/position-overrides';
 import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
 import { createClient, currentLeagueId } from '@/lib/supabase/server';
 import freeAgentData from '@/lib/free-agent-players.json';
 import { buildAttrs, type Attr } from '@/lib/scouting';
@@ -106,16 +107,21 @@ export const getLeague = cache(async (): Promise<League> => {
   const lid = await currentLeagueId();
   const { data: stamp } = await supabase.rpc('data_stamp');
   const v = typeof stamp === 'number' ? stamp : stamp != null ? Number(stamp) : null;
-  if (v != null) {
-    const hit = leagueMemo.get(lid);
-    if (hit && hit.v === v) return hit.league;
-  }
-  const league = await buildLeague(supabase);
-  if (v != null) leagueMemo.set(lid, { v, league });
+  if (v == null) return buildLeague(await fetchLeagueRaw(supabase));
+  const hit = leagueMemo.get(lid);
+  if (hit && hit.v === v) return hit.league;
+  // The raw tables are also kept in Vercel's shared data cache under the stamp, so a fresh server instance skips the
+  // database. Only members reach here (non-members get a null stamp), and a member's view of league data is the same
+  // for everyone in the league. A failed load throws, so it's never cached.
+  const raw = await unstable_cache(() => fetchLeagueRaw(supabase, true), ['khq-league-raw', String(lid), String(v)], { revalidate: 6 * 3600 })();
+  const league = buildLeague(raw);
+  leagueMemo.set(lid, { v, league });
   return league;
 });
 
-async function buildLeague(supabase: Awaited<ReturnType<typeof createClient>>): Promise<League> {
+type LeagueRaw = { teams: unknown[]; squad: unknown[]; seasons: unknown[]; ladder: unknown[]; picks: unknown[] };
+
+async function fetchLeagueRaw(supabase: Awaited<ReturnType<typeof createClient>>, strict = false): Promise<LeagueRaw> {
   const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
     loadTeams(supabase),
     (() => {
@@ -136,18 +142,26 @@ async function buildLeague(supabase: Awaited<ReturnType<typeof createClient>>): 
       return sel(', kind, bonus, slot_first').then((r) => (r.error ? sel(', kind') : r)).then((r) => (r.error ? sel('') : r));
     })(),
   ]);
-  const allPicks = ((picksQ.data ?? []) as unknown as Pick[]).map((p) => ({ ...p, kind: p.kind ?? 'draft' }));
+  if (strict) {
+    const bad = [teamsQ, squadQ, seasonsQ, ladderQ, picksQ].find((q) => q.error || q.data == null);
+    if (bad) throw new Error('League data failed to load');
+  }
+  return { teams: teamsQ.data ?? [], squad: squadQ.data ?? [], seasons: seasonsQ.data ?? [], ladder: ladderQ.data ?? [], picks: picksQ.data ?? [] };
+}
+
+function buildLeague(raw: LeagueRaw): League {
+  const allPicks = ((raw.picks) as unknown as Pick[]).map((p) => ({ ...p, kind: p.kind ?? 'draft' }));
   const picks = allPicks.filter((p) => p.kind === 'draft');
   const extraPicks = allPicks.filter((p) => p.kind !== 'draft');
 
-  const teams = (teamsQ.data ?? []) as Team[];
+  const teams = raw.teams as Team[];
   type SquadRow = {
     team_id: number; is_keeper: boolean; is_rookie_keeper: boolean; lineup: Slot | null; lineup_pos?: number | null;
     players: { id: number; name: string; full_name: string | null; positions: Line[]; afl_club: string | null; birth_date: string | null;
       draft_pick: number | null; draft_year: number | null; dfs_id: string | null; height_cm: number | null; debut_year: number | null; career_games: number | null; hist: Hist[] | null; photo_path: string | null; list_status: string | null;
       player_seasons: { season: number; games: number | null; average: number | null; last5: (number | null)[] | null; status: string | null; box: Box | null; games_log?: GameLog[] | null }[] };
   };
-  const players: PlayerRow[] = ((squadQ.data ?? []) as unknown as SquadRow[]).map((s) => {
+  const players: PlayerRow[] = (raw.squad as unknown as SquadRow[]).map((s) => {
     const cur = s.players.player_seasons.find((x) => x.season === CURRENT_SEASON);
     return {
       id: s.players.id, name: s.players.name, positions: positionsFor(s.players.full_name, s.players.positions), afl_club: s.players.afl_club,
@@ -166,7 +180,7 @@ async function buildLeague(supabase: Awaited<ReturnType<typeof createClient>>): 
   }));
   const ownedPct = new Map(FA_ROWS.map((f) => [f.id, f.owned_pct]));
   const ratings = buildRatings(players, freeAgents);
-  const seasons = (seasonsQ.data ?? []) as League['seasons'];
+  const seasons = raw.seasons as League['seasons'];
 
   const analyses = teams.map((team) => {
     const ps = players.filter((p) => p.team_id === team.id);
@@ -243,7 +257,7 @@ async function buildLeague(supabase: Awaited<ReturnType<typeof createClient>>): 
   }
 
   const attrs = buildAttrs(players, freeAgents);
-  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: (ladderQ.data ?? []) as League['ladder'] };
+  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: raw.ladder as League['ladder'] };
 }
 
 export { primaryLine };
