@@ -2782,3 +2782,30 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .lg-nx em { font-style: normal; font-size: 11px; color: #9aa59a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .lg-nx[style*="#1f3a5c"] { border-top-color: #6f9ccf; } .lg-nx[style*="#151a17"] { border-top-color: #b9c0b8; }
 @media (max-width: 760px) { .lg-next { flex-basis: 100%; max-width: none; order: 3; } .lg-nx b { font-size: 18px; } .lg-nx { padding: 6px 8px; } }
+
+/* Clubhouse header, desktop: logo edit as a corner icon, stats tucked under the name, bank/salary + actions on the right */
+.ch-kpis-desk, .ch-right-desk { display: none; }
+.logo-edit.as-icon { position: absolute; top: -6px; right: -8px; z-index: 3; }
+.logo-ico { display: grid; place-items: center; width: 22px !important; height: 22px; padding: 0 !important; border-radius: 50%; background: #fff !important; border: 1px solid rgb(0 0 0 / .14) !important; color: var(--ink) !important; opacity: .9 !important; text-decoration: none !important; box-shadow: 0 1px 3px rgb(0 0 0 / .12); }
+.logo-ico:hover { opacity: 1 !important; }
+.logo-menu { position: absolute; top: 26px; left: 0; display: flex; flex-direction: column; min-width: 130px; padding: 4px; background: #fff; border: 1px solid #e2e5df; border-radius: 10px; box-shadow: 0 8px 24px rgb(0 0 0 / .14); }
+.logo-menu button { text-align: left; padding: 7px 10px !important; border-radius: 7px; text-decoration: none !important; opacity: 1 !important; font-size: 13px !important; color: var(--ink) !important; }
+.logo-menu button:hover { background: #f1f3ee !important; }
+@media (min-width: 861px) {
+  .club-head-body { flex-wrap: nowrap; align-items: center; padding: 10px 22px; }
+  .club-head-id { align-items: center; }
+  .club-head-stats, .club-head-more { display: none !important; }
+  .ch-kpis-desk { display: flex; gap: 0; margin-top: 4px; }
+  .ch-kpis-desk > div { display: flex; flex-direction: column; padding: 0 16px; border-left: 1px solid rgb(0 0 0 / .1); }
+  .ch-kpis-desk > div:first-child { padding-left: 0; border-left: 0; }
+  .ch-kpis-desk span { font: 500 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .ch-kpis-desk b { font: 600 17px var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .club-head.has-colour .ch-kpis-desk b { color: var(--club); }
+  .ch-right-desk { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; position: relative; z-index: 1; flex: none; }
+  .ch-stats-desk { display: grid; grid-template-columns: repeat(2, minmax(96px, auto)); gap: 6px; }
+  .ch-stats-desk > div { background: rgb(255 255 255 / .62); border: 1px solid rgb(0 0 0 / .06); border-radius: 12px; padding: 4px 12px; display: flex; flex-direction: column; align-items: center; backdrop-filter: blur(4px); }
+  .ch-stats-desk b { font: 700 19px/1.1 var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .ch-stats-desk span { font: 500 9px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .ch-acts-desk { display: flex; gap: 8px; }
+  .ch-acts-desk .btn, .ch-acts-desk button { padding-top: 7px; padding-bottom: 7px; }
+}

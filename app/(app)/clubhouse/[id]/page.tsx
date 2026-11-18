@@ -172,9 +172,9 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
         <StadiumArt className="club-head-art" />
         <div className="club-head-body">
           <div className="club-head-id">
-            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none' }}>
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, flex: 'none', position: 'relative' }}>
               <TeamBadge code={a.team.short_code} logo={a.team.logo_url} />
-              {(isMine || me?.is_commish) && <span className="club-logo-desk"><ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} /></span>}
+              {(isMine || me?.is_commish) && <span className="club-logo-desk"><ClubLogoEditor teamId={a.team.id} hasLogo={!!a.team.logo_url} icon /></span>}
             </span>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px 12px', flexWrap: 'wrap' }}>
@@ -185,7 +185,20 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
                   </span>
                 )}
               </div>
+              <div className="ch-kpis-desk">
+                <div><span>Power rank</span><b>#{a.rank}</b></div>
+                <div><span>Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
+                <div><span>Keepers</span><b>{keepers.length} / 18</b></div>
+                <div><span>Squad</span><b>{a.players.length} / 33</b></div>
+              </div>
             </div>
+          </div>
+          <div className="ch-right-desk">
+            <div className="ch-stats-desk">
+              <div><b>{bank != null ? bank.toLocaleString('en-AU') : '–'}</b><span>KT bank</span></div>
+              <div><b>{salaryK != null ? `$${salaryK}k` : '–'}</b><span>Salary</span></div>
+            </div>
+            {(isMine || me?.is_commish) && <div className="ch-acts-desk"><ClubSettings teamId={a.team.id} colour={a.team.colour ?? null} hidden={a.team.clubhouse_hide ?? []} /><Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link></div>}
           </div>
           <div className="club-head-stats">
             <div><b>#{a.rank}</b><span>Power rank</span></div>

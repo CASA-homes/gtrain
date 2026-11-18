@@ -55,10 +55,6 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   // Investments
   const flows = new Map<string, number>();
   for (const l of ledger) flows.set(bucket(l.reason), (flows.get(bucket(l.reason)) ?? 0) + l.delta);
-  const TRADE_B = ['Sales and fees', 'Players bought', 'Refunds'];
-  const trades = ledger.filter((l) => TRADE_B.includes(bucket(l.reason)) || /trade/i.test(l.reason));
-  const tradeIn = trades.filter((l) => l.delta > 0).reduce((t, l) => t + l.delta, 0);
-  const tradeOut = -trades.filter((l) => l.delta < 0).reduce((t, l) => t + l.delta, 0);
   const openDeps = deposits.filter((x) => x.status === 'open');
   const locked = openDeps.reduce((t, x) => t + x.amount, 0);
   const depReturn = openDeps.reduce((t, x) => t + Math.floor((x.amount * x.rate_pct) / 100), 0);
@@ -69,6 +65,13 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   const offersIn = loans.filter((l) => l.status === 'offered' && l.borrower === teamId);
   const offersOut = loans.filter((l) => l.status === 'offered' && l.lender === teamId);
   const netWorth = club.bank + locked + depReturn + dueBack - dueOut;
+  const heldInOffers = d.myOffers.reduce((t, o) => t + (o.sweet_kt ?? 0), 0);
+  const earned = ledger.filter((l) => l.delta > 0).reduce((t, l) => t + l.delta, 0);
+  const spent = -ledger.filter((l) => l.delta < 0).reduce((t, l) => t + l.delta, 0);
+  // Running balance after each entry (newest first), working back from the bank.
+  const balAfter: number[] = []; { let b = club.bank; for (const l of ledger) { balAfter.push(b); b -= l.delta; } }
+  const setupNow = !!s.setup_until && new Date(s.setup_until) > new Date();
+  const buysLeft = Math.max(0, s.max_buys - d.claims.filter((c) => c.buyer_team === teamId && c.status !== 'cancelled' && (!s.window_opened_at || c.created_at >= s.window_opened_at)).length);
 
   // Rookie slot candidates: 10 or fewer games, contract covering this season.
   const rookieLocked = !!s.rookie_lock_at && new Date(s.rookie_lock_at) <= new Date();
@@ -146,31 +149,40 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
 
       {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
 
-      <section className="kc-card fn-tabs" aria-label="Trades, investments and loans">
+      <div className="fn-bankrow">
+      <section className="kc-card fn-bank" aria-labelledby="bk-h">
+        <div className="row-between"><h2 id="bk-h">Your bank</h2><span className="kc-sub">KT</span></div>
+        <div className="fn-bank-big"><b>{kt(club.bank)}</b><span>available to spend</span></div>
+        <div className="fn-bank-grid">
+          <div><span>Savings</span><b>{kt(locked)}</b><em>{openDeps.length ? `${openDeps.length} deposit${openDeps.length > 1 ? 's' : ''} · +${kt(depReturn)} due` : 'No deposits'}</em></div>
+          <div><span>Debts</span><b className={dueOut ? 'dn' : ''}>{dueOut ? `−${kt(dueOut)}` : kt(0)}</b><em>{owed.length ? `${owed.length} loan${owed.length > 1 ? 's' : ''} · due season end` : 'Nothing owed'}</em></div>
+          <div><span>Lent out</span><b className={dueBack ? 'up' : ''}>{kt(dueBack)}</b><em>{lent.length ? 'back with interest' : 'No loans out'}</em></div>
+          <div><span>Held in offers</span><b>{kt(heldInOffers)}</b><em>{d.myOffers.length ? `${d.myOffers.length} free-agent offer${d.myOffers.length > 1 ? 's' : ''}` : 'No offers tabled'}</em></div>
+          <div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + savings + lent − debts</em></div>
+          <div><span>Squad value</span><b>{moneyK(rateTotal)}</b><em className={rateTotal >= club.salary ? 'up' : 'dn'}>{rateTotal >= club.salary ? '+' : '−'}{moneyK(Math.abs(rateTotal - club.salary))} vs salary</em></div>
+        </div>
+        <p className="fn-bank-note">Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</p>
+      </section>
+
+      <section className="kc-card fn-tabs" aria-label="Transactions, investments and loans">
         <input type="radio" name="fn-tab" id="fn-t1" defaultChecked hidden />
         <input type="radio" name="fn-tab" id="fn-t2" hidden />
         <input type="radio" name="fn-tab" id="fn-t3" hidden />
         <div className="fn-tabbar" role="tablist">
-          <label htmlFor="fn-t1" role="tab">Trades</label>
+          <label htmlFor="fn-t1" role="tab">Transactions</label>
           <label htmlFor="fn-t2" role="tab">Investments</label>
           <label htmlFor="fn-t3" role="tab">Loans{offersIn.length ? <i>{offersIn.length}</i> : null}</label>
         </div>
 
         <div className="fn-pane fn-p1">
           <div className="fn-split">
-            <div><span>Sales &amp; fees</span><b className="up">+{kt(tradeIn)}</b></div>
-            <div><span>Players bought</span><b className="dn">−{kt(tradeOut)}</b></div>
+            <div><span>Earned</span><b className="up">+{kt(earned)}</b></div>
+            <div><span>Spent</span><b className="dn">−{kt(spent)}</b></div>
           </div>
-          <div className="fn-flows">
-            {BUCKETS.map(([b]) => b).concat('Other').filter((b) => flows.get(b)).map((b) => {
-              const v = flows.get(b)!; const w = Math.min(100, (Math.abs(v) / Math.max(...[...flows.values()].map(Math.abs))) * 100);
-              return <div key={b}><span>{b}</span><span className="fn-flowbar"><i className={v >= 0 ? 'up' : 'dn'} style={{ width: `${w}%` }} /></span><b className={v >= 0 ? 'up' : 'dn'}>{v >= 0 ? '+' : '−'}{Math.abs(v).toLocaleString('en-AU')}</b></div>;
-            })}
-          </div>
-          <div className="kc-ledger" style={{ marginTop: 12 }}>
-            {trades.length ? trades.slice(0, 30).map((l) => (
-              <div key={l.id}><span className="muted">{new Date(l.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span><span>{l.reason}</span><b className={l.delta >= 0 ? 'kc-up' : 'kc-down'}>{l.delta >= 0 ? '+' : '−'}{Math.abs(l.delta).toLocaleString('en-AU')}</b></div>
-            )) : <p className="kc-sub">No sales or purchases yet. Clause buys, trades paid in KT, transfer fees and auction wins show here.</p>}
+          <div className="kc-ledger fn-ledger">
+            {ledger.length ? ledger.map((l, i) => (
+              <div key={l.id}><span className="muted">{new Date(l.created_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}</span><span>{l.reason}</span><b className={l.delta >= 0 ? 'kc-up' : 'kc-down'}>{l.delta >= 0 ? '+' : '−'}{Math.abs(l.delta).toLocaleString('en-AU')}</b><em>{balAfter[i].toLocaleString('en-AU')}</em></div>
+            )) : <p className="kc-sub">No KT moves yet.</p>}
           </div>
         </div>
 
@@ -212,6 +224,8 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           </div>
         </div>
       </section>
+
+      </div>
 
       <section className="kc-card fn-coach" aria-labelledby="ac-h">
         <div className="fn-coach-head"><span className="fn-ac">AC</span><div><h2 id="ac-h">Assistant coach</h2><span className="kc-sub">{tips.length ? `${tips.length} suggestion${tips.length > 1 ? 's' : ''} for your cap` : 'Nothing urgent. Your cap is in good shape.'}</span></div></div>
