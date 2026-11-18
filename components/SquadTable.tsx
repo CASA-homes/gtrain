@@ -10,7 +10,7 @@ import { resetLineup, saveLineup } from '@/app/(app)/clubhouse/[id]/lineup-actio
 export interface SquadPlayer {
   id: number; name: string; positions: Line[]; afl_club: string | null; average: number | null;
   last5: (number | null)[]; games: number | null; tons: number; form: Form;
-  valueStars: number; potential: number | null; is_keeper: boolean; status: string | null;
+  valueStars: number; mv?: number | null; potential: number | null; is_keeper: boolean; status: string | null;
   slot: Slot | null;
   pos?: number | null;          // spot within the line (0 = top)
   photo_path: string | null; dfs_id: string | null;
@@ -55,9 +55,9 @@ const fits = (p: SquadPlayer, s: Slot | 'EXT') => s === 'EXT' || s === 'BENCH' |
 
 type Board = { cells: Record<Slot, (number | null)[]>; ext: number[] };
 type Loc = { slot: Slot | 'EXT'; i: number };   // ext i = -1 is the empty "move off the 22" row
-type SortKey = 'avg' | 'apps' | 'ability' | 'pot';
+type SortKey = 'avg' | 'apps' | 'mv' | 'ability' | 'pot';
 const SORTS: Record<SortKey, (p: SquadPlayer) => number> = {
-  avg: (p) => p.average ?? -1, apps: (p) => p.games ?? -1, ability: (p) => p.valueStars, pot: (p) => p.potential ?? -1,
+  avg: (p) => p.average ?? -1, apps: (p) => p.games ?? -1, mv: (p) => p.mv ?? -1, ability: (p) => p.valueStars, pot: (p) => p.potential ?? -1,
 };
 
 /** Lay the squad out on the board: each player in his saved spot, gaps kept, overflow to the extended squad. */
@@ -80,7 +80,7 @@ const key = (b: Board) => JSON.stringify(b.cells) + '|' + [...b.ext].sort().join
 /**
  * Starting 22 + extended squad. The owner moves players by dragging a row onto another row or onto an empty spot,
  * or by tapping ⇅ on a player and then tapping where he goes. Lines can have gaps. Changes save in one go.
- * Clicking Avg / Apps / Current ability / Pot. sorts within each line (click again to go back to the coach's order).
+ * Clicking Avg / Apps / Value / Ability / Pot. sorts within each line (click again to go back to the coach's order).
  */
 export function SquadTable({ players, teamId, editable, saved, onToggle }: {
   players: SquadPlayer[]; teamId: number; editable: boolean; saved: boolean; onToggle?: (open: boolean) => void;
@@ -172,7 +172,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
     },
     { title: 'Extended squad', sub: `${board.ext.length} not selected`, groups: [{ key: 'EXT' as Slot | 'EXT', name: 'Not selected', colour: C.muted, need: 0 }] },
   ];
-  const cols = (open ? 13 : 9) + (editable ? 1 : 0);
+  const cols = (open ? 14 : 10) + (editable ? 1 : 0);
   const SortHead = ({ k, label, title, style }: { k: SortKey; label: string; title?: string; style: React.CSSProperties }) => (
     <th style={style} title={title} aria-sort={sortBy === k ? 'descending' : undefined}>
       <button type="button" onClick={() => setSortBy(sortBy === k ? null : k)} title={sortBy === k ? 'Back to the coach’s order' : `Sort each line by ${label}`}
@@ -234,7 +234,8 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                   <th style={{ width: 40, textAlign: 'center' }}>Form</th>
                   <SortHead k="apps" label="Apps" style={{ width: 44, textAlign: 'center' }} />
                   <th style={{ width: 38, textAlign: 'center' }} title="100+ scores in the last 5">100s</th>
-                  <SortHead k="ability" label="Current ability" style={{ width: 110 }} />
+                  <SortHead k="mv" label="Value" style={{ width: 62, textAlign: 'right' }} />
+                  <SortHead k="ability" label="Ability" style={{ width: 110 }} />
                   <SortHead k="pot" label="Pot." style={{ width: 78 }} />
                 </tr>
               </thead>
@@ -322,7 +323,8 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
                         <td style={{ textAlign: 'center' }}><FormArrow form={p.form} /></td>
                         <td style={{ textAlign: 'center' }}>{p.games ?? '–'}</td>
                         <td style={{ textAlign: 'center', fontWeight: 600 }}>{p.tons}</td>
-                        <td><Stars value={p.valueStars} label="Current ability" /></td>
+                        <td className="mono" style={{ textAlign: 'right', fontWeight: 600 }} title="Market value">{p.mv != null ? `$${p.mv}k` : '–'}</td>
+                        <td><Stars value={p.valueStars} label="Ability" /></td>
                         <td><Stars value={p.potential} colour={C.green5} label="Potential" /></td>
                       </tr>
                     );
@@ -334,7 +336,7 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
         </section>
       ))}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 18px', alignItems: 'center', fontSize: 12 }} className="muted">
-        {editable && <span>Drag a player onto another player or an empty spot, or tap <b style={{ fontWeight: 600 }}>⇅</b> then tap where he goes. Click Avg, Apps, Current ability or Pot. to sort each line.</span>}
+        {editable && <span>Drag a player onto another player or an empty spot, or tap <b style={{ fontWeight: 600 }}>⇅</b> then tap where he goes. Click Avg, Apps, Value, Ability or Pot. to sort each line.</span>}
         {open && (
           <>
             <span className="eyebrow">Trend</span>
