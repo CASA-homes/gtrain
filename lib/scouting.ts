@@ -119,7 +119,7 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
  * The verdict label, plus any secondary labels. Line-adjusted average first (forwards +10, defenders +5, so a 90
  * forward reads like a 100 midfielder; half that lift for the tiers below gun):
  *   Win-now asset: 30 or older and 95+ (or gun-level for his line).
- *   Fantasy star 110+, Fantasy gun 99+ (any age under 30).
+ *   Fantasy star 110+, Fantasy gun 95+ (any age under 30).
  *   24 and under, it's about potential:
  *     Potential fantasy star: 23 or younger at 90+, 21 or younger at 80+, 20 or younger at 76+, or a top-10 pick aged 20 or under with top potential.
  *     Potential great fantasy player: 78+, strong potential, 22 or younger at 72+, a hot finish (80+ over his last five),
@@ -129,7 +129,7 @@ function roleOf(p: PlayerRow, b: Box, v: (k: string) => number): string {
  *     fewer games are at least Potential great, tagged Too early to tell. Under 70 with a real sample: Role dependent tag.
  *   Key-position players (193cm+ defenders and forwards) drop one potential rung.
  *   Missed a lot of football (under 9 games a year on a list, 8 or fewer in 2026): Unknown quantity tag.
- *   Over 24: Great fantasy player 90–99, Reliable starter 80–90, Depth piece 70–80, Role dependent under 70.
+ *   Over 24: Great fantasy player 90–95, Reliable starter 80–90, Depth piece 70–80, Role dependent under 70.
  *   Under 30 with an injury-hit season: Bounce-back candidate. 30 or older and not a win-now asset: Sell now tag.
  */
 function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean): { verdict: Verdict; extra: Verdict[] } {
@@ -146,10 +146,10 @@ function verdictFor(p: PlayerRow, r: Ratings, a: number | null, bounce: boolean)
   // Missed a lot of footy: few games for his years on a list, and barely played in 2026.
   const yrs = p.draft_year ? CURRENT_YEAR - p.draft_year : 0;
   if (yrs >= 3 && cg / yrs < 9 && g <= 8 && cg >= 10) extra.push('Unknown quantity');
-  if (age >= 30 && (avg >= 95 || adj >= 99)) return out('Win-now asset');
+  if (age >= 30 && (avg >= 95 || adj >= 95)) return out('Win-now asset');
   if (age >= 30) extra.push('Sell now');
   if (adj >= 110 && g >= 8) return out('Fantasy star');
-  if (adj >= 99 && g >= 8) return out('Fantasy gun');
+  if (adj >= 95 && g >= 8) return out('Fantasy gun');
 
   if (age <= 24) {
     let tier: Verdict =
@@ -365,8 +365,8 @@ export function scoutingReport(p: PlayerRow, r: Ratings, attrs: Attr[] | undefin
   else {
     const map: Record<Verdict, string> = {
       'Fantasy star': `${first} is a fantasy star, one of the handful of players who can win you a week on his own. Build around him.`,
-      'Fantasy gun': `${first} is a fantasy gun: a 100-plus scorer (or the positional equivalent) you lock in every week. He’s not quite in the top handful, but he’s close.`,
-      'Great fantasy player': `${first} is a great fantasy player: a 90-plus scorer who carries a starting spot every week. Not a gun, but the kind of player good teams are built on.`,
+      'Fantasy gun': `${first} is a fantasy gun: a 95-plus scorer (or the positional equivalent) you lock in every week. He’s not quite in the top handful, but he’s close.`,
+      'Great fantasy player': `${first} is a great fantasy player: a 90-to-95 scorer who carries a starting spot every week. Not a gun, but the kind of player good teams are built on.`,
       'Reliable starter': `${first} is a reliable starter. He’s unlikely to win you a week on his own, but he rarely costs you one either.`,
       'Depth piece': `${first} is a depth piece: fine cover through the byes and injuries, but not someone to build around.`,
       'Role dependent': `${first}’s scoring depends on his role, and right now it isn’t a scoring one. A move on-ball, or a teammate leaving, could change that.`,

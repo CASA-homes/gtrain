@@ -343,6 +343,8 @@ const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x
  *   100+ junior numbers, top-40 picks with 115+ or top-5 picks; 3.5★ for top-20 picks, 95+ juniors, a 130+ junior game or a 100+ AFL game.
  * Prime (24–27): current ability, with a little extra if he's still climbing.
  * 28+: current ability less an age drop (29 −0.5, 30–32 −1, 33+ −1.5).
+ * Proven ceiling, under 30: two of his last four full seasons at 100+ (line-adjusted) keeps him at 4.5★ or better, 110+ at 5★,
+ * so one down year in his mid-20s doesn't sink his potential. From 30, regression takes over.
  */
 /**
  * Projected peak for a young player: his 2026 level (blended with his last 10 full games, so a strong back half
@@ -413,13 +415,17 @@ export function potential(p: Pick<PlayerRow, 'full_name' | 'birth_date' | 'draft
       : pick <= 20 || jfp >= 95 || (jmax >= 130 && jfp >= 80) || spike ? 3.5 : 0;
     return halfStar(Math.max(P, C, floor, pk ? abilityStars(pk + lineBonus) : 0));
   }
+  // Proven ceiling (under 30): an established player who's already shown it keeps that potential through one down
+  // year. Two of his last four full seasons (10+ games) at 100+ line-adjusted = at least 4.5★; two at 110+ = 5★.
+  const recentFull = full.filter((h) => h[1] >= 10 && h[0] >= SEASON_NOW - 3).map((h) => h[2] + lineBonus).sort((x, y) => y - x);
+  const proven = a >= 30 || recentFull.length < 2 ? 0 : recentFull[1] >= 110 ? 5 : recentFull[1] >= 100 ? 4.5 : 0;
   if (a <= 27) {
     const slope = full.length >= 2 ? full[full.length - 1][2] - full[full.length - 2][2] : 0;
     const pk = a <= 25 ? projectedPeak(p) : null;
-    return halfStar(Math.max(C + (a <= 26 ? clamp(slope / 20, 0, 0.5) : 0), pk ? abilityStars(pk + lineBonus) : 0));
+    return halfStar(Math.max(C + (a <= 26 ? clamp(slope / 20, 0, 0.5) : 0), pk ? abilityStars(pk + lineBonus) : 0, proven));
   }
   const drop = a === 28 ? 0 : a === 29 ? 0.5 : a <= 32 ? 1 : 1.5;
-  return halfStar(C - drop);
+  return halfStar(Math.max(C - drop, proven));
 }
 
 // ---------------------------------------------------------------- team level
