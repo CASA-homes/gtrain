@@ -85,6 +85,12 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
   const lean = givePts + getPts ? getPts / (givePts + getPts) : 0.5;
 
   const onTable = new Set(items.map((i) => i.player_id).filter(Boolean));
+  const sizeOf = (tid: number) => {
+    const inP = items.filter((i) => i.to_team_id === tid && i.player_id).length;
+    const outP = items.filter((i) => i.from_team_id === tid && i.player_id).length;
+    const ds = (drops ?? []).filter((x) => x.team_id === tid) as { id: number; team_id: number; player_id: number }[];
+    return { inP, outP, drops: ds, after: league.players.filter((p) => p.team_id === tid).length + inP - outP - ds.length };
+  };
   const pickOnTable = new Set(items.map((i) => i.pick_id).filter(Boolean));
   const assetsFor = (tid: number): { players: TradeAsset[]; picks: TradeAsset[] } => ({
     players: league.players.filter((p) => p.team_id === tid && !p.list_status && !onTable.has(p.id))
@@ -95,6 +101,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
       .map((p) => ({ key: `pick:${p.id}`, label: `${pickLabel(p)}${p.original_team_id !== tid ? ` (orig. ${team(p.original_team_id).short_code})` : ''}`, value: `${pickValue(p).toLocaleString()} pts` })),
   });
 
+  const overClubs = partIds.filter((t) => sizeOf(t).after > 33);
   const title = two ? `Trade with ${team(others[0]).name}` : desk.title;
   const evLine = (e: Ev) => {
     const who = e.team_id === myId ? 'You' : team(e.team_id).name;
@@ -197,9 +204,27 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
               {gives.length ? gives.map((i) => row(snapOf(i), { removeId: canEdit && [i.from_team_id, i.to_team_id, i.added_by_team].includes(myId) ? i.id : undefined, dir: two ? undefined : `to ${team(i.to_team_id).short_code}` }))
                 : <p className="td-empty">Nothing yet</p>}
               {canEdit && (
-                <TradeAdd from={tid} toOptions={(isMe ? others : [myId]).filter((x) => x !== tid).map((x) => ({ id: x, name: team(x).name }))}
+                <TradeAdd from={tid} toOptions={partIds.filter((x) => x !== tid).sort((a, b) => (a === myId ? -1 : b === myId ? 1 : 0)).map((x) => ({ id: x, name: team(x).name }))}
                   players={a.players} picks={a.picks} bank={club?.bank ?? null} action={addItem.bind(null, id)} />
               )}
+              {(() => {
+                const sz = sizeOf(tid); const over = sz.after - 33;
+                const canDrop = isOpen && (tid === myId || me?.is_commish);
+                const options = league.players.filter((p) => p.team_id === tid && !onTable.has(p.id) && !sz.drops.some((x) => x.player_id === p.id)).sort((x, y) => (x.average ?? 0) - (y.average ?? 0));
+                return (
+                  <div className={`td-list${over > 0 ? ' over' : ''}`}>
+                    <span>List after trade <b>{sz.after} / 33</b>{sz.inP || sz.outP ? <em> · {sz.inP} in, {sz.outP} out</em> : null}</span>
+                    {sz.drops.map((x) => { const p = league.players.find((pp) => pp.id === x.player_id); return <span key={x.id} className="td-dropchip">Releases {p?.name ?? 'player'}{canDrop && <form action={removeDrop.bind(null, id, x.id)}><button aria-label={`Keep ${p?.name}`}>×</button></form>}</span>; })}
+                    {over > 0 && <span className="td-list-warn">{tid === myId ? 'You' : team(tid).short_code} must release {over} player{over > 1 ? 's' : ''} for this trade to go through.</span>}
+                    {canDrop && over > 0 && options.length > 0 && (
+                      <form action={addDrop.bind(null, id, tid)} className="td-dropform">
+                        <select name="player" className="input" required defaultValue=""><option value="" disabled>Choose who to release…</option>{options.map((p) => <option key={p.id} value={p.id}>{p.name} · {p.positions.join('/')} · {p.average?.toFixed(1) ?? '–'}</option>)}</select>
+                        <button className="btn">Release</button>
+                      </form>
+                    )}
+                  </div>
+                );
+              })()}
               <div className="td-tot"><span className="muted">{isMe ? 'You give' : two ? 'You get' : 'Gives'}</span><b>{[val ? `$${val}k` : null, kt ? `${kt.toLocaleString('en-AU')} KT` : null, `${pts.toLocaleString()} pts`].filter(Boolean).join(' · ')}</b></div>
             </div>
           );
@@ -214,35 +239,12 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
         </div>
       )}
 
-      {/* List sizes and releases */}
-      {partIds.map((tid) => {
-        const gets = items.filter((i) => i.to_team_id === tid && i.player_id).length;
-        const gives = items.filter((i) => i.from_team_id === tid && i.player_id).length;
-        const myDrops = (drops ?? []).filter((x) => x.team_id === tid);
-        const after = league.players.filter((p) => p.team_id === tid).length + gets - gives - myDrops.length;
-        const over = after - 33;
-        if (over <= 0 && !myDrops.length) return null;
-        const canDrop = isOpen && (tid === myId || me?.is_commish);
-        const options = league.players.filter((p) => p.team_id === tid && !onTable.has(p.id) && !myDrops.some((x) => x.player_id === p.id)).sort((x, y) => (x.average ?? 0) - (y.average ?? 0));
-        return (
-          <section key={`d${tid}`} className="td-drops">
-            <span><b>{team(tid).name}</b>: list after trade <b className={over > 0 ? 'dn' : ''}>{after} / 33</b>{over > 0 ? ` · release ${over} more or it can’t go through` : ''}</span>
-            {myDrops.map((x) => { const p = league.players.find((pp) => pp.id === x.player_id); return <span key={x.id} className="td-dropchip">Releases {p?.name ?? 'player'}{canDrop && <form action={removeDrop.bind(null, id, x.id)}><button aria-label={`Keep ${p?.name}`}>×</button></form>}</span>; })}
-            {canDrop && over > 0 && options.length > 0 && (
-              <form action={addDrop.bind(null, id, tid)} className="td-dropform">
-                <select name="player" className="input" required defaultValue=""><option value="" disabled>Pick someone to release…</option>{options.map((p) => <option key={p.id} value={p.id}>{p.name} · {p.positions.join('/')} · {p.average?.toFixed(1) ?? '–'}</option>)}</select>
-                <button className="btn">Release</button>
-              </form>
-            )}
-          </section>
-        );
-      })}
-
       {isOpen && iAmIn && items.length > 0 && boardChanged && (
         <form action={proposeDesk.bind(null, id)} className="td-propose">
           <label htmlFor="td-note" className="sr-only">Message</label>
           <input id="td-note" name="note" className="input" maxLength={500} placeholder="Add a message (optional)" />
-          <button className="btn green">{last && last.team_id !== myId ? 'Put counter forward' : last ? 'Update offer' : 'Put it forward'}</button>
+          {overClubs.length > 0 && <span className="td-list-warn" style={{ alignSelf: 'center' }}>{overClubs.map((t) => team(t).short_code).join(', ')} over 33: pick who to release first</span>}
+          <button className="btn green" disabled={overClubs.includes(myId)}>{last && last.team_id !== myId ? 'Put counter forward' : last ? 'Update offer' : 'Put it forward'}</button>
         </form>
       )}
       {isOpen && !iAmIn && <p className="muted" style={{ margin: 0 }}>{partIds.length ? `On this trade: ${partIds.map((t) => team(t).name).join(', ')}. Join to put something on the table.` : 'Join to put something on the table.'}</p>}

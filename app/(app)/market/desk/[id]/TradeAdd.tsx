@@ -27,7 +27,7 @@ export function TradeAdd({ from, toOptions, players, picks, bank, action }: {
         <option value="kt">KT</option>
       </select>
       {kind === 'kt' ? (
-        <input className="input" type="number" min={1} step={5} max={bank ?? undefined} inputMode="numeric" placeholder={bank != null ? `Up to ${bank.toLocaleString('en-AU')} KT` : 'How much KT'} value={kt} onChange={(e) => setKt(e.target.value)} aria-label="KT amount" />
+        <input className="input" type="number" min={1} step={1} max={bank ?? undefined} inputMode="numeric" placeholder={bank != null ? `Up to ${bank.toLocaleString('en-AU')} KT` : 'How much KT'} value={kt} onChange={(e) => setKt(e.target.value)} aria-label="KT amount" />
       ) : (
         <select className="input" value={asset} onChange={(e) => setAsset(e.target.value)} aria-label={kind === 'player' ? 'Player' : 'Pick'}>
           <option value="" disabled>{kind === 'player' ? (list.length ? 'Choose a player…' : 'No players') : (list.length ? 'Choose a pick…' : 'No picks')}</option>
@@ -39,7 +39,8 @@ export function TradeAdd({ from, toOptions, players, picks, bank, action }: {
           {toOptions.map((t) => <option key={t.id} value={t.id}>to {t.name}</option>)}
         </select>
       )}
-      <button className="btn dark" disabled={!value}>Add</button>
+      <button className="btn dark" disabled={!value || (kind === 'kt' && bank != null && ktN > bank)}>＋ Add</button>
+      {kind === 'kt' && bank != null && ktN > bank && <span className="td-add-err">Only {bank.toLocaleString('en-AU')} KT in the bank</span>}
     </form>
   );
 }
