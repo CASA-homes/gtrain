@@ -146,6 +146,15 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
               </form>
             </details>
           )}
+          {isOpen && (iAmIn || me?.is_commish) && (
+            <details className="td-invite td-cancel">
+              <summary className="btn">Cancel trade</summary>
+              <form action={declineDesk.bind(null, id)}>
+                <span>Call it off for every club on this trade?</span>
+                <button className="btn danger">Yes, cancel it</button>
+              </form>
+            </details>
+          )}
           {desk.status === 'agreed' && me?.is_commish && <>
             <form action={vetoDesk.bind(null, id)}><button className="btn">Veto</button></form>
             <form action={executeDesk.bind(null, id)}><button className="btn green">Approve and execute</button></form>
