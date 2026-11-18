@@ -809,3 +809,21 @@
 .kc-match { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding: 12px; border-radius: 12px; border: 1.5px solid #e0b13a; background: #fffaf0; }
 .kc-match-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; }
 .kc-match-acts { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+
+/* Offer contract sheet on phones: nothing spills out of its box */
+@media (max-width: 640px) {
+  .kc-modal .kc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .kc-modal .kc-stat b { font-size: 20px !important; overflow-wrap: anywhere; }
+  .kc-modal button.kc-opts { grid-template-columns: minmax(0, 1fr) !important; gap: 6px; }
+  .kc-modal button.kc-opt { display: grid; grid-template-columns: 76px minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; min-height: 0 !important; padding: 11px 14px; }
+  .kc-modal button.kc-opt[aria-pressed='true'] { padding: 10px 13px; }
+  .kc-modal button.kc-opt > :first-child { font-size: 13px; color: var(--ink); }
+  .kc-modal button.kc-opt b { font-size: 18px; }
+  .kc-modal button.kc-opt > :nth-child(3) { text-align: right; }
+  .kc-modal button.kc-opt > :nth-child(n+4) { grid-column: 1 / -1; }
+  .kc-modal .kc-field { flex-wrap: wrap; gap: 4px; }
+  .kc-modal-foot { flex-wrap: nowrap !important; gap: 8px; }
+  .kc-modal-foot .kc-sub { display: none; }
+  .kc-modal-foot .kc-btn { white-space: nowrap; }
+  .kc-modal-foot .kc-btn.dark { margin-left: auto; }
+}
