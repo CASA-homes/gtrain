@@ -149,3 +149,45 @@ export async function removeDrop(deskId: string, dropId: number) {
   const { error } = await supabase.from('desk_drops').delete().eq('id', dropId);
   back(deskId, error?.message);
 }
+
+/** Start a trade with another club: a desk with both clubs on it, ready to build. */
+export async function startTrade(form: FormData) {
+  const me = await getCoach();
+  if (!me) redirect('/');
+  const withTeam = Number(form.get('with'));
+  if (!withTeam || withTeam === me.team_id) redirect('/market/desk?error=' + encodeURIComponent('Pick a club to trade with.'));
+  const supabase = await createClient();
+  const { data: teams } = await supabase.from('teams').select('id, short_code').in('id', [me.team_id, withTeam]);
+  const code = (id: number) => teams?.find((t) => t.id === id)?.short_code ?? '?';
+  const { data, error } = await supabase.from('desks').insert({ team_id: me.team_id, title: `${code(me.team_id)} ⇄ ${code(withTeam)}`, details: null }).select('id').single();
+  if (error || !data) redirect('/market/desk?error=' + encodeURIComponent(error?.message ?? 'Couldn’t start the trade'));
+  const inv = await supabase.rpc('desk_invite', { p_desk: data.id, p_team: withTeam });
+  if (inv.error) redirect('/market/desk?error=' + encodeURIComponent(inv.error.message));
+  revalidatePath('/market/desk');
+  redirect(`/market/desk/${data.id}`);
+}
+
+export async function inviteClub(deskId: string, form: FormData) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('desk_invite', { p_desk: deskId, p_team: Number(form.get('team')) });
+  back(deskId, error?.message);
+}
+
+/** Put the board forward (an offer, or a counter if the other side proposed last). */
+export async function proposeDesk(deskId: string, form: FormData) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('desk_propose', { p_desk: deskId, p_note: String(form.get('note') || '') });
+  back(deskId, error?.message);
+}
+
+export async function acceptDesk(deskId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('desk_accept', { p_desk: deskId });
+  back(deskId, error?.message);
+}
+
+export async function declineDesk(deskId: string) {
+  const supabase = await createClient();
+  const { error } = await supabase.rpc('desk_decline', { p_desk: deskId, p_note: null });
+  back(deskId, error?.message);
+}
