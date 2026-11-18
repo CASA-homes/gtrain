@@ -16,7 +16,7 @@ import { CupTables } from '@/components/live/cup';
 import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 import { MarketMovers } from '@/components/MarketMovers';
-import { SeasonSchedule } from '@/components/SeasonSchedule';
+import { NextUp, SeasonSchedule } from '@/components/SeasonSchedule';
 
 export default async function LeaguePage() {
   const legacy = await isLegacyLeague();
@@ -50,6 +50,7 @@ export default async function LeaguePage() {
           <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>{leagueTitle(leagueName)}</h1>
           <span className="lg-sub" style={{ color: '#b9c0b8' }}>10 coaches · est. 2022</span>
         </div>
+        <NextUp />
         <div className="kpis lg-kpis">
           <div className="lg-honours">
             <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e2c46b" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-label="Premiership cup"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z" /><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M9.5 17h5" /></svg></b></div>
