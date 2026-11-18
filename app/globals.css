@@ -116,8 +116,7 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
   .nav-brand .khq-wm { font-size: 19px; }
   .nav-me { padding: 3px; }
   .nav-me em { display: none; }
-  .nav-out button { width: 34px; height: 34px; justify-content: center; border-radius: 10px; color: var(--muted); padding: 0; }
-  .nav-out button:active { background: var(--sunk); }
+  .nav-out { display: none; }
   .nav .nav-label { display: none; }
   .nav .nav-ico { display: block; width: 20px; height: 20px; }
   .nav .nav-short { display: block; font-size: 9.5px; line-height: 1; letter-spacing: .01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
