@@ -9,7 +9,7 @@ import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 
 export type Tier = 'standard' | 'high' | 'none' | 'protected';
 
-export interface KcSettings {
+export interface KcSettings { fa_day?: string | null;
   league_id: number; season: number; shadow: boolean;
   keeper_cap_k: number; season_cap_k: number; tax_line_k: number; tax_kt_per_k: number; start_kt: number;
   max_years: number; long_deal_limit: number;
@@ -27,7 +27,7 @@ export interface Contract {
   rookie_slot_season: number | null; clause_kt: number | null; locked_until: string | null; draft_review?: boolean; provisional?: boolean;
 }
 export interface Auction { id: number; contract_id: number; player_id: number; seller_team: number; reserve_kt: number; ends_at: string; status: string; bids: { team_id: number; amount_kt: number; created_at: string }[] }
-export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending' | 'offseason'; offers: number }
+export interface FreeAgent { id: number; player_id: number; ex_team: number | null; closes_at: string | null; status: string; kind: 'open' | 'pending' | 'offseason'; offers: number; match_offer?: number | null; match_by?: string | null }
 export interface MyOffer { id: number; fa_id: number; team_id: number; years: number; salary_k: number; tier: Tier; sweet_kt: number; pick_ids: number[]; score: number; status: string }
 export interface Transfer { id: number; player_id: number | null; from_team: number | null; to_team: number | null; kind: string; fee_kt: number; levy_kt: number; note: string | null; created_at: string }
 
@@ -142,7 +142,8 @@ export const getRates = cache(async (): Promise<Map<number, number>> => {
 
 export const getContracts = cache(async (): Promise<ContractsData> => {
   const supabase = await createClient();
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
+  // Any 48-hour match windows that ran out settle first (the bidder signs him). Harmless if there are none.
+  const [league, me] = await Promise.all([getLeague(), getMe(), supabase.rpc('kc_settle_matches').then(() => null, () => null)]);
   const players = new Map(league.players.map((p) => [p.id, p]));
   const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),

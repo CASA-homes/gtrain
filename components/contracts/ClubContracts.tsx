@@ -104,6 +104,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
   const provCount = contracts.filter((c) => c.provisional).length;
   const deadline = s.setup_until ? new Date(s.setup_until).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Perth' }) : '';
   const room = club.keeperCapNow - club.salary;
+  const faDay = (s.fa_day ? new Date(`${s.fa_day}T12:00:00+08:00`) : new Date(`${s.season + 1}-01-01T12:00:00+08:00`)).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Australia/Perth' });
 
   return (
     <div className="kc-stack">
@@ -153,27 +154,27 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
       {canManage && myPendingFas.length > 0 && (
         <section className="kc-card" aria-labelledby="pfa-h">
-          <div className="row-between"><h2 id="pfa-h">Pending free agents · offers in</h2><span className="kc-sub">Accept one: you get the fee now, he finishes {s.season} with you, then moves. Accept none and he goes to open free agency at season end.</span></div>
+          <div className="row-between"><h2 id="pfa-h">Pending free agents · offers in</h2><span className="kc-sub">Each new top offer gives you 48 hours to match it (he stays on the same terms) or let him go (you get the fee, he finishes {s.season} with you and moves on Free Agent Day, {faDay}). No answer in 48 hours and he goes.</span></div>
           {myPendingFas.map((f) => {
             const offers = d.offersOnMine.filter((o) => o.fa_id === f.id);
+            // Until the match columns exist (migration 0064), fall back to the best offer and a plain accept.
+            const legacy = !('match_offer' in f);
+            const top = offers.find((o) => o.id === f.match_offer) ?? (legacy ? offers[0] ?? null : null);
             return (
               <div key={f.id} style={{ marginTop: 14 }}>
                 <div className="row-between"><strong>{name(f.player_id)}</strong><span className="kc-sub">Market {money(d.rates.get(f.player_id) ?? 0)} · {offers.length} offer{offers.length === 1 ? '' : 's'}</span></div>
-                {offers.length === 0 ? <p className="kc-sub">No offers yet.</p> : (
-                  <div className="kc-table-box"><table className="kc-table">
-                    <thead><tr><th>From</th><th className="r">Contract</th><th>Clause</th><th className="r">Fee to you</th><th>Picks</th><th className="r">Score</th><th><span className="sr-only">Accept</span></th></tr></thead>
-                    <tbody>{offers.map((o, i) => (
-                      <tr key={o.id}>
-                        <td className="name">{team(o.team_id)}{i === 0 ? <span className="kc-tag high" style={{ marginLeft: 6 }}>Best</span> : null}</td>
-                        <td className="r">{o.years} × {money(o.salary_k)}</td>
-                        <td className="meta">{o.tier === 'none' ? 'No clause' : o.tier === 'high' ? 'High' : 'Standard'}</td>
-                        <td className="r" style={{ fontWeight: 700 }}>{kt(o.sweet_kt)}</td>
-                        <td className="meta">{o.pick_ids.length ? `${o.pick_ids.length} pick${o.pick_ids.length > 1 ? 's' : ''} (noted)` : '—'}</td>
-                        <td className="r">{o.score}</td>
-                        <td className="r"><RunButton run="accept" id={o.id} small kind="sage" label="Accept" confirmText={`Accept ${team(o.team_id)}'s offer? You get ${kt(o.sweet_kt)} now and ${name(f.player_id)} moves at season end.`} /></td>
-                      </tr>
-                    ))}</tbody>
-                  </table></div>
+                {!top ? <p className="kc-sub">No offers yet. If nobody bids, he’s an open free agent from Free Agent Day.</p> : (
+                  <div className="kc-match">
+                    <div className="kc-match-top">
+                      <span><b>{team(top.team_id)}</b> offers {top.years} × {money(top.salary_k)} · {top.tier === 'none' ? 'no clause' : top.tier === 'high' ? 'high clause' : 'standard clause'} · <b>{kt(top.sweet_kt)}</b> fee to you</span>
+                      {f.match_by && <span className="kc-tag std">Match within <KcClock endsAt={f.match_by} /></span>}
+                    </div>
+                    <div className="kc-match-acts">
+                      <RunButton run="complete-fa" id={top.id} small kind="plain" label={`Let him go · +${kt(top.sweet_kt)}`} confirmText={`${name(f.player_id)} signs with ${team(top.team_id)}. You get the ${kt(top.sweet_kt)} fee now, he plays out ${s.season} with you, then moves on Free Agent Day.`} />
+                      {!legacy && <RunButton run="match-fa" id={f.id} small kind="sage" label={`Match · ${top.years} × ${money(top.salary_k)}`} confirmText={`Keep ${name(f.player_id)} on ${team(top.team_id)}’s terms: ${top.years} year${top.years > 1 ? 's' : ''} at ${money(top.salary_k)} from ${s.season + 1}. No fee changes hands.`} />}
+                    </div>
+                    {offers.length > 1 && <p className="kc-sub" style={{ margin: 0 }}>{offers.length - 1} lower offer{offers.length > 2 ? 's' : ''} refunded whichever way you go.</p>}
+                  </div>
                 )}
               </div>
             );

@@ -185,3 +185,8 @@ export async function offerLoan(borrower: number, amount: number, rate: number) 
 export async function respondLoan(loanId: number, accept: boolean) {
   return run('kc_loan_respond', { lid: loanId, p_accept: accept }, (d) => (d === 'active' ? 'Loan accepted. The KT is in your bank.' : d === 'cancelled' ? 'Loan offer withdrawn.' : 'Loan declined.'));
 }
+
+/** Match the top offer on your pending free agent: he re-signs with you on the same years, salary and clause. */
+export async function matchOffer(faId: number) {
+  return run('kc_match_offer', { p_fa: faId }, () => 'Matched. He stays with you on the same terms from next season.');
+}

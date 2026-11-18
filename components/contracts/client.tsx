@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import {
   acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
-  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, type Result,
+  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, matchOffer, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 import { SignSheet } from '@/components/contracts/SignSheet';
@@ -66,19 +66,20 @@ const lenNote = (y: number) => (y === 3 ? 'flat for 3 yrs' : y < 3 ? `+${y === 1
 
 export function RunButton({ label, kind = 'dark', small, confirmText, run, disabled, id = 0 }: {
   label: string; kind?: 'dark' | 'sage' | 'plain' | 'ghost'; small?: boolean; confirmText?: string; disabled?: boolean;
-  run: 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover' | 'match' | 'complete' | 'accept' | 'midseason' | 'draftees' | 'lockin'; id?: number;
+  run: 'settle' | 'cancel' | 'close-fa' | 'seed' | 'tax' | 'rollover' | 'match' | 'complete' | 'accept' | 'midseason' | 'draftees' | 'lockin' | 'match-fa' | 'complete-fa'; id?: number;
 }) {
   const { pending, go, note } = useRun();
   const fn = () => {
     switch (run) {
       case 'settle': return settleAuction(id);
+      case 'match-fa': return matchOffer(id);
       case 'cancel': return cancelAuction(id);
       case 'close-fa': return closeFreeAgent(id);
       case 'seed': return seedContracts();
       case 'tax': return chargeTax();
       case 'match': return matchClaim(id);
       case 'complete': return completeClaim(id);
-      case 'accept': return acceptOffer(id);
+      case 'accept': case 'complete-fa': return acceptOffer(id);
       case 'midseason': return startMidseason();
       case 'draftees': return signDraftees();
       case 'lockin': return lockIn(id);

@@ -806,3 +806,6 @@
 .cf-go { min-width: 140px; }
 .kc-btn.danger { background: #b5462a; border-color: #b5462a; color: #fff; }
 .kc-btn.danger:hover { background: #9c3a21; }
+.kc-match { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; padding: 12px; border-radius: 12px; border: 1.5px solid #e0b13a; background: #fffaf0; }
+.kc-match-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13.5px; }
+.kc-match-acts { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }

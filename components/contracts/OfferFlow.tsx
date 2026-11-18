@@ -82,8 +82,8 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
               <li><strong>{fa.exTeam} reviews</strong> every offer and picks one. You can raise yours, or cancel it from your Trademarket.</li>
               <li><strong>If they accept</strong>, your KT fee goes to them and he’s yours from the start of {s.season}. If not, your tokens come back.</li>
             </> : fa.pending ? <>
-              <li><strong>{fa.exTeam} decides</strong>: they can accept any offer until season end. You can raise yours, or cancel it from your Trademarket.</li>
-              <li><strong>If they accept</strong>, your fee goes to them and he joins you at season end. If not, your tokens come back and he goes to open free agency.</li>
+              <li><strong>{fa.exTeam} decides</strong>: they get 48 hours to match the top offer and keep him on the same terms. You can raise yours, or cancel it from your Trademarket.</li>
+              <li><strong>If they don’t match</strong>, your fee goes to them and he joins you on Free Agent Day (1 Jan). If not, your tokens come back and he goes to open free agency.</li>
             </> : <>
               <li><strong>Offers close</strong>{fa.closesAt ? ' when the clock runs out' : ' when the commish closes them'}. Until then you can raise your offer, or cancel it from your Trademarket.</li>
               <li><strong>Best score wins</strong>; ties go to the lower ladder club. Lose and your tokens come back.</li>
@@ -100,7 +100,7 @@ export function OfferFlow({ fa, player, rate, settings: s, bank, salary, picks, 
           <p className="kc-sub" style={{ marginBottom: 16 }}>{fa.offseason
             ? `Out of contract at ${fa.exTeam}. Place your best offer: salary, length, clause, and a KT fee if you want to sweeten it. ${fa.exTeam} reviews the offers and picks one. If they accept, he’s yours from the start of ${s.season}.`
             : fa.pending
-            ? `In his last six months at ${fa.exTeam}. ${fa.exTeam} picks which offer to take, and the token fee goes to them. He finishes ${s.season} there and joins the winner at season end, so your deal starts in ${s.season + 1}.`
+            ? `In his last six months at ${fa.exTeam}. The top offer gives ${fa.exTeam} 48 hours to match it. If they don’t, the token fee goes to them, he finishes ${s.season} there and joins you on Free Agent Day (1 Jan), so your deal starts in ${s.season + 1}.`
             : `${fa.exTeam ? `Out of contract at ${fa.exTeam}.` : 'Free agent.'} Offers are blind; the best offer score wins when offers close.`}</p>
           <div className="kc-grid" style={{ gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 10 }}>
             {[['Average', player.average?.toFixed(1) ?? '–'], ['Age', player.age ?? '–'], ['Games', player.games ?? '–'], ['Market rate', money(rate)]].map(([l, v], i) => (
