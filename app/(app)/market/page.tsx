@@ -41,6 +41,10 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
     .map((c) => ({ c, rate: d.rates.get(c.player_id) ?? 0, clause: clauseKt(s, c, d.rates.get(c.player_id) ?? 0, d.pendingFa.has(c.player_id)) }))
     .filter((r) => r.clause != null && r.rate >= 20)
     .sort((a, b) => a.clause! / a.rate - b.clause! / b.rate)[0] : null;
+  // Who could actually pay it today: other clubs with the KT in the bank.
+  const rivalBanks = meId ? [...d.clubs.entries()].filter(([id]) => id !== meId).map(([, c]) => c.bank ?? 0) : [];
+  const canPay = cheapest ? rivalBanks.filter((b) => b >= cheapest.clause!).length : 0;
+  const richest = rivalBanks.length ? Math.max(...rivalBanks) : 0;
   const windowOpen = !!s?.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > new Date();
   const buysUsed = meId && s?.window_opened_at ? d.claims.filter((c) => c.buyer_team === meId && c.status !== 'cancelled' && new Date(c.created_at) >= new Date(s.window_opened_at!)).length : 0;
   const clubBase = meId ? `/clubhouse/${meId}` : '/clubhouse';
@@ -187,8 +191,8 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
                 <span className="th-mut" style={{ fontSize: 12 }}>{ago(t.created_at)}</span></div>
             ))}
             {cheapest && (
-              <div className="th-feed"><span className="th-ico rust">!</span>
-                <span><b>{shortName(pname(cheapest.c.player_id))}’s clause is your cheapest</b><span className="s">{kt(cheapest.clause!)} for a {moneyK(cheapest.rate)} player · anyone can pay it in the window</span></span>
+              <div className="th-feed"><span className={`th-ico ${canPay ? 'rust' : 'grey'}`}>{canPay ? '!' : 'OK'}</span>
+                <span><b>{shortName(pname(cheapest.c.player_id))} has your lowest clause for his value</b><span className="s">{kt(cheapest.clause!)} for a {moneyK(cheapest.rate)} player · {canPay ? `${canPay} club${canPay === 1 ? '' : 's'} could pay it in the window` : `nobody can afford it yet (richest rival bank ${kt(richest)})`}</span></span>
                 <Link href={`${clubBase}?view=contracts`} className="th-btn sm">Extend</Link></div>
             )}
             {myClub && s && (
