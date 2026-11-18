@@ -89,9 +89,10 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     capRoomNext: s.season_cap_k - viewer.salary,
   } : null;
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
-  const underContract = rows.filter((r) => !r.tone);
+  // One-year deals (final year, yellow) sit with the rest of the signed list, keeping their yellow fill.
+  const underContract = [...rows.filter((r) => !r.tone), ...rows.filter((r) => r.tone === 'amber')];
   const outRows: CtRow[] = [
-    ...rows.filter((r) => r.tone === 'red'), ...rows.filter((r) => r.tone === 'amber'),
+    ...rows.filter((r) => r.tone === 'red'),
     ...uncontracted.map((p) => ({
       id: -p.id, playerId: p.id, name: p.full_name ?? p.name, positions: p.positions ?? [], club: p.afl_club ?? null, age: playerAge(p), avg: p.average ?? null,
       games: p.games ?? 0, salary: null, base: 0, rate: d.rates.get(p.id) ?? 0, start: null, end: null, yearsLeft: 0, tier: 'standard' as const, clause: null,
@@ -213,7 +214,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           <h2 id="ct-h">Contracts</h2>
           {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
         </div>
-        <ContractsTable title="Under contract" note="Signed beyond this season, including extensions." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
+        <ContractsTable title="Under contract" note="Everyone signed, including extensions. Light yellow: one-year deal or final year, re-sign before it runs out." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
       </section>
 
       <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h" data-tour="rookie">
@@ -229,7 +230,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       </section>
 
       <section className="kc-card ct2-card" aria-label="Expiring and free agents" data-tour="unsigned">
-        <ContractsTable title={setup ? 'Unsigned & expiring' : 'Expiring & free agents'} note={setup ? 'Light red: unsigned. Tap a player to offer him a contract.' : 'Light red: free agent, under six months or leaving. Light yellow: final year, re-sign before the mid-season window closes.'} rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
+        <ContractsTable title={setup ? 'Unsigned & expiring' : 'Expiring & free agents'} note={setup ? 'Light red: unsigned. Tap a player to offer him a contract.' : 'Light red: free agent, under six months or leaving.'} rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
         <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: top 10 picks $30k, rest of R1 and R2 $25k, R3 $20k, R4 $15k, R5+ $10k. Rookies (10 or fewer games) half that, on 2 years; established players on 1. No clause until the mid-season window. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
     </div>
