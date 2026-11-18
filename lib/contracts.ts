@@ -4,6 +4,7 @@
 import { cache } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import { getLeague, getMe, type Me, type Team } from '@/lib/data';
+import freeAgentData from '@/lib/free-agent-players.json';
 import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 
 export type Tier = 'standard' | 'high' | 'none' | 'protected';
@@ -105,11 +106,38 @@ export interface ContractsData {
 }
 
 /** Everything the contracts pages need, loaded once per request. */
+/** kc_rate_v2 in TypeScript, for players who aren't in the database (the unrostered AFL free-agent pool). Keep in step
+ *  with the SQL: blended average of the last three seasons, experience, age and availability factors, soft top end. */
+export function rateFromHist(hist: [number, number, number][] | null | undefined, birth: string | null | undefined, season = 2027): number {
+  const h = (hist ?? []).filter((x) => x[1] > 0).sort((a, b) => b[0] - a[0]);
+  if (!h.length) return 5;
+  const [s0, g0, a0] = h[0]; const g1 = h[1]?.[1], a1 = h[1]?.[2], g2 = h[2]?.[1], a2 = h[2]?.[2];
+  const prior = Math.max(6, 22 - g0);
+  const w0 = g0, w1 = g1 != null ? 0.65 * prior * Math.min(1, g1 / 10) : 0, w2 = g2 != null ? 0.35 * prior * Math.min(1, g2 / 10) : 0;
+  const avg = (w0 * a0 + w1 * (a1 ?? 0) + w2 * (a2 ?? 0)) / (w0 + w1 + w2 || 1);
+  const n = h.length;
+  const xp = n + 1 <= 1 ? 0.5 : n + 1 === 2 ? 0.6 : n + 1 === 3 ? 0.7 : n + 1 === 4 ? 0.85 : 1;
+  const age = birth ? Math.floor((Date.UTC(season, 2, 1) - new Date(birth).getTime()) / (365.25 * 86400000)) : null;
+  const agef = age == null || age < 30 ? 1 : Math.max(0.6, 1 - 0.08 * (age - 29));
+  const avail = s0 >= season ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
+  let v = Math.pow(Math.max(avg - 55, 0), 1.3) * 0.66 * xp * agef * avail;
+  if (v > 90) v = 90 + (v - 90) * 0.9;
+  return Math.max(5, Math.round(v));
+}
+
+type FaRow = { id: number; birth_date: string | null; hist: [number, number, number][] | null };
+const FA_POOL = (freeAgentData as unknown as { players: FaRow[] }).players;
+/** Adds market values for the unrostered free-agent pool, which the database doesn't price. */
+function withFaRates(m: Map<number, number>): Map<number, number> {
+  for (const f of FA_POOL) if (!m.has(f.id)) m.set(f.id, rateFromHist(f.hist, f.birth_date));
+  return m;
+}
+
 /** Market value ($k) for every player, from the contract pricing. */
 export const getRates = cache(async (): Promise<Map<number, number>> => {
   const supabase = await createClient();
   const { data } = await supabase.rpc('kc_rates');
-  return new Map(((data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k]));
+  return withFaRates(new Map(((data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k])));
 });
 
 export const getContracts = cache(async (): Promise<ContractsData> => {
@@ -136,7 +164,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const contracts = ((conQ.data ?? []) as Contract[]).map((c) => ({ ...c, id: Number(c.id) }));
   const active = contracts.filter((c) => c.status === 'active');
   const pending = contracts.filter((c) => c.status === 'pending');
-  const rates = new Map(((rateQ.data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k]));
+  const rates = withFaRates(new Map(((rateQ.data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k])));
   const banks = new Map<number, number>();
   for (const r of (ledQ.data ?? []) as { team_id: number; delta: number }[]) banks.set(r.team_id, (banks.get(r.team_id) ?? 0) + r.delta);
   const counts = new Map(((cntQ.data ?? []) as { fa_id: number; offers: number }[]).map((r) => [Number(r.fa_id), r.offers]));
