@@ -17,10 +17,11 @@ export default async function JoinPage({ params }: { params: Promise<{ code: str
   const signedIn = !!claims?.claims?.sub;
   let status: 'member' | 'pending' | null = null;
   if (signedIn && league) {
-    const { data: mine } = await supabase.from('members').select('league_id').eq('league_id', league.league_id).maybeSingle();
-    if (mine) status = 'member';
+    // members is readable league-wide, so filtering by league alone returned every coach and maybeSingle() errored
+    const { data: mine } = await supabase.rpc('my_leagues');
+    if (((mine ?? []) as { id: number }[]).some((l) => l.id === league.league_id)) status = 'member';
     else {
-      const { data: req } = await supabase.from('join_requests').select('status').eq('league_id', league.league_id).maybeSingle();
+      const { data: req } = await supabase.from('join_requests').select('status').eq('league_id', league.league_id).eq('user_id', claims!.claims.sub).order('created_at', { ascending: false }).limit(1).maybeSingle();
       if (req?.status === 'pending') status = 'pending';
       if (req?.status === 'approved') status = 'member';
     }
