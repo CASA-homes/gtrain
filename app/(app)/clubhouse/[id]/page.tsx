@@ -28,7 +28,7 @@ import { ContractsStrip } from '@/components/contracts/ContractsStrip';
 import { ClubContracts } from '@/components/contracts/ClubContracts';
 import { ClubFinances } from '@/components/contracts/ClubFinances';
 import { ClubPicks } from '@/components/ClubPicks';
-import { getContracts } from '@/lib/contracts';
+import { getRates, getContracts } from '@/lib/contracts';
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
 const ordinal = (n: number) => n + (['th', 'st', 'nd', 'rd'][(n % 100 > 10 && n % 100 < 14) ? 0 : n % 10] ?? 'th');
@@ -78,12 +78,13 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
   const posOf = new Map<number, number>();
   for (const l of LINES) a.lineup.lines[l].forEach((p, i) => { slotOf.set(p.id, l); posOf.set(p.id, a.lineupSaved ? (p.lineup_pos ?? i) : i); });
   a.lineup.bench.forEach((p, i) => { slotOf.set(p.id, 'BENCH'); posOf.set(p.id, a.lineupSaved ? (p.lineup_pos ?? i) : i); });
+  const rates = await getRates();
   const rows: SquadPlayer[] = a.players.map((p: PlayerRow) => {
     const r = league.ratings.get(p.id)!;
     return {
       id: p.id, name: p.name, positions: p.positions, afl_club: p.afl_club, average: p.average, last5: p.last5,
       games: p.games, tons: played(p.last5).filter((s) => s >= 100).length, form: form(p),
-      valueStars: r.valueStars, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
+      valueStars: r.valueStars, mv: rates.get(p.id) ?? null, potential: r.potential, is_keeper: p.is_keeper || p.is_rookie_keeper, status: p.status,
       slot: slotOf.get(p.id) ?? null, pos: posOf.get(p.id) ?? null, photo_path: p.photo_path, dfs_id: p.dfs_id,
       ...trendOf(p),
     };
