@@ -59,7 +59,7 @@ export default async function LeaguePage() {
           <nav className="kpi league-links" style={{ borderColor: '#333b35' }} aria-label="League">
             <Link href="/league/settings">Settings <span aria-hidden>→</span></Link>
             <Link href="#history">History <span aria-hidden>→</span></Link>
-            <Link href="/league/bets">Bets <span aria-hidden>→</span></Link>
+            <Link href="/league/bets">Bets &amp; fines <span aria-hidden>→</span></Link>
             <Link href="/league/scores">Overrides <span aria-hidden>→</span></Link>
           </nav>
         </div>
