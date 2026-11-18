@@ -3,6 +3,7 @@
 // enforces the rules; these components only show previews and the result message.
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { createPortal } from 'react-dom';
 import {
   acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
   lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, type Result,
@@ -23,15 +24,41 @@ export function KcClock({ endsAt }: { endsAt: string }) {
 }
 
 /** Run an action, show its message, refresh the page's data. */
+export type Ask = {
+  title?: string; tone?: 'ok' | 'danger'; cta?: string; eyebrow?: string;
+  /** Rows shown on the paper, e.g. [['Salary', '$116,000']]. */
+  rows?: [string, string][]; warn?: string;
+};
+
 export function useRun() {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<Result | null>(null);
-  const go = (fn: () => Promise<Result>, confirmText?: string) => {
-    if (confirmText && !window.confirm(confirmText)) return;
-    start(async () => { const r = await fn(); setMsg(r); if (r.ok) router.refresh(); });
+  const [ask, setAsk] = useState<{ text: string; fn: () => Promise<Result>; o: Ask } | null>(null);
+  const exec = (fn: () => Promise<Result>) => start(async () => { const r = await fn(); setMsg(r); setAsk(null); if (r.ok) router.refresh(); });
+  // A confirm text opens our own sheet, not the browser's dialog.
+  const go = (fn: () => Promise<Result>, confirmText?: string, o: Ask = {}) => {
+    if (confirmText) { setAsk({ text: confirmText, fn, o }); return; }
+    exec(fn);
   };
-  const note = msg ? <p className={`kc-msg ${msg.ok ? 'ok' : 'err'}`} role="status">{msg.message}</p> : null;
+  const sheet = ask && typeof document !== 'undefined' ? createPortal(
+    <div className="sgn-back cf-back" role="dialog" aria-modal="true" aria-labelledby="cf-h" onClick={(e) => { if (e.target === e.currentTarget && !pending) setAsk(null); }}>
+      <div className={`sgn-card cf-card ${ask.o.tone === 'danger' ? 'danger' : ''}`}>
+        {ask.o.warn && <div className="cf-warn" role="alert">{ask.o.warn}</div>}
+        <div className="cf-paper">
+          <span className="cf-eb">{ask.o.eyebrow ?? 'Keeper HQ · Confirm'}</span>
+          <h3 id="cf-h">{ask.o.title ?? 'Are you sure?'}</h3>
+          {ask.o.rows?.length ? <dl>{ask.o.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl> : null}
+          <p>{ask.text}</p>
+          {ask.o.tone === 'danger' ? <div className="cf-stamp" aria-hidden="true">Release</div> : <div className="cf-seal" aria-hidden="true">KHQ</div>}
+        </div>
+        <div className="cf-acts">
+          <button type="button" className="kc-btn" disabled={pending} onClick={() => setAsk(null)}>Cancel</button>
+          <button type="button" className={`kc-btn ${ask.o.tone === 'danger' ? 'danger' : 'sage'} cf-go`} disabled={pending} onClick={() => exec(ask.fn)}>{pending ? 'Working…' : ask.o.cta ?? 'Confirm'}</button>
+        </div>
+      </div>
+    </div>, document.body) : null;
+  const note = <>{msg ? <p className={`kc-msg ${msg.ok ? 'ok' : 'err'}`} role="status">{msg.message}</p> : null}{sheet}</>;
   return { pending, go, note, msg };
 }
 
@@ -181,8 +208,8 @@ export function ProvisionalControls({ contractId, name }: { contractId: number; 
   const { pending, go, note } = useRun();
   return (
     <span style={{ display: 'inline-flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-      <button type="button" className="kc-btn small" disabled={pending} onClick={() => go(() => undoContract(contractId), `Undo ${name}’s contract? He goes back to unsigned, no cost.`)}>Undo</button>
-      <button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => lockContracts(contractId, null), `Lock ${name}’s contract now? You won’t be able to undo or change it yourself. Only the commish can unlock it. Contracts become formal on deadline day anyway.`)}>Lock</button>
+      <button type="button" className="kc-btn small" disabled={pending} onClick={() => go(() => undoContract(contractId), `He goes back to unsigned. No cost, and you can sign him again before deadline day.`, { title: `Undo ${name}’s contract`, eyebrow: 'Keeper HQ · Player contract', cta: 'Undo contract' })}>Undo</button>
+      <button type="button" className="kc-btn small sage" disabled={pending} onClick={() => go(() => lockContracts(contractId, null), `Once locked you can’t undo or change it yourself. Only the commish can unlock it. Contracts become formal on deadline day anyway.`, { title: `Lock ${name}’s contract`, eyebrow: 'Keeper HQ · Player contract', cta: 'Lock contract' })}>Lock</button>
       {note}
     </span>
   );
@@ -190,7 +217,7 @@ export function ProvisionalControls({ contractId, name }: { contractId: number; 
 
 export function LockAllButton({ teamId, count }: { teamId: number; count: number }) {
   const { pending, go, note } = useRun();
-  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Lock all ${count} contracts now? Once locked you can’t undo or re-sign them yourself before deadline day. Only the commish can unlock them. They all become formal on deadline day anyway, so you don’t need to lock them.`)}>Lock all ({count})</button>{note}</span>;
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Once locked you can’t undo or re-sign them yourself before deadline day. Only the commish can unlock them. They all become formal on deadline day anyway, so you don’t need to lock them.`, { title: `Lock all ${count} contracts`, eyebrow: 'Keeper HQ · Player contracts', cta: `Lock all ${count}` })}>Lock all ({count})</button>{note}</span>;
 }
 
 export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0 }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number }) {
@@ -198,7 +225,11 @@ export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
       <button type="button" className="kc-btn small" disabled={pending}
-        onClick={() => go(() => releasePlayer(contractId), `Release ${name}? It costs ${kt(fee)} now, ${money(dead)} of dead money on this season's cap${laterYears ? ` and ${money(later)} a season for the next ${laterYears}` : ''}. He becomes a free agent.`)}>Release</button>
+        onClick={() => go(() => releasePlayer(contractId), `He becomes a free agent straight away and any club can sign him.`, {
+          title: `Release ${name}`, eyebrow: 'Keeper HQ · Release notice', tone: 'danger', cta: 'Release him',
+          warn: 'This can’t be undone. The fee and dead money stay on your books.',
+          rows: [['Release fee', kt(fee)], ['Dead money this season', money(dead)], ...(laterYears ? [[`Then each season × ${laterYears}`, money(later)] as [string, string]] : [])],
+        })}>Release</button>
       {note}
     </span>
   );
