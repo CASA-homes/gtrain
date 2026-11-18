@@ -2883,3 +2883,20 @@ html.theme-dark img, html.theme-dark video, html.theme-dark picture, html.theme-
   .bf-rule { flex-wrap: wrap; } .bf-rule-r { margin-left: auto; }
   .bf-kpis b { font-size: 17px; }
 }
+
+/* League drafts board */
+.ld { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 72px; }
+.ld-h { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+.ld-years { display: flex; gap: 4px; flex-wrap: wrap; }
+.ld-years a { padding: 5px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--muted); border: 1px solid var(--line); }
+.ld-years a.on { background: #17201b; color: #fff; border-color: #17201b; }
+.ld-ok { padding: 8px 12px; border-radius: 10px; background: #e5f2e6; color: #2f6b3a; font-size: 13px; }
+.ld-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+.ld-board { border-collapse: collapse; font-size: 12.5px; min-width: 100%; }
+.ld-board th, .ld-board td { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.ld-board thead th { position: sticky; top: 0; background: var(--sunk); font-size: 12px; white-space: nowrap; }
+.ld-board tbody th { background: var(--sunk); font-family: var(--mono); text-align: center; width: 34px; }
+.ld-pick { display: flex; flex-direction: column; min-width: 110px; }
+.ld-pick b { font-weight: 600; } .ld-pick em { font-style: normal; color: var(--muted); font-size: 11px; font-family: var(--mono); }
+.ld-up summary { list-style: none; cursor: pointer; width: fit-content; } .ld-up summary::-webkit-details-marker { display: none; }
+.ld-up[open] { display: flex; flex-direction: column; gap: 8px; }

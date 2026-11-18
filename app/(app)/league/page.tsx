@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { LeagueDrafts } from '@/components/LeagueDrafts';
 import { Chat } from '@/components/Chat';
 import { Cup } from '@/components/bits';
 import { AllTeamField } from '@/components/AllTeamField';
@@ -18,7 +19,8 @@ import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 import { MarketMovers } from '@/components/MarketMovers';
 import { NextUp, SeasonSchedule } from '@/components/SeasonSchedule';
 
-export default async function LeaguePage() {
+export default async function LeaguePage({ searchParams }: { searchParams: Promise<{ draft?: string; draftError?: string; draftOk?: string }> }) {
+  const dsp = await searchParams;
   const legacy = await isLegacyLeague();
   const [league, me, leagueName] = await Promise.all([getLeague(), getMe(), getLeagueName()]);
   const cup = await buildCup(league, me?.team_id ?? 0);
@@ -238,6 +240,7 @@ export default async function LeaguePage() {
           </section>
         </div>
       </div>
+      <LeagueDrafts commish={!!me?.is_commish} year={Number(dsp.draft) || undefined} error={dsp.draftError} ok={dsp.draftOk} />
       <div id="history" style={{ scrollMarginTop: 72 }} />
       {legacy ? <LeagueHistory teams={league.teams} myTeamName={league.teams.find((t) => t.id === me?.team_id)?.name ?? null} />
         : <section id="history" className="card" style={{ padding: 18 }}><h2 className="h2">League history</h2><p className="muted" style={{ margin: '6px 0 0' }}>Head-to-heads, records and rivalries build here as your league plays its games.</p></section>}
