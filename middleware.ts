@@ -38,5 +38,5 @@ export async function middleware(request: NextRequest) {
 export const config = {
   // Run next to the database (Tokyo) instead of at the edge near the visitor, so session refreshes are quick.
   runtime: 'nodejs',
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|icons/|landing/|.*\\.(?:png|jpg|svg|webp)$).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|manifest.webmanifest|sw.js|icons/|landing/|.*\\.(?:png|jpg|svg|webp)$).*)'],
 };
