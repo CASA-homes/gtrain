@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
 import { COMP } from '@/lib/scores';
 import { liveRound, loadScoreState } from '@/lib/scores/server';
+import { applyRoundFines } from '@/lib/fines';
 
 type Res = { ok: boolean; error?: string };
 export interface OverrideChange { player_id: number; player_name: string; score: number | null; feed_score: number | null; reason: string }
@@ -70,7 +71,9 @@ export async function lockRound(round: number): Promise<Res> {
   const supabase = await createClient();
   const r = await supabase.from('score_rounds').upsert({ comp: COMP, round, locked_at: new Date().toISOString(), locked_by: me.user_id, snapshot, updated_at: new Date().toISOString() }, { onConflict: 'league_id,comp,round' });
   if (r.error) return { ok: false, error: friendly(r.error.message) };
-  await log(round, me.display_name ?? 'Commish', [`${data.name} locked`]);
+  const f = await applyRoundFines(round, snapshot);
+  await log(round, me.display_name ?? 'Commish', [`${data.name} locked`, ...(f.ok && f.count ? [`${f.count} automatic fine${f.count === 1 ? '' : 's'} posted`] : [])]);
+  revalidatePath('/league/bets');
   done();
   return { ok: true };
 }

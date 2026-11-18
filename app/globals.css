@@ -2844,3 +2844,42 @@ html.theme-dark img, html.theme-dark video, html.theme-dark picture, html.theme-
 .lc-table td { padding: 8px; border-top: 1px solid var(--line); white-space: nowrap; }
 .lc-table tr.inv td { background: #fbf7ea; }
 .lc-tag { margin-left: 6px; padding: 1px 6px; border-radius: 5px; background: #2f5d46; color: #fff; font: 600 10px var(--font); }
+
+/* Bets & fines */
+.bf-tabs { display: flex; gap: 6px; padding: 4px; background: var(--sunk); border: 1px solid var(--line); border-radius: 14px; width: fit-content; }
+.bf-tabs a { padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.bf-tabs a.on { background: #17201b; color: #fff; }
+.bf-alert { padding: 10px 14px; border-radius: 12px; background: #fdecea; color: #8a1c14; font-size: 14px; }
+.bf-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 14px; align-items: start; }
+.bf-card { display: flex; flex-direction: column; gap: 4px; padding: 16px 18px; }
+.bf-h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.bf-h h2 { margin: 0; font-size: 18px; }
+.bf-rule, .bf-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.bf-rule-l em { font-style: normal; color: var(--muted); font-size: 12px; }
+.bf-rule-r { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.bf-num { width: 64px; min-height: 32px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px; font: inherit; font-size: 14px; background: #fff; }
+.bf-amt { display: inline-flex; align-items: center; gap: 2px; font-weight: 700; }
+.bf-tog { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--muted); }
+.bf-rule .btn, .bf-mini button { min-height: 30px; padding: 0 10px; font-size: 12px; }
+.bf-pill { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--sunk); color: var(--muted); }
+.bf-pill.on { background: #e5f2e6; color: #2f6b3a; }
+.bf-pill.due { background: #fbefd5; color: #8a5a0b; }
+.bf-pill.pl { background: #e6eefb; color: #24508f; }
+.bf-plus { color: #2f6b3a; }
+.bf-acts { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; padding-top: 10px; border-top: 1px solid var(--line); }
+.bf-inline { display: flex; gap: 8px; align-items: center; }
+.bf-inline.wrap { flex-wrap: wrap; }
+.bf-inline .input { min-height: 36px; }
+.bf-manual summary { list-style: none; cursor: pointer; } .bf-manual summary::-webkit-details-marker { display: none; }
+.bf-manual[open] { flex-basis: 100%; display: flex; flex-direction: column; gap: 8px; }
+.bf-mini { display: inline-flex; gap: 4px; }
+.bf-mini button, .bf-mini select { border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; font-size: 12px; min-height: 30px; }
+.bf-owed { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: #8a5a0b; padding-bottom: 8px; }
+.bf-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.bf-kpis > div { background: var(--sunk); border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.bf-kpis b { font-size: 22px; }
+@media (max-width: 640px) {
+  .bf-tabs { width: 100%; } .bf-tabs a { flex: 1; text-align: center; }
+  .bf-rule { flex-wrap: wrap; } .bf-rule-r { margin-left: auto; }
+  .bf-kpis b { font-size: 17px; }
+}
