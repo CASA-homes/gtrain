@@ -37,7 +37,7 @@ export default async function FreeAgentsPage() {
                           <td className="r">{p?.average?.toFixed(1) ?? '–'}</td>
                           <td className="r tn" style={{ fontWeight: 700 }}>{moneyK(d.rates.get(f.player_id) ?? 0)}</td>
                           <td className="r">{f.offers}</td>
-                          <td className="meta">{kind === 'pending' ? 'His club, by season end' : f.closes_at ? (closed ? 'Closed' : <KcClock endsAt={f.closes_at} />) : 'Set by commish'}</td>
+                          <td className="meta">{kind === 'pending' ? 'His club can match (48h)' : f.closes_at ? (closed ? 'Closed' : <KcClock endsAt={f.closes_at} />) : 'Set by commish'}</td>
                           <td className="r"><span style={{ display: 'inline-flex', gap: 6 }}>
                             {own ? <Link href={`/clubhouse/${meId}?view=contracts`} className="th-btn sm">Your player · offers</Link>
                               : meId && !closed && <Link href={`/contracts/offer/${f.id}`} className="th-btn sm dk">{mine ? 'Raise offer' : 'Make offer'}</Link>}

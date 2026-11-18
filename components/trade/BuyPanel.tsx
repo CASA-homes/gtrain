@@ -57,7 +57,7 @@ export async function BuyPanel() {
           </div>
           <div className="bp-pane bp-pane-up">
             <div className="bp-head"><span className="bp-dot" style={{ background: '#c08a1e' }} /><h3>Upcoming free agents</h3><span className="bp-n">{pending.length + finalYear.length}</span></div>
-            <p className="bp-note">{d.midseason ? 'Pending free agents: offer a contract plus a fee, their club picks one, they move at season end.' : 'Final-year players. Unless re-signed by the end of the mid-season window, they become free agents.'}</p>
+            <p className="bp-note">{d.midseason ? 'Pending free agents: offer a contract plus a fee. Their club has 48 hours to match; if not, he’s yours from Free Agent Day (1 Jan).' : 'Final-year players. Unless re-signed by the end of the mid-season window, they become free agents.'}</p>
             {pending.map(({ f, p, rate }) => (
               <Row key={`p${f.id}`} href={`/contracts/offer/${f.id}`} name={p?.name ?? ''} meta={`${p?.positions.join('/') ?? ''} · ${playerAge(p) ?? '–'}y · ${p?.average?.toFixed(1) ?? '–'} · ${team(f.ex_team)}`} right={k$(rate)} sub={`${f.offers} offer${f.offers === 1 ? '' : 's'}`} tag="Offers open" />
             ))}

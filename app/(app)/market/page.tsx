@@ -173,7 +173,7 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
             })}
             {offersOnMine > 0 && (
               <div className="th-feed"><span className="th-ico brass">FA</span>
-                <span><b>{offersOnMine} offer{offersOnMine > 1 ? 's' : ''} on your pending free agents</b><span className="s">Pick one or keep him to season end</span></span>
+                <span><b>{offersOnMine} offer{offersOnMine > 1 ? 's' : ''} on your pending free agents</b><span className="s">Match within 48 hours or let him go</span></span>
                 <Link href={`${clubBase}?view=contracts`} className="th-btn sm dk">Review</Link></div>
             )}
             {myDesks.slice(0, 3).map((x) => (
