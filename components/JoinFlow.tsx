@@ -14,6 +14,7 @@ export function JoinFlow({ code, league, clubs, signedIn, status }: {
   const [done, setDone] = useState<'member' | 'pending' | null>(status);
   const [have, setHave] = useState(false);
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [pw, setPw] = useState('');
   const [pw2, setPw2] = useState('');
   const [otp, setOtp] = useState('');
@@ -48,7 +49,7 @@ export function JoinFlow({ code, league, clubs, signedIn, status }: {
     setBusy(true);
     const { error } = await sb.auth.verifyOtp({ email: email.trim().toLowerCase(), token, type: 'email' });
     if (error) { setBusy(false); return setErr('That code didn’t work. Check it, or go back and send a fresh one.'); }
-    const { error: pwErr } = await sb.auth.updateUser({ password: pw });
+    const { error: pwErr } = await sb.auth.updateUser({ password: pw, data: name.trim() ? { full_name: name.trim() } : undefined });
     setBusy(false);
     if (pwErr) setErr(`Signed in, but your password didn’t save (${pwErr.message}). You can set it later from the lock icon.`);
     setStep('club');
@@ -77,6 +78,10 @@ export function JoinFlow({ code, league, clubs, signedIn, status }: {
             <button type="button" role="tab" aria-selected={!have} onClick={() => { setHave(false); setErr(null); }}>I’m new</button>
             <button type="button" role="tab" aria-selected={have} onClick={() => { setHave(true); setErr(null); }}>I have an account</button>
           </div>
+          {!have && (<>
+            <label className="lg-lab" htmlFor="j-nm">Your name</label>
+            <input id="j-nm" className="lg-in" autoComplete="name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="First and last name" />
+          </>)}
           <label className="lg-lab" htmlFor="j-em">Email</label>
           <input id="j-em" className="lg-in" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
           <label className="lg-lab" htmlFor="j-pw">{have ? 'Password' : 'Choose a password'}</label>

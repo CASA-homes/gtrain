@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
 import { usePathname } from 'next/navigation';
 import { NavSearch } from '@/components/NavSearch';
+import { NavSettings, type MyLeague } from '@/components/NavSettings';
 
 // Simple line icons (24px grid, stroked) used for the phone menu.
 const ICONS: Record<string, React.ReactNode> = {
@@ -31,7 +32,7 @@ const LINKS = [
   { href: '/live', label: 'Matchday', short: 'Match', icon: 'live' },
 ];
 
-export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null }) {
+export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], leagueId = 1 }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null; leagues?: MyLeague[]; leagueId?: number }) {
   const path = usePathname();
   return (
     <nav className="nav" aria-label="Keeper HQ">
@@ -54,7 +55,7 @@ export function Nav({ myTeamId, shortCode, guest = false, logo }: { myTeamId: nu
             ? <img src={logo} alt={shortCode} className="nav-me-logo" />
             : <span>{shortCode}</span>}<em>{guest ? 'Guest' : 'My club'}</em>
         </Link>
-        {!guest && <Link href="/account" className="nav-out nav-acct" aria-label="Account and password" title="Account and password"><span><Icon name="account" /></span></Link>}
+        <NavSettings leagues={leagues} current={leagueId} />
         <form action="/auth/signout" method="post" className="nav-out">
           <button type="submit" aria-label="Sign out" title="Sign out"><Icon name="signout" /><span className="nav-label">Sign out</span></button>
         </form>
