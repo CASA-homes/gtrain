@@ -157,7 +157,9 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           <div className="row-between"><h2 id="pfa-h">Pending free agents · offers in</h2><span className="kc-sub">Each new top offer gives you 48 hours to match it (he stays on the same terms) or let him go (you get the fee, he finishes {s.season} with you and moves on Free Agent Day, {faDay}). No answer in 48 hours and he goes.</span></div>
           {myPendingFas.map((f) => {
             const offers = d.offersOnMine.filter((o) => o.fa_id === f.id);
-            const top = offers.find((o) => o.id === f.match_offer) ?? null;
+            // Until the match columns exist (migration 0064), fall back to the best offer and a plain accept.
+            const legacy = !('match_offer' in f);
+            const top = offers.find((o) => o.id === f.match_offer) ?? (legacy ? offers[0] ?? null : null);
             return (
               <div key={f.id} style={{ marginTop: 14 }}>
                 <div className="row-between"><strong>{name(f.player_id)}</strong><span className="kc-sub">Market {money(d.rates.get(f.player_id) ?? 0)} · {offers.length} offer{offers.length === 1 ? '' : 's'}</span></div>
@@ -169,7 +171,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
                     </div>
                     <div className="kc-match-acts">
                       <RunButton run="complete-fa" id={top.id} small kind="plain" label={`Let him go · +${kt(top.sweet_kt)}`} confirmText={`${name(f.player_id)} signs with ${team(top.team_id)}. You get the ${kt(top.sweet_kt)} fee now, he plays out ${s.season} with you, then moves on Free Agent Day.`} />
-                      <RunButton run="match-fa" id={f.id} small kind="sage" label={`Match · ${top.years} × ${money(top.salary_k)}`} confirmText={`Keep ${name(f.player_id)} on ${team(top.team_id)}’s terms: ${top.years} year${top.years > 1 ? 's' : ''} at ${money(top.salary_k)} from ${s.season + 1}. No fee changes hands.`} />
+                      {!legacy && <RunButton run="match-fa" id={f.id} small kind="sage" label={`Match · ${top.years} × ${money(top.salary_k)}`} confirmText={`Keep ${name(f.player_id)} on ${team(top.team_id)}’s terms: ${top.years} year${top.years > 1 ? 's' : ''} at ${money(top.salary_k)} from ${s.season + 1}. No fee changes hands.`} />}
                     </div>
                     {offers.length > 1 && <p className="kc-sub" style={{ margin: 0 }}>{offers.length - 1} lower offer{offers.length > 2 ? 's' : ''} refunded whichever way you go.</p>}
                   </div>
