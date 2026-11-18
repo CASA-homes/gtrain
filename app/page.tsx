@@ -54,10 +54,11 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
   // Signed in but not in a league yet (joined by code, waiting for the commish).
   type Joining = { league: string; club: string | null; status: string; code: string };
   let joining: Joining[] | null = null as Joining[] | null;
+  let signedAs: string | null = null;
   if (!me) {
     const sb = await createClient();
     const { data: cl } = await sb.auth.getClaims();
-    if (cl?.claims?.sub) joining = ((await sb.rpc('my_join_status')).data ?? []) as Joining[];
+    if (cl?.claims?.sub) { joining = ((await sb.rpc('my_join_status')).data ?? []) as Joining[]; signedAs = (cl.claims.email as string | undefined) ?? null; }
   }
   return (
     <main className="kl">
@@ -65,7 +66,9 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
         <div className="kl-lock"><KeeperMark size={36} /><KeeperWordmark /></div>
         <span className="kl-eyebrow">The all-in-one AFL keeper league platform</span>
         <nav className="kl-nav">
-          {me ? <Link href="/live" className="kl-btn sm">Enter Matchday</Link> : (
+          {me ? <Link href="/live" className="kl-btn sm">Enter Matchday</Link> : joining ? (
+            <form action="/auth/signout" method="post"><button type="submit" className="kl-link strong">Sign out</button></form>
+          ) : (
             <><GateLink to="login" className="kl-link strong">Log in</GateLink><GateLink to="signup" className="kl-btn sm">Sign up</GateLink></>
           )}
         </nav>
@@ -102,8 +105,8 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
                         : <><b>You’re approved.</b> <Link href="/clubhouse">Go to your clubhouse</Link></>}
                     </div>
                   ))
-                : <div className="kl-soon"><b>You’re signed in, but not in a league yet.</b> Open the invite link your commish sent you, or ask them for the league code.</div>}
-              <form action="/auth/signout" method="post"><button type="submit" className="kl-link">Sign out</button></form>
+                : <div className="kl-soon"><b>{signedAs ? <>You’re signed in as {signedAs}.</> : 'You’re signed in.'}</b> That email isn’t in a league yet. If you meant to use another email, sign out and log in with it. Otherwise open your commish’s invite link.</div>}
+              <form action="/auth/signout" method="post"><button type="submit" className="kl-btn">Sign out and use another email</button></form>
             </div>
           ) : <Gate linkError={sp.error === 'link'} />}
         </div>
