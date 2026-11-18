@@ -2770,3 +2770,15 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .ss-title h2 { margin: 0 !important; display: flex; align-items: baseline; gap: 8px; }
 .ss-title .ss-now { margin: 0; }
 .ss-chart { padding-top: 0; }
+/* League banner: next three key dates */
+.lg-next { flex: 1 1 340px; max-width: 520px; display: flex; flex-direction: column; gap: 6px; }
+.lg-next-h { font: 500 10px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #9ccb84; }
+.lg-next-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.lg-nx { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px; border-radius: 12px; background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .1); border-top: 3px solid var(--tone); min-width: 0; }
+.lg-nx.first { background: rgb(255 255 255 / .1); }
+.lg-nx b { font: 700 22px/1.1 var(--font); color: #fff; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.lg-nx b small { font-size: 11px; font-weight: 500; color: #b9c0b8; letter-spacing: 0; }
+.lg-nx span { font-size: 12.5px; font-weight: 600; color: #e7ece4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lg-nx em { font-style: normal; font-size: 11px; color: #9aa59a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lg-nx[style*="#1f3a5c"] { border-top-color: #6f9ccf; } .lg-nx[style*="#151a17"] { border-top-color: #b9c0b8; }
+@media (max-width: 760px) { .lg-next { flex-basis: 100%; max-width: none; order: 3; } .lg-nx b { font-size: 18px; } .lg-nx { padding: 6px 8px; } }

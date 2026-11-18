@@ -4,10 +4,10 @@
 // League rules: draft day is 2 weeks before the season, deadline day (contract expiry) 1 month before.
 // The mid-season trade window is an estimate around the byes until the commish sets it.
 
-const D = (s: string) => new Date(`${s}T12:00:00+08:00`).getTime();
+export const D = (s: string) => new Date(`${s}T12:00:00+08:00`).getTime();
 const START = D('2026-11-01'), END = D('2027-10-31');
 const SEASON = { start: '2027-03-17', end: '2027-08-30' };
-const KEY: { key: string; label: string; date: string; tone: string; note?: string }[] = [
+export const KEY: { key: string; label: string; date: string; tone: string; note?: string }[] = [
   { key: 'deadline', label: 'Deadline day', date: '2027-02-17', tone: '#c2462a', note: 'Contracts expire' },
   { key: 'draft', label: 'Draft day', date: '2027-03-03', tone: '#1f3a5c' },
   { key: 'r1', label: 'Season starts', date: SEASON.start, tone: '#2e6b47', note: 'Round 1' },
@@ -18,7 +18,7 @@ const KEY: { key: string; label: string; date: string; tone: string; note?: stri
 const MID = { start: '2027-06-01', end: '2027-06-14' };
 
 const pos = (s: string | number) => ((typeof s === 'number' ? s : D(s)) - START) / (END - START) * 100;
-const fmt = (s: string) => new Date(`${s}T12:00:00+08:00`).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
+export const fmt = (s: string) => new Date(`${s}T12:00:00+08:00`).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 
 export function SeasonSchedule() {
   const now = Date.now();
@@ -71,5 +71,29 @@ export function SeasonSchedule() {
         })}
       </ol>
     </section>
+  );
+}
+
+/** League banner: the next three key dates with a countdown. */
+export function NextUp() {
+  const now = Date.now();
+  const up = KEY.filter((k) => D(k.date) > now).slice(0, 3);
+  if (!up.length) return null;
+  return (
+    <div className="lg-next" aria-label="Next up">
+      <span className="lg-next-h">Next up</span>
+      <div className="lg-next-row">
+        {up.map((k, i) => {
+          const d = Math.ceil((D(k.date) - now) / 86400000);
+          return (
+            <div key={k.key} className={`lg-nx${i === 0 ? ' first' : ''}`} style={{ ['--tone' as string]: k.tone }}>
+              <b>{d}<small> day{d === 1 ? '' : 's'}</small></b>
+              <span>{k.label}</span>
+              <em>{fmt(k.date)}{k.note ? ` · ${k.note}` : ''}</em>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
