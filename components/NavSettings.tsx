@@ -62,6 +62,9 @@ export function NavSettings({ leagues, current }: { leagues: MyLeague[]; current
             <span className="nset-h">Join another league</span>
             <div><input className="input" value={code} onChange={(e) => setCode(e.target.value)} placeholder="League code" autoCapitalize="characters" aria-label="League code" /><button className="btn dark" disabled={!code.trim()}>Join</button></div>
           </form>
+          <form action="/auth/signout" method="post" className="nset-sec">
+            <button type="submit" className="nset-row"><b>Sign out</b><span /></button>
+          </form>
         </div>
       )}
     </div>
