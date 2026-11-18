@@ -1,0 +1,3 @@
+-- A club counts as taken once a coach has asked for it (pending) as well as once one is approved.
+-- join_lookup marks it closed for everyone else; join_request refuses a club someone else has already asked for.
+-- Applied 18 Nov 2026 (see the live definitions of public.join_lookup and public.join_request).
