@@ -5,6 +5,14 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'S. Robey', tag: 'Injury', date: '2026-11-19', title: 'Robey to rejoin main group after Christmas',
+    body: 'Mark McVeigh says Robey’s knee surgery for the partial medial ligament tear he copped in round 20 went really well, and he should be running in the next few weeks. The plan is to integrate him with the main group after Christmas. A bit of pre-season lost, but Bito’s Boys’ young keeper looks on track for an early-season start.',
+  },
+  {
+    player: 'S. Darcy', tag: 'Injury', date: '2026-11-19', title: 'Darcy rehabbing in the US',
+    body: 'Darcy has headed to the United States to keep working on the ACL he ruptured in round 6. Bontempelli says he looks really good and the Dogs are optimistic about an early-season return, though no date has been set. Only six games in 2026, so NSW-ACT Academy will be watching his summer closely before banking on round 1 tons.',
+  },
+  {
     player: 'S. Pendlebury', tag: 'Role', date: '2026-11-18', title: 'Pendlebury expects midfield minutes at Gold Coast',
     body: 'Pendlebury says Collingwood wanted him to stay in 2027 and move into coaching, but he picked the Suns’ deal of two playing years then two coaching under Damien Hardwick. Roles haven’t been locked in yet, though he expects to spend most of his time in the middle. Not kept by his G-Train side, so he’s a cheap draft punt if that midfield time is real.',
   },
@@ -67,13 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'P. Gothard', tag: 'Injury', date: '2026-11-08', title: 'Gothard back from shoulder surgery in January',
     body: 'The Giants confirmed Gothard had shoulder surgery and is tracking towards full training in January. Missing the first chunk of pre-season puts his early-round spot in a strong forward line at some risk, so don’t bank on him from round 1.',
-  },
-  {
-    player: 'T. Green', tag: 'Injury', date: '2026-11-07', title: 'Green re-signs, eyes round 1',
-    body: 'Green has signed a two-year extension at GWS after knocking back rival interest, and says his ACL rehab is going really well. The Giants have him pencilled in for full training around January, with round 1 against Adelaide the target. If that holds, a Sheedy Medal-calibre mid is a big keeper win for NSW-ACT Academy.',
-  },
-  {
-    player: 'F. Callaghan', tag: 'Injury', date: '2026-11-07', title: 'Callaghan had late-season ankle surgery',
-    body: 'GWS have confirmed Callaghan went under the knife on his ankle late in 2026, and he’s aiming to be back in full training around January. That’s a chunk of pre-season on the side, so temper expectations for his early-round scoring.',
   },
 ];
