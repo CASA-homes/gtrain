@@ -10,7 +10,8 @@ type State =
   | { kind: 'sent'; email: string; codeError?: string; checking?: boolean }
   | { kind: 'error'; message: string };
 
-export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: boolean; initialMode?: Mode }) {
+/** founder: someone starting their own league. No league code or invite needed; after signing in they go to `next`. */
+export function LoginForm({ linkError, initialMode = 'login', founder = false, next = '/clubhouse' }: { linkError?: boolean; initialMode?: Mode; founder?: boolean; next?: string }) {
   const [mode, setMode] = useState<Mode>(initialMode);
   const [usePw, setUsePw] = useState(true);
   const [email, setEmail] = useState('');
@@ -35,7 +36,9 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
     setState({ kind: 'sending' });
     const supabase = createClient();
     const lc = league.trim().toUpperCase();
-    if (mode === 'signup' && lc) {
+    if (founder) {
+      // Starting a league: anyone can make an account.
+    } else if (mode === 'signup' && lc) {
       const { data: lk } = await supabase.rpc('join_lookup', { p_code: lc });
       if (!lk) return setState({ kind: 'error', message: 'That league code isn’t right. Check it with your commish.' });
     } else {
@@ -46,10 +49,10 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
     if (mode === 'login' && usePw) {
       const { error } = await supabase.auth.signInWithPassword({ email: clean, password: pw });
       if (error) return setState({ kind: 'error', message: 'Wrong email or password. No password yet? Tap Sign up to create one.' });
-      window.location.href = '/clubhouse';
+      window.location.href = next;
       return;
     }
-    const { error } = await supabase.auth.signInWithOtp({ email: clean, options: { emailRedirectTo: `${window.location.origin}/auth/callback` } });
+    const { error } = await supabase.auth.signInWithOtp({ email: clean, options: { emailRedirectTo: `${window.location.origin}/auth/callback${next !== '/clubhouse' ? `?next=${encodeURIComponent(next)}` : ''}` } });
     if (error) return setState({ kind: 'error', message: error.message });
     setState({ kind: 'sent', email: clean });
   }
@@ -67,9 +70,9 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
     if (mode === 'signup') {
       const { error: pwErr } = await supabase.auth.updateUser({ password: pw });
       if (pwErr) return setState({ ...state, checking: false, codeError: `You’re signed in, but the password didn’t save: ${pwErr.message}. Set it from the lock icon.` });
-      if (league.trim()) { window.location.href = `/join/${encodeURIComponent(league.trim().toUpperCase())}`; return; }
+      if (!founder && league.trim()) { window.location.href = `/join/${encodeURIComponent(league.trim().toUpperCase())}`; return; }
     }
-    window.location.href = '/clubhouse';
+    window.location.href = next;
   }
 
   const tabs = (
@@ -111,8 +114,10 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
         <>
           <label htmlFor="pw2" className="lg-lab">Type it again</label>
           <input id="pw2" className="lg-in" type="password" autoComplete="new-password" required minLength={8} value={pw2} onChange={(e) => setPw2(e.target.value)} />
-          <label htmlFor="lc" className="lg-lab">League code</label>
-          <input id="lc" className="lg-in lg-mono" autoCapitalize="characters" autoComplete="off" value={league} onChange={(e) => setLeague(e.target.value)} placeholder="e.g. GTRAIN-4KX9 (from your commish)" />
+          {!founder && <>
+            <label htmlFor="lc" className="lg-lab">League code</label>
+            <input id="lc" className="lg-in lg-mono" autoCapitalize="characters" autoComplete="off" value={league} onChange={(e) => setLeague(e.target.value)} placeholder="e.g. GTRAIN-4KX9 (from your commish)" />
+          </>}
         </>
       )}
       <button type="submit" className="lg-btn" disabled={sending}><i aria-hidden="true" />
@@ -121,6 +126,7 @@ export function LoginForm({ linkError, initialMode = 'login' }: { linkError?: bo
       {mode === 'login' && <button type="button" className="lg-alt" onClick={() => { setUsePw(!usePw); setState({ kind: 'idle' }); }}>{usePw ? 'No password? Email me a sign-in link' : 'Log in with a password'}</button>}
       <span role="status" className={state.kind === 'error' ? 'lg-err' : 'lg-note'}>
         {state.kind === 'error' ? state.message
+          : founder ? (mode === 'signup' ? 'We’ll email a 6-digit code to confirm it’s you, then you’ll set up your league.' : 'Log in and we’ll take you to league setup.')
           : mode === 'signup' ? 'Enter the league code from your commish (not needed if they added your email). We’ll email a 6-digit code to confirm it’s you.'
           : 'New here? Tap Sign up to create your password.'}
       </span>
