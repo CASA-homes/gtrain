@@ -11,7 +11,7 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',
-    background_color: '#f4f6f1',
+    background_color: '#2f5d46', // Android's launch splash: sage, so the mark sits on its own colour and hands over to <LaunchScreen>
     theme_color: '#f4f6f1',
     icons: [
       { src: '/icons/icon-192.png?v=3', sizes: '192x192', type: 'image/png', purpose: 'any' },

@@ -1,3 +1,4 @@
+import { LaunchScreen, LAUNCH_ONCE } from '@/components/LaunchScreen';
 import { InstallPrompt } from '@/components/InstallPrompt';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Apply the saved theme before first paint, so dark mode doesn't flash light. */}
         <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('khq_theme')==='dark')document.documentElement.classList.add('theme-dark')}catch(e){}" }} />
+        <script dangerouslySetInnerHTML={{ __html: LAUNCH_ONCE }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         {/* eslint-disable-next-line @next/next/no-page-custom-font */}
@@ -33,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
         />
       </head>
-      <body>{children}<InstallPrompt /></body>
+      <body><LaunchScreen />{children}<InstallPrompt /></body>
     </html>
   );
 }
