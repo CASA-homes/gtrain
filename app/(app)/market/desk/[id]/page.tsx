@@ -38,6 +38,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
     supabase.from('desk_events').select('*').eq('desk_id', id).order('created_at'),
   ]);
   const kc = await getContracts();
+  const LIST = kc.settings?.list_size ?? 33;
   const items = (itemsQ ?? []) as Item[];
   const events = (evQ ?? []) as Ev[];
   const team = (tid: number) => league.teams.find((t) => t.id === tid)!;
@@ -101,7 +102,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
       .map((p) => ({ key: `pick:${p.id}`, label: `${pickLabel(p)}${p.original_team_id !== tid ? ` (orig. ${team(p.original_team_id).short_code})` : ''}`, value: `${pickValue(p).toLocaleString()} pts` })),
   });
 
-  const overClubs = partIds.filter((t) => sizeOf(t).after > 33);
+  const overClubs = partIds.filter((t) => sizeOf(t).after > LIST);
   const title = two ? `Trade with ${team(others[0]).name}` : desk.title;
   const evLine = (e: Ev) => {
     const who = e.team_id === myId ? 'You' : team(e.team_id).name;
@@ -217,12 +218,12 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
                   players={a.players} picks={a.picks} bank={club?.bank ?? null} action={addItem.bind(null, id)} />
               )}
               {(() => {
-                const sz = sizeOf(tid); const over = sz.after - 33;
+                const sz = sizeOf(tid); const over = sz.after - LIST;
                 const canDrop = isOpen && (tid === myId || me?.is_commish);
                 const options = league.players.filter((p) => p.team_id === tid && !onTable.has(p.id) && !sz.drops.some((x) => x.player_id === p.id)).sort((x, y) => (x.average ?? 0) - (y.average ?? 0));
                 return (
                   <div className={`td-list${over > 0 ? ' over' : ''}`}>
-                    <span>List after trade <b>{sz.after} / 33</b>{sz.inP || sz.outP ? <em> · {sz.inP} in, {sz.outP} out</em> : null}</span>
+                    <span>List after trade <b>{sz.after} / {LIST}</b>{sz.inP || sz.outP ? <em> · {sz.inP} in, {sz.outP} out</em> : null}</span>
                     {sz.drops.map((x) => { const p = league.players.find((pp) => pp.id === x.player_id); return <span key={x.id} className="td-dropchip">Releases {p?.name ?? 'player'}{canDrop && <form action={removeDrop.bind(null, id, x.id)}><button aria-label={`Keep ${p?.name}`}>×</button></form>}</span>; })}
                     {over > 0 && <span className="td-list-warn">{tid === myId ? 'You' : team(tid).short_code} must release {over} player{over > 1 ? 's' : ''} for this trade to go through.</span>}
                     {canDrop && over > 0 && options.length > 0 && (
@@ -252,7 +253,7 @@ export default async function DeskPage({ params, searchParams }: { params: Promi
         <form action={proposeDesk.bind(null, id)} className="td-propose">
           <label htmlFor="td-note" className="sr-only">Message</label>
           <input id="td-note" name="note" className="input" maxLength={500} placeholder="Add a message (optional)" />
-          {overClubs.length > 0 && <span className="td-list-warn" style={{ alignSelf: 'center' }}>{overClubs.map((t) => team(t).short_code).join(', ')} over 33: pick who to release first</span>}
+          {overClubs.length > 0 && <span className="td-list-warn" style={{ alignSelf: 'center' }}>{overClubs.map((t) => team(t).short_code).join(', ')} over {LIST}: pick who to release first</span>}
           <button className="btn green" disabled={overClubs.includes(myId)}>{last && last.team_id !== myId ? 'Put counter forward' : last ? 'Update offer' : 'Put it forward'}</button>
         </form>
       )}

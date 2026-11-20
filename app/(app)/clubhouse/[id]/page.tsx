@@ -189,8 +189,8 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
               <div className="ch-kpis-desk">
                 <div><span>Power rank</span><b>#{a.rank}</b></div>
                 <div><span>Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
-                <div><span>Keepers</span><b>{keepers.length} / 18</b></div>
-                <div><span>Squad</span><b>{a.players.length} / 33</b></div>
+                <div><span>Keepers</span><b>{keepers.length} / {kc.settings?.keepers ?? 18}</b></div>
+                <div><span>Squad</span><b>{a.players.length} / {kc.settings?.list_size ?? 33}</b></div>
               </div>
             </div>
           </div>
@@ -210,8 +210,8 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
           <div className="club-head-kpis">
             <div className="kpi"><span className="eyebrow">Power rank</span><b>#{a.rank}</b></div>
             <div className="kpi"><span className="eyebrow">Best 18 avg</span><b>{Math.round(a.best18).toLocaleString()}</b></div>
-            <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / 18</b></div>
-            <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / 33</b></div>
+            <div className="kpi"><span className="eyebrow">Keepers</span><b>{keepers.length} / {kc.settings?.keepers ?? 18}</b></div>
+            <div className="kpi"><span className="eyebrow">Squad</span><b>{a.players.length} / {kc.settings?.list_size ?? 33}</b></div>
             {bank != null && <div className="kpi ch-kpi-bank"><span className="eyebrow">Bank</span><b>{bank.toLocaleString('en-AU')} KT</b></div>}
           </div>
           {(isMine || me?.is_commish) && <div className="club-head-acts"><ClubSettings teamId={a.team.id} colour={a.team.colour ?? null} hidden={a.team.clubhouse_hide ?? []} /><Link href={`/clubhouse/${a.team.id}/keepers`} className="btn dark club-head-cta">{isMine ? 'Set keepers' : `Set ${a.team.short_code} keepers`}</Link></div>}
