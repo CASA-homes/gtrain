@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getCoach, getLeague } from '@/lib/data';
 import { CUP_SEASON } from '@/lib/cup';
 import { COMP_SEASON } from '@/lib/comps';
-import { RULES, clean, type GameKey, type MdLineup } from '@/lib/matchday';
+import { RULES, clean, rulesFor, type GameKey, type LineupShape, type MdLineup } from '@/lib/matchday';
 import { toMd } from '@/lib/matchday-data';
 import { R1_2027 } from '@/lib/mens-round';
 import { cupTiedError } from './cup-actions';
@@ -22,9 +22,10 @@ function lockedClubs(round: number, now = Date.now()) {
 export async function saveGameLineup(key: GameKey, round: number, lineup: MdLineup): Promise<Res> {
   const me = await getCoach();
   if (!me) return { ok: false, error: 'Only coaches can set a team.' };
-  const rules = RULES[key];
-  if (!rules || !Number.isInteger(round)) return { ok: false, error: 'Unknown game.' };
+  if (!RULES[key] || !Number.isInteger(round)) return { ok: false, error: 'Unknown game.' };
   const supabase = await createClient();
+  const { data: ks } = await supabase.from('kc_settings').select('lineup').maybeSingle();
+  const rules = rulesFor(key, (ks as { lineup?: LineupShape } | null)?.lineup ?? null);
   const league = await getLeague();
 
   if (key === 'shield' || key === 'survivor' || key === 'plate') {

@@ -3,7 +3,7 @@
 // Clubs with no saved lineup for the round sit out the automatic rules.
 import { createClient } from '@/lib/supabase/server';
 import { COMP_SEASON } from '@/lib/comps';
-import { RULES, type MdLineup } from '@/lib/matchday';
+import { rulesFor, type LineupShape, type MdLineup } from '@/lib/matchday';
 
 export type FineKind = 'low_player' | 'low_team' | 'high_team' | 'captain_under';
 export interface FineRule { id: number; kind: FineKind; amount: number; threshold: number | null; active: boolean }
@@ -23,17 +23,18 @@ export const fineLabel = (k: string, threshold?: number | null) => {
 /** AFL Fantasy ids are the Champion Data numbers in players.dfs_id ("CD_I297373" → 297373). */
 const feedId = (dfs: string | null) => { const m = dfs?.match(/(\d+)$/); return m ? Number(m[1]) : null; };
 
-const FIELD = RULES.gtrain.slots.filter((s) => !s.bench).map((s) => s.key);
 
 /** Work out (and replace) the automatic fines for a locked round. Returns how many were posted. */
 export async function applyRoundFines(round: number, snapshot: Record<string, number>): Promise<{ ok: boolean; count: number; error?: string }> {
   const supabase = await createClient();
-  const [rq, lq, pq, tq] = await Promise.all([
+  const [rq, lq, pq, tq, ks] = await Promise.all([
     supabase.from('fine_rules').select('*').eq('active', true),
     supabase.from('game_lineups').select('team_id, lineup').eq('season', COMP_SEASON).eq('comp', 'gtrain').eq('round', round),
     supabase.from('players').select('id, name, dfs_id'),
     supabase.from('teams').select('id, is_guest'),
+    supabase.from('kc_settings').select('lineup').maybeSingle(),
   ]);
+  const FIELD = rulesFor('gtrain', (ks.data as { lineup?: LineupShape } | null)?.lineup ?? null).slots.filter((s) => !s.bench).map((s) => s.key);
   if (rq.error) return { ok: false, count: 0, error: rq.error.message };
   const rules = (rq.data ?? []) as FineRule[];
   const real = new Set((tq.data ?? []).filter((t) => !t.is_guest).map((t) => t.id as number));

@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 import { KcHeader } from '@/components/contracts/KcHeader';
 import { FaDeadlineControl, GrantControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
+import { keeperLabel } from '@/lib/keepers';
 
 export const dynamic = 'force-dynamic';
 
@@ -59,7 +60,7 @@ export default async function ContractsAdmin() {
             </section>
             <section className="kc-card warn" aria-labelledby="ro-h">
               <h2 id="ro-h">End of season: roll over to {s.season + 1}</h2>
-              <p className="kc-sub">Every club must be within its keeper cap (or the allowed deficit) and 17 + 1 keepers. Contracts ending in {s.season} expire; anyone not re-signed becomes an open free agent; everyone agreed to move joins their new club; every club gets its new starting bank. Close the window first. This can’t be undone.</p>
+              <p className="kc-sub">Every club must be within its keeper cap (or the allowed deficit) and {keeperLabel(s)} keepers. Contracts ending in {s.season} expire; anyone not re-signed becomes an open free agent; everyone agreed to move joins their new club; every club gets its new starting bank. Close the window first. This can’t be undone.</p>
               <div style={{ marginTop: 12 }}><RunButton run="rollover" label={`Start ${s.season + 1}`} kind="plain" confirmText={`Roll over to ${s.season + 1}? This can't be undone.`} /></div>
             </section>
           </>

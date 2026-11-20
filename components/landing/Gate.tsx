@@ -1,13 +1,13 @@
 'use client';
 // Sign-in page actions for someone who isn't signed in: Start your league / Log in.
-// New leagues can't be created yet, so "Start your league" explains that rather than showing a form that does nothing.
+// "Start your league" makes an account (no invite needed) and goes on to /start.
 import { useEffect, useState } from 'react';
 import { LoginForm } from '@/components/LoginForm';
 
 type Pane = 'choose' | 'login' | 'signup' | 'start';
 
-export function Gate({ linkError }: { linkError: boolean }) {
-  const [pane, setPane] = useState<Pane>(linkError ? 'login' : 'choose');
+export function Gate({ linkError, start = false }: { linkError: boolean; start?: boolean }) {
+  const [pane, setPane] = useState<Pane>(linkError ? 'login' : start ? 'start' : 'choose');
   // The header's Log in / Start a league buttons switch panes too.
   useEffect(() => {
     const on = (e: Event) => setPane((e as CustomEvent<Pane>).detail);
@@ -18,8 +18,9 @@ export function Gate({ linkError }: { linkError: boolean }) {
   if (pane === 'login' || pane === 'signup') return <div className="kl-gate"><LoginForm key={pane} linkError={linkError} initialMode={pane === 'signup' ? 'signup' : 'login'} /><p className="kl-note">{back}</p></div>;
   if (pane === 'start') return (
     <div className="kl-gate">
-      <div className="kl-soon"><b>New leagues are coming soon.</b> Keeper HQ is invite-only for now. If your league is already here, ask your commish to add your email, then log in.</div>
-      <p className="kl-note">{back} · <button type="button" className="kl-link" onClick={() => setPane('login')}>Log in</button></p>
+      <p className="kl-note" style={{ margin: '0 0 10px' }}><b>Start your league.</b> Make an account, name your league and clubs, then invite your coaches. It takes about two minutes.</p>
+      <LoginForm founder next="/start" initialMode="signup" />
+      <p className="kl-note">{back}</p>
     </div>
   );
   return (

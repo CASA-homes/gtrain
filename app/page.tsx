@@ -49,16 +49,21 @@ const TAPE: [string, string, string][] = [
   ['ANDERSON', '$97k', '+4'], ['ENGLISH', '$46k', '-8'], ['RANKINE', '$84k', '+9'], ['WHITFIELD', '$65k', '-14'], ['SHEEZEL', '$128k', '+19'],
 ];
 
-export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
+export default async function Landing({ searchParams }: { searchParams: Promise<{ error?: string; start?: string }> }) {
   const [me, sp] = await Promise.all([getMe(), searchParams]);
   // Signed in but not in a league yet (joined by code, waiting for the commish).
   type Joining = { league: string; club: string | null; status: string; code: string };
   let joining: Joining[] | null = null as Joining[] | null;
   let signedAs: string | null = null;
+  let myLeagues: { id: number; name: string }[] = [];
   if (!me) {
     const sb = await createClient();
     const { data: cl } = await sb.auth.getClaims();
-    if (cl?.claims?.sub) { joining = ((await sb.rpc('my_join_status')).data ?? []) as Joining[]; signedAs = (cl.claims.email as string | undefined) ?? null; }
+    if (cl?.claims?.sub) {
+      joining = ((await sb.rpc('my_join_status')).data ?? []) as Joining[];
+      signedAs = (cl.claims.email as string | undefined) ?? null;
+      myLeagues = ((await sb.rpc('my_leagues')).data ?? []) as { id: number; name: string }[];
+    }
   }
   return (
     <main className="kl">
@@ -95,6 +100,12 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
               Enter Matchday
               <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10 H15 M11 6 L15 10 L11 14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </Link>
+          ) : joining && myLeagues.length ? (
+            <div className="kl-gate">
+              <div className="kl-soon"><b>Welcome back.</b> Pick a league to open.</div>
+              {myLeagues.map((l) => <a key={l.id} href={`/auth/enter?l=${l.id}`} className="kl-btn">{l.name}</a>)}
+              <p className="kl-note"><Link href="/start">Start another league</Link> · <form action="/auth/signout" method="post" style={{ display: 'inline' }}><button type="submit" className="kl-link">Sign out</button></form></p>
+            </div>
           ) : joining ? (
             <div className="kl-gate">
               {joining.length
@@ -105,10 +116,11 @@ export default async function Landing({ searchParams }: { searchParams: Promise<
                         : <><b>You’re approved.</b> <Link href="/clubhouse">Go to your clubhouse</Link></>}
                     </div>
                   ))
-                : <div className="kl-soon"><b>{signedAs ? <>You’re signed in as {signedAs}.</> : 'You’re signed in.'}</b> That email isn’t in a league yet. If you meant to use another email, sign out and log in with it. Otherwise open your commish’s invite link.</div>}
-              <form action="/auth/signout" method="post"><button type="submit" className="kl-btn">Sign out and use another email</button></form>
+                : <div className="kl-soon"><b>{signedAs ? <>You’re signed in as {signedAs}.</> : 'You’re signed in.'}</b> That email isn’t in a league yet. Open your commish’s invite link, start your own league, or sign out and use another email.</div>}
+              <Link href="/start" className="kl-btn">Start your own league</Link>
+              <form action="/auth/signout" method="post"><button type="submit" className="kl-btn ghost" style={{ width: '100%' }}>Sign out and use another email</button></form>
             </div>
-          ) : <Gate linkError={sp.error === 'link'} />}
+          ) : <Gate linkError={sp.error === 'link'} start={sp.start === '1'} />}
         </div>
         </div>
       </section>

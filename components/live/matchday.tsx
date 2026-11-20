@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { CLUBS } from '@/lib/clubs';
 import { jumper } from '@/lib/jumpers';
-import { RULES, autoFill, filledField, fits, onField, projTotal, rowsFor, type MdLineup, type MdPlayer, type Pos, type Rules, type SlotRule } from '@/lib/matchday';
+import { rulesFor, autoFill, filledField, fits, onField, projTotal, rowsFor, type MdLineup, type MdPlayer, type Pos, type Rules, type SlotRule } from '@/lib/matchday';
 import type { GameOpt, MatchdayData, Side } from '@/lib/matchday-data';
 import type { MiniLink } from '@/lib/minis';
 import { saveGameLineup } from '@/app/(app)/live/matchday-actions';
@@ -584,7 +584,7 @@ function Lineups({ games, savedIds, locks, current, onPick, minis = [] }: { game
 export function Matchday({ data, cup, minis = [], liveSrc = null }: { data: MatchdayData; cup: CupData; minis?: MiniLink[]; liveSrc?: LiveSrc | null }) {
   const [gid, setGid] = useState(data.games[0]?.id ?? '');
   const game = data.games.find((g) => g.id === gid) ?? data.games[0];
-  const rules = RULES[game.key];
+  const rules = rulesFor(game.key, data.lineupShape);
   const squad = game.key === 'survivor' ? data.pool : data.squad;
   const look = useMemo(() => { const m = new Map<number, MdPlayer>([...Object.values(data.others), ...data.squad, ...data.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [data]);
   const [live, setLive] = useState<Record<string, MdLineup>>({});

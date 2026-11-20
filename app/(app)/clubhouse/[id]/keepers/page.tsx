@@ -1,11 +1,14 @@
 import { notFound, redirect } from 'next/navigation';
 import { KeeperPicker } from './KeeperPicker';
 import { getLeague, getMe } from '@/lib/data';
+import { createClient } from '@/lib/supabase/server';
 
 export default async function KeepersPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const [league, me] = await Promise.all([getLeague(), getMe()]);
   const a = league.byTeam.get(Number(id));
+  const { data: ks } = await (await createClient()).from('kc_settings').select('keepers').maybeSingle();
+  const spots = (ks as { keepers?: number } | null)?.keepers ?? 18;
   if (!a) notFound();
   if (!me || (me.team_id !== a.team.id && !me.is_commish)) redirect(`/clubhouse/${a.team.id}`);
 
@@ -23,10 +26,10 @@ export default async function KeepersPage({ params }: { params: Promise<{ id: st
         <h1 style={{ font: '600 30px var(--font)', letterSpacing: '-.03em' }}>{me.team_id === a.team.id ? 'Set your 2027 keepers' : `Set ${a.team.name}’s 2027 keepers`}</h1>
         {me.team_id !== a.team.id && <span className="pill" style={{ alignSelf: 'flex-start', background: '#f4ead0', color: '#17201a', fontSize: 12 }}>Commish edit · only your login can change another club’s keepers</span>}
         <p className="muted" style={{ margin: 0, maxWidth: '65ch' }}>
-          Keep up to 17 players, plus an 18th rookie slot for a player with 10 or fewer career AFL games. Players are sorted by league value.
+          Keep up to {spots - 1} players, plus a rookie slot for a player with 10 or fewer career AFL games. Players are sorted by league value.
         </p>
       </div>
-      <KeeperPicker teamId={a.team.id} players={players} />
+      <KeeperPicker teamId={a.team.id} players={players} spots={spots} />
     </div>
   );
 }

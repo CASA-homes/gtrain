@@ -7,7 +7,7 @@ import type { HRound } from '@/lib/history';
 import type { MiniLink } from '@/lib/minis';
 import { HistoryBoard } from './history';
 import Link from 'next/link';
-import { RULES, autoFill } from '@/lib/matchday';
+import { RULES, autoFill, rulesFor } from '@/lib/matchday';
 import type { MatchdayData } from '@/lib/matchday-data';
 import type { MRound } from '@/lib/mens-round';
 import { MensRound } from './mens';
@@ -45,12 +45,12 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
       sub={<span className="lm-sub">{history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>}</span>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
-        : game.key === 'gtrain' && game.opp ? <CupLive game={game} rules={RULES.gtrain} mine={md.lineups[game.id] ?? autoFill(RULES.gtrain, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />
+        : game.key === 'gtrain' && game.opp ? <CupLive game={game} rules={rulesFor('gtrain', md.lineupShape)} mine={md.lineups[game.id] ?? autoFill(rulesFor('gtrain', md.lineupShape), md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : game.key === 'cup' ? <CupLive game={game} rules={RULES.cup} mine={md.lineups[game.id] ?? autoFill(RULES.cup, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} />
         : (
           <div className="lm-proj">
-            <Matchup game={game} rules={RULES[game.key]} mine={md.lineups[game.id] ?? autoFill(RULES[game.key], game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
+            <Matchup game={game} rules={rulesFor(game.key, md.lineupShape)} mine={md.lineups[game.id] ?? autoFill(rulesFor(game.key, md.lineupShape), game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
             <span className="rh-dim" style={{ fontSize: 12 }}>Projected from each side’s saved team (or best guess). Live scores fill in here once 2027 games are being played.</span>
           </div>
         )}

@@ -12,7 +12,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { postNews, rsvp } from './actions';
 import { LeagueHistory } from '@/components/LeagueHistory';
-import { isLegacyLeague } from '@/lib/league-scope';
+import { getLeagueProfile, isLegacyLeague } from '@/lib/league-scope';
 import { CupTables } from '@/components/live/cup';
 import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
@@ -21,6 +21,7 @@ import { NextUp, SeasonSchedule } from '@/components/SeasonSchedule';
 
 export default async function LeaguePage() {
   const legacy = await isLegacyLeague();
+  const profile = await getLeagueProfile();
   const [league, me, leagueName] = await Promise.all([getLeague(), getMe(), getLeagueName()]);
   const cup = await buildCup(league, me?.team_id ?? 0);
   const supabase = await createClient();
@@ -49,7 +50,7 @@ export default async function LeaguePage() {
         <div className="lg-title" style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <span style={{ font: '500 12px var(--mono)', letterSpacing: '.14em', textTransform: 'uppercase', color: '#9ccb84' }}>Keeper HQ</span>
           <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>{leagueTitle(leagueName)}</h1>
-          <span className="lg-sub" style={{ color: '#b9c0b8' }}>10 coaches · est. 2022</span>
+          <span className="lg-sub" style={{ color: '#b9c0b8' }}>{legacy ? 10 : league.teams.length} clubs · est. {legacy ? 2022 : profile.founded ?? 2027}</span>
         </div>
         <NextUp />
         <div className="kpis lg-kpis">

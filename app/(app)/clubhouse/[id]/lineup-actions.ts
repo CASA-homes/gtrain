@@ -4,13 +4,15 @@ import { createClient } from '@/lib/supabase/server';
 import { getCoach } from '@/lib/data';
 import type { Line, Slot } from '@/lib/ratings';
 
-const LIMIT: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 4 };
 
 export async function saveLineup(teamId: number, entries: { id: number; slot: Slot | null; pos?: number | null }[]) {
   const me = await getCoach();
   if (!me || me.team_id !== teamId) return { error: 'You can only set the lineup for your own club.' };
 
   const supabase = await createClient();
+  const { data: ks } = await supabase.from('kc_settings').select('lineup').maybeSingle();
+  const shape = (ks as { lineup?: Record<Line, number> } | null)?.lineup ?? { DEF: 5, MID: 7, RUC: 1, FWD: 5 };
+  const LIMIT: Record<Slot, number> = { ...shape, BENCH: 4 };
   const { data: squad, error } = await supabase.from('squad').select('player_id, players(name, positions)').eq('team_id', teamId);
   if (error) return { error: error.message };
   const own = new Map((squad ?? []).map((s) => [s.player_id, s.players as unknown as { name: string; positions: Line[] }]));

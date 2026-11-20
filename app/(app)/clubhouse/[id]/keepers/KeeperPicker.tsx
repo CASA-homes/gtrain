@@ -11,13 +11,13 @@ interface P { id: number; name: string; positions: Line[]; afl_club: string | nu
  * 17 keepers plus an 18th "rookie" slot for a player with 10 or fewer career games.
  * Career games come from DFS Australia; players over 10 are flagged rather than blocked so the commish can rule on edge cases.
  */
-export function KeeperPicker({ teamId, players }: { teamId: number; players: P[] }) {
+export function KeeperPicker({ teamId, players, spots = 18 }: { teamId: number; players: P[]; spots?: number }) {
   const router = useRouter();
   const [keepers, setKeepers] = useState(new Set(players.filter((p) => p.is_keeper).map((p) => p.id)));
   const [rookie, setRookie] = useState<number | null>(players.find((p) => p.is_rookie_keeper)?.id ?? null);
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
-  const full = keepers.size >= 17;
+  const full = keepers.size >= spots - 1;
   const rookiePlayer = players.find((p) => p.id === rookie);
   const careerOf = (p: P) => p.career_games ?? p.games ?? 0;
 
@@ -47,9 +47,9 @@ export function KeeperPicker({ teamId, players }: { teamId: number; players: P[]
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
       <div className="ribbon" style={{ position: 'sticky', top: 64, zIndex: 5 }}>
         <div className="kpis">
-          <div className="kpi"><span className="eyebrow">Keepers</span><b style={{ color: full ? C.green5 : C.ink }}>{keepers.size} / 17</b></div>
+          <div className="kpi"><span className="eyebrow">Keepers</span><b style={{ color: full ? C.green5 : C.ink }}>{keepers.size} / {spots - 1}</b></div>
           <div className="kpi"><span className="eyebrow">18th: rookie slot</span><b>{rookiePlayer ? rookiePlayer.name : 'Empty'}</b></div>
-          <div className="kpi"><span className="eyebrow">Total kept</span><b>{keepers.size + (rookie ? 1 : 0)} / 18</b></div>
+          <div className="kpi"><span className="eyebrow">Total kept</span><b>{keepers.size + (rookie ? 1 : 0)} / {spots}</b></div>
         </div>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           {msg && <span role="status" style={{ fontSize: 13, color: msg === 'Keepers saved' ? C.green5 : C.redFg }}>{msg}</span>}
