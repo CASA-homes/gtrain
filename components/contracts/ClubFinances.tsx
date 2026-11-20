@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
 import { CapBar, CapSimulator, CollectDeposits, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
 import { getContracts, kt, moneyK, playerAge, releaseCost } from '@/lib/contracts';
+import { keeperLabel, keeperSpots } from '@/lib/keepers';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
 
@@ -256,7 +257,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <section className="kc-card" aria-labelledby="lk-h">
           <h2 id="lk-h">{season + 1} keeper lock-in</h2>
           <div style={{ marginTop: 8 }}>
-            <div className="kc-kv"><span>Signed for {season}</span><strong className={club.keptNow > 18 ? 'kc-down' : undefined}>{club.keptNow} / 17 + 1</strong></div>
+            <div className="kc-kv"><span>Signed for {season}</span><strong className={club.keptNow > keeperSpots(s) ? 'kc-down' : undefined}>{club.keptNow} / {keeperLabel(s)}</strong></div>
             <div className="kc-kv"><span>Salary (rookie excluded)</span><strong>{moneyK(club.salary)}</strong></div>
             <div className="kc-kv"><span>Keeper cap</span><strong>{moneyK(club.keeperCapNow)}</strong></div>
             <div className="kc-kv"><span>Deficit allowed</span><strong>{club.deficitUsed ? 'None (used last year)' : `Up to ${moneyK(s.deficit_max_k)}`}</strong></div>

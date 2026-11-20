@@ -45,9 +45,11 @@ function Delta({ p }: { p: SquadPlayer }) {
 }
 
 const LINE_NAMES: Record<Line, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forward' };
-const SLOT_COUNT: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 4 };
+export type Shape = Record<Line, number>;
+const STD_SHAPE: Shape = { DEF: 5, MID: 7, RUC: 1, FWD: 5 };
+const slotCount = (sh: Shape): Record<Slot, number> => ({ ...sh, BENCH: 4 });
 // Cells shown per group. The bench gets one spare spot so there's always somewhere to move a player while you shuffle.
-const CELLS: Record<Slot, number> = { DEF: 5, MID: 7, RUC: 1, FWD: 5, BENCH: 5 };
+const cellCount = (sh: Shape): Record<Slot, number> => ({ ...sh, BENCH: 5 });
 const SLOTS: Slot[] = [...LINES, 'BENCH'];
 
 /** Can this player fill this slot? Bench and the extended squad take anyone. */
@@ -61,7 +63,8 @@ const SORTS: Record<SortKey, (p: SquadPlayer) => number> = {
 };
 
 /** Lay the squad out on the board: each player in his saved spot, gaps kept, overflow to the extended squad. */
-function initBoard(players: SquadPlayer[]): Board {
+function initBoard(players: SquadPlayer[], sh: Shape): Board {
+  const CELLS = cellCount(sh);
   const cells = Object.fromEntries(SLOTS.map((s) => [s, Array(CELLS[s]).fill(null)])) as Board['cells'];
   const ext: number[] = [];
   for (const s of SLOTS) {
@@ -82,12 +85,16 @@ const key = (b: Board) => JSON.stringify(b.cells) + '|' + [...b.ext].sort().join
  * or by tapping ⇅ on a player and then tapping where he goes. Lines can have gaps. Changes save in one go.
  * Clicking Avg / Apps / Value / Ability / Pot. sorts within each line (click again to go back to the coach's order).
  */
-export function SquadTable({ players, teamId, editable, saved, onToggle }: {
+export function SquadTable({ players, teamId, editable, saved, onToggle, shape = STD_SHAPE }: {
   players: SquadPlayer[]; teamId: number; editable: boolean; saved: boolean; onToggle?: (open: boolean) => void;
+  /** this league's starting lineup (G-Train 5/7/1/5) */
+  shape?: Shape;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const start0 = useMemo(() => initBoard(players), [players]);
+  const SLOT_COUNT = slotCount(shape);
+  const starting = shape.DEF + shape.MID + shape.RUC + shape.FWD + SLOT_COUNT.BENCH;
+  const start0 = useMemo(() => initBoard(players, shape), [players, shape]);
   const [board, setBoard] = useState<Board>(start0);
   const [picked, setPicked] = useState<number | null>(null);
   const [dragId, setDragId] = useState<number | null>(null);
@@ -163,8 +170,8 @@ export function SquadTable({ players, teamId, editable, saved, onToggle }: {
   const count = (s: Slot | 'EXT') => (s === 'EXT' ? board.ext.length : board.cells[s].filter((x) => x != null).length);
   const blocks = [
     {
-      title: 'Starting 22',
-      sub: saved ? 'Set by the coach' : '5 DEF · 7 MID · 1 RUC · 5 FWD · 4 bench, auto-picked on 2026 average',
+      title: `Starting ${starting}`,
+      sub: saved ? 'Set by the coach' : `${shape.DEF} DEF · ${shape.MID} MID · ${shape.RUC} RUC · ${shape.FWD} FWD · ${SLOT_COUNT.BENCH} bench, auto-picked on 2026 average`,
       groups: [
         ...LINES.map((l) => ({ key: l as Slot | 'EXT', name: LINE_NAMES[l], colour: C[l], need: SLOT_COUNT[l] })),
         { key: 'BENCH' as Slot | 'EXT', name: 'Bench', colour: C.muted, need: SLOT_COUNT.BENCH },

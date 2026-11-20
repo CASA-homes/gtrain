@@ -2961,3 +2961,8 @@ a.st-opt:hover, button.st-opt:hover { border-color: var(--khq-sage); }
 .st-code b { font: 600 26px var(--mono); letter-spacing: .12em; }
 a.lg-btn { color: #fff; text-decoration: none; }
 a.lg-alt { text-align: center; }
+.st-custom { display: flex; flex-direction: column; gap: 10px; }
+.st-custom fieldset { border: 1px solid var(--khq-line); border-radius: 14px; padding: 10px 12px 12px; margin: 0; }
+.st-custom legend { font-size: 12px; font-weight: 700; color: var(--ink); padding: 0 4px; }
+.st-grid.four { grid-template-columns: repeat(4, 1fr); }
+.st-grid .lg-in { min-height: 42px; font-size: 15px; }

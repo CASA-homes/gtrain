@@ -1,4 +1,5 @@
 import type { ContractsData, KcSettings } from '@/lib/contracts';
+import { keeperLabel } from '@/lib/keepers';
 import { kt, moneyK } from '@/lib/contracts';
 
 export const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'}`;
@@ -45,7 +46,7 @@ export function DealsFeed({ d, limit = 8 }: { d: ContractsData; limit?: number }
 
 export function Rules({ s }: { s: KcSettings }) {
   const items = [
-    `Keep 17 + 1 rookie under the ${moneyK(s.keeper_cap_k)} keeper cap at lock-in. You can go up to ${moneyK(s.deficit_max_k)} over; the overage comes off next year's keeper cap, and you can't do it two years running.`,
+    `Keep ${keeperLabel(s)} rookie under the ${moneyK(s.keeper_cap_k)} keeper cap at lock-in. You can go up to ${moneyK(s.deficit_max_k)} over; the overage comes off next year's keeper cap, and you can't do it two years running.`,
     `In season the whole list must fit under ${moneyK(s.season_cap_k)}.`,
     `Contracts run 1–${s.max_years} years. Longer is cheaper per year. Draftees sign one-season deals priced by round (rookies half).`,
     `Nobody changes clubs mid-season. Players only move at season end. Coach-to-coach trades still run on the Trademarket.`,

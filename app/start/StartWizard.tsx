@@ -4,9 +4,15 @@
 import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { KeeperMark } from '@/components/KeeperMark';
-import { createLeague } from './actions';
+import { createLeague, type LeagueRules } from './actions';
 
 const SIZES = [6, 8, 10, 12, 14];
+/** The standard keeper rules (G-Train's). */
+const STD: Omit<LeagueRules, 'clubs'> = {
+  rounds: 16, keepers: 18, list_size: 33, lineup: { DEF: 5, MID: 7, RUC: 1, FWD: 5 },
+  start_kt: 1000, keeper_cap: 925, season_cap: 1150, deficit_max: 20, home_grown_pct: 20,
+  draft_r1: 30, draft_r2: 25, draft_r3: 20, draft_r4: 15, draft_rest: 10, rookie_pct: 50,
+};
 const STEPS = ['Name', 'Clubs and rules', 'Bring it in', 'Invite'];
 
 export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
@@ -17,10 +23,10 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   const [clubs, setClubs] = useState(10);
   const [names, setNames] = useState<string[]>([]);
   const [custom, setCustom] = useState(false);
-  const [keeperCap, setKeeperCap] = useState(925);
-  const [seasonCap, setSeasonCap] = useState(1150);
-  const [keepers, setKeepers] = useState(18);
-  const [rounds, setRounds] = useState(16);
+  const [r, setR] = useState(STD);
+  const set = (k: keyof typeof STD, v: number) => setR({ ...r, [k]: Number.isFinite(v) ? v : 0 });
+  const setLine = (k: 'DEF' | 'MID' | 'RUC' | 'FWD', v: number) => setR({ ...r, lineup: { ...r.lineup, [k]: v } });
+  const starters = r.lineup.DEF + r.lineup.MID + r.lineup.RUC + r.lineup.FWD;
   const [err, setErr] = useState<string | null>(null);
   const [made, setMade] = useState<{ leagueId: number; code: string } | null>(null);
   const [copied, setCopied] = useState(false);
@@ -33,10 +39,13 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   };
   const create = () => start(async () => {
     setErr(null);
-    if (seasonCap < keeperCap) return setErr('The season cap has to be at least the keeper cap.');
-    const r = await createLeague({ name, club, coach, clubs, names: [club, ...Array.from({ length: clubs - 1 }, (_, i) => names[i + 1] ?? '')], keeperCap, seasonCap, keepers, rounds });
-    if (!r.ok) return setErr(r.error);
-    setMade({ leagueId: r.leagueId, code: r.code }); setStep(2);
+    const rules = custom ? r : STD;
+    if (rules.season_cap < rules.keeper_cap) return setErr('The soft cap has to be at least the keeper cap.');
+    if (rules.list_size < rules.keepers + 4) return setErr('The list needs room for at least 4 draftees beyond your keepers.');
+    if (rules.list_size < starters + 4) return setErr('The list has to fit your starting team plus a bench.');
+    const res = await createLeague({ name, club, coach, names: [club, ...Array.from({ length: clubs - 1 }, (_, i) => names[i + 1] ?? '')], rules: { ...rules, clubs } });
+    if (!res.ok) return setErr(res.error);
+    setMade({ leagueId: res.leagueId, code: res.code }); setStep(2);
   });
   const link = made ? `${typeof window !== 'undefined' ? window.location.origin : 'https://keeperhq.au'}/join/${made.code}` : '';
   const share = async () => {
@@ -82,17 +91,45 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
           </details>
           <span className="st-lab">Rules</span>
           <button type="button" className="st-opt" aria-pressed={!custom} onClick={() => setCustom(false)}>
-            <b>Standard keeper</b><span>{keepers} keepers · ${keeperCap}k keeper cap · ${seasonCap}k season cap · {rounds}-round draft · contracts and KT</span>
+            <b>Standard keeper</b><span>{STD.keepers} keepers (incl. a rookie) · {STD.list_size}-man lists · ${STD.keeper_cap}k keeper cap · ${STD.season_cap}k soft cap · {STD.start_kt.toLocaleString()} KT each · {STD.rounds}-round draft</span>
           </button>
           <button type="button" className="st-opt" aria-pressed={custom} onClick={() => setCustom(true)}>
             <b>Customise</b><span>Set your own caps, keepers and draft rounds</span>
           </button>
           {custom && (
-            <div className="st-grid">
-              <label>Keepers<input type="number" className="lg-in" min={10} max={30} value={keepers} onChange={(e) => setKeepers(Number(e.target.value))} /></label>
-              <label>Draft rounds<input type="number" className="lg-in" min={4} max={40} value={rounds} onChange={(e) => setRounds(Number(e.target.value))} /></label>
-              <label>Keeper cap ($k)<input type="number" className="lg-in" min={500} max={2000} step={25} value={keeperCap} onChange={(e) => setKeeperCap(Number(e.target.value))} /></label>
-              <label>Season cap ($k)<input type="number" className="lg-in" min={500} max={2500} step={25} value={seasonCap} onChange={(e) => setSeasonCap(Number(e.target.value))} /></label>
+            <div className="st-custom">
+              <fieldset><legend>Lists</legend>
+                <div className="st-grid">
+                  <Num label="Keepers (incl. 1 rookie)" v={r.keepers} min={6} max={30} on={(v) => set('keepers', v)} />
+                  <Num label="List size" v={r.list_size} min={15} max={50} on={(v) => set('list_size', v)} />
+                  <Num label="Draft rounds" v={r.rounds} min={4} max={40} on={(v) => set('rounds', v)} />
+                  <Num label="Starting KT per club" v={r.start_kt} min={0} max={100000} step={100} on={(v) => set('start_kt', v)} />
+                </div>
+              </fieldset>
+              <fieldset><legend>Starting team · {starters} on field</legend>
+                <div className="st-grid four">
+                  {(['DEF', 'MID', 'RUC', 'FWD'] as const).map((k) => <Num key={k} label={k} v={r.lineup[k]} min={1} max={k === 'RUC' ? 3 : 12} on={(v) => setLine(k, v)} />)}
+                </div>
+              </fieldset>
+              <fieldset><legend>Salary cap</legend>
+                <div className="st-grid">
+                  <Num label="Keeper cap ($k)" v={r.keeper_cap} min={300} max={3000} step={25} on={(v) => set('keeper_cap', v)} />
+                  <Num label="Soft cap, in season ($k)" v={r.season_cap} min={300} max={4000} step={25} on={(v) => set('season_cap', v)} />
+                  <Num label="Max over keeper cap ($k)" v={r.deficit_max} min={0} max={200} step={5} on={(v) => set('deficit_max', v)} />
+                  <Num label="Home-grown discount (%)" v={r.home_grown_pct} min={0} max={60} on={(v) => set('home_grown_pct', v)} />
+                </div>
+              </fieldset>
+              <fieldset><legend>Draftee salaries ($k a year)</legend>
+                <div className="st-grid">
+                  <Num label="Round 1, picks 1 to 10" v={r.draft_r1} min={1} max={200} on={(v) => set('draft_r1', v)} />
+                  <Num label="Round 1 rest and round 2" v={r.draft_r2} min={1} max={200} on={(v) => set('draft_r2', v)} />
+                  <Num label="Round 3" v={r.draft_r3} min={1} max={200} on={(v) => set('draft_r3', v)} />
+                  <Num label="Round 4" v={r.draft_r4} min={1} max={200} on={(v) => set('draft_r4', v)} />
+                  <Num label="Round 5 onwards" v={r.draft_rest} min={1} max={200} on={(v) => set('draft_rest', v)} />
+                  <Num label="Rookies pay (% of that)" v={r.rookie_pct} min={10} max={100} step={5} on={(v) => set('rookie_pct', v)} />
+                </div>
+              </fieldset>
+              <p className="st-hint">Over the keeper cap: allowed up to your max at lock-in, but the overage comes off next year&apos;s cap and costs KT. Everything else follows the standard keeper rules and can be changed later in league settings.</p>
             </div>
           )}
           {err && <p role="alert" className="lg-err">{err}</p>}
@@ -121,5 +158,17 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
         </>}
       </div>
     </main>
+  );
+}
+
+function Num({ label, v, on, min, max, step = 1 }: { label: string; v: number; on: (v: number) => void; min: number; max: number; step?: number }) {
+  // Free typing; snapped into range when the field loses focus.
+  const [raw, setRaw] = useState(String(v));
+  return (
+    <label>{label}
+      <input type="number" inputMode="numeric" className="lg-in" min={min} max={max} step={step} value={raw}
+        onChange={(e) => { setRaw(e.target.value); const n = Number(e.target.value); if (e.target.value !== '' && n >= min && n <= max) on(n); }}
+        onBlur={() => { const n = Math.max(min, Math.min(max, Number(raw) || min)); setRaw(String(n)); on(n); }} />
+    </label>
   );
 }

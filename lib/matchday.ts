@@ -24,12 +24,21 @@ export type MdLineup = { slots: Record<string, number[]>; c?: number | null; vc?
 const POS4: Pos[] = ['DEF', 'MID', 'RUC', 'FWD'];
 const field = (n: Record<Pos, number>): SlotRule[] => POS4.map((p) => ({ key: p, label: { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards' }[p], n: n[p], fits: [p] }));
 
+export type LineupShape = Record<Pos, number>;
+/** The regular-season lineup. G-Train's is 5/7/1/5; each league can set its own (kc_settings.lineup). */
+export const STD_LINEUP: LineupShape = { DEF: 5, MID: 7, RUC: 1, FWD: 5 };
+function gtrainSlots(l: LineupShape): SlotRule[] {
+  return [...field(l), ...POS4.map((p): SlotRule => ({ key: `E${p}`, label: `${p} emergency`, n: 1, fits: [p], bench: true }))];
+}
+function gtrainSummary(l: LineupShape) {
+  return `${l.DEF} DEF, ${l.MID} MID, ${l.RUC} RUC, ${l.FWD} FWD. Captain doubles, VC covers. One emergency per line: he only comes on if a starter in his line plays under 25% game time.`;
+}
+
 export const RULES: Record<GameKey, Rules> = {
   gtrain: {
     key: 'gtrain', name: 'G-Train', captain: true, vc: true,
-    slots: [...field({ DEF: 5, MID: 7, RUC: 1, FWD: 5 }),
-      ...POS4.map((p): SlotRule => ({ key: `E${p}`, label: `${p} emergency`, n: 1, fits: [p], bench: true }))],
-    summary: '5 DEF, 7 MID, 1 RUC, 5 FWD. Captain doubles, VC covers. One emergency per line: he only comes on if a starter in his line plays under 25% game time.',
+    slots: gtrainSlots(STD_LINEUP),
+    summary: gtrainSummary(STD_LINEUP),
   },
   cup: {
     key: 'cup', name: 'Knockout Cup', captain: false, vc: false,
@@ -115,4 +124,12 @@ export function rowsFor(n: number): number[] {
   if (n === 6) return [3, 3];
   if (n === 7) return [4, 3];
   return [Math.ceil(n / 2), Math.floor(n / 2)];
+}
+
+/** Rules for a game, with the league's own regular-season lineup. */
+export function rulesFor(key: GameKey, lineup?: Partial<LineupShape> | null): Rules {
+  if (key !== 'gtrain' || !lineup) return RULES[key];
+  const l: LineupShape = { ...STD_LINEUP, ...lineup };
+  if (POS4.every((p) => l[p] === STD_LINEUP[p])) return RULES.gtrain;
+  return { ...RULES.gtrain, slots: gtrainSlots(l), summary: gtrainSummary(l) };
 }

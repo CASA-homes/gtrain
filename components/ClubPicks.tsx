@@ -8,11 +8,10 @@ import { getContracts } from '@/lib/contracts';
 import { getLeague } from '@/lib/data';
 import { pickValue } from '@/lib/picks';
 
-const LIST = 33;
-const FULL_KEEP = 18;
-
 export async function ClubPicks({ teamId }: { teamId: number }) {
   const [league, d] = await Promise.all([getLeague(), getContracts()]);
+  const LIST = d.settings?.list_size ?? 33;
+  const FULL_KEEP = d.settings?.keepers ?? 18;
   const team = new Map(league.teams.map((t) => [t.id, t]));
   const years = [2027, 2028];
   const lastRound = (y: number) => Math.max(1, ...league.picks.filter((p) => p.year === y && p.kind !== 'msd').map((p) => p.round));
@@ -45,7 +44,7 @@ export async function ClubPicks({ teamId }: { teamId: number }) {
             <div className="cp-head">
               <div>
                 <h2 id={`cp-${y}`}>{y} draft</h2>
-                <span>{need} pick{need === 1 ? '' : 's'} to fill {LIST} · {y === 2027 ? `keeping ${kept}` : 'assumes 17 + 1 kept'}{y === 2028 ? ' · order set Dec 2027' : ''}</span>
+                <span>{need} pick{need === 1 ? '' : 's'} to fill {LIST} · {y === 2027 ? `keeping ${kept}` : `assumes ${FULL_KEEP - 1} + 1 kept`}{y === 2028 ? ' · order set Dec 2027' : ''}</span>
               </div>
               <div className="cp-cap"><b>{pts.toLocaleString('en-AU')}</b><span>pts · #{rank} of {league.teams.length}</span></div>
             </div>

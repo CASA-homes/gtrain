@@ -16,6 +16,9 @@ export interface KcSettings { fa_day?: string | null;
   floor_def: number; floor_mid: number; floor_ruc: number; floor_fwd: number;
   clause_std: number; clause_high: number; kt_per_k: number; high_pct: number; none_pct: number; home_grown_pct: number;
   levy_pct: number; max_buys: number; deficit_max_k: number; hold_back_k: number; midseason_at: string | null; deposit_pct: number; loan_max_pct: number; rookie_lock_at: string | null; setup_until: string | null; release_fee_pct: number; ext_premium_pct: number; ext_fee_kt: number; fee_kt_per_k: number; clause_std_pct: number; clause_high_pct: number; deficit_fee_kt: number;
+  /** League rules (migration 0073). G-Train: 18 keepers incl. a rookie, 33-man lists, 5/7/1/5. */
+  keepers?: number; list_size?: number; lineup?: { DEF: number; MID: number; RUC: number; FWD: number };
+  draft_r1_k?: number; draft_r2_k?: number; draft_r3_k?: number; draft_r4_k?: number; draft_rest_k?: number; rookie_pct?: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
 }
@@ -266,3 +269,5 @@ export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   if (out.length <= points) return out;
   return Array.from({ length: points }, (_, i) => out[Math.round((i * (out.length - 1)) / (points - 1))]);
 }
+
+export { keeperSpots, keeperLabel, listSize } from '@/lib/keepers';

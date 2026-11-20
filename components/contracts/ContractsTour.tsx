@@ -9,7 +9,7 @@ const KEY = 'khq-tour-contracts-v1';
 
 const Tag = ({ c, children }: { c: string; children: React.ReactNode }) => <span className={`kc-tag ${c}`} style={{ marginRight: 6 }}>{children}</span>;
 
-function steps(setup: boolean, keeperCap: number, softCap: number, deadline: string): Step[] {
+function steps(setup: boolean, keeperCap: number, softCap: number, deadline: string, label: string): Step[] {
   return [
     {
       title: 'Welcome to your contracts',
@@ -18,7 +18,7 @@ function steps(setup: boolean, keeperCap: number, softCap: number, deadline: str
     ...(setup ? [{
       target: 'setup',
       title: 'Re-sign your list',
-      body: <>First off-season: <b>every player starts unsigned</b>. The players you sign become your <b>17 + 1 keepers</b>; anyone unsigned expires on deadline day. This card tracks how many you’ve signed and your room under the <b>${keeperCap}k keeper cap</b>. Everything is provisional until <b>{deadline}</b> (deadline day), so experiment freely.</>,
+      body: <>First off-season: <b>every player starts unsigned</b>. The players you sign become your <b>{label} keepers</b>; anyone unsigned expires on deadline day. This card tracks how many you’ve signed and your room under the <b>${keeperCap}k keeper cap</b>. Everything is provisional until <b>{deadline}</b> (deadline day), so experiment freely.</>,
     }] : []),
     {
       target: 'unsigned',
@@ -93,8 +93,8 @@ export function TourButton({ className = 'kc-btn small' }: { className?: string 
   return <button type="button" className={className} onClick={() => window.dispatchEvent(new Event('khq-tour-open'))}>How contracts work</button>;
 }
 
-export function ContractsTour({ setup, keeperCap, softCap, deadline, showButton = true }: { setup: boolean; keeperCap: number; softCap: number; deadline: string; showButton?: boolean }) {
-  const list = useMemo(() => steps(setup, keeperCap, softCap, deadline), [setup, keeperCap, softCap, deadline]);
+export function ContractsTour({ setup, keeperCap, softCap, deadline, showButton = true, keepers = '17 + 1' }: { setup: boolean; keeperCap: number; softCap: number; deadline: string; showButton?: boolean; keepers?: string }) {
+  const list = useMemo(() => steps(setup, keeperCap, softCap, deadline, keepers), [setup, keeperCap, softCap, deadline, keepers]);
   const [i, setI] = useState<number | null>(null);
   useEffect(() => { try { if (!localStorage.getItem(KEY)) setI(0); } catch { /* storage blocked: skip the auto tour */ } }, []);
 

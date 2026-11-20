@@ -240,7 +240,7 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
 
-      <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved}>
+      <ClubhouseSplit players={rows} teamId={a.team.id} editable={isMine} saved={a.lineupSaved} shape={kc.settings?.lineup}>
         {show('highlights') && <div className="ch-desk">{highlights}</div>}
 
         {(show('lines') || show('ages')) && (<div className="ch-pair">
