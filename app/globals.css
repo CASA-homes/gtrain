@@ -2959,3 +2959,5 @@ a.st-opt:hover, button.st-opt:hover { border-color: var(--khq-sage); }
 .st-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 6px; }
 .st-code { background: var(--sunk); border-radius: 14px; padding: 14px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
 .st-code b { font: 600 26px var(--mono); letter-spacing: .12em; }
+a.lg-btn { color: #fff; text-decoration: none; }
+a.lg-alt { text-align: center; }
