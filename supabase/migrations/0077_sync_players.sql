@@ -1,0 +1,3 @@
+-- Fill the shared players table from the AFL Fantasy feed: adds anyone missing (matched on dfs_id = CD_I<feed id>).
+-- Existing players are left alone apart from a missing club/positions/birth date being filled in.
+-- (Applied via the Supabase MCP; see the function body in the database for the exact SQL.)

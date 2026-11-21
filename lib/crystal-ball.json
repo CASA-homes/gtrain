@@ -817,15 +817,173 @@
  "prospects": [
   {
    "rank": 2,
-   "name": "Cody Walker",
+   "name": "Ethan Drever",
    "slot": 2,
+   "boards": {
+    "tw": 4,
+    "rm": 7,
+    "zh": 3
+   },
+   "club": "Essendon",
+   "drafted": true,
+   "junior": "GWV Rebels",
+   "position": "MID",
+   "height": 188,
+   "role": "Midfielder",
+   "jFP": 121.0,
+   "jD": 28.2,
+   "jT": 6.5,
+   "jSeason": 2026,
+   "jMax": 148.0,
+   "j120": 3,
+   "traits": [
+    "Athleticism",
+    "Contested / inside",
+    "Defensive pressure",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 76.4,
+   "relevant": 85.5,
+   "positionOnly": 38.7,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.8
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.68
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Defensive pressure",
+     "effect": 0.47
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Big-game ceiling: best junior game 148, 3 games of 120+. Goes big when it's on, not just a steady accumulator."
+    },
+    {
+     "good": true,
+     "text": "Junior fantasy average of 121. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
+    },
+    {
+     "good": true,
+     "text": "6.5 tackles a game. Juniors laying 6+ became stars 19% of the time: hunters score, as Warner, Berry and Brayshaw showed."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Bailey Smith",
+     "pick": 7,
+     "year": 2018,
+     "peak": 117.7,
+     "now": 117.7,
+     "jFP": 149.0,
+     "jT": 6.5,
+     "jD": 32.5,
+     "scouts": [
+      "Endurance",
+      "Contested ball-winning",
+      "Kicking",
+      "Leadership",
+      "Attitude"
+     ],
+     "workons": [
+      "Defensive One-on-ones"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Ashcroft",
+     "pick": 2,
+     "year": 2022,
+     "peak": 105.6,
+     "now": 105.6,
+     "jFP": 136.0,
+     "jT": 5.0,
+     "jD": 33.5,
+     "scouts": [
+      "Accumulation",
+      "Character",
+      "Consistency",
+      "Endurance",
+      "Inside-outside balance"
+     ],
+     "workons": [
+      "Defensive habits",
+      "Versatility"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Chad Warner",
+     "pick": 39,
+     "year": 2019,
+     "peak": 93.0,
+     "now": 92.6,
+     "jFP": 105.9,
+     "jT": 6.4,
+     "jD": 27.1,
+     "scouts": [
+      "Contested work",
+      "Clearances",
+      "Defensive pressure",
+      "Strength",
+      "Accumulation"
+     ],
+     "workons": [
+      "Speed",
+      "Kicking penetration"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 3,
+   "name": "Cody Walker",
+   "slot": 3,
    "boards": {
     "tw": 2,
     "rm": 2,
     "zh": 5
    },
-   "club": null,
-   "drafted": false,
+   "club": "Carlton",
+   "drafted": true,
    "junior": "Bendigo Pioneers",
    "position": "MID",
    "height": 184,
@@ -846,9 +1004,9 @@
    "flags": [
     "needs kicking"
    ],
-   "chance": 78.7,
-   "relevant": 89.2,
-   "positionOnly": 38.7,
+   "chance": 73.2,
+   "relevant": 85.7,
+   "positionOnly": 31.2,
    "reasons": [
     {
      "label": "Junior fantasy avg",
@@ -909,6 +1067,28 @@
    "ceiling": true,
    "comps": [
     {
+     "name": "Andrew Brayshaw",
+     "pick": 2,
+     "year": 2017,
+     "peak": 113.3,
+     "now": 94.2,
+     "jFP": 103.0,
+     "jT": 6.6,
+     "jD": 24.8,
+     "scouts": [
+      "Contested ball winning",
+      "Impact in the midfield",
+      "Kicking",
+      "Endurance",
+      "Leadership"
+     ],
+     "workons": [
+      "Scoreboard imapct"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
      "name": "Will Ashcroft",
      "pick": 2,
      "year": 2022,
@@ -932,45 +1112,24 @@
      "type": "inside midfielder"
     },
     {
-     "name": "Bailey Smith",
-     "pick": 7,
-     "year": 2018,
-     "peak": 117.7,
-     "now": 117.7,
-     "jFP": 149.0,
-     "jT": 6.5,
-     "jD": 32.5,
+     "name": "Nick Daicos",
+     "pick": 4,
+     "year": 2021,
+     "peak": 116.6,
+     "now": 116.6,
+     "jFP": 136.0,
+     "jT": 3.4,
+     "jD": 35.8,
      "scouts": [
-      "Endurance",
-      "Contested ball-winning",
-      "Kicking",
+      "Consistency",
+      "Production",
+      "Clean Skills",
       "Leadership",
-      "Attitude"
+      "Endurance"
      ],
      "workons": [
-      "Defensive One-on-ones"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Andrew Brayshaw",
-     "pick": 2,
-     "year": 2017,
-     "peak": 113.3,
-     "now": 94.2,
-     "jFP": 103.0,
-     "jT": 6.6,
-     "jD": 24.8,
-     "scouts": [
-      "Contested ball winning",
-      "Impact in the midfield",
-      "Kicking",
-      "Endurance",
-      "Leadership"
-     ],
-     "workons": [
-      "Scoreboard imapct"
+      "Impact per Kick",
+      "Strength"
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
@@ -978,16 +1137,16 @@
    ]
   },
   {
-   "rank": 8,
+   "rank": 6,
    "name": "Ethan Matthews",
-   "slot": 8,
+   "slot": 6,
    "boards": {
     "tw": 8,
     "rm": 6,
     "zh": 8
    },
-   "club": null,
-   "drafted": false,
+   "club": "GWS",
+   "drafted": true,
    "junior": "GIANTS Academy",
    "position": "MID",
    "height": 186,
@@ -1010,9 +1169,9 @@
     "needs contested/inside game",
     "needs strength/size"
    ],
-   "chance": 63.3,
-   "relevant": 79.4,
-   "positionOnly": 17.1,
+   "chance": 68.2,
+   "relevant": 82.9,
+   "positionOnly": 20.6,
    "reasons": [
     {
      "label": "Junior fantasy avg",
@@ -1081,29 +1240,6 @@
    "ceiling": true,
    "comps": [
     {
-     "name": "Nick Daicos",
-     "pick": 4,
-     "year": 2021,
-     "peak": 116.6,
-     "now": 116.6,
-     "jFP": 136.0,
-     "jT": 3.4,
-     "jD": 35.8,
-     "scouts": [
-      "Consistency",
-      "Production",
-      "Clean Skills",
-      "Leadership",
-      "Endurance"
-     ],
-     "workons": [
-      "Impact per Kick",
-      "Strength"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
      "name": "Noah Anderson",
      "pick": 2,
      "year": 2019,
@@ -1147,161 +1283,26 @@
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
-    }
-   ]
-  },
-  {
-   "rank": 4,
-   "name": "Ethan Drever",
-   "slot": 5,
-   "boards": {
-    "tw": 4,
-    "rm": 7,
-    "zh": 3
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "GWV Rebels",
-   "position": "MID",
-   "height": 188,
-   "role": "Midfielder",
-   "jFP": 121.0,
-   "jD": 28.2,
-   "jT": 6.5,
-   "jSeason": 2026,
-   "jMax": 148.0,
-   "j120": 3,
-   "traits": [
-    "Athleticism",
-    "Contested / inside",
-    "Defensive pressure",
-    "Speed / agility"
-   ],
-   "flags": [
-    "needs kicking"
-   ],
-   "chance": 61.9,
-   "relevant": 74.0,
-   "positionOnly": 23.1,
-   "reasons": [
-    {
-     "label": "Junior fantasy avg",
-     "effect": 0.8
     },
     {
-     "label": "Junior tackles",
-     "effect": 0.68
-    },
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.47
-    },
-    {
-     "label": "Defensive pressure",
-     "effect": 0.47
-    },
-    {
-     "label": "Speed / agility",
-     "effect": 0.22
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Big-game ceiling: best junior game 148, 3 games of 120+. Goes big when it's on, not just a steady accumulator."
-    },
-    {
-     "good": true,
-     "text": "Junior fantasy average of 121. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
-    },
-    {
-     "good": true,
-     "text": "6.5 tackles a game. Juniors laying 6+ became stars 19% of the time: hunters score, as Warner, Berry and Brayshaw showed."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    }
-   ],
-   "type": "inside midfielder",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Chad Warner",
-     "pick": 39,
-     "year": 2019,
-     "peak": 93.0,
-     "now": 92.6,
-     "jFP": 105.9,
-     "jT": 6.4,
-     "jD": 27.1,
-     "scouts": [
-      "Contested work",
-      "Clearances",
-      "Defensive pressure",
-      "Strength",
-      "Accumulation"
-     ],
-     "workons": [
-      "Speed",
-      "Kicking penetration"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "James Worpel",
-     "pick": 45,
-     "year": 2017,
-     "peak": 96.6,
-     "now": 79.1,
-     "jFP": 94.0,
-     "jT": 6.8,
-     "jD": 21.4,
-     "scouts": [
-      "Inside game",
-      "Tackling",
-      "Leadership",
-      "Scoreboard impact"
-     ],
-     "workons": [
-      "Kicking",
-      "Agility"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Luke Davies-Uniacke",
+     "name": "Nick Daicos",
      "pick": 4,
-     "year": 2017,
-     "peak": 97.4,
-     "now": 90.0,
-     "jFP": 105.0,
-     "jT": 3.5,
-     "jD": 24.2,
+     "year": 2021,
+     "peak": 116.6,
+     "now": 116.6,
+     "jFP": 136.0,
+     "jT": 3.4,
+     "jD": 35.8,
      "scouts": [
-      "Powerful",
-      "Penetrating kick",
-      "Contested marking",
-      "Big game player",
-      "Acceleration"
+      "Consistency",
+      "Production",
+      "Clean Skills",
+      "Leadership",
+      "Endurance"
      ],
      "workons": [
-      "Endurance",
-      "Speed"
+      "Impact per Kick",
+      "Strength"
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
@@ -1317,8 +1318,8 @@
     "rm": 1,
     "zh": 1
    },
-   "club": null,
-   "drafted": false,
+   "club": "Port Adelaide",
+   "drafted": true,
    "junior": "Port Adelaide NGA",
    "position": "Key position utility",
    "height": 196,
@@ -1442,14 +1443,14 @@
   {
    "rank": 5,
    "name": "Heath Mellody",
-   "slot": 4,
+   "slot": 5,
    "boards": {
     "tw": 5,
     "rm": 5,
     "zh": 2
    },
-   "club": null,
-   "drafted": false,
+   "club": "West Coast",
+   "drafted": true,
    "junior": "Claremont",
    "position": "MID/DEF",
    "height": 184,
@@ -1466,9 +1467,9 @@
     "Kicking / skills"
    ],
    "flags": [],
-   "chance": 52.6,
-   "relevant": 73.0,
-   "positionOnly": 26.5,
+   "chance": 48.4,
+   "relevant": 69.4,
+   "positionOnly": 23.1,
    "reasons": [
     {
      "label": "Footy IQ / vision",
@@ -1585,186 +1586,16 @@
    ]
   },
   {
-   "rank": 28,
-   "name": "Albert MacGowan",
-   "slot": 28,
-   "boards": {
-    "tw": null,
-    "rm": 38,
-    "zh": 24
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "Wing/MID",
-   "height": 187,
-   "role": "Midfielder",
-   "jFP": 115.0,
-   "jD": 27.9,
-   "jT": 4.6,
-   "jSeason": 2026,
-   "jMax": 139.0,
-   "j120": 2,
-   "traits": [
-    "Consistency",
-    "Engine / work rate",
-    "Footy IQ / vision",
-    "Kicking / skills",
-    "Size / strength"
-   ],
-   "flags": [
-    "needs contested/inside game",
-    "needs speed/athleticism"
-   ],
-   "chance": 44.2,
-   "relevant": 65.3,
-   "positionOnly": 7.0,
-   "reasons": [
-    {
-     "label": "Junior fantasy avg",
-     "effect": 0.65
-    },
-    {
-     "label": "Footy IQ / vision",
-     "effect": 0.41
-    },
-    {
-     "label": "needs contested/inside game",
-     "effect": 0.38
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
-    },
-    {
-     "label": "Junior tackles",
-     "effect": 0.25
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Big-game ceiling: best junior game 139, 2 games of 120+. Goes big when it's on, not just a steady accumulator."
-    },
-    {
-     "good": true,
-     "text": "Junior fantasy average of 115. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
-    },
-    {
-     "good": true,
-     "text": "4.6 tackles a game. Juniors laying 4.5+ became stars 18% of the time: hunters score, as Warner, Berry and Brayshaw showed."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    },
-    {
-     "good": true,
-     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
-    }
-   ],
-   "type": "wing",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Jase Burgoyne",
-     "pick": 60,
-     "year": 2021,
-     "peak": 90.4,
-     "now": 90.4,
-     "jFP": 107.1,
-     "jT": 2.3,
-     "jD": 28.8,
-     "scouts": [
-      "Kicking accuracy",
-      "Evasiveness",
-      "Accumulation",
-      "Clean skills",
-      "Decision making"
-     ],
-     "workons": [
-      "Kicking penetration",
-      "Contested game",
-      "Strength"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    },
-    {
-     "name": "Lachlan Sholl",
-     "pick": 64,
-     "year": 2018,
-     "peak": 85.3,
-     "now": null,
-     "jFP": 97.0,
-     "jT": 2.1,
-     "jD": 24.1,
-     "scouts": [
-      "Disposal",
-      "Intercept marking",
-      "Footy smarts",
-      "Accumulation",
-      "Endurance"
-     ],
-     "workons": [
-      "Contested work",
-      "Defensive game"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    },
-    {
-     "name": "Bailey Scott",
-     "pick": 49,
-     "year": 2018,
-     "peak": 85.6,
-     "now": null,
-     "jFP": 103.0,
-     "jT": 4.0,
-     "jD": 23.5,
-     "scouts": [
-      "Clean Hands",
-      "Skills",
-      "Versatility",
-      "Scoreboard Impact",
-      "Ball Winning"
-     ],
-     "workons": [
-      "Consistency",
-      "Size"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    }
-   ]
-  },
-  {
    "rank": 22,
    "name": "Noah Williams",
-   "slot": 25,
+   "slot": 22,
    "boards": {
     "tw": 22,
     "rm": 21,
     "zh": null
    },
-   "club": null,
-   "drafted": false,
+   "club": "Richmond",
+   "drafted": true,
    "junior": "Geelong Falcons",
    "position": "MID",
    "height": 177,
@@ -1782,9 +1613,9 @@
     "Speed / agility"
    ],
    "flags": [],
-   "chance": 37.4,
-   "relevant": 41.4,
-   "positionOnly": 7.6,
+   "chance": 39.7,
+   "relevant": 43.9,
+   "positionOnly": 8.3,
    "reasons": [
     {
      "label": "Junior tackles",
@@ -1852,6 +1683,28 @@
      "type": "inside midfielder"
     },
     {
+     "name": "James Worpel",
+     "pick": 45,
+     "year": 2017,
+     "peak": 96.6,
+     "now": 79.1,
+     "jFP": 94.0,
+     "jT": 6.8,
+     "jD": 21.4,
+     "scouts": [
+      "Inside game",
+      "Tackling",
+      "Leadership",
+      "Scoreboard impact"
+     ],
+     "workons": [
+      "Kicking",
+      "Agility"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
      "name": "Hugo Garcia",
      "pick": 50,
      "year": 2023,
@@ -1872,201 +1725,20 @@
      ],
      "role": "Midfielder",
      "type": "inside midfielder"
-    },
-    {
-     "name": "Jye Caldwell",
-     "pick": 11,
-     "year": 2018,
-     "peak": 103.6,
-     "now": 73.9,
-     "jFP": 60.0,
-     "jT": 4.0,
-     "jD": 16.3,
-     "scouts": [
-      "Acceleration",
-      "Agility",
-      "Goal sense",
-      "Game smarts",
-      "Tackling"
-     ],
-     "workons": [
-      "Durability",
-      "Kicking consistency"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
     }
    ]
   },
   {
-   "rank": 7,
-   "name": "Harry Van Hattum",
-   "slot": 7,
-   "boards": {
-    "tw": 7,
-    "rm": 8,
-    "zh": 6
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Northern Knights",
-   "position": "RUC",
-   "height": 205,
-   "role": "Ruck",
-   "jFP": 111.0,
-   "jD": 19.1,
-   "jT": 1.7,
-   "jSeason": 2026,
-   "jMax": 100.0,
-   "j120": 0,
-   "traits": [
-    "Aerial / marking",
-    "Athleticism",
-    "Kicking / skills",
-    "Leadership / character",
-    "Ruck craft",
-    "Speed / agility",
-    "Upside",
-    "X-factor / hurt"
-   ],
-   "flags": [
-    "needs consistency",
-    "needs endurance"
-   ],
-   "chance": 33.8,
-   "relevant": 26.9,
-   "positionOnly": 18.7,
-   "reasons": [
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.47
-    },
-    {
-     "label": "Junior tackles",
-     "effect": -0.41
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
-    },
-    {
-     "label": "X-factor / hurt",
-     "effect": 0.29
-    },
-    {
-     "label": "needs consistency",
-     "effect": -0.28
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Junior fantasy average of 111. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    },
-    {
-     "good": true,
-     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5–7 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
-    },
-    {
-     "good": true,
-     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
-    }
-   ],
-   "type": "ruck",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Sean Darcy",
-     "pick": 38,
-     "year": 2016,
-     "peak": 95.4,
-     "now": 43.4,
-     "jFP": 57.0,
-     "jT": 3.2,
-     "jD": 9.4,
-     "scouts": [],
-     "workons": [],
-     "role": "Ruck",
-     "type": "ruck"
-    },
-    {
-     "name": "Lloyd Meek",
-     "pick": 69,
-     "year": 2017,
-     "peak": 93.8,
-     "now": 72.9,
-     "jFP": 84.0,
-     "jT": 3.4,
-     "jD": 13.6,
-     "scouts": [
-      "Ruck work",
-      "Smarts",
-      "Hands at ground level",
-      "Contested marking"
-     ],
-     "workons": [
-      "Goal kicking",
-      "Mobility"
-     ],
-     "role": "Ruck",
-     "type": "ruck"
-    },
-    {
-     "name": "Tim English",
-     "pick": 19,
-     "year": 2016,
-     "peak": 118.7,
-     "now": 85.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "kicking",
-      "decision making"
-     ],
-     "workons": [
-      "strength"
-     ],
-     "role": "Ruck",
-     "type": "ruck"
-    }
-   ]
-  },
-  {
-   "rank": 10,
+   "rank": 9,
    "name": "Caylen Murray",
-   "slot": 11,
+   "slot": 9,
    "boards": {
     "tw": 10,
     "rm": 12,
     "zh": 11
    },
-   "club": null,
-   "drafted": false,
+   "club": "Sydney",
+   "drafted": true,
    "junior": "Brisbane Northern Academy",
    "position": "MID/DEF",
    "height": 183,
@@ -2089,9 +1761,9 @@
     "needs contested/inside game",
     "needs defensive work"
    ],
-   "chance": 33.4,
-   "relevant": 50.3,
-   "positionOnly": 13.7,
+   "chance": 36.8,
+   "relevant": 54.2,
+   "positionOnly": 15.8,
    "reasons": [
     {
      "label": "needs contested/inside game",
@@ -2227,37 +1899,59 @@
    ]
   },
   {
-   "rank": 3,
-   "name": "Arki Butler",
-   "slot": 3,
+   "rank": 8,
+   "name": "Harry Van Hattum",
+   "slot": 8,
    "boards": {
-    "tw": 3,
-    "rm": 3,
-    "zh": 4
+    "tw": 7,
+    "rm": 8,
+    "zh": 6
    },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "FWD/MID",
-   "height": 182,
-   "role": "Midfielder",
-   "jFP": 82.0,
-   "jD": 16.5,
-   "jT": 2.0,
+   "club": "Richmond",
+   "drafted": true,
+   "junior": "Northern Knights",
+   "position": "RUC",
+   "height": 205,
+   "role": "Ruck",
+   "jFP": 111.0,
+   "jD": 19.1,
+   "jT": 1.7,
    "jSeason": 2026,
-   "jMax": 104.0,
+   "jMax": 100.0,
    "j120": 0,
-   "traits": [],
-   "flags": [
-    "needs consistency"
+   "traits": [
+    "Aerial / marking",
+    "Athleticism",
+    "Kicking / skills",
+    "Leadership / character",
+    "Ruck craft",
+    "Speed / agility",
+    "Upside",
+    "X-factor / hurt"
    ],
-   "chance": 25.0,
-   "relevant": 33.4,
-   "positionOnly": 31.2,
+   "flags": [
+    "needs consistency",
+    "needs endurance"
+   ],
+   "chance": 31.5,
+   "relevant": 24.9,
+   "positionOnly": 17.1,
    "reasons": [
     {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
      "label": "Junior tackles",
-     "effect": -0.34
+     "effect": -0.41
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "X-factor / hurt",
+     "effect": 0.29
     },
     {
      "label": "needs consistency",
@@ -2267,91 +1961,112 @@
    "why": [
     {
      "good": true,
-     "text": "Junior fantasy average of 82 undersells him: 2.0 tackles and 4.0 clearances a game. Low scorers with that contested work became stars at about 1.2–1.3× their draft slots: a hidden scorer."
+     "text": "Junior fantasy average of 111. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted x-factor / hurt. 11 of 58 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     },
     {
      "good": false,
      "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": true,
+     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5–7 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
+    },
+    {
+     "good": true,
+     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
     }
    ],
-   "type": "midfielder-forward",
+   "type": "ruck",
    "ceiling": false,
    "comps": [
     {
-     "name": "Hayden Young",
-     "pick": 7,
-     "year": 2019,
-     "peak": 92.9,
-     "now": 78.7,
-     "jFP": 89.0,
-     "jT": 3.6,
-     "jD": 22.3,
-     "scouts": [
-      "Kicking",
-      "Intercept marking",
-      "Reading the play",
-      "Agility",
-      "Athleticism"
-     ],
-     "workons": [
-      "Midfield craft",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
+     "name": "Sean Darcy",
+     "pick": 38,
+     "year": 2016,
+     "peak": 95.4,
+     "now": 43.4,
+     "jFP": 57.0,
+     "jT": 3.2,
+     "jD": 9.4,
+     "scouts": [],
+     "workons": [],
+     "role": "Ruck",
+     "type": "ruck"
     },
     {
-     "name": "Jy Simpkin",
-     "pick": 12,
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8,
+     "now": 72.9,
+     "jFP": 84.0,
+     "jT": 3.4,
+     "jD": 13.6,
+     "scouts": [
+      "Ruck work",
+      "Smarts",
+      "Hands at ground level",
+      "Contested marking"
+     ],
+     "workons": [
+      "Goal kicking",
+      "Mobility"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Tim English",
+     "pick": 19,
      "year": 2016,
-     "peak": 95.5,
-     "now": 81.7,
+     "peak": 118.7,
+     "now": 85.0,
      "jFP": null,
      "jT": null,
      "jD": null,
      "scouts": [
-      "x-factor",
+      "kicking",
       "decision making"
      ],
      "workons": [
-      "durability"
+      "strength"
      ],
-     "role": "Small forward",
-     "type": "midfielder-forward"
-    },
-    {
-     "name": "Shai Bolton",
-     "pick": 29,
-     "year": 2016,
-     "peak": 86.8,
-     "now": 85.2,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "speed",
-      "x-factor"
-     ],
-     "workons": [
-      "kicking",
-      "endurance"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
+     "role": "Ruck",
+     "type": "ruck"
     }
    ]
   },
   {
-   "rank": 17,
+   "rank": 14,
    "name": "Toby Krasna",
-   "slot": 16,
+   "slot": 14,
    "boards": {
     "tw": 17,
     "rm": 17,
     "zh": 18
    },
-   "club": null,
-   "drafted": false,
+   "club": "Adelaide",
+   "drafted": true,
    "junior": "Northern Knights",
    "position": "Wing/MID",
    "height": 181,
@@ -2375,9 +2090,9 @@
     "needs contested/inside game",
     "needs strength/size"
    ],
-   "chance": 22.9,
-   "relevant": 37.8,
-   "positionOnly": 10.5,
+   "chance": 24.8,
+   "relevant": 40.3,
+   "positionOnly": 11.6,
    "reasons": [
     {
      "label": "Footy IQ / vision",
@@ -2475,430 +2190,24 @@
      "type": "wing"
     },
     {
-     "name": "Isaac Cumming",
-     "pick": 20,
-     "year": 2016,
-     "peak": 90.6,
-     "now": 60.5,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "kicking",
-      "x-factor"
-     ],
-     "workons": [
-      "accumulation"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    }
-   ]
-  },
-  {
-   "rank": 12,
-   "name": "Leo Steed",
-   "slot": 10,
-   "boards": {
-    "tw": 12,
-    "rm": 10,
-    "zh": 10
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Swan Districts",
-   "position": "MID/FWD",
-   "height": 176,
-   "role": "Midfielder",
-   "jFP": 90.0,
-   "jD": 23.5,
-   "jT": 4.0,
-   "jSeason": 2026,
-   "jMax": 103.0,
-   "j120": 0,
-   "traits": [
-    "Defensive pressure",
-    "Engine / work rate",
-    "Leadership / character"
-   ],
-   "flags": [],
-   "chance": 22.8,
-   "relevant": 39.7,
-   "positionOnly": 14.7,
-   "reasons": [
-    {
-     "label": "Defensive pressure",
-     "effect": 0.47
-    },
-    {
-     "label": "Combine: top-10 endurance",
-     "effect": 0.22
-    },
-    {
-     "label": "Engine / work rate",
-     "effect": -0.19
-    },
-    {
-     "label": "Junior tackles",
-     "effect": 0.11
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Junior fantasy average of 90. Draftees at 90+ became 90+ AFL Fantasy players 18% of the time (20 of 110), against 9% for all picks."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
-    },
-    {
-     "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
-    }
-   ],
-   "type": "midfielder-forward",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Shai Bolton",
-     "pick": 29,
-     "year": 2016,
-     "peak": 86.8,
-     "now": 85.2,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "speed",
-      "x-factor"
-     ],
-     "workons": [
-      "kicking",
-      "endurance"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
-    },
-    {
-     "name": "Tom Sparrow",
-     "pick": 27,
+     "name": "Lachlan Sholl",
+     "pick": 64,
      "year": 2018,
-     "peak": 90.1,
-     "now": 90.1,
-     "jFP": 56.0,
-     "jT": 5.3,
-     "jD": 11.5,
+     "peak": 85.3,
+     "now": null,
+     "jFP": 97.0,
+     "jT": 2.1,
+     "jD": 24.1,
      "scouts": [
-      "Contested work",
-      "Size",
-      "Explosive pace",
-      "Competitiveness",
-      "Team first"
-     ],
-     "workons": [
-      "Kicking Efficiency",
-      "Decision Making"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Jy Simpkin",
-     "pick": 12,
-     "year": 2016,
-     "peak": 95.5,
-     "now": 81.7,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "x-factor",
-      "decision making"
-     ],
-     "workons": [
-      "durability"
-     ],
-     "role": "Small forward",
-     "type": "midfielder-forward"
-    }
-   ]
-  },
-  {
-   "rank": 6,
-   "name": "Gus Teixeira",
-   "slot": 6,
-   "boards": {
-    "tw": 6,
-    "rm": 4,
-    "zh": 7
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "MID/FWD",
-   "height": 181,
-   "role": "Midfielder",
-   "jFP": 83.0,
-   "jD": 18.0,
-   "jT": 3.0,
-   "jSeason": 2026,
-   "jMax": 116.0,
-   "j120": 0,
-   "traits": [
-    "Contested / inside",
-    "Scoreboard impact"
-   ],
-   "flags": [],
-   "chance": 19.6,
-   "relevant": 34.2,
-   "positionOnly": 20.6,
-   "reasons": [
-    {
-     "label": "Contested / inside",
-     "effect": 0.12
-    },
-    {
-     "label": "Junior tackles",
-     "effect": -0.11
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
-    }
-   ],
-   "type": "midfielder-forward",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Tom Powell",
-     "pick": 13,
-     "year": 2020,
-     "peak": 86.9,
-     "now": 71.2,
-     "jFP": 0.0,
-     "jT": 3.0,
-     "jD": 24.3,
-     "scouts": [
-      "Accumulation",
-      "Consistency",
-      "Contested ball",
-      "Stoppage craft",
-      "Handball skills"
-     ],
-     "workons": [
-      "Strength",
-      "Damage by foot"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
-      "Kicking",
-      "Overhead marking"
-     ],
-     "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward",
-     "type": "midfielder"
-    },
-    {
-     "name": "Hayden Young",
-     "pick": 7,
-     "year": 2019,
-     "peak": 92.9,
-     "now": 78.7,
-     "jFP": 89.0,
-     "jT": 3.6,
-     "jD": 22.3,
-     "scouts": [
-      "Kicking",
+      "Disposal",
       "Intercept marking",
-      "Reading the play",
-      "Agility",
-      "Athleticism"
-     ],
-     "workons": [
-      "Midfield craft",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder-forward"
-    }
-   ]
-  },
-  {
-   "rank": 20,
-   "name": "Jackson Phillips",
-   "slot": 21,
-   "boards": {
-    "tw": 20,
-    "rm": 16,
-    "zh": null
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Dandenong Stingrays",
-   "position": "Wing/MID",
-   "height": 182,
-   "role": "Midfielder",
-   "jFP": 87.0,
-   "jD": 19.4,
-   "jT": 3.4,
-   "jSeason": 2026,
-   "jMax": 123.0,
-   "j120": 1,
-   "traits": [
-    "Engine / work rate",
-    "Footy IQ / vision",
-    "Kicking / skills",
-    "Scoreboard impact",
-    "Speed / agility"
-   ],
-   "flags": [
-    "needs contested/inside game",
-    "needs to win more ball"
-   ],
-   "chance": 18.9,
-   "relevant": 22.0,
-   "positionOnly": 8.6,
-   "reasons": [
-    {
-     "label": "Footy IQ / vision",
-     "effect": 0.41
-    },
-    {
-     "label": "needs contested/inside game",
-     "effect": 0.38
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
-    },
-    {
-     "label": "needs to win more ball",
-     "effect": -0.23
-    },
-    {
-     "label": "Speed / agility",
-     "effect": 0.22
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
-    }
-   ],
-   "type": "wing",
-   "ceiling": false,
-   "comps": [
-    {
-     "name": "Harry Perryman",
-     "pick": 14,
-     "year": 2016,
-     "peak": 86.5,
-     "now": 66.8,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "decision making",
-      "kicking"
-     ],
-     "workons": [
-      "speed"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    },
-    {
-     "name": "Isaac Cumming",
-     "pick": 20,
-     "year": 2016,
-     "peak": 90.6,
-     "now": 60.5,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "kicking",
-      "x-factor"
-     ],
-     "workons": [
-      "accumulation"
-     ],
-     "role": "Midfielder",
-     "type": "wing"
-    },
-    {
-     "name": "Jase Burgoyne",
-     "pick": 60,
-     "year": 2021,
-     "peak": 90.4,
-     "now": 90.4,
-     "jFP": 107.1,
-     "jT": 2.3,
-     "jD": 28.8,
-     "scouts": [
-      "Kicking accuracy",
-      "Evasiveness",
+      "Footy smarts",
       "Accumulation",
-      "Clean skills",
-      "Decision making"
+      "Endurance"
      ],
      "workons": [
-      "Kicking penetration",
-      "Contested game",
-      "Strength"
+      "Contested work",
+      "Defensive game"
      ],
      "role": "Midfielder",
      "type": "wing"
@@ -2906,16 +2215,16 @@
    ]
   },
   {
-   "rank": 23,
+   "rank": 13,
    "name": "Jake Eime",
-   "slot": 20,
+   "slot": 13,
    "boards": {
     "tw": 23,
     "rm": 23,
     "zh": 15
    },
-   "club": null,
-   "drafted": false,
+   "club": "GWS",
+   "drafted": true,
    "junior": "Central District",
    "position": "DEF/Wing",
    "height": 182,
@@ -2938,9 +2247,9 @@
     "needs defensive work",
     "needs strength/size"
    ],
-   "chance": 18.7,
-   "relevant": 25.7,
-   "positionOnly": 8.9,
+   "chance": 24.1,
+   "relevant": 32.7,
+   "positionOnly": 12.2,
    "reasons": [
     {
      "label": "Kicking / skills",
@@ -3061,76 +2370,61 @@
    ]
   },
   {
-   "rank": 36,
-   "name": "Jordan Knapp",
-   "slot": 36,
+   "rank": 10,
+   "name": "Leo Steed",
+   "slot": 10,
    "boards": {
-    "tw": null,
-    "rm": 47,
-    "zh": null
+    "tw": 12,
+    "rm": 10,
+    "zh": 10
    },
-   "club": null,
-   "drafted": false,
-   "junior": "Eastern Ranges",
-   "position": "MID",
-   "height": 179,
+   "club": "Gold Coast",
+   "drafted": true,
+   "junior": "Swan Districts",
+   "position": "MID/FWD",
+   "height": 176,
    "role": "Midfielder",
-   "jFP": 117.0,
-   "jD": 28.0,
+   "jFP": 90.0,
+   "jD": 23.5,
    "jT": 4.0,
    "jSeason": 2026,
-   "jMax": null,
-   "j120": null,
+   "jMax": 103.0,
+   "j120": 0,
    "traits": [
-    "Accumulator",
-    "Clean hands",
+    "Defensive pressure",
     "Engine / work rate",
-    "Footy IQ / vision",
-    "Kicking / skills",
     "Leadership / character"
    ],
    "flags": [],
-   "chance": 18.4,
-   "relevant": 35.7,
-   "positionOnly": 5.8,
+   "chance": 22.8,
+   "relevant": 39.7,
+   "positionOnly": 14.7,
    "reasons": [
     {
-     "label": "Junior fantasy avg",
-     "effect": 0.7
+     "label": "Defensive pressure",
+     "effect": 0.47
     },
     {
-     "label": "Footy IQ / vision",
-     "effect": 0.41
-    },
-    {
-     "label": "Clean hands",
-     "effect": -0.36
-    },
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
     },
     {
      "label": "Engine / work rate",
      "effect": -0.19
+    },
+    {
+     "label": "Junior tackles",
+     "effect": 0.11
     }
    ],
    "why": [
     {
      "good": true,
-     "text": "Junior fantasy average of 117. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
+     "text": "Junior fantasy average of 90. Draftees at 90+ became 90+ AFL Fantasy players 18% of the time (20 of 110), against 9% for all picks."
     },
     {
      "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
     },
     {
      "good": false,
@@ -3138,99 +2432,213 @@
     },
     {
      "good": true,
-     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 52% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 81 vs 74). Nick Daicos, Will Ashcroft, Chad Warner."
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
     },
     {
-     "good": true,
-     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
+     "good": false,
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
-   "type": "inside midfielder",
-   "ceiling": true,
+   "type": "midfielder-forward",
+   "ceiling": false,
    "comps": [
     {
-     "name": "Caleb Serong",
-     "pick": 8,
+     "name": "Shai Bolton",
+     "pick": 29,
+     "year": 2016,
+     "peak": 86.8,
+     "now": 85.2,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "speed",
+      "x-factor"
+     ],
+     "workons": [
+      "kicking",
+      "endurance"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Jy Simpkin",
+     "pick": 12,
+     "year": 2016,
+     "peak": 95.5,
+     "now": 81.7,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "x-factor",
+      "decision making"
+     ],
+     "workons": [
+      "durability"
+     ],
+     "role": "Small forward",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
      "year": 2019,
-     "peak": 108.1,
-     "now": 90.1,
-     "jFP": 112.0,
-     "jT": 5.6,
-     "jD": 24.2,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
      "scouts": [
-      "Clean hands",
-      "Footy IQ",
-      "Leadership/competitiveness",
-      "Consistency",
-      "Clearances"
+      "Kicking",
+      "Intercept marking",
+      "Reading the play",
+      "Agility",
+      "Athleticism"
      ],
      "workons": [
-      "Kicking under pressure",
-      "On-field emotion",
-      "Size"
+      "Midfield craft",
+      "Scoreboard impact"
      ],
      "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Nick Daicos",
-     "pick": 4,
-     "year": 2021,
-     "peak": 116.6,
-     "now": 116.6,
-     "jFP": 136.0,
-     "jT": 3.4,
-     "jD": 35.8,
-     "scouts": [
-      "Consistency",
-      "Production",
-      "Clean Skills",
-      "Leadership",
-      "Endurance"
-     ],
-     "workons": [
-      "Impact per Kick",
-      "Strength"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
-    },
-    {
-     "name": "Will Ashcroft",
-     "pick": 2,
-     "year": 2022,
-     "peak": 105.6,
-     "now": 105.6,
-     "jFP": 136.0,
-     "jT": 5.0,
-     "jD": 33.5,
-     "scouts": [
-      "Accumulation",
-      "Character",
-      "Consistency",
-      "Endurance",
-      "Inside-outside balance"
-     ],
-     "workons": [
-      "Defensive habits",
-      "Versatility"
-     ],
-     "role": "Midfielder",
-     "type": "inside midfielder"
+     "type": "midfielder-forward"
     }
    ]
   },
   {
-   "rank": 19,
+   "rank": 4,
+   "name": "Arki Butler",
+   "slot": 4,
+   "boards": {
+    "tw": 3,
+    "rm": 3,
+    "zh": 4
+   },
+   "club": "Richmond",
+   "drafted": true,
+   "junior": "Sandringham Dragons",
+   "position": "FWD/MID",
+   "height": 182,
+   "role": "Midfielder",
+   "jFP": 82.0,
+   "jD": 16.5,
+   "jT": 2.0,
+   "jSeason": 2026,
+   "jMax": 104.0,
+   "j120": 0,
+   "traits": [],
+   "flags": [
+    "needs consistency"
+   ],
+   "chance": 21.2,
+   "relevant": 28.6,
+   "positionOnly": 26.5,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": -0.34
+    },
+    {
+     "label": "needs consistency",
+     "effect": -0.28
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 82 undersells him: 2.0 tackles and 4.0 clearances a game. Low scorers with that contested work became stars at about 1.2–1.3× their draft slots: a hidden scorer."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
+    }
+   ],
+   "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2,
+     "now": 116.2,
+     "jFP": 83.0,
+     "jT": 3.3,
+     "jD": 19.3,
+     "scouts": [
+      "Footy IQ",
+      "Forward Craft",
+      "Goal Sense",
+      "Kicking",
+      "Overhead marking"
+     ],
+     "workons": [
+      "Limited midfield exposure",
+      "Speed"
+     ],
+     "role": "Forward",
+     "type": "midfielder"
+    },
+    {
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
+     "scouts": [
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
+     ],
+     "workons": [
+      "Strength",
+      "Damage by foot"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Hayden Young",
+     "pick": 7,
+     "year": 2019,
+     "peak": 92.9,
+     "now": 78.7,
+     "jFP": 89.0,
+     "jT": 3.6,
+     "jD": 22.3,
+     "scouts": [
+      "Kicking",
+      "Intercept marking",
+      "Reading the play",
+      "Agility",
+      "Athleticism"
+     ],
+     "workons": [
+      "Midfield craft",
+      "Scoreboard impact"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder-forward"
+    }
+   ]
+  },
+  {
+   "rank": 21,
    "name": "Harvie Cooke",
-   "slot": 26,
+   "slot": 21,
    "boards": {
     "tw": 19,
     "rm": 35,
     "zh": null
    },
-   "club": null,
-   "drafted": false,
+   "club": "Essendon",
+   "drafted": true,
    "junior": "Northern Knights",
    "position": "MID/FWD",
    "height": 176,
@@ -3254,9 +2662,9 @@
     "needs composure/decisions",
     "needs strength/size"
    ],
-   "chance": 17.4,
-   "relevant": 31.3,
-   "positionOnly": 7.4,
+   "chance": 19.9,
+   "relevant": 35.0,
+   "positionOnly": 8.6,
    "reasons": [
     {
      "label": "Junior fantasy avg",
@@ -3341,47 +2749,44 @@
      "type": "midfielder"
     },
     {
-     "name": "Dylan Moore",
-     "pick": 67,
-     "year": 2017,
-     "peak": 93.3,
-     "now": 76.5,
-     "jFP": 107.0,
-     "jT": 5.8,
-     "jD": 25.7,
+     "name": "Shai Bolton",
+     "pick": 29,
+     "year": 2016,
+     "peak": 86.8,
+     "now": 85.2,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
      "scouts": [
-      "Endurance",
-      "Kicking",
-      "Contested ball",
-      "Clearance work",
-      "Scoreboard impact"
+      "speed",
+      "x-factor"
      ],
      "workons": [
-      "Speed",
-      "Goal kicking accuracy"
+      "kicking",
+      "endurance"
      ],
      "role": "Midfielder",
-     "type": "forward"
+     "type": "midfielder-forward"
     },
     {
-     "name": "Errol Gulden",
-     "pick": 32,
-     "year": 2020,
-     "peak": 115.1,
-     "now": 115.1,
-     "jFP": 125.0,
-     "jT": 2.0,
-     "jD": 27.3,
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1,
+     "now": 90.1,
+     "jFP": 56.0,
+     "jT": 5.3,
+     "jD": 11.5,
      "scouts": [
-      "Speed/Agility",
-      "Footy IQ",
-      "Vision",
-      "Impact",
-      "Class"
+      "Contested work",
+      "Size",
+      "Explosive pace",
+      "Competitiveness",
+      "Team first"
      ],
      "workons": [
-      "Inside game",
-      "Kicking consistency"
+      "Kicking Efficiency",
+      "Decision Making"
      ],
      "role": "Midfielder",
      "type": "midfielder"
@@ -3389,16 +2794,176 @@
    ]
   },
   {
-   "rank": 26,
+   "rank": 41,
+   "name": "Jordan Knapp",
+   "slot": 41,
+   "boards": {
+    "tw": null,
+    "rm": 47,
+    "zh": null
+   },
+   "club": "Collingwood",
+   "drafted": true,
+   "junior": "Eastern Ranges",
+   "position": "MID",
+   "height": 179,
+   "role": "Midfielder",
+   "jFP": 117.0,
+   "jD": 28.0,
+   "jT": 4.0,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Accumulator",
+    "Clean hands",
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills",
+    "Leadership / character"
+   ],
+   "flags": [],
+   "chance": 16.9,
+   "relevant": 33.4,
+   "positionOnly": 5.2,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.7
+    },
+    {
+     "label": "Footy IQ / vision",
+     "effect": 0.41
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.36
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "Engine / work rate",
+     "effect": -0.19
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 117. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 52% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 81 vs 74). Nick Daicos, Will Ashcroft, Chad Warner."
+    },
+    {
+     "good": true,
+     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": true,
+   "comps": [
+    {
+     "name": "Caleb Serong",
+     "pick": 8,
+     "year": 2019,
+     "peak": 108.1,
+     "now": 90.1,
+     "jFP": 112.0,
+     "jT": 5.6,
+     "jD": 24.2,
+     "scouts": [
+      "Clean hands",
+      "Footy IQ",
+      "Leadership/competitiveness",
+      "Consistency",
+      "Clearances"
+     ],
+     "workons": [
+      "Kicking under pressure",
+      "On-field emotion",
+      "Size"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Luke Davies-Uniacke",
+     "pick": 4,
+     "year": 2017,
+     "peak": 97.4,
+     "now": 90.0,
+     "jFP": 105.0,
+     "jT": 3.5,
+     "jD": 24.2,
+     "scouts": [
+      "Powerful",
+      "Penetrating kick",
+      "Contested marking",
+      "Big game player",
+      "Acceleration"
+     ],
+     "workons": [
+      "Endurance",
+      "Speed"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Day",
+     "pick": 13,
+     "year": 2019,
+     "peak": 95.3,
+     "now": 80.9,
+     "jFP": 110.0,
+     "jT": 2.8,
+     "jD": 26.0,
+     "scouts": [
+      "Athleticism",
+      "Kicking efficiency",
+      "Footy smarts",
+      "Rebounding",
+      "Upside"
+     ],
+     "workons": [
+      "Strength",
+      "Inside game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 23,
    "name": "George Gale",
-   "slot": 24,
+   "slot": 23,
    "boards": {
     "tw": 26,
     "rm": 25,
     "zh": 16
    },
-   "club": null,
-   "drafted": false,
+   "club": "North Melbourne",
+   "drafted": true,
    "junior": "Claremont",
    "position": "Wing/MID",
    "height": 190,
@@ -3419,9 +2984,9 @@
    "flags": [
     "needs speed/athleticism"
    ],
-   "chance": 15.2,
-   "relevant": 29.1,
-   "positionOnly": 7.8,
+   "chance": 15.6,
+   "relevant": 29.8,
+   "positionOnly": 8.1,
    "reasons": [
     {
      "label": "Junior fantasy avg",
@@ -3478,6 +3043,30 @@
    "ceiling": true,
    "comps": [
     {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4,
+     "now": 90.4,
+     "jFP": 107.1,
+     "jT": 2.3,
+     "jD": 28.8,
+     "scouts": [
+      "Kicking accuracy",
+      "Evasiveness",
+      "Accumulation",
+      "Clean skills",
+      "Decision making"
+     ],
+     "workons": [
+      "Kicking penetration",
+      "Contested game",
+      "Strength"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
      "name": "Jarrod Berry",
      "pick": 17,
      "year": 2016,
@@ -3496,29 +3085,6 @@
       "durability"
      ],
      "role": "Tall utility",
-     "type": "wing"
-    },
-    {
-     "name": "Lachlan Sholl",
-     "pick": 64,
-     "year": 2018,
-     "peak": 85.3,
-     "now": null,
-     "jFP": 97.0,
-     "jT": 2.1,
-     "jD": 24.1,
-     "scouts": [
-      "Disposal",
-      "Intercept marking",
-      "Footy smarts",
-      "Accumulation",
-      "Endurance"
-     ],
-     "workons": [
-      "Contested work",
-      "Defensive game"
-     ],
-     "role": "Midfielder",
      "type": "wing"
     },
     {
@@ -3547,61 +3113,78 @@
    ]
   },
   {
-   "rank": 28,
-   "name": "Keenan Boi",
-   "slot": 30,
+   "rank": 29,
+   "name": "Jackson Phillips",
+   "slot": 29,
    "boards": {
-    "tw": 28,
-    "rm": null,
-    "zh": 29
+    "tw": 20,
+    "rm": 16,
+    "zh": null
    },
-   "club": null,
-   "drafted": false,
-   "junior": "Gippsland Power (Hawthorn NGA)",
-   "position": "Small FWD/MID",
-   "height": 177,
+   "club": "Brisbane",
+   "drafted": true,
+   "junior": "Dandenong Stingrays",
+   "position": "Wing/MID",
+   "height": 182,
    "role": "Midfielder",
-   "jFP": 74.0,
-   "jD": 15.2,
-   "jT": 3.6,
+   "jFP": 87.0,
+   "jD": 19.4,
+   "jT": 3.4,
    "jSeason": 2026,
-   "jMax": 126.0,
+   "jMax": 123.0,
    "j120": 1,
    "traits": [
-    "Aerial / marking",
-    "Defensive pressure",
+    "Engine / work rate",
+    "Footy IQ / vision",
+    "Kicking / skills",
     "Scoreboard impact",
-    "Size / strength",
     "Speed / agility"
    ],
    "flags": [
-    "needs kicking"
+    "needs contested/inside game",
+    "needs to win more ball"
    ],
-   "chance": 10.9,
-   "relevant": 15.3,
-   "positionOnly": 6.6,
+   "chance": 15.4,
+   "relevant": 17.9,
+   "positionOnly": 6.8,
    "reasons": [
     {
-     "label": "Defensive pressure",
-     "effect": 0.47
+     "label": "Footy IQ / vision",
+     "effect": 0.41
+    },
+    {
+     "label": "needs contested/inside game",
+     "effect": 0.38
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "needs to win more ball",
+     "effect": -0.23
     },
     {
      "label": "Speed / agility",
      "effect": 0.22
-    },
-    {
-     "label": "Aerial / marking",
-     "effect": -0.17
     }
    ],
    "why": [
     {
-     "good": false,
-     "text": "Junior fantasy average of 74. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
     },
     {
      "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted work-on: to win more ball: only 2 of 53 with that note became 90+ players (0.5× their draft slots)."
     },
     {
      "good": true,
@@ -3609,14 +3192,231 @@
     },
     {
      "good": false,
-     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
+    }
+   ],
+   "type": "wing",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Isaac Cumming",
+     "pick": 20,
+     "year": 2016,
+     "peak": 90.6,
+     "now": 60.5,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "kicking",
+      "x-factor"
+     ],
+     "workons": [
+      "accumulation"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
     },
     {
+     "name": "Harry Perryman",
+     "pick": 14,
+     "year": 2016,
+     "peak": 86.5,
+     "now": 66.8,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "decision making",
+      "kicking"
+     ],
+     "workons": [
+      "speed"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
+    },
+    {
+     "name": "Jase Burgoyne",
+     "pick": 60,
+     "year": 2021,
+     "peak": 90.4,
+     "now": 90.4,
+     "jFP": 107.1,
+     "jT": 2.3,
+     "jD": 28.8,
+     "scouts": [
+      "Kicking accuracy",
+      "Evasiveness",
+      "Accumulation",
+      "Clean skills",
+      "Decision making"
+     ],
+     "workons": [
+      "Kicking penetration",
+      "Contested game",
+      "Strength"
+     ],
+     "role": "Midfielder",
+     "type": "wing"
+    }
+   ]
+  },
+  {
+   "rank": 11,
+   "name": "Gus Teixeira",
+   "slot": 11,
+   "boards": {
+    "tw": 6,
+    "rm": 4,
+    "zh": 7
+   },
+   "club": "St Kilda",
+   "drafted": true,
+   "junior": "Sandringham Dragons",
+   "position": "MID/FWD",
+   "height": 181,
+   "role": "Midfielder",
+   "jFP": 83.0,
+   "jD": 18.0,
+   "jT": 3.0,
+   "jSeason": 2026,
+   "jMax": 116.0,
+   "j120": 0,
+   "traits": [
+    "Contested / inside",
+    "Scoreboard impact"
+   ],
+   "flags": [],
+   "chance": 13.4,
+   "relevant": 24.3,
+   "positionOnly": 13.7,
+   "reasons": [
+    {
+     "label": "Contested / inside",
+     "effect": 0.12
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.11
+    }
+   ],
+   "why": [
+    {
      "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted contested / inside. 19 of 109 draftees with that note became 90+ players, 1.4× what their draft slots predicted."
     }
    ],
    "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Jy Simpkin",
+     "pick": 12,
+     "year": 2016,
+     "peak": 95.5,
+     "now": 81.7,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "x-factor",
+      "decision making"
+     ],
+     "workons": [
+      "durability"
+     ],
+     "role": "Small forward",
+     "type": "midfielder-forward"
+    },
+    {
+     "name": "Will Brodie",
+     "pick": 9,
+     "year": 2016,
+     "peak": 94.2,
+     "now": null,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball"
+     ],
+     "workons": [
+      "kicking",
+      "accumulation"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Tom Powell",
+     "pick": 13,
+     "year": 2020,
+     "peak": 86.9,
+     "now": 71.2,
+     "jFP": 0.0,
+     "jT": 3.0,
+     "jD": 24.3,
+     "scouts": [
+      "Accumulation",
+      "Consistency",
+      "Contested ball",
+      "Stoppage craft",
+      "Handball skills"
+     ],
+     "workons": [
+      "Strength",
+      "Damage by foot"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 17,
+   "name": "Archie Elliott",
+   "slot": 17,
+   "boards": {
+    "tw": 25,
+    "rm": 30,
+    "zh": null
+   },
+   "club": "Essendon",
+   "drafted": true,
+   "junior": "GWV Rebels",
+   "position": "FWD",
+   "height": 182,
+   "role": "Forward",
+   "jFP": 76.0,
+   "jD": 12.5,
+   "jT": 3.8,
+   "jSeason": 2026,
+   "jMax": 110.0,
+   "j120": 0,
+   "traits": [
+    "Defensive pressure"
+   ],
+   "flags": [],
+   "chance": 11.3,
+   "relevant": 15.3,
+   "positionOnly": 10.1,
+   "reasons": [],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted defensive pressure, but that's the small forward's job description, so it isn't counted. The 7 forwards tagged for pressure produced no 90+ players; the 59 midfielders with the same tag produced 12."
+    }
+   ],
+   "type": "forward",
    "ceiling": false,
    "comps": [
     {
@@ -3682,16 +3482,490 @@
    ]
   },
   {
+   "rank": 38,
+   "name": "Lachlan Hicks",
+   "slot": 38,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Geelong",
+   "drafted": true,
+   "junior": "Western Jets",
+   "position": "",
+   "height": 183,
+   "role": "Midfielder",
+   "jFP": 127.0,
+   "jD": 28.5,
+   "jT": 3.7,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 10.8,
+   "relevant": 35.6,
+   "positionOnly": 5.5,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.9
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 127. Draftees at 110+ became 90+ AFL Fantasy players 29% of the time (8 of 28), against 9% for all picks."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Noah Anderson",
+     "pick": 2,
+     "year": 2019,
+     "peak": 103.9,
+     "now": 101.5,
+     "jFP": 116.0,
+     "jT": 3.6,
+     "jD": 28.3,
+     "scouts": [
+      "Scoreboard impact",
+      "Power",
+      "Strength/size",
+      "Kick penetration",
+      "Contested ball winning"
+     ],
+     "workons": [
+      "Kicking consistency",
+      "Lowering the eyes"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Day",
+     "pick": 13,
+     "year": 2019,
+     "peak": 95.3,
+     "now": 80.9,
+     "jFP": 110.0,
+     "jT": 2.8,
+     "jD": 26.0,
+     "scouts": [
+      "Athleticism",
+      "Kicking efficiency",
+      "Footy smarts",
+      "Rebounding",
+      "Upside"
+     ],
+     "workons": [
+      "Strength",
+      "Inside game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Adam Cerra",
+     "pick": 5,
+     "year": 2017,
+     "peak": 95.1,
+     "now": 83.0,
+     "jFP": 129.0,
+     "jT": 3.8,
+     "jD": 26.3,
+     "scouts": [
+      "Kicking",
+      "Contested ball",
+      "Agility",
+      "Upside"
+     ],
+     "workons": [
+      "Speed",
+      "Injury durability"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 30,
+   "name": "Benji van Rooyen",
+   "slot": 30,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Hawthorn",
+   "drafted": true,
+   "junior": "Western Australia",
+   "position": "",
+   "height": 203,
+   "role": "Ruck",
+   "jFP": 86.0,
+   "jD": 14.0,
+   "jT": 2.8,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Aerial / marking",
+    "Clean hands",
+    "Leadership / character",
+    "Ruck craft",
+    "Upside"
+   ],
+   "flags": [
+    "needs endurance",
+    "needs strength/size"
+   ],
+   "chance": 9.7,
+   "relevant": 12.5,
+   "positionOnly": 6.6,
+   "reasons": [
+    {
+     "label": "Clean hands",
+     "effect": -0.36
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.16
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": true,
+     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5–7 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
+    }
+   ],
+   "type": "ruck",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Tristan Xerri",
+     "pick": 72,
+     "year": 2017,
+     "peak": 114.5,
+     "now": 96.5,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [],
+     "workons": [],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Tom De Koning",
+     "pick": 30,
+     "year": 2017,
+     "peak": 86.2,
+     "now": 64.3,
+     "jFP": 66.0,
+     "jT": 2.6,
+     "jD": 10.3,
+     "scouts": [
+      "Athleticism",
+      "Versatility",
+      "Goal kicking"
+     ],
+     "workons": [
+      "Aggression",
+      "Contested marking"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Sean Darcy",
+     "pick": 38,
+     "year": 2016,
+     "peak": 95.4,
+     "now": 43.4,
+     "jFP": 57.0,
+     "jT": 3.2,
+     "jD": 9.4,
+     "scouts": [],
+     "workons": [],
+     "role": "Ruck",
+     "type": "ruck"
+    }
+   ]
+  },
+  {
+   "rank": 25,
+   "name": "Wil Antrobus",
+   "slot": 25,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Port Adelaide",
+   "drafted": true,
+   "junior": "Dandenong Stingrays",
+   "position": "",
+   "height": 182,
+   "role": "Defender",
+   "jFP": 85.0,
+   "jD": 22.3,
+   "jT": 3.5,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 9.6,
+   "relevant": 16.0,
+   "positionOnly": 7.6,
+   "reasons": [],
+   "why": [
+    {
+     "good": true,
+     "text": "3.5 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6,
+     "now": 73.9,
+     "jFP": 60.0,
+     "jT": 4.0,
+     "jD": 16.3,
+     "scouts": [
+      "Acceleration",
+      "Agility",
+      "Goal sense",
+      "Game smarts",
+      "Tackling"
+     ],
+     "workons": [
+      "Durability",
+      "Kicking consistency"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Jason Horne-Francis",
+     "pick": 1,
+     "year": 2021,
+     "peak": 95.8,
+     "now": 95.8,
+     "jFP": 77.7,
+     "jT": 4.2,
+     "jD": 16.5,
+     "scouts": [
+      "Contested ball",
+      "Defensive effort",
+      "Scoreboard impact",
+      "Explosiveness",
+      "Physicality"
+     ],
+     "workons": [
+      "Kicking consistency",
+      "Outside game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Zak Butters",
+     "pick": 12,
+     "year": 2018,
+     "peak": 104.5,
+     "now": 104.5,
+     "jFP": 91.0,
+     "jT": 3.8,
+     "jD": 20.0,
+     "scouts": [
+      "Speed",
+      "Agility",
+      "X-factor",
+      "Vision",
+      "Scope"
+     ],
+     "workons": [
+      "Strength",
+      "Endurance"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 15,
+   "name": "Lochie Burrows",
+   "slot": 15,
+   "boards": {
+    "tw": 15,
+    "rm": 24,
+    "zh": 22
+   },
+   "club": "Melbourne",
+   "drafted": true,
+   "junior": "Sandringham Dragons",
+   "position": "MID/FWD",
+   "height": 179,
+   "role": "Midfielder",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": 103.0,
+   "j120": 0,
+   "traits": [
+    "Athleticism",
+    "Leadership / character",
+    "Versatility"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 9.1,
+   "relevant": 27.8,
+   "positionOnly": 11.0,
+   "reasons": [
+    {
+     "label": "Versatility",
+     "effect": -0.37
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+    }
+   ],
+   "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Tom Sparrow",
+     "pick": 27,
+     "year": 2018,
+     "peak": 90.1,
+     "now": 90.1,
+     "jFP": 56.0,
+     "jT": 5.3,
+     "jD": 11.5,
+     "scouts": [
+      "Contested work",
+      "Size",
+      "Explosive pace",
+      "Competitiveness",
+      "Team first"
+     ],
+     "workons": [
+      "Kicking Efficiency",
+      "Decision Making"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "James Rowbottom",
+     "pick": 25,
+     "year": 2018,
+     "peak": 85.1,
+     "now": 71.3,
+     "jFP": 91.0,
+     "jT": 6.5,
+     "jD": 21.9,
+     "scouts": [
+      "Contested ball",
+      "Clearances",
+      "Clean hands",
+      "Tackling",
+      "Core strength"
+     ],
+     "workons": [
+      "Endurance",
+      "Kicking",
+      "Scoreboard impact"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Harry Sheezel",
+     "pick": 3,
+     "year": 2022,
+     "peak": 116.2,
+     "now": 116.2,
+     "jFP": 83.0,
+     "jT": 3.3,
+     "jD": 19.3,
+     "scouts": [
+      "Footy IQ",
+      "Forward Craft",
+      "Goal Sense",
+      "Kicking",
+      "Overhead marking"
+     ],
+     "workons": [
+      "Limited midfield exposure",
+      "Speed"
+     ],
+     "role": "Forward",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
    "rank": 18,
    "name": "George Dimer",
-   "slot": 17,
+   "slot": 18,
    "boards": {
     "tw": 18,
     "rm": 19,
     "zh": 17
    },
-   "club": null,
-   "drafted": false,
+   "club": "Fremantle",
+   "drafted": true,
    "junior": "Sandringham Dragons",
    "position": "Small FWD",
    "height": 173,
@@ -3709,9 +3983,9 @@
     "Speed / agility"
    ],
    "flags": [],
-   "chance": 9.3,
-   "relevant": 11.6,
-   "positionOnly": 10.1,
+   "chance": 8.9,
+   "relevant": 11.2,
+   "positionOnly": 9.7,
    "reasons": [
     {
      "label": "Combine: top-10 speed/jump",
@@ -3803,318 +4077,87 @@
      ],
      "role": "Midfielder",
      "type": "forward"
+    },
+    {
+     "name": "Dylan Moore",
+     "pick": 67,
+     "year": 2017,
+     "peak": 93.3,
+     "now": 76.5,
+     "jFP": 107.0,
+     "jT": 5.8,
+     "jD": 25.7,
+     "scouts": [
+      "Endurance",
+      "Kicking",
+      "Contested ball",
+      "Clearance work",
+      "Scoreboard impact"
+     ],
+     "workons": [
+      "Speed",
+      "Goal kicking accuracy"
+     ],
+     "role": "Midfielder",
+     "type": "forward"
     }
    ]
   },
   {
-   "rank": 21,
-   "name": "Khaled El Souki",
-   "slot": 19,
+   "rank": 37,
+   "name": "Jackson Watkins",
+   "slot": 37,
    "boards": {
-    "tw": 21,
-    "rm": 18,
-    "zh": 23
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Western Jets (Bulldogs NGA)",
-   "position": "Small FWD",
-   "height": 175,
-   "role": "Small forward",
-   "jFP": 83.0,
-   "jD": 17.1,
-   "jT": 2.7,
-   "jSeason": 2026,
-   "jMax": 105.0,
-   "j120": 0,
-   "traits": [
-    "Defensive pressure",
-    "Kicking / skills",
-    "Scoreboard impact"
-   ],
-   "flags": [
-    "needs strength/size"
-   ],
-   "chance": 9.1,
-   "relevant": 8.3,
-   "positionOnly": 9.3,
-   "reasons": [
-    {
-     "label": "Kicking / skills",
-     "effect": 0.33
-    },
-    {
-     "label": "Junior tackles",
-     "effect": -0.18
-    },
-    {
-     "label": "Small forward",
-     "effect": -0.12
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted defensive pressure and scoreboard impact, but that's the small forward's job description, so it isn't counted. The 7 forwards tagged for pressure produced no 90+ players; the 59 midfielders with the same tag produced 12."
-    },
-    {
-     "good": false,
-     "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
-    }
-   ],
-   "type": "forward",
-   "ceiling": false,
-   "comps": []
-  },
-  {
-   "rank": 25,
-   "name": "Archie Elliott",
-   "slot": 27,
-   "boards": {
-    "tw": 25,
-    "rm": 30,
+    "tw": null,
+    "rm": null,
     "zh": null
    },
-   "club": null,
-   "drafted": false,
-   "junior": "GWV Rebels",
-   "position": "FWD",
-   "height": 182,
+   "club": "Carlton",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
    "role": "Forward",
-   "jFP": 76.0,
-   "jD": 12.5,
-   "jT": 3.8,
-   "jSeason": 2026,
-   "jMax": 110.0,
-   "j120": 0,
-   "traits": [
-    "Defensive pressure"
-   ],
-   "flags": [],
-   "chance": 8.3,
-   "relevant": 11.1,
-   "positionOnly": 7.2,
-   "reasons": [],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 76. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted defensive pressure, but that's the small forward's job description, so it isn't counted. The 7 forwards tagged for pressure produced no 90+ players; the 59 midfielders with the same tag produced 12."
-    }
-   ],
-   "type": "forward",
-   "ceiling": false,
-   "comps": []
-  },
-  {
-   "rank": 15,
-   "name": "Lochie Burrows",
-   "slot": 18,
-   "boards": {
-    "tw": 15,
-    "rm": 24,
-    "zh": 22
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "MID/FWD",
-   "height": 179,
-   "role": "Midfielder",
    "jFP": null,
    "jD": null,
    "jT": null,
    "jSeason": null,
-   "jMax": 103.0,
-   "j120": 0,
-   "traits": [
-    "Athleticism",
-    "Leadership / character",
-    "Versatility"
-   ],
-   "flags": [
-    "needs strength/size"
-   ],
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
    "chance": 8.0,
-   "relevant": 25.0,
-   "positionOnly": 9.7,
+   "relevant": 15.4,
+   "positionOnly": 5.6,
    "reasons": [
-    {
-     "label": "Versatility",
-     "effect": -0.37
-    },
     {
      "label": "No junior numbers",
      "effect": 0.27
     }
    ],
-   "why": [
-    {
-     "good": false,
-     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
-    },
-    {
-     "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
-    }
-   ],
-   "type": "midfielder-forward",
+   "why": [],
+   "type": "inside midfielder",
    "ceiling": false,
    "comps": [
     {
-     "name": "Will Brodie",
-     "pick": 9,
+     "name": "Will Setterfield",
+     "pick": 5,
      "year": 2016,
-     "peak": 94.2,
-     "now": null,
+     "peak": 95.9,
+     "now": 89.9,
      "jFP": null,
      "jT": null,
      "jD": null,
      "scouts": [
-      "contested ball"
+      "tackling"
      ],
      "workons": [
-      "kicking",
-      "accumulation"
+      "consistency",
+      "durability"
      ],
      "role": "Midfielder",
-     "type": "midfielder"
+     "type": "inside midfielder"
     },
-    {
-     "name": "Tom Powell",
-     "pick": 13,
-     "year": 2020,
-     "peak": 86.9,
-     "now": 71.2,
-     "jFP": 0.0,
-     "jT": 3.0,
-     "jD": 24.3,
-     "scouts": [
-      "Accumulation",
-      "Consistency",
-      "Contested ball",
-      "Stoppage craft",
-      "Handball skills"
-     ],
-     "workons": [
-      "Strength",
-      "Damage by foot"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Tom Sparrow",
-     "pick": 27,
-     "year": 2018,
-     "peak": 90.1,
-     "now": 90.1,
-     "jFP": 56.0,
-     "jT": 5.3,
-     "jD": 11.5,
-     "scouts": [
-      "Contested work",
-      "Size",
-      "Explosive pace",
-      "Competitiveness",
-      "Team first"
-     ],
-     "workons": [
-      "Kicking Efficiency",
-      "Decision Making"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    }
-   ]
-  },
-  {
-   "rank": 30,
-   "name": "Billy Wigmore",
-   "slot": 29,
-   "boards": {
-    "tw": 30,
-    "rm": 45,
-    "zh": null
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Western Jets",
-   "position": "Tall DEF",
-   "height": 188,
-   "role": "Defender",
-   "jFP": 80.0,
-   "jD": 18.6,
-   "jT": 1.9,
-   "jSeason": 2026,
-   "jMax": 163.0,
-   "j120": 3,
-   "traits": [
-    "Aerial / marking",
-    "Clean hands",
-    "Footy IQ / vision",
-    "Intercept / rebound"
-   ],
-   "flags": [
-    "needs composure/decisions"
-   ],
-   "chance": 7.7,
-   "relevant": 14.0,
-   "positionOnly": 6.8,
-   "reasons": [
-    {
-     "label": "Footy IQ / vision",
-     "effect": 0.41
-    },
-    {
-     "label": "Clean hands",
-     "effect": -0.36
-    },
-    {
-     "label": "Aerial / marking",
-     "effect": -0.17
-    }
-   ],
-   "why": [
-    {
-     "good": true,
-     "text": "Big-game ceiling: best junior game 163, 3 games of 120+, well above his 80 average. Juniors averaging under 95 who still had a 140+ game became 90+ players at 0.0× their draft slots (0 of 0: ). A few huge games say the scoring is in him."
-    },
-    {
-     "good": false,
-     "text": "Junior fantasy average of 80. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
-    },
-    {
-     "good": true,
-     "text": "1.9 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
-    }
-   ],
-   "type": "inside midfielder",
-   "ceiling": false,
-   "comps": [
     {
      "name": "Tom Green",
      "pick": 10,
@@ -4153,6 +4196,210 @@
      "workons": [],
      "role": "Midfielder",
      "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 44,
+   "name": "Sam Tassone",
+   "slot": 44,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Adelaide",
+   "drafted": true,
+   "junior": "South Australia",
+   "position": "",
+   "height": 180,
+   "role": "Defender",
+   "jFP": 74.0,
+   "jD": 20.8,
+   "jT": 0.8,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 7.9,
+   "relevant": 16.7,
+   "positionOnly": 4.9,
+   "reasons": [
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 74. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "0.8 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Matt Rowell",
+     "pick": 1,
+     "year": 2019,
+     "peak": 101.5,
+     "now": 98.7,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball",
+      "tackling",
+      "clearances",
+      "consistency",
+      "decision making"
+     ],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4,
+     "now": 99.4,
+     "jFP": 90.0,
+     "jT": 2.0,
+     "jD": 15.8,
+     "scouts": [
+      "Goal sense",
+      "Explosiveness",
+      "Pressure",
+      "Composure",
+      "Skills"
+     ],
+     "workons": [
+      "Endurance",
+      "Discipline"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Ed Richards",
+     "pick": 16,
+     "year": 2017,
+     "peak": 101.4,
+     "now": 101.4,
+     "jFP": 56.0,
+     "jT": 2.9,
+     "jD": 15.0,
+     "scouts": [
+      "Speed",
+      "Kicking",
+      "Leap",
+      "Clearance work",
+      "Clean hands"
+     ],
+     "workons": [
+      "Endurance",
+      "Contested ball winning"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 36,
+   "name": "Archie Spencer",
+   "slot": 36,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Brisbane",
+   "drafted": true,
+   "junior": "Eastern Ranges",
+   "position": "",
+   "height": 181,
+   "role": "Midfielder",
+   "jFP": 87.0,
+   "jD": 22.5,
+   "jT": 4.6,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 7.4,
+   "relevant": 15.8,
+   "positionOnly": 5.8,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": 0.25
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "4.6 tackles a game. Juniors laying 4.5+ became stars 18% of the time: hunters score, as Warner, Berry and Brayshaw showed."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Hugh McCluggage",
+     "pick": 3,
+     "year": 2016,
+     "peak": 102.3,
+     "now": 74.5,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "decision making",
+      "contested ball",
+      "x-factor",
+      "kicking"
+     ],
+     "workons": [
+      "contested ball"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Jye Caldwell",
+     "pick": 11,
+     "year": 2018,
+     "peak": 103.6,
+     "now": 73.9,
+     "jFP": 60.0,
+     "jT": 4.0,
+     "jD": 16.3,
+     "scouts": [
+      "Acceleration",
+      "Agility",
+      "Goal sense",
+      "Game smarts",
+      "Tackling"
+     ],
+     "workons": [
+      "Durability",
+      "Kicking consistency"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
     },
     {
      "name": "Finn Callaghan",
@@ -4173,16 +4420,1430 @@
    ]
   },
   {
+   "rank": 59,
+   "name": "Keenan Boi",
+   "slot": 59,
+   "boards": {
+    "tw": 28,
+    "rm": null,
+    "zh": 29
+   },
+   "club": "Hawthorn",
+   "drafted": true,
+   "junior": "Gippsland Power (Hawthorn NGA)",
+   "position": "Small FWD/MID",
+   "height": 177,
+   "role": "Midfielder",
+   "jFP": 74.0,
+   "jD": 15.2,
+   "jT": 3.6,
+   "jSeason": 2026,
+   "jMax": 126.0,
+   "j120": 1,
+   "traits": [
+    "Aerial / marking",
+    "Defensive pressure",
+    "Scoreboard impact",
+    "Size / strength",
+    "Speed / agility"
+   ],
+   "flags": [
+    "needs kicking"
+   ],
+   "chance": 6.8,
+   "relevant": 9.6,
+   "positionOnly": 3.9,
+   "reasons": [
+    {
+     "label": "Defensive pressure",
+     "effect": 0.47
+    },
+    {
+     "label": "Speed / agility",
+     "effect": 0.22
+    },
+    {
+     "label": "Aerial / marking",
+     "effect": -0.17
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 74. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted aerial / marking: only 10 of 173 with that note became 90+ players (0.5× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+    }
+   ],
+   "type": "midfielder-forward",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 65,
+   "name": "Harper Banfield",
+   "slot": 65,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "West Coast",
+   "drafted": true,
+   "junior": "Western Australia",
+   "position": "",
+   "height": 181,
+   "role": "Midfielder",
+   "jFP": 87.0,
+   "jD": 23.0,
+   "jT": 6.0,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 6.6,
+   "relevant": 13.6,
+   "positionOnly": 3.7,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": 0.57
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "6.0 tackles a game. Juniors laying 6+ became stars 19% of the time: hunters score, as Warner, Berry and Brayshaw showed."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "James Worpel",
+     "pick": 45,
+     "year": 2017,
+     "peak": 96.6,
+     "now": 79.1,
+     "jFP": 94.0,
+     "jT": 6.8,
+     "jD": 21.4,
+     "scouts": [
+      "Inside game",
+      "Tackling",
+      "Leadership",
+      "Scoreboard impact"
+     ],
+     "workons": [
+      "Kicking",
+      "Agility"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Hugo Garcia",
+     "pick": 50,
+     "year": 2023,
+     "peak": 90.0,
+     "now": 90.0,
+     "jFP": 70.0,
+     "jT": 7.1,
+     "jD": 19.5,
+     "scouts": [
+      "Production",
+      "Tackling",
+      "Versatility",
+      "Work rate"
+     ],
+     "workons": [
+      "Impact per possession",
+      "Kick penetration"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Sam Berry",
+     "pick": 28,
+     "year": 2020,
+     "peak": 90.3,
+     "now": 90.3,
+     "jFP": 79.0,
+     "jT": 6.5,
+     "jD": 17.7,
+     "scouts": [
+      "Contested work",
+      "Consistency",
+      "Clearances",
+      "Endurance",
+      "Evasion"
+     ],
+     "workons": [
+      "On-field speed",
+      "Kicking composure"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 50,
+   "name": "Jack Riding",
+   "slot": 50,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Western Bulldogs",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Forward",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 6.5,
+   "relevant": 12.5,
+   "positionOnly": 4.5,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Max Holmes",
+     "pick": 20,
+     "year": 2020,
+     "peak": 102.7,
+     "now": 97.0,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "Athleticism",
+      "Speed",
+      "Endurance",
+      "Clean hands",
+      "Rate of development"
+     ],
+     "workons": [
+      "Rawness",
+      "Strength/contested game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Setterfield",
+     "pick": 5,
+     "year": 2016,
+     "peak": 95.9,
+     "now": 89.9,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "tackling"
+     ],
+     "workons": [
+      "consistency",
+      "durability"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Tom Green",
+     "pick": 10,
+     "year": 2019,
+     "peak": 108.7,
+     "now": null,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball",
+      "clearances",
+      "clean hands",
+      "kicking",
+      "consistency"
+     ],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 47,
+   "name": "Angus White",
+   "slot": 47,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Port Adelaide",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Midfielder",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 6.3,
+   "relevant": 19.3,
+   "positionOnly": 4.7,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Tim Taranto",
+     "pick": 2,
+     "year": 2016,
+     "peak": 112.4,
+     "now": 95.2,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball",
+      "marking",
+      "x-factor",
+      "decision making"
+     ],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Hugh McCluggage",
+     "pick": 3,
+     "year": 2016,
+     "peak": 102.3,
+     "now": 74.5,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "decision making",
+      "contested ball",
+      "x-factor",
+      "kicking"
+     ],
+     "workons": [
+      "contested ball"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Finn Callaghan",
+     "pick": 3,
+     "year": 2021,
+     "peak": 100.6,
+     "now": 95.6,
+     "jFP": 87.0,
+     "jT": 3.2,
+     "jD": 24.3,
+     "scouts": [],
+     "workons": [
+      "Contested game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 33,
+   "name": "Khaled El Souki",
+   "slot": 33,
+   "boards": {
+    "tw": 21,
+    "rm": 18,
+    "zh": 23
+   },
+   "club": "Western Bulldogs",
+   "drafted": true,
+   "junior": "Western Jets (Bulldogs NGA)",
+   "position": "Small FWD",
+   "height": 175,
+   "role": "Small forward",
+   "jFP": 83.0,
+   "jD": 17.1,
+   "jT": 2.7,
+   "jSeason": 2026,
+   "jMax": 105.0,
+   "j120": 0,
+   "traits": [
+    "Defensive pressure",
+    "Kicking / skills",
+    "Scoreboard impact"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 6.2,
+   "relevant": 5.5,
+   "positionOnly": 6.2,
+   "reasons": [
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.18
+    },
+    {
+     "label": "Small forward",
+     "effect": -0.12
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 83. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted defensive pressure and scoreboard impact, but that's the small forward's job description, so it isn't counted. The 7 forwards tagged for pressure produced no 90+ players; the 59 midfielders with the same tag produced 12."
+    },
+    {
+     "good": false,
+     "text": "Small-forward role. Fewer touches and stoppages make big fantasy scores rare unless he moves into the midfield."
+    }
+   ],
+   "type": "forward",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 54,
+   "name": "Aidan McCartney",
+   "slot": 54,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "North Melbourne",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Forward",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 6.2,
+   "relevant": 11.9,
+   "positionOnly": 4.2,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Jason Horne-Francis",
+     "pick": 1,
+     "year": 2021,
+     "peak": 95.8,
+     "now": 95.8,
+     "jFP": 77.7,
+     "jT": 4.2,
+     "jD": 16.5,
+     "scouts": [
+      "Contested ball",
+      "Defensive effort",
+      "Scoreboard impact",
+      "Explosiveness",
+      "Physicality"
+     ],
+     "workons": [
+      "Kicking consistency",
+      "Outside game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Ed Richards",
+     "pick": 16,
+     "year": 2017,
+     "peak": 101.4,
+     "now": 101.4,
+     "jFP": 56.0,
+     "jT": 2.9,
+     "jD": 15.0,
+     "scouts": [
+      "Speed",
+      "Kicking",
+      "Leap",
+      "Clearance work",
+      "Clean hands"
+     ],
+     "workons": [
+      "Endurance",
+      "Contested ball winning"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Max Holmes",
+     "pick": 20,
+     "year": 2020,
+     "peak": 102.7,
+     "now": 97.0,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "Athleticism",
+      "Speed",
+      "Endurance",
+      "Clean hands",
+      "Rate of development"
+     ],
+     "workons": [
+      "Rawness",
+      "Strength/contested game"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 49,
+   "name": "Ben Forster",
+   "slot": 49,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Melbourne",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Midfielder",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 6.1,
+   "relevant": 18.8,
+   "positionOnly": 4.5,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Luke Davies-Uniacke",
+     "pick": 4,
+     "year": 2017,
+     "peak": 97.4,
+     "now": 90.0,
+     "jFP": 105.0,
+     "jT": 3.5,
+     "jD": 24.2,
+     "scouts": [
+      "Powerful",
+      "Penetrating kick",
+      "Contested marking",
+      "Big game player",
+      "Acceleration"
+     ],
+     "workons": [
+      "Endurance",
+      "Speed"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Matt Rowell",
+     "pick": 1,
+     "year": 2019,
+     "peak": 101.5,
+     "now": 98.7,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball",
+      "tackling",
+      "clearances",
+      "consistency",
+      "decision making"
+     ],
+     "workons": [],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Will Brodie",
+     "pick": 9,
+     "year": 2016,
+     "peak": 94.2,
+     "now": null,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "contested ball"
+     ],
+     "workons": [
+      "kicking",
+      "accumulation"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 52,
+   "name": "Kaie Sullivan",
+   "slot": 52,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Melbourne",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Midfielder",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 5.9,
+   "relevant": 18.1,
+   "positionOnly": 4.3,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Zak Butters",
+     "pick": 12,
+     "year": 2018,
+     "peak": 104.5,
+     "now": 104.5,
+     "jFP": 91.0,
+     "jT": 3.8,
+     "jD": 20.0,
+     "scouts": [
+      "Speed",
+      "Agility",
+      "X-factor",
+      "Vision",
+      "Scope"
+     ],
+     "workons": [
+      "Strength",
+      "Endurance"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Izak Rankine",
+     "pick": 3,
+     "year": 2018,
+     "peak": 99.4,
+     "now": 99.4,
+     "jFP": 90.0,
+     "jT": 2.0,
+     "jD": 15.8,
+     "scouts": [
+      "Goal sense",
+      "Explosiveness",
+      "Pressure",
+      "Composure",
+      "Skills"
+     ],
+     "workons": [
+      "Endurance",
+      "Discipline"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Andrew Brayshaw",
+     "pick": 2,
+     "year": 2017,
+     "peak": 113.3,
+     "now": 94.2,
+     "jFP": 103.0,
+     "jT": 6.6,
+     "jD": 24.8,
+     "scouts": [
+      "Contested ball winning",
+      "Impact in the midfield",
+      "Kicking",
+      "Endurance",
+      "Leadership"
+     ],
+     "workons": [
+      "Scoreboard imapct"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 60,
+   "name": "Zach Stevens",
+   "slot": 60,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Geelong",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Forward",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 5.7,
+   "relevant": 11.0,
+   "positionOnly": 3.9,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Chad Warner",
+     "pick": 39,
+     "year": 2019,
+     "peak": 93.0,
+     "now": 92.6,
+     "jFP": 105.9,
+     "jT": 6.4,
+     "jD": 27.1,
+     "scouts": [
+      "Contested work",
+      "Clearances",
+      "Defensive pressure",
+      "Strength",
+      "Accumulation"
+     ],
+     "workons": [
+      "Speed",
+      "Kicking penetration"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Kysaiah Pickett",
+     "pick": 12,
+     "year": 2019,
+     "peak": 94.2,
+     "now": 94.2,
+     "jFP": 52.0,
+     "jT": 3.0,
+     "jD": 11.9,
+     "scouts": [
+      "Speed/acceleration",
+      "Athleticism",
+      "Footy smarts",
+      "Defensive pressure",
+      "Goal sense"
+     ],
+     "workons": [
+      "Four quarter consistency",
+      "Size",
+      "Endurance"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Caleb Serong",
+     "pick": 8,
+     "year": 2019,
+     "peak": 108.1,
+     "now": 90.1,
+     "jFP": 112.0,
+     "jT": 5.6,
+     "jD": 24.2,
+     "scouts": [
+      "Clean hands",
+      "Footy IQ",
+      "Leadership/competitiveness",
+      "Consistency",
+      "Clearances"
+     ],
+     "workons": [
+      "Kicking under pressure",
+      "On-field emotion",
+      "Size"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 57,
+   "name": "Jake Medved",
+   "slot": 57,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Fremantle",
+   "drafted": true,
+   "junior": "Swans Academy",
+   "position": "",
+   "height": 191,
+   "role": "Defender",
+   "jFP": 54.0,
+   "jD": 15.5,
+   "jT": 1.8,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 5.4,
+   "relevant": 9.0,
+   "positionOnly": 4.0,
+   "reasons": [],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 54. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "1.8 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "James Rowbottom",
+     "pick": 25,
+     "year": 2018,
+     "peak": 85.1,
+     "now": 71.3,
+     "jFP": 91.0,
+     "jT": 6.5,
+     "jD": 21.9,
+     "scouts": [
+      "Contested ball",
+      "Clearances",
+      "Clean hands",
+      "Tackling",
+      "Core strength"
+     ],
+     "workons": [
+      "Endurance",
+      "Kicking",
+      "Scoreboard impact"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Sam Flanders",
+     "pick": 11,
+     "year": 2019,
+     "peak": 107.8,
+     "now": 91.9,
+     "jFP": 102.0,
+     "jT": 4.7,
+     "jD": 22.4,
+     "scouts": [
+      "Clean hands",
+      "Contested work",
+      "Goal sense",
+      "X-factor",
+      "One-on-ones"
+     ],
+     "workons": [
+      "Set shot goal kicking",
+      "Kicking consistency",
+      "Four quarter consistency"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    },
+    {
+     "name": "Adam Cerra",
+     "pick": 5,
+     "year": 2017,
+     "peak": 95.1,
+     "now": 83.0,
+     "jFP": 129.0,
+     "jT": 3.8,
+     "jD": 26.3,
+     "scouts": [
+      "Kicking",
+      "Contested ball",
+      "Agility",
+      "Upside"
+     ],
+     "workons": [
+      "Speed",
+      "Injury durability"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 58,
+   "name": "Cooper Hodge",
+   "slot": 58,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Hawthorn",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Unknown",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 5.4,
+   "relevant": 16.0,
+   "positionOnly": 4.0,
+   "reasons": [
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Kysaiah Pickett",
+     "pick": 12,
+     "year": 2019,
+     "peak": 94.2,
+     "now": 94.2,
+     "jFP": 52.0,
+     "jT": 3.0,
+     "jD": 11.9,
+     "scouts": [
+      "Speed/acceleration",
+      "Athleticism",
+      "Footy smarts",
+      "Defensive pressure",
+      "Goal sense"
+     ],
+     "workons": [
+      "Four quarter consistency",
+      "Size",
+      "Endurance"
+     ],
+     "role": "Midfielder",
+     "type": "inside midfielder"
+    },
+    {
+     "name": "Errol Gulden",
+     "pick": 32,
+     "year": 2020,
+     "peak": 115.1,
+     "now": 115.1,
+     "jFP": 125.0,
+     "jT": 2.0,
+     "jD": 27.3,
+     "scouts": [
+      "Speed/Agility",
+      "Footy IQ",
+      "Vision",
+      "Impact",
+      "Class"
+     ],
+     "workons": [
+      "Inside game",
+      "Kicking consistency"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 55,
+   "name": "Blake Justice",
+   "slot": 55,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Essendon",
+   "drafted": true,
+   "junior": "Calder Cannons",
+   "position": "",
+   "height": 191,
+   "role": "Midfielder",
+   "jFP": 99.0,
+   "jD": 22.0,
+   "jT": 3.3,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 5.2,
+   "relevant": 11.8,
+   "positionOnly": 4.2,
+   "reasons": [
+    {
+     "label": "Junior fantasy avg",
+     "effect": 0.23
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 99. Draftees at 90+ became 90+ AFL Fantasy players 18% of the time (20 of 110), against 9% for all picks."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Errol Gulden",
+     "pick": 32,
+     "year": 2020,
+     "peak": 115.1,
+     "now": 115.1,
+     "jFP": 125.0,
+     "jT": 2.0,
+     "jD": 27.3,
+     "scouts": [
+      "Speed/Agility",
+      "Footy IQ",
+      "Vision",
+      "Impact",
+      "Class"
+     ],
+     "workons": [
+      "Inside game",
+      "Kicking consistency"
+     ],
+     "role": "Midfielder",
+     "type": "midfielder"
+    }
+   ]
+  },
+  {
+   "rank": 46,
+   "name": "Ethan Herbert",
+   "slot": 46,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Carlton",
+   "drafted": true,
+   "junior": "South Australia",
+   "position": "",
+   "height": 201,
+   "role": "Ruck",
+   "jFP": 81.0,
+   "jD": 15.8,
+   "jT": 2.3,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Accumulator",
+    "Athleticism",
+    "Clean hands",
+    "Leadership / character",
+    "Ruck craft"
+   ],
+   "flags": [],
+   "chance": 4.9,
+   "relevant": 9.3,
+   "positionOnly": 4.8,
+   "reasons": [
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.36
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.27
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 81 undersells him: 2.3 tackles and 6.0 clearances a game. Low scorers with that contested work became stars at about 1.2–1.3× their draft slots: a hidden scorer."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Accumulator. The tag doesn't tell you whether he'll make it, but it tells you how high he goes if he does: 52% of accumulators who played 50+ games had an 80+ season, against 40% of everyone else (best season typically 81 vs 74). Nick Daicos, Will Ashcroft, Chad Warner."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": true,
+     "text": "Ruck. Rucks who make it are fantasy gold; they produced stars at a higher rate than their draft slots suggested. But it takes time: the rucks who made it first averaged 90+ in year 5–7 after the draft (typically year 6; Sean Darcy 5, Kieren Briggs 5, Tim English 6, Luke Jackson 6, Lloyd Meek 7, Tristan Xerri 7). Expect little before then."
+    },
+    {
+     "good": true,
+     "text": "Class plus production: a skilled, smart ball user who also wins a lot of it. The modern star profile (Nick Daicos, Will Ashcroft, Jagga Smith, Levi Ashcroft)."
+    }
+   ],
+   "type": "ruck",
+   "ceiling": true,
+   "comps": [
+    {
+     "name": "Luke Jackson",
+     "pick": 3,
+     "year": 2019,
+     "peak": 104.0,
+     "now": 104.0,
+     "jFP": 101.3,
+     "jT": 2.4,
+     "jD": 18.6,
+     "scouts": [
+      "Athleticism",
+      "Ruck Craft",
+      "Follow-up work",
+      "Tackling",
+      "Marking"
+     ],
+     "workons": [
+      "Lack of senior experience",
+      "Size",
+      "Versatility"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Lloyd Meek",
+     "pick": 69,
+     "year": 2017,
+     "peak": 93.8,
+     "now": 72.9,
+     "jFP": 84.0,
+     "jT": 3.4,
+     "jD": 13.6,
+     "scouts": [
+      "Ruck work",
+      "Smarts",
+      "Hands at ground level",
+      "Contested marking"
+     ],
+     "workons": [
+      "Goal kicking",
+      "Mobility"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    },
+    {
+     "name": "Tom De Koning",
+     "pick": 30,
+     "year": 2017,
+     "peak": 86.2,
+     "now": 64.3,
+     "jFP": 66.0,
+     "jT": 2.6,
+     "jD": 10.3,
+     "scouts": [
+      "Athleticism",
+      "Versatility",
+      "Goal kicking"
+     ],
+     "workons": [
+      "Aggression",
+      "Contested marking"
+     ],
+     "role": "Ruck",
+     "type": "ruck"
+    }
+   ]
+  },
+  {
+   "rank": 39,
+   "name": "Gabriel Patterson",
+   "slot": 39,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Port Adelaide",
+   "drafted": true,
+   "junior": "South Australia",
+   "position": "",
+   "height": 185,
+   "role": "Forward",
+   "jFP": 48.0,
+   "jD": 13.0,
+   "jT": 2.3,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 4.6,
+   "relevant": 6.4,
+   "positionOnly": 5.4,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": -0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 48. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 28,
+   "name": "Archie Van Dyk",
+   "slot": 28,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Brisbane",
+   "drafted": true,
+   "junior": "South Australia",
+   "position": "",
+   "height": 191,
+   "role": "Tall utility",
+   "jFP": 92.7,
+   "jD": 25.3,
+   "jT": 2.3,
+   "jSeason": 2024,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 4.4,
+   "relevant": 10.3,
+   "positionOnly": 7.0,
+   "reasons": [
+    {
+     "label": "Junior tackles",
+     "effect": -0.27
+    },
+    {
+     "label": "Combine: top-10 endurance",
+     "effect": 0.22
+    }
+   ],
+   "why": [
+    {
+     "good": true,
+     "text": "Junior fantasy average of 93. Draftees at 90+ became 90+ AFL Fantasy players 18% of the time (20 of 110), against 9% for all picks."
+    },
+    {
+     "good": true,
+     "text": "Top-10 endurance at the national combine. Elite runners became stars at 1.3× their draft slots (Brayshaw, Warner, Berry, Noah Anderson, Lachie Ash)."
+    },
+    {
+     "good": false,
+     "text": "Tall utility. Big bodies who can play through the midfield sit between key forwards (almost never stars) and midfielders: they usually become solid 75–90 scorers, and the odd one (Noah Anderson, Bontempelli, Goddard) becomes a star."
+    }
+   ],
+   "type": "midfielder",
+   "ceiling": false,
+   "comps": [
+    {
+     "name": "Jordan Ridley",
+     "pick": 22,
+     "year": 2016,
+     "peak": 88.4,
+     "now": 57.0,
+     "jFP": null,
+     "jT": null,
+     "jD": null,
+     "scouts": [
+      "decision making",
+      "marking"
+     ],
+     "workons": [
+      "strength"
+     ],
+     "role": "Defender",
+     "type": "half-back"
+    },
+    {
+     "name": "Jack Lukosius",
+     "pick": 2,
+     "year": 2018,
+     "peak": 86.0,
+     "now": 61.5,
+     "jFP": 84.0,
+     "jT": 1.5,
+     "jD": 14.5,
+     "scouts": [
+      "Kicking",
+      "Leading patterns",
+      "Work rate",
+      "Acceleration",
+      "Cleanness"
+     ],
+     "workons": [
+      "Contested Marking",
+      "Strength"
+     ],
+     "role": "Key position",
+     "type": "key position player"
+    }
+   ]
+  },
+  {
    "rank": 27,
    "name": "Kodah Edwards",
-   "slot": 23,
+   "slot": 27,
    "boards": {
     "tw": 27,
     "rm": 20,
     "zh": 19
    },
-   "club": null,
-   "drafted": false,
+   "club": "Brisbane",
+   "drafted": true,
    "junior": "South Adelaide",
    "position": "MID/FWD",
    "height": 184,
@@ -4206,9 +5867,9 @@
     "needs kicking",
     "needs outside game"
    ],
-   "chance": 4.8,
-   "relevant": 10.8,
-   "positionOnly": 8.1,
+   "chance": 4.3,
+   "relevant": 9.6,
+   "positionOnly": 7.2,
    "reasons": [
     {
      "label": "Versatility",
@@ -4247,86 +5908,256 @@
    ],
    "type": "midfielder-forward",
    "ceiling": false,
-   "comps": [
-    {
-     "name": "James Rowbottom",
-     "pick": 25,
-     "year": 2018,
-     "peak": 85.1,
-     "now": 71.3,
-     "jFP": 91.0,
-     "jT": 6.5,
-     "jD": 21.9,
-     "scouts": [
-      "Contested ball",
-      "Clearances",
-      "Clean hands",
-      "Tackling",
-      "Core strength"
-     ],
-     "workons": [
-      "Endurance",
-      "Kicking",
-      "Scoreboard impact"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    },
-    {
-     "name": "Harry Sheezel",
-     "pick": 3,
-     "year": 2022,
-     "peak": 116.2,
-     "now": 116.2,
-     "jFP": 83.0,
-     "jT": 3.3,
-     "jD": 19.3,
-     "scouts": [
-      "Footy IQ",
-      "Forward Craft",
-      "Goal Sense",
-      "Kicking",
-      "Overhead marking"
-     ],
-     "workons": [
-      "Limited midfield exposure",
-      "Speed"
-     ],
-     "role": "Forward",
-     "type": "midfielder"
-    },
-    {
-     "name": "Will Brodie",
-     "pick": 9,
-     "year": 2016,
-     "peak": 94.2,
-     "now": null,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "contested ball"
-     ],
-     "workons": [
-      "kicking",
-      "accumulation"
-     ],
-     "role": "Midfielder",
-     "type": "midfielder"
-    }
-   ]
+   "comps": []
   },
   {
-   "rank": 9,
+   "rank": 31,
+   "name": "Gus Kennedy",
+   "slot": 31,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Collingwood",
+   "drafted": true,
+   "junior": "Dandenong Stingrays",
+   "position": "",
+   "height": 186,
+   "role": "Midfielder",
+   "jFP": 77.0,
+   "jD": 19.2,
+   "jT": 3.0,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 4.2,
+   "relevant": 11.7,
+   "positionOnly": 6.4,
+   "reasons": [
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 77. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "3.0 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 45,
+   "name": "Andrio Sousa",
+   "slot": 45,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "GWS",
+   "drafted": true,
+   "junior": "Dandenong Stingrays",
+   "position": "",
+   "height": 182,
+   "role": "Midfielder",
+   "jFP": 78.0,
+   "jD": 18.5,
+   "jT": 3.2,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Athleticism",
+    "Clean hands",
+    "Defensive pressure",
+    "Speed / agility",
+    "Versatility"
+   ],
+   "flags": [
+    "needs contested/inside game",
+    "needs endurance"
+   ],
+   "chance": 3.9,
+   "relevant": 6.9,
+   "positionOnly": 4.9,
+   "reasons": [
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Defensive pressure",
+     "effect": 0.47
+    },
+    {
+     "label": "needs contested/inside game",
+     "effect": 0.38
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.37
+    },
+    {
+     "label": "Clean hands",
+     "effect": -0.36
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 78. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted work-on: contested/inside game. 12 of 84 draftees with that note became 90+ players, 1.5× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted clean hands: only 7 of 104 with that note became 90+ players (0.6× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 53,
+   "name": "Sam Devers",
+   "slot": 53,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Western Bulldogs",
+   "drafted": true,
+   "junior": "Eastern Ranges",
+   "position": "",
+   "height": 189,
+   "role": "Defender",
+   "jFP": 71.0,
+   "jD": 17.3,
+   "jT": 1.4,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 3.6,
+   "relevant": 7.7,
+   "positionOnly": 4.3,
+   "reasons": [
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 71. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "1.4 tackles a game isn't counted against him: he's a rebounding half-back, not a hunter. Among 35 half-backs drafted 2016–24, low junior tacklers did no worse than the rest (Archie Roberts laid 1.5 and reached 95)."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 56,
+   "name": "Anthony Long",
+   "slot": 56,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Geelong",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Unknown",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 3.5,
+   "relevant": 13.3,
+   "positionOnly": 4.1,
+   "reasons": [
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    }
+   ],
+   "type": "inside midfielder",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 7,
    "name": "Mitch Harris",
-   "slot": 9,
+   "slot": 7,
    "boards": {
     "tw": 9,
     "rm": 13,
     "zh": 9
    },
-   "club": null,
-   "drafted": false,
+   "club": "Melbourne",
+   "drafted": true,
    "junior": "South Australia",
    "position": "Key DEF",
    "height": 196,
@@ -4348,9 +6179,9 @@
     "needs composure/decisions",
     "needs kicking"
    ],
-   "chance": 0.5,
-   "relevant": 1.6,
-   "positionOnly": 15.8,
+   "chance": 0.6,
+   "relevant": 2.0,
+   "positionOnly": 18.7,
    "reasons": [
     {
      "label": "Key position",
@@ -4389,62 +6220,65 @@
    ],
    "type": "key position player",
    "ceiling": false,
-   "comps": [
-    {
-     "name": "Jack Lukosius",
-     "pick": 2,
-     "year": 2018,
-     "peak": 86.0,
-     "now": 61.5,
-     "jFP": 84.0,
-     "jT": 1.5,
-     "jD": 14.5,
-     "scouts": [
-      "Kicking",
-      "Leading patterns",
-      "Work rate",
-      "Acceleration",
-      "Cleanness"
-     ],
-     "workons": [
-      "Contested Marking",
-      "Strength"
-     ],
-     "role": "Key position",
-     "type": "key position player"
-    },
-    {
-     "name": "Jordan Ridley",
-     "pick": 22,
-     "year": 2016,
-     "peak": 88.4,
-     "now": 57.0,
-     "jFP": null,
-     "jT": null,
-     "jD": null,
-     "scouts": [
-      "decision making",
-      "marking"
-     ],
-     "workons": [
-      "strength"
-     ],
-     "role": "Defender",
-     "type": "half-back"
-    }
-   ]
+   "comps": []
   },
   {
-   "rank": 29,
+   "rank": 24,
+   "name": "Jake Soutar",
+   "slot": 24,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "West Coast",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.6,
+   "relevant": 3.7,
+   "positionOnly": 7.8,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 32,
    "name": "Harvey Spawton-Guy",
-   "slot": 31,
+   "slot": 32,
    "boards": {
     "tw": 29,
     "rm": null,
     "zh": null
    },
-   "club": null,
-   "drafted": false,
+   "club": "Carlton",
+   "drafted": true,
    "junior": "West Perth",
    "position": "Tall forward",
    "height": 0,
@@ -4461,8 +6295,8 @@
    ],
    "flags": [],
    "chance": 0.5,
-   "relevant": 3.1,
-   "positionOnly": 6.4,
+   "relevant": 3.0,
+   "positionOnly": 6.3,
    "reasons": [
     {
      "label": "Key position",
@@ -4488,16 +6322,293 @@
    "comps": []
   },
   {
-   "rank": 14,
+   "rank": 35,
+   "name": "Seb Marsic",
+   "slot": 35,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "North Melbourne",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.5,
+   "relevant": 2.8,
+   "positionOnly": 5.9,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 40,
+   "name": "Brady Wright",
+   "slot": 40,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Sydney",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.4,
+   "relevant": 2.5,
+   "positionOnly": 5.3,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 42,
+   "name": "Kane Johnston",
+   "slot": 42,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Fremantle",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.4,
+   "relevant": 2.4,
+   "positionOnly": 5.1,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 51,
+   "name": "Harry Franz",
+   "slot": 51,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Richmond",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.4,
+   "relevant": 2.1,
+   "positionOnly": 4.4,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 12,
+   "name": "Sam Gayfer",
+   "slot": 12,
+   "boards": {
+    "tw": 13,
+    "rm": 14,
+    "zh": 13
+   },
+   "club": "Collingwood",
+   "drafted": true,
+   "junior": "Northern Knights",
+   "position": "Key FWD",
+   "height": 194,
+   "role": "Key position",
+   "jFP": 69.0,
+   "jD": 12.4,
+   "jT": 2.6,
+   "jSeason": 2026,
+   "jMax": 128.0,
+   "j120": 1,
+   "traits": [
+    "Aerial / marking",
+    "Athleticism",
+    "Defensive pressure",
+    "Leadership / character",
+    "Ruck craft",
+    "Scoreboard impact",
+    "Size / strength"
+   ],
+   "flags": [
+    "needs consistency",
+    "needs finishing"
+   ],
+   "chance": 0.3,
+   "relevant": 0.7,
+   "positionOnly": 12.9,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "Tall (192cm+, not a ruck)",
+     "effect": -0.51
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Defensive pressure",
+     "effect": 0.47
+    },
+    {
+     "label": "needs consistency",
+     "effect": -0.28
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 69. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    },
+    {
+     "good": false,
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 19,
    "name": "Clancy Snell",
-   "slot": 14,
+   "slot": 19,
    "boards": {
     "tw": 14,
     "rm": 9,
     "zh": 21
    },
-   "club": null,
-   "drafted": false,
+   "club": "Port Adelaide",
+   "drafted": true,
    "junior": "Gippsland Power",
    "position": "Key DEF",
    "height": 196,
@@ -4514,9 +6625,9 @@
     "Footy IQ / vision"
    ],
    "flags": [],
-   "chance": 0.4,
-   "relevant": 1.7,
-   "positionOnly": 11.6,
+   "chance": 0.3,
+   "relevant": 1.3,
+   "positionOnly": 9.3,
    "reasons": [
     {
      "label": "Key position",
@@ -4566,16 +6677,146 @@
    "comps": []
   },
   {
-   "rank": 11,
+   "rank": 43,
+   "name": "Lewis Houndsome",
+   "slot": 43,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "St Kilda",
+   "drafted": true,
+   "junior": "",
+   "position": "",
+   "height": 0,
+   "role": "Key position",
+   "jFP": null,
+   "jD": null,
+   "jT": null,
+   "jSeason": null,
+   "jMax": null,
+   "j120": null,
+   "traits": [],
+   "flags": [],
+   "chance": 0.3,
+   "relevant": 1.9,
+   "positionOnly": 5.0,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "No junior numbers",
+     "effect": 0.27
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 16,
+   "name": "Tyson Bradley",
+   "slot": 16,
+   "boards": {
+    "tw": 16,
+    "rm": 15,
+    "zh": 14
+   },
+   "club": "St Kilda",
+   "drafted": true,
+   "junior": "Sandringham Dragons",
+   "position": "Key DEF",
+   "height": 195,
+   "role": "Key position",
+   "jFP": 66.0,
+   "jD": 14.5,
+   "jT": 1.0,
+   "jSeason": 2026,
+   "jMax": 87.0,
+   "j120": 0,
+   "traits": [
+    "Intercept / rebound",
+    "Kicking / skills",
+    "Leadership / character"
+   ],
+   "flags": [
+    "needs speed/athleticism"
+   ],
+   "chance": 0.2,
+   "relevant": 0.7,
+   "positionOnly": 10.5,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.57
+    },
+    {
+     "label": "Tall (192cm+, not a ruck)",
+     "effect": -0.51
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Kicking / skills",
+     "effect": 0.33
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 66. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 20,
    "name": "Wil Malady",
-   "slot": 12,
+   "slot": 20,
    "boards": {
     "tw": 11,
     "rm": 11,
     "zh": 12
    },
-   "club": null,
-   "drafted": false,
+   "club": "Port Adelaide",
+   "drafted": true,
    "junior": "Gippsland Power",
    "position": "Tall FWD",
    "height": 190,
@@ -4595,9 +6836,9 @@
     "needs consistency",
     "needs to win more ball"
    ],
-   "chance": 0.3,
-   "relevant": 0.9,
-   "positionOnly": 12.9,
+   "chance": 0.2,
+   "relevant": 0.6,
+   "positionOnly": 8.9,
    "reasons": [
     {
      "label": "Key position",
@@ -4659,146 +6900,57 @@
    "comps": []
   },
   {
-   "rank": 13,
-   "name": "Sam Gayfer",
-   "slot": 13,
+   "rank": 62,
+   "name": "Koby LeCras",
+   "slot": 62,
    "boards": {
-    "tw": 13,
-    "rm": 14,
-    "zh": 13
+    "tw": null,
+    "rm": null,
+    "zh": null
    },
-   "club": null,
-   "drafted": false,
-   "junior": "Northern Knights",
-   "position": "Key FWD",
-   "height": 194,
+   "club": "Collingwood",
+   "drafted": true,
+   "junior": "Western Australia",
+   "position": "",
+   "height": 192,
    "role": "Key position",
-   "jFP": 69.0,
-   "jD": 12.4,
-   "jT": 2.6,
-   "jSeason": 2026,
-   "jMax": 128.0,
-   "j120": 1,
+   "jFP": 51.3,
+   "jD": 10.7,
+   "jT": 3.0,
+   "jSeason": 2024,
+   "jMax": null,
+   "j120": null,
    "traits": [
     "Aerial / marking",
-    "Athleticism",
-    "Defensive pressure",
-    "Leadership / character",
-    "Ruck craft",
-    "Scoreboard impact",
-    "Size / strength"
-   ],
-   "flags": [
-    "needs consistency",
-    "needs finishing"
-   ],
-   "chance": 0.3,
-   "relevant": 0.7,
-   "positionOnly": 12.2,
-   "reasons": [
-    {
-     "label": "Key position",
-     "effect": -1.98
-    },
-    {
-     "label": "Tall (192cm+, not a ruck)",
-     "effect": -0.51
-    },
-    {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.47
-    },
-    {
-     "label": "Defensive pressure",
-     "effect": 0.47
-    },
-    {
-     "label": "needs consistency",
-     "effect": -0.28
-    }
-   ],
-   "why": [
-    {
-     "good": false,
-     "text": "Junior fantasy average of 69. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
-    },
-    {
-     "good": true,
-     "text": "Scouts noted defensive pressure. 14 of 78 draftees with that note became 90+ players, 1.6× what their draft slots predicted."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted work-on: consistency: only 4 of 98 with that note became 90+ players (0.5× their draft slots)."
-    },
-    {
-     "good": false,
-     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
-    },
-    {
-     "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
-    },
-    {
-     "good": false,
-     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
-    },
-    {
-     "good": false,
-     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
-    }
-   ],
-   "type": "key position player",
-   "ceiling": false,
-   "comps": []
-  },
-  {
-   "rank": 16,
-   "name": "Tyson Bradley",
-   "slot": 15,
-   "boards": {
-    "tw": 16,
-    "rm": 15,
-    "zh": 14
-   },
-   "club": null,
-   "drafted": false,
-   "junior": "Sandringham Dragons",
-   "position": "Key DEF",
-   "height": 195,
-   "role": "Key position",
-   "jFP": 66.0,
-   "jD": 14.5,
-   "jT": 1.0,
-   "jSeason": 2026,
-   "jMax": 87.0,
-   "j120": 0,
-   "traits": [
-    "Intercept / rebound",
+    "Engine / work rate",
+    "Footy IQ / vision",
     "Kicking / skills",
-    "Leadership / character"
+    "Scoreboard impact",
+    "Versatility"
    ],
    "flags": [
-    "needs speed/athleticism"
+    "needs speed/athleticism",
+    "needs strength/size"
    ],
    "chance": 0.2,
-   "relevant": 0.7,
-   "positionOnly": 11.0,
+   "relevant": 0.5,
+   "positionOnly": 3.8,
    "reasons": [
     {
      "label": "Key position",
      "effect": -1.98
     },
     {
-     "label": "Junior tackles",
-     "effect": -0.57
-    },
-    {
      "label": "Tall (192cm+, not a ruck)",
      "effect": -0.51
     },
     {
-     "label": "Combine: top-10 speed/jump",
-     "effect": -0.47
+     "label": "Footy IQ / vision",
+     "effect": 0.41
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.37
     },
     {
      "label": "Kicking / skills",
@@ -4808,7 +6960,15 @@
    "why": [
     {
      "good": false,
-     "text": "Junior fantasy average of 66. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+     "text": "Junior fantasy average of 51. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted footy iq / vision. 24 of 170 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
     },
     {
      "good": true,
@@ -4816,7 +6976,11 @@
     },
     {
      "good": false,
-     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
     },
     {
      "good": false,
@@ -4828,16 +6992,16 @@
    "comps": []
   },
   {
-   "rank": 24,
+   "rank": 26,
    "name": "Jack Pickett",
-   "slot": 22,
+   "slot": 26,
    "boards": {
     "tw": 24,
     "rm": 22,
     "zh": 20
    },
-   "club": null,
-   "drafted": false,
+   "club": "Essendon",
+   "drafted": true,
    "junior": "Geelong Falcons",
    "position": "Key FWD",
    "height": 194,
@@ -4861,7 +7025,7 @@
    ],
    "chance": 0.1,
    "relevant": 0.3,
-   "positionOnly": 8.3,
+   "positionOnly": 7.4,
    "reasons": [
     {
      "label": "Key position",
@@ -4908,6 +7072,189 @@
     {
      "good": false,
      "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 34,
+   "name": "Xavier Ladbrook",
+   "slot": 34,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Adelaide",
+   "drafted": true,
+   "junior": "Gippsland Power",
+   "position": "",
+   "height": 201,
+   "role": "Key position",
+   "jFP": 66.0,
+   "jD": 14.4,
+   "jT": 1.8,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Aerial / marking",
+    "Athleticism",
+    "Engine / work rate",
+    "Kicking / skills",
+    "Upside",
+    "Versatility"
+   ],
+   "flags": [
+    "needs strength/size"
+   ],
+   "chance": 0.1,
+   "relevant": 0.2,
+   "positionOnly": 6.0,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "Tall (192cm+, not a ruck)",
+     "effect": -0.51
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.39
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.37
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 66. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted kicking / skills. 25 of 169 draftees with that note became 90+ players, 1.3× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted engine / work rate: only 12 of 136 with that note became 90+ players (0.9× their draft slots)."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    }
+   ],
+   "type": "key position player",
+   "ceiling": false,
+   "comps": []
+  },
+  {
+   "rank": 61,
+   "name": "Mason McGroder",
+   "slot": 61,
+   "boards": {
+    "tw": null,
+    "rm": null,
+    "zh": null
+   },
+   "club": "Sydney",
+   "drafted": true,
+   "junior": "Swans Academy",
+   "position": "",
+   "height": 195,
+   "role": "Key position",
+   "jFP": 32.0,
+   "jD": 10.0,
+   "jT": 1.7,
+   "jSeason": 2026,
+   "jMax": null,
+   "j120": null,
+   "traits": [
+    "Aerial / marking",
+    "Athleticism",
+    "Size / strength",
+    "Speed / agility",
+    "Upside",
+    "Versatility"
+   ],
+   "flags": [
+    "needs kicking",
+    "raw / limited exposure"
+   ],
+   "chance": 0.1,
+   "relevant": 0.2,
+   "positionOnly": 3.8,
+   "reasons": [
+    {
+     "label": "Key position",
+     "effect": -1.98
+    },
+    {
+     "label": "Tall (192cm+, not a ruck)",
+     "effect": -0.51
+    },
+    {
+     "label": "Combine: top-10 speed/jump",
+     "effect": -0.47
+    },
+    {
+     "label": "Junior tackles",
+     "effect": -0.41
+    },
+    {
+     "label": "Versatility",
+     "effect": -0.37
+    }
+   ],
+   "why": [
+    {
+     "good": false,
+     "text": "Junior fantasy average of 32. Not counted against him on its own (his pick and other numbers already say more), but most stars scored 90+ as juniors, so he'd be doing it a different way."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted versatility: only 4 of 115 with that note became 90+ players (0.4× their draft slots)."
+    },
+    {
+     "good": true,
+     "text": "Scouts noted speed / agility. 20 of 180 draftees with that note became 90+ players, 1.1× what their draft slots predicted."
+    },
+    {
+     "good": false,
+     "text": "Scouts noted his marking, but every tall is sold on that, so it isn't counted as extra evidence either way."
+    },
+    {
+     "good": false,
+     "text": "Top-10 speed or jump at the combine: pure athletes have become fantasy stars less often than their draft slots suggested."
+    },
+    {
+     "good": false,
+     "text": "Key-position role. Almost no key defenders or forwards have become 90+ fantasy players, however good they are as footballers."
+    },
+    {
+     "good": false,
+     "text": "Sold mainly on running or athleticism, with no skill or contested tag. Across the 2016–24 drafts that profile produced almost no fantasy stars (Hollands, Ginbey, Dylan Stephens types topped out in the 70s)."
     }
    ],
    "type": "key position player",

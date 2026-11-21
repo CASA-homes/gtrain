@@ -3,7 +3,8 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getCoach, getLeague } from '@/lib/data';
-import { loadRoomState, profileLine } from '@/lib/draft-room-data';
+import { AFL_CODE, loadRoomState, profileLine } from '@/lib/draft-room-data';
+import { DRAFT_2026_DONE, PHANTOM_2026 } from '@/lib/phantom-2026';
 import { DRAFT_YEAR } from '@/lib/draft-room';
 import PROFILES from '@/lib/draft-profiles-2026.json';
 
@@ -21,6 +22,7 @@ export async function postDraft(): Promise<Res> {
   const fa = new Map(league.freeAgents.map((p) => [p.id, p]));
   const profiles = new Map((PROFILES as { year: number; name: string; position: string; height?: number }[]).filter((d) => d.year === DRAFT_YEAR - 1)
     .map((d) => [`dr:${d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, d]));
+  const real = new Map(DRAFT_2026_DONE ? PHANTOM_2026.map((d) => [`dr:${d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`, d]) : []);
   const sels = state.sels.filter((s) => s.player_key && s.player);
 
   // Details for every drafted player who isn't in the players table yet.
@@ -39,10 +41,11 @@ export async function postDraft(): Promise<Res> {
       continue;
     }
     const d = profiles.get(key);
-    const full = d?.name ?? s.player!.n;
+    const r = real.get(key);
+    const full = d?.name ?? r?.name ?? s.player!.n;
     newp.push({
-      key, player: { name: short(full), full_name: full, afl_club: null, positions: d ? profileLine(d.position) : s.player!.positions ?? [s.player!.pos],
-        dfs_id: null, birth_date: null, draft_year: DRAFT_YEAR - 1, draft_pick: null, height_cm: d?.height ?? null, debut_year: null, career_games: 0, hist: null },
+      key, player: { name: short(full), full_name: full, afl_club: r?.club ? AFL_CODE[r.club] ?? null : null, positions: d ? profileLine(d.position) : s.player!.positions ?? [s.player!.pos],
+        dfs_id: null, birth_date: null, draft_year: DRAFT_YEAR - 1, draft_pick: r?.rank ?? null, height_cm: d?.height ?? null, debut_year: null, career_games: 0, hist: null },
       season: null,
     });
   }

@@ -22,6 +22,12 @@ PH = [(int(r), n) for r, n in re.findall(r"rank: (\d+), name: '([^']*)'", _PT)]
 # After the national draft: rank is the actual pick and each entry carries the club that took him.
 DRAFTED = bool(re.search(r'DRAFT_2026_DONE\s*=\s*true', _PT))
 CLUB = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']*)'[^\n]*?club: '([^']*)'", _PT)}
+# Delisted AFL players re-drafted in the national draft aren't draft-age prospects: leave them out.
+_RD = re.search(r"REDRAFTED_2026 = new Set\(\[([^\]]*)\]", _PT)
+REDRAFTED = set(re.findall(r"'([^']*)'", _RD.group(1))) if _RD else set()
+PH = [(r, n) for r, n in PH if n not in REDRAFTED]
+# Draft-night position for anyone without a scouting profile (fallback only).
+POSN = {m.group(1): m.group(2) for m in re.finditer(r"name: '([^']*)'[^\n]*?position: '([^']*)'", _PT)}
 ALIAS = {'Mitch Harris': 'Mitchell Harris'}
 
 from crystal import role_of, fantasy_role, combine_flags, H as HIST  # noqa: E402
@@ -222,7 +228,7 @@ for rank, name in PH:
             best_yr = max(AFL_JG[name], key=lambda y: max((x for c in AFL_JG[name][y].values() for x in c), default=0))
             jg = {'max': float(max(gs)), 'maxYr': int(best_yr), 'g120': sum(1 for x in gs if x >= 120), 'g150': sum(1 for x in gs if x >= 150), 'gms': len(gs)}
     if j and jg: j = {**j, 'max': jg['max'], 'maxYr': jg['maxYr'], 'g120': jg['g120'], 'g150': jg.get('g150'), 'jGames': jg.get('gms')}
-    listed = ((prof or {}).get('position') or rm.get('pos') or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
+    listed = ((prof or {}).get('position') or rm.get('pos') or POSN.get(name) or '').lower().replace('fwd', 'forward').replace('def', 'defender').replace('mid', 'midfielder').replace('ruc', 'ruck')
     role = fantasy_role(role_of(listed, ht, strs), j, ht)
     p = {'name': name, 'listed': listed, 'str': st, 'imp': im, 'jun': j, 'ht': ht, 'role': role, 'combine': combine_flags(2026, ALIAS.get(name, name))}
     # Before the draft the pick slot is the consensus of Twomey / Rookie Me / Zero Hanger; after it, the real pick.
