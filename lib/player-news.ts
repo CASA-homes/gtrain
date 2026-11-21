@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'C. Warner', tag: 'Trade', date: '2026-11-21', title: 'Eagles bank extra first for Warner tilt',
+    body: 'West Coast swapped pick 23 for North’s 2027 first-rounder, giving them two firsts next year, and it’s being read as ammo for a bid on Warner, who is a restricted free agent at the end of 2027. The Eagles wouldn’t talk specifics and no offer has been reported, with Tasmania also keen. Nothing changes for 2027 scoring, but keepers holding him should watch where he lands for 2028.',
+  },
+  {
     player: 'S. Robey', tag: 'Injury', date: '2026-11-19', title: 'Robey to rejoin main group after Christmas',
     body: 'Mark McVeigh says Robey’s knee surgery for the partial medial ligament tear he copped in round 20 went really well, and he should be running in the next few weeks. The plan is to integrate him with the main group after Christmas. A bit of pre-season lost, but Bito’s Boys’ young keeper looks on track for an early-season start.',
   },
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'B. Daniels', tag: 'Injury', date: '2026-11-08', title: 'Daniels on track before Christmas',
     body: 'GWS say Daniels is managing a soft-tissue issue but should be in full pre-season training before Christmas, with his load modified early. Not a long-term worry, so he looks a safe keeper for Serong So’Right if he stays on the park.',
-  },
-  {
-    player: 'P. Gothard', tag: 'Injury', date: '2026-11-08', title: 'Gothard back from shoulder surgery in January',
-    body: 'The Giants confirmed Gothard had shoulder surgery and is tracking towards full training in January. Missing the first chunk of pre-season puts his early-round spot in a strong forward line at some risk, so don’t bank on him from round 1.',
   },
 ];
