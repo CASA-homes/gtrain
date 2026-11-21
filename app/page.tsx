@@ -5,6 +5,7 @@ import { CardFan, type FanData, type HeatGame } from '@/components/landing/CardF
 import { getMe } from '@/lib/data';
 import { createClient } from '@/lib/supabase/server';
 import { AFL_LANDING_2026 } from '@/lib/afl-landing-2026';
+import { DRAFT_2026_DONE } from '@/lib/phantom-2026';
 import LEAGUE from '@/data/league.json';
 import GAMES from '@/lib/player-games.json';
 import CRYSTAL from '@/lib/crystal-ball.json';
@@ -29,7 +30,7 @@ function fanData(): FanData {
       height: pros?.height ?? 188, avg: prof?.games?.seasons[0]?.avg ?? 108.6, best: prof?.games?.max ?? 148,
       boards: [['Twomey', pros?.boards.tw ?? 4], ['Rookie Me', pros?.boards.rm ?? 7], ['Zero Hanger', pros?.boards.zh ?? 3]],
       traits: ['Contested / inside', 'Athleticism', 'Speed'], flag: 'Kicking', chance: pros?.chance ?? 62,
-      landing: land ? `proj. pick ${land.pick}${land.club ? `, ${land.club}` : ''}` : 'top-5 prospect',
+      landing: land ? `${DRAFT_2026_DONE ? 'pick' : 'proj. pick'} ${land.pick}${land.club ? `, ${land.club}` : ''}` : 'top-5 prospect',
     },
   };
 }
@@ -39,7 +40,7 @@ const WIRE = (() => {
   return [
     `${last.year} premiers: ${last.premier}`, `${last.year} runners-up: ${last.runner_up}`, last.medal ? `${last.year} league medal: ${last.medal}` : null,
     `Wooden spoon ${last.year}: ${last.spoon}`, 'Knockout Cup winners take a round 2 pick into next year’s draft', 'Future picks tradeable through 2028',
-    'Ethan Drever tipped to go pick 2 in the AFL draft', '18 keepers a club, the 18th must be a rookie', 'Every keeper on a contract under a $1.25M cap', 'Deadline day: the mid-season window opens clauses and free agency',
+    'Ethan Drever went pick 2 to Essendon in the AFL draft', '18 keepers a club, the 18th must be a rookie', 'Every keeper on a contract under a $1.25M cap', 'Deadline day: the mid-season window opens clauses and free agency',
   ].filter(Boolean) as string[];
 })();
 

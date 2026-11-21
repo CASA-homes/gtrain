@@ -5,9 +5,16 @@ import type { PlayerRow } from '@/lib/ratings';
 import { age } from '@/lib/ratings';
 import { photoUrl } from '@/lib/photos';
 import PROFILES from './draft-profiles-2026.json';
+import { DRAFT_2026_DONE, PHANTOM_2026, REDRAFTED_2026 } from './phantom-2026';
 import { DEFAULT_ROOM, DRAFT_YEAR, FALLBACK_TEAM_COLOURS, type DraftPlayer, type Line, type RoomRequest, type RoomState, type RoomTeam } from '@/lib/draft-room';
 
 const OUT = /retired|delisted/i;
+type Profile26 = { year: number; name: string; junior?: string; position: string; height?: number; summary?: string };
+/** AFL club names (as the draft list has them) to the codes the rest of the app uses. */
+export const AFL_CODE: Record<string, string> = {
+  Adelaide: 'ADE', Brisbane: 'BRL', Carlton: 'CAR', Collingwood: 'COL', Essendon: 'ESS', Fremantle: 'FRE', Geelong: 'GEE', 'Gold Coast': 'GCS', GWS: 'GWS',
+  Hawthorn: 'HAW', Melbourne: 'MEL', 'North Melbourne': 'NTH', 'Port Adelaide': 'PTA', Richmond: 'RIC', 'St Kilda': 'STK', Sydney: 'SYD', 'Western Bulldogs': 'WBD', 'West Coast': 'WCE',
+};
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 function toPlayer(p: PlayerRow, was: string | null): DraftPlayer {
@@ -51,11 +58,22 @@ export function roomPool(league: League): DraftPlayer[] {
     out.push(toPlayer(p, null)); known.add((p.full_name ?? p.name).toLowerCase());
   }
   out.sort((a, b) => (b.avg ?? -1) - (a.avg ?? -1));
-  const draftees = (PROFILES as { year: number; name: string; junior?: string; position: string; height?: number; summary?: string }[])
-    .filter((d) => d.year === 2026 && !known.has(d.name.toLowerCase()))
+  // The 2026 AFL draftees: the real national draft once it's run (scouting profile joined on where there is one), the
+  // profiled prospects before it. Re-drafted AFL veterans are already in the pool as free agents.
+  const prof = new Map((PROFILES as Profile26[]).filter((d) => d.year === 2026).map((d) => [d.name.toLowerCase(), d]));
+  const list: { name: string; position: string; junior?: string; height?: number; club?: string; pick?: number }[] = DRAFT_2026_DONE
+    ? PHANTOM_2026.filter((d) => !REDRAFTED_2026.has(d.name)).map((d) => {
+      const pr = prof.get(d.name.toLowerCase());
+      return { name: d.name, position: pr?.position || d.position || 'Midfielder', junior: d.from || pr?.junior, height: pr?.height, club: d.club, pick: d.rank };
+    })
+    : [...prof.values()];
+  const draftees = list
+    .filter((d) => !known.has(d.name.toLowerCase()))
     .map((d): DraftPlayer => {
       const lines = profileLine(d.position);
-      return { key: `dr:${slug(d.name)}`, n: d.name, pos: lines[0], positions: lines, club: d.junior ?? 'Draftee', img: null, avg: null, games: null, age: null, rookie: true, note: d.position + (d.height ? ` · ${d.height}cm` : '') };
+      const club = d.club ? (AFL_CODE[d.club] ?? d.club) : (d.junior ?? 'Draftee');
+      const note = [d.pick ? `AFL pick ${d.pick}` : null, d.position, d.height ? `${d.height}cm` : null, d.pick && d.junior ? d.junior : null].filter(Boolean).join(' · ');
+      return { key: `dr:${slug(d.name)}`, n: d.name, pos: lines[0], positions: lines, club, img: null, avg: null, games: null, age: null, rookie: true, note };
     });
   return [...out, ...draftees];
 }
