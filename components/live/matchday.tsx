@@ -239,9 +239,8 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           <Info p={p} onInfo={setSheet} />
         </span>
         <span className="sqc-b">
-          <span className="sqc-disc"><Disc p={p} size={26} /></span>
-          <span className="sqc-meta"><b>{p.club ?? '–'}</b> | {p.pos.join('/')}</span>
-          <span className="sqc-sub" title={`2026 average${p.l5 != null ? ` · last 5: ${p.l5}` : ''}`}>{p.avg != null ? p.avg.toFixed(1) : 'no games'}</span>
+          <span className="sqc-disc"><Disc p={p} size={22} /></span>
+          <span className="sqc-meta" title={`2026 average${p.l5 != null ? ` · last 5: ${p.l5}` : ''}`}><b>{p.club ?? '–'}</b> | {p.pos.join('/')} | <span className="sqc-avg">{p.avg != null ? p.avg.toFixed(1) : 'no games'}</span></span>
           {showProj && <span className={`sqc-proj est ${capd ? 'is-cap' : ''}`} title={capd ? `Projected ${p.proj}, doubled as captain` : 'Projected score'}>{capd ? p.proj * 2 : p.proj}</span>}
         </span>
         <span className="sqc-f" suppressHydrationWarning>{fixtureOf(p.club)}</span>

@@ -3018,3 +3018,10 @@ input.im-mini { width: 110px; cursor: text; }
 .sq-body.has-lu .sqc-n { font-size: 13px; }
 @media (max-width: 1180px) { .sq-body.has-lu .sq-spot, .sq-body.has-lu .sq-line.emg .sq-spot { min-width: 0; } .sq-body.has-lu .sq-list { flex: none; height: 520px; } }
 @media (max-width: 720px) { .sq-body.has-lu .sq-list { flex: none; max-height: 300px; } .sq-leftcol > .sq-locks { max-height: none; } }
+
+/* Field cards (23 Nov 2026): club disc sits in its own row under the name band; average joins club | position. */
+.sq-spot.full.sqc .sqc-b { grid-template-columns: 22px minmax(0, 1fr) auto; grid-template-rows: auto; row-gap: 0; overflow: hidden; padding: 3px 8px; }
+.sq-spot.full.sqc .sqc-disc { grid-row: 1; width: 22px; height: 22px; }
+.sq-spot.full.sqc .sqc-meta { grid-row: 1; grid-column: 2; align-self: center; }
+.sq-spot.full.sqc .sqc-avg { font: 500 10.5px var(--mono); color: var(--rh-dim); }
+.sq-spot.full.sqc .sqc-proj { grid-row: 1; grid-column: 3; font-size: 20px; }
