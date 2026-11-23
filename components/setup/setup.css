@@ -1,0 +1,72 @@
+/* Squad setup (components/setup/SquadSetup.tsx) — phone first. */
+.su { display: flex; flex-direction: column; gap: 12px; }
+.su-tabs { margin-bottom: 2px; }
+.su-note { padding: 18px; font-size: 15px; line-height: 1.5; }
+.su-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.su-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.su-h { font: 800 26px/1 var(--display); text-transform: uppercase; margin: 4px 0 0; letter-spacing: .01em; }
+.su-count { font: 800 28px/1 var(--display); white-space: nowrap; }
+.su-count span { font: 500 13px var(--font); color: var(--muted); }
+.su-bar, .su-mini { display: block; height: 6px; background: var(--khq-panel); border-radius: 6px; overflow: hidden; }
+.su-mini { height: 4px; }
+.su-bar span, .su-mini span { display: block; height: 100%; background: var(--khq-sage); border-radius: inherit; transition: width .2s; }
+.su-lines { margin: -4px 0 0; font: 500 12px var(--mono); color: var(--muted); }
+.su-q { width: 100%; box-sizing: border-box; }
+.su-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.su-chips button { min-height: 36px; padding: 0 14px; border-radius: 18px; border: 1px solid var(--khq-line); background: var(--surface); color: var(--ink); font: 600 13px var(--font); cursor: pointer; }
+.su-chips button[aria-pressed='true'] { background: var(--ink); border-color: var(--ink); color: #fff; }
+.su-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.su-list li { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line-soft); }
+.su-list li:last-child { border-bottom: 0; }
+.su-list li.taken .su-who b { color: var(--muted); }
+.su-list li.taken > :first-child { opacity: .5; }
+.su-who { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.su-who b { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.su-who span { font-size: 12px; color: var(--muted); }
+.su-btn { min-width: 78px; min-height: 40px; border-radius: 10px; border: 1.5px solid var(--khq-sage); background: var(--surface); color: var(--khq-sage-deep); font: 600 13px var(--font); cursor: pointer; white-space: nowrap; }
+.su-btn.on { background: var(--khq-sage); color: #fff; }
+.su-btn:disabled, .su-link:disabled { opacity: .6; cursor: default; }
+.su-held { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 78px; font-size: 12px; color: var(--muted); text-align: right; }
+.su-link { background: none; border: 0; padding: 4px 0; font: 600 13px var(--font); color: var(--khq-brass-text); text-decoration: underline; cursor: pointer; min-height: 32px; }
+.su-alt { min-height: 50px; padding: 0 18px; border-radius: 12px; border: 1.5px solid var(--khq-line); background: var(--surface); color: var(--ink); font: 600 15px var(--font); cursor: pointer; }
+.su-empty { justify-content: center; color: var(--muted); font-size: 14px; padding: 16px 0 !important; }
+.su-foot { position: sticky; bottom: 0; background: var(--surface); padding-top: 10px; border-top: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 6px; }
+.su-foot .lg-btn { width: 100%; }
+.su-msg { margin: 0; padding: 10px 14px; border-radius: 12px; font-size: 14px; background: #f3ebda; color: #4a3815; }
+.su-msg.ok { background: var(--khq-panel); color: var(--khq-sage-deep); }
+.su-msg.err { background: #fbe9e7; color: #8a2a1c; }
+.su-banner { padding: 10px 14px; border-radius: 12px; background: #f3ebda; color: #4a3815; font-size: 14px; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+.su-lineGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.su-lineGrid div { background: var(--khq-bg); border-radius: 12px; padding: 10px 0; display: flex; flex-direction: column; align-items: center; }
+.su-lineGrid b { font: 800 24px/1 var(--display); }
+.su-lineGrid span { font-size: 12px; color: var(--muted); }
+.su-group { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; }
+.su-group summary { cursor: pointer; min-height: 28px; display: flex; align-items: center; gap: 4px; }
+.su-group ul { list-style: none; margin: 6px 0 0; padding: 0; }
+.su-group li { display: flex; justify-content: space-between; padding: 7px 0; border-top: 1px solid var(--line-soft); font-size: 14px; }
+.su-picksNote span { font-size: 13px; }
+.su-flag { border: 1.5px solid var(--khq-brass); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px; }
+.su-flag p { margin: 0; font-size: 14px; line-height: 1.45; }
+.su-flagTag { color: var(--khq-brass-text); }
+.su-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.su-row > * { flex: 1 1 140px; }
+.su-clubs { list-style: none; margin: 0; padding: 0; }
+.su-clubs li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
+.su-club { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.su-clubTop { display: flex; justify-content: space-between; gap: 8px; font-size: 15px; }
+.su-clubTop span { font-size: 13px; }
+.su-st { font-size: 12px; font-weight: 600; color: var(--muted); }
+.su-st.ok { color: var(--khq-sage-deep); }
+.su-st.brass { color: var(--khq-brass-text); }
+.su-small { margin: 0; font-size: 12px; }
+.su-pickForm { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; align-items: end; margin-top: 6px; }
+.su-pickForm label { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.su-pickForm select { min-height: 44px; font-size: 15px; }
+.su-traded { list-style: none; margin: 8px 0 0; padding: 0; }
+.su-traded li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 13px; padding: 6px 0; border-top: 1px solid var(--line-soft); }
+.su-traded li > :first-child { flex: 1 1 160px; }
+.su-lock { position: static; }
+.su-lock .su-row .lg-btn { width: auto; }
+.su-pickForm .lg-btn { grid-column: 1 / -1; }
+.su-panel > .su-link:first-child { align-self: flex-start; }
+

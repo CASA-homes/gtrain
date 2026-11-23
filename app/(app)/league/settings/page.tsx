@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import LEAGUE from '@/data/league.json';
 import { getLeagueProfile } from '@/lib/league-scope';
 import { Group, SubHead } from '@/components/LeagueSubpage';
@@ -39,6 +40,13 @@ export default async function LeagueSettingsPage() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
         {coaches && <LeagueCoaches rows={coaches} clubs={league.teams.map((t) => ({ id: t.id, name: t.name }))} />}
         {joinAdmin && <InviteCoaches admin={joinAdmin} />}
+        {me?.is_commish && !profile.legacy && (
+          <section className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <h2 className="h2" style={{ fontSize: 18 }}>Squad setup</h2>
+            <p className="muted" style={{ margin: 0, fontSize: 13 }}>Coaches pick their own squads off the AFL list. Sign each one off, sort out flags, fix traded picks, then lock squads.</p>
+            <Link href="/league/setup" className="lg-btn" style={{ alignSelf: 'flex-start' }}>Open the squad board</Link>
+          </section>
+        )}
         {me?.is_commish && <StatsSources season={statsSeason} compare={statsCompare} />}
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
         {kc.settings && (
