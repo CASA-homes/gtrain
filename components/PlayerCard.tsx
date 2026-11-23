@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 
+import { aflSized } from '@/lib/photos';
 /** One 2026 game: round, opponent, venue, score, TOG %, CBA %, Q1–Q4 points, possessions by zone (D50, D-mid, A-mid, A50), heat map id. */
 export type CardGame = [number | null, string | null, string | null, number, number | null, number | null, number | null, number | null, number | null, number | null,
   number | null, number | null, number | null, number | null, string | null];
@@ -98,7 +99,7 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
   const vens = split(1, 3).sort((a, b) => b.gm - a.gm).slice(0, 5);
 
   const heat = heatIdx >= 0 ? games[heatIdx] : null;
-  const heatUrl = heat?.[14] && playerNo ? `https://s.afl.com.au/heatmaps/2026/match-${heat[14]}-${playerNo}.png` : null;
+  const heatUrl = heat?.[14] && playerNo ? aflSized(`https://s.afl.com.au/heatmaps/2026/match-${heat[14]}-${playerNo}.png`, 480) : null;
   const oRow = (o: { k: string; avg: number; gm: number }) => (
     <div key={o.k} className="pc-orow"><span>{o.k}</span><em>{o.gm} gm</em><b style={{ background: tone(o.avg)[0], color: tone(o.avg)[1] }}>{o.avg}</b></div>
   );

@@ -3005,3 +3005,16 @@ input.im-mini { width: 110px; cursor: text; }
 /* Squad setup prompt (app layout, while coaches pick their squads). */
 .su-prompt { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 auto 14px; max-width: 1360px; padding: 10px 14px; border-radius: 12px; background: var(--khq-panel); color: var(--khq-sage-deep); font-size: 14px; }
 .su-prompt a { font-weight: 700; color: var(--khq-sage-deep); white-space: nowrap; }
+
+/* Squad Selector, desktop (23 Nov 2026): lineups panel top-left, player list under it, field takes the full width. */
+.sq-grid.solo { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 641px) { .sq-phone { display: none !important; } }
+.sq-leftcol { display: flex; flex-direction: column; gap: 10px; min-width: 0; min-height: 0; }
+.sq-leftcol > .sq-locks { flex: none; max-height: 40%; overflow-y: auto; box-shadow: none; border: 1px solid var(--rh-line); }
+.sq-body.has-lu .sq-list { height: auto; min-height: 0; flex: 1 1 0; }
+.sq-fieldcol > .sq-top { grid-template-columns: minmax(0, 1fr); }
+.sq-body.has-lu .sq-spot { flex: 0 1 236px; min-width: 176px; }
+.sq-body.has-lu .sq-line.emg .sq-spot { flex-basis: 220px; min-width: 168px; }
+.sq-body.has-lu .sqc-n { font-size: 13px; }
+@media (max-width: 1180px) { .sq-body.has-lu .sq-spot, .sq-body.has-lu .sq-line.emg .sq-spot { min-width: 0; } .sq-body.has-lu .sq-list { flex: none; height: 520px; } }
+@media (max-width: 720px) { .sq-body.has-lu .sq-list { flex: none; max-height: 300px; } .sq-leftcol > .sq-locks { max-height: none; } }

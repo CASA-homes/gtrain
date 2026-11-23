@@ -4,6 +4,7 @@
 // rounds on its own until someone taps a round.
 import { useEffect, useRef, useState } from 'react';
 
+import { aflSized } from '@/lib/photos';
 export type HeatGame = { round: number; opp: string; score: number; tog: number | null; heat: string | null };
 export type Honour = { year: number; premier: string; spoon: string | null; medal: string | null };
 export interface FanData {
@@ -100,7 +101,7 @@ function HeatCard({ d, active }: { d: FanData['anderson']; active: boolean }) {
     </>
   );
 }
-const heatSrc = (id: string, no: string) => `https://s.afl.com.au/heatmaps/2026/match-${id}-${no}.png`;
+const heatSrc = (id: string, no: string) => aflSized(`https://s.afl.com.au/heatmaps/2026/match-${id}-${no}.png`, 360)!;
 
 function RookieCard({ d }: { d: FanData['drever'] }) {
   return (

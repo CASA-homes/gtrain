@@ -2,7 +2,8 @@
 // truth for every rule and price; the helpers here only mirror its maths so pages can show previews.
 // Salaries are cap dollars in thousands ($98,000 = 98). Tokens here are paper KT, separate from real tokens.
 import { cache } from 'react';
-import { createClient } from '@/lib/supabase/server';
+import { unstable_cache } from 'next/cache';
+import { createClient, currentLeagueId } from '@/lib/supabase/server';
 import { getLeague, getMe, type Me, type Team } from '@/lib/data';
 import freeAgentData from '@/lib/free-agent-players.json';
 import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
@@ -137,10 +138,21 @@ function withFaRates(m: Map<number, number>): Map<number, number> {
 }
 
 /** Market value ($k) for every player, from the contract pricing. */
+type RateRow = { player_id: number; rate_k: number };
 export const getRates = cache(async (): Promise<Map<number, number>> => {
   const supabase = await createClient();
-  const { data } = await supabase.rpc('kc_rates');
-  return withFaRates(new Map(((data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k])));
+  const lid = await currentLeagueId();
+  // Market values only move when scores or contracts do, so they're shared across the league's pages for 5 minutes
+  // (kc_rates costs ~80 ms a call and nearly every page asked for it). Empty or failed results are never cached.
+  const load = async () => {
+    const { data, error } = await supabase.rpc('kc_rates');
+    if (error || !data || !(data as RateRow[]).length) throw new Error('No rates');
+    return data as RateRow[];
+  };
+  let rows: RateRow[];
+  try { rows = await unstable_cache(load, ['khq-rates', String(lid)], { revalidate: 300 })(); }
+  catch { rows = ((await supabase.rpc('kc_rates')).data ?? []) as RateRow[]; }
+  return withFaRates(new Map(rows.map((r) => [r.player_id, r.rate_k])));
 });
 
 export const getContracts = cache(async (): Promise<ContractsData> => {

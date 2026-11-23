@@ -1,5 +1,6 @@
 'use client';
 import { useState, type CSSProperties } from 'react';
+import { aflSized } from '@/lib/photos';
 import { HOLO_FOIL, type Holo } from '@/lib/holo';
 
 const abs: CSSProperties = { position: 'absolute', inset: 0, pointerEvents: 'none' };
@@ -31,7 +32,7 @@ export function HoloAvatar({ holo, alt, size = 168 }: { holo: Holo; alt: string;
         <div className="holo-anim" style={{ ...abs, mixBlendMode: 'screen', background: `radial-gradient(circle, ${f.glint[0]} 0 0.8px, transparent 1.4px) 0 0 / 17px 17px, radial-gradient(circle, ${f.glint[1]} 0 0.7px, transparent 1.3px) 8px 9px / 23px 23px`, animation: 'holoTwinkle 2.6s ease-in-out infinite' }} />
         <div style={{ ...abs, mixBlendMode: 'screen', opacity: m.on ? 0.95 : 0.4, background: `radial-gradient(circle at ${pos}, rgb(255 255 255 / .7), ${f.glare} 25%, transparent 50%)` }} />
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={holo.photo} alt={alt} style={{ position: 'absolute', left: '50%', bottom: 0, transform: 'translateX(-50%)', height: '100%', filter: 'drop-shadow(0 6px 10px rgb(7 9 14 / .55))' }} />
+        <img src={aflSized(holo.photo, Math.min(1080, Math.ceil(size * 2 / 60) * 60)) ?? holo.photo} alt={alt} style={{ position: 'absolute', left: '50%', bottom: 0, transform: 'translateX(-50%)', height: '100%', filter: 'drop-shadow(0 6px 10px rgb(7 9 14 / .55))' }} />
         <div style={{ ...abs, mixBlendMode: 'soft-light', opacity: m.on ? 0.6 : 0.25, background: `linear-gradient(115deg, transparent 30%, rgb(255 255 255 / .8) 45%, ${f.sheen} 52%, transparent 65%)`, backgroundSize: '250% 250%', backgroundPosition: pos }} />
       </div>
     </div>

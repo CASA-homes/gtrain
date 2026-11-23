@@ -23,15 +23,15 @@ const shortName = (n: string) => {
 export { shortName };
 
 export const getMarket = cache(async () => {
-  const [d, league] = await Promise.all([getContracts(), getLeague()]);
   const supabase = await createClient();
-  const [lq, tq, vq, dq, wq] = await Promise.all([
+  // The market's own tables load alongside the contracts and league data, not after them.
+  const [[d, league], [lq, tq, vq, dq, wq]] = await Promise.all([Promise.all([getContracts(), getLeague()]), Promise.all([
     supabase.from('listings').select('id, kind, asking, minimum, open_to, ends_at, status, team_id, player_id, created_at, offers(id, offer, points, team_id, created_at)').in('status', ['open', 'pending']).order('created_at', { ascending: false }),
     supabase.from('trades').select('id, team_a, team_b, a_gives, b_gives, status, created_at, decided_at').order('created_at', { ascending: false }).limit(40),
     supabase.from('trade_votes').select('trade_id, team_id'),
     supabase.from('desks').select('id, title, status, team_id, created_at, desk_teams(team_id, accepted)').in('status', ['open', 'agreed']).order('created_at', { ascending: false }),
     supabase.from('wishes').select('*, wish_replies(count)').eq('status', 'open').order('created_at', { ascending: false }).limit(20),
-  ]);
+  ])]);
   const listings = (lq.data ?? []) as ListingRow[];
   const trades = (tq.data ?? []) as TradeRow[];
   const s = d.settings;

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { loadClubRows } from '@/app/(app)/live/club-rows-action';
 import type { MProfile } from '@/lib/mens-round';
 
+import { aflSized } from '@/lib/photos';
 type Tab = 'round' | 'season' | 'club';
 
 export function ProfileTabs({ roundLabel, round, prof, proj, clubName, defaultTab = 'season', fullName }: {
@@ -132,7 +133,7 @@ export function RoundDetail({ g, playerNo, proj }: { g: [number, string | null, 
   const qs = [g[6], g[7], g[8], g[9]], zones: [string, number | null][] = [['D50', g[10]], ['D-mid', g[11]], ['A-mid', g[12]], ['A50', g[13]]];
   const qMax = Math.max(30, ...qs.map((x) => x ?? 0));
   const zTot = zones.reduce((a, [, v]) => a + (v ?? 0), 0);
-  const heat = g[14] && playerNo ? `https://s.afl.com.au/heatmaps/2026/match-${g[14]}-${playerNo}.png` : null;
+  const heat = g[14] && playerNo ? aflSized(`https://s.afl.com.au/heatmaps/2026/match-${g[14]}-${playerNo}.png`, 480) : null;
   return (
     <>
       <div className="pt-tiles">
