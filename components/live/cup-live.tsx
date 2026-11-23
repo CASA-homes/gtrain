@@ -128,7 +128,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, the
         <div className="cl-side a">
           <b>{myName}</b>
           <span className="cl-big rh-mono" style={{ color: A_COL }}>{started ? aTot : aProj}</span>
-          <span className="rh-dim rh-mono">{started ? `proj ${aProj} · ${aLeft} to play` : 'projected'}</span>
+          {started && <span className="rh-dim rh-mono">proj {aProj} · {aLeft} to play</span>}
         </div>
         <div className="cl-mid">
           {theme === 'gold' && <svg className="cl-cup" width="38" height="38" viewBox="0 0 64 64" aria-hidden="true"><path fill="#c9a13a" d="M18 8h28v6h10v6c0 8-6 14-13 15-2 5-6 8-9 9v8h8v6H22v-6h8v-8c-3-1-7-4-9-9C14 34 8 28 8 20v-6h10V8zm-4 12c0 4 2 7 5 8-1-3-1-5-1-8h-4zm36 0h-4c0 3 0 5-1 8 3-1 5-4 5-8z" /></svg>}
@@ -140,7 +140,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, the
         <div className="cl-side b">
           <b>{oppName}</b>
           <span className="cl-big rh-mono" style={{ color: B_COL }}>{started ? bTot : bProj}</span>
-          <span className="rh-dim rh-mono">{started ? `proj ${bProj} · ${bLeft} to play` : opp.saved ? 'projected' : 'best guess team'}</span>
+          {started && <span className="rh-dim rh-mono">proj {bProj} · {bLeft} to play</span>}
         </div>
       </section>
 

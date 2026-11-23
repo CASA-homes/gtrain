@@ -3025,3 +3025,27 @@ input.im-mini { width: 110px; cursor: text; }
 .sq-spot.full.sqc .sqc-meta { grid-row: 1; grid-column: 2; align-self: center; }
 .sq-spot.full.sqc .sqc-avg { font: 500 10.5px var(--mono); color: var(--rh-dim); }
 .sq-spot.full.sqc .sqc-proj { grid-row: 1; grid-column: 3; font-size: 20px; }
+
+/* Live Matchups, desktop (23 Nov 2026): compact score plate and one-line player rows so far more fits on screen. */
+@media (min-width: 900px) {
+  .cl-plate { padding: 8px 20px; gap: 14px; border-radius: 14px; border-width: 1.5px; box-shadow: 0 0 0 3px rgb(214 169 42 / .1); grid-template-columns: minmax(0, 1fr) 280px minmax(0, 1fr); }
+  .cl-big { font-size: 36px; }
+  .cl .cl-side b, .cl-side b { font-size: 14.5px; }
+  .cl-mid { gap: 3px; }
+  .cl-odds { font-size: 12px; }
+  .cl-lines { font-size: 11px; }
+  .cl-lhead { margin: 8px 0 5px; }
+  .cl-strip { padding: 3px 12px; gap: 8px; }
+  .cl-grp { column-gap: 20px; }
+  .cl-stack { gap: 3px; }
+  .cl-pc { padding: 3px 10px; gap: 8px; border-radius: 9px; min-height: 0; }
+  .cl-pc .gsy, .cl-pc .gsy svg { width: 20px !important; height: 20px !important; }
+  .cl-who { flex-direction: row; align-items: baseline; gap: 8px; }
+  .cl-pc.a .cl-who { justify-content: flex-start; }
+  .cl-pc.b .cl-who { flex-direction: row-reverse; justify-content: flex-start; }
+  .cl-nm { font-size: 13.5px; flex: none; max-width: 55%; }
+  .cl-sub { font-size: 11px; min-width: 0; }
+  .cl-sc { font-size: 17px; min-width: 38px; }
+  .cl-sc.proj { font-size: 15px; }
+  .cl-bar { margin: -2px 0; }
+}
