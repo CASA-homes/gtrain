@@ -37,7 +37,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const f = form(p);
   const a = age(p.birth_date);
   const report = scoutingReport(p, r, attrs);
-  const photo = photoUrl(p);
+  const photo = photoUrl(p, 480);
   const b = p.box;
   const cc = careerCurve(p, league.players, (o) => league.ratings.get(o.id)?.line ?? 'MID', r.potential);
   const drafted = DRAFTEES.find((d) => d.id && d.id === p.dfs_id) ?? null;

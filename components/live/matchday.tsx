@@ -1,6 +1,7 @@
 'use client';
 // Matchday · Squad Selector. Left: your whole list beside the field (3-2 / 4-3 / 1 / 3-2 + emergencies), drag and drop
-// or tap to place. Right: the matchup for whichever game is picked in the dropdown, and the Knockout Cup.
+// or tap to place. Desktop: lineups panel top-left (picks the game), list under it, field across the rest.
+// Phones: the matchup for the picked game and the Knockout Cup sit underneath.
 import { Guernsey } from '@/components/Guernsey';
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
@@ -93,7 +94,9 @@ function SquadSheet({ p, slot, cap, vc, onClose, clubName, gameName }: { p: MdPl
 type Pick = { pid: number; from: string | null } | null;
 /** Live scores for the mobile list: this round's simulated men's games (same source as Live Matchups). */
 export interface LiveSrc { now: number; games: MGame[]; players: MPlayer[] }
-function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange, liveSrc, round }: {
+function Selector({ game, games, onGame, rules, squad, initial, used, tied, clubName, onChange, liveSrc, round, lineups }: {
+  /** Desktop: the lineups panel (pick a game, see what's saved) sits top-left, where the game dropdown used to be. */
+  lineups?: React.ReactNode;
   round?: number; liveSrc?: LiveSrc | null; clubName: string | null; game: GameOpt; games: GameOpt[]; onGame: (id: string) => void; rules: Rules; squad: MdPlayer[]; initial: MdLineup | null; used: number[]; tied: Record<number, string>; onChange: (l: MdLineup) => void;
 }) {
   const router = useRouter();
@@ -362,31 +365,11 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
 
   return (
     <>
-      <div className="sq-top sq-desk">
-        <label className="sq-game"><span className="sr-only">Game</span>
-          <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
-            {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
-          </select>
-        </label>
-        <div className="sq-rest">
-          <div className="sq-stat"><span className="rh-k">Projected</span><b className="rh-mono">{total}</b></div>
-          <div className="sq-stat"><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
-          <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
-          <button type="button" className={`sq-projtog ${showProj ? 'on' : ''}`} aria-pressed={showProj} onClick={toggleProj} title="Show projected scores on the field">
-            <i aria-hidden="true" />Projections
-          </button>
-          <div className="sq-acts">
-            <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set([...used, ...Object.keys(tied).map(Number)])))}>Auto-pick</button>
-            <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
-            <button className="rh-btn go" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
-          </div>
-        </div>
-      </div>
-      {msg && <div className={`rh-toast sq-desk ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
-
       {mobile}
 
-      <div className="sq-body sq-desk">
+      <div className={`sq-body sq-desk ${lineups ? 'has-lu' : ''}`}>
+        <div className="sq-leftcol">
+        {lineups}
         <div className={`sq-list ${drag?.from ? 'drop-ok' : ''}`}
           onDragOver={(e) => { if (drag?.from) e.preventDefault(); }}
           onDrop={(e) => { e.preventDefault(); const pid = Number(e.dataTransfer.getData('text/plain')); setDrag(null); setOver(null); if (pid && slotOf.has(pid)) remove(pid); }}>
@@ -421,7 +404,30 @@ function Selector({ game, games, onGame, rules, squad, initial, used, tied, club
           </div>
         </div>
 
+        </div>
+
         <div className="sq-fieldcol">
+          <div className="sq-top sq-desk">
+            {!lineups && <label className="sq-game"><span className="sr-only">Game</span>
+              <select className="rh-select" value={game.id} onChange={(e) => onGame(e.target.value)}>
+                {games.map((g) => <option key={g.id} value={g.id}>{shortGame(g)}</option>)}
+              </select>
+            </label>}
+            <div className="sq-rest">
+              <div className="sq-stat"><span className="rh-k">Projected</span><b className="rh-mono">{total}</b></div>
+              <div className="sq-stat"><span className="rh-k">On field</span><b className={`rh-mono ${count >= need ? 'rh-up' : ''}`}>{count}<small>/{need}</small></b></div>
+              <span className={`sq-state ${dirty ? 'dirty' : initial ? 'saved' : ''}`}>{dirty ? 'Unsaved' : initial ? 'Saved' : 'Not set'}</span>
+              <button type="button" className={`sq-projtog ${showProj ? 'on' : ''}`} aria-pressed={showProj} onClick={toggleProj} title="Show projected scores on the field">
+                <i aria-hidden="true" />Projections
+              </button>
+              <div className="sq-acts">
+                <button className="rh-btn alt" onClick={() => setLineup(autoFill(rules, squad, new Set([...used, ...Object.keys(tied).map(Number)])))}>Auto-pick</button>
+                <button className="rh-btn alt" onClick={() => setLineup(empty(rules))}>Clear</button>
+                <button className="rh-btn go" disabled={pending} onClick={save}>{pending ? 'Saving…' : 'Save team'}</button>
+              </div>
+            </div>
+          </div>
+          {msg && <div className={`rh-toast sq-desk ${msg.ok ? 'up' : 'down'}`} style={{ margin: 0 }}>{msg.text}</div>}
           <div className={`sq-field ${rules.key === 'cup' ? 'cup-gold' : ''}`}>
             {lines.map((s, li) => {
               let i = 0;
@@ -605,12 +611,14 @@ export function Matchday({ data, cup, minis = [], liveSrc = null }: { data: Matc
   return (
     <Shell compact title="Squad Selector" sub={<>Round {data.round}, {data.season} · {data.myName}</>} right={<Fixtures round={data.round} games={data.fixtures} />}>
       {!data.ready && <div className="rh-card md-warn">Saving teams needs <code>supabase/migrations/0020_matchday_comps_msd_values.sql</code>. You can still build and preview.</div>}
-      <div className="sq-grid" ref={gridRef} style={fit ? { height: fit } : undefined}>
+      <div className="sq-grid solo" ref={gridRef} style={fit ? { height: fit } : undefined}>
         <section className="rh-card sq-card" aria-label="Set your team">
           <Selector key={game.id} round={data.round} game={game} games={data.games} onGame={setGid} rules={rules} squad={squad} initial={data.lineups[game.id] ?? null}
-            used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} liveSrc={liveSrc} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))} />
+            used={game.key === 'survivor' ? data.survivorUsed : []} tied={tied} clubName={data.myName || null} liveSrc={liveSrc} onChange={(l) => setLive((x) => ({ ...x, [game.id]: l }))}
+            lineups={<Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} minis={minis} />} />
         </section>
-        <div className="sq-right">
+        {/* Phones only: the matchup and the cup sit under the list. On desktop the field gets the full width. */}
+        <div className="sq-right sq-phone">
           <Lineups games={data.games} savedIds={data.savedIds} locks={data.locks} current={game.id} onPick={setGid} minis={minis} />
           <Matchup game={game} rules={rules} mine={mine} myName={data.myName} myTeamId={data.myTeamId} look={look} />
           <CupPanel data={cup} compact />

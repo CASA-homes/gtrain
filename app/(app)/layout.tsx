@@ -10,9 +10,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const me = await getMe();
   if (!me) redirect('/');
   const supabase = await createClient();
-  const [{ teams }, lid, { data: lq }] = await Promise.all([getLeague(), currentLeagueId(), supabase.rpc('my_leagues')]);
+  const lid = await currentLeagueId();
   // While a new league's coaches pick their squads, every page points them (and the commish) at squad setup.
-  const lg = lid !== 1 && !me.is_guest ? (await supabase.from('leagues').select('*').eq('id', lid).maybeSingle()).data as { setup_mode?: string | null; squads_locked_at?: string | null } | null : null;
+  const [{ teams }, { data: lq }, lgQ] = await Promise.all([getLeague(), supabase.rpc('my_leagues'),
+    lid !== 1 && !me.is_guest ? supabase.from('leagues').select('setup_mode, squads_locked_at').eq('id', lid).maybeSingle() : Promise.resolve({ data: null })]);
+  const lg = lgQ.data as { setup_mode?: string | null; squads_locked_at?: string | null } | null;
   const picking = lg?.setup_mode === 'picks' && !lg.squads_locked_at;
   const leagues = ((lq ?? []) as { id: number; name: string; is_commish: boolean }[]).map((l) => ({ id: l.id, name: l.name, is_commish: l.is_commish }));
   const mine = teams.find((t) => t.id === me.team_id);

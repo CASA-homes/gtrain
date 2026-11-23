@@ -10,7 +10,10 @@ import { positions2025 } from '@/lib/positions-2025';
 import { AskPlayers } from '@/components/AskPlayers';
 
 type SP = { q?: string; line?: string; team?: string; sort?: string; f1?: string; m1?: string; f2?: string; m2?: string; agemin?: string; agemax?: string; avgmax?: string; mine?: string;
-  own?: string; club?: string; status?: string; period?: string; yr?: string };
+  own?: string; club?: string; status?: string; period?: string; yr?: string; n?: string };
+
+/** Rows drawn per page load: the full list was 790 rows and a 5 MB page. "Show more" adds another batch. */
+const PAGE = 100;
 
 const INJURED = ['SHORT', 'LONG', 'SEASON', 'TEST', 'INJ'];
 const PERIODS = [['season', 'Season average'], ['l10', 'Last 10 games'], ['l5', 'Last 5 games'], ['l3', 'Last 3 games'], ['l1', 'Last game']] as const;
@@ -119,12 +122,21 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
       return (y ?? -1) - (x ?? -1) || ((rates.get(b.id) ?? 0) - (rates.get(a.id) ?? 0));
     });
 
+  const limit = Math.max(PAGE, Math.min(2000, Number(sp.n) || PAGE));
+  const shown = rows.slice(0, limit);
+  const moreHref = (n: number) => {
+    const u = new URLSearchParams();
+    for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'n') u.set(key, String(v));
+    u.set('n', String(n));
+    return `/players?${u.toString()}`;
+  };
+
   // Extra columns: the sort stat and any filtered stats, as bars.
   const extra = [...new Set([sort, ...filters.map((f) => f[0])])].filter((k) => k !== 'value' && k !== 'growth' && k !== 'potential' && k !== 'age' && k !== 'avg' && k !== 'last');
   // Clickable column headers: same filters, new sort.
   const sortHref = (k: string) => {
     const u = new URLSearchParams();
-    for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'sort') u.set(key, String(v));
+    for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'sort' && key !== 'n') u.set(key, String(v));
     u.set('sort', k);
     return `/players?${u.toString()}`;
   };
@@ -155,7 +167,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     <div className="wrap">
       <div className="row-between pl-head" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow pl-eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length} shown</span>
+          <span className="eyebrow pl-eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length}{rows.length > shown.length ? `, showing ${shown.length}` : ' shown'}</span>
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}><span className="d-txt">Players</span><span className="m-txt">Player Search</span></h1>
         </div>
         <Link href="/players/rather" className="btn dark pl-rather-btn">Who’d you rather? · player values →</Link>
@@ -264,7 +276,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
             </tr>
           </thead>
           <tbody>
-            {rows.map((p, i) => {
+            {shown.map((p, i) => {
               const r = league.ratings.get(p.id)!;
               const owner = league.teams.find((t) => t.id === p.team_id);
               return (
@@ -308,6 +320,13 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
           </tbody>
         </table>
       </div>
+      {rows.length > shown.length && (
+        <nav aria-label="More players" style={{ display: 'flex', gap: 8, justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+          <span className="muted" style={{ fontSize: 13 }}>Showing {shown.length} of {rows.length}</span>
+          <Link href={moreHref(limit + PAGE)} scroll={false} className="btn dark">Show {Math.min(PAGE, rows.length - shown.length)} more</Link>
+          {rows.length - shown.length > PAGE && <Link href={moreHref(rows.length)} scroll={false} className="btn">Show all</Link>}
+        </nav>
+      )}
       {!rows.length && <p className="muted">No players match those filters. Try lowering a minimum or clearing a filter.</p>}
     </div>
   );

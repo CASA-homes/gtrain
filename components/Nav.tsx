@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { KeeperMark, KeeperWordmark } from '@/components/KeeperMark';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { PrefetchKind } from 'next/dist/client/components/router-reducer/router-reducer-types';
 import { NavSearch } from '@/components/NavSearch';
 import { NavSettings, type MyLeague } from '@/components/NavSettings';
 
@@ -34,6 +35,10 @@ const LINKS = [
 
 export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], leagueId = 1 }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null; leagues?: MyLeague[]; leagueId?: number }) {
   const path = usePathname();
+  const router = useRouter();
+  // Desktop: start loading a page the moment the mouse reaches its tab, so the click lands on a page that's already
+  // on its way (dynamic pages otherwise only prefetch their loading skeleton). Phones (no hover) are unaffected.
+  const warm = (href: string) => { try { router.prefetch(href, { kind: PrefetchKind.FULL }); } catch { /* best effort */ } };
   return (
     <nav className="nav" aria-label="Keeper HQ">
       <div className="nav-in">
@@ -43,7 +48,8 @@ export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], le
         </Link>
         <div className="nav-links">
           {LINKS.map((l) => (
-            <Link key={l.href} href={l.href} aria-label={l.label} title={l.label} aria-current={path.startsWith(l.href) ? 'page' : undefined}>
+            <Link key={l.href} href={l.href} aria-label={l.label} title={l.label} aria-current={path.startsWith(l.href) ? 'page' : undefined}
+              onMouseEnter={() => warm(l.href)} onFocus={() => warm(l.href)}>
               <Icon name={l.icon} /><span className="nav-label">{l.label}</span><span className="nav-short" aria-hidden="true">{l.short}</span>
             </Link>
           ))}
