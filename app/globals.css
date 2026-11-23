@@ -3001,3 +3001,7 @@ input.im-mini { width: 110px; cursor: text; }
   .im-r { grid-template-columns: 1fr; gap: 4px; }
   .im-act { justify-content: flex-start; flex-wrap: wrap; }
 }
+
+/* Squad setup prompt (app layout, while coaches pick their squads). */
+.su-prompt { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 auto 14px; max-width: 1360px; padding: 10px 14px; border-radius: 12px; background: var(--khq-panel); color: var(--khq-sage-deep); font-size: 14px; }
+.su-prompt a { font-weight: 700; color: var(--khq-sage-deep); white-space: nowrap; }

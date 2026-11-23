@@ -1,10 +1,10 @@
 'use client';
-// Start your league: 1 name it, 2 clubs and rules, 3 bring your league in, 4 invite your coaches.
+// Start your league: 1 name it, 2 clubs and rules, 3 how squads get filled, 4 invite your coaches.
 // The league is created at the end of step 2; steps 3 and 4 work on the new league.
 import { useState, useTransition } from 'react';
-import Link from 'next/link';
 import { KeeperMark } from '@/components/KeeperMark';
 import { createLeague, type LeagueRules } from './actions';
+import { setSetupMode } from '@/app/(app)/league/setup/actions';
 
 const SIZES = [6, 8, 10, 12, 14];
 /** The standard keeper rules (G-Train's). */
@@ -13,7 +13,7 @@ const STD: Omit<LeagueRules, 'clubs'> = {
   start_kt: 1000, keeper_cap: 925, season_cap: 1150, deficit_max: 20, home_grown_pct: 20,
   draft_r1: 30, draft_r2: 25, draft_r3: 20, draft_r4: 15, draft_rest: 10, rookie_pct: 50,
 };
-const STEPS = ['Name', 'Clubs and rules', 'Bring it in', 'Invite'];
+const STEPS = ['Name', 'Clubs and rules', 'Squads', 'Invite'];
 
 export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   const [step, setStep] = useState(0);
@@ -31,6 +31,15 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   const [made, setMade] = useState<{ leagueId: number; code: string } | null>(null);
   const [copied, setCopied] = useState(false);
   const [pending, start] = useTransition();
+  const [mode, setMode] = useState<'picks' | 'draft' | 'import' | null>(null);
+  const choose = (m: 'picks' | 'draft' | 'import') => start(async () => {
+    setErr(null);
+    const res = await setSetupMode(m);
+    if (!res.ok) return setErr(res.error);
+    setMode(m);
+    if (m === 'import') window.location.assign('/league/import?via=sheet');
+    else setStep(3);
+  });
 
   const next1 = () => {
     if (name.trim().length < 3) return setErr('Give your league a name (3 letters or more).');
@@ -140,12 +149,13 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
         </>}
 
         {step === 2 && made && <>
-          <h1 className="st-h">Bring your league in</h1>
-          <p className="st-hint" style={{ marginTop: 0 }}>{name} is set up. Already playing somewhere else? Bring your rosters across, or start fresh with a draft.</p>
-          <Link href="/league/import?via=screens" className="st-opt"><b>Screenshots</b><span>Team pages from any fantasy app. We read them for you.</span></Link>
-          <Link href="/league/import?via=sheet" className="st-opt"><b>Spreadsheet or CSV</b><span>One row per player, with their club or coach.</span></Link>
-          <button type="button" className="st-opt" onClick={() => setStep(3)}><b>Start fresh</b><span>Everyone drafts from an empty pool.</span></button>
-          <p className="st-hint">You can import later from League settings too.</p>
+          <h1 className="st-h">How do squads get filled?</h1>
+          <p className="st-hint" style={{ marginTop: 0 }}>{name} is set up. Already playing somewhere else? Coaches bring their own squads across. Brand new? Run a draft.</p>
+          <button type="button" className="st-opt" disabled={pending} onClick={() => choose('picks')}><b>Coaches pick their own players</b><span>Each coach ticks their current squad off the AFL list. First in gets the player, and you sign every squad off.</span></button>
+          <button type="button" className="st-opt" disabled={pending} onClick={() => choose('draft')}><b>Start from scratch with a draft</b><span>Brand new league. Everyone drafts from an empty pool in the draft room.</span></button>
+          <button type="button" className="st-opt" disabled={pending} onClick={() => choose('import')}><b>I’ve got a spreadsheet</b><span>Upload every club’s list yourself: one row per player, with their club or coach.</span></button>
+          {err && <p role="alert" className="lg-err">{err}</p>}
+          <p className="st-hint">You can change this later from League settings.</p>
         </>}
 
         {step === 3 && made && <>
@@ -153,8 +163,10 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
           <div className="st-code"><span className="eyebrow">League code</span><b>{made.code}</b></div>
           <button className="lg-btn" onClick={share}>{copied ? 'Invite link copied' : 'Share invite link'}</button>
           <a className="lg-alt" href={`mailto:?subject=${encodeURIComponent(`Join ${name} on Keeper HQ`)}&body=${encodeURIComponent(`Pick your club here: ${link}`)}`}>Email invites</a>
-          <p className="st-hint">Coaches pick their club when they join, and you approve them. You can change everything later in league settings.</p>
-          <a className="lg-btn" style={{ background: 'var(--khq-sage-deep)' }} href={`/auth/enter?l=${made.leagueId}`}>Go to your clubhouse</a>
+          <p className="st-hint">{mode === 'picks'
+            ? 'Coaches pick their club when they join and you approve them. Then they tick their squad off the AFL list, and you sign each one off on the squad board.'
+            : 'Coaches pick their club when they join, and you approve them. Set your draft order and date in the draft centre. You can change everything later in league settings.'}</p>
+          <a className="lg-btn" style={{ background: 'var(--khq-sage-deep)' }} href={`/auth/enter?l=${made.leagueId}${mode === 'picks' ? '&next=/league/setup' : mode === 'draft' ? '&next=/draft/centre' : ''}`}>{mode === 'picks' ? 'Pick your own squad' : mode === 'draft' ? 'Go to the draft centre' : 'Go to your clubhouse'}</a>
         </>}
       </div>
     </main>
