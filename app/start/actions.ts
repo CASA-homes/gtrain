@@ -7,6 +7,8 @@ export interface LeagueRules {
   clubs: number; rounds: number; keepers: number; list_size: number; lineup: { DEF: number; MID: number; RUC: number; FWD: number };
   start_kt: number; keeper_cap: number; season_cap: number; deficit_max: number; home_grown_pct: number;
   draft_r1: number; draft_r2: number; draft_r3: number; draft_r4: number; draft_rest: number; rookie_pct: number;
+  /** When the national draft starts (ISO). Contracts lock at this moment. */
+  draft_at?: string;
 }
 export interface NewLeague { name: string; club: string; coach: string; names: string[]; rules: LeagueRules }
 type Res = { ok: true; leagueId: number; code: string } | { ok: false; error: string };

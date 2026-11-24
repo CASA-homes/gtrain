@@ -1,5 +1,5 @@
 'use client';
-// Start your league: 1 name it, 2 clubs and rules, 3 how squads get filled, 4 invite your coaches.
+// Start your league: 1 name it, 2 clubs, draft day and rules, 3 how squads get filled, 4 invite your coaches.
 // The league is created at the end of step 2; steps 3 and 4 work on the new league.
 import { useState, useTransition } from 'react';
 import { KeeperMark } from '@/components/KeeperMark';
@@ -14,6 +14,8 @@ const STD: Omit<LeagueRules, 'clubs'> = {
   draft_r1: 30, draft_r2: 25, draft_r3: 20, draft_r4: 15, draft_rest: 10, rookie_pct: 50,
 };
 const STEPS = ['Name', 'Clubs and rules', 'Squads', 'Invite'];
+/** Perth has no daylight saving: +08:00 all year. */
+const fromPerthInput = (v: string) => new Date(`${v}:00+08:00`).toISOString();
 
 export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   const [step, setStep] = useState(0);
@@ -22,6 +24,7 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   const [coach, setCoach] = useState(defaultCoach);
   const [clubs, setClubs] = useState(10);
   const [names, setNames] = useState<string[]>([]);
+  const [draftAt, setDraftAt] = useState('');
   const [custom, setCustom] = useState(false);
   const [r, setR] = useState(STD);
   const set = (k: keyof typeof STD, v: number) => setR({ ...r, [k]: Number.isFinite(v) ? v : 0 });
@@ -48,11 +51,14 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
   };
   const create = () => start(async () => {
     setErr(null);
+    if (!draftAt) return setErr('Pick your draft day and time.');
+    const draftIso = fromPerthInput(draftAt);
+    if (Date.parse(draftIso) <= Date.now()) return setErr('Pick a draft day in the future.');
     const rules = custom ? r : STD;
     if (rules.season_cap < rules.keeper_cap) return setErr('The soft cap has to be at least the keeper cap.');
     if (rules.list_size < rules.keepers + 4) return setErr('The list needs room for at least 4 draftees beyond your keepers.');
     if (rules.list_size < starters + 4) return setErr('The list has to fit your starting team plus a bench.');
-    const res = await createLeague({ name, club, coach, names: [club, ...Array.from({ length: clubs - 1 }, (_, i) => names[i + 1] ?? '')], rules: { ...rules, clubs } });
+    const res = await createLeague({ name, club, coach, names: [club, ...Array.from({ length: clubs - 1 }, (_, i) => names[i + 1] ?? '')], rules: { ...rules, clubs, draft_at: draftIso } });
     if (!res.ok) return setErr(res.error);
     setMade({ leagueId: res.leagueId, code: res.code }); setStep(2);
   });
@@ -98,6 +104,9 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
             </div>
             <p className="st-hint">Coaches can rename their own club when they join.</p>
           </details>
+          <label className="st-lab" htmlFor="st-draft">Draft day</label>
+          <input id="st-draft" className="lg-in" type="datetime-local" value={draftAt} onChange={(e) => setDraftAt(e.target.value)} />
+          <p className="st-hint" style={{ marginTop: 4 }}>Perth time. Keeper contracts lock when the draft starts. You can move it later in the draft centre.</p>
           <span className="st-lab">Rules</span>
           <button type="button" className="st-opt" aria-pressed={!custom} onClick={() => setCustom(false)}>
             <b>Standard keeper</b><span>{STD.keepers} keepers (incl. a rookie) · {STD.list_size}-man lists · ${STD.keeper_cap}k keeper cap · ${STD.season_cap}k soft cap · {STD.start_kt.toLocaleString()} KT each · {STD.rounds}-round draft</span>
@@ -165,7 +174,7 @@ export function StartWizard({ defaultCoach }: { defaultCoach: string }) {
           <a className="lg-alt" href={`mailto:?subject=${encodeURIComponent(`Join ${name} on Keeper HQ`)}&body=${encodeURIComponent(`Pick your club here: ${link}`)}`}>Email invites</a>
           <p className="st-hint">{mode === 'picks'
             ? 'Coaches pick their club when they join and you approve them. Then they tick their squad off the AFL list, and you sign each one off on the squad board.'
-            : 'Coaches pick their club when they join, and you approve them. Set your draft order and date in the draft centre. You can change everything later in league settings.'}</p>
+            : 'Coaches pick their club when they join, and you approve them. Set your draft order in the draft centre. You can change everything later in league settings.'}</p>
           <a className="lg-btn" style={{ background: 'var(--khq-sage-deep)' }} href={`/auth/enter?l=${made.leagueId}${mode === 'picks' ? '&next=/league/setup' : mode === 'draft' ? '&next=/draft/centre' : ''}`}>{mode === 'picks' ? 'Pick your own squad' : mode === 'draft' ? 'Go to the draft centre' : 'Go to your clubhouse'}</a>
         </>}
       </div>
