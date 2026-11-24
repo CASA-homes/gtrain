@@ -49,11 +49,18 @@ export function DraftSettings({ room, started }: { room: RoomSettings; started: 
 
   async function save() {
     setBusy(true); setMsg(null);
-    const { error } = await supabase.from('draft_room').update({
+    // Upsert, not update: a brand-new league has no draft room row yet, so a plain update saved nothing.
+    // league_id is filled in by the database (current league), and the key is (league_id, year).
+    const { data, error } = await supabase.from('draft_room').upsert({
+      year: DRAFT_YEAR,
       snake: s.snake, starts_at: fromPerthInput(s.starts), pick_seconds: s.pick_seconds, break_every: s.break_every,
       break_minutes: s.break_minutes, trading: s.trading, list_max: s.list_max, updated_at: new Date().toISOString(),
-    }).eq('year', DRAFT_YEAR);
+    }, { onConflict: 'league_id,year' }).select('year');
     setBusy(false);
+    if (!error && !data?.length) {
+      setMsg({ ok: false, text: 'Nothing was saved. Only the commish can change draft settings.' });
+      return;
+    }
     setMsg(error ? { ok: false, text: error.message } : { ok: true, text: 'Saved. Everyone sees the new settings straight away.' });
     if (!error) router.refresh();
   }
