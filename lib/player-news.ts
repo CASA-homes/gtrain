@@ -5,6 +5,22 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'N. Wanganeen-Milera', tag: 'Injury', date: '2026-11-24', title: 'Nasiah back in full training early',
+    body: 'Wanganeen-Milera is already doing full pre-season work at St Kilda after the hamstring strain that finished his 2026 in round 22. A clean summer is exactly what Pato’s Fantasy Team want from a keeper who averaged 105 last year.',
+  },
+  {
+    player: 'J. Sinclair', tag: 'Injury', date: '2026-11-24', title: 'Sinclair over his calf tear',
+    body: 'Sinclair has rejoined full training this week after a torn calf cost him the last eight games of 2026. He was still averaging 99 before it went, so Such Is Fyfe’s keeper looks set for a normal run at round 1.',
+  },
+  {
+    player: 'T. De Koning', tag: 'Injury', date: '2026-11-24', title: 'De Koning modified after shoulder surgery',
+    body: 'The Saints have De Koning on a modified program while he rehabs off-season shoulder surgery, with the club expecting him to be training properly after Christmas. His average slid from 85 to 64 in 2026, so NSW-ACT Academy will want a full January out of him.',
+  },
+  {
+    player: 'D. Wilson', tag: 'Role', date: '2026-11-24', title: 'Wilson wins fourth straight Saints time trial',
+    body: 'Wilson took out St Kilda’s time trial at Moorabbin again on Tuesday, making it four from four since he was drafted. Fresh off an 83 average in 2026, his tank is in great shape heading into a big summer for the Bodega Boys keeper.',
+  },
+  {
     player: 'C. Warner', tag: 'Trade', date: '2026-11-21', title: 'Eagles bank extra first for Warner tilt',
     body: 'West Coast swapped pick 23 for North’s 2027 first-rounder, giving them two firsts next year, and it’s being read as ammo for a bid on Warner, who is a restricted free agent at the end of 2027. The Eagles wouldn’t talk specifics and no offer has been reported, with Tasmania also keen. Nothing changes for 2027 scoring, but keepers holding him should watch where he lands for 2028.',
   },
@@ -57,23 +73,7 @@ export const PLAYER_NEWS: PlayerStory[] = [
     body: 'Port high-performance boss Tim Parham says Rozee is now training in drills after a minor UK procedure to clear scar tissue around the nerve in his torn hamstring, though he’s not quite at full speed. Parham is bullish about round 1 against North Melbourne, roughly four and a half months off. If he gets there, Serong So’Right get back a mid who averaged over 100 in 2025.',
   },
   {
-    player: 'J. Viney', tag: 'Role', date: '2026-11-10', title: 'Viney hits the ground running at West Coast',
-    body: 'The 32-year-old ex-Demon was the last off the track on the Eagles’ first day back, doing a heavy running and skills session alongside young mid Bo Allan. West Coast recruited him for his midfield craft, so expect plenty of centre time in a rebuilding side. A fit Viney in a big midfield role is a handy bounce-back option after he managed just one game in 2026.',
-  },
-  {
     player: 'H. Reid', tag: 'Injury', date: '2026-11-10', title: 'Reid modified on day one, banned rounds 1–2',
     body: 'Reid did a modified session on the Eagles’ first day back, running and agility work but no footy drills, after his end-of-season shoulder clean-up. No return date has been given. He still carries a two-match ban for a dangerous tackle into 2027, so he misses the first two rounds regardless.',
-  },
-  {
-    player: 'Z. Williams', tag: 'Retired', date: '2026-11-09', title: 'Zac Williams calls it a day',
-    body: 'Delisted by Carlton at the end of 2026 and not picked up elsewhere, Williams has announced his retirement after 183 games across GWS and Carlton. He won’t be on an AFL list in 2027, so he’s no use to anyone’s fantasy side.',
-  },
-  {
-    player: 'D. Prestia', tag: 'Retired', date: '2026-11-09', title: 'Prestia retired, now a Hawks coach',
-    body: 'Prestia retired at the end of 2026 and has been unveiled as a development coach at Hawthorn. Separately, he and Steven May are reportedly facing a civil lawsuit over a 2024 pub incident, after the criminal charges were dropped in May. Either way, he’s done as a player, so scratch him from fantasy plans.',
-  },
-  {
-    player: 'B. Daniels', tag: 'Injury', date: '2026-11-08', title: 'Daniels on track before Christmas',
-    body: 'GWS say Daniels is managing a soft-tissue issue but should be in full pre-season training before Christmas, with his load modified early. Not a long-term worry, so he looks a safe keeper for Serong So’Right if he stays on the park.',
   },
 ];
