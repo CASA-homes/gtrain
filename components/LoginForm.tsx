@@ -123,6 +123,11 @@ export function LoginForm({ linkError, initialMode = 'login', founder = false, n
       <button type="submit" className="lg-btn" disabled={sending}><i aria-hidden="true" />
         {sending ? 'One moment…' : mode === 'signup' ? 'Email me a code' : usePw ? 'Log in' : 'Email me a sign-in link'}
       </button>
+      {mode === 'signup' && (
+        <span className="lg-note" style={{ fontSize: 12 }}>
+          By signing up you agree to the <a href="/terms" target="_blank" rel="noopener">Terms of Use</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
+        </span>
+      )}
       {mode === 'login' && <button type="button" className="lg-alt" onClick={() => { setUsePw(!usePw); setState({ kind: 'idle' }); }}>{usePw ? 'No password? Email me a sign-in link' : 'Log in with a password'}</button>}
       <span role="status" className={state.kind === 'error' ? 'lg-err' : 'lg-note'}>
         {state.kind === 'error' ? state.message
