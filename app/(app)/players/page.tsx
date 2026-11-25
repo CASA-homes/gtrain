@@ -276,7 +276,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         </details>
       </form>
       {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages, games played and AFL Fantasy positions. Owners, ratings and value are still current (2026).</p>}
-      {y27 && <p style={{ margin: 0, fontSize: 13, background: '#e8f0fb', color: '#2c4a72', borderRadius: 10, padding: '8px 12px' }}>The <b>2026 AFL draft class</b>: {league.draftClass.filter((d) => d.pick.kind === 'national').length} National Draft picks and {league.draftClass.filter((d) => d.pick.kind === 'rookie').length} Rookie Draft picks, in order. They’re free agents in the keeper league until a coach drafts them, and they show in All, Not owned and your watchlist on the 2026 tab too. No AFL games yet, so there’s no average or value; potential comes from draft position and age. Positions are the clubs’ descriptions until AFL Fantasy sets 2027 positions.</p>}
+      {y27 && <p style={{ margin: 0, fontSize: 13, background: '#e8f0fb', color: '#2c4a72', borderRadius: 10, padding: '8px 12px' }}>The <b>2026 AFL draft class</b>: {league.draftClass.filter((d) => d.pick.kind === 'national').length} National Draft picks and {league.draftClass.filter((d) => d.pick.kind === 'rookie').length} Rookie Draft picks, in order. They’re free agents in the keeper league until a coach drafts them, and they show in All, Not owned and your watchlist on the 2026 tab too. No AFL games yet, so there’s no average or value. Potential is fantasy potential: where he was picked, his junior average (Champion Data ranking points, from Kevin Sheehan’s top 40) and his role, so ball-winning midfielders rate high and tall defenders and key forwards rate low. Positions are the clubs’ descriptions until AFL Fantasy sets 2027 positions.</p>}
       <p className="muted pl-note" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
       {y27 ? (
@@ -285,7 +285,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
             <thead>
               <tr>
                 <th style={{ width: 70 }}>Pick</th><th style={{ width: 70 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>Owner</th>
-                <th style={{ width: 44, textAlign: 'center' }}>Age</th><th style={{ width: 60, textAlign: 'center' }}>Height</th><th>Drafted from</th><th>Note</th><th style={{ width: 110 }}>Potential</th>
+                <th style={{ width: 44, textAlign: 'center' }}>Age</th><th style={{ width: 60, textAlign: 'center' }}>Height</th><th style={{ width: 70, textAlign: 'center' }} title="Junior average, Champion Data ranking points">Junior</th><th>Drafted from</th><th>Note</th><th style={{ width: 110 }}>Potential</th>
               </tr>
             </thead>
             <tbody>
@@ -306,6 +306,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
                     </td>
                     <td style={{ textAlign: 'center' }} className="mono">{age(p.birth_date) ?? '–'}</td>
                     <td style={{ textAlign: 'center' }} className="mono">{p.height_cm ? `${Math.round(p.height_cm)}` : '–'}</td>
+                    <td style={{ textAlign: 'center' }} className="mono" title={d.jr != null ? `${d.jr} ranking points · ${d.jrFrom}` : 'No published junior numbers'}>{d.jr != null ? Math.round(d.jr) : '–'}</td>
                     <td className="muted" style={{ whiteSpace: 'nowrap' }}>{d.from}</td>
                     <td className="muted" style={{ fontSize: 12 }}>{d.note ?? ''}</td>
                     <td>{r ? <Stars value={r.potential} colour={C.green5} label="Potential" /> : '–'}</td>

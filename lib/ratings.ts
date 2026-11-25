@@ -1,5 +1,6 @@
 import { bounceBack } from '@/lib/injury';
 import JUNIOR_FP from '@/lib/junior-fp.json';
+import { DRAFT_2026, type Draftee, type DraftRole } from '@/lib/draft-2026';
 // League maths: colour bands, Best 22, 1–20 ratings, value scores and team status.
 // Every number on the site comes from these functions so the rules live in one place.
 
@@ -366,7 +367,28 @@ export function projectedPeak(p: Pick<PlayerRow, 'birth_date' | 'hist' | 'averag
   return (base + momentum) * Math.min(1.15, growth);
 }
 
+/** Fantasy scoring lean of each draftee role, in points of projected peak average. */
+const ROLE_ADJ: Record<DraftRole, number> = {
+  mid: 4, 'mid-fwd': 1, 'def-mid': 1, 'fwd-mid': -1, wing: 0, 'rebound-def': 0, ruck: -1,
+  'intercept-def': -6, 'med-fwd': -6, 'tall-util': -7, 'tall-fwd': -9, 'tall-def': -10,
+};
+const DRAFTEES = new Map(DRAFT_2026.map((d) => [d.name.toLowerCase(), d]));
+
+/** Fantasy potential for a 2026 draftee who hasn't played an AFL game: a projected peak average built from where he
+ *  was picked, what he scored as a junior and the job he does, then starred on the usual scale. A top-10 pick who's
+ *  a tall or intercept defender (Mitchell Harris, 57 ranking points at the U18 Champs) lands low; a ball-winning
+ *  midfielder who piled up junior numbers (Ethan Matthews, 126) lands high. */
+function draftPotential(d: Draftee, a: number): number {
+  const p = d.pick;
+  const base = d.kind === 'rookie' ? 77 : p <= 3 ? 92 : p <= 10 ? 89 : p <= 20 ? 86 : p <= 40 ? 83 : 80;
+  const junior = d.jr != null ? clamp((d.jr - 95) * 0.35, -14, 10) : -2;   // no published numbers: a little below par
+  const older = a >= 24 ? -6 : a >= 21 ? -3 : 0;                             // mature-age picks have less growth left
+  return halfStar(Math.min(4.5, abilityStars(base + junior + ROLE_ADJ[d.role] + older)));
+}
+
 export function potential(p: Pick<PlayerRow, 'full_name' | 'birth_date' | 'draft_pick' | 'draft_year' | 'career_games' | 'hist' | 'average' | 'games_log'>, lineBonus = 0): number | null {
+  const dr = p.full_name ? DRAFTEES.get(p.full_name.toLowerCase()) : undefined;
+  if (dr && !(p.hist ?? []).some((h) => h[1] > 0)) return draftPotential(dr, age(p.birth_date) ?? (dr.kind === 'rookie' ? 18 : 18));
   const a = age(p.birth_date);
   if (a == null) return null;
   const hist = (p.hist ?? []).filter((h) => h[1] > 0);

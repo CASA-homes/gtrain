@@ -3,7 +3,12 @@
 // Zero Hanger, afl.com.au and Draftguru (rookie). Positions are the clubs' / draft cards' descriptions until AFL Fantasy
 // sets 2027 positions. Re-drafted and re-listed players are matched to their existing records by name.
 export type DraftKind = 'national' | 'rookie';
-export interface Draftee { kind: DraftKind; pick: number; club: string; name: string; pos: 'DEF' | 'MID' | 'RUC' | 'FWD'; from: string; dob: string | null; height: number | null; note: string | null }
+/** The job he does, as his draft profile describes it. Drives fantasy potential: midfielders score, tall defenders and key forwards don't. */
+export type DraftRole = 'mid' | 'mid-fwd' | 'fwd-mid' | 'def-mid' | 'wing' | 'rebound-def' | 'intercept-def' | 'tall-def' | 'ruck' | 'med-fwd' | 'tall-fwd' | 'tall-util';
+export interface Draftee { kind: DraftKind; pick: number; club: string; name: string; pos: 'DEF' | 'MID' | 'RUC' | 'FWD'; from: string; dob: string | null; height: number | null; note: string | null;
+  role: DraftRole;
+  /** junior average (Champion Data ranking points, from Kevin Sheehan's top 40, afl.com.au Nov 2026) and where it came from */
+  jr: number | null; jrFrom: string | null }
 
 export const DRAFT_2026: Draftee[] = [
  {
@@ -15,7 +20,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Central District",
   "dob": "2008-05-02",
   "height": 195,
-  "note": "Bid matched (NGA)"
+  "note": "Bid matched (NGA)",
+  "role": "tall-util",
+  "jr": 125.0,
+  "jrFrom": "SANFL U18 2025"
  },
  {
   "kind": "national",
@@ -26,7 +34,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "GWV Rebels",
   "dob": "2008-07-10",
   "height": 189,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 101.2,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -37,7 +48,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Bendigo Pioneers",
   "dob": "2008-01-26",
   "height": 186,
-  "note": "Bid matched (father-son)"
+  "note": "Bid matched (father-son)",
+  "role": "mid",
+  "jr": 79.7,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -48,7 +62,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-04-23",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "fwd-mid",
+  "jr": 100.6,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -59,7 +76,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Claremont",
   "dob": "2008-07-27",
   "height": 185,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 105.1,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -70,7 +90,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "GWS Academy",
   "dob": "2008-09-04",
   "height": 186,
-  "note": "Bid matched (academy)"
+  "note": "Bid matched (academy)",
+  "role": "mid",
+  "jr": 126.0,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -81,7 +104,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Woodville-West Torrens",
   "dob": "2008-07-01",
   "height": 196,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": 57.2,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -92,7 +118,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": "2008-07-01",
   "height": 205,
-  "note": null
+  "note": null,
+  "role": "ruck",
+  "jr": 92.7,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -103,7 +132,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Brisbane Lions Academy",
   "dob": "2008-01-03",
   "height": 179,
-  "note": "Brisbane academy, bid not matched"
+  "note": "Brisbane academy, bid not matched",
+  "role": "def-mid",
+  "jr": 112.8,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -114,7 +146,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Swan Districts",
   "dob": "2008-03-07",
   "height": 176,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 113.2,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -125,7 +160,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-03-29",
   "height": 180,
-  "note": null
+  "note": null,
+  "role": "fwd-mid",
+  "jr": 114.1,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -136,7 +174,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": "2008-05-21",
   "height": 194,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": 92.9,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -147,7 +188,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Central District",
   "dob": "2008-07-29",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "rebound-def",
+  "jr": 81.5,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -158,7 +202,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": "2008-02-28",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 87.7,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -169,7 +216,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-04-11",
   "height": 180,
-  "note": null
+  "note": null,
+  "role": "mid-fwd",
+  "jr": 69.4,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -180,7 +230,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-09-16",
   "height": 195,
-  "note": null
+  "note": null,
+  "role": "intercept-def",
+  "jr": 87.1,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -191,7 +244,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "GWV Rebels",
   "dob": "2008-08-10",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": 51.2,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -202,7 +258,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-06-21",
   "height": 173,
-  "note": null
+  "note": null,
+  "role": "fwd-mid",
+  "jr": 124.4,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -213,7 +272,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gippsland Power",
   "dob": "2008-08-21",
   "height": 197,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": 71.3,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -224,7 +286,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gippsland Power",
   "dob": "2008-10-12",
   "height": 190,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": 72.9,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -235,7 +300,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": "2008-12-04",
   "height": 176,
-  "note": null
+  "note": null,
+  "role": "fwd-mid",
+  "jr": 98.9,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -246,7 +314,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Geelong Falcons",
   "dob": "2008-01-22",
   "height": 177,
-  "note": null
+  "note": null,
+  "role": "def-mid",
+  "jr": 84.6,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -257,7 +328,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Claremont",
   "dob": "2008-09-06",
   "height": 191,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 101.8,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -268,7 +342,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "East Perth",
   "dob": "2006-06-22",
   "height": 192,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": 96.0,
+  "jrFrom": "WAFL"
  },
  {
   "kind": "national",
@@ -279,7 +356,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": "2008-04-18",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "rebound-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -290,7 +370,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Geelong Falcons",
   "dob": "2008-03-06",
   "height": 193,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": 97.0,
+  "jrFrom": "Talent League 2025"
  },
  {
   "kind": "national",
@@ -301,7 +384,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "South Adelaide",
   "dob": "2008-07-25",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "mid-fwd",
+  "jr": 104.9,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -312,7 +398,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "South Adelaide",
   "dob": "2008-07-28",
   "height": 190,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 114.6,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -323,7 +412,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": "2008-01-30",
   "height": 183,
-  "note": null
+  "note": null,
+  "role": "wing",
+  "jr": 76.4,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -334,7 +426,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Claremont",
   "dob": "2008-09-17",
   "height": 203,
-  "note": null
+  "note": null,
+  "role": "ruck",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -345,7 +440,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": "2008-02-21",
   "height": 187,
-  "note": null
+  "note": null,
+  "role": "def-mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -356,7 +454,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "West Perth",
   "dob": "2008-09-08",
   "height": 195,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -367,7 +468,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Western Jets",
   "dob": "2008-07-04",
   "height": 175,
-  "note": "Bid matched (academy)"
+  "note": "Bid matched (academy)",
+  "role": "fwd-mid",
+  "jr": 113.0,
+  "jrFrom": "Talent League"
  },
  {
   "kind": "national",
@@ -378,7 +482,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gippsland Power",
   "dob": "2008-10-16",
   "height": 203,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": 57.1,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -389,7 +496,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Oakleigh Chargers",
   "dob": "2008-08-30",
   "height": 196,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -400,7 +510,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Eastern Ranges",
   "dob": "2008-09-24",
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "def-mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -411,7 +524,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Calder Cannons",
   "dob": "2008-10-04",
   "height": 187,
-  "note": null
+  "note": null,
+  "role": "mid-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -422,7 +538,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Western Jets",
   "dob": "2008-01-19",
   "height": 184,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 85.3,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -433,7 +552,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Glenelg",
   "dob": "2008-03-26",
   "height": 185,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -444,7 +566,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Werribee (VFL)",
   "dob": "2004-12-19",
   "height": 194,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": 76.0,
+  "jrFrom": "VFL"
  },
  {
   "kind": "national",
@@ -455,7 +580,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Eastern Ranges",
   "dob": "2008-01-05",
   "height": 180,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": 86.0,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -466,7 +594,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Perth",
   "dob": "2002-06-26",
   "height": 196,
-  "note": null
+  "note": null,
+  "role": "tall-util",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -477,7 +608,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": "2008-05-29",
   "height": 198,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -488,7 +622,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "North Adelaide",
   "dob": "2008-02-12",
   "height": 181,
-  "note": null
+  "note": null,
+  "role": "rebound-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -499,7 +636,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": "2008-08-11",
   "height": 183,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -510,7 +650,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "North Adelaide",
   "dob": "2008-11-01",
   "height": 201,
-  "note": null
+  "note": null,
+  "role": "ruck",
+  "jr": 94.9,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -521,7 +664,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "South Adelaide",
   "dob": "2008-06-06",
   "height": 185,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -532,7 +678,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Geelong",
   "dob": "2003-01-08",
   "height": 193,
-  "note": "Delisted by Geelong"
+  "note": "Delisted by Geelong",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -543,7 +692,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": "2008-05-27",
   "height": 189,
-  "note": null
+  "note": null,
+  "role": "def-mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -554,7 +706,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Werribee (VFL)",
   "dob": "2000-10-08",
   "height": 183,
-  "note": null
+  "note": null,
+  "role": "mid-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -565,7 +720,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Glenelg",
   "dob": "2008-11-27",
   "height": 193,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -576,7 +734,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": null,
   "height": null,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -587,7 +748,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Eastern Ranges",
   "dob": "2008-03-27",
   "height": 189,
-  "note": null
+  "note": null,
+  "role": "rebound-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -598,7 +762,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sydney Swans Academy",
   "dob": "2008-11-04",
   "height": 190,
-  "note": "Bid matched (father-son)"
+  "note": "Bid matched (father-son)",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -609,7 +776,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Calder Cannons",
   "dob": "2008-09-29",
   "height": 192,
-  "note": "Bid matched (NGA)"
+  "note": "Bid matched (NGA)",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -620,7 +790,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "West Adelaide",
   "dob": "2008-03-23",
   "height": 184,
-  "note": "Adelaide NGA, bid not matched"
+  "note": "Adelaide NGA, bid not matched",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -631,7 +804,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sydney Swans Academy",
   "dob": "2008-06-02",
   "height": 193,
-  "note": "Sydney academy, bid not matched"
+  "note": "Sydney academy, bid not matched",
+  "role": "tall-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -642,7 +818,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Brisbane Lions Academy",
   "dob": "2008-07-26",
   "height": 181,
-  "note": "Bid matched (father-son)"
+  "note": "Bid matched (father-son)",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -653,7 +832,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gippsland Power",
   "dob": "2008-11-03",
   "height": 179,
-  "note": "Bid matched (NGA)"
+  "note": "Bid matched (NGA)",
+  "role": "fwd-mid",
+  "jr": 81.0,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -664,7 +846,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Geelong (VFL)",
   "dob": "2007-07-06",
   "height": 178,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -675,7 +860,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sydney Swans Academy",
   "dob": "2008-09-18",
   "height": 195,
-  "note": "Bid matched (academy)"
+  "note": "Bid matched (academy)",
+  "role": "tall-def",
+  "jr": 63.5,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "national",
@@ -686,7 +874,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "West Perth",
   "dob": "2008-04-26",
   "height": 192,
-  "note": null
+  "note": null,
+  "role": "tall-fwd",
+  "jr": 100.0,
+  "jrFrom": "Australia U18"
  },
  {
   "kind": "national",
@@ -697,7 +888,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gold Coast",
   "dob": "1998-06-04",
   "height": 200,
-  "note": "Re-drafted"
+  "note": "Re-drafted",
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -708,7 +902,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gold Coast",
   "dob": "2002-04-04",
   "height": 197,
-  "note": "Re-drafted"
+  "note": "Re-drafted",
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "national",
@@ -719,7 +916,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Claremont",
   "dob": "2008-12-18",
   "height": 181,
-  "note": "Father-son"
+  "note": "Father-son",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -730,7 +930,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Essendon (VFL)",
   "dob": null,
   "height": 207,
-  "note": null
+  "note": null,
+  "role": "ruck",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -741,7 +944,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Richmond",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "fwd-mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -752,7 +958,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Western Jets",
   "dob": null,
   "height": 195,
-  "note": null
+  "note": null,
+  "role": "tall-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -763,7 +972,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "St Kilda",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -774,7 +986,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Collingwood",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -785,7 +1000,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Dandenong Stingrays",
   "dob": null,
   "height": 168,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -796,7 +1014,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Western Bulldogs",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -807,7 +1028,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Gippsland Power",
   "dob": null,
   "height": 181,
-  "note": null
+  "note": null,
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -818,7 +1042,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": null,
   "height": 182,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -829,7 +1056,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Sandringham Dragons",
   "dob": null,
   "height": 187,
-  "note": null
+  "note": null,
+  "role": "wing",
+  "jr": 103.0,
+  "jrFrom": "U18 Champs"
  },
  {
   "kind": "rookie",
@@ -840,7 +1070,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Fremantle",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -851,7 +1084,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Northern Knights",
   "dob": null,
   "height": 189,
-  "note": null
+  "note": null,
+  "role": "rebound-def",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -862,7 +1098,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Williamstown (VFL)",
   "dob": "1998-07-22",
   "height": 196,
-  "note": "Ex-North Melbourne"
+  "note": "Ex-North Melbourne",
+  "role": "tall-fwd",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -873,7 +1112,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "St Kilda",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "def-mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -884,7 +1126,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Calder Cannons",
   "dob": null,
   "height": 181,
-  "note": null
+  "note": null,
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -895,7 +1140,10 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Brisbane",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "mid",
+  "jr": null,
+  "jrFrom": null
  },
  {
   "kind": "rookie",
@@ -906,6 +1154,9 @@ export const DRAFT_2026: Draftee[] = [
   "from": "Brisbane",
   "dob": null,
   "height": null,
-  "note": "Re-listed as a rookie"
+  "note": "Re-listed as a rookie",
+  "role": "med-fwd",
+  "jr": null,
+  "jrFrom": null
  }
 ];
