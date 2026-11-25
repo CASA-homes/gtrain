@@ -82,6 +82,9 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
   const period = PERIODS.some(([k]) => k === sp.period) ? sp.period! : 'season';
   // Season toggle: 2025 swaps the average and games played for last year's numbers (positions stay current).
   const y25 = sp.yr === '2025';
+  // 2027: the 2026 draft class (national then rookie draft), in pick order.
+  const y27 = sp.yr === '2027';
+  const yearSel = y27 ? '2027' : y25 ? '2025' : '2026';
   const h25 = (p: PlayerRow) => (p.hist ?? []).find((h) => h[0] === 2025) ?? null;
   // 2025 mode uses the positions Champion Data set for 2025 (falls back to current for players who weren't listed).
   const posOf = (p: PlayerRow): Line[] => (y25 ? positions2025(p.full_name, p.afl_club) ?? p.positions : p.positions);
@@ -122,6 +125,17 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
       return (y ?? -1) - (x ?? -1) || ((rates.get(b.id) ?? 0) - (rates.get(a.id) ?? 0));
     });
 
+  // 2027 tab: the draft class in pick order, filtered by the same ownership toggle, search, position, club and age.
+  const byId = new Map([...league.players, ...league.freeAgents].map((p) => [p.id, p]));
+  const classAll = league.draftClass.map((d) => ({ d: d.pick, p: byId.get(d.id)! })).filter((x) => x.p);
+  const inOwn = (p: PlayerRow) => own === 'owned' ? p.team_id > 0 : own === 'free' ? p.team_id === 0 : own === 'watch' ? watch.ids.has(p.id) : true;
+  const classRows = classAll.filter(({ p }) => inOwn(p)
+    && (!q || p.name.toLowerCase().includes(q) || (p.full_name ?? '').toLowerCase().includes(q))
+    && (!line || p.positions.includes(line)) && (!club || p.afl_club === club)
+    && (!team || own === 'free' || p.team_id === team) && (sp.mine !== 'not' || p.team_id !== me?.team_id)
+    && (ageMin == null || (age(p.birth_date) ?? 0) >= ageMin) && (ageMax == null || (age(p.birth_date) ?? 99) <= ageMax));
+  const classCount = (o: string) => classAll.filter(({ p }) => o === 'owned' ? p.team_id > 0 : o === 'free' ? p.team_id === 0 : watch.ids.has(p.id)).length;
+
   const limit = Math.max(PAGE, Math.min(2000, Number(sp.n) || PAGE));
   const shown = rows.slice(0, limit);
   const moreHref = (n: number) => {
@@ -147,7 +161,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
   );
   const active = (preset: Record<string, string>) => Object.entries(preset).every(([k, v]) => sp[k as keyof SP] === v);
   const presetHref = (preset: Record<string, string>) => `/players?${new URLSearchParams({ ...(own !== 'all' ? { own } : {}), ...(y25 ? { yr: '2025' } : {}), ...(line ? { line } : {}), ...preset }).toString()}`;
-  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'all' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}), ...(y25 ? { yr: '2025' } : {}) }).toString()}`;
+  const ownHref = (o: string) => `/players?${new URLSearchParams({ ...(o !== 'all' ? { own: o } : {}), ...(sp.q ? { q: sp.q } : {}), ...(line ? { line } : {}), ...(club ? { club } : {}), ...(status ? { status } : {}), ...(period !== 'season' ? { period } : {}), ...(y25 || y27 ? { yr: yearSel } : {}) }).toString()}`;
   const activeFilters = [line, club, status, team && own !== 'free' ? 'team' : null, sp.mine, period !== 'season' ? period : null, sp.agemin, sp.agemax, sp.avgmax, ...filters.map((f) => f[0])].filter(Boolean).length;
   const periodLabel = PERIODS.find(([k]) => k === period)![1];
   const groups = ['Rating', 'Fantasy profile', 'Game attributes'] as const;
@@ -167,7 +181,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
     <div className="wrap">
       <div className="row-between pl-head" style={{ alignItems: 'flex-end', flexWrap: 'wrap', gap: 12 }}>
         <div>
-          <span className="eyebrow pl-eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length}{rows.length > shown.length ? `, showing ${shown.length}` : ' shown'}</span>
+          {y27 ? <span className="eyebrow pl-eyebrow">2026 draft class · {own === 'owned' ? 'drafted into the league' : own === 'free' ? 'not owned yet' : own === 'watch' ? 'on your watchlist' : 'every pick'} · {classRows.length} shown</span> : <span className="eyebrow pl-eyebrow">{own === 'owned' ? 'On a league list' : own === 'watch' ? `Your watchlist · only you see this${watch.synced ? '' : ' · saved on this device'}` : own === 'free' ? `Nobody owns them · from Keeper, ${FREE_AGENTS_UPDATED.split('-').reverse().join('/')}` : 'Every player'} · {rows.length}{rows.length > shown.length ? `, showing ${shown.length}` : ' shown'}</span>}
           <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}><span className="d-txt">Players</span><span className="m-txt">Player Search</span></h1>
         </div>
         <Link href="/players/rather" className="btn dark pl-rather-btn">Who’d you rather? · player values →</Link>
@@ -187,15 +201,16 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
 
       <form className="card players-filter" style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 10 }}>
         {own !== 'all' && <input type="hidden" name="own" value={own} />}
-        {y25 && <input type="hidden" name="yr" value="2025" />}
+        {(y25 || y27) && <input type="hidden" name="yr" value={yearSel} />}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input name="q" defaultValue={sp.q} placeholder="Search a player" className="input" style={{ flex: 1, minWidth: 0 }} aria-label="Search a player" />
           <span className="own-toggle own-year pf-year-m" role="tablist" aria-label="Season">
-              {(['2026', '2025'] as const).map((y) => {
+              {(['2027', '2026', '2025'] as const).map((y) => {
                 const u = new URLSearchParams();
-                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
-                if (y === '2025') u.set('yr', '2025');
-                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={(y === '2025') === y25} className={(y === '2025') === y25 ? 'on' : undefined}>{y}</Link>;
+                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period' && key !== 'n') u.set(key, String(v));
+                if (y !== '2026') u.set('yr', y);
+                const on = y === yearSel;
+                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={on} className={on ? 'on' : undefined} title={y === '2027' ? 'The 2026 draft class' : undefined}>{y}</Link>;
               })}
           </span>
           <button type="submit" className="btn dark pf-go">Go</button>
@@ -207,15 +222,16 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
               <span className="pf-lab">Filters</span>{activeFilters ? <span className="pf-n">{activeFilters}</span> : null}
             </span>
             <span className="own-toggle own-year pf-year-d" role="tablist" aria-label="Season">
-              {(['2026', '2025'] as const).map((y) => {
+              {(['2027', '2026', '2025'] as const).map((y) => {
                 const u = new URLSearchParams();
-                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period') u.set(key, String(v));
-                if (y === '2025') u.set('yr', '2025');
-                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={(y === '2025') === y25} className={(y === '2025') === y25 ? 'on' : undefined}>{y}</Link>;
+                for (const [key, v] of Object.entries(sp)) if (v != null && v !== '' && key !== 'yr' && key !== 'period' && key !== 'n') u.set(key, String(v));
+                if (y !== '2026') u.set('yr', y);
+                const on = y === yearSel;
+                return <Link key={y} href={`/players?${u.toString()}`} role="tab" aria-selected={on} className={on ? 'on' : undefined} title={y === '2027' ? 'The 2026 draft class' : undefined}>{y}</Link>;
               })}
             </span>
             <span className="own-toggle own-main" role="tablist" aria-label="Ownership">
-              {([['all', 'All', null], ['owned', 'Owned', league.players.length], ['free', 'Not owned', league.freeAgents.length], ['watch', 'Watchlist', watch.ids.size]] as const).map(([k, lab, n]) => (
+              {([['all', 'All', y27 ? classAll.length : null], ['owned', 'Owned', y27 ? classCount('owned') : league.players.length], ['free', 'Not owned', y27 ? classCount('free') : league.freeAgents.length], ['watch', 'Watchlist', y27 ? classCount('watch') : watch.ids.size]] as const).map(([k, lab, n]) => (
                 <Link key={k} href={ownHref(k)} role="tab" aria-selected={own === k} className={own === k ? 'on' : undefined}>
                   {lab}{n != null && <span>{n}</span>}
                 </Link>
@@ -260,8 +276,47 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         </details>
       </form>
       {y25 && <p style={{ margin: 0, fontSize: 13, background: '#fbf3dc', color: '#7a5a12', borderRadius: 10, padding: '8px 12px' }}>Showing <b>2025</b> averages, games played and AFL Fantasy positions. Owners, ratings and value are still current (2026).</p>}
+      {y27 && <p style={{ margin: 0, fontSize: 13, background: '#e8f0fb', color: '#2c4a72', borderRadius: 10, padding: '8px 12px' }}>The <b>2026 AFL draft class</b>: {league.draftClass.filter((d) => d.pick.kind === 'national').length} National Draft picks and {league.draftClass.filter((d) => d.pick.kind === 'rookie').length} Rookie Draft picks, in order. They’re free agents in the keeper league until a coach drafts them, and they show in All, Not owned and your watchlist on the 2026 tab too. No AFL games yet, so there’s no average or value; potential comes from draft position and age. Positions are the clubs’ descriptions until AFL Fantasy sets 2027 positions.</p>}
       <p className="muted pl-note" style={{ margin: 0, fontSize: 12 }}>Bars are 1–20 against every rostered player on the same line, free agents included on the same scale. Potential is stars out of 5; value is 0–100.</p>
 
+      {y27 ? (
+        <div className="table-box">
+          <table className="squad" style={{ minWidth: 920 }}>
+            <thead>
+              <tr>
+                <th style={{ width: 70 }}>Pick</th><th style={{ width: 70 }}>Pos</th><th style={{ width: 26 }}><span className="sr-only">AFL club</span></th><th>Player</th><th>Owner</th>
+                <th style={{ width: 44, textAlign: 'center' }}>Age</th><th style={{ width: 60, textAlign: 'center' }}>Height</th><th>Drafted from</th><th>Note</th><th style={{ width: 110 }}>Potential</th>
+              </tr>
+            </thead>
+            <tbody>
+              {classRows.map(({ d, p }) => {
+                const owner = league.teams.find((t) => t.id === p.team_id);
+                const r = league.ratings.get(p.id);
+                return (
+                  <tr key={`${d.kind}${d.pick}`}>
+                    <td className="mono" style={{ whiteSpace: 'nowrap' }}>{d.kind === 'rookie' ? <span title="Rookie Draft pick">R{d.pick}</span> : <b>{d.pick}</b>}</td>
+                    <td><PosDots positions={p.positions} /></td>
+                    <td><ClubDot code={p.afl_club} name={p.name} size={20} /></td>
+                    <td style={{ whiteSpace: 'nowrap' }}>
+                      <Link href={`/players/${p.id}`}>{p.full_name ?? p.name}</Link>{watch.ids.has(p.id) && <span title="On your watchlist" aria-label="On your watchlist" style={{ color: '#e2b100', marginLeft: 4 }}>★</span>}
+                    </td>
+                    <td style={{ whiteSpace: 'nowrap' }}>
+                      {owner ? <Link href={`/clubhouse/${owner.id}`} style={{ fontWeight: 400, color: C.muted }}>{owner.name}</Link>
+                        : <span className="pill" style={{ background: '#e6f0e1', color: C.green5, fontSize: 11 }}>Free agent</span>}
+                    </td>
+                    <td style={{ textAlign: 'center' }} className="mono">{age(p.birth_date) ?? '–'}</td>
+                    <td style={{ textAlign: 'center' }} className="mono">{p.height_cm ? `${Math.round(p.height_cm)}` : '–'}</td>
+                    <td className="muted" style={{ whiteSpace: 'nowrap' }}>{d.from}</td>
+                    <td className="muted" style={{ fontSize: 12 }}>{d.note ?? ''}</td>
+                    <td>{r ? <Stars value={r.potential} colour={C.green5} label="Potential" /> : '–'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          {!classRows.length && <p className="muted" style={{ padding: 12 }}>{own === 'watch' ? 'None of the draft class is on your watchlist yet. Star a player on his profile to add him.' : 'No draftees match those filters.'}</p>}
+        </div>
+      ) : (<>
       {own === 'watch' && rows.length === 0 && (
           <div className="card muted" style={{ padding: 16 }}>Your watchlist is empty. Tap the grey star above a player’s name on his profile to add him.</div>
         )}
@@ -328,6 +383,7 @@ export default async function PlayersPage({ searchParams }: { searchParams: Prom
         </nav>
       )}
       {!rows.length && <p className="muted">No players match those filters. Try lowering a minimum or clearing a filter.</p>}
+      </>)}
     </div>
   );
 }

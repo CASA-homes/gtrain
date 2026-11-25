@@ -16,6 +16,7 @@ export const CURRENT_SEASON = 2026;
 // Every player nobody in the league owns, from the Keeper board with full DFS stats (scripts/fa-pull.py → fa-build.py).
 type FARow = Omit<PlayerRow, 'team_id' | 'is_keeper' | 'is_rookie_keeper' | 'photo_path' | 'list_status' | 'lineup'> & { owned_pct: string };
 const FA_ROWS = (freeAgentData as unknown as { updated: string; players: FARow[] }).players;
+import { DRAFT_2026, type Draftee } from '@/lib/draft-2026';
 export const FREE_AGENTS_UPDATED = (freeAgentData as unknown as { updated: string }).updated;
 
 export interface Team {
@@ -75,6 +76,8 @@ export interface League {
   /** Unowned players. team_id is 0. Rated against the rostered pool without changing it. */
   freeAgents: PlayerRow[];
   ownedPct: Map<number, string>;
+  /** the 2026 draft class (2027 tab): each pick with the player it became, rostered or free agent */
+  draftClass: { pick: Draftee; id: number }[];
   ratings: Map<number, Ratings>;
   attrs: Map<number, Attr[]>;
   byTeam: Map<number, TeamAnalysis>;
@@ -179,6 +182,23 @@ function buildLeague(raw: LeagueRaw): League {
     ...f, team_id: 0, is_keeper: false, is_rookie_keeper: false, photo_path: null, list_status: null, lineup: null,
   }));
   const ownedPct = new Map(FA_ROWS.map((f) => [f.id, f.owned_pct]));
+  // The 2026 draft class. Re-drafted and re-listed players keep their record (now at the club that picked them);
+  // everyone else joins the free agents until a coach drafts him.
+  const byName = new Map([...players, ...freeAgents].filter((p) => p.full_name).map((p) => [p.full_name!.toLowerCase(), p]));
+  const draftClass: League['draftClass'] = DRAFT_2026.map((d) => {
+    const hit = byName.get(d.name.toLowerCase());
+    if (hit) { hit.afl_club = d.club; return { pick: d, id: hit.id }; }
+    const [first, ...rest] = d.name.split(' ');
+    const id = 30_000_000 + (d.kind === 'national' ? 0 : 500) + d.pick;
+    freeAgents.push({
+      id, name: `${first[0]}. ${rest.join(' ')}`, full_name: d.name, positions: [d.pos], afl_club: d.club, birth_date: d.dob,
+      draft_pick: d.kind === 'national' ? d.pick : null, draft_year: 2026, dfs_id: null, height_cm: d.height, debut_year: null, career_games: 0,
+      hist: [], box: null, games_log: null, games: 0, average: null, last5: [], status: null,
+      team_id: 0, is_keeper: false, is_rookie_keeper: false, photo_path: null, list_status: null, lineup: null,
+    } as PlayerRow);
+    ownedPct.set(id, '0%');
+    return { pick: d, id };
+  });
   const ratings = buildRatings(players, freeAgents);
   const seasons = raw.seasons as League['seasons'];
 
@@ -257,7 +277,7 @@ function buildLeague(raw: LeagueRaw): League {
   }
 
   const attrs = buildAttrs(players, freeAgents);
-  return { teams, players, freeAgents, ownedPct, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: raw.ladder as League['ladder'] };
+  return { teams, players, freeAgents, ownedPct, draftClass, ratings, attrs, byTeam, picks, extraPicks, seasons, ladder: raw.ladder as League['ladder'] };
 }
 
 export { primaryLine };
