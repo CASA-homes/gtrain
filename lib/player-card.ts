@@ -27,7 +27,7 @@ const rnd = (r: number | null) => (r == null ? '' : r === 0 ? 'OR' : r >= 25 ? [
 function priceSeries(p: PlayerRow, g: CardGame[]): PriceSeries | null {
   const hist = [...(p.hist ?? [])].filter((h) => h[1] > 0).sort((a, b) => a[0] - b[0]);
   const birth = p.birth_date ?? null;
-  const live = valueTrend(p, 999);
+  const live = valueTrend(p, 999).map((v) => Math.round(v));
   const now = live.length ? live[live.length - 1] : rateFromHist(hist, birth);
   const season = live.length >= 2 ? live : null;
   const curYear = g.length ? CURRENT : null;
