@@ -67,7 +67,7 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
                   ))}
                 </div>
               )}
-              {p ? <CupLive key={`p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme="green" />
+              {p ? <CupLive key={`p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme="green" spectator />
                 : <CupLive key="mine" game={game} rules={rules} mine={md.lineups[game.id] ?? autoFill(rules, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />}
             </div>
           );

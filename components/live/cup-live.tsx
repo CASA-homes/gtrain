@@ -80,7 +80,7 @@ function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPla
   return <div className={`cl-pc lv-pc ${side} ${r.slot === 'UTIL' ? 'util' : ''}`} title={r.p.club ? CLUBS[r.p.club]?.name : undefined}>{side === 'a' ? <>{disc}{who}{chip}{sc}</> : <>{sc}{chip}{who}{disc}</>}</div>;
 }
 
-export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, theme = 'gold' }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void; theme?: 'gold' | 'green' }) {
+export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, theme = 'gold', spectator = false }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void; theme?: 'gold' | 'green'; /** watching someone else's game: names instead of "you" */ spectator?: boolean }) {
   const lineKeys = rules.slots.filter((x) => !x.bench).map((x) => x.key);
   const benchKeys = rules.slots.filter((x) => x.bench).map((x) => x.key);
   const onFieldN = rules.slots.filter((x) => !x.bench).reduce((t, x) => t + x.n, 0);
@@ -135,7 +135,7 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, the
           <span className="rh-k cl-gold">{game.label}{theme === 'gold' && game.note ? ` · ${game.note}` : ''}</span>
           <span className="rh-mono cl-odds"><b style={{ color: A_COL }}>{Math.round(win * 100)}%</b> <span className="cl-wc">win chance</span> <b style={{ color: B_COL }}>{Math.round((1 - win) * 100)}%</b></span>
           <span className="cl-wbar" aria-hidden="true"><i style={{ width: `${win * 100}%` }} /></span>
-          <span className="rh-dim cl-lines">Lines {started ? 'won' : 'projected'} <b className="rh-mono" style={{ color: A_COL }}>{linesA}</b>–<b className="rh-mono" style={{ color: B_COL }}>{linesB}</b> · {aProj === bProj ? 'level' : `${aProj > bProj ? 'you' : oppName} by ${Math.abs(aProj - bProj)} projected`}</span>
+          <span className="rh-dim cl-lines">Lines {started ? 'won' : 'projected'} <b className="rh-mono" style={{ color: A_COL }}>{linesA}</b>–<b className="rh-mono" style={{ color: B_COL }}>{linesB}</b> · {aProj === bProj ? 'level' : `${aProj > bProj ? (spectator ? myName : 'you') : oppName} by ${Math.abs(aProj - bProj)} projected`}</span>
         </div>
         <div className="cl-side b">
           <b>{oppName}</b>
@@ -197,8 +197,8 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, the
             {started && (() => {
               const gap = aTot - bTot;
               return <span className="cl-need">{gap > 0
-                ? <>{oppName} need <b className="rh-mono">{gap + 1}</b> more to catch you: {bLeft ? <b>{Math.ceil((gap + 1) / bLeft)} a player</b> : 'and they have nobody left'} from their {bLeft}.</>
-                : gap < 0 ? <>You need <b className="rh-mono">{-gap + 1}</b> more: {aLeft ? <b>{Math.ceil((-gap + 1) / aLeft)} a player</b> : 'and nobody is left'} from your {aLeft}.</>
+                ? <>{oppName} need <b className="rh-mono">{gap + 1}</b> more to catch {spectator ? myName : 'you'}: {bLeft ? <b>{Math.ceil((gap + 1) / bLeft)} a player</b> : 'and they have nobody left'} from their {bLeft}.</>
+                : gap < 0 ? <>{spectator ? `${myName} need` : 'You need'} <b className="rh-mono">{-gap + 1}</b> more: {aLeft ? <b>{Math.ceil((-gap + 1) / aLeft)} a player</b> : 'and nobody is left'} from {spectator ? 'their' : 'your'} {aLeft}.</>
                 : <>Dead level.</>}</span>;
             })()}
           </div>
