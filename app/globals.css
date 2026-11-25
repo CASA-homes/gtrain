@@ -3084,3 +3084,14 @@ input.im-mini { width: 110px; cursor: text; }
   .pc-top .pc-fchip b { padding: 4px 0; }
   .pc-top .pc-form.pc-row { padding: 1px 1px 4px; }
 }
+
+/* Desktop profile header: photo, name block and player summary all start on one top line, and the header sits
+   closer to the breadcrumb. */
+@media (min-width: 901px) {
+  .wrap > .ph { margin-top: -14px; }
+  .ph-top { align-items: start; }
+  .ph-photo, .ph-holo { align-self: start; }
+  .ph-main { align-self: start; }
+  .ph-right { align-self: stretch; }
+  .ph-summary { padding-top: 12px; }
+}
