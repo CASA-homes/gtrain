@@ -1,3 +1,5 @@
+import { ProLock } from '@/components/ProLock';
+import { getPlan } from '@/lib/plan';
 import { ClubSettings } from '@/components/ClubSettings';
 import { isLegacyLeague } from '@/lib/league-scope';
 import { CLUBHOUSE_SECTIONS } from '@/lib/team-colours';
@@ -59,7 +61,7 @@ function trendOf(p: PlayerRow): { age: number | null; prevAvg: number | null; de
 export default async function Clubhouse({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
   const { view } = await searchParams;
-  const [league, me] = await Promise.all([getLeague(), getMe()]);
+  const [league, me, plan] = await Promise.all([getLeague(), getMe(), getPlan()]);
   const a = league.byTeam.get(Number(id));
   if (!a) notFound();
   const isMine = me?.team_id === a.team.id;
@@ -235,7 +237,7 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
         </Link>
       </nav>
 
-      {tab === 'picks' ? <ClubPicks teamId={a.team.id} /> : tab === 'contracts' ? <ClubContracts teamId={a.team.id} /> : tab === 'finances' ? <ClubFinances teamId={a.team.id} /> : <>
+      {tab === 'picks' ? <ClubPicks teamId={a.team.id} /> : tab === 'contracts' ? (plan.isPro ? <ClubContracts teamId={a.team.id} /> : <ProLock feature="Contracts and the salary cap" blurb="Sign players to contracts, manage the cap, pay release clauses and bid on free agents." />) : tab === 'finances' ? (plan.isPro ? <ClubFinances teamId={a.team.id} /> : <ProLock feature="Club finances" blurb="Your KT bank, cap room, term deposits and loans." />) : <>
       <ContractsStrip teamId={a.team.id} mine={isMine} />
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}

@@ -3166,3 +3166,22 @@ input.im-mini { width: 110px; cursor: text; }
 .lm-gt { display: flex; flex-direction: column; gap: 12px; }
 .lm-fx { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
 .lm-fx .mx-mu { flex: 1 0 160px; padding: 7px 8px; gap: 3px; border-radius: 11px; }
+
+/* Pro lock (0085): what a Free league sees in place of a Pro feature. */
+.pro-lock { display: flex; justify-content: center; padding: 48px 16px; }
+.pro-lock-card { max-width: 460px; background: #fff; border: 1px solid var(--line, #e5e8e1); border-radius: 18px; box-shadow: 0 18px 40px rgba(20, 30, 24, .08); padding: 26px; display: flex; flex-direction: column; gap: 12px; }
+.pro-lock-card h2 { margin: 0; font-size: 22px; line-height: 1.2; letter-spacing: -.01em; }
+.pro-lock-card p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+.pro-lock-card .pro-lock-sub { font-size: 13px; }
+.pro-lock-tag { align-self: flex-start; font: 700 10.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #13241a; background: #9fd3ae; padding: 4px 10px; border-radius: 99px; }
+.pro-lock-btn { min-height: 44px; border-radius: 12px; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; text-decoration: none; }
+.pro-lock-btn:hover { color: #fff; opacity: .92; }
+.pro-lock-btn.alt { background: #f1f3ee; color: var(--ink); }
+.plan-card { display: flex; flex-direction: column; gap: 10px; }
+.plan-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; row-gap: 8px; font-size: 14px; border-top: 1px solid var(--line, #eef0eb); padding-top: 10px; }
+.plan-row span { color: var(--muted); } .plan-row b { text-align: right; }
+.plan-pill { align-self: flex-start; font-weight: 600; font-size: 12.5px; padding: 4px 10px; border-radius: 99px; background: #e6f1ea; color: #2e7a43; }
+.plan-pill.free { background: #f1f3ee; color: var(--ink); } .plan-pill.lapsed { background: #fbe4dd; color: #a23d27; }
+.admin-plans { width: 100%; border-collapse: collapse; font-size: 14px; }
+.admin-plans th, .admin-plans td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line, #eef0eb); vertical-align: middle; }
+.admin-plans form { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }

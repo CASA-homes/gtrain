@@ -14,6 +14,7 @@ import { StatsSources } from '@/components/StatsSources';
 import { InviteCoaches } from '@/components/InviteCoaches';
 import { LeagueCoaches } from '@/components/LeagueCoaches';
 import { createClient } from '@/lib/supabase/server';
+import { getPlan, isSiteAdmin, PRO_PER_COACH } from '@/lib/plan';
 
 export const metadata = { title: 'League settings' };
 
@@ -26,7 +27,8 @@ export const dynamic = 'force-dynamic';
 export default async function LeagueSettingsPage() {
   const profile = await getLeagueProfile();
   const C = profile.charter;
-  const [me, league, prizes, leagueName, kc] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName(), getContracts()]);
+  const [me, league, prizes, leagueName, kc, plan, siteAdmin] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName(), getContracts(), getPlan(), isSiteAdmin()]);
+  const planDay = (iso: string) => new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Australia/Perth' });
   const dropDay = kc.settings?.rookie_lock_at ?? null;
   const statsSeason = (kc.settings?.season ?? 2027) - 1;
   const statsCompare = me?.is_commish ? ((await (await createClient()).rpc('stats_compare', { p_season: statsSeason })).data ?? null) : null;
@@ -38,6 +40,26 @@ export default async function LeagueSettingsPage() {
     <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
+        {plan.ready && (
+          <section id="plan" className="card plan-card" style={{ padding: 16 }}>
+            <div className="row-between" style={{ gap: 8, flexWrap: 'wrap' }}>
+              <h2 className="h2" style={{ fontSize: 18, margin: 0 }}>Plan</h2>
+              <span className={`plan-pill ${plan.isPro ? '' : plan.plan === 'pro' ? 'lapsed' : 'free'}`}>{plan.isPro ? `Pro${plan.founding ? ' · founding league' : ''}` : plan.plan === 'pro' ? 'Pro · lapsed' : 'Free'}</span>
+            </div>
+            <p className="muted" style={{ margin: 0, fontSize: 13 }}>
+              {plan.isPro
+                ? 'Your league has everything: contracts and the cap, the KT economy, the Knockout Cup and mini comps, the draft centre and deep player profiles.'
+                : 'Free covers the draft, keepers, trades, matchday and the ladder. Pro adds contracts and the cap, the KT economy, the Knockout Cup and mini comps, the draft centre and deep player profiles.'}
+            </p>
+            <div className="plan-row">
+              {plan.founding && <><span>2027 season</span><b>Free (founding league)</b></>}
+              {plan.isPro && plan.proUntil && <><span>Pro until</span><b>{planDay(plan.proUntil)}</b></>}
+              <span>{plan.founding ? 'From 2028' : 'Pro'}</span><b>${PRO_PER_COACH} × {plan.coaches} coaches = ${PRO_PER_COACH * plan.coaches} a season</b>
+            </div>
+            {me?.is_commish && <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{plan.founding ? 'Payments open before the 2028 draft. We’ll email you a month ahead; nothing changes until then.' : 'Online payments are coming. To go Pro now, email hello@keeperhq.au.'}</p>}
+            {siteAdmin && <Link href="/admin/plans" className="lg-btn" style={{ alignSelf: 'flex-start' }}>Manage every league’s plan</Link>}
+          </section>
+        )}
         {coaches && <LeagueCoaches rows={coaches} clubs={league.teams.map((t) => ({ id: t.id, name: t.name }))} />}
         {joinAdmin && <InviteCoaches admin={joinAdmin} />}
         {me?.is_commish && !profile.legacy && (

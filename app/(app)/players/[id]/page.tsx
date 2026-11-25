@@ -1,3 +1,5 @@
+import { ProLock } from '@/components/ProLock';
+import { getPlan } from '@/lib/plan';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { AvgChip, Bar20, ClubDot, ScoreChip, Stars } from '@/components/bits';
@@ -45,6 +47,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const prof = draftProfileFor(drafted?.y ?? p.draft_year, drafted?.n ?? p.full_name ?? p.name);
   const showDraft = view === 'draft';
   const card = playerCard(p, r, league.players, league.ratings);
+  // Free leagues get the header, season line and ratings; the deep stats panels and draft profiles are Pro (0085).
+  const pro = (await getPlan()).isPro;
   const pool26 = [...league.players, ...league.freeAgents].filter((x) => (x.games ?? 0) >= 10 && x.average != null).sort((x, y) => (y.average ?? 0) - (x.average ?? 0));
   const rank26 = pool26.findIndex((x) => x.id === p.id);
   const summary = playerSummary(p, { rank: rank26 >= 0 ? rank26 + 1 : null });
@@ -95,7 +99,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               <h1 className="phx-name">{p.full_name ?? p.name}</h1>
               <div className="phx-bio">
                 {bio.map(([k, v]) => <span key={k}>{k === 'Age' ? `${v} yrs` : k === 'Height' ? v : k === 'Drafted' ? `Drafted ${v}` : k === 'Games' ? `${v} games` : `Debut ${v}`}</span>)}
-                {prof ? (
+                {prof && pro ? (
                   <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className="phx-draft">{showDraft ? 'Back to stats' : 'Draft profile'}</Link>
                 ) : null}
               </div>
@@ -120,7 +124,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
         </aside>
       </header>
 
-      {showDraft && prof ? (
+      {pro && showDraft && prof ? (
         <section className="card" style={{ padding: '20px 22px', display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div className="row-between" style={{ flexWrap: 'wrap', gap: 8 }}>
             <h2 className="h2">Draft profile · {prof.year}</h2>
@@ -142,8 +146,8 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
         </section>
       ) : (
         <>
-      {card && <PlayerCard {...card} />}
-      <details className="card sr-acc">
+      {pro ? card && <PlayerCard {...card} /> : <ProLock feature="Deep player profiles" blurb="Price movement, heat maps, scoring splits, the scouting report, game attributes and draft profiles for every player." />}
+      {pro && <details className="card sr-acc">
         <summary className="row-between sr-sum" style={{ flexWrap: 'wrap', gap: 8 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <h2 className="h2">Scouting report</h2>
@@ -163,10 +167,10 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             </div>
           ))}
         </div>
-      </details>
+      </details>}
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 32 }}>
-        <section>
+        {pro && <section>
           <div className="row-between" style={{ paddingBottom: 8 }}><h2 className="h2">Fantasy profile</h2><span className="mono muted" style={{ fontSize: 11 }}>vs every {line}</span></div>
           {profile.map(([label, v]) => (
             <div key={label} style={{ display: 'grid', gridTemplateColumns: '130px minmax(0, 1fr) 26px', gap: 12, alignItems: 'center', padding: '9px 0', borderTop: '1px solid var(--line)' }}>
@@ -180,9 +184,9 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             <div className="row-between"><span className="eyebrow">Career curve</span><span className="mono muted" style={{ fontSize: 11 }}>average by age · to {32}</span></div>
             <CareerCurveChart c={cc} lineName={LINE_NAME[line]} name={p.name} />
           </div>
-        </section>
+        </section>}
 
-        <section>
+        {pro && <section>
           <div className="row-between" style={{ paddingBottom: 8 }}><h2 className="h2">Game attributes</h2><span className="mono muted" style={{ fontSize: 11 }}>{CURRENT_SEASON} · vs the league</span></div>
           {attrs ? attrs.map((x) => (
             <div key={x.key} style={{ display: 'grid', gridTemplateColumns: '150px minmax(0, 1fr) 26px', gap: 12, alignItems: 'center', padding: '7px 0', borderTop: '1px solid var(--line)' }}>
@@ -191,7 +195,7 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
               <span className="mono" style={{ textAlign: 'right' }}>{x.value}</span>
             </div>
           )) : <p className="muted" style={{ fontSize: 13 }}>No AFL games in {CURRENT_SEASON}, so there’s nothing to grade yet.</p>}
-        </section>
+        </section>}
 
         <section style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <div className="row-between"><h2 className="h2">Season line</h2><span className="mono muted" style={{ fontSize: 12 }}>{CURRENT_SEASON} · {p.games ?? 0} games</span></div>
