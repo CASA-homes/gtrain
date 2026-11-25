@@ -35,15 +35,18 @@ function PriceGraph({ price }: { price: PriceSeries }) {
   const lo = Math.floor(min / step) * step, hi = Math.max(lo + step, Math.ceil(max / step) * step);
   const x = (i: number) => L + (i / Math.max(1, pts.length - 1)) * (R - L);
   const y = (v: number) => T + (1 - (v - lo) / (hi - lo)) * (B - T);
-  const start = pts[0], end = pts[pts.length - 1], diff = end - start, up = diff >= 0;
-  const pct = start > 0 ? Math.round((diff / start) * 100) : 0;
+  const start = pts[0], end = pts[pts.length - 1], up = end - start >= 0;
+  // The headline change is always this season's, whichever range is showing; the line colour follows the range.
+  const sp = (price.season ?? price.three ?? price.all ?? line).pts;
+  const s0 = price.season ? sp[0] : start, diff = end - s0, sUp = diff >= 0;
+  const pct = s0 > 0 ? Math.round((diff / s0) * 100) : 0;
   const color = up ? '#2e8b4a' : '#c4462f';
   const mid = (lo + hi) / 2;
   const path = pts.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
   return (
     <Card o={1} title="Price movement" note={`${$k(end)} now`}>
       <div className="pc-price-top">
-        <b style={{ color: up ? '#2e7a43' : '#b23b24' }}>{up ? '▲' : '▼'} {$k(Math.abs(diff))} ({up ? '+' : ''}{pct}%)</b>
+        <b style={{ color: sUp ? '#2e7a43' : '#b23b24' }}>{sUp ? '▲' : '▼'} {$k(Math.abs(diff))} ({sUp ? '+' : ''}{pct}%) <small style={{ fontWeight: 500, color: 'var(--muted)' }}>this season</small></b>
         {opts.length > 1 && (
           <div className="pc-seg pc-seg-sm" role="tablist" aria-label="Price range">
             {opts.map(([k, label]) => <button key={k} type="button" role="tab" aria-selected={range === k} className={range === k ? 'on' : ''} onClick={() => setRange(k)}>{label}</button>)}
@@ -126,12 +129,11 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
 
   // Role: score bars with centre-bounce and time-on-ground lines.
   const W = 340, H = 120, bw = W / n, top = Math.max(150, ...scores);
-  const cbas = games.map((g) => g[5]).filter((x): x is number => x != null);
-  const mid = cbas.length && Math.max(...cbas) >= 30;
-  const cut = mid ? (mean(cbas) >= 60 ? 75 : Math.round(mean(cbas) / 5) * 5) : null;
-  const hi = cut != null ? games.filter((g) => (g[5] ?? 0) >= cut).map((g) => g[3]) : [];
-  const lo = cut != null ? games.filter((g) => (g[5] ?? 0) < cut).map((g) => g[3]) : [];
   const togs = games.map((g) => g[4]).filter((x): x is number => x != null);
+  // TOG v score: split his games at a round TOG mark near his usual and compare averages either side.
+  const togCut = togs.length ? Math.max(60, Math.min(90, Math.round(mean(togs) / 5) * 5)) : null;
+  const togHi = togCut != null ? games.filter((g) => (g[4] ?? 0) >= togCut).map((g) => g[3]) : [];
+  const togLo = togCut != null ? games.filter((g) => g[4] != null && g[4] < togCut).map((g) => g[3]) : [];
   const last5 = games.slice(-5);
 
   // Quarters
@@ -200,11 +202,11 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
       <div className="pc-col">
       {price && (price.season || price.three || price.all) ? <PriceGraph price={price} /> : null}
 
-      <Card o={5} title={ballView === 'where' && zt > 0 ? 'Where he wins the ball' : 'Role'} note={ballView === 'where' && zt > 0 ? `${zt} possessions in 2026` : mid ? `centre bounces ${Math.round(mean(cbas))}% · last 5: ${Math.round(mean(last5.map((g) => g[5] ?? 0)))}%` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
+      <Card o={5} title={ballView === 'where' && zt > 0 ? 'Where he wins the ball' : 'TOG v score'} note={ballView === 'where' && zt > 0 ? `${zt} possessions in 2026` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
         {zt > 0 && (
-          <div className="pc-seg" role="tablist" aria-label="Where he wins the ball or role">
+          <div className="pc-seg" role="tablist" aria-label="Where he wins the ball or time on ground">
             <button type="button" role="tab" aria-selected={ballView === 'where'} className={ballView === 'where' ? 'on' : ''} onClick={() => setBallView('where')}>Where he wins it</button>
-            <button type="button" role="tab" aria-selected={ballView === 'role'} className={ballView === 'role' ? 'on' : ''} onClick={() => setBallView('role')}>Role</button>
+            <button type="button" role="tab" aria-selected={ballView === 'role'} className={ballView === 'role' ? 'on' : ''} onClick={() => setBallView('role')}>TOG</button>
           </div>
         )}
         {ballView === 'where' && zt > 0 ? (
@@ -223,14 +225,13 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
           </>
         ) : (
           <>
-            <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }} role="img" aria-label="Score per game with centre bounce and time on ground">
+            <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }} role="img" aria-label="Score per game against time on ground">
               {games.map((g, i) => <rect key={i} x={i * bw + 1.2} y={H - (g[3] / top) * H} width={Math.max(1, bw - 2.4)} height={(g[3] / top) * H} rx={2} fill={tone(g[3])[0]} />)}
-              <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[4] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#6b726c" strokeWidth={1.2} strokeDasharray="3 3" />
-              {mid && <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[5] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#c48a1f" strokeWidth={2} />}
+              <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[4] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#c48a1f" strokeWidth={2} strokeLinejoin="round" />
             </svg>
-            <div className="pc-legend"><span><i style={{ background: '#4f9a5f', width: 8, height: 8 }} />Score</span>{mid && <span><i style={{ background: '#c48a1f' }} />Centre bounce %</span>}<span><i style={{ borderTop: '1.5px dashed #6b726c', height: 0 }} />Time on ground</span></div>
-            {cut != null && hi.length >= 2 && lo.length >= 2 && (
-              <p className="pc-note">With {cut}%+ of centre bounces he averaged <b>{Math.round(mean(hi))}</b> ({hi.length} games); under that, <b>{Math.round(mean(lo))}</b> ({lo.length} games).</p>
+            <div className="pc-legend"><span><i style={{ background: '#4f9a5f', width: 8, height: 8 }} />Score</span><span><i style={{ background: '#c48a1f' }} />Time on ground %</span></div>
+            {togCut != null && togHi.length >= 2 && togLo.length >= 2 && (
+              <p className="pc-note">At {togCut}%+ time on ground he averaged <b>{Math.round(mean(togHi))}</b> ({togHi.length} games); under that, <b>{Math.round(mean(togLo))}</b> ({togLo.length} games).</p>
             )}
           </>
         )}
