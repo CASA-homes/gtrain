@@ -36,17 +36,17 @@ function PriceGraph({ price }: { price: PriceSeries }) {
   const x = (i: number) => L + (i / Math.max(1, pts.length - 1)) * (R - L);
   const y = (v: number) => T + (1 - (v - lo) / (hi - lo)) * (B - T);
   const start = pts[0], end = pts[pts.length - 1], up = end - start >= 0;
-  // The headline change is always this season's, whichever range is showing; the line colour follows the range.
-  const sp = (price.season ?? price.three ?? price.all ?? line).pts;
-  const s0 = price.season ? sp[0] : start, diff = end - s0, sUp = diff >= 0;
-  const pct = s0 > 0 ? Math.round((diff / s0) * 100) : 0;
+  // The headline change follows the range showing, and says which period it covers.
+  const diff = end - start, sUp = up;
+  const pct = start > 0 ? Math.round((diff / start) * 100) : 0;
+  const period = range === 'season' ? 'this season' : range === 'three' ? 'over 3 yrs' : xs[0] ? `since ${xs[0]}` : 'all time';
   const color = up ? '#2e8b4a' : '#c4462f';
   const mid = (lo + hi) / 2;
   const path = pts.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
   return (
     <Card o={1} title="Price movement" note={`${$k(end)} now`}>
       <div className="pc-price-top">
-        <b style={{ color: sUp ? '#2e7a43' : '#b23b24' }}>{sUp ? '▲' : '▼'} {$k(Math.abs(diff))} ({sUp ? '+' : ''}{pct}%) <small style={{ fontWeight: 500, color: 'var(--muted)' }}>this season</small></b>
+        <b style={{ color: sUp ? '#2e7a43' : '#b23b24' }}>{sUp ? '▲' : '▼'} {$k(Math.abs(diff))} ({sUp ? '+' : ''}{pct}%) <small style={{ fontWeight: 500, color: 'var(--muted)', whiteSpace: 'nowrap' }}>{period}</small></b>
         {opts.length > 1 && (
           <div className="pc-seg pc-seg-sm" role="tablist" aria-label="Price range">
             {opts.map(([k, label]) => <button key={k} type="button" role="tab" aria-selected={range === k} className={range === k ? 'on' : ''} onClick={() => setRange(k)}>{label}</button>)}
