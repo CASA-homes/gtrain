@@ -28,7 +28,8 @@ function PriceGraph({ price }: { price: PriceSeries }) {
   const line = price[range] ?? price[opts[0]?.[0] ?? 'season'];
   if (!line) return null;
   const { pts, xs } = line;
-  const L = 38, R = 300, T = 6, B = 92;
+  const L = 50, R = 300, T = 6, B = 92;
+  const $k = (v: number) => `$${v.toFixed(2)}k`;
   const min = Math.min(...pts), max = Math.max(...pts), span = max - min;
   const step = span > 60 ? 20 : span > 24 ? 10 : span > 10 ? 5 : 2;
   const lo = Math.floor(min / step) * step, hi = Math.max(lo + step, Math.ceil(max / step) * step);
@@ -37,23 +38,23 @@ function PriceGraph({ price }: { price: PriceSeries }) {
   const start = pts[0], end = pts[pts.length - 1], diff = end - start, up = diff >= 0;
   const pct = start > 0 ? Math.round((diff / start) * 100) : 0;
   const color = up ? '#2e8b4a' : '#c4462f';
-  const mid = Math.round((lo + hi) / 2);
+  const mid = (lo + hi) / 2;
   const path = pts.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
   return (
-    <Card o={1} title="Price movement" note={`$${end}k now`}>
+    <Card o={1} title="Price movement" note={`${$k(end)} now`}>
       <div className="pc-price-top">
-        <b style={{ color: up ? '#2e7a43' : '#b23b24' }}>{up ? '▲' : '▼'} ${Math.abs(diff)}k ({up ? '+' : ''}{pct}%)</b>
+        <b style={{ color: up ? '#2e7a43' : '#b23b24' }}>{up ? '▲' : '▼'} {$k(Math.abs(diff))} ({up ? '+' : ''}{pct}%)</b>
         {opts.length > 1 && (
           <div className="pc-seg pc-seg-sm" role="tablist" aria-label="Price range">
             {opts.map(([k, label]) => <button key={k} type="button" role="tab" aria-selected={range === k} className={range === k ? 'on' : ''} onClick={() => setRange(k)}>{label}</button>)}
           </div>
         )}
       </div>
-      <svg viewBox="0 0 304 110" width="100%" className="pc-price" role="img" aria-label={`Price from $${start}k to $${end}k, ${up ? 'up' : 'down'} ${Math.abs(pct)}%`}>
+      <svg viewBox="0 0 304 110" width="100%" className="pc-price" role="img" aria-label={`Price from ${$k(start)} to ${$k(end)}, ${up ? 'up' : 'down'} ${Math.abs(pct)}%`}>
         {[hi, mid, lo].map((v) => (
           <g key={v}>
             <line x1={L} x2={R} y1={y(v)} y2={y(v)} stroke="#e6e9e2" strokeWidth={1} />
-            <text x={L - 5} y={y(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#6b726c">${v}k</text>
+            <text x={L - 5} y={y(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#6b726c">{$k(v)}</text>
           </g>
         ))}
         <line x1={L} x2={R} y1={y(start)} y2={y(start)} stroke={color} strokeOpacity={0.35} strokeWidth={1} strokeDasharray="3 3" />

@@ -3056,3 +3056,15 @@ input.im-mini { width: 110px; cursor: text; }
   .cl-sc.proj { font-size: 15px; }
   .cl-bar { margin: -2px 0; }
 }
+
+/* Key info (age, height, draft, games, debut) sits under the player summary, its bottom in line with the contract
+   strip on the left, so the panels below move up. */
+.ph-right { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ph-right .ph-summary { flex: 1 1 auto; max-width: none; justify-self: stretch; }
+.ph-key { display: flex; flex-direction: column; gap: 4px; }
+.ph-key .eyebrow { padding-left: 2px; }
+.ph-key .ph-bio { max-width: none; }
+@media (min-width: 901px) {
+  .ph-right { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; justify-self: end; width: 100%; max-width: 420px; }
+}
+@media (max-width: 900px) { .ph-right { grid-column: 1 / -1; } }

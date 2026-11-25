@@ -110,22 +110,27 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
             </div>
             <PlayerContractStrip playerId={p.id} ownerTeamId={owner?.id ?? null} />
           </div>
-          <aside className="ph-summary" aria-label="Player summary">
-            <span className="eyebrow">Player summary</span>
-            {summary.map((t, i) => <p key={i}>{t}</p>)}
-          </aside>
-        </div>
-        <div className="ph-bio">
-          {bio.map(([k, v]) => (
-            <div key={k}><span>{k}</span><b>{v}</b></div>
-          ))}
-          {prof ? (
-            <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className={`ph-draft${showDraft ? ' on' : ''}`}>
-              {showDraft ? 'Back' : 'Draft profile'}
-            </Link>
-          ) : (
-            <span className="ph-draft off" title={p.draft_year && p.draft_year < 2020 ? `Draft guide profiles start with the 2020 draft (drafted ${p.draft_year})` : "No draft guide profile loaded for this player yet"}>Draft profile</span>
-          )}
+          <div className="ph-right">
+            <aside className="ph-summary" aria-label="Player summary">
+              <span className="eyebrow">Player summary</span>
+              {summary.map((t, i) => <p key={i}>{t}</p>)}
+            </aside>
+            <div className="ph-key" aria-label="Key info">
+              <span className="eyebrow">Key info</span>
+              <div className="ph-bio">
+                {bio.map(([k, v]) => (
+                  <div key={k}><span>{k}</span><b>{v}</b></div>
+                ))}
+                {prof ? (
+                  <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className={`ph-draft${showDraft ? ' on' : ''}`}>
+                    {showDraft ? 'Back' : 'Draft profile'}
+                  </Link>
+                ) : (
+                  <span className="ph-draft off" title={p.draft_year && p.draft_year < 2020 ? `Draft guide profiles start with the 2020 draft (drafted ${p.draft_year})` : "No draft guide profile loaded for this player yet"}>Draft profile</span>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 

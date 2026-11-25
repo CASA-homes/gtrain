@@ -27,7 +27,7 @@ const rnd = (r: number | null) => (r == null ? '' : r === 0 ? 'OR' : r >= 25 ? [
 function priceSeries(p: PlayerRow, g: CardGame[]): PriceSeries | null {
   const hist = [...(p.hist ?? [])].filter((h) => h[1] > 0).sort((a, b) => a[0] - b[0]);
   const birth = p.birth_date ?? null;
-  const live = valueTrend(p, 999).map((v) => Math.round(v));
+  const live = valueTrend(p, 999);
   const now = live.length ? live[live.length - 1] : rateFromHist(hist, birth);
   const season = live.length >= 2 ? live : null;
   const curYear = g.length ? CURRENT : null;
@@ -36,7 +36,7 @@ function priceSeries(p: PlayerRow, g: CardGame[]): PriceSeries | null {
   const past = hist.filter((h) => h[0] !== curYear);
   const est = (y: number, games: number) => {
     const a = rateFromHist(before(y), birth, y), b = rateFromHist(thru(y), birth, y + 1), n = Math.max(1, games);
-    return Array.from({ length: n + 1 }, (_, i) => Math.round(a + ((b - a) * i) / n));
+    return Array.from({ length: n + 1 }, (_, i) => a + ((b - a) * i) / n);
   };
   const lastYears = past.slice(-2);
   const three = lastYears.length ? [...lastYears.flatMap(([y, gm], i) => est(y, gm).slice(i ? 1 : 0)), ...(season ?? [now]).slice(1)] : null;
