@@ -3159,3 +3159,6 @@ input.im-mini { width: 110px; cursor: text; }
   .phx-sep { border-top: 0; }
   .phx-side { padding: 14px; }
 }
+
+.mx-mu-link { text-decoration: none; color: inherit; cursor: pointer; }
+.mx-mu-link:hover:not(.on) { box-shadow: 0 0 0 1px var(--line, #d7dcd3); }

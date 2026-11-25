@@ -33,9 +33,9 @@ export interface HPlayer {
   cap?: 'C' | null;
 }
 export interface HSide { teamId: number | null; name: string; short: string; colour: string | null; coach: string; total: number | null; res: string; players: HPlayer[] }
-export interface HRound { season: number; round: number; label: string; matchups: { a: string; b: string; as: number | null; bs: number | null }[]; mine: [HSide, HSide] | null; myName: string }
+export interface HRound { season: number; round: number; label: string; matchups: { a: string; b: string; as: number | null; bs: number | null }[]; mine: [HSide, HSide] | null; myName: string; /** whose game `mine` holds: yours unless another fixture was picked */ focus: string }
 
-export function buildHistoryRound(round: number, league: League, myTeamId: number): HRound {
+export function buildHistoryRound(round: number, league: League, myTeamId: number, pick?: string | null): HRound {
   const team = (name: string) => league.teams.find((t) => t.name === name);
   const myName = league.teams.find((t) => t.id === myTeamId)?.name ?? '';
   const byDfs = new Map<string, PlayerRow>();
@@ -82,7 +82,12 @@ export function buildHistoryRound(round: number, league: League, myTeamId: numbe
     }
     return { teamId: t?.id ?? null, name, short: t?.short_code ?? name.slice(0, 2).toUpperCase(), colour: t?.colour ?? null, coach: t?.coach_name ?? '', total: f?.[3] ?? null, res: f?.[2] ?? '', players };
   };
-  const mf = FX[myName]?.find((x) => x[0] === label);
-  const mine: HRound['mine'] = mf && mf[1] !== 'Bye' ? [side(myName), side(mf[1])] : null;
-  return { season: HISTORY_SEASON, round, label: roundName(round), matchups, mine, myName };
+  // The game on the board: the one picked from the fixture list, otherwise yours (or the first game if you had a bye).
+  const picked = pick ? matchups.find((x) => x.a === pick || x.b === pick) : undefined;
+  const ownGame = matchups.find((x) => x.a === myName || x.b === myName);
+  const g = picked ?? ownGame ?? (pick ? undefined : matchups[0]);
+  const lead = g ? (g === ownGame ? myName : g.a) : null;
+  const other = g && lead ? (g.a === lead ? g.b : g.a) : null;
+  const mine: HRound['mine'] = lead && other ? [side(lead), side(other)] : null;
+  return { season: HISTORY_SEASON, round, label: roundName(round), matchups, mine, myName, focus: lead ?? '' };
 }

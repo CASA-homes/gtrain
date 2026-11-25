@@ -1,6 +1,7 @@
 'use client';
 // A completed G-Train round from 2026: final scores around the grounds, your matchup, both teams mirrored with each
 // player's real score, and the player pop-up with that game's quarters, zones and heat map.
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import type { HPlayer, HRound, HSide } from '@/lib/history';
 import type { MPlayer } from '@/lib/mens-round';
@@ -70,22 +71,24 @@ export function HistoryBoard({ round }: { round: HRound }) {
       <div className="mx-toprow">
         <div className="mx-scrub rh-card hx-done">
           <div className="mx-scrubtop"><span className="rh-k">{round.season} · {round.label} · final scores</span></div>
-          <span className="rh-dim" style={{ fontSize: 12.5 }}>Each player shows his score that round, with his 2026 average faded beside it. Tap a name for his game: quarters, where he won the ball and the heat map.</span>
+          <span className="rh-dim" style={{ fontSize: 12.5 }}>Each player shows his score that round, with his 2026 average faded beside it. Tap a fixture to open that game, or a name for his game: quarters, where he won the ball and the heat map.</span>
         </div>
         <div className="mx-matchups">
           {round.matchups.map((x) => {
+            const shown = x.a === round.focus || x.b === round.focus;
             const mine = x.a === round.myName || x.b === round.myName;
             return (
-              <div key={x.a} className={`mx-mu ${mine ? 'on' : ''}`}>
+              <Link key={x.a} href={`/live/matchups?r=${round.season}-${round.round}${mine ? '' : `&g=${encodeURIComponent(x.a)}`}`} scroll={false}
+                className={`mx-mu mx-mu-link ${shown ? 'on' : ''}`} aria-current={shown ? 'true' : undefined} title={shown ? 'Showing this game' : `Open ${x.a} v ${x.b}`}>
                 <span className="mx-mu-t"><span className="rh-ellip">{x.a}</span><b className="rh-mono" style={{ fontWeight: (x.as ?? 0) >= (x.bs ?? 0) ? 700 : 500 }}>{x.as ?? '–'}</b></span>
                 <span className="mx-mu-t"><span className="rh-ellip">{x.b}</span><b className="rh-mono" style={{ fontWeight: (x.bs ?? 0) > (x.as ?? 0) ? 700 : 500 }}>{x.bs ?? '–'}</b></span>
-                <span className="mx-mu-p rh-mono"><span>Final</span><span>by {Math.abs((x.as ?? 0) - (x.bs ?? 0))}</span></span>
-              </div>
+                <span className="mx-mu-p rh-mono"><span>{mine ? 'Yours' : 'Final'}</span><span>by {Math.abs((x.as ?? 0) - (x.bs ?? 0))}</span></span>
+              </Link>
             );
           })}
         </div>
       </div>
-      {!A || !B ? <section className="rh-card"><span className="rh-dim">You didn’t have a game in {round.label.toLowerCase()} of {round.season}.</span></section> : (<>
+      {!A || !B ? <section className="rh-card"><span className="rh-dim">No game to show for {round.label.toLowerCase()} of {round.season}. Pick a fixture above.</span></section> : (<>
         <section className="rh-card mx-board hx-board">
           <div className="mx-sb">
             <div className="mx-sbt a"><span className="rh-k">{A.coach}</span><b>{A.name}</b><span className="mx-big rh-mono" style={{ color: ca }}>{A.total ?? '–'}</span></div>

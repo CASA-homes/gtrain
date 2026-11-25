@@ -12,10 +12,10 @@ import { isLegacyLeague } from '@/lib/league-scope';
 export const metadata = { title: 'Live Matchups' };
 export const dynamic = 'force-dynamic';
 
-export default async function MatchupsPage({ searchParams }: { searchParams: Promise<{ r?: string }> }) {
+export default async function MatchupsPage({ searchParams }: { searchParams: Promise<{ r?: string; g?: string }> }) {
   const me = await getMe();
   if (!me) redirect('/');
-  const { r } = await searchParams;
+  const { r, g } = await searchParams;
   const league = await getLeague();
   const cup = await buildCup(league, me.team_id);
   const [md, minis] = await Promise.all([buildMatchday(league, me.team_id, cup), myMinis(league, me.team_id)]);
@@ -25,7 +25,7 @@ export default async function MatchupsPage({ searchParams }: { searchParams: Pro
     ...(legacy ? HISTORY_ROUNDS : []).slice().reverse().map((n) => ({ value: `${HISTORY_SEASON}-${n}`, label: `${roundName(n)} · completed`, group: String(HISTORY_SEASON) })),
   ];
   const m = /^(\d{4})-(\d{1,2})$/.exec(r ?? '');
-  const hist = legacy && m && Number(m[1]) === HISTORY_SEASON && HISTORY_ROUNDS.includes(Number(m[2])) ? buildHistoryRound(Number(m[2]), league, me.team_id) : null;
+  const hist = legacy && m && Number(m[1]) === HISTORY_SEASON && HISTORY_ROUNDS.includes(Number(m[2])) ? buildHistoryRound(Number(m[2]), league, me.team_id, g ?? null) : null;
   const sel = hist ? `${HISTORY_SEASON}-${hist.round}` : rounds[0].value;
   const mens = buildMensRound(league);
   mens.previews = buildPreviews(league, mens.teams.map((t) => ({ id: t.id, starters: t.players.filter((p) => p.line !== 'BENCH').map((p) => p.id) })));
