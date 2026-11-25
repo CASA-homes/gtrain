@@ -5,7 +5,7 @@
 import Link from 'next/link';
 import { offerForPlayer, openUnsigned } from '@/app/(app)/contracts/actions';
 import { RunButton } from '@/components/contracts/client';
-import { clauseKt, getContracts, isFinalYear, kt, money } from '@/lib/contracts';
+import { clauseKt, getContracts, isFinalYear, kt, money, yearsLeft } from '@/lib/contracts';
 import './contracts.css';
 
 async function load(playerId: number, ownerTeamId: number | null) {
@@ -56,23 +56,23 @@ export async function PlayerContractStrip({ playerId, ownerTeamId }: { playerId:
   const x = await load(playerId, ownerTeamId);
   if (!x) return null;
   const { s, c, next, fa, claim, team, holder, rate, clause, leaving } = x;
-  let status: string | null = null; let tone = 'exp';
-  if (claim) status = `Clause paid by ${team(claim.buyer_team)}. ${team(claim.seller_team)} can match`;
-  else if (leaving && next) status = `Joins ${team(next.team_id)} at season end · ${short(next.salary_k)} to ${next.end_season}`;
-  else if (fa?.kind === 'pending') status = `Pending free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`;
-  else if (fa) { status = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'rook'; }
-  else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season} at ${short(next.salary_k)}`; tone = 'high'; }
-  else if (c && isFinalYear(s, c)) status = c.how === 'draft' ? 'Draft deal · final year' : 'Final year';
+  // Contract status: a short label in its own cell, the full story in the tooltip.
+  let status = c ? `${yearsLeft(s, c)} yrs left` : holder ? 'No contract' : 'Unsigned'; let full = status; let tone = '';
+  if (claim) { status = 'Clause paid'; full = `Clause paid by ${team(claim.buyer_team)}. ${team(claim.seller_team)} can match`; tone = 'warn'; }
+  else if (leaving && next) { status = 'Signed elsewhere'; full = `Joins ${team(next.team_id)} at season end · ${short(next.salary_k)} to ${next.end_season}`; tone = 'move'; }
+  else if (fa) { status = 'Free agent'; full = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'fa'; }
+  else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season}`; full = `Extended to ${next.end_season} at ${short(next.salary_k)}`; tone = 'ok'; }
+  else if (c && isFinalYear(s, c)) { status = c.how === 'draft' ? 'Draft deal' : 'Final year'; full = c.how === 'draft' ? 'Draft deal · final year' : 'Final year'; tone = 'warn'; }
   const clauseText = !c ? '—' : clause != null ? kt(clause) : c.tier === 'none' ? 'None' : '—';
   return (
     <div className="ph-kc">
       <div className="ph-kc-cells">
         <div><span>Contract value</span><b>{c ? short(c.salary_k) : holder ? 'None' : 'Unsigned'}</b></div>
         <div><span>Until</span><b>{c ? c.end_season : '—'}</b></div>
+        <div title={full}><span>Contract status</span><b className={tone ? `ph-st ${tone}` : undefined}>{status}</b></div>
         <div><span>Market value</span><b>{short(rate)}</b></div>
         <div><span>Release clause</span><b>{clauseText}</b></div>
       </div>
-      {status && <span className={`kc-tag ${tone}`}>{status}</span>}
     </div>
   );
 }

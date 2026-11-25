@@ -3068,3 +3068,19 @@ input.im-mini { width: 110px; cursor: text; }
   .ph-right { grid-column: 3; grid-row: 1 / span 2; align-self: stretch; justify-self: end; width: 100%; max-width: 420px; }
 }
 @media (max-width: 900px) { .ph-right { grid-column: 1 / -1; } }
+
+/* Desktop header tidy (25 Nov): five equal contract cells incl. contract status; Key info lines up with the summary
+   text; compact Season averages / Form row. */
+.ph-kc-cells { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.ph-st.warn { color: #9a6a12; } .ph-st.move { color: #5b3f8c; } .ph-st.fa { color: #36557a; } .ph-st.ok { color: #2e7a43; }
+@media (min-width: 901px) {
+  .ph-stats { max-width: 640px; }
+  .ph-kc-cells > div { padding: 4px 10px; }
+  .ph-right { gap: 6px; }
+  .ph-key { gap: 3px; }
+  .ph-key .eyebrow { padding-left: 16px; }
+  .pc-top .pc-card { padding: 10px 14px 8px; gap: 4px; }
+  .pc-top .pc-card h3 { margin: 0; }
+  .pc-top .pc-fchip b { padding: 4px 0; }
+  .pc-top .pc-form.pc-row { padding: 1px 1px 4px; }
+}
