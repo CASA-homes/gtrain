@@ -18,6 +18,7 @@ import { CupLive } from './cup-live';
 export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null; minis?: MiniLink[] }) {
   const router = useRouter();
   const [gid, setGid] = useState(md.games[0]?.id ?? '');
+  const [pair, setPair] = useState(-1); // G-Train: -1 = your game, otherwise another game this round
   const game = md.games.find((g) => g.id === gid) ?? md.games[0];
   const look = useMemo(() => { const m = new Map([...Object.values(md.others), ...md.squad, ...md.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [md]);
   const tabsEl = (
@@ -45,7 +46,32 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
       sub={<span className="lm-sub">{history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>}</span>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
-        : game.key === 'gtrain' && game.opp ? <CupLive game={game} rules={rulesFor('gtrain', md.lineupShape)} mine={md.lineups[game.id] ?? autoFill(rulesFor('gtrain', md.lineupShape), md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />
+        : game.key === 'gtrain' && game.opp ? (() => {
+          const p = pair >= 0 ? game.pairs?.[pair] : undefined;
+          const rules = rulesFor('gtrain', md.lineupShape);
+          return (
+            <div className="lm-gt">
+              {!!game.pairs?.length && (
+                <div className="mx-matchups lm-fx" role="tablist" aria-label="G-Train games this round">
+                  <button type="button" role="tab" aria-selected={!p} className={`mx-mu mx-mu-link ${!p ? 'on' : ''}`} onClick={() => setPair(-1)}>
+                    <span className="mx-mu-t"><span className="rh-ellip">{md.myName}</span></span>
+                    <span className="mx-mu-t"><span className="rh-ellip">{game.opp.name}</span></span>
+                    <span className="mx-mu-p rh-mono"><span>Yours</span><span>R{md.round}</span></span>
+                  </button>
+                  {game.pairs.map(([a, b], i) => (
+                    <button key={a.teamId} type="button" role="tab" aria-selected={pair === i} className={`mx-mu mx-mu-link ${pair === i ? 'on' : ''}`} onClick={() => setPair(i)}>
+                      <span className="mx-mu-t"><span className="rh-ellip">{a.name}</span></span>
+                      <span className="mx-mu-t"><span className="rh-ellip">{b.name}</span></span>
+                      <span className="mx-mu-p rh-mono"><span>{a.saved && b.saved ? 'Both set' : a.saved || b.saved ? 'One set' : 'Not set'}</span><span>R{md.round}</span></span>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {p ? <CupLive key={`p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme="green" />
+                : <CupLive key="mine" game={game} rules={rules} mine={md.lineups[game.id] ?? autoFill(rules, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />}
+            </div>
+          );
+        })()
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : game.key === 'cup' ? <CupLive game={game} rules={RULES.cup} mine={md.lineups[game.id] ?? autoFill(RULES.cup, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} />
         : (

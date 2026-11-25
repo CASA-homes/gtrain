@@ -3162,3 +3162,7 @@ input.im-mini { width: 110px; cursor: text; }
 
 .mx-mu-link { text-decoration: none; color: inherit; cursor: pointer; }
 .mx-mu-link:hover:not(.on) { box-shadow: 0 0 0 1px var(--line, #d7dcd3); }
+
+.lm-gt { display: flex; flex-direction: column; gap: 12px; }
+.lm-fx { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
+.lm-fx .mx-mu { flex: 1 0 160px; padding: 7px 8px; gap: 3px; border-radius: 11px; }

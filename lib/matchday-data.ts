@@ -25,6 +25,8 @@ export interface GameOpt {
   id: string; key: GameKey; round: number; label: string; sub: string;
   /** a head-to-head opponent, or a table of every entrant for season-long comps */
   opp: Side | null; table?: Side[]; note?: string;
+  /** G-Train: every other game this round, so Live Matchups can open any of them */
+  pairs?: [Side, Side][];
 }
 export interface MatchdayData {
   season: number; round: number; myTeamId: number; myName: string; ready: boolean;
@@ -105,7 +107,8 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
   const mu = mens.matchups.find((m) => m.includes(myTeamId));
   const gOpp = mu ? (mu[0] === myTeamId ? mu[1] : mu[0]) : null;
   games.push({ id: `gtrain:${round}`, key: 'gtrain', round, label: `${leagueName} · Round ${round}`, sub: gOpp ? `v ${team(gOpp)?.name}` : 'No game',
-    opp: gOpp ? side('gtrain', round, gOpp) : null, note: 'Round 1 opponent is from the test draw until the 2027 fixture is set.' });
+    opp: gOpp ? side('gtrain', round, gOpp) : null, note: 'Round 1 opponent is from the test draw until the 2027 fixture is set.',
+    pairs: mens.matchups.filter((m) => !m.includes(myTeamId)).map(([a, b]) => [side('gtrain', round, a), side('gtrain', round, b)] as [Side, Side]) });
   lineups[`gtrain:${round}`] = saved.get(`gtrain:${round}:${myTeamId}`) ?? null;
 
   // Knockout Cup: your next unplayed cup game.
