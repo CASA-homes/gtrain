@@ -19,7 +19,8 @@ import { DRAFTEES } from '@/lib/draft-history';
 import { WatchStar } from '@/components/WatchStar';
 import { playerSummary } from '@/lib/player-summary';
 import { getWatchlist } from '@/lib/watchlist';
-import { PlayerContractStrip, PlayerOffer } from '@/components/contracts/PlayerContract';
+import { PlayerContractRow, PlayerOffer } from '@/components/contracts/PlayerContract';
+import { SummaryClamp } from '@/components/SummaryClamp';
 
 export default async function PlayerPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ view?: string }> }) {
   const { id } = await params;
@@ -66,72 +67,57 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
     <div className="wrap">
       <span className="mono muted" style={{ fontSize: 12 }}><Link href="/players">Players</Link> / {p.name}</span>
 
-      <header className="ph">
-        <div className="ph-top">
-          {HOLO[p.name] ? <div className="ph-holo"><HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={104} /></div> : (
-            <div className="ph-photo">
-              {photo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={photo} alt={p.full_name ?? p.name} />
-              ) : (
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true" style={{ alignSelf: 'center' }}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
-              )}
-            </div>
-          )}
-          <div className="ph-main">
-            <div className="ph-tags">
-              {p.positions.map((pos) => (
-                <span key={pos} className="pill ph-pill"><span className="dot" style={{ background: C[pos] }} />{pos}</span>
-              ))}
-              {(p.is_keeper || p.is_rookie_keeper) && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
-              {p.status && <span className="pill ph-pill" style={{ background: C.redBg, color: C.redFg, borderColor: C.redBg }}>{p.status}</span>}
-              {p.list_status && <span className="pill ph-pill" style={{ background: C.ink, color: '#fff', borderColor: C.ink }}>{p.list_status}</span>}
-              <WatchStar playerId={p.id} initial={watch.ids.has(p.id)} name={p.full_name ?? p.name} size={20} />
-            </div>
-            <h1 className="ph-name">{p.full_name ?? p.name}</h1>
-            <div className="ph-sub">
-              <span className="ph-club"><ClubDot code={p.afl_club} size={13} />{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
-              {owner ? <Link href={`/clubhouse/${owner.id}`}>{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
-            </div>
-            <PlayerOffer playerId={p.id} ownerTeamId={owner?.id ?? null} name={p.full_name ?? p.name} />
-          </div>
-          <div className="ph-stats">
-            <div className="ph-rating">
-              <div className="ph-value" title={`Market value: No.${valueRank} of ${league.players.length} in the league`}>
-                <b>{mv != null ? `$${mv}k` : '–'}</b><span>Market value<br />#{valueRank} in league</span>
-              </div>
-              <div className="ph-value ph-avg">
-                <b>{p.average != null ? p.average.toFixed(1) : '–'}</b><span>{CURRENT_SEASON} avg<br />{p.games ?? 0} games</span>
-              </div>
-              <div className="ph-stars">
-                <span><em>Ability</em><Stars value={r.valueStars} label="Current ability" /></span>
-                <span><em>Potential</em><Stars value={r.potential} colour={C.green5} label="Potential" /></span>
-              </div>
-            </div>
-            <PlayerContractStrip playerId={p.id} ownerTeamId={owner?.id ?? null} />
-          </div>
-          <div className="ph-right">
-            <aside className="ph-summary" aria-label="Player summary">
-              <span className="eyebrow">Player summary</span>
-              {summary.map((t, i) => <p key={i}>{t}</p>)}
-            </aside>
-            <div className="ph-key" aria-label="Key info">
-              <span className="eyebrow">Key info</span>
-              <div className="ph-bio">
-                {bio.map(([k, v]) => (
-                  <div key={k}><span>{k}</span><b>{v}</b></div>
-                ))}
-                {prof ? (
-                  <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className={`ph-draft${showDraft ? ' on' : ''}`}>
-                    {showDraft ? 'Back' : 'Draft profile'}
-                  </Link>
+      <header className="phx">
+        {/* One card: who he is and his numbers on the left, the summary on the right. */}
+        <div className="phx-main">
+          <div className="phx-who">
+            {HOLO[p.name] ? <div className="phx-holo"><HoloAvatar holo={HOLO[p.name]} alt={p.full_name ?? p.name} size={88} /></div> : (
+              <div className="phx-photo">
+                {photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={photo} alt={p.full_name ?? p.name} />
                 ) : (
-                  <span className="ph-draft off" title={p.draft_year && p.draft_year < 2020 ? `Draft guide profiles start with the 2020 draft (drafted ${p.draft_year})` : "No draft guide profile loaded for this player yet"}>Draft profile</span>
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9aa79a" strokeWidth="1.4" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>
                 )}
               </div>
+            )}
+            <div className="phx-id">
+              <div className="phx-meta">
+                {p.positions.map((pos) => <span key={pos} className="phx-pos"><i style={{ background: C[pos] }} />{pos}</span>)}
+                <span className="phx-dot">·</span>
+                <span className="phx-club"><ClubDot code={p.afl_club} size={12} />{p.afl_club ? CLUBS[p.afl_club]?.name : '–'}</span>
+                <span className="phx-dot">·</span>
+                {owner ? <Link href={`/clubhouse/${owner.id}`} className="phx-owner">{owner.name}</Link> : <span><b>Free agent</b>{league.ownedPct.get(p.id) ? ` · ${league.ownedPct.get(p.id)} owned` : ''}</span>}
+                {(p.is_keeper || p.is_rookie_keeper) && <span className="phx-tag">{p.is_rookie_keeper ? 'Rookie keeper' : 'Keeper'}</span>}
+                {p.status && <span className="phx-tag red">{p.status}</span>}
+                {p.list_status && <span className="phx-tag">{p.list_status}</span>}
+              </div>
+              <h1 className="phx-name">{p.full_name ?? p.name}</h1>
+              <div className="phx-bio">
+                {bio.map(([k, v]) => <span key={k}>{k === 'Age' ? `${v} yrs` : k === 'Height' ? v : k === 'Drafted' ? `Drafted ${v}` : k === 'Games' ? `${v} games` : `Debut ${v}`}</span>)}
+                {prof ? (
+                  <Link href={showDraft ? `/players/${p.id}` : `/players/${p.id}?view=draft`} aria-pressed={showDraft} className="phx-draft">{showDraft ? 'Back to stats' : 'Draft profile'}</Link>
+                ) : null}
+              </div>
+            </div>
+            <div className="phx-acts">
+              <WatchStar playerId={p.id} initial={watch.ids.has(p.id)} name={p.full_name ?? p.name} size={20} />
+              <PlayerOffer playerId={p.id} ownerTeamId={owner?.id ?? null} name={p.full_name ?? p.name} />
             </div>
           </div>
+          <div className="phx-grid">
+            <div className="phx-lab">Value</div>
+            <div className="phx-cell" title={`Market value: No.${valueRank} of ${league.players.length} in the league`}><b className="phx-lg phx-mv">{mv != null ? `$${mv}k` : '–'}</b><span>Market value · #{valueRank}</span></div>
+            <div className="phx-cell"><b className="phx-lg">{p.average != null ? p.average.toFixed(1) : '–'}</b><span>{CURRENT_SEASON} avg · {p.games ?? 0} games</span></div>
+            <div className="phx-cell"><Stars value={r.valueStars} label="Current ability" /><span>Ability</span></div>
+            <div className="phx-cell"><Stars value={r.potential} colour={C.green5} label="Potential" /><span>Potential</span></div>
+            <PlayerContractRow playerId={p.id} ownerTeamId={owner?.id ?? null} />
+          </div>
         </div>
+        <aside className="phx-side" aria-label="Player summary">
+          <span className="phx-eb">Player summary</span>
+          <SummaryClamp paras={summary} />
+        </aside>
       </header>
 
       {showDraft && prof ? (

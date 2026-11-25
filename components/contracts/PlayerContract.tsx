@@ -33,7 +33,7 @@ const short = (k: number) => `$${Math.round(k)}k`;
 export async function PlayerOffer({ playerId, ownerTeamId, name }: { playerId: number; ownerTeamId: number | null; name: string }) {
   const x = await load(playerId, ownerTeamId);
   if (!x || x.meId == null) return null;
-  const { meId, c, fa, claim, team, holder, clause, windowOpen, myOffer, leaving } = x;
+  const { meId, c, fa, claim, holder, clause, myOffer, leaving } = x;
   if (holder === meId) return fa?.kind === 'pending' ? <Link href={`/clubhouse/${meId}?view=contracts`} className="kc-btn small ph-act">See offers</Link> : null;
   return (
     <span className="ph-offer">
@@ -45,7 +45,7 @@ export async function PlayerOffer({ playerId, ownerTeamId, name }: { playerId: n
         : !c && holder
           ? <form action={openUnsigned.bind(null, playerId)}><button type="submit" className="kc-btn small dark">Offer contract</button></form>
           : <span className="kc-btn small dark" aria-disabled="true" title="Only free agents and out-of-contract players can be offered a contract">Offer contract</span>}
-      {c && clause != null && windowOpen && !claim && !leaving &&
+      {c && clause != null && !claim && !leaving &&
         <Link href={`/clubhouse/${c.team_id}?view=contracts`} className="kc-btn small sage">Pay clause · {kt(clause)}</Link>}
     </span>
   );
@@ -74,5 +74,28 @@ export async function PlayerContractStrip({ playerId, ownerTeamId }: { playerId:
         <div><span>Release clause</span><b>{clauseText}</b></div>
       </div>
     </div>
+  );
+}
+
+/** The Contract row of the profile header: label + four cells on the shared grid (salary, until, clause, status pill). */
+export async function PlayerContractRow({ playerId, ownerTeamId }: { playerId: number; ownerTeamId: number | null }) {
+  const x = await load(playerId, ownerTeamId);
+  if (!x) return null;
+  const { s, c, next, fa, claim, team, holder, clause, leaving } = x;
+  let status = c ? `${yearsLeft(s, c)} yr${yearsLeft(s, c) === 1 ? '' : 's'} left` : holder ? 'No contract' : 'Unsigned'; let full = status; let tone = c ? 'ok' : 'warn';
+  if (claim) { status = 'Clause paid'; full = `Clause paid by ${team(claim.buyer_team)}. ${team(claim.seller_team)} can match`; tone = 'red'; }
+  else if (leaving && next) { status = 'Signed elsewhere'; full = `Joins ${team(next.team_id)} at season end · ${short(next.salary_k)} to ${next.end_season}`; tone = 'move'; }
+  else if (fa) { status = 'Free agent'; full = `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`; tone = 'fa'; }
+  else if (c && isFinalYear(s, c) && next) { status = `Extended to ${next.end_season}`; full = `Extended to ${next.end_season} at ${short(next.salary_k)}`; tone = 'ok'; }
+  else if (c && isFinalYear(s, c)) { status = c.how === 'draft' ? 'Draft deal' : 'Final year'; full = c.how === 'draft' ? 'Draft deal · final year' : 'Final year'; tone = 'warn'; }
+  const clauseText = !c ? '—' : clause != null ? kt(clause) : c.tier === 'none' ? 'None' : '—';
+  return (
+    <>
+      <div className="phx-lab phx-sep">Contract</div>
+      <div className="phx-cell phx-sep"><b className="phx-md">{c ? short(c.salary_k) : '—'}</b><span>{c ? 'a year' : 'salary'}</span></div>
+      <div className="phx-cell phx-sep"><b className="phx-md">{c ? c.end_season : '—'}</b><span>until</span></div>
+      <div className="phx-cell phx-sep"><b className="phx-md">{clauseText}</b><span>release clause</span></div>
+      <div className="phx-cell phx-sep phx-pillcell" title={full}><span className={`phx-pill ${tone}`}>{status}</span></div>
+    </>
   );
 }
