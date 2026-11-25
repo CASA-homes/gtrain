@@ -32,6 +32,15 @@ function basisOf(p: MdPlayer, slot: string): RatingBasis {
 
 /** Every player's state at `now`. Without test scores nothing has been played yet. Bench slots all land in EMG;
  *  with captains on, the captain's score and projection count double. */
+/** A side's live total and projection right now (field players only, captain doubled), for the fixture strip. */
+export function sideTotals(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], rules: Rules): { score: number; proj: number; started: boolean } {
+  const lineKeys = rules.slots.filter((x) => !x.bench).map((x) => x.key);
+  const trimmed: MdLineup = { ...l, slots: Object.fromEntries(rules.slots.map((s) => [s.key, (l.slots[s.key] ?? []).slice(0, s.n)])) };
+  const rows = rowsFor(trimmed, look, fx, false, Date.now(), lineKeys, [], rules.captain);
+  const field = lineKeys.flatMap((k) => rows[k] ?? []);
+  return { score: field.reduce((t, r) => t + (r.score ?? 0), 0), proj: field.reduce((t, r) => t + r.proj, 0), started: field.some((r) => r.st !== 'pre') };
+}
+
 function rowsFor(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], test: boolean, now: number, lineKeys: string[], benchKeys: string[], captain: boolean): Record<string, Row[]> {
   const gameOf = (club: string | null) => fx.find((g) => g.home === club || g.away === club);
   const out = Object.fromEntries([...lineKeys, 'EMG'].map((k) => [k, [] as Row[]])) as Record<string, Row[]>;

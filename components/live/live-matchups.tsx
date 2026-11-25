@@ -13,7 +13,9 @@ import type { MRound } from '@/lib/mens-round';
 import { MensRound } from './mens';
 import { Matchup, shortGame } from './matchday';
 import { Shell } from './kit';
-import { CupLive } from './cup-live';
+import { CupLive, sideTotals } from './cup-live';
+import type { GameOpt, Side } from '@/lib/matchday-data';
+import type { MdLineup, MdPlayer, Rules } from '@/lib/matchday';
 
 export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { mens: MRound; md: MatchdayData; rounds: { value: string; label: string; group: string }[]; sel: string; history: HRound | null; minis?: MiniLink[] }) {
   const router = useRouter();
@@ -24,7 +26,7 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
   const tabsEl = (
         <div className="lm-tabs" role="tablist" aria-label="Your games this week">
         {md.games.map((g) => (
-          <button key={g.id} role="tab" aria-selected={g.id === game?.id} className={`lm-tab ${g.id === game?.id ? 'on' : ''} ${g.key}`} onClick={() => setGid(g.id)}>
+          <button key={g.id} role="tab" aria-selected={g.id === game?.id} className={`lm-tab ${g.id === game?.id ? 'on' : ''} ${g.key}`} onClick={() => { setGid(g.id); setPair(-1); }}>
             <b className="lm-tl">{shortGame(g)}</b>
             <b className="lm-ts">{g.key === 'gtrain' ? 'G-Train' : g.key === 'cup' ? 'Cup' : shortGame(g).split(' · ')[0].replace(/ R\d+$/, '')}<i className={md.savedIds.includes(g.id) ? 'ok' : ''} title={md.savedIds.includes(g.id) ? 'Team saved' : 'Team not saved'} /></b>
             <span>{md.savedIds.includes(g.id) ? 'Team saved' : 'Team not saved'}</span>
@@ -46,34 +48,20 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
       sub={<span className="lm-sub">{history ? <>{history.season} · {history.label} · {md.myName}</> : <>Round {md.round}, {md.season} · {md.myName}</>}</span>} right={rightEl}>
       {history ? <HistoryBoard round={history} />
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
-        : game.key === 'gtrain' && game.opp ? (() => {
+        : (game.key === 'gtrain' || game.key === 'cup') && game.opp ? (() => {
           const p = pair >= 0 ? game.pairs?.[pair] : undefined;
-          const rules = rulesFor('gtrain', md.lineupShape);
+          const rules = game.key === 'cup' ? RULES.cup : rulesFor('gtrain', md.lineupShape);
+          const myLineup = md.lineups[game.id] ?? autoFill(rules, md.squad);
+          const theme = game.key === 'cup' ? 'gold' : 'green';
           return (
             <div className="lm-gt">
-              {!!game.pairs?.length && (
-                <div className="mx-matchups lm-fx" role="tablist" aria-label="G-Train games this round">
-                  <button type="button" role="tab" aria-selected={!p} className={`mx-mu mx-mu-link ${!p ? 'on' : ''}`} onClick={() => setPair(-1)}>
-                    <span className="mx-mu-t"><span className="rh-ellip">{md.myName}</span></span>
-                    <span className="mx-mu-t"><span className="rh-ellip">{game.opp.name}</span></span>
-                    <span className="mx-mu-p rh-mono"><span>Yours</span><span>R{md.round}</span></span>
-                  </button>
-                  {game.pairs.map(([a, b], i) => (
-                    <button key={a.teamId} type="button" role="tab" aria-selected={pair === i} className={`mx-mu mx-mu-link ${pair === i ? 'on' : ''}`} onClick={() => setPair(i)}>
-                      <span className="mx-mu-t"><span className="rh-ellip">{a.name}</span></span>
-                      <span className="mx-mu-t"><span className="rh-ellip">{b.name}</span></span>
-                      <span className="mx-mu-p rh-mono"><span>{a.saved && b.saved ? 'Both set' : a.saved || b.saved ? 'One set' : 'Not set'}</span><span>R{md.round}</span></span>
-                    </button>
-                  ))}
-                </div>
-              )}
-              {p ? <CupLive key={`p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme="green" spectator />
-                : <CupLive key="mine" game={game} rules={rules} mine={md.lineups[game.id] ?? autoFill(rules, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} theme="green" />}
+              <FixtureStrip game={game} myName={md.myName} myLineup={myLineup} rules={rules} look={look} fixtures={md.fixtures} pair={pair} setPair={setPair} round={game.round} />
+              {p ? <CupLive key={`${game.id}p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme={theme} spectator />
+                : <CupLive key={`${game.id}mine`} game={game} rules={rules} mine={myLineup} myName={md.myName} look={look} fixtures={md.fixtures} theme={theme} />}
             </div>
           );
         })()
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
-        : game.key === 'cup' ? <CupLive game={game} rules={RULES.cup} mine={md.lineups[game.id] ?? autoFill(RULES.cup, md.squad)} myName={md.myName} look={look} fixtures={md.fixtures} />
         : (
           <div className="lm-proj">
             <Matchup game={game} rules={rulesFor(game.key, md.lineupShape)} mine={md.lineups[game.id] ?? autoFill(rulesFor(game.key, md.lineupShape), game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
@@ -81,5 +69,35 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
           </div>
         )}
     </Shell>
+  );
+}
+
+/** Every game this round as a tile: both clubs with their score (live) or projection (before bounce). Tap to open. */
+function FixtureStrip({ game, myName, myLineup, rules, look, fixtures, pair, setPair, round }: {
+  game: GameOpt; myName: string; myLineup: MdLineup; rules: Rules; look: (id: number) => MdPlayer | undefined;
+  fixtures: { home: string; away: string; start: string }[]; pair: number; setPair: (i: number) => void; round: number;
+}) {
+  const tiles = useMemo(() => {
+    const t = (name: string, lineup: MdLineup) => ({ name, ...sideTotals(lineup, look, fixtures, rules) });
+    const mine = { a: t(myName, myLineup), b: t(game.opp!.name, game.opp!.lineup), saved: '', i: -1 };
+    const rest = (game.pairs ?? []).map(([a, b]: [Side, Side], i: number) => ({ a: t(a.name, a.lineup), b: t(b.name, b.lineup), saved: a.saved && b.saved ? 'Both set' : a.saved || b.saved ? 'One set' : 'Not set', i }));
+    return [mine, ...rest];
+  }, [game, myName, myLineup, rules, look, fixtures]);
+  if (tiles.length < 2) return null;
+  return (
+    <div className="mx-matchups lm-fx" role="tablist" aria-label={`${game.key === 'cup' ? 'Cup' : 'G-Train'} games this round`}>
+      {tiles.map(({ a, b, saved, i }) => {
+        const live = a.started || b.started;
+        const as = live ? a.score : a.proj, bs = live ? b.score : b.proj;
+        const on = pair === i;
+        return (
+          <button key={i} type="button" role="tab" aria-selected={on} className={`mx-mu mx-mu-link ${on ? 'on' : ''}`} onClick={() => setPair(i)}>
+            <span className="mx-mu-t"><span className="rh-ellip">{a.name}</span><b className="rh-mono" style={{ fontWeight: as >= bs ? 700 : 500 }}>{as}</b></span>
+            <span className="mx-mu-t"><span className="rh-ellip">{b.name}</span><b className="rh-mono" style={{ fontWeight: bs > as ? 700 : 500 }}>{bs}</b></span>
+            <span className="mx-mu-p rh-mono"><span>{i < 0 ? 'Yours' : saved}</span><span>{live ? 'Live' : 'Proj'} · R{round}</span></span>
+          </button>
+        );
+      })}
+    </div>
   );
 }

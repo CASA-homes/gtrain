@@ -119,7 +119,9 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
     const opp = next.home === myTeamId ? next.away : next.away === myTeamId ? next.home : null;
     games.push({ id: `cup:${next.round}`, key: 'cup', round: next.round,
       label: `Knockout Cup · Round ${next.round}`, sub: opp ? `v ${team(opp)?.name}` : next.label ?? 'TBC',
-      opp: opp ? side('cup', next.round, opp) : null, note: STAGE_NAME[next.stage] });
+      opp: opp ? side('cup', next.round, opp) : null, note: STAGE_NAME[next.stage],
+      pairs: cup.matches.filter((m) => m.round === next.round && m.id !== next.id && m.home && m.away && m.home !== myTeamId && m.away !== myTeamId)
+        .map((m) => [side('cup', next.round, m.home!), side('cup', next.round, m.away!)] as [Side, Side]) });
     lineups[`cup:${next.round}`] = saved.get(`cup:${next.round}:${myTeamId}`)
       ?? [...cup.matches.map((m) => m.round)].filter((r) => r < next.round).reverse().map((r) => saved.get(`cup:${r}:${myTeamId}`)).find(Boolean) ?? null;
   }
