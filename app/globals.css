@@ -3095,3 +3095,7 @@ input.im-mini { width: 110px; cursor: text; }
   .ph-right { align-self: stretch; }
   .ph-summary { padding-top: 12px; }
 }
+@media (min-width: 901px) {
+  .ph-top { grid-template-rows: auto 1fr; }
+  .ph-stats { align-self: start; }
+}
