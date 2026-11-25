@@ -846,3 +846,6 @@
   .kc-modal-foot .kc-btn { white-space: nowrap; }
   .kc-modal-foot .kc-btn.dark { margin-left: auto; }
 }
+
+.kc-btn.kc-delist { background: #fff; border-color: #b9492f; color: #a23d27; }
+.kc-btn.kc-delist:hover { background: #fbf0ec; }

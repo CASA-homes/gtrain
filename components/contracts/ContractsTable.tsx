@@ -178,8 +178,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid, deadline 
       <details className="ct2-item">
         <summary className="ct2-row">
           <span className="ct2-ic"><ClubDot code={r.club} size={20} /></span>
-          <span className="ct2-who"><b>{r.name}</b><i>{r.positions.join('/')}{r.status === 'moving' && <em className="ct2-mv">Signed for {settings.season + 1}{r.movingTo ? ` · ${r.movingTo}` : ''}</em>}</i>
-            {canManage && mine && !locked && !prov && r.salary != null && <ReleaseButton compact contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} deadline={deadline} />}</span>
+          <span className="ct2-who"><b>{r.name}</b><i>{r.positions.join('/')}{r.status === 'moving' && <em className="ct2-mv">Signed for {settings.season + 1}{r.movingTo ? ` · ${r.movingTo}` : ''}</em>}</i></span>
           <span className="ct2-c ct2-pa">{r.age ?? '–'}<em>yrs</em></span>
           <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
           <Trend v={r.trend} />
@@ -242,6 +241,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid, deadline 
           )}
           <div className="ct2-acts">
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
+            {canManage && mine && !locked && !prov && r.salary != null && <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} deadline={deadline} />}
             {canManage && !locked && <>
               {r.onAuction ? <Link href="/market/auctions" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
             </>}

@@ -240,7 +240,7 @@ export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 
   }
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
-      <button type="button" className="kc-btn small danger" disabled={pending} onClick={open}>Delist</button>
+      <button type="button" className="kc-btn small kc-delist" disabled={pending} onClick={open}>Delist</button>
       {note}
     </span>
   );
