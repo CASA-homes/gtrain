@@ -5,6 +5,18 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'L. Duggan', tag: 'Injury', date: '2026-11-25', title: 'Duggan sidelined after knee scope',
+    body: 'West Coast’s co-captain had an arthroscope on his knee over the off-season and will spend some time on the sidelines, with the Eagles still working through his timeline. Released by Bito’s Boys after averaging 75 in 2026, he’s a draft option to treat with caution until there’s a return date.',
+  },
+  {
+    player: 'C. Nash', tag: 'Injury', date: '2026-11-25', title: 'Nash nearly cleared after neck surgery',
+    body: 'Nash is back training with the Hawks and doing everything bar full contact after the neck surgery that ended his 2026 in August. He’s on track to be cleared for full training before Christmas. A Brayshaw Thing let him go, so a clean summer makes him a handy late midfield pick.',
+  },
+  {
+    player: 'J. Waterman', tag: 'Injury', date: '2026-11-25', title: 'Waterman eased in on load management',
+    body: 'The Eagles have Waterman on a managed load as he works back into the program, with full training hoped for later this week. Nothing alarming yet for a forward who played all 23 games in 2026 at a 72 average.',
+  },
+  {
     player: 'N. Wanganeen-Milera', tag: 'Injury', date: '2026-11-24', title: 'Nasiah back in full training early',
     body: 'Wanganeen-Milera is already doing full pre-season work at St Kilda after the hamstring strain that finished his 2026 in round 22. A clean summer is exactly what Pato’s Fantasy Team want from a keeper who averaged 105 last year.',
   },
@@ -63,17 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'N. Blakey', tag: 'Injury', date: '2026-11-13', title: 'Blakey back to group skills in December',
     body: 'Blakey had an off-season procedure on his AC joint and the Roos expect him to move into group skills in December. That leaves plenty of time before round 1, so there’s no real alarm for a defender who averaged 86 in 2026.',
-  },
-  {
-    player: 'T. Powell', tag: 'Injury', date: '2026-11-13', title: 'Powell stays on a modified program',
-    body: 'Powell has joined some team skills but North have him on a modified program for roughly another six weeks. He only managed eight games in 2026, so a clean run into January matters if he’s going to push for regular midfield minutes.',
-  },
-  {
-    player: 'C. Rozee', tag: 'Injury', date: '2026-11-11', title: 'Rozee in drills, Port bullish on round 1',
-    body: 'Port high-performance boss Tim Parham says Rozee is now training in drills after a minor UK procedure to clear scar tissue around the nerve in his torn hamstring, though he’s not quite at full speed. Parham is bullish about round 1 against North Melbourne, roughly four and a half months off. If he gets there, Serong So’Right get back a mid who averaged over 100 in 2025.',
-  },
-  {
-    player: 'H. Reid', tag: 'Injury', date: '2026-11-10', title: 'Reid modified on day one, banned rounds 1–2',
-    body: 'Reid did a modified session on the Eagles’ first day back, running and agility work but no footy drills, after his end-of-season shoulder clean-up. No return date has been given. He still carries a two-match ban for a dangerous tackle into 2027, so he misses the first two rounds regardless.',
   },
 ];
