@@ -1,10 +1,10 @@
 'use client';
 // A club's contracts as a compact table. One row per player: full name, club and position/age, contract length,
 // a market-value trend line (green rising, red falling), market value and salary, and an arrow that opens the full
-// contract details and manage actions. Used twice: players under contract, and expiring / free agents (row tint
-// shows which: light red = free agent or leaving, light yellow = expiring).
+// contract details and manage actions. Row tint: amber = unsigned, blue = free agent, purple = signed with another
+// club for next season, red = clause paid, light yellow = final year.
 import Link from 'next/link';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, type ReactNode } from 'react';
 import { ClubDot } from '@/components/bits';
 import { AuctionControl, ExtendControl, ProvisionalControls, ReleaseButton, useRun } from '@/components/contracts/client';
 import { buyClause } from '@/app/(app)/contracts/actions';
@@ -17,11 +17,16 @@ export interface CtRow {
   id: number; playerId: number; name: string; positions: string[]; club: string | null; age: number | null; avg: number | null; games: number;
   salary: number | null; base: number; rate: number; start: number | null; end: number | null; yearsLeft: number; tier: Tier; clause: number | null;
   status: CtStatus; statusLabel: string; provisional?: boolean; homeGrown: boolean; extEnd: number | null; extSalary: number | null;
-  onAuction: boolean; lockedUntil?: string | null; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | null;
+  onAuction: boolean; lockedUntil?: string | null; dead: number; deadLater?: number; deadYears?: number; releaseFee?: number; trend: number[]; tone?: 'red' | 'amber' | 'unsigned' | 'fa' | 'moving' | null; movingTo?: string | null;
 }
 
-/** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club. */
-export interface BuyInfo { dropOptions: { id: number; label: string }[]; bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoomNext: number; nextSeason: number; seasonCap: number; clubName: string }
+/** What the viewing coach needs to pay a clause on another club's player. Null when it's your own club.
+ *  capRoom is for the season he'd join you in (this one if a window is open, otherwise next). */
+export interface BuyInfo { bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoom: number; joinSeason: number; seasonCap: number; clubName: string; maxYears: number; season: number }
+
+/** Market salary for a deal of this length (mirrors kc_length_factor): short deals cost a little more. */
+const LEN: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
+export const clauseSalary = (rate: number, current: number, years: number) => Math.max(current, Math.round(rate * (LEN[years] ?? 1)));
 
 const k$ = (k: number) => `$${Math.round(k)}k`;
 const ktShort = (n: number) => (n >= 10000 ? `${Math.round(n / 1000)}k` : n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`);
@@ -56,8 +61,8 @@ const sortVal = (r: CtRow, k: SortKey): number | string => {
   }
 };
 
-export function ContractsTable({ title, note, rows, settings, years, canManage, mine, windowOpen, empty, buy }: {
-  title: string; note?: string; rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean; empty?: string; buy?: BuyInfo | null;
+export function ContractsTable({ title, note, info, rows, settings, years, canManage, mine, windowOpen, empty, buy, deadline }: {
+  title: string; note?: string; info?: ReactNode; rows: CtRow[]; settings: KcSettings; years: number[]; canManage: boolean; mine: boolean; windowOpen: boolean; empty?: string; buy?: BuyInfo | null; deadline?: string | null;
 }) {
   const total = rows.reduce((t, r) => t + (r.salary ?? 0), 0);
   const [sort, setSort] = useState<{ k: SortKey; dir: 1 | -1 } | null>(null);
@@ -73,7 +78,7 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
   return (
     <section className="ct2">
       <header className="ct2-head">
-        <div><h3>{title} <span>{rows.length}</span></h3>{note && <p>{note}</p>}</div>
+        <div><div className="ct2-title"><h3>{title} <span>{rows.length}</span></h3>{info && <details className="cs-info"><summary aria-label={`What does ${title.toLowerCase()} mean?`}>i</summary><div className="cs-pop">{info}</div></details>}</div>{note && <p>{note}</p>}</div>
         {total > 0 && <b>{k$(total)}</b>}
       </header>
       <div className="ct2-cols" role="toolbar" aria-label="Sort players">
@@ -88,25 +93,29 @@ export function ContractsTable({ title, note, rows, settings, years, canManage, 
         <span />
       </div>
       {rows.length ? (
-        <ul>{shown.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} onBid={buy ? setBidOn : null} />)}</ul>
+        <ul>{shown.map((r) => <Row key={r.id} r={r} years={years} settings={settings} canManage={canManage} mine={mine} windowOpen={windowOpen} onBid={buy ? setBidOn : null} deadline={deadline} />)}</ul>
       ) : <p className="ct2-empty">{empty ?? 'Nobody here.'}</p>}
       {bidOn && buy && <ClauseDialog r={bidOn} buy={buy} settings={settings} onClose={() => setBidOn(null)} />}
     </section>
   );
 }
 
-/** Popup for paying a release clause, with every rule spelled out, plus a lower KT offer as the alternative. */
+/** Popup for activating a release clause: pick a length, see the salary, every rule spelled out, plus a lower KT
+ *  offer as the alternative. Mirrors kc_buy. */
 function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; settings: KcSettings; onClose: () => void }) {
   const { pending, go, note, msg } = useRun();
-  const [drop, setDrop] = useState<string>('');
+  const [years, setYears] = useState(3);
   const price = r.clause ?? 0;
   const ref = useRef<HTMLDivElement>(null);
+  const current = r.salary ?? 0;
+  const sal = clauseSalary(r.rate, current, years);
+  const from = buy.joinSeason, to = from + years - 1;
+  const when = buy.windowOpen ? 'straight away (the window is open)' : `at the next window, at the end of ${buy.season}. He plays out the season for ${buy.clubName}`;
   const blockers = [
-    !buy.windowOpen && 'Clauses can only be paid while the mid-season window is open.',
-    buy.used >= buy.maxBuys && `You’ve used your ${buy.maxBuys} clause buys this window.`,
+    r.status === 'moving' && 'He’s already signed with another club for next season.',
+    buy.used >= buy.maxBuys && `You’ve made your ${buy.maxBuys} clause offers this period.`,
     buy.bank < price && `You need ${kt(price)} and have ${kt(buy.bank)}.`,
-    (r.salary ?? 0) > buy.capRoomNext && `His ${k$(r.salary ?? 0)} salary would take you over the ${k$(buy.seasonCap)} cap in ${buy.nextSeason}.`,
-    !drop && 'Pick a player to drop.',
+    sal > buy.capRoom && `His ${k$(sal)} salary would take you over the ${k$(buy.seasonCap)} cap in ${buy.joinSeason}.`,
   ].filter(Boolean) as string[];
   return (
     <div className="cd-back" role="dialog" aria-modal="true" aria-labelledby="cd-h" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -117,29 +126,28 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
         </div>
         <div className="cd-price">
           <div><span>Clause</span><b>{kt(price)}</b></div>
-          <div><span>His salary</span><b>{r.salary != null ? k$(r.salary) : '—'}</b></div>
-          <div><span>Contract to</span><b>{r.extEnd ?? r.end ?? '—'}</b></div>
+          <div><span>Salary now</span><b>{r.salary != null ? k$(r.salary) : '—'}</b></div>
+          <div><span>Market</span><b>{k$(r.rate)}</b></div>
+        </div>
+        <div className="cd-len" role="radiogroup" aria-label="Contract length">
+          <span>Your offer to him</span>
+          <div>{Array.from({ length: Math.min(5, buy.maxYears) }, (_, i) => i + 1).map((y) => (
+            <button key={y} type="button" role="radio" aria-checked={years === y} className={years === y ? 'on' : undefined} onClick={() => setYears(y)}>{y} yr{y > 1 ? 's' : ''}</button>
+          ))}</div>
+          <p><b>{k$(sal)} a year</b>, {from}{to > from ? `–${to}` : ''}. {sal === current && current > 0 ? 'Never less than he earns now.' : 'Market rate for that length.'}</p>
         </div>
         <ul className="cd-rules">
-          <li><b>Full price only.</b> You pay the whole clause up front. It’s held for 24 hours.</li>
-          <li><b>His club can match.</b> They have 24 hours to pay the same {kt(price)}. Their KT is burned, yours comes back, and his clause steps up ({r.tier === 'standard' ? 'standard to high' : 'high to none'}). They can only match once a season.</li>
-          <li><b>If they don’t match</b>, he’s yours straight away on the rest of his contract.</li>
-          <li><b>You drop a player.</b> Pick who goes below. If he’s under contract it’s a normal release (dead money and fee); either way he leaves your list when the deal completes.</li>
-          <li><b>Window only.</b> Clauses can only be paid while a window is open: pre-season (deadline day to draft day) or mid-season. A player has a clause until his last 6 months.</li>
-          <li><b>His salary comes with him.</b> You take on his current contract: {r.salary != null ? k$(r.salary) : '—'} a year to {r.extEnd ?? r.end ?? '—'}, and it has to fit under your {k$(buy.seasonCap)} cap for {buy.nextSeason} ({k$(Math.max(0, buy.capRoomNext))} room). It’s checked again when he moves.</li>
-          <li><b>Limits.</b> {buy.maxBuys} clause buys per window ({buy.used} used).</li>
+          <li><b>Pay the clause.</b> {kt(price)} up front, held for 48 hours.</li>
+          <li><b>His club gets 48 hours to match.</b> To keep him they pay the same {kt(price)} (burned) and give him your terms. Your KT comes back.</li>
+          <li><b>No match and he’s yours</b>, on your terms. He moves {when}.</li>
+          <li><b>Any time of year.</b> {buy.maxBuys} clause offers per period ({buy.used} used). Balance your list by delisting when the window opens.</li>
+          <li><b>Cap.</b> {k$(sal)} has to fit under your {k$(buy.seasonCap)} cap for {buy.joinSeason} ({k$(Math.max(0, buy.capRoom))} room).</li>
         </ul>
         {blockers.length > 0 && <div className="cd-block">{blockers.map((b) => <p key={b}>{b}</p>)}</div>}
         {msg?.ok ? note : (
           <>
-            <label className="cd-drop">Drop a player to make room
-              <select value={drop} onChange={(e) => setDrop(e.target.value)} aria-label="Player to drop">
-                <option value="">Choose…</option>
-                {buy.dropOptions.map((o) => <option key={o.id} value={o.id}>{o.label}</option>)}
-              </select>
-            </label>
             <button type="button" className="kc-btn cd-go" disabled={pending || blockers.length > 0}
-              onClick={() => go(() => buyClause(r.id, Number(drop)), `Pay ${kt(price)} for ${r.name}’s release clause? His club gets 24 hours to match; then he joins you and your dropped player goes.`)}>
+              onClick={() => go(() => buyClause(r.id, years), `Pay ${kt(price)} for ${r.name}’s release clause and offer him ${years} year${years > 1 ? 's' : ''} at ${k$(sal)}? ${buy.clubName} get 48 hours to match.`)}>
               {pending ? 'Paying…' : `Pay the clause · ${kt(price)}`}
             </button>
             {note}
@@ -157,7 +165,7 @@ function ClauseDialog({ r, buy, settings, onClose }: { r: CtRow; buy: BuyInfo; s
   );
 }
 
-function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean; onBid: ((r: CtRow) => void) | null }) {
+function Row({ r, years, settings, canManage, mine, windowOpen, onBid, deadline }: { r: CtRow; years: number[]; settings: KcSettings; canManage: boolean; mine: boolean; windowOpen: boolean; onBid: ((r: CtRow) => void) | null; deadline?: string | null }) {
   const surplus = r.salary != null ? r.rate - r.salary : null;
   const setup = !!settings.setup_until && new Date(settings.setup_until) > new Date();
   const prov = setup && !!r.provisional;
@@ -170,7 +178,8 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
       <details className="ct2-item">
         <summary className="ct2-row">
           <span className="ct2-ic"><ClubDot code={r.club} size={20} /></span>
-          <span className="ct2-who"><b>{r.name}</b><i>{r.positions.join('/')}</i></span>
+          <span className="ct2-who"><b>{r.name}</b><i>{r.positions.join('/')}{r.status === 'moving' && <em className="ct2-mv">Signed for {settings.season + 1}{r.movingTo ? ` · ${r.movingTo}` : ''}</em>}</i>
+            {canManage && mine && !locked && !prov && r.salary != null && <ReleaseButton compact contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} deadline={deadline} />}</span>
           <span className="ct2-c ct2-pa">{r.age ?? '–'}<em>yrs</em></span>
           <span className="ct2-c">{yrs != null ? `${yrs}y` : '—'}<em>{until ?? 'none'}</em></span>
           <Trend v={r.trend} />
@@ -208,7 +217,7 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <div><dt>Release clause</dt><dd>{r.clause != null ? `${kt(r.clause)} (${r.tier})` : r.salary == null ? '—' : finalYr ? 'None in his last 6 months' : r.tier === 'none' ? 'No clause' : '—'}</dd></div>
             <div><dt>Market value</dt><dd>{k$(r.rate)}{surplus != null ? ` · ${surplus >= 0 ? `${k$(surplus)} under` : `${k$(-surplus)} over`} his salary` : ''}</dd></div>
             <div><dt>2026</dt><dd>{r.avg?.toFixed(1) ?? '–'} avg · {r.games} games</dd></div>
-            {r.dead > 0 && !locked && <div><dt>Release cost</dt><dd>{k$(r.dead)} dead now{r.deadLater ? `, ${k$(r.deadLater)} × ${r.deadYears} later` : ''}{r.releaseFee ? ` + ${kt(r.releaseFee)}` : ''}</dd></div>}
+            {r.dead > 0 && !locked && <div><dt>Delist cost</dt><dd>{k$(r.dead)} dead now{r.deadLater ? `, ${k$(r.deadLater)} × ${r.deadYears} later` : ''}{r.releaseFee ? ` + ${kt(r.releaseFee)}` : ''}</dd></div>}
           </dl>
           {r.status === 'none' && canManage && (
             <div className="ct2-sign">
@@ -235,7 +244,6 @@ function Row({ r, years, settings, canManage, mine, windowOpen, onBid }: { r: Ct
             <Link href={`/players/${r.playerId}`} className="kc-btn small">Player profile</Link>
             {canManage && !locked && <>
               {r.onAuction ? <Link href="/market/auctions" className="kc-btn small">On auction</Link> : mine && windowOpen && !finalYr ? <AuctionControl contractId={r.id} name={r.name} suggested={Math.max(1, Math.round((r.clause ?? r.rate) * 0.4))} /> : null}
-              {!prov && <ReleaseButton contractId={r.id} name={r.name} dead={r.dead} later={r.deadLater ?? 0} laterYears={r.deadYears ?? 0} fee={r.releaseFee ?? 0} />}
             </>}
           </div>
         </div>

@@ -48,7 +48,7 @@ export async function setTier(contractId: number, tier: string) {
   return run('kc_set_tier', { cid: contractId, new_tier: tier }, () => 'Release clause updated.');
 }
 export async function releasePlayer(contractId: number) {
-  return run('kc_release', { cid: contractId }, (d) => `Released. $${d}k of dead money stays on your cap this season. He's now a free agent.`);
+  return run('kc_release', { cid: contractId }, (d) => `Delisted. $${d}k of dead money stays on your cap this season. He's a free agent and goes into the draft pool.`);
 }
 export async function listAuction(contractId: number, reserve: number, hours: number) {
   return run('kc_list_auction', { cid: contractId, reserve: Math.max(0, Math.round(reserve)), hours: Math.round(hours) }, () => 'Listed. The auction is live on the Transfer Market.');
@@ -62,14 +62,18 @@ export async function bid(auctionId: number, amount: number) {
 export async function settleAuction(auctionId: number) {
   return run('kc_settle', { aid: auctionId }, (d) => (d === 'sold' ? 'Sold. He joins the winner at season end.' : d === 'unsold' ? 'No valid bids: he stays put.' : 'Auction closed.'));
 }
-export async function buyClause(contractId: number, dropPlayerId: number) {
-  return run('kc_buy', { cid: contractId, p_drop: dropPlayerId }, () => 'Clause paid. His club has 24 hours to match. If they don’t, he joins you straight away and your dropped player goes.');
+export async function buyClause(contractId: number, years: number) {
+  return run('kc_buy', { cid: contractId, p_years: years }, () => 'Clause paid. His club has 48 hours to match. If they don’t, he signs with you and moves at the next window.');
 }
 export async function matchClaim(claimId: number) {
-  return run('kc_match', { claim_id: claimId }, (t) => `Matched. He stays, the buyer gets their tokens back, and his clause is now ${t === 'high' ? 'High' : 'off (no clause)'}.`);
+  return run('kc_match', { claim_id: claimId }, () => 'Matched. He stays on the new terms and the buyer gets their tokens back.');
 }
 export async function completeClaim(claimId: number) {
-  return run('kc_complete_claim', { claim_id: claimId }, (d) => (d === 'completed' ? 'Done. He finishes the season here, then moves. Tokens paid, less the levy.' : 'The buy fell through and the buyer was refunded.'));
+  return run('kc_complete_claim', { claim_id: claimId }, (d) => (d === 'completed' ? 'Done. He’s signed with his new club and moves at the next window. Tokens paid, less the levy.' : 'The buy fell through and the buyer was refunded.'));
+}
+/** Commish: set the contract deadline, or null to go back to one month before the draft. */
+export async function setDeadline(at: string | null) {
+  return run('kc_set_deadline', { p_at: at }, (d) => `Contract deadline set: ${new Date(String(d)).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Perth' })} Perth time.`);
 }
 export async function acceptOffer(offerId: number) {
   return run('kc_accept_offer', { oid: offerId }, () => 'Offer accepted. The fee is in your bank. He plays out the season with you, then moves.');

@@ -1,6 +1,7 @@
 // Server-side inputs for the player card: per-game detail and percentile bars against the same line.
 import games from '@/lib/player-games.json';
-import type { CardGame, CardProps } from '@/components/PlayerCard';
+import type { CardGame, CardProps, PriceSeries } from '@/components/PlayerCard';
+import { rateFromHist, valueTrend } from '@/lib/contracts';
 import type { Box, Line, PlayerRow, Ratings } from '@/lib/ratings';
 
 const CURRENT = 2026;
@@ -17,6 +18,38 @@ const STATS: Record<Line, Stat[]> = {
   RUC: [['Hitouts', (b) => b.ho, f1], ['Ruck contests', (b) => b.rc, pc], ['Clearances', (b) => b.cl, f1], ['Contested poss.', (b) => b.cp, f1], ['Disposals', disp, f1], ['Marks', (b) => b.m, f1], ['Points per minute', (b) => b.ppm, (v) => v.toFixed(2)], ['Time on ground', (b) => b.tog, pc]],
 };
 const LINE_NAME: Record<Line, string> = { DEF: 'defender', MID: 'midfielder', RUC: 'ruck', FWD: 'forward' };
+
+const rnd = (r: number | null) => (r == null ? '' : r === 0 ? 'OR' : r >= 25 ? ['QF', 'SF', 'PF', 'GF'][Math.min(3, r - 25)] ?? `R${r}` : `R${r}`);
+
+/** Market value ($k) over time for the price graph. This season is match by match (valueTrend). Earlier seasons are
+ *  estimates: his value going into each season and coming out of it, joined game by game. All time is one point per
+ *  season end. */
+function priceSeries(p: PlayerRow, g: CardGame[]): PriceSeries | null {
+  const hist = [...(p.hist ?? [])].filter((h) => h[1] > 0).sort((a, b) => a[0] - b[0]);
+  const birth = p.birth_date ?? null;
+  const live = valueTrend(p, 999);
+  const now = live.length ? live[live.length - 1] : rateFromHist(hist, birth);
+  const season = live.length >= 2 ? live : null;
+  const curYear = g.length ? CURRENT : null;
+  const before = (y: number) => hist.filter((h) => h[0] < y);
+  const thru = (y: number) => hist.filter((h) => h[0] <= y);
+  const past = hist.filter((h) => h[0] !== curYear);
+  const est = (y: number, games: number) => {
+    const a = rateFromHist(before(y), birth, y), b = rateFromHist(thru(y), birth, y + 1), n = Math.max(1, games);
+    return Array.from({ length: n + 1 }, (_, i) => Math.round(a + ((b - a) * i) / n));
+  };
+  const lastYears = past.slice(-2);
+  const three = lastYears.length ? [...lastYears.flatMap(([y, gm], i) => est(y, gm).slice(i ? 1 : 0)), ...(season ?? [now]).slice(1)] : null;
+  const yrs3 = [...lastYears.map((h) => h[0]), ...(curYear ? [curYear] : [])];
+  const allPts = hist.length >= 2 ? [rateFromHist([], birth, hist[0][0]), ...hist.map(([y]) => (y === curYear ? now : rateFromHist(thru(y), birth, y + 1)))] : null;
+  const first = hist[0]?.[0];
+  const mid = g.length ? g[Math.floor((g.length - 1) / 2)][0] : null;
+  return {
+    season: season ? { pts: season, xs: ['Start', rnd(mid), g.length ? rnd(g[g.length - 1][0]) : ''] } : null,
+    three: three && three.length >= 2 ? { pts: three, xs: [String(yrs3[0]), yrs3.length > 2 ? String(yrs3[1]) : '', String(yrs3[yrs3.length - 1])] } : null,
+    all: allPts && first ? { pts: allPts, xs: [String(first), String(Math.round((first + hist[hist.length - 1][0]) / 2)), String(hist[hist.length - 1][0])] } : null,
+  };
+}
 
 export function playerCard(p: PlayerRow, r: Ratings, rostered: PlayerRow[], ratings: Map<number, Ratings>): CardProps | null {
   const found = p.dfs_id ? G[p.dfs_id] : null;
@@ -35,6 +68,6 @@ export function playerCard(p: PlayerRow, r: Ratings, rostered: PlayerRow[], rati
   return {
     playerNo: p.dfs_id ? p.dfs_id.replace('CD_I', '') : null, games: d.g, prev: d.p, pct, lineName: LINE_NAME[line],
     seasons: [...(p.hist ?? [])].filter((h) => h[1] > 0).sort((a, b) => b[0] - a[0]), current: CURRENT,
-    poolNote: `percentile · ${pool.length} rostered ${LINE_NAME[line]}s, 8+ games`,
+    poolNote: `percentile · ${pool.length} rostered ${LINE_NAME[line]}s, 8+ games`, price: priceSeries(p, d.g),
   };
 }

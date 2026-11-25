@@ -14,7 +14,6 @@ export default async function ClausesPage({ searchParams }: { searchParams: Prom
   const m = await getMarket();
   const { d, s, meId, teamName } = m;
   const myClub = meId ? d.clubs.get(meId) : null;
-  const windowOpen = !!s?.window_open && !!s.window_closes_at && new Date(s.window_closes_at) > new Date();
   const buysUsed = meId && s?.window_opened_at ? d.claims.filter((c) => c.buyer_team === meId && c.status !== 'cancelled' && new Date(c.created_at) >= new Date(s.window_opened_at!)).length : 0;
   const claimed = new Set(d.claims.filter((c) => c.status === 'pending').map((c) => c.contract_id));
   const byValue = sp.sort === 'value';
@@ -29,7 +28,7 @@ export default async function ClausesPage({ searchParams }: { searchParams: Prom
   return (
     <div className="th"><main className="th-main">
       <MarketSub tab="clauses" title="Release clauses"
-        sub={s ? <>Pay a player’s clause in a window and he’s yours, max {s.max_buys} per club. His club has 24 hours to match. If they don’t, he joins you on the rest of his contract and you drop a player.</> : undefined}>
+        sub={s ? <>Pay a player’s clause any time of year and offer him 1 to {s.max_years} years at market rate, max {s.max_buys} per club each period. His club has 48 hours to match your terms. If they don’t, he signs with you and moves at the next window.</> : undefined}>
         {myClub && s && (
           <div className="th-card" style={{ padding: '12px 16px', display: 'flex', gap: 22 }}>
             <div><span className="th-eb">Bank</span><b style={{ display: 'block', fontSize: 18 }}>{kt(myClub.bank)}</b></div>
@@ -55,8 +54,7 @@ export default async function ClausesPage({ searchParams }: { searchParams: Prom
               {rows.map(({ c, p, rate, clause }) => {
                 const fits = myClub && s ? myClub.salary + c.salary_k <= s.season_cap_k : false;
                 const affordable = myClub ? myClub.bank >= clause : false;
-                const reason = claimed.has(c.id) ? 'Clause paid · 24h' : !windowOpen ? 'Window closed'
-                  : !fits ? 'Over your cap' : !affordable ? 'Not enough KT' : s && buysUsed >= s.max_buys ? 'Buys used' : null;
+                const reason = claimed.has(c.id) ? 'Clause paid · 48h' : !fits ? 'Over your cap' : !affordable ? 'Not enough KT' : s && buysUsed >= s.max_buys ? 'Buys used' : null;
                 return (
                   <tr key={c.id}>
                     <td><Link href={`/players/${c.player_id}`}>{p?.name ?? m.pname(c.player_id)}</Link> <span className="meta">{p?.positions.join('/')}</span></td>

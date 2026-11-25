@@ -267,6 +267,25 @@
 .ct2 li { border-top: 1px solid var(--line-soft); }
 .ct2 li.tone-red { background: #fdf0ea; }
 .ct2 li.tone-amber { background: #fdf7e4; }
+/* 0084 statuses: unsigned (amber/brass), free agent (blue), signed for next season with another club (purple). */
+.ct2 li.tone-unsigned { background: #f7ecd4; box-shadow: inset 3px 0 0 #d9b46a; }
+.ct2 li.tone-fa { background: #e4ecf6; box-shadow: inset 3px 0 0 #8ea8c6; }
+.ct2 li.tone-moving { background: #ede6f6; box-shadow: inset 3px 0 0 #8a6fc0; }
+.ct2-mv { display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 6px; font-style: normal; font-size: 10.5px; font-weight: 700; color: #5b3f8c;
+  background: repeating-linear-gradient(135deg, #e3d8f3 0 6px, #ede6f6 6px 12px); border: 1px solid #c9b6e6; }
+.ct2-title { display: flex; align-items: center; gap: 8px; }
+.ct2-title h3 { margin: 0; }
+.ct2-delist-wrap { display: inline-flex; flex-direction: column; align-items: flex-start; }
+.ct2-delist { margin-top: 3px; min-height: 26px; padding: 0 9px; border-radius: 7px; border: 1px solid #b9492f; background: #fff; color: #a23d27; font-weight: 600; font-size: 11.5px; cursor: pointer; }
+.ct2-delist:hover { background: #fbf0ec; }
+.ct2-delist:disabled { opacity: .5; }
+.cd-len { display: grid; gap: 6px; margin: 12px 0 4px; }
+.cd-len > span { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.cd-len > div { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.cd-len button { min-height: 40px; border-radius: 9px; border: 1px solid var(--khq-line, #d7dcd3); background: #fff; font-weight: 600; font-size: 13px; cursor: pointer; }
+.cd-len button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.cd-len p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+.cd-len p b { color: var(--ink); }
 .ct2-cols, .ct2-row { display: grid; grid-template-columns: minmax(0, 1fr) 28px 32px 44px 40px 48px 14px; gap: 5px; align-items: center; }
 .ct2-cols { padding: 6px 12px; font: 500 9px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--line-soft); }
 .ct2-cols button { all: unset; cursor: pointer; text-align: right; white-space: nowrap; font: inherit; letter-spacing: inherit; color: inherit; }

@@ -22,6 +22,8 @@ export interface KcSettings { fa_day?: string | null;
   draft_r1_k?: number; draft_r2_k?: number; draft_r3_k?: number; draft_r4_k?: number; draft_rest_k?: number; rookie_pct?: number;
   window_open: boolean; window_kind: string | null; window_opened_at: string | null; window_closes_at: string | null;
   seeded_at: string | null;
+  /** 0084: the commish picked the contract deadline (otherwise one month before the draft); when unsigned players went to the pool. */
+  deadline_custom?: boolean; unsigned_swept_at?: string | null;
 }
 
 export interface Contract {
@@ -60,7 +62,7 @@ export function clauseKt(s: KcSettings, c: Pick<Contract, 'tier' | 'end_season'>
   if (c.tier === 'none' || c.tier === 'protected' || (c.end_season <= s.season && !!s.midseason_at) || pending) return null;
   return c.clause_kt ?? clauseFor(s, c.tier, rate);
 }
-export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string; drop_player?: number | null }
+export interface Claim { id: number; contract_id: number; player_id: number; buyer_team: number; seller_team: number; price_kt: number; season: number; expires_at: string; status: string; created_at: string; drop_player?: number | null; offer_years?: number | null; offer_salary_k?: number | null }
 export interface CapAdjust { team_id: number; season: number; amount_k: number; reason: string }
 /** Cost of releasing a contract now: 50% of salary dead this season, 20% a season after that, and a KT fee of
  *  release_fee_pct of what's left on the deal (1 KT = $1k). Mirrors kc_release. */
@@ -157,8 +159,10 @@ export const getRates = cache(async (): Promise<Map<number, number>> => {
 
 export const getContracts = cache(async (): Promise<ContractsData> => {
   const supabase = await createClient();
-  // Any 48-hour match windows that ran out settle first (the bidder signs him). Harmless if there are none.
-  const [league, me] = await Promise.all([getLeague(), getMe(), supabase.rpc('kc_settle_matches').then(() => null, () => null)]);
+  // Housekeeping first, in order: once the contract deadline passes, unsigned players go to the draft pool; then
+  // free-agent weeks and 48-hour clause matches that ran out settle. Both are harmless when there's nothing to do.
+  const tidy = supabase.rpc('kc_deadline_sweep').then(() => supabase.rpc('kc_settle_matches')).then(() => null, () => null);
+  const [league, me] = await Promise.all([tidy.then(() => getLeague()), getMe()]);
   const players = new Map(league.players.map((p) => [p.id, p]));
   const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),

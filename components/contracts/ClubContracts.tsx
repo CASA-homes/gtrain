@@ -41,9 +41,9 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     const cl = pendingClaim.get(c.id);
     if (cl) return ['claim', `Clause paid by ${team(cl.buyer_team)}`];
     const lv = leaving.get(c.player_id);
-    if (lv) return ['moving', `Joins ${team(lv.team_id)} in ${s.season + 1}`];
+    if (lv) return ['moving', `Signed with ${team(lv.team_id)} · moves at season end`];
     const fa = faOf.get(c.player_id);
-    if (fa) return ['pending', `Pending FA · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}`];
+    if (fa) return ['pending', `Free agent · ${fa.offers} offer${fa.offers === 1 ? '' : 's'}${fa.closes_at ? ` · week ends ${new Date(fa.closes_at).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Perth' })}` : ''}`];
     const ext = ownNext.get(c.player_id);
     if (isFinalYear(s, c) && ext) return ['extended', `Extended to ${ext.end_season}`];
     if (isFinalYear(s, c) && c.how === 'draft') return ['draft', 'Draft deal · 1 season'];
@@ -62,7 +62,8 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       status, statusLabel, homeGrown: c.home_grown, extEnd: ext?.end_season ?? null, extSalary: ext?.salary_k ?? null,
       onAuction: openAuction.has(c.id), lockedUntil: c.locked_until, ...(() => { const rc = releaseCost(s, c); return { dead: rc.now, deadLater: rc.later, deadYears: rc.laterYears, releaseFee: rc.fee }; })(),
       trend: valueTrend(p),
-      tone: status === 'pending' || status === 'moving' || status === 'claim' ? 'red' : status === 'final' || status === 'draft' ? 'amber' : null,
+      tone: status === 'claim' ? 'red' : status === 'moving' ? 'moving' : status === 'pending' ? 'fa' : status === 'final' || status === 'draft' ? 'amber' : null,
+      movingTo: status === 'moving' ? team(leaving.get(c.player_id)?.team_id ?? null) : null,
     };
   });
 
@@ -83,29 +84,28 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
     .map((c) => { const p = d.players.get(c.player_id); return { id: c.player_id, label: `${p?.name ?? `Player ${c.player_id}`} · ${p?.career_games ?? 0} games · ${money(c.salary_k)} off cap` }; });
   // Another coach looking at this club can bid on release clauses.
   const viewer = d.me && !d.me.is_guest && !mine ? d.clubs.get(d.me.team_id) : null;
+  // Joining this season if a window is open, otherwise next season: the cap that has to fit his new salary.
+  const joinSeason = windowOpen ? s.season : s.season + 1;
+  const committed = (team: number, yr: number) => [...d.active, ...d.pending].filter((c) => c.team_id === team && c.start_season <= yr && c.end_season >= yr).reduce((t, c) => t + c.salary_k, 0);
   const buy: BuyInfo | null = viewer && d.me ? {
-    dropOptions: [...viewer.list].map((id) => { const p = d.players.get(id); const c = d.byPlayer.get(id); return { id, sal: c?.salary_k ?? 0, label: `${p?.name ?? id}${c ? ` · $${c.salary_k}k to ${c.end_season}` : ' · no contract'}` }; }).sort((a, b) => a.sal - b.sal).map(({ id, label }) => ({ id, label })),
-    bank: viewer.bank, windowOpen, maxBuys: s.max_buys, nextSeason: s.season, seasonCap: s.season_cap_k, clubName: club.team.name,
+    bank: viewer.bank, windowOpen, maxBuys: s.max_buys, joinSeason, season: s.season, seasonCap: s.season_cap_k, clubName: club.team.name, maxYears: s.max_years,
     used: d.claims.filter((c) => c.buyer_team === d.me!.team_id && c.status !== 'cancelled' && (!s.window_opened_at || c.created_at >= s.window_opened_at)).length,
-    capRoomNext: s.season_cap_k - viewer.salary,
+    capRoom: s.season_cap_k - (windowOpen ? viewer.salary : committed(d.me.team_id, joinSeason)),
   } : null;
+  const deadline = s.setup_until ? new Date(s.setup_until).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Perth' }) : '';
   const uncontracted = [...club.list].filter((pid) => !d.byPlayer.has(pid)).map((pid) => d.players.get(pid)).filter((p): p is NonNullable<typeof p> => !!p);
-  // One-year deals (final year, yellow) sit with the rest of the signed list, keeping their yellow fill.
-  const underContract = [...rows.filter((r) => !r.tone), ...rows.filter((r) => r.tone === 'amber')];
-  const outRows: CtRow[] = [
-    ...rows.filter((r) => r.tone === 'red'),
-    ...uncontracted.map((p) => ({
+  // One-year deals (final year, yellow) sit with the rest of the signed list, keeping their yellow fill. Players
+  // signed with another club for next season stay here in purple: he still plays for you until season's end.
+  const underContract = [...rows.filter((r) => !r.tone), ...rows.filter((r) => r.tone === 'amber'), ...rows.filter((r) => r.tone === 'moving')];
+  const unsignedRows: CtRow[] = uncontracted.map((p) => ({
       id: -p.id, playerId: p.id, name: p.full_name ?? p.name, positions: p.positions ?? [], club: p.afl_club ?? null, age: playerAge(p), avg: p.average ?? null,
       games: p.games ?? 0, salary: null, base: 0, rate: d.rates.get(p.id) ?? 0, start: null, end: null, yearsLeft: 0, tier: 'standard' as const, clause: null,
-      status: 'none' as const, statusLabel: setup ? 'Unsigned · expires on deadline day' : 'No contract · free agent at season end', homeGrown: false, extEnd: null, extSalary: null, onAuction: false, dead: 0,
-      trend: valueTrend(p), tone: 'red' as const,
-    })).sort((a, b) => b.rate - a.rate),
-  ];
-
+      status: 'none' as const, statusLabel: setup ? `Unsigned · goes to the draft pool on ${deadline || 'deadline day'}` : 'No contract · free agent', homeGrown: false, extEnd: null, extSalary: null, onAuction: false, dead: 0,
+      trend: valueTrend(p), tone: setup ? 'unsigned' as const : 'fa' as const,
+    })).sort((a, b) => b.rate - a.rate);
+  const faRows: CtRow[] = [...rows.filter((r) => r.tone === 'red' || r.tone === 'fa'), ...(setup ? [] : unsignedRows)];
   const provCount = contracts.filter((c) => c.provisional).length;
-  const deadline = s.setup_until ? new Date(s.setup_until).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Australia/Perth' }) : '';
   const room = club.keeperCapNow - club.salary;
-  const faDay = (s.fa_day ? new Date(`${s.fa_day}T12:00:00+08:00`) : new Date(`${s.season + 1}-01-01T12:00:00+08:00`)).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Australia/Perth' });
 
   return (
     <div className="kc-stack">
@@ -136,16 +136,16 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
       </section>
       {canManage && incomingClaims.length > 0 && (
         <section className="kc-card warn" aria-labelledby="clm-h">
-          <h2 id="clm-h">Release clause paid · decide within 24 hours</h2>
-          <p className="kc-sub">Match by paying the same amount (it’s burned, the buyer is refunded, and his clause steps up a level, with salary to suit). Or let him go: you get the fee less the {s.levy_pct}% levy now, he plays out {s.season} with you, then moves.</p>
+          <h2 id="clm-h">Release clause paid · decide within 48 hours</h2>
+          <p className="kc-sub">Match by paying the same amount (it’s burned and the buyer is refunded) and giving him the buyer’s terms. Or let him go: you get the fee less the {s.levy_pct}% levy, and he moves {windowOpen ? 'straight away (the window is open)' : `at the end of ${s.season}, playing out the season with you`}. No answer in 48 hours and he goes.</p>
           {incomingClaims.map((c) => {
             const con = d.active.find((x) => x.id === c.contract_id);
             return (
               <div key={c.id} className="kc-kv" style={{ alignItems: 'center', flexWrap: 'wrap', paddingTop: 12 }}>
-                <span style={{ color: 'var(--ink)' }}><b>{name(c.player_id)}</b> · {team(c.buyer_team)} paid {kt(c.price_kt)} · {con ? `${money(con.salary_k)} to ${con.end_season}` : ''} · <KcClock endsAt={c.expires_at} /> left</span>
+                <span style={{ color: 'var(--ink)' }}><b>{name(c.player_id)}</b> · {team(c.buyer_team)} paid {kt(c.price_kt)}{c.offer_years && c.offer_salary_k ? <> and offer {c.offer_years} yr{c.offer_years > 1 ? 's' : ''} at {money(c.offer_salary_k)}</> : con ? ` · ${money(con.salary_k)} to ${con.end_season}` : ''} · <KcClock endsAt={c.expires_at} /> left</span>
                 <span style={{ display: 'inline-flex', gap: 8 }}>
-                  <RunButton run="match" id={c.id} small kind="dark" label={`Match · ${kt(c.price_kt)}`} disabled={club.bank < c.price_kt} confirmText={`Pay ${kt(c.price_kt)} to keep ${name(c.player_id)}? His clause goes up a level and his salary with it.`} />
-                  <RunButton run="complete" id={c.id} small kind="plain" label="Let him go" confirmText={`Let ${name(c.player_id)} go? You get ${kt(c.price_kt - Math.floor((c.price_kt * s.levy_pct) / 100))} now and he moves at season end.`} />
+                  <RunButton run="match" id={c.id} small kind="dark" label={`Match · ${kt(c.price_kt)}`} disabled={club.bank < c.price_kt} confirmText={`Pay ${kt(c.price_kt)} to keep ${name(c.player_id)}?${c.offer_years && c.offer_salary_k ? ` He stays on ${team(c.buyer_team)}’s terms: ${c.offer_years} year${c.offer_years > 1 ? 's' : ''} at ${money(c.offer_salary_k)}.` : ''}`} />
+                  <RunButton run="complete" id={c.id} small kind="plain" label="Let him go" confirmText={`Let ${name(c.player_id)} go? You get ${kt(c.price_kt - Math.floor((c.price_kt * s.levy_pct) / 100))} now and he moves ${windowOpen ? 'straight away' : 'at season end'}.`} />
                 </span>
               </div>
             );
@@ -155,7 +155,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
 
       {canManage && myPendingFas.length > 0 && (
         <section className="kc-card" aria-labelledby="pfa-h">
-          <div className="row-between"><h2 id="pfa-h">Pending free agents · offers in</h2><span className="kc-sub">Each new top offer gives you 48 hours to match it (he stays on the same terms) or let him go (you get the fee, he finishes {s.season} with you and moves on Free Agent Day, {faDay}). No answer in 48 hours and he goes.</span></div>
+          <div className="row-between"><h2 id="pfa-h">Pending free agents · offers in</h2><span className="kc-sub">Each free agent gets one week of offers, listed on the Trademarket. You can match the best offer any time before the week ends (he stays on those terms) or let him go (you get the fee, he finishes {s.season} with you and moves at season’s end). When the week ends, the best offer signs him.</span></div>
           {myPendingFas.map((f) => {
             const offers = d.offersOnMine.filter((o) => o.fa_id === f.id);
             // Until the match columns exist (migration 0064), fall back to the best offer and a plain accept.
@@ -168,10 +168,10 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
                   <div className="kc-match">
                     <div className="kc-match-top">
                       <span><b>{team(top.team_id)}</b> offers {top.years} × {money(top.salary_k)} · {top.tier === 'none' ? 'no clause' : top.tier === 'high' ? 'high clause' : 'standard clause'} · <b>{kt(top.sweet_kt)}</b> fee to you</span>
-                      {f.match_by && <span className="kc-tag std">Match within <KcClock endsAt={f.match_by} /></span>}
+                      {f.match_by && <span className="kc-tag std">Week ends in <KcClock endsAt={f.match_by} /></span>}
                     </div>
                     <div className="kc-match-acts">
-                      <RunButton run="complete-fa" id={top.id} small kind="plain" label={`Let him go · +${kt(top.sweet_kt)}`} confirmText={`${name(f.player_id)} signs with ${team(top.team_id)}. You get the ${kt(top.sweet_kt)} fee now, he plays out ${s.season} with you, then moves on Free Agent Day.`} />
+                      <RunButton run="complete-fa" id={top.id} small kind="plain" label={`Let him go · +${kt(top.sweet_kt)}`} confirmText={`${name(f.player_id)} signs with ${team(top.team_id)}. You get the ${kt(top.sweet_kt)} fee now, he plays out ${s.season} with you, then moves at season’s end.`} />
                       {!legacy && <RunButton run="match-fa" id={f.id} small kind="sage" label={`Match · ${top.years} × ${money(top.salary_k)}`} confirmText={`Keep ${name(f.player_id)} on ${team(top.team_id)}’s terms: ${top.years} year${top.years > 1 ? 's' : ''} at ${money(top.salary_k)} from ${s.season + 1}. No fee changes hands.`} />}
                     </div>
                     {offers.length > 1 && <p className="kc-sub" style={{ margin: 0 }}>{offers.length - 1} lower offer{offers.length > 2 ? 's' : ''} refunded whichever way you go.</p>}
@@ -216,7 +216,7 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
           <h2 id="ct-h">Contracts</h2>
           {windowOpen && <span className="kc-tag exp">Window open · clause levels locked</span>}
         </div>
-        <ContractsTable title="Under contract" note="Everyone signed, including extensions. Light yellow: one-year deal or final year, re-sign before it runs out." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} />
+        <ContractsTable title="Under contract" note="Everyone signed, including extensions. Light yellow: final year, re-sign before it runs out. Purple: signed with another club for next season, plays for you until season’s end." rows={underContract} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} deadline={setup ? deadline : null} />
       </section>
 
       <section className="kc-card rk-card" id="rookie" aria-labelledby="rk-h" data-tour="rookie">
@@ -231,8 +231,19 @@ export async function ClubContracts({ teamId }: { teamId: number }) {
         {canManage && <RookiePicker season={s.season} current={rookie?.player_id ?? null} options={rookieOptions} locked={rookieLocked} />}
       </section>
 
-      <section className="kc-card ct2-card" aria-label="Expiring and free agents" data-tour="unsigned">
-        <ContractsTable title={setup ? 'Unsigned & expiring' : 'Expiring & free agents'} note={setup ? 'Light red: unsigned. Tap a player to offer him a contract.' : 'Light red: free agent, under six months or leaving.'} rows={outRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Nobody expiring." />
+      <section className="kc-card ct2-card" aria-label="Unsigned and free agents" data-tour="unsigned">
+        {setup && (
+          <ContractsTable title="Unsigned" note="Amber: on your list, not signed yet. Tap a player to offer him a contract." info={<>
+            <p><b>Unsigned:</b> on your list, but not on a contract yet. Sign him before the contract deadline{deadline ? ` (${deadline})` : ''} to keep him.</p>
+            <p>Setup signings get the {s.home_grown_pct}% home-grown discount, and they’re provisional until the deadline, so you can undo for free.</p>
+            <p>Still unsigned at the deadline? He becomes a free agent and goes into the draft pool.</p>
+          </>} rows={unsignedRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="Everyone’s signed." />
+        )}
+        <ContractsTable title="Free agents" note="Blue: free agent, any club can offer. Red: release clause paid, waiting on a match." info={<>
+          <p><b>Free agent:</b> not on a contract with any club. Any coach can offer him a contract at any time.</p>
+          <p>He’s listed on the Trademarket for one week. The best offer wins, unless his old club matches. He signs at the end of the week and moves at season’s end.</p>
+          <p>No home-grown discount: full market price. Unsigned players become free agents at the contract deadline and go into the draft pool.</p>
+        </>} rows={faRows} settings={s} years={years} canManage={canManage} mine={mine} windowOpen={windowOpen} buy={buy} empty="No free agents." />
         <p className="kc-sub" style={{ marginTop: 10 }}>Draft day prices: top 10 picks $30k, rest of R1 and R2 $25k, R3 $20k, R4 $15k, R5+ $10k. Rookies (10 or fewer games) half that, on 2 years; established players on 1. No clause until the mid-season window. {mine && <Link href={`/clubhouse/${teamId}?view=finances`}>Cap &amp; lock-in →</Link>}</p>
       </section>
     </div>

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { KcHeader } from '@/components/contracts/KcHeader';
-import { FaDeadlineControl, GrantControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
+import { DeadlineControl, FaDeadlineControl, GrantControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
+import { createClient } from '@/lib/supabase/server';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
 import { keeperLabel } from '@/lib/keepers';
 
@@ -11,6 +12,8 @@ export default async function ContractsAdmin() {
   const d = await getContracts();
   if (!d.me?.is_commish) redirect('/contracts');
   const s = d.settings;
+  const supabase = await createClient();
+  const draftAt = s ? ((await supabase.from('draft_room').select('starts_at').eq('year', s.season).maybeSingle()).data?.starts_at as string | null) ?? null : null;
   return (
     <div className="kc-page">
       <KcHeader settings={s} tab="admin" myTeamId={d.me.team_id} isCommish crumb="Keeper HQ / Contracts" title="Commish controls"
@@ -30,6 +33,11 @@ export default async function ContractsAdmin() {
               <section className="kc-card"><div className="kc-stat"><span>Free agents</span><b>{d.freeAgents.length}</b><em>{d.freeAgents.reduce((a, f) => a + f.offers, 0)} offers tabled</em></div></section>
               <section className="kc-card"><div className="kc-stat"><span>Tokens in the league</span><b>{kt(d.totalKt)}</b><em>{s.start_kt.toLocaleString('en-AU')} KT a club to start</em></div></section>
             </div>
+            <section className="kc-card" aria-labelledby="kd-h">
+              <h2 id="kd-h">Key dates</h2>
+              <p className="kc-sub">The contract deadline is the last day to sign or delist. At the deadline, anyone unsigned goes into the draft pool, and from then until the draft players only move by trade (player for player). It’s one month before the draft unless you pick another date.</p>
+              <div style={{ marginTop: 12 }}>{s.unsigned_swept_at ? <p className="kc-sub">Passed. Unsigned players went to the draft pool on {new Date(s.unsigned_swept_at).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Australia/Perth' })}.</p> : <DeadlineControl current={s.setup_until} custom={!!s.deadline_custom} draftAt={draftAt} />}</div>
+            </section>
             <section className="kc-card" aria-labelledby="dr-h">
               <h2 id="dr-h">Draft day</h2>
               <p className="kc-sub">After the draft, put every uncontracted squad player on a one-season deal: R1 $32k, R2 $24k, R3 $18k, R4+ $12k, rookies (10 or fewer games) half. Round comes from the draft room; anyone not found is priced as R4+.</p>

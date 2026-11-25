@@ -14,6 +14,58 @@ export interface CardProps {
   poolNote: string;
   seasons: [number, number, number][];  // [year, games, average], newest first
   current: number;
+  price?: PriceSeries | null;            // market value over time, for the price graph
+}
+/** One range of the price graph: values in $k, oldest first, and three x-axis labels (start, middle, end). */
+export interface PriceLine { pts: number[]; xs: [string, string, string] }
+export interface PriceSeries { season: PriceLine | null; three: PriceLine | null; all: PriceLine | null }
+
+/** Price movement: one line, green if he's worth more than at the start of the range, red if less. $ on the left,
+ *  games along the bottom. */
+function PriceGraph({ price }: { price: PriceSeries }) {
+  const opts = ([['season', 'Season'], ['three', '3 yrs'], ['all', 'All']] as const).filter(([k]) => price[k]);
+  const [range, setRange] = useState<'season' | 'three' | 'all'>(opts[0]?.[0] ?? 'season');
+  const line = price[range] ?? price[opts[0]?.[0] ?? 'season'];
+  if (!line) return null;
+  const { pts, xs } = line;
+  const L = 38, R = 300, T = 6, B = 92;
+  const min = Math.min(...pts), max = Math.max(...pts), span = max - min;
+  const step = span > 60 ? 20 : span > 24 ? 10 : span > 10 ? 5 : 2;
+  const lo = Math.floor(min / step) * step, hi = Math.max(lo + step, Math.ceil(max / step) * step);
+  const x = (i: number) => L + (i / Math.max(1, pts.length - 1)) * (R - L);
+  const y = (v: number) => T + (1 - (v - lo) / (hi - lo)) * (B - T);
+  const start = pts[0], end = pts[pts.length - 1], diff = end - start, up = diff >= 0;
+  const pct = start > 0 ? Math.round((diff / start) * 100) : 0;
+  const color = up ? '#2e8b4a' : '#c4462f';
+  const mid = Math.round((lo + hi) / 2);
+  const path = pts.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  return (
+    <Card o={1} title="Price movement" note={`$${end}k now`}>
+      <div className="pc-price-top">
+        <b style={{ color: up ? '#2e7a43' : '#b23b24' }}>{up ? '▲' : '▼'} ${Math.abs(diff)}k ({up ? '+' : ''}{pct}%)</b>
+        {opts.length > 1 && (
+          <div className="pc-seg pc-seg-sm" role="tablist" aria-label="Price range">
+            {opts.map(([k, label]) => <button key={k} type="button" role="tab" aria-selected={range === k} className={range === k ? 'on' : ''} onClick={() => setRange(k)}>{label}</button>)}
+          </div>
+        )}
+      </div>
+      <svg viewBox="0 0 304 110" width="100%" className="pc-price" role="img" aria-label={`Price from $${start}k to $${end}k, ${up ? 'up' : 'down'} ${Math.abs(pct)}%`}>
+        {[hi, mid, lo].map((v) => (
+          <g key={v}>
+            <line x1={L} x2={R} y1={y(v)} y2={y(v)} stroke="#e6e9e2" strokeWidth={1} />
+            <text x={L - 5} y={y(v) + 3.5} textAnchor="end" fontSize="9.5" fill="#6b726c">${v}k</text>
+          </g>
+        ))}
+        <line x1={L} x2={R} y1={y(start)} y2={y(start)} stroke={color} strokeOpacity={0.35} strokeWidth={1} strokeDasharray="3 3" />
+        <path d={path} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx={x(pts.length - 1)} cy={y(end)} r={3} fill={color} />
+        <text x={L} y={106} fontSize="9.5" fill="#6b726c">{xs[0]}</text>
+        <text x={(L + R) / 2} y={106} fontSize="9.5" fill="#6b726c" textAnchor="middle">{xs[1]}</text>
+        <text x={R} y={106} fontSize="9.5" fill="#6b726c" textAnchor="end">{xs[2]}</text>
+      </svg>
+      <p className="pc-note">{range === 'season' ? 'Match by match this season.' : 'Earlier seasons estimated from his averages.'}</p>
+    </Card>
+  );
 }
 
 const tone = (s: number): [string, string] => s >= 120 ? ['#1f6b3a', '#fff'] : s >= 100 ? ['#4f9a5f', '#fff'] : s >= 80 ? ['#9ccb84', '#151a16'] : s >= 70 ? ['#d6e49a', '#151a16'] : s >= 50 ? ['#f1e8a8', '#151a16'] : ['#f3c2b9', '#7a1d12'];
@@ -30,8 +82,9 @@ function Card({ title, note, o, children }: { title: string; note?: string; o?: 
   );
 }
 
-export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, seasons, current }: CardProps) {
+export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, seasons, current, price }: CardProps) {
   const [splitView, setSplitView] = useState<'pos' | 'opp'>('pos');
+  const [ballView, setBallView] = useState<'where' | 'role'>('where');
   const [heatIdx, setHeatIdx] = useState(() => {
     for (let i = games.length - 1; i >= 0; i--) if (games[i][14]) return i;
     return -1;
@@ -82,6 +135,12 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
 
   // Quarters
   const q = ([6, 7, 8, 9] as const).map((k) => mean(games.map((g) => g[k]).filter((x): x is number => x != null)));
+  // Best quarter in each game (ties go to the earlier quarter).
+  const bestQ = [0, 0, 0, 0];
+  for (const g of games) { const v = [g[6], g[7], g[8], g[9]]; if (v.some((x) => x == null)) continue; bestQ[v.indexOf(Math.max(...(v as number[])))]++; }
+  const bestN = bestQ.reduce((a, b) => a + b, 0), early = bestQ[0] + bestQ[1];
+  const bestNote = bestN >= 4 ? (early / bestN >= 0.6 ? ` Best quarter in ${early} of ${bestN} games was Q1 or Q2.` : early / bestN <= 0.4 ? ` Best quarter in ${bestN - early} of ${bestN} games was Q3 or Q4.` : '') : '';
+  const qTop = Math.max(1, ...q);
   const qNote = q[3] < mean(q.slice(0, 3)) - 3 ? 'Fades in the last quarter.' : q[3] > mean(q.slice(0, 3)) + 3 ? 'Finishes strongest: best in the last quarter.' : q[0] > mean(q.slice(1)) + 3 ? 'Fast starter: does most damage early.' : 'Even across all four quarters.';
 
   // Zones: where he won the ball across the season, attacking left to right.
@@ -138,45 +197,56 @@ export function PlayerCard({ playerNo, games, prev, pct, lineName, poolNote, sea
       {/* Desktop: four stacked columns so short cards don't leave gaps. Narrower screens flatten them back into card order (pc-oN). */}
       <div className="pc-cols">
       <div className="pc-col">
-      <Card o={1} title="Scoring range" note={`floor ${sorted[0]} · median ${median} · ceiling ${sorted[n - 1]}`}>
+      {price && (price.season || price.three || price.all) ? <PriceGraph price={price} /> : null}
+
+      <Card o={5} title={ballView === 'where' && zt > 0 ? 'Where he wins the ball' : 'Role'} note={ballView === 'where' && zt > 0 ? `${zt} possessions in 2026` : mid ? `centre bounces ${Math.round(mean(cbas))}% · last 5: ${Math.round(mean(last5.map((g) => g[5] ?? 0)))}%` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
+        {zt > 0 && (
+          <div className="pc-seg" role="tablist" aria-label="Where he wins the ball or role">
+            <button type="button" role="tab" aria-selected={ballView === 'where'} className={ballView === 'where' ? 'on' : ''} onClick={() => setBallView('where')}>Where he wins it</button>
+            <button type="button" role="tab" aria-selected={ballView === 'role'} className={ballView === 'role' ? 'on' : ''} onClick={() => setBallView('role')}>Role</button>
+          </div>
+        )}
+        {ballView === 'where' && zt > 0 ? (
+          <>
+            <div className="pc-zones">
+              {(['Defensive 50', 'Defensive mid', 'Attacking mid', 'Attacking 50'] as const).map((z, i) => {
+                const s = zones[i] / zt;
+                return (
+                  <div key={z} style={{ background: `rgb(31 107 58 / ${0.08 + s * 1.6})`, color: s > 0.3 ? '#fff' : '#151a16' }}>
+                    <b>{Math.round(s * 100)}%</b><span>{z}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="pc-legend"><span>← defending</span><span style={{ marginLeft: 'auto' }}>attacking →</span></div>
+          </>
+        ) : (
+          <>
+            <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }} role="img" aria-label="Score per game with centre bounce and time on ground">
+              {games.map((g, i) => <rect key={i} x={i * bw + 1.2} y={H - (g[3] / top) * H} width={Math.max(1, bw - 2.4)} height={(g[3] / top) * H} rx={2} fill={tone(g[3])[0]} />)}
+              <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[4] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#6b726c" strokeWidth={1.2} strokeDasharray="3 3" />
+              {mid && <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[5] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#c48a1f" strokeWidth={2} />}
+            </svg>
+            <div className="pc-legend"><span><i style={{ background: '#4f9a5f', width: 8, height: 8 }} />Score</span>{mid && <span><i style={{ background: '#c48a1f' }} />Centre bounce %</span>}<span><i style={{ borderTop: '1.5px dashed #6b726c', height: 0 }} />Time on ground</span></div>
+            {cut != null && hi.length >= 2 && lo.length >= 2 && (
+              <p className="pc-note">With {cut}%+ of centre bounces he averaged <b>{Math.round(mean(hi))}</b> ({hi.length} games); under that, <b>{Math.round(mean(lo))}</b> ({lo.length} games).</p>
+            )}
+          </>
+        )}
+      </Card>
+
+      </div>
+      <div className="pc-col">
+      <Card o={2} title="Scoring range" note={`floor ${sorted[0]} · median ${median} · ceiling ${sorted[n - 1]}`}>
         <div className="pc-dist">{bands.filter((b) => b[1]).map(([l, c, bg]) => <div key={l} style={{ flex: c, background: bg }} title={l} />)}</div>
         <div className="pc-distl">{bands.map(([l, c, bg]) => <div key={l}><span><i style={{ background: bg }} />{l}</span><b>{Math.round((c / n) * 100)}%</b></div>)}</div>
         <p className="pc-note">{rangeNote}{rangeNote2}</p>
       </Card>
 
-      {zt > 0 && (
-        <Card o={5} title="Where he wins the ball" note={`${zt} possessions in 2026`}>
-          <div className="pc-zones">
-            {(['Defensive 50', 'Defensive mid', 'Attacking mid', 'Attacking 50'] as const).map((z, i) => {
-              const s = zones[i] / zt;
-              return (
-                <div key={z} style={{ background: `rgb(31 107 58 / ${0.08 + s * 1.6})`, color: s > 0.3 ? '#fff' : '#151a16' }}>
-                  <b>{Math.round(s * 100)}%</b><span>{z}</span>
-                </div>
-              );
-            })}
-          </div>
-          <div className="pc-legend"><span>← defending</span><span style={{ marginLeft: 'auto' }}>attacking →</span></div>
-        </Card>
-      )}
-
-      </div>
-      <div className="pc-col">
-      <Card o={2} title="Role" note={mid ? `centre bounces ${Math.round(mean(cbas))}% · last 5: ${Math.round(mean(last5.map((g) => g[5] ?? 0)))}%` : `time on ground ${Math.round(mean(togs))}% · last 5: ${Math.round(mean(last5.map((g) => g[4] ?? 0)))}%`}>
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" style={{ display: 'block' }} role="img" aria-label="Score per game with centre bounce and time on ground">
-          {games.map((g, i) => <rect key={i} x={i * bw + 1.2} y={H - (g[3] / top) * H} width={Math.max(1, bw - 2.4)} height={(g[3] / top) * H} rx={2} fill={tone(g[3])[0]} />)}
-          <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[4] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#6b726c" strokeWidth={1.2} strokeDasharray="3 3" />
-          {mid && <polyline points={games.map((g, i) => `${i * bw + bw / 2},${H - ((g[5] ?? 0) / 100) * H}`).join(' ')} fill="none" stroke="#c48a1f" strokeWidth={2} />}
-        </svg>
-        <div className="pc-legend"><span><i style={{ background: '#4f9a5f', width: 8, height: 8 }} />Score</span>{mid && <span><i style={{ background: '#c48a1f' }} />Centre bounce %</span>}<span><i style={{ borderTop: '1.5px dashed #6b726c', height: 0 }} />Time on ground</span></div>
-        {cut != null && hi.length >= 2 && lo.length >= 2 && (
-          <p className="pc-note">With {cut}%+ of centre bounces he averaged <b>{Math.round(mean(hi))}</b> ({hi.length} games); under that, <b>{Math.round(mean(lo))}</b> ({lo.length} games).</p>
-        )}
-      </Card>
-
-      <Card o={6} title="By quarter" note="average points">
-        <div className="pc-q">{q.map((v, i) => <div key={i}><span>Q{i + 1}</span><b>{Math.round(v)}</b></div>)}</div>
-        <p className="pc-note">{qNote}</p>
+      <Card o={6} title="By quarter" note={`average points · ${current}`}>
+        <div className="pc-qbars" aria-hidden="true">{q.map((v, i) => <div key={i}><i style={{ height: `${Math.max(6, (v / qTop) * 100)}%`, background: v >= qTop - 1 ? '#4f9a5f' : v >= mean(q) ? '#9ccb84' : '#e5dfa0' }} /></div>)}</div>
+        <div className="pc-q">{q.map((v, i) => <div key={i}><span>Q{i + 1}</span><b>{Math.round(v)}</b>{bestN > 0 && <em>best in {bestQ[i]}</em>}</div>)}</div>
+        <p className="pc-note">{qNote}{bestNote}</p>
       </Card>
 
       </div>

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import {
   acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
-  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, matchOffer, type Result,
+  lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setDeadline, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, matchOffer, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
 import { SignSheet } from '@/components/contracts/SignSheet';
@@ -50,7 +50,7 @@ export function useRun() {
           <h3 id="cf-h">{ask.o.title ?? 'Are you sure?'}</h3>
           {ask.o.rows?.length ? <dl>{ask.o.rows.map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl> : null}
           <p>{ask.text}</p>
-          {ask.o.tone === 'danger' ? <div className="cf-stamp" aria-hidden="true">Release</div> : <div className="cf-seal" aria-hidden="true">KHQ</div>}
+          {ask.o.tone === 'danger' ? <div className="cf-stamp" aria-hidden="true">Delist</div> : <div className="cf-seal" aria-hidden="true">KHQ</div>}
         </div>
         <div className="cf-acts">
           <button type="button" className="kc-btn" disabled={pending} onClick={() => setAsk(null)}>Cancel</button>
@@ -221,18 +221,50 @@ export function LockAllButton({ teamId, count }: { teamId: number; count: number
   return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}><button type="button" className="kc-btn small sage" disabled={pending || count === 0} onClick={() => go(() => lockContracts(null, teamId), `Once locked you can’t undo or re-sign them yourself before deadline day. Only the commish can unlock them. They all become formal on deadline day anyway, so you don’t need to lock them.`, { title: `Lock all ${count} contracts`, eyebrow: 'Keeper HQ · Player contracts', cta: `Lock all ${count}` })}>Lock all ({count})</button>{note}</span>;
 }
 
-export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0 }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number }) {
+/** Delist a contracted player: he goes into the draft pool and his contract is paid out as dead money. `compact`
+ *  draws the small red button that sits on his row in the contracts table. */
+export function ReleaseButton({ contractId, name, dead, later = 0, laterYears = 0, fee = 0, deadline, compact }: { contractId: number; name: string; dead: number; later?: number; laterYears?: number; fee?: number; deadline?: string | null; compact?: boolean }) {
   const { pending, go, note } = useRun();
+  const open = () => go(() => releasePlayer(contractId), `He leaves your list and goes into the draft pool. Dead money counts against your cap.${deadline ? ` You can delist until the contract deadline (${deadline}). After that, players move by trade only.` : ''}`, {
+    title: `Delist ${name}?`, eyebrow: 'Keeper HQ · Delist', tone: 'danger', cta: fee > 0 ? `Delist for ${kt(fee)}` : 'Delist him',
+    warn: 'This can’t be undone. The fee and dead money stay on your books.',
+    rows: [['Dead money this season (50%)', money(dead)], ...(laterYears ? [[`Then each season × ${laterYears} (20%)`, money(later)] as [string, string]] : []), ['Release fee', fee > 0 ? kt(fee) : 'None']],
+  });
+  if (compact) {
+    return (
+      <span className="ct2-delist-wrap" onClick={(e) => { e.preventDefault(); e.stopPropagation(); }} onKeyDown={(e) => e.stopPropagation()}>
+        <button type="button" className="ct2-delist" disabled={pending} onClick={open} aria-label={`Delist ${name}`}>Delist</button>
+        {note}
+      </span>
+    );
+  }
   return (
     <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4, alignItems: 'flex-end' }}>
-      <button type="button" className="kc-btn small" disabled={pending}
-        onClick={() => go(() => releasePlayer(contractId), `He becomes a free agent straight away and any club can sign him.`, {
-          title: `Release ${name}`, eyebrow: 'Keeper HQ · Release notice', tone: 'danger', cta: 'Release him',
-          warn: 'This can’t be undone. The fee and dead money stay on your books.',
-          rows: [['Release fee', kt(fee)], ['Dead money this season', money(dead)], ...(laterYears ? [[`Then each season × ${laterYears}`, money(later)] as [string, string]] : [])],
-        })}>Release</button>
+      <button type="button" className="kc-btn small danger" disabled={pending} onClick={open}>Delist</button>
       {note}
     </span>
+  );
+}
+
+/** Commish: the contract deadline. Defaults to one month before the draft; pick another date or reset it. */
+export function DeadlineControl({ current, custom, draftAt }: { current: string | null; custom: boolean; draftAt: string | null }) {
+  const { pending, go, note } = useRun();
+  const perth = (iso: string) => new Date(new Date(iso).getTime() + 8 * 3600e3).toISOString().slice(0, 16);
+  const [v, setV] = useState(current ? perth(current) : '');
+  const fmt = (iso: string) => new Date(iso).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Perth' });
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <p className="kc-sub" style={{ margin: 0 }}>
+        {current ? <>Now <b style={{ color: 'var(--ink)' }}>{fmt(current)}</b> (Perth){custom ? ', set by you.' : ', one month before the draft.'}</> : 'Not set yet. It follows the draft date.'}
+        {draftAt ? <> Draft: {fmt(draftAt)}.</> : null}
+      </p>
+      <div className="kc-inline" style={{ flexWrap: 'wrap' }}>
+        <label className="kc-field" style={{ minWidth: 220 }}>Contract deadline (Perth time)<input type="datetime-local" value={v} onChange={(e) => setV(e.target.value)} /></label>
+        <button type="button" className="kc-btn dark" disabled={pending || !v} onClick={() => go(() => setDeadline(new Date(`${v}:00+08:00`).toISOString()), 'Unsigned players go into the draft pool at this time, and lists lock until the draft.', { title: 'Set the contract deadline', eyebrow: 'Keeper HQ · Key dates', cta: 'Set deadline' })}>Set deadline</button>
+        {custom && <button type="button" className="kc-btn" disabled={pending || !draftAt} onClick={() => go(() => setDeadline(null))}>Reset to one month before the draft</button>}
+      </div>
+      {note}
+    </div>
   );
 }
 
