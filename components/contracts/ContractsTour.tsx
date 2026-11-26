@@ -45,8 +45,8 @@ function steps(setup: boolean, keeperCap: number, softCap: number, deadline: str
           <p style={{ margin: '0 0 6px' }}>A clause is the KT price another coach can pay to take your player straight away.</p>
           <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 4 }}>
             <li><b>Standard:</b> cheapest salary, lowest clause. Easiest to poach.</li>
-            <li><b>High:</b> +10% salary, clause doubles.</li>
-            <li><b>No clause</b> <span aria-hidden="true">🔒</span>: +25% salary, nobody can buy him.</li>
+            <li><b>High:</b> +20% salary, clause doubles.</li>
+            <li><b>No clause</b> <span aria-hidden="true">🔒</span>: +40% salary, nobody can buy him.</li>
           </ul>
           <p style={{ margin: '6px 0 0' }}>Rising young players on cheap clauses are the ones rivals will target.</p>
         </>
