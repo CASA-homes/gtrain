@@ -32,7 +32,7 @@ function steps(setup: boolean, keeperCap: number, softCap: number, deadline: str
         <>
           <p style={{ margin: '0 0 6px' }}>Pick a <b>length</b> (1 to 5 years) and a <b>release clause</b>, then swipe to sign.</p>
           <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 4 }}>
-            <li><b>Length:</b> short deals cost more (1 yr +6%), long deals less (5 yrs −6.7%). 3 years is market value.</li>
+            <li><b>Length:</b> short deals cost more (1 yr +10%), long deals less (5 yrs −15%). 3 years is market value.</li>
             <li><b>Home-grown:</b> your own players get 20% off.</li>
           </ul>
         </>

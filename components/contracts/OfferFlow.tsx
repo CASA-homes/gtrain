@@ -8,7 +8,7 @@ import type { KcSettings, MyOffer } from '@/lib/contracts';
 
 const money = (k: number) => `$${(Math.round(k) * 1000).toLocaleString('en-AU')}`;
 const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
-const LF: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
+const LF: Record<number, number> = { 1: 1.1, 2: 1.05, 3: 1, 4: 0.925, 5: 0.85 };
 const STEPS = ['Player', 'Contract', 'Release clause', 'Sweeteners', 'Review'];
 type ClauseTier = 'standard' | 'high' | 'none';
 

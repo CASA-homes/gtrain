@@ -133,12 +133,12 @@ export function ExtendControl({ contractId, name, rate, homeGrown, settings, sig
   const [years, setYears] = useState(Math.min(3, most));
   const [tier, setTierV] = useState<Exclude<Tier, 'protected'>>('standard');
   const [open, setOpen] = useState(false);
-  const lf: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
+  const lf: Record<number, number> = { 1: 1.1, 2: 1.05, 3: 1, 4: 0.925, 5: 0.85 };
   // Both price by length (1 yr dearest, 5 yrs cheapest); extensions add the premium and fee.
   const extPct = sign ? 0 : settings.ext_premium_pct ?? 10;
   const setup = !!settings.setup_until && new Date(settings.setup_until) > new Date();
   const fee = sign || setup ? 0 : settings.ext_fee_kt ?? 10;
-  const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.933) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
+  const base = Math.max(5, Math.round(rate * (lf[years] ?? 0.85) * (homeGrown ? (100 - settings.home_grown_pct) / 100 : 1) * (1 + extPct / 100)));
   const salOf = (t: Tier) => Math.round(base * (1 + (t === 'high' ? settings.high_pct : t === 'none' ? settings.none_pct : 0) / 100));
   const clauseOf = (t: Tier) => (t === 'none' ? null : Math.round((rate * settings.kt_per_k * (t === 'high' ? settings.clause_high_pct : settings.clause_std_pct)) / 100));
   const sal = salOf(tier);

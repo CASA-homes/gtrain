@@ -25,7 +25,7 @@ export interface CtRow {
 export interface BuyInfo { bank: number; windowOpen: boolean; maxBuys: number; used: number; capRoom: number; joinSeason: number; seasonCap: number; clubName: string; maxYears: number; season: number }
 
 /** Market salary for a deal of this length (mirrors kc_length_factor): short deals cost a little more. */
-const LEN: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1, 4: 0.967, 5: 0.933 };
+const LEN: Record<number, number> = { 1: 1.1, 2: 1.05, 3: 1, 4: 0.925, 5: 0.85 };
 export const clauseSalary = (rate: number, current: number, years: number) => Math.max(current, Math.round(rate * (LEN[years] ?? 1)));
 
 const k$ = (k: number) => `$${Math.round(k)}k`;

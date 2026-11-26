@@ -39,8 +39,8 @@ export interface MyOffer { id: number; fa_id: number; team_id: number; years: nu
 export interface Transfer { id: number; player_id: number | null; from_team: number | null; to_team: number | null; kind: string; fee_kt: number; levy_kt: number; note: string | null; created_at: string }
 
 export const TIER_LABEL: Record<Tier, string> = { standard: 'Standard', high: 'High', none: 'No clause', protected: 'Protected to mid-season' };
-export const LENGTH_FACTOR: Record<number, number> = { 1: 1.06, 2: 1.03, 3: 1.0, 4: 0.967, 5: 0.933 };
-export const lengthFactor = (years: number) => LENGTH_FACTOR[years] ?? 0.933;
+export const LENGTH_FACTOR: Record<number, number> = { 1: 1.1, 2: 1.05, 3: 1.0, 4: 0.925, 5: 0.85 };
+export const lengthFactor = (years: number) => LENGTH_FACTOR[years] ?? 0.85;
 export const NOT_FIT = new Set(['LONG', 'SEASON', 'OUT', 'SUSP', 'DEL']);
 
 export const money = (k: number) => `$${(Math.round(k) * 1000).toLocaleString('en-AU')}`;
