@@ -1,8 +1,9 @@
 // Clubhouse › Finances: the club's money in one place.
 //  1. Cap: this season's salary against the keeper hard cap and in-season soft cap, with the cap-free rookie shown.
 //     Other coaches see only this panel.
-//  2. Future seasons: committed salary against the keeper cap.
-//  3. Trades / Investments / Loans tabs: KT sales and purchases, term deposits, loans.
+//     A "Future seasons" toggle on the cap card shows committed salary against the keeper cap for 5 seasons.
+//  2. Your bank: available KT, shares, savings, offers, loans and net worth, beside the cap card.
+//  3. Finances overview: Stock ownership (default), Transactions, Investments and Loans tabs.
 //  4. Assistant coach, cap simulator, money by line, lock-in, draft budget and the token ledger.
 //  The rookie slot itself is set on the Contracts tab (this season only, before drop day).
 import Link from 'next/link';
@@ -124,55 +125,81 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
   return (
     <div className="kc-stack fin-page">
       <div className={`fn-top${mine ? ' two' : ''}`}>
-      <section className="kc-card fn-hero" aria-labelledby="cap-h">
-        <div className="row-between"><h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
-          <span className={`fn-pill ${club.salary > s.season_cap_k ? 'dn' : 'up'}`}>{moneyK(s.season_cap_k - club.salary)} room</span></div>
-        <div className="fn-big"><b>{moneyK(club.salary)}</b><span>of {moneyK(s.season_cap_k)}</span></div>
-        <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" dead={deadThisSeason} />
-        <div className="fn-kpis">
-          <div><span>{season} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
-          <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}{canManage && !rookieLocked && <> · <Link href={`/clubhouse/${teamId}?view=contracts#rookie`} className="fn-set">{rookieNow ? 'Change' : 'Set'}</Link></>}</b></div>
-          <div><span>Bank</span><b>{kt(club.bank)}</b></div>
+      <section className="kc-card fn-hero fn-capcard" aria-labelledby="cap-h">
+        <input type="radio" name="fn-cap" id="fn-c1" defaultChecked hidden />
+        <input type="radio" name="fn-cap" id="fn-c2" hidden />
+        <div className="fn-caphead">
+          <h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
+          {mine && <div className="fn-capseg" role="tablist" aria-label="Cap view"><label htmlFor="fn-c1" role="tab">This season</label><label htmlFor="fn-c2" role="tab">Future seasons</label></div>}
+          <span className={`fn-pill ${club.salary > s.season_cap_k ? 'dn' : 'up'}`}>{moneyK(s.season_cap_k - club.salary)} room</span>
         </div>
+        <div className="fn-cap1">
+          <div className="fn-big"><b>{moneyK(club.salary)}</b><span>of {moneyK(s.season_cap_k)}</span></div>
+          <CapBar salary={club.salary} rookie={rookieNow?.salary_k ?? 0} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} taxLine={s.tax_line_k} label="salary" dead={deadThisSeason} />
+          <div className="fn-kpis">
+            <div><span>{season} keepers</span><b className={nextOver > 0 ? 'dn' : ''}>{nextOver > 0 ? `${moneyK(nextOver)} over` : `${moneyK(-nextOver)} under`}</b></div>
+            <div><span>Rookie slot</span><b className="brass">{rookieNow ? (d.players.get(rookieNow.player_id)?.name ?? '—') : 'Empty'}{canManage && !rookieLocked && <> · <Link href={`/clubhouse/${teamId}?view=contracts#rookie`} className="fn-set">{rookieNow ? 'Change' : 'Set'}</Link></>}</b></div>
+            <div><span>Squad value</span><b className={rateTotal >= club.salary ? '' : 'dn'}>{moneyK(rateTotal)}</b></div>
+          </div>
+        </div>
+        {mine && (
+          <div className="fn-cap2">
+            <div className="row-between kc-sub"><span>Committed salary against the keeper cap</span><span>5 seasons</span></div>
+            <div className="fn-runway">
+              {committed.map(({ y, k, cap }) => (
+                <div key={y}><b>{y}</b><span className="fn-rbar"><i className={k > cap ? 'dn' : ''} style={{ width: `${Math.min(100, (k / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(cap / s.season_cap_k) * 100}%` }} /></span><em>{moneyK(k)} <span>/ {moneyK(cap)}</span></em></div>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       {mine && (
-      <section className="kc-card" aria-labelledby="yr-h">
-        <div className="row-between"><h2 id="yr-h">Future seasons</h2><span className="kc-sub">Committed vs keeper cap</span></div>
-        <div className="fn-runway">
-          {committed.map(({ y, k, cap }) => (
-            <div key={y}><b>{y}</b><span className="fn-rbar"><i className={k > cap ? 'dn' : ''} style={{ width: `${Math.min(100, (k / s.season_cap_k) * 100)}%` }} /><s style={{ left: `${(cap / s.season_cap_k) * 100}%` }} /></span><em>{moneyK(k)} <span>/ {moneyK(cap)}</span></em></div>
-          ))}
+      <section className="kc-card fn-bank" aria-labelledby="bk-h">
+        <div className="row-between"><h2 id="bk-h">Your bank</h2><span className="kc-sub">1 KT = $1k</span></div>
+        <div className="fn-bank-big"><b>{kt(club.bank)}</b><span>available to spend</span></div>
+        <div className="fn-bank-grid three">
+          <div><span>Invested</span><b>{kt(0)}</b><em>Shares open soon</em></div>
+          <div><span>Savings</span><b>{kt(locked)}</b><em>{openDeps.length ? `${openDeps.length} deposit${openDeps.length > 1 ? 's' : ''} · +${kt(depReturn)} due` : 'No deposits'}</em></div>
+          <div><span>Held in offers</span><b>{kt(heldInOffers)}</b><em>{d.myOffers.length ? `${d.myOffers.length} free-agent offer${d.myOffers.length > 1 ? 's' : ''}` : 'No offers tabled'}</em></div>
+          <div><span>Lent out</span><b className={dueBack ? 'up' : ''}>{kt(dueBack)}</b><em>{lent.length ? 'back with interest' : 'No loans out'}</em></div>
+          <div><span>Debts</span><b className={dueOut ? 'dn' : ''}>{dueOut ? `−${kt(dueOut)}` : kt(0)}</b><em>{owed.length ? `${owed.length} loan${owed.length > 1 ? 's' : ''} · due season end` : 'Nothing owed'}</em></div>
+          <div className="nw"><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + savings + lent − debts</em></div>
         </div>
+        <p className="fn-bank-note row-between"><span>Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</span><Link href="/market">Trademarket →</Link></p>
       </section>
       )}
       </div>
 
       {!mine ? <p className="kc-sub" style={{ margin: 0, textAlign: 'center' }}>The rest of {club.team.name}’s finances are private to their coach.</p> : <>
 
-      <div className="fn-bankrow">
-      <section className="kc-card fn-bank" aria-labelledby="bk-h">
-        <div className="row-between"><h2 id="bk-h">Your bank</h2><span className="kc-sub">KT</span></div>
-        <div className="fn-bank-big"><b>{kt(club.bank)}</b><span>available to spend</span></div>
-        <div className="fn-bank-grid">
-          <div><span>Savings</span><b>{kt(locked)}</b><em>{openDeps.length ? `${openDeps.length} deposit${openDeps.length > 1 ? 's' : ''} · +${kt(depReturn)} due` : 'No deposits'}</em></div>
-          <div><span>Debts</span><b className={dueOut ? 'dn' : ''}>{dueOut ? `−${kt(dueOut)}` : kt(0)}</b><em>{owed.length ? `${owed.length} loan${owed.length > 1 ? 's' : ''} · due season end` : 'Nothing owed'}</em></div>
-          <div><span>Lent out</span><b className={dueBack ? 'up' : ''}>{kt(dueBack)}</b><em>{lent.length ? 'back with interest' : 'No loans out'}</em></div>
-          <div><span>Held in offers</span><b>{kt(heldInOffers)}</b><em>{d.myOffers.length ? `${d.myOffers.length} free-agent offer${d.myOffers.length > 1 ? 's' : ''}` : 'No offers tabled'}</em></div>
-          <div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + savings + lent − debts</em></div>
-          <div><span>Squad value</span><b>{moneyK(rateTotal)}</b><em className={rateTotal >= club.salary ? 'up' : 'dn'}>{rateTotal >= club.salary ? '+' : '−'}{moneyK(Math.abs(rateTotal - club.salary))} vs salary</em></div>
-        </div>
-        <p className="fn-bank-note">Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</p>
-      </section>
-
-      <section className="kc-card fn-tabs" aria-label="Transactions, investments and loans">
-        <input type="radio" name="fn-tab" id="fn-t1" defaultChecked hidden />
+      <section className="kc-card fn-tabs fn-overview" aria-labelledby="ov-h">
+        <input type="radio" name="fn-tab" id="fn-t4" defaultChecked hidden />
+        <input type="radio" name="fn-tab" id="fn-t1" hidden />
         <input type="radio" name="fn-tab" id="fn-t2" hidden />
         <input type="radio" name="fn-tab" id="fn-t3" hidden />
-        <div className="fn-tabbar" role="tablist">
-          <label htmlFor="fn-t1" role="tab">Transactions</label>
-          <label htmlFor="fn-t2" role="tab">Investments</label>
-          <label htmlFor="fn-t3" role="tab">Loans{offersIn.length ? <i>{offersIn.length}</i> : null}</label>
+        <div className="fn-ovhead">
+          <h2 id="ov-h">Finances overview</h2>
+          <div className="fn-tabbar" role="tablist">
+            <label htmlFor="fn-t4" role="tab">Stock ownership</label>
+            <label htmlFor="fn-t1" role="tab">Transactions</label>
+            <label htmlFor="fn-t2" role="tab">Investments</label>
+            <label htmlFor="fn-t3" role="tab">Loans{offersIn.length ? <i>{offersIn.length}</i> : null}</label>
+          </div>
+        </div>
+
+        <div className="fn-pane fn-p4">
+          <div className="fn-split four">
+            <div><span>Portfolio value</span><b>{kt(0)}</b></div>
+            <div><span>You paid</span><b>{kt(0)}</b></div>
+            <div><span>Gain</span><b>{kt(0)}</b></div>
+            <div><span>If you sold all today</span><b>{kt(0)}</b></div>
+          </div>
+          <div className="fn-stock-empty">
+            <b>No shares yet</b>
+            <p>Soon you’ll be able to buy shares in any player with KT: 10 shares per player, up to 5 each. Each share costs his market value, so your shares rise and fall with his form. Sell any time; 10% of the sale goes to the league. Your shares will show here with what you paid, what they’re worth now and your profit.</p>
+            <Link href="/market" className="kc-btn small">Browse the player market</Link>
+          </div>
         </div>
 
         <div className="fn-pane fn-p1">
@@ -225,8 +252,6 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           </div>
         </div>
       </section>
-
-      </div>
 
       <section className="kc-card fn-coach" aria-labelledby="ac-h">
         <div className="fn-coach-head"><span className="fn-ac">AC</span><div><h2 id="ac-h">Assistant coach</h2><span className="kc-sub">{tips.length ? `${tips.length} suggestion${tips.length > 1 ? 's' : ''} for your cap` : 'Nothing urgent. Your cap is in good shape.'}</span></div></div>
