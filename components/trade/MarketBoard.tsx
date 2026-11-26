@@ -48,7 +48,10 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       (!s || r.n.toLowerCase().includes(s) || (r.own ?? '').toLowerCase() === s));
     const { k, asc } = sort;
     const val = (r: BoardRow) => (k === 'n' ? r.n : k === 'own' ? r.own ?? (r.st === 'f' ? '~FA' : '~~' + r.st) : r[k]);
+    // % moves on $5k players are noise: when sorting by a move, players under $10k go to the bottom.
+    const pctSort = k === 'w' || k === 'm' || k === 's';
     return xs.sort((a, b) => {
+      if (pctSort && (a.v < 10) !== (b.v < 10)) return a.v < 10 ? 1 : -1;
       const x = val(a), y = val(b);
       if (x == null && y == null) return b.v - a.v;
       if (x == null) return 1;
@@ -104,7 +107,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
         </select>
         <label className="mb-tog"><input type="checkbox" checked={hl} onChange={(e) => setHl(e.target.checked)} /><span aria-hidden="true" />Highlight available</label>
       </div>
-      {hl && <div className="mb-key"><span><i className="k-f" />Free agent · any club can offer</span><span><i className="k-p" />Undrafted pool</span><span><i className="k-d" />2026 draftee</span><span><i className="k-u" />Owned, not signed</span></div>}
+      {hl && <div className="mb-key"><span><i className="k-f" />Free agent · any club can offer</span><span><i className="k-p" />Undrafted pool</span><span><i className="k-d" />2026 draftee</span></div>}
 
       <div className="mb-wrap">
         <table className={`mb-tbl${hl ? ' hl' : ''}`}>
