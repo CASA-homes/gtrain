@@ -5,7 +5,7 @@ import { cache } from 'react';
 import { unstable_cache } from 'next/cache';
 import { createClient, currentLeagueId } from '@/lib/supabase/server';
 import { getLeague, getMe, type Me, type Team } from '@/lib/data';
-import { valueNow, valuePath } from '@/lib/value';
+import { startPriceFromPick, valueNow, valuePath } from '@/lib/value';
 import freeAgentData from '@/lib/free-agent-players.json';
 import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 
@@ -125,11 +125,11 @@ export function logsOf(p: Pick<PlayerRow, 'hist' | 'games_log'>): Record<number,
   return { [yr]: log };
 }
 
-type FaRow = { id: number; birth_date: string | null; hist: [number, number, number][] | null; games_log?: PlayerRow['games_log'] };
+type FaRow = { id: number; birth_date: string | null; hist: [number, number, number][] | null; games_log?: PlayerRow['games_log']; draft_pick?: number | null };
 const FA_POOL = (freeAgentData as unknown as { players: FaRow[] }).players;
 /** Adds market values for the unrostered free-agent pool, which the database doesn't price. */
 function withFaRates(m: Map<number, number>): Map<number, number> {
-  for (const f of FA_POOL) if (!m.has(f.id)) m.set(f.id, valueNow(valuePath(f.hist, logsOf(f), f.birth_date)));
+  for (const f of FA_POOL) if (!m.has(f.id)) m.set(f.id, valueNow(valuePath(f.hist, logsOf(f), f.birth_date, 2027, startPriceFromPick(f.draft_pick))));
   return m;
 }
 
@@ -245,7 +245,7 @@ export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : 
  *  Moves are slow: at most 4% a game. */
 export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   if (!p) return [];
-  const path = valuePath(p.hist, logsOf(p), p.birth_date);
+  const path = valuePath(p.hist, logsOf(p), p.birth_date, 2027, startPriceFromPick(p.draft_pick));
   const played = path.filter((x) => x.game > 0);
   const yr = played.length ? played[played.length - 1].season : path[path.length - 1].season;
   const out = path.filter((x) => x.season >= yr).map((x) => x.v);
