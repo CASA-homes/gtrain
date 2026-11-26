@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'S. Draper', tag: 'Injury', date: '2026-11-26', title: 'Sid Draper’s pre-season delayed by surgery',
+    body: 'Adelaide’s young on-baller has had surgery to decompress the arteries behind his knees after soreness while running, and won’t be back running until the end of January. It’s another interrupted summer for the 2024 pick four, who didn’t play a senior game in 2026. Pato’s Fantasy Team shouldn’t bank on much from him early in 2027.',
+  },
+  {
     player: 'L. Duggan', tag: 'Injury', date: '2026-11-25', title: 'Duggan sidelined after knee scope',
     body: 'West Coast’s co-captain had an arthroscope on his knee over the off-season and will spend some time on the sidelines, with the Eagles still working through his timeline. Released by Bito’s Boys after averaging 75 in 2026, he’s a draft option to treat with caution until there’s a return date.',
   },
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'G. Wardlaw', tag: 'Injury', date: '2026-11-13', title: 'Wardlaw nursing a minor MCL sprain',
     body: 'North say Wardlaw picked up a low-grade MCL sprain over the break and should rejoin the main group within a fortnight. It’s a small one, but after his run of hamstring dramas any missed pre-season is worth noting. Ram Dawgs will want him banking a full summer before trusting him as a keeper.',
-  },
-  {
-    player: 'N. Blakey', tag: 'Injury', date: '2026-11-13', title: 'Blakey back to group skills in December',
-    body: 'Blakey had an off-season procedure on his AC joint and the Roos expect him to move into group skills in December. That leaves plenty of time before round 1, so there’s no real alarm for a defender who averaged 86 in 2026.',
   },
 ];
