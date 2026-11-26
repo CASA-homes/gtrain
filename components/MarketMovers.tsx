@@ -1,5 +1,5 @@
 // League page: weekly risers and fallers in market value, like a stock report. Value is the contract market rate
-// (this season's average blended with the last two, turned into $k), so "this week" is the move from the previous round to the latest one.
+// (career average with older seasons fading, at most 4% a week), so "this week" is the move from the previous round to the latest one.
 import Link from 'next/link';
 import { ClubDot } from '@/components/bits';
 import { valueTrend } from '@/lib/contracts';
@@ -76,7 +76,7 @@ export async function MarketMovers({ compact = false }: { compact?: boolean } = 
       </div>
       <Pane xs={week} cls="mm-p-wk" />
       <Pane xs={season} cls="mm-p-ss" />
-      {!compact && <p className="mm-foot">Market value = this season’s average blended with the last two seasons. Season compares with where he started the year.</p>}
+      {!compact && <p className="mm-foot">Market value = career average with older seasons fading, moving at most 4% a week. Season compares with where he started the year.</p>}
     </section>
   );
 }

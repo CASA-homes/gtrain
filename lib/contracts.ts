@@ -5,6 +5,7 @@ import { cache } from 'react';
 import { unstable_cache } from 'next/cache';
 import { createClient, currentLeagueId } from '@/lib/supabase/server';
 import { getLeague, getMe, type Me, type Team } from '@/lib/data';
+import { valueNow, valuePath } from '@/lib/value';
 import freeAgentData from '@/lib/free-agent-players.json';
 import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 
@@ -112,30 +113,23 @@ export interface ContractsData {
 }
 
 /** Everything the contracts pages need, loaded once per request. */
-/** kc_rate_v2 in TypeScript, for players who aren't in the database (the unrostered AFL free-agent pool). Keep in step
- *  with the SQL: blended average of the last three seasons, experience, age and availability factors, soft top end. */
+/** Value now from season history alone (no game logs): the database's kc_value_path, for players it doesn't hold. */
 export function rateFromHist(hist: [number, number, number][] | null | undefined, birth: string | null | undefined, season = 2027): number {
-  const h = (hist ?? []).filter((x) => x[1] > 0).sort((a, b) => b[0] - a[0]);
-  if (!h.length) return 5;
-  const [s0, g0, a0] = h[0]; const g1 = h[1]?.[1], a1 = h[1]?.[2], g2 = h[2]?.[1], a2 = h[2]?.[2];
-  const prior = Math.max(6, 22 - g0);
-  const w0 = g0, w1 = g1 != null ? 0.65 * prior * Math.min(1, g1 / 10) : 0, w2 = g2 != null ? 0.35 * prior * Math.min(1, g2 / 10) : 0;
-  const avg = (w0 * a0 + w1 * (a1 ?? 0) + w2 * (a2 ?? 0)) / (w0 + w1 + w2 || 1);
-  const n = h.length;
-  const xp = n + 1 <= 1 ? 0.5 : n + 1 === 2 ? 0.6 : n + 1 === 3 ? 0.7 : n + 1 === 4 ? 0.85 : 1;
-  const age = birth ? Math.floor((Date.UTC(season, 2, 1) - new Date(birth).getTime()) / (365.25 * 86400000)) : null;
-  const agef = age == null || age < 30 ? 1 : Math.max(0.6, 1 - 0.08 * (age - 29));
-  const avail = s0 >= season ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
-  let v = Math.pow(Math.max(avg - 55, 0), 1.3) * 0.66 * xp * agef * avail;
-  if (v > 90) v = 90 + (v - 90) * 0.9;
-  return Math.max(5, Math.round(v));
+  return valueNow(valuePath(hist, {}, birth, season));
+}
+/** A player's game logs by season, for valuePath: games_log belongs to his latest season with games. */
+export function logsOf(p: Pick<PlayerRow, 'hist' | 'games_log'>): Record<number, (number | null)[]> {
+  const log = (p.games_log ?? []).map((g) => g[1]);
+  if (!log.length) return {};
+  const yr = Math.max(...(p.hist ?? []).filter((h) => h[1] > 0).map((h) => h[0]), 2026);
+  return { [yr]: log };
 }
 
-type FaRow = { id: number; birth_date: string | null; hist: [number, number, number][] | null };
+type FaRow = { id: number; birth_date: string | null; hist: [number, number, number][] | null; games_log?: PlayerRow['games_log'] };
 const FA_POOL = (freeAgentData as unknown as { players: FaRow[] }).players;
 /** Adds market values for the unrostered free-agent pool, which the database doesn't price. */
 function withFaRates(m: Map<number, number>): Map<number, number> {
-  for (const f of FA_POOL) if (!m.has(f.id)) m.set(f.id, rateFromHist(f.hist, f.birth_date));
+  for (const f of FA_POOL) if (!m.has(f.id)) m.set(f.id, valueNow(valuePath(f.hist, logsOf(f), f.birth_date)));
   return m;
 }
 
@@ -247,41 +241,14 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
 
 export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : null);
 
-/** A rough market-value line for a player: last season's rate, then the rate after each game this season (season average blended with the last two seasons).
- *  Same shape as the database formula (without age/availability), for a sparkline only. */
-/** Market value v2, mirroring kc_rate_v2 in the database. g0/a0 = this season so far; prev = earlier seasons, latest first.
- *  Last season and the one before (65/35) fill the games this season hasn't had yet (min 6 games' weight);
- *  priced on experience (2nd season 60%, 3rd 70%, 4th 85%, 5th+ full) and age (8% off a year from 30). */
-export function rateV2(g0: number, a0: number, prev: [number, number][], seasons: number, age: number | null, live = false): number {
-  if (seasons <= 0 && g0 <= 0) return 5;
-  const prior = Math.max(6, 22 - g0);
-  const w = [g0, prev[0] ? 0.65 * prior * Math.min(1, prev[0][0] / 10) : 0, prev[1] ? 0.35 * prior * Math.min(1, prev[1][0] / 10) : 0];
-  const tot = w[0] + w[1] + w[2];
-  const avg = tot ? (w[0] * a0 + w[1] * (prev[0]?.[1] ?? 0) + w[2] * (prev[1]?.[1] ?? 0)) / tot : 0;
-  const k = seasons + 1;
-  const xp = k <= 1 ? 0.5 : k === 2 ? 0.6 : k === 3 ? 0.7 : k === 4 ? 0.85 : 1;
-  const agef = age == null || age < 30 ? 1 : Math.max(0.6, 1 - 0.08 * (age - 29));
-  // Games-played discount only once a season is finished (injured players); none while it's being played.
-  const avail = g0 === 0 || live ? 1 : 0.8 + 0.2 * Math.min(1, g0 / 18);
-  return Math.max(5, Math.pow(Math.max(0, avg - 55), 1.3) * 0.66 * xp * agef * avail);
-}
-
-/** Market value after each game this season, from where he started the year. Moves are small: each score shifts the
- *  blended average a little. */
+/** Market value after each game of his latest season, from where he started it (value engine v3, lib/value.ts).
+ *  Moves are slow: at most 4% a game. */
 export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   if (!p) return [];
-  const hist = (p.hist ?? []).filter((h) => h[1] > 0).sort((a, b) => b[0] - a[0]);
-  const scores = (p.games_log ?? []).map((g) => g[1]).filter((x): x is number => x != null);
-  const curYear = hist[0] && scores.length ? hist[0][0] : null;
-  const prev = hist.filter((h) => h[0] !== curYear).map((h) => [h[1], h[2]] as [number, number]);
-  const seasons = hist.length;
-  const born = p.birth_date ? new Date(p.birth_date) : null;
-  const age = born ? Math.floor((Date.UTC(2027, 2, 1) - born.getTime()) / (365.25 * 86400000)) : null;
-  const out = [rateV2(0, 0, prev, seasons, age)];
-  let sum = 0;
-  // In-season points carry no availability discount; the last point does if that season is finished.
-  const finished = curYear != null && curYear < 2027;
-  scores.forEach((x, i) => { sum += x; out.push(rateV2(i + 1, sum / (i + 1), prev, seasons, age, !(finished && i === scores.length - 1))); });
+  const path = valuePath(p.hist, logsOf(p), p.birth_date);
+  const played = path.filter((x) => x.game > 0);
+  const yr = played.length ? played[played.length - 1].season : path[path.length - 1].season;
+  const out = path.filter((x) => x.season >= yr).map((x) => x.v);
   if (out.length <= points) return out;
   return Array.from({ length: points }, (_, i) => out[Math.round((i * (out.length - 1)) / (points - 1))]);
 }

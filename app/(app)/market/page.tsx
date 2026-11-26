@@ -291,7 +291,7 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
           </section>
 
         </div>
-        <p className="th-note">Prices are market values: this season’s average blended with the last two seasons, updated after every game.</p>
+        <p className="th-note">Prices are market values: his career average with older seasons fading, moving at most 4% a week. The same number sets salaries and clauses.</p>
       </main>
     </div>
   );
