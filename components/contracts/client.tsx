@@ -5,7 +5,7 @@ import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import {
-  acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction,
+  acceptOffer, bid, signOwn, cancelAuction, chargeTax, closeFreeAgent, completeClaim, extendPlayer, faDeadline, grantTokens, listAuction, resetFinances,
   lockIn, matchClaim, releasePlayer, rollover, saveSettings, seedContracts, setDeadline, setTier, setWindow, settleAuction, signDraftees, startMidseason, draftReview, undoContract, lockContracts, matchOffer, type Result,
 } from '@/app/(app)/contracts/actions';
 import type { KcSettings, Tier } from '@/lib/contracts';
@@ -335,6 +335,24 @@ export function GrantControl({ teams }: { teams: { id: number; name: string }[] 
         <label className="kc-field" style={{ width: 120 }}>KT (− to take)<input type="number" step={1} value={amount} onChange={(e) => setAmount(Number(e.target.value))} /></label>
         <label className="kc-field" style={{ flex: 1, minWidth: 180 }}>Reason<input value={why} onChange={(e) => setWhy(e.target.value)} placeholder="Cup prize, correction…" /></label>
         <button type="button" className="kc-btn dark" disabled={pending || !why.trim()} onClick={() => go(() => grantTokens(team, amount, why))}>Apply</button>
+      </div>
+      {note}
+    </div>
+  );
+}
+
+export function ResetFinancesControl({ teams, startKt }: { teams: { id: number; name: string; bank: number }[]; startKt: number }) {
+  const { pending, go, note } = useRun();
+  const [team, setTeam] = useState(teams[0]?.id ?? 0);
+  const t = teams.find((x) => x.id === team);
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div className="kc-inline">
+        <label className="kc-field">Club<select value={team} onChange={(e) => setTeam(Number(e.target.value))}>{teams.map((x) => <option key={x.id} value={x.id}>{x.name} · {x.bank.toLocaleString('en-AU')} KT</option>)}</select></label>
+        <button type="button" className="kc-btn dark" disabled={pending || !t}
+          onClick={() => { if (t && window.confirm(`Reset ${t.name}'s finances? Their open term deposits and loan offers are cancelled (no interest) and their bank goes back to ${startKt.toLocaleString('en-AU')} KT. Contracts and picks don't change.`)) go(() => resetFinances(team)); }}>
+          Reset to {startKt.toLocaleString('en-AU')} KT
+        </button>
       </div>
       {note}
     </div>

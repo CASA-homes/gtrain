@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { KcHeader } from '@/components/contracts/KcHeader';
-import { DeadlineControl, FaDeadlineControl, GrantControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
+import { DeadlineControl, FaDeadlineControl, GrantControl, ResetFinancesControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
 import { createClient } from '@/lib/supabase/server';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
 import { keeperLabel } from '@/lib/keepers';
@@ -60,6 +60,11 @@ export default async function ContractsAdmin() {
               <h2 id="g-h">Give or take tokens</h2>
               <p className="kc-sub">Paper tokens only, for prizes, fines or corrections.</p>
               <div style={{ marginTop: 12 }}><GrantControl teams={d.teams.map((t) => ({ id: t.id, name: t.name }))} /></div>
+            </section>
+            <section className="kc-card" aria-labelledby="rf-h">
+              <h2 id="rf-h">Reset a club’s finances</h2>
+              <p className="kc-sub">Undo a club’s money moves: open term deposits and loan offers are cancelled with no interest, and the bank goes back to the starting KT. Contracts, picks and the ledger history stay. Not allowed while the club has an active loan or KT held in a free-agent offer.</p>
+              <div style={{ marginTop: 12 }}><ResetFinancesControl startKt={s.start_kt ?? 1000} teams={d.teams.map((t) => ({ id: t.id, name: t.name, bank: d.clubs.get(t.id)?.bank ?? 0 }))} /></div>
             </section>
             <section className="kc-card" aria-labelledby="set-h">
               <h2 id="set-h">League numbers</h2>

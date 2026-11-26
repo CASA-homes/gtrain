@@ -118,6 +118,10 @@ export async function setWindow(open: boolean, kind: string, hours: number) {
 export async function grantTokens(teamId: number, amount: number, why: string) {
   return run('kc_grant', { t: teamId, amount: Math.round(amount), why }, () => `${amount > 0 ? 'Gave' : 'Took'} ${kt(Math.abs(amount))}.`);
 }
+/** Commish: cancel a club's open deposits and loan offers and put its bank back to the starting KT. */
+export async function resetFinances(teamId: number) {
+  return run('kc_reset_finances', { t: teamId }, (m) => String(m));
+}
 export async function chargeTax() {
   return run('kc_charge_tax', {}, (d) => `Luxury tax charged: ${kt(d)} shared among the bottom three.`);
 }
