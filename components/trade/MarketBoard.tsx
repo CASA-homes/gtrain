@@ -85,7 +85,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       <div className="mb-top">
         <div>
           <h2 id="mb-h">Player market</h2>
-          <p className="mb-mut">Every player priced like a stock. Value is his contract market rate from a rolling six-game average; tap a column to sort.</p>
+          <p className="mb-mut">Every player priced like a stock. Value is this season’s average blended with his last two seasons, updated after every game; tap a column to sort.</p>
         </div>
         <label className="mb-search"><span className="sr-only">Search players</span>
           <input type="search" placeholder="Search a player or club code" value={q} onChange={(e) => { setQ(e.target.value); reset(); }} />

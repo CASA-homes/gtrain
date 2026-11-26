@@ -247,7 +247,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
 
 export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : null);
 
-/** A rough market-value line for a player: last season's rate, then a rolling 6-game rate through this season.
+/** A rough market-value line for a player: last season's rate, then the rate after each game this season (season average blended with the last two seasons).
  *  Same shape as the database formula (without age/availability), for a sparkline only. */
 /** Market value v2, mirroring kc_rate_v2 in the database. g0/a0 = this season so far; prev = earlier seasons, latest first.
  *  Last season and the one before (65/35) fill the games this season hasn't had yet (min 6 games' weight);
