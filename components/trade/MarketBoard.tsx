@@ -1,19 +1,17 @@
 'use client';
-// The trademarket board: every player as a stock. Sort by any column (value, weekly/monthly/season move, averages,
-// salary, clause), filter by position, age and status, highlight who's available, 20 a page.
+// The trademarket board: every player as a stock. Sort by any column (value, weekly/monthly/season move, averages), filter by position, age and status, highlight who's available, 20 a page.
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ClubDot } from '@/components/bits';
 import type { BoardRow, BoardStatus } from '@/lib/market-board';
 
-type Key = 'n' | 'age' | 'a0' | 'a1' | 'sal' | 'v' | 'w' | 'm' | 's' | 'cl' | 'own';
+type Key = 'n' | 'age' | 'a0' | 'a1' | 'v' | 'w' | 'm' | 's' | 'own';
 const POS = ['DEF', 'MID', 'RUC', 'FWD'] as const;
 const AGES = [['all', 'Any age'], ['u22', 'Under 22'], ['22', '22–25'], ['26', '26–29'], ['30', '30+']] as const;
 const SHOW: [string, string][] = [['all', 'All'], ['c', 'Contracted'], ['u', 'Unsigned'], ['f', 'Free agents'], ['p', 'Undrafted'], ['d', 'Draftees']];
 const ST_LABEL: Record<BoardStatus, string> = { c: '', u: 'Unsigned', f: 'Free agent', p: 'Undrafted', d: 'Draftee' };
 
 const k$ = (x: number | null) => (x == null ? '—' : `$${x.toLocaleString('en-AU')}k`);
-const ktf = (x: number | null) => (x == null ? null : x >= 1000 ? `${(x / 1000).toFixed(1)}k` : `${x}`);
 const sc = (x: number) => (x >= 110 ? 'hot' : x >= 90 ? 'good' : x >= 70 ? 'ok' : x >= 50 ? 'low' : 'bad');
 
 function Spark({ v }: { v: number[] }) {
@@ -112,7 +110,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       <div className="mb-wrap">
         <table className={`mb-tbl${hl ? ' hl' : ''}`}>
           <thead>
-            <tr className="mb-grp"><th colSpan={4} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Contract</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /></tr>
+            <tr className="mb-grp"><th colSpan={4} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /></tr>
             <tr>
               <th className="c-rk">#</th>
               <H k="n" cls="c-pl">Player</H>
@@ -121,8 +119,6 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
               <th className="c-l5">Last 5</th>
               <H k="a1" cls="r c-a1" title={`${cur - 1} season average`}>{`'${String(cur - 1).slice(2)}`} avg</H>
               <H k="a0" cls="r c-a0" title={`${cur} season average`}>{`'${String(cur).slice(2)}`} avg</H>
-              <H k="sal" cls="r c-sal" title="Salary he's contracted on">Salary</H>
-              <H k="cl" cls="r c-cl" title="Release clause in KT">Clause</H>
               <th className="c-sp" aria-label="Value trend" />
               <H k="v" cls="r c-v" title="Market value now">Now</H>
               <H k="w" cls="r c-w" title="Value move since last round">Week</H>
@@ -134,7 +130,6 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
           <tbody>
             {view.map((r, i) => {
               const mine = !!meCode && r.own === meCode;
-              const under = r.sal != null && r.v > r.sal;
               return (
                 <tr key={r.id} className={`st-${r.st}${mine ? ' mine' : ''}`}>
                   <td className="c-rk">{pg * per + i + 1}</td>
@@ -149,8 +144,6 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                   <td className="c-l5"><span className="mb-l5">{r.l5.length ? r.l5.map((x, j) => <i key={j} className={x == null ? 'na' : sc(x)}>{x ?? '·'}</i>) : <span className="mb-mut">No games</span>}</span></td>
                   <td className="r c-a1 tn">{r.a1?.toFixed(1) ?? '—'}</td>
                   <td className="r c-a0 tn"><b>{r.a0?.toFixed(1) ?? '—'}</b>{r.a0 != null && <small>{r.g0}g</small>}</td>
-                  <td className="r c-sal tn">{r.sal != null ? <span className={under ? 'mb-bar' : ''} title={under ? 'Worth more than he’s paid' : undefined}>{k$(r.sal)}</span> : <span className="mb-mut">—</span>}</td>
-                  <td className="r c-cl tn">{r.cl != null ? <>{ktf(r.cl)}<small> KT</small></> : r.st === 'c' ? <span className="mb-lock" title="No clause: can't be bought">🔒</span> : <span className="mb-mut">—</span>}</td>
                   <td className="c-sp"><Spark v={r.sp} /></td>
                   <td className="r c-v tn"><b>{k$(r.v)}</b></td>
                   <td className="r c-w"><Chg x={r.w} /></td>
@@ -160,7 +153,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                 </tr>
               );
             })}
-            {!view.length && <tr><td colSpan={15} className="mb-empty">No players match those filters.</td></tr>}
+            {!view.length && <tr><td colSpan={13} className="mb-empty">No players match those filters.</td></tr>}
           </tbody>
         </table>
       </div>

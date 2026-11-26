@@ -82,6 +82,6 @@
 @media (max-width: 1080px) { .th-split, .th-more { grid-template-columns: 1fr; } .mb-tog { margin-left: 0; } }
 @media (max-width: 760px) {
   .mb-top { flex-direction: column; } .mb-search input { width: 100%; } .mb-search { width: 100%; }
-  .mb-tbl .c-m, .mb-tbl .c-age, .mb-tbl .c-cl, .mb-tbl .c-own, .mb-tbl .c-rk { display: none; }
+  .mb-tbl .c-l5, .mb-tbl .c-age, .mb-tbl .c-own, .mb-tbl .c-rk, .mb-tbl .c-a0 small { display: none; }
   .mb-seg { overflow-x: auto; max-width: 100%; }
 }
