@@ -5,6 +5,10 @@ export interface PlayerStory { player: string; tag: 'Trade' | 'Off-field' | 'Inj
 
 export const PLAYER_NEWS: PlayerStory[] = [
   {
+    player: 'S. Cumming', tag: 'Role', date: '2026-11-27', title: 'Cumming handed Cotchin’s No.9',
+    body: 'Richmond have pulled Trent Cotchin’s No.9 back out of the cupboard for Sam Cumming, who swaps from No.22 after a 14-game debut year interrupted by shoulder trouble. Cotchin gave it his blessing. A jumper doesn’t score points, but it shows where the Tigers rate him, and Ram Dawgs will hope a clean summer lifts that 59 average.',
+  },
+  {
     player: 'S. Draper', tag: 'Injury', date: '2026-11-26', title: 'Sid Draper’s pre-season delayed by surgery',
     body: 'Adelaide’s young on-baller has had surgery to decompress the arteries behind his knees after soreness while running, and won’t be back running until the end of January. It’s another interrupted summer for the 2024 pick four, who didn’t play a senior game in 2026. Pato’s Fantasy Team shouldn’t bank on much from him early in 2027.',
   },
@@ -71,9 +75,5 @@ export const PLAYER_NEWS: PlayerStory[] = [
   {
     player: 'T. Greene', tag: 'Role', date: '2026-11-14', title: 'Greene settles in at Geelong',
     body: 'Fresh off his free agency move from GWS, Greene says he expects a similar role at the Cats: mostly forward with a bit of midfield, and high half-forward an option. He’s 33 but still averaged 86 in 2026. If he gets those midfield minutes under Chris Scott, Serong So’Right have a handy forward-line keeper.',
-  },
-  {
-    player: 'G. Wardlaw', tag: 'Injury', date: '2026-11-13', title: 'Wardlaw nursing a minor MCL sprain',
-    body: 'North say Wardlaw picked up a low-grade MCL sprain over the break and should rejoin the main group within a fortnight. It’s a small one, but after his run of hamstring dramas any missed pre-season is worth noting. Ram Dawgs will want him banking a full summer before trusting him as a keeper.',
   },
 ];
