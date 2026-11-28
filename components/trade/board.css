@@ -88,3 +88,20 @@
 }
 @media (max-width: 560px) { .mb-tbl .c-a0 { display: none; } .mb-who { min-width: 130px; } }
 .mb-tbl .c-sh { width: 96px; text-align: left; }
+
+/* The Shares and open columns never scroll out of view: the player column takes the room that's left and long names
+   are cut off with an ellipsis; if the table still overflows, Shares and › stay pinned to the right edge. */
+.mb-tbl th.c-pl, .mb-tbl td.c-pl { width: 100%; max-width: 0; min-width: 118px; }
+.mb-who { min-width: 0 !important; }
+.mb-who > span { min-width: 0; overflow: hidden; }
+.mb-who b, .mb-who small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mb-tbl th.c-sh, .mb-tbl td.c-sh { position: sticky; right: 40px; z-index: 1; background: #fff; box-shadow: -8px 0 8px -8px rgb(21 26 22 / .18); }
+.mb-tbl th.c-go, .mb-tbl td.c-go { position: sticky; right: 0; z-index: 1; background: #fff; width: 26px; min-width: 26px; box-sizing: content-box; }
+.mb-tbl thead th.c-sh, .mb-tbl thead th.c-go { background: #fafbf8; }
+.mb-tbl .mb-grp th:nth-last-child(-n+2) { position: sticky; background: #fff; }
+.mb-tbl tbody tr:hover td.c-sh, .mb-tbl tbody tr:hover td.c-go { background: #f7f9f5; }
+.mb-tbl.hl tr.st-f td.c-sh, .mb-tbl.hl tr.st-f td.c-go { background: #f1f6fe; }
+.mb-tbl.hl tr.st-p td.c-sh, .mb-tbl.hl tr.st-p td.c-go { background: #f2f9f4; }
+.mb-tbl.hl tr.st-d td.c-sh, .mb-tbl.hl tr.st-d td.c-go { background: #fcf7ea; }
+@media (max-width: 1600px) { .mb-tbl .c-sp { display: none; } }
+@media (max-width: 1440px) { .mb-tbl .c-a1 { display: none; } .mb-grp { display: none; } }
