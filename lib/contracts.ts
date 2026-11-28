@@ -144,6 +144,15 @@ const loadRanking = cache(async () => {
   try { setRanking(await unstable_cache(load, ['khq-ranking'], { revalidate: 300 })()); } catch { /* the shipped copy stands */ }
 });
 
+/** Starting prices from league draft and rookie contracts, stamped onto the league's player rows (one set of rows per
+ *  league), so price graphs start where the database's values do. */
+const loadStartPrices = cache(async () => {
+  const supabase = await createClient();
+  const [{ data }, league] = await Promise.all([supabase.rpc('kc_start_prices'), getLeague()]);
+  const m = new Map(((data ?? []) as { player_id: number; start_k: number | string }[]).map((r) => [r.player_id, Number(r.start_k)]));
+  for (const p of league.players) p.start_k = m.get(p.id) ?? null;
+});
+
 /** Market value ($k) for every player, from the contract pricing. */
 type RateRow = { player_id: number; rate_k: number };
 export const getRates = cache(async (): Promise<Map<number, number>> => {
@@ -156,7 +165,7 @@ export const getRates = cache(async (): Promise<Map<number, number>> => {
     if (error || !data || !(data as RateRow[]).length) throw new Error('No rates');
     return data as RateRow[];
   };
-  await loadRanking();
+  await Promise.all([loadRanking(), loadStartPrices()]);
   let rows: RateRow[];
   try { rows = await unstable_cache(load, ['khq-rates', String(lid)], { revalidate: 300 })(); }
   catch { rows = ((await supabase.rpc('kc_rates')).data ?? []) as RateRow[]; }
@@ -168,7 +177,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   // Housekeeping first, in order: once the contract deadline passes, unsigned players go to the draft pool; then
   // free-agent weeks and 48-hour clause matches that ran out settle. Both are harmless when there's nothing to do.
   const tidy = supabase.rpc('kc_deadline_sweep').then(() => supabase.rpc('kc_settle_matches')).then(() => null, () => null);
-  const [league, me] = await Promise.all([tidy.then(() => getLeague()), getMe(), loadRanking()]);
+  const [league, me] = await Promise.all([tidy.then(() => getLeague()), getMe(), loadRanking(), loadStartPrices()]);
   const players = new Map(league.players.map((p) => [p.id, p]));
   const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),
@@ -256,7 +265,7 @@ export const playerAge = (p: PlayerRow | undefined) => (p ? age(p.birth_date) : 
 /** Market value after each game of his latest season, from where he started it (value engine v5, lib/value.ts). */
 export function valueTrend(p: PlayerRow | undefined, points = 10): number[] {
   if (!p) return [];
-  const path = valuePath(p.hist, logsOf(p), p.birth_date, 2027, startPriceFromPick(p.draft_pick));
+  const path = valuePath(p.hist, logsOf(p), p.birth_date, 2027, p.start_k ?? startPriceFromPick(p.draft_pick));
   const played = path.filter((x) => x.game > 0);
   const yr = played.length ? played[played.length - 1].season : path[path.length - 1].season;
   const out = path.filter((x) => x.season >= yr).map((x) => x.v);

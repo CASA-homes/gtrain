@@ -21,6 +21,8 @@ export interface PlayerRow {
   status: string | null;
   birth_date: string | null;
   draft_pick: number | null;
+  /** Starting market value ($k) from a league draft or rookie contract (his pick's full price), when he has one. */
+  start_k?: number | null;
   draft_year: number | null;
   full_name: string | null;
   dfs_id: string | null;
