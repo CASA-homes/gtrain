@@ -110,11 +110,10 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       <div className="mb-wrap">
         <table className={`mb-tbl${hl ? ' hl' : ''}`}>
           <thead>
-            <tr className="mb-grp"><th colSpan={4} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /></tr>
+            <tr className="mb-grp"><th colSpan={3} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /></tr>
             <tr>
               <th className="c-rk">#</th>
               <H k="n" cls="c-pl">Player</H>
-              <H k="own" cls="c-own">Owner</H>
               <H k="age" cls="r c-age">Age</H>
               <th className="c-l5">Last 5</th>
               <H k="a1" cls="r c-a1" title={`${cur - 1} season average`}>{`'${String(cur - 1).slice(2)}`} avg</H>
@@ -139,7 +138,6 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                       <span><b>{r.n}</b><small>{r.pos.join('/')}{r.st !== 'c' ? <em className={`mb-st s-${r.st}`}>{ST_LABEL[r.st]}</em> : r.to ? <> · to {r.to}</> : null}</small></span>
                     </Link>
                   </td>
-                  <td className="c-own">{r.own ? <span className={`mb-own${mine ? ' me' : ''}`}>{r.own}</span> : <span className="mb-mut">{r.st === 'f' ? 'FA' : '—'}</span>}</td>
                   <td className="r c-age tn">{r.age ?? '–'}</td>
                   <td className="c-l5"><span className="mb-l5">{r.l5.length ? r.l5.map((x, j) => <i key={j} className={x == null ? 'na' : sc(x)}>{x ?? '·'}</i>) : <span className="mb-mut">No games</span>}</span></td>
                   <td className="r c-a1 tn">{r.a1?.toFixed(1) ?? '—'}</td>
@@ -153,7 +151,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                 </tr>
               );
             })}
-            {!view.length && <tr><td colSpan={13} className="mb-empty">No players match those filters.</td></tr>}
+            {!view.length && <tr><td colSpan={12} className="mb-empty">No players match those filters.</td></tr>}
           </tbody>
         </table>
       </div>
