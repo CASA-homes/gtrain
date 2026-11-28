@@ -3185,3 +3185,10 @@ input.im-mini { width: 110px; cursor: text; }
 .admin-plans { width: 100%; border-collapse: collapse; font-size: 14px; }
 .admin-plans th, .admin-plans td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line, #eef0eb); vertical-align: middle; }
 .admin-plans form { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+/* Cup KT prizes */
+.cpz-kt{display:flex;flex-direction:column;gap:6px;padding-top:8px;border-top:1px solid var(--line,#eef0ec)}
+.cpz-kt-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cpz-kt-p{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:10px;background:#fbf6e9;font-size:13px}
+.cpz-kt-p > span:first-child{font:600 11px var(--font);color:var(--muted)}
+.cpz-kt-in{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.cpz-kt-in input{width:96px;height:32px;border:1px solid #d6dbd2;border-radius:8px;padding:0 8px;font:600 14px var(--font)}

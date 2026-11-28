@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import LEAGUE from '@/data/league.json';
 import { getLeagueProfile } from '@/lib/league-scope';
 import { Group, SubHead } from '@/components/LeagueSubpage';
 import { CupPrizes } from '@/components/live/cup-prizes';
@@ -8,7 +7,6 @@ import { getLeague, getMe } from '@/lib/data';
 import { CUP_NAME } from '@/lib/cup';
 import { getLeagueName, leagueTitle } from '@/lib/league-name';
 import { LeagueNameForm } from '@/components/LeagueNameForm';
-import { DropDayControl } from '@/components/contracts/finance-client';
 import { getContracts } from '@/lib/contracts';
 import { StatsSources } from '@/components/StatsSources';
 import { InviteCoaches } from '@/components/InviteCoaches';
@@ -16,20 +14,25 @@ import { LeagueCoaches } from '@/components/LeagueCoaches';
 import { createClient } from '@/lib/supabase/server';
 import { getPlan, isSiteAdmin, PRO_PER_COACH } from '@/lib/plan';
 import { LeagueBankPanel } from '@/components/league/LeagueBankPanel';
+import { FinesPanel, KeepersDraftPanel, MilestonesPanel, ScoringPanel, TeamStructurePanel } from '@/components/league/settings/RulesPanels';
+import { getLeagueRules } from '@/lib/league-rules-server';
 import '@/components/league/league-bank.css';
 
 export const metadata = { title: 'League settings' };
 
 // Mirrors the league settings on Keeper (keeperfantasy.com/afl/288126/rules), plus G-Train's own house rules.
 
-const SCORING: [string, number][] = [['Kick', 3], ['Handball', 2], ['Mark', 3], ['Tackle', 4], ['Hitout', 1], ['Goal', 6], ['Behind', 1], ['Free for', 1], ['Free against', -3]];
 
 export const dynamic = 'force-dynamic';
 
 export default async function LeagueSettingsPage() {
   const profile = await getLeagueProfile();
   const C = profile.charter;
-  const [me, league, prizes, leagueName, kc, plan, siteAdmin] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName(), getContracts(), getPlan(), isSiteAdmin()]);
+  const [me, league, prizes, leagueName, kc, plan, siteAdmin, rules] = await Promise.all([getMe(), getLeague(), loadCupPrizes(), getLeagueName(), getContracts(), getPlan(), isSiteAdmin(), getLeagueRules()]);
+  const commish = !!me?.is_commish;
+  const listSize = kc.settings?.list_size ?? 33;
+  const kcKeepers = kc.settings?.keepers ?? 18;
+  const lineupShape = (kc.settings?.lineup ?? { DEF: 5, MID: 7, RUC: 1, FWD: 5 }) as Record<'DEF' | 'MID' | 'RUC' | 'FWD', number>;
   const planDay = (iso: string) => new Date(iso).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Australia/Perth' });
   const dropDay = kc.settings?.rookie_lock_at ?? null;
   const statsSeason = (kc.settings?.season ?? 2027) - 1;
@@ -86,32 +89,9 @@ export default async function LeagueSettingsPage() {
         )}
         {me?.is_commish && <StatsSources season={statsSeason} compare={statsCompare} />}
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
-        {kc.settings && (
-          <section className="card" style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <h2 className="h2" style={{ fontSize: 18 }}>Player drop day</h2>
-            <p className="muted" style={{ margin: 0, fontSize: 13 }}>Rookie contracts lock on drop day. Each club picks its cap-free rookie (10 or fewer games) for the season before then.</p>
-            <b style={{ fontSize: 15 }}>{dropDay ? new Date(dropDay).toLocaleString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Australia/Perth' }) + ' (Perth)' : 'Not set'}</b>
-            {me?.is_commish && <DropDayControl value={dropDay} />}
-          </section>
-        )}
-        <Group title="Team structure" rows={[
-          ['Squad size', '33 players: 18 starters, 5 emergencies, 10 bench'],
-          ['On field', '5 DEF · 7 MID · 1 RUC · 5 FWD'],
-          ['Emergencies', '5: one per line (DEF, MID, RUC, FWD) plus a utility'],
-          ['Utility', 'Covers only the positions he holds, as the last-chance cover'],
-          ['Injury / rookie / veteran lists', 'None'],
-        ]} />
-        <Group title="Scoring" rows={[
-          ['System', 'Points, standard AFL Fantasy'],
-          ['Formula', <span style={{ display: 'flex', flexWrap: 'wrap', gap: '2px 10px' }}>{SCORING.map(([k, v]) => <span key={k}>{k} <b>{v > 0 ? `+${v}` : v}</b></span>)}</span>],
-          ['Captains', 'Captain scores 2×. The vice-captain only scores 2× if the captain doesn’t count'],
-          ['Captain rule', 'If the captain plays under 25% time on ground, the vice-captain scores double instead and the captain counts as normal'],
-          ['TOG threshold', `${C.emergency_tog_threshold}: a starter under this is replaced by his emergency, only if the emergency scored more`],
-          ['Dual positions', 'An emergency with two or three positions can cover any of them'],
-          ['Utility cover', 'If the line emergency can’t help (e.g. a Sunday late out after your DEF emergency scored poorly), the utility comes on if he holds that position. Covers one starter'],
-          ['Emergency loophole', 'No: emergencies can’t cover an empty lineup slot'],
-          ['Lockout', 'Rolling: each player locks when his game starts'],
-        ]} />
+        <MilestonesPanel commish={commish} release={dropDay} dates={rules.dates} />
+        <TeamStructurePanel commish={commish} listSize={listSize} lineup={lineupShape} keepers={kcKeepers} rules={rules.team} />
+        <ScoringPanel commish={commish} rules={rules.scoring} />
         <Group title="Season" rows={[
           ['Early bye rounds', 'Opening Round scores used'],
           ['Mid-season byes', 'No scoring adjustments'],
@@ -134,24 +114,12 @@ export default async function LeagueSettingsPage() {
           ['Draft-day trades', `Allowed. ${C.trading.draft_trade_window}`],
           ['Lopsided trades', C.trading.lopsided_veto],
         ]} />
-        <Group title="Keepers & draft" rows={[
-          ['Keepers', '17, plus an 18th keeper slot for a rookie'],
-          ['Rookie keeper', 'The 18th keeper must be a rookie: 10 career games or fewer, no age limit'],
-          ['Pick trading', 'Enabled, picks tradeable through 2028'],
-          ['Draft', '16 rounds · round 16 is the keeper/rookie round'],
-          ['Mid-season draft order', C.ladder.mid_season_draft_order],
-          ['End-of-season draft order', C.ladder.end_of_season_draft_order],
-          ...(profile.legacy ? [['Next draft', `${LEAGUE.league.next_draft.season} · ${LEAGUE.league.next_draft.date}`] as [string, string]] : []),
-        ]} />
+        <KeepersDraftPanel commish={commish} listSize={listSize} keepers={kcKeepers} rookie={rules.team.rookie} rules={rules.draft} nextDraft={new Date(`${rules.dates.draft_day}T12:00:00+08:00`).toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} />
         <section style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           <h2 className="h2" style={{ fontSize: 18 }}>{CUP_NAME}</h2>
           <CupPrizes variant="settings" settings={prizes} isCommish={!!me?.is_commish} teams={teams} />
         </section>
-        <Group title="Fines" rows={[
-          ['Captain loophole', `$${C.fines.captain_loop}`],
-          ['Zero on field loophole', `$${C.fines.zero_on_field_loop}`],
-          ['Lopsided trade', `$${C.fines.lopsided_trade} per offence`],
-        ]} />
+        <FinesPanel commish={commish} rules={rules.fines} />
       </div>
       <p className="muted" style={{ fontSize: 12, margin: 0 }}>From the league’s settings on Keeper, plus {leagueName} house rules.</p>
     </div>

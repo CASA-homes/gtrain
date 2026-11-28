@@ -7,27 +7,34 @@
 export const D = (s: string) => new Date(`${s}T12:00:00+08:00`).getTime();
 const START = D('2026-11-01'), END = D('2027-10-31');
 const SEASON = { start: '2027-03-17', end: '2027-08-30' };
-export const KEY: { key: string; label: string; date: string; tone: string; note?: string }[] = [
-  { key: 'deadline', label: 'Deadline day', date: '2027-02-17', tone: '#c2462a', note: 'Contracts expire' },
-  { key: 'draft', label: 'Draft day', date: '2027-03-03', tone: '#1f3a5c' },
+/** The commish's milestone dates (League settings). Anything missing falls back to the defaults. */
+export interface Milestones { release?: string | null; draft_day?: string; mid_open?: string; mid_close?: string; fa_day?: string }
+type Key = { key: string; label: string; date: string; tone: string; note?: string };
+const keysFor = (m: Milestones = {}): Key[] => [
+  { key: 'deadline', label: 'Player Release Day', date: m.release ? new Date(new Date(m.release).getTime() + 8 * 3600e3).toISOString().slice(0, 10) : '2027-02-17', tone: '#c2462a', note: 'Last day to delist' },
+  { key: 'draft', label: 'Draft day', date: m.draft_day ?? '2027-03-03', tone: '#1f3a5c' },
   { key: 'r1', label: 'Season starts', date: SEASON.start, tone: '#2e6b47', note: 'Round 1' },
-  { key: 'mid', label: 'Mid-season window', date: '2027-06-01', tone: '#8a6a1f', note: 'Approx. 2 weeks around the byes' },
+  { key: 'mid', label: 'Mid-season window', date: m.mid_open ?? '2027-06-01', tone: '#8a6a1f', note: 'Trades and the mid-season draft' },
+  { key: 'fa', label: 'Free Agent Day', date: m.fa_day ?? '2027-06-15', tone: '#2a55a8', note: 'Unsigned players go to free agency' },
   { key: 'end', label: 'End of season', date: SEASON.end, tone: '#151a17', note: 'Round 24' },
   { key: 'gf', label: 'Grand final', date: '2027-10-03', tone: '#c9a227' },
-];
-const MID = { start: '2027-06-01', end: '2027-06-14' };
+].sort((a, b) => a.date.localeCompare(b.date));
+export const KEY: Key[] = keysFor();
 
 const pos = (s: string | number) => ((typeof s === 'number' ? s : D(s)) - START) / (END - START) * 100;
 export const fmt = (s: string) => new Date(`${s}T12:00:00+08:00`).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' });
 
-export function SeasonSchedule() {
+export function SeasonSchedule({ m }: { m?: Milestones } = {}) {
+  const KEY = keysFor(m);
+  const MID = { start: m?.mid_open ?? '2027-06-01', end: m?.mid_close ?? '2027-06-14' };
   const now = Date.now();
   const today = Math.min(100, Math.max(0, pos(now)));
   const months = Array.from({ length: 12 }, (_, i) => new Date(2026, 10 + i, 1));
   const next = KEY.find((k) => D(k.date) > now);
   const days = (s: string) => Math.ceil((D(s) - now) / 86400000);
-  const phase = now < D(KEY[0].date) ? 'Off-season · 2026 season complete, signings open'
-    : now < D(KEY[1].date) ? 'Contracts expired · draft day next'
+  const kd = (k: string) => KEY.find((x) => x.key === k)!.date;
+  const phase = now < D(kd('deadline')) ? 'Off-season · 2026 season complete, signings open'
+    : now < D(kd('draft')) ? 'Release day passed · draft day next'
     : now < D(SEASON.start) ? 'Pre-season · draft done'
     : now < D(SEASON.end) ? (now >= D(MID.start) && now <= D(MID.end) ? 'Mid-season trade window open' : '2027 season in progress')
     : now < D('2027-10-03') ? 'Finals' : 'Off-season · 2027 season complete';
@@ -41,13 +48,13 @@ export function SeasonSchedule() {
 
       <div className="ss-chart" aria-hidden="true">
         <div className="ss-brk">
-          <span className="ss-b off" style={seg(START, KEY[0].date)}><em>Off-season</em></span>
+          <span className="ss-b off" style={seg(START, kd('deadline'))}><em>Off-season</em></span>
           <span className="ss-b on" style={seg(SEASON.start, SEASON.end)}><em>Season · 24 rounds</em></span>
           <span className="ss-b fin" style={seg(SEASON.end, '2027-10-03')}><em>Finals</em></span>
         </div>
         <div className="ss-bar">
           <i className="ss-off" style={seg(START, SEASON.start)} />
-          <i className="ss-pre" style={seg(KEY[0].date, SEASON.start)} />
+          <i className="ss-pre" style={seg(kd('deadline'), SEASON.start)} />
           <i className="ss-on" style={seg(SEASON.start, SEASON.end)} />
           <i className="ss-mid" style={seg(MID.start, MID.end)} />
           <i className="ss-fin" style={seg(SEASON.end, '2027-10-03')} />
@@ -75,7 +82,8 @@ export function SeasonSchedule() {
 }
 
 /** League banner: the next three key dates with a countdown. */
-export function NextUp() {
+export function NextUp({ m }: { m?: Milestones } = {}) {
+  const KEY = keysFor(m);
   const now = Date.now();
   const up = KEY.filter((k) => D(k.date) > now).slice(0, 3);
   if (!up.length) return null;

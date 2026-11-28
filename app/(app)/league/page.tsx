@@ -17,14 +17,17 @@ import { CupTables } from '@/components/live/cup';
 import { buildCup } from '@/lib/cup-data';
 import { CUP_NAME, CUP_SEASON } from '@/lib/cup';
 import { MarketMovers } from '@/components/MarketMovers';
-import { NextUp, SeasonSchedule } from '@/components/SeasonSchedule';
+import { NextUp, SeasonSchedule, type Milestones } from '@/components/SeasonSchedule';
+import { getLeagueRules } from '@/lib/league-rules-server';
 
 export default async function LeaguePage() {
   const legacy = await isLegacyLeague();
   const profile = await getLeagueProfile();
-  const [league, me, leagueName] = await Promise.all([getLeague(), getMe(), getLeagueName()]);
+  const [league, me, leagueName, rules] = await Promise.all([getLeague(), getMe(), getLeagueName(), getLeagueRules()]);
   const cup = await buildCup(league, me?.team_id ?? 0);
   const supabase = await createClient();
+  const { data: ks } = await supabase.from('kc_settings').select('rookie_lock_at').maybeSingle();
+  const milestones: Milestones = { release: (ks as { rookie_lock_at: string | null } | null)?.rookie_lock_at ?? null, ...rules.dates };
   const [{ data: news }, { data: chat }, { data: rsvps }] = await Promise.all([
     supabase.from('news').select('*').order('happens_at', { ascending: true, nullsFirst: false }).limit(8),
     supabase.from('chat_messages').select('id, team_id, body, pinned, created_at').order('created_at', { ascending: false }).limit(60),
@@ -52,7 +55,7 @@ export default async function LeaguePage() {
           <h1 style={{ font: '900 52px/.95 var(--display)', textTransform: 'uppercase' }}>{leagueTitle(leagueName)}</h1>
           <span className="lg-sub" style={{ color: '#b9c0b8' }}>{legacy ? 10 : league.teams.length} clubs · est. {legacy ? 2022 : profile.founded ?? 2027}</span>
         </div>
-        <NextUp />
+        <NextUp m={milestones} />
         <div className="kpis lg-kpis">
           <div className="lg-honours">
             <div className="kpi lg-k" style={{ borderColor: '#333b35' }}><span className="eyebrow" style={{ color: '#b9c0b8' }}>{latest?.year} premiers</span><b>{latest ? name(latest.premier_id) : '–'}<svg className="lg-ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e2c46b" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-label="Premiership cup"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z" /><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M9.5 17h5" /></svg></b></div>
@@ -96,7 +99,7 @@ export default async function LeaguePage() {
         </section>
         <div className="lg-col lg-fit"><MarketMovers compact /></div>
       </div>
-      <SeasonSchedule />
+      <SeasonSchedule m={milestones} />
 
       <section style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <h2 className="h2" style={{ fontSize: 20 }}>News board</h2>

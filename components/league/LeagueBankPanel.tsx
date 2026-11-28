@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import './league-bank.css';
+import { BankStartForm } from '@/components/league/BankStartForm';
+import { getLeagueRules } from '@/lib/league-rules-server';
 
-type Bank = { sources: Record<string, number>; collected: number; paid: number; pledged: number; balance: number; history?: [string, number][] };
+type Bank = { sources: Record<string, number>; collected: number; paid: number; pledged: number; balance: number; start?: number; history?: [string, number][] };
 type Prize = { id: number; season: number; label: string; kt: number; status: 'pledged' | 'paid' | 'cancelled'; team_id: number | null };
 
 export const BANK_SOURCES: [string, string][] = [
-  ['shares', 'Share trading fees and gains tax'], ['levy', 'Transfer levies (clauses, auctions)'], ['release', 'Release fees'],
+  ['start', 'Starting balance'], ['shares', 'Share trading fees and gains tax'], ['levy', 'Transfer levies (clauses, auctions)'], ['release', 'Release fees'],
   ['extension', 'Extension fees'], ['deficit', 'Over-cap deficit fees'], ['burned', 'Burned clause matches'], ['games', 'Mini game and comp pots (20% cut)'],
 ];
 const kt = (n: number) => `${Math.round(n).toLocaleString('en-AU')} KT`;
@@ -42,10 +44,11 @@ function Growth({ pts }: { pts: [string, number][] }) {
 
 export async function LeagueBankPanel({ commish }: { commish: boolean }) {
   const supabase = await createClient();
-  const [bq, pq, tq] = await Promise.all([
+  const [bq, pq, tq, rules] = await Promise.all([
     supabase.rpc('kc_league_bank'),
     supabase.from('bank_prizes').select('id, season, label, kt, status, team_id').neq('status', 'cancelled').order('season').order('created_at'),
     supabase.from('teams').select('id, name'),
+    getLeagueRules(),
   ]);
   if (bq.error || !bq.data) return null;
   const b = bq.data as Bank;
@@ -66,6 +69,8 @@ export async function LeagueBankPanel({ commish }: { commish: boolean }) {
       {top.length ? (
         <dl className="lb-src">{top.map(([k, l]) => <div key={k}><dt>{l}</dt><dd>{kt(b.sources[k])}</dd></div>)}</dl>
       ) : <p className="muted" style={{ margin: 0, fontSize: 13 }}>Nothing collected yet. Share trades, release and extension fees, deficit fees, transfer levies and the cut from mini comps all land here.</p>}
+
+      {commish && <BankStartForm value={rules.bank_start_kt} />}
 
       <details className="lb-alloc">
         <summary>

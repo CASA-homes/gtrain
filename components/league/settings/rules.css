@@ -1,0 +1,41 @@
+/* League settings: editable rules panels */
+.rp-card { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+.rp-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.rp-head .h2 { font-size: 18px; margin: 0; }
+.rp-edit { border: 1px solid var(--line, #d6dbd2); background: #fff; border-radius: 8px; padding: 4px 12px; font: 600 12px var(--font); cursor: pointer; }
+.rp-edit:hover { border-color: #aab3a6; }
+.rp-note { margin: 0; font-size: 13px; }
+.rp-dl { display: flex; flex-direction: column; gap: 8px; margin: 0; font-size: 14px; }
+.rp-dl > div { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; gap: 16px; }
+.rp-dl dt { color: var(--muted); } .rp-dl dd { margin: 0; }
+.rp-formula { display: flex; flex-wrap: wrap; gap: 2px 10px; }
+.rp-form { display: flex; flex-direction: column; gap: 10px; }
+.rp-f { display: grid; grid-template-columns: minmax(120px, 34%) 1fr; align-items: center; gap: 4px 16px; font-size: 14px; }
+.rp-f > span:first-child { color: var(--muted); }
+.rp-f small { grid-column: 2; font-size: 11.5px; color: var(--muted); margin-top: -2px; }
+.rp-f input[type=number], .rp-f input[type=date], .rp-f input[type=datetime-local], .rp-f select { height: 34px; border: 1px solid #d6dbd2; border-radius: 8px; padding: 0 10px; font: 500 14px var(--font); background: #fff; max-width: 240px; }
+.rp-f input[type=number] { width: 90px; }
+.rp-in { display: inline-flex; align-items: center; gap: 6px; } .rp-in em { font-style: normal; color: var(--muted); font-size: 13px; }
+.rp-tog { cursor: pointer; }
+.rp-tog input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.rp-tog i { width: 36px; height: 20px; border-radius: 99px; background: #d6dbd2; position: relative; transition: background .15s; }
+.rp-tog i::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s; box-shadow: 0 1px 2px rgb(0 0 0 / .2); }
+.rp-tog input:checked + i { background: #1f6b3a; } .rp-tog input:checked + i::after { transform: translateX(16px); }
+.rp-tog input:focus-visible + i { outline: 2px solid #1f6b3a; outline-offset: 2px; }
+.rp-lu, .rp-fgrid { display: flex; flex-wrap: wrap; gap: 8px; }
+.rp-lu label, .rp-fgrid label { display: flex; flex-direction: column; gap: 2px; font-size: 11px; color: var(--muted); }
+.rp-lu label em, .rp-fgrid label em { font-style: normal; }
+.rp-lu input, .rp-fgrid input { width: 64px !important; }
+.rp-row2 { display: flex; flex-wrap: wrap; gap: 10px 20px; } .rp-row2 .rp-f { grid-template-columns: auto 1fr; }
+.rp-acts { display: flex; justify-content: flex-end; gap: 8px; }
+.rp-msg { margin: 0; font-size: 13px; } .rp-msg.ok { color: #1f7a43; } .rp-msg.err { color: #a8461f; }
+/* Milestones */
+.rp-tabs { display: flex; flex-wrap: wrap; gap: 4px; padding: 3px; border-radius: 10px; background: var(--sunk, #f1f3ee); }
+.rp-tabs button { border: 0; background: none; padding: 5px 10px; border-radius: 8px; font: 600 12px var(--font); color: var(--muted); cursor: pointer; white-space: nowrap; }
+.rp-tabs button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .1); }
+.rp-ms-body { display: flex; flex-direction: column; gap: 6px; }
+.rp-ms-when { display: flex; align-items: center; gap: 8px; } .rp-ms-when b { font-size: 15px; }
+.rp-tip { position: relative; display: inline-flex; }
+.rp-tip > button { width: 18px; height: 18px; border-radius: 50%; border: 1px solid #aab3a6; background: #fff; font: italic 700 11px Georgia, serif; color: #4d554f; cursor: pointer; line-height: 1; padding: 0; }
+.rp-pop { position: absolute; z-index: 20; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); width: 260px; padding: 10px 12px; border-radius: 10px; background: var(--ink, #1c2420); color: #fff; font-size: 12.5px; line-height: 1.45; box-shadow: 0 6px 18px rgb(0 0 0 / .2); }
+@media (max-width: 560px) { .rp-dl > div, .rp-f { grid-template-columns: 1fr; gap: 2px; } .rp-f small { grid-column: 1; } .rp-pop { left: 0; transform: none; } }

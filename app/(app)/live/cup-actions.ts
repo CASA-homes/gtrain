@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getMe } from '@/lib/data';
-import { CUP_SEASON, CUP_SLOTS, CUP_SLOT_ORDER, conferences, trimCup, cupFixture, cupTies, fitsSlot, type CupLineup, type CupResult } from '@/lib/cup';
+import { CUP_NAME, CUP_SEASON, CUP_SLOTS, CUP_SLOT_ORDER, conferences, trimCup, cupFixture, cupTies, fitsSlot, type CupLineup, type CupResult } from '@/lib/cup';
 
 type Res = { ok: boolean; error?: string };
 const needMigration = (m: string) => (/cup_/.test(m) ? 'The cup needs supabase/migrations/0019_cup.sql run in Supabase first.' : m);
@@ -75,12 +75,14 @@ export async function saveCupResult(matchId: string, home: number, away: number)
 }
 
 // ---- Cup pick prizes ------------------------------------------------------------------------------------------
-export interface CupPrizeSettings { prizes_on: boolean; winner_round: number; runner_round: number; awarded_at: string | null; winner_team: number | null; runner_team: number | null }
+export interface CupPrizeSettings { prizes_on: boolean; winner_round: number; runner_round: number; awarded_at: string | null; winner_team: number | null; runner_team: number | null; winner_kt?: number; runner_kt?: number }
 const PRIZE_MIG = 'Cup prizes need supabase/migrations/0025_cup_prizes.sql run in Supabase first.';
 
 export async function loadCupPrizes(): Promise<CupPrizeSettings | null> {
   const supabase = await createClient();
-  const { data, error } = await supabase.from('cup_settings').select('prizes_on, winner_round, runner_round, awarded_at, winner_team, runner_team').eq('season', CUP_SEASON).maybeSingle();
+  let { data, error } = await supabase.from('cup_settings').select('prizes_on, winner_round, runner_round, awarded_at, winner_team, runner_team, winner_kt, runner_kt').eq('season', CUP_SEASON).maybeSingle();
+  if (error) ({ data, error } = await supabase.from('cup_settings').select('prizes_on, winner_round, runner_round, awarded_at, winner_team, runner_team').eq('season', CUP_SEASON).maybeSingle());
+  if (!error && !data) return { prizes_on: false, winner_round: 1, runner_round: 2, awarded_at: null, winner_team: null, runner_team: null, winner_kt: 0, runner_kt: 0 };
   return error || !data ? null : (data as CupPrizeSettings);
 }
 
@@ -93,7 +95,7 @@ function revalidateCup() {
   revalidatePath('/league/settings');
 }
 
-export async function setCupPrizes(patch: { prizes_on?: boolean; winner_round?: number; runner_round?: number }): Promise<Res> {
+export async function setCupPrizes(patch: { prizes_on?: boolean; winner_round?: number; runner_round?: number; winner_kt?: number; runner_kt?: number }): Promise<Res> {
   const no = await commishOnly(); if (no) return { ok: false, error: no };
   const clean: Record<string, unknown> = { updated_at: new Date().toISOString() };
   if (typeof patch.prizes_on === 'boolean') clean.prizes_on = patch.prizes_on;
@@ -102,9 +104,29 @@ export async function setCupPrizes(patch: { prizes_on?: boolean; winner_round?: 
     if (v != null) { if (!Number.isInteger(v) || v < 1 || v > 16) return { ok: false, error: 'Rounds go from 1 to 16.' }; clean[k] = v; }
   }
   const supabase = await createClient();
+  // KT prizes are allocations in the league bank, paid when the cup is awarded.
+  for (const [k, who, label] of [['winner_kt', 'winner', `${CUP_NAME} winner`], ['runner_kt', 'runner', `${CUP_NAME} runner-up`]] as const) {
+    const v = patch[k];
+    if (v == null) continue;
+    if (!Number.isInteger(v) || v < 0 || v > 100000) return { ok: false, error: 'KT prizes go from 0 to 100,000.' };
+    const ref = `cup:${CUP_SEASON}:${who}`;
+    const { data: cur } = await supabase.from('bank_prizes').select('id, kt, status').eq('ref', ref).neq('status', 'cancelled').maybeSingle();
+    if (cur?.status === 'paid') return { ok: false, error: 'That prize has already been paid.' };
+    const { data: bank } = await supabase.rpc('kc_league_bank');
+    const b = bank as { balance: number; pledged: number } | null;
+    const free = b ? b.balance - b.pledged + (cur?.kt ?? 0) : Infinity;
+    if (v > free) return { ok: false, error: `Only ${Math.max(0, free).toLocaleString('en-AU')} KT is free in the league bank.` };
+    if (cur && v === 0) await supabase.from('bank_prizes').update({ status: 'cancelled' }).eq('id', cur.id);
+    else if (cur) await supabase.from('bank_prizes').update({ kt: v }).eq('id', cur.id);
+    else if (v > 0) {
+      const { error: pe } = await supabase.from('bank_prizes').insert({ label, kt: v, season: CUP_SEASON, ref });
+      if (pe) return { ok: false, error: pe.message };
+    }
+    clean[k] = v;
+  }
   const { error } = await supabase.from('cup_settings').upsert({ season: CUP_SEASON, ...clean }, { onConflict: 'league_id,season' });
   if (error) return { ok: false, error: /cup_settings/.test(error.message) ? PRIZE_MIG : error.message };
-  revalidateCup();
+  revalidateCup(); revalidatePath('/league/bets');
   return { ok: true };
 }
 

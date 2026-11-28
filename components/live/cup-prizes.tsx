@@ -27,9 +27,9 @@ export function CupPrizes({ settings, isCommish, teams, final, variant = 'cup' }
   if (!s) {
     return isCommish ? <div className={`cpz ${variant}`}><span className="cpz-k">Cup pick prizes</span><span className="cpz-dim">Run supabase/migrations/0025_cup_prizes.sql in Supabase to switch these on.</span></div> : null;
   }
-  if (!s.prizes_on && !isCommish && variant === 'cup') return null;
+  if (!s.prizes_on && !(s.winner_kt ?? 0) && !(s.runner_kt ?? 0) && !isCommish && variant === 'cup') return null;
 
-  const save = (patch: Partial<Pick<CupPrizeSettings, 'prizes_on' | 'winner_round' | 'runner_round'>>) => {
+  const save = (patch: Partial<Pick<CupPrizeSettings, 'prizes_on' | 'winner_round' | 'runner_round' | 'winner_kt' | 'runner_kt'>>) => {
     const prev = s;
     setS({ ...s, ...patch }); setMsg(null);
     start(async () => {
@@ -40,6 +40,8 @@ export function CupPrizes({ settings, isCommish, teams, final, variant = 'cup' }
   };
   const awarded = !!s.awarded_at;
   const locked = awarded || pending;
+  const wkt = s.winner_kt ?? 0, rkt = s.runner_kt ?? 0;
+  const anyPrize = s.prizes_on || wkt > 0 || rkt > 0;
 
   return (
     <div className={`cpz ${variant} ${s.prizes_on ? '' : 'off'}`}>
@@ -81,22 +83,40 @@ export function CupPrizes({ settings, isCommish, teams, final, variant = 'cup' }
         </span>
       )}
 
-      {isCommish && s.prizes_on && (
+      {(isCommish || wkt > 0 || rkt > 0) && (
+        <div className="cpz-kt">
+          <span className="cpz-k">KT prizes · from the league bank</span>
+          <div className="cpz-kt-row">
+            {([['winner_kt', '🏆 Winner', wkt, s.winner_team], ['runner_kt', '🥈 Runner-up', rkt, s.runner_team]] as const).map(([k, l, v, t]) => (
+              <label key={k} className="cpz-kt-p">
+                <span>{l}</span>
+                {isCommish && !awarded
+                  ? <span className="cpz-kt-in"><input type="number" min={0} step={10} defaultValue={v} disabled={pending} aria-label={`${l} KT prize`}
+                      onBlur={(e) => { const n = Math.max(0, Math.round(Number(e.target.value) || 0)); if (n !== v) save({ [k]: n }); }} /> KT</span>
+                  : <b>{v ? `${v.toLocaleString('en-AU')} KT` : 'None'}{awarded && v ? ` · paid to ${tn(t)}` : ''}</b>}
+              </label>
+            ))}
+          </div>
+          <span className="cpz-dim">Set aside in the league bank now, paid into the clubs’ banks when you award the cup.</span>
+        </div>
+      )}
+
+      {isCommish && anyPrize && (
         <div className="cpz-acts">
           {!awarded && final && (
             <button className="cpz-btn go" disabled={pending} onClick={() => start(async () => {
               const r = await awardCupPrizes(final.winner, final.runner);
-              if (r.ok) { setS({ ...s, awarded_at: new Date().toISOString(), winner_team: final.winner, runner_team: final.runner }); setMsg({ ok: true, text: `Awarded: ${tn(final.winner)} and ${tn(final.runner)} have their Cup picks.` }); }
+              if (r.ok) { setS({ ...s, awarded_at: new Date().toISOString(), winner_team: final.winner, runner_team: final.runner }); setMsg({ ok: true, text: `Awarded: ${tn(final.winner)} and ${tn(final.runner)} have their Cup prizes.` }); }
               else setMsg({ ok: false, text: r.error ?? 'Couldn’t award.' });
-            })}>Award the Cup picks to {tn(final.winner)} and {tn(final.runner)}</button>
+            })}>Award the Cup prizes to {tn(final.winner)} and {tn(final.runner)}</button>
           )}
-          {!awarded && !final && variant === 'cup' && <span className="cpz-dim">Once the final is in, you&apos;ll award the picks here.</span>}
+          {!awarded && !final && variant === 'cup' && <span className="cpz-dim">Once the final is in, you&apos;ll award the prizes here.</span>}
           {awarded && (
             <button className="cpz-btn" disabled={pending} onClick={() => {
-              if (!window.confirm('Take the Cup picks back? Both bonus picks are removed from the 2028 draft.')) return;
+              if (!window.confirm('Take the Cup prizes back? Bonus picks are removed from the 2028 draft and any KT prizes come back out of both clubs’ banks.')) return;
               start(async () => {
                 const r = await unawardCupPrizes();
-                if (r.ok) { setS({ ...s, awarded_at: null, winner_team: null, runner_team: null }); setMsg({ ok: true, text: 'Cup picks removed.' }); }
+                if (r.ok) { setS({ ...s, awarded_at: null, winner_team: null, runner_team: null }); setMsg({ ok: true, text: 'Cup prizes taken back.' }); }
                 else setMsg({ ok: false, text: r.error ?? 'Couldn’t undo.' });
               });
             }}>Undo the award</button>
