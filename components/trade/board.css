@@ -79,9 +79,11 @@
 .mb-pager span { padding: 0 6px; color: #4d554f; }
 
 @media (max-width: 1280px) { .th-split { grid-template-columns: minmax(0, 1fr) 340px; } .mb-tbl .c-a1, .mb-tbl .c-sp { display: none; } .mb-grp { display: none; } }
+@media (min-width: 1081px) and (max-width: 1200px) { .mb-tbl .c-rk, .mb-tbl .c-age { display: none; } }
 @media (max-width: 1080px) { .th-split, .th-more { grid-template-columns: 1fr; } .mb-tog { margin-left: 0; } }
 @media (max-width: 760px) {
   .mb-top { flex-direction: column; } .mb-search input { width: 100%; } .mb-search { width: 100%; }
   .mb-tbl .c-l5, .mb-tbl .c-age, .mb-tbl .c-own, .mb-tbl .c-rk, .mb-tbl .c-a0 small { display: none; }
   .mb-seg { overflow-x: auto; max-width: 100%; }
 }
+@media (max-width: 560px) { .mb-tbl .c-a0 { display: none; } .mb-who { min-width: 130px; } }
