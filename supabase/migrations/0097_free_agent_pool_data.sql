@@ -1,0 +1,12 @@
+-- 0097 · The unrostered free-agent pool's data in the players table (28 Nov 2026, data load).
+--
+-- The 493 free agents were already in players as empty records (name, club and Champion Data id only). They're now
+-- filled from lib/free-agent-players.json, matched on dfs_id: career games, birth date, debut, draft year and pick,
+-- height and season history (hist), plus their 2026 season (games, average, last five, game logs, box score) in
+-- player_seasons. 467 players updated, 350 with 2026 seasons. The site now gives free agents their database id
+-- (lib/data.ts), so they're priced by the value engine and can be bought as shares once they've played 30 games.
+--
+-- Applied once, through the database's http extension reading a temporary copy of the JSON from the site:
+--   update players p set career_games = …, hist = … from (json) x where p.dfs_id = x.dfs_id;
+--   insert into player_seasons (player_id, 2026, …) … on conflict (player_id, season) do update …;
+-- Re-run by regenerating that JSON (scripts/fa-build.py) and repeating the same update.
