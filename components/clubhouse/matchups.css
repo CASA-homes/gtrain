@@ -24,3 +24,4 @@ a.cm-box:hover { background: #ecf2ea; }
 .cm-op { color: #4d554f; overflow: hidden; text-overflow: ellipsis; }
 .cm-rd { font: 500 10px var(--mono); color: var(--muted); text-transform: uppercase; }
 @media (max-width: 560px) { .cm-boxes { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .ch-top2 { gap: 16px; } .ch-top2 > :first-child, .ch-top2 > :nth-child(2) { flex-basis: 100%; } }

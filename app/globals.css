@@ -2841,7 +2841,12 @@ button.md-slot:hover { border-color: #cdd2cb; }
 .nset-join > div { display: flex; gap: 6px; padding: 0 2px; }
 .nset-join .input { flex: 1; min-width: 0; min-height: 34px; font-size: 13px; }
 .nset-join .btn { min-height: 34px; }
-@media (max-width: 760px) { .nset-menu { position: fixed; left: 10px; right: 10px; top: auto; bottom: 80px; width: auto; } }
+/* Phones: the menu drops down from the top bar and scrolls inside itself, so every option fits on screen. */
+@media (max-width: 760px) {
+  .nset-menu { position: fixed; left: 10px; right: 10px; top: calc(env(safe-area-inset-top, 0px) + 58px); bottom: auto; width: auto;
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px) - 58px - env(safe-area-inset-bottom, 0px) - 12px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+  .nset-row { padding: 9px 10px; }
+}
 
 /* Dark theme (first pass): invert the light design, keep photos, logos and guernseys true to colour. */
 html.theme-dark { background: #0f1210; filter: invert(.92) hue-rotate(180deg); }
