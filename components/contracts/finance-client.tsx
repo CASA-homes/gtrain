@@ -168,6 +168,48 @@ export function CapBar({ salary, rookie, keeperCap, seasonCap, taxLine, label, d
   );
 }
 
+/** The cap bar split into each player's chunk, biggest first, then dead money. Hover (or tap) a chunk for the player and
+ *  his share of the keeper hard cap. */
+export function CapBarPlayers({ chunks, rookie, keeperCap, seasonCap }: {
+  chunks: { id: string; name: string; k: number; dead?: boolean; note?: string }[]; rookie: { name: string; k: number } | null; keeperCap: number; seasonCap: number;
+}) {
+  const max = seasonCap;
+  const pc = (v: number) => `${Math.max(0, Math.min(100, (v / max) * 100))}%`;
+  const pct = (v: number) => `${((v / keeperCap) * 100).toFixed(1)}%`;
+  const total = chunks.reduce((t, c) => t + c.k, 0);
+  let at = 0;
+  return (
+    <div className="fn-cap">
+      <div className="fn-cap-top">
+        <span style={{ left: 0 }}><b>{k$(total)}</b>{chunks.filter((c) => !c.dead).length} players{chunks.some((c) => c.dead) ? ' + dead money' : ''}</span>
+        <span style={{ right: 0, alignItems: 'flex-end' }}><b>{pct(total)}</b>of the keeper hard cap</span>
+      </div>
+      <div className="fn-bar segs">
+        {chunks.map((c) => {
+          const left = at; at += c.k;
+          if (left >= max) return null;
+          return (
+            <i key={c.id} tabIndex={0} className={`seg${c.dead ? ' dead' : ''}${left / max < 0.12 ? ' tl' : left / max > 0.7 ? ' tr' : ''}`} style={{ left: pc(left), width: pc(Math.min(c.k, max - left)) }} aria-label={`${c.name}: ${k$(c.k)}, ${pct(c.k)} of the keeper hard cap`}>
+              <span className="fn-tip"><b>{c.name}</b>{k$(c.k)} · {pct(c.k)} of the hard cap{c.note ? <em>{c.note}</em> : null}</span>
+            </i>
+          );
+        })}
+        {rookie && rookie.k > 0 && at < max && (
+          <i tabIndex={0} className={`seg rook${at / max > 0.7 ? ' tr' : ''}`} style={{ left: pc(at), width: pc(Math.min(rookie.k, max - at)) }} aria-label={`${rookie.name}: cap-free rookie`}>
+            <span className="fn-tip"><b>{rookie.name}</b>{k$(rookie.k)} · cap-free rookie, not counted</span>
+          </i>
+        )}
+        <s className="hard" style={{ left: pc(keeperCap) }} />
+      </div>
+      <div className="fn-brackets">
+        <div style={{ left: 0, width: pc(keeperCap) }}><span>Keeper hard cap · {k$(keeperCap)}</span></div>
+        <div className="soft" style={{ left: pc(keeperCap), width: pc(seasonCap - keeperCap) }}><span>In-season +{k$(seasonCap - keeperCap)}</span></div>
+      </div>
+      <div className="fn-legend"><span><i className="sal" />Each player’s salary, biggest first</span>{chunks.some((c) => c.dead) && <span><i className="dead" />Dead money</span>}{rookie && <span><i className="rook" />Cap-free rookie</span>}<span>Hover a chunk for the player</span></div>
+    </div>
+  );
+}
+
 export interface SimPlayer {
   id: number; name: string; pos: string; age: number | null;
   /** This season's salary as it counts now (0 if he's the cap-free rookie). */ cur: number;

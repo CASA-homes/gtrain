@@ -1,0 +1,9 @@
+-- 0095 · The 2026 AFL draft class (national and rookie drafts) in the players table, from lib/draft-2026.ts, with
+-- 2027 positions where afl.com.au has them. Players already on file (re-drafted, re-listed) keep their record; their
+-- AFL club moves to the club that picked them. Run on 28 Nov 2026 as a data load (71 added, Mitch Knevitt to SYD).
+--
+-- Posting the league draft (draft_room_post) now also matches a drafted player to these records by full name and
+-- draft year, so he isn't created twice. Applied in place:
+--   or (p.full_name is not null and lower(p.full_name) = lower(np -> 'player' ->> 'full_name')
+--       and p.draft_year = (np -> 'player' ->> 'draft_year')::int)
+-- added ahead of the existing name-and-positions match.

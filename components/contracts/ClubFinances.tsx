@@ -8,7 +8,7 @@
 //  The rookie slot itself is set on the Contracts tab (this season only, before drop day).
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
-import { CapBar, CapSimulator, CollectDeposits, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
+import { CapBar, CapBarPlayers, CapSimulator, CollectDeposits, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
 import { getContracts, kt, moneyK, playerAge, releaseCost } from '@/lib/contracts';
 import { keeperLabel, keeperSpots } from '@/lib/keepers';
 import { createClient } from '@/lib/supabase/server';
@@ -91,6 +91,26 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
       + d.deadLater.filter((x) => x.team_id === teamId && x.season === y).reduce((a, x) => a + x.amount_k, 0),
     cap: y === season ? club.keeperCapNow : y === season + 1 ? club.keeperCapNext : s.keeper_cap_k,
   }));
+  // Player % view: this season's salary by player, biggest first, then dead money.
+  const salByPlayer = new Map<number, number>();
+  for (const c of covers(season)) if (c.rookie_slot_season !== season) salByPlayer.set(c.player_id, (salByPlayer.get(c.player_id) ?? 0) + c.salary_k);
+  // Dead money: every released player you're still paying, by season.
+  const deadBy = new Map<number, Map<number, number>>();
+  const addDead = (pid: number, y: number, k: number) => { if (k <= 0) return; const m = deadBy.get(pid) ?? new Map<number, number>(); m.set(y, (m.get(y) ?? 0) + k); deadBy.set(pid, m); };
+  for (const c of d.contracts) if (c.team_id === teamId && c.dead_season != null && c.dead_k > 0) addDead(c.player_id, c.dead_season, c.dead_k);
+  for (const x of d.deadLater) if (x.team_id === teamId) addDead(x.player_id, x.season, x.amount_k);
+  const deadRows = [...deadBy].map(([pid, m]) => {
+    const ys = [...m].filter(([y]) => y >= season).sort((a, b) => a[0] - b[0]);
+    return { pid, ys, now: m.get(season) ?? 0, total: ys.reduce((t, [, k]) => t + k, 0), until: ys.length ? ys[ys.length - 1][0] : null };
+  }).filter((r) => r.total > 0).sort((a, b) => b.total - a.total);
+  const deadTotal = deadRows.reduce((t, r) => t + r.total, 0);
+  const chunks = [
+    ...[...salByPlayer].sort((a, b) => b[1] - a[1]).map(([pid, k]) => {
+      const c = covers(season).find((x) => x.player_id === pid);
+      return { id: `p${pid}`, name: name(pid), k, note: c ? `Contract to ${c.end_season}` : undefined };
+    }),
+    ...deadRows.filter((r) => r.now > 0).map((r) => ({ id: `d${r.pid}`, name: `${name(r.pid)} (released)`, k: r.now, dead: true, note: r.until && r.until > season ? `Dead money until ${r.until}` : `Dead money, ${season} only` })),
+  ];
   const emptySpots = Math.max(0, 33 - club.list.size);
   const draftBudget = Math.max(0, s.season_cap_k - club.salary - emptySpots * s.hold_back_k);
 
@@ -127,10 +147,12 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
       <div className={`fn-top${mine ? ' two' : ''}`}>
       <section className="kc-card fn-hero fn-capcard" aria-labelledby="cap-h">
         <input type="radio" name="fn-cap" id="fn-c1" defaultChecked hidden />
+        <input type="radio" name="fn-cap" id="fn-c3" hidden />
         <input type="radio" name="fn-cap" id="fn-c2" hidden />
+        <input type="radio" name="fn-cap" id="fn-c4" hidden />
         <div className="fn-caphead">
           <h2 id="cap-h" className="eyebrow" style={{ margin: 0 }}>{season} salary cap</h2>
-          {mine && <div className="fn-capseg" role="tablist" aria-label="Cap view"><label htmlFor="fn-c1" role="tab">This season</label><label htmlFor="fn-c2" role="tab">Future seasons</label></div>}
+          {mine && <div className="fn-capseg" role="tablist" aria-label="Cap view"><label htmlFor="fn-c1" role="tab">This season</label><label htmlFor="fn-c3" role="tab">Player %</label><label htmlFor="fn-c2" role="tab">Future seasons</label><label htmlFor="fn-c4" role="tab">Dead money{deadTotal > 0 ? <em className="fn-segn">{moneyK(deadTotal)}</em> : null}</label></div>}
           <span className={`fn-pill ${club.salary > s.season_cap_k ? 'dn' : 'up'}`}>{moneyK(s.season_cap_k - club.salary)} room</span>
         </div>
         <div className="fn-cap1">
@@ -142,6 +164,33 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
             <div><span>Squad value</span><b className={rateTotal >= club.salary ? '' : 'dn'}>{moneyK(rateTotal)}</b></div>
           </div>
         </div>
+        {mine && (
+          <div className="fn-cap3">
+            <CapBarPlayers chunks={chunks} rookie={rookieNow ? { name: name(rookieNow.player_id), k: rookieNow.salary_k } : null} keeperCap={s.keeper_cap_k} seasonCap={s.season_cap_k} />
+          </div>
+        )}
+        {mine && (
+          <div className="fn-cap4">
+            <div className="row-between kc-sub"><span>Released players you’re still paying</span><span>{deadRows.length ? `${moneyK(deadTotal)} in total` : ''}</span></div>
+            {deadRows.length ? (
+              <table className="fn-dead">
+                <thead><tr><th>Player</th><th>{season}</th><th>Later</th><th>Paying until</th></tr></thead>
+                <tbody>
+                  {deadRows.map((r) => (
+                    <tr key={r.pid}>
+                      <td>{name(r.pid)}</td>
+                      <td>{r.now ? moneyK(r.now) : '–'}</td>
+                      <td>{r.ys.filter(([y]) => y > season).map(([y, k]) => `${moneyK(k)} in ${y}`).join(' · ') || '–'}</td>
+                      <td><b>{r.until}</b></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p className="fn-dead-empty">No dead money. Releasing a contracted player leaves 50% of his salary on your cap this season and 20% for each season left on his deal.</p>
+            )}
+          </div>
+        )}
         {mine && (
           <div className="fn-cap2">
             <div className="row-between kc-sub"><span>Committed salary against the keeper cap</span><span>5 seasons</span></div>

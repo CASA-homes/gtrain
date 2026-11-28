@@ -107,7 +107,7 @@ export interface ContractsData {
   auctions: Auction[]; freeAgents: FreeAgent[]; myOffers: MyOffer[]; offersOnMine: MyOffer[]; transfers: Transfer[];
   claims: Claim[]; capAdjust: CapAdjust[]; pendingFa: Set<number>; midseason: boolean;
   /** Dead money in later seasons from releases (the first season sits on the contract). */
-  deadLater: { team_id: number; season: number; amount_k: number }[];
+  deadLater: { team_id: number; player_id: number; season: number; amount_k: number }[];
   ladderRank: Map<number, number>; totalKt: number;
   ready: boolean; error: string | null;
 }
@@ -191,9 +191,9 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
     supabase.rpc('kc_rates'),
     supabase.from('kc_claims').select('*').order('created_at', { ascending: false }).limit(60),
     supabase.from('kc_cap_adjust').select('team_id, season, amount_k, reason'),
-    supabase.from('kc_dead').select('team_id, season, amount_k'),
+    supabase.from('kc_dead').select('team_id, player_id, season, amount_k'),
   ]);
-  const deadLater = (deadQ.data ?? []) as { team_id: number; season: number; amount_k: number }[];
+  const deadLater = (deadQ.data ?? []) as { team_id: number; player_id: number; season: number; amount_k: number }[];
   const settings = (setQ.data as KcSettings | null) ?? null;
   const error = setQ.error?.message ?? conQ.error?.message ?? null;
   const contracts = ((conQ.data ?? []) as Contract[]).map((c) => ({ ...c, id: Number(c.id) }));
