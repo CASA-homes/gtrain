@@ -1,22 +1,26 @@
-/* Clubhouse home: Matchups (left) beside Important news (right) on desktop; stacked on phones. Compact: one line each. */
-.ch-top2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
-.ch-top2 > :only-child { grid-column: 1 / -1; }
-.ch-top2 > .ch-news { height: 100%; padding: 9px 12px; gap: 5px; }
+/* Clubhouse home: Matchups and Important news, laid out exactly like the Starting 22 / Player highlights split below
+   (flex, 600px and 520px bases, 28px gap) so their edges line up. */
+.ch-top2 { display: flex; flex-wrap: wrap; gap: 28px; align-items: stretch; }
+.ch-top2 > :first-child { flex: 1 1 600px; min-width: 0; }
+.ch-top2 > :nth-child(2) { flex: 1 1 520px; min-width: 0; }
+.ch-top2 > .ch-news { padding: 9px 12px; gap: 5px; }
 .ch-top2 .ch-alert { padding: 6px 10px; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ch-top2 .ch-news .kc-news > div { padding: 4px 0; }
-@media (max-width: 900px) { .ch-top2 { grid-template-columns: 1fr; } }
-.cm { padding: 9px 12px; display: flex; flex-direction: column; gap: 5px; }
-.cm-tag { font: 600 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-.cm-line { display: flex; align-items: baseline; gap: 7px; min-width: 0; font-size: 13px; text-decoration: none; color: inherit; white-space: nowrap; }
-.cm-next { padding: 5px 9px; border-radius: 9px; background: #f4f7f2; }
-.cm-next:hover { background: #ecf2ea; }
-.cm-t { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.cm-line em { font: 700 13px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; color: #1f6b3a; }
-.cm-line i { font-style: normal; color: var(--muted); font-size: 11.5px; }
-.cm-note { font-size: 10.5px; color: var(--muted); margin-left: auto; }
-.cm-last { padding: 0 9px; align-items: center; }
-.cm-res { font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
-.cm-wl { width: 18px; height: 18px; border-radius: 5px; display: inline-grid; place-items: center; font: 700 11px var(--font); color: #fff; background: #1f7a43; flex: none; }
-.cm-last.l .cm-wl { background: #c2462a; }
-.cm-others { margin: 0; padding: 0 9px; display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 11.5px; color: #5f6660; font-variant-numeric: tabular-nums; }
-.cm-others b { font: 600 11px var(--mono); color: #151a16; }
+
+.cm { padding: 9px 12px; display: flex; flex-direction: column; gap: 6px; }
+.cm-boxes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.cm-box { display: flex; flex-direction: column; gap: 2px; padding: 7px 10px; border-radius: 10px; background: #f4f7f2; text-decoration: none; color: inherit; min-width: 0; }
+a.cm-box:hover { background: #ecf2ea; }
+.cm-tag { font: 600 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cm-row { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; min-width: 0; }
+.cm-row b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cm-row em { font: 700 13px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; color: #1f6b3a; }
+.cm-foot { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cm-res { background: #fafbf8; border: 1px solid var(--line, #eef0ec); }
+.cm-rrow { display: grid; grid-template-columns: 18px auto 1fr auto; align-items: center; gap: 6px; font-size: 12.5px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cm-wl { width: 18px; height: 18px; border-radius: 5px; display: inline-grid; place-items: center; font: 700 11px var(--font); color: #fff; background: #1f7a43; }
+.cm-wl.l { background: #c2462a; }
+.cm-sc { font-weight: 600; }
+.cm-op { color: #4d554f; overflow: hidden; text-overflow: ellipsis; }
+.cm-rd { font: 500 10px var(--mono); color: var(--muted); text-transform: uppercase; }
+@media (max-width: 560px) { .cm-boxes { grid-template-columns: 1fr; } }
