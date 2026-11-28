@@ -1,7 +1,7 @@
 import { ProLock } from '@/components/ProLock';
 import { getPlan } from '@/lib/plan';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { AvgChip, Bar20, ClubDot, ScoreChip, Stars } from '@/components/bits';
 import { CLUBS } from '@/lib/clubs';
 import { getLeague, CURRENT_SEASON } from '@/lib/data';
@@ -29,7 +29,13 @@ export default async function PlayerPage({ params, searchParams }: { params: Pro
   const { view } = await searchParams;
   const [league, watch, rates] = await Promise.all([getLeague(), getWatchlist(), getRates()]);
   const p = league.players.find((x) => x.id === Number(id)) ?? league.freeAgents.find((x) => x.id === Number(id));
-  if (!p) notFound();
+  if (!p) {
+    // Old free-agent links used 10,000,000 + his Champion Data number; free agents now carry their database id.
+    const n = Number(id);
+    const moved = n >= 10_000_000 && n < 20_000_000 ? [...league.players, ...league.freeAgents].find((x) => x.dfs_id === `CD_I${n - 10_000_000}`) : null;
+    if (moved && moved.id !== n) redirect(`/players/${moved.id}`);
+    notFound();
+  }
   const r = league.ratings.get(p.id)!;
   const attrs = league.attrs.get(p.id);
   const owner = league.teams.find((t) => t.id === p.team_id) ?? null;

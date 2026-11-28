@@ -122,10 +122,10 @@ export const getLeague = cache(async (): Promise<League> => {
   return league;
 });
 
-type LeagueRaw = { teams: unknown[]; squad: unknown[]; seasons: unknown[]; ladder: unknown[]; picks: unknown[] };
+type LeagueRaw = { teams: unknown[]; squad: unknown[]; seasons: unknown[]; ladder: unknown[]; picks: unknown[]; ids?: { id: number; dfs_id: string }[] };
 
 async function fetchLeagueRaw(supabase: Awaited<ReturnType<typeof createClient>>, strict = false): Promise<LeagueRaw> {
-  const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ] = await Promise.all([
+  const [teamsQ, squadQ, seasonsQ, ladderQ, picksQ, idsQ] = await Promise.all([
     loadTeams(supabase),
     (() => {
       const sel = (pos: boolean) => supabase.from('squad').select(`
@@ -144,12 +144,14 @@ async function fetchLeagueRaw(supabase: Awaited<ReturnType<typeof createClient>>
         .in('year', [CURRENT_SEASON + 1, CURRENT_SEASON + 2]).order('year').order('round').order('overall').order('id');
       return sel(', kind, bonus, slot_first').then((r) => (r.error ? sel(', kind') : r)).then((r) => (r.error ? sel('') : r));
     })(),
+    // Database ids by AFL (Champion Data) id, so unrostered free agents carry the same id as their database record.
+    supabase.from('players').select('id, dfs_id').not('dfs_id', 'is', null).range(0, 9999),
   ]);
   if (strict) {
     const bad = [teamsQ, squadQ, seasonsQ, ladderQ, picksQ].find((q) => q.error || q.data == null);
     if (bad) throw new Error('League data failed to load');
   }
-  return { teams: teamsQ.data ?? [], squad: squadQ.data ?? [], seasons: seasonsQ.data ?? [], ladder: ladderQ.data ?? [], picks: picksQ.data ?? [] };
+  return { teams: teamsQ.data ?? [], squad: squadQ.data ?? [], seasons: seasonsQ.data ?? [], ladder: ladderQ.data ?? [], picks: picksQ.data ?? [], ids: (idsQ.data ?? []) as { id: number; dfs_id: string }[] };
 }
 
 function buildLeague(raw: LeagueRaw): League {
@@ -178,10 +180,11 @@ function buildLeague(raw: LeagueRaw): League {
   });
 
   const rosteredIds = new Set(players.map((p) => p.dfs_id).filter(Boolean));
+  const dbId = new Map((raw.ids ?? []).map((x) => [x.dfs_id, x.id]));
   const freeAgents: PlayerRow[] = FA_ROWS.filter((f) => !f.dfs_id || !rosteredIds.has(f.dfs_id)).map(({ owned_pct: _o, ...f }) => ({
-    ...f, team_id: 0, is_keeper: false, is_rookie_keeper: false, photo_path: null, list_status: null, lineup: null,
+    ...f, id: (f.dfs_id && dbId.get(f.dfs_id)) || f.id, team_id: 0, is_keeper: false, is_rookie_keeper: false, photo_path: null, list_status: null, lineup: null,
   }));
-  const ownedPct = new Map(FA_ROWS.map((f) => [f.id, f.owned_pct]));
+  const ownedPct = new Map(FA_ROWS.map((f) => [(f.dfs_id && dbId.get(f.dfs_id)) || f.id, f.owned_pct]));
   // The 2026 draft class. Re-drafted and re-listed players keep their record (now at the club that picked them);
   // everyone else joins the free agents until a coach drafts him.
   const byName = new Map([...players, ...freeAgents].filter((p) => p.full_name).map((p) => [p.full_name!.toLowerCase(), p]));
