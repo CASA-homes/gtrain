@@ -174,7 +174,7 @@ export default async function SiteAdminPage({ searchParams }: { searchParams: Pr
             <tbody>{o.users.map((u) => (
               <tr key={u.email} className={u.leagues.length ? '' : 'flag'}>
                 <td>{u.email}{u.admin && <em className="adm-tag on">admin</em>}{!u.confirmed && <em className="adm-tag warn">unconfirmed</em>}</td>
-                <td>{u.leagues.length ? u.leagues.map((x, i) => <span key={i} className="adm-ul">{x.league}{x.team ? ` · ${x.team}` : ''}{x.commish ? ' (commish)' : ''}</span>) : <span className="adm-none">No league</span>}</td>
+                <td><div className="adm-uls">{u.leagues.length ? u.leagues.map((x, i) => <span key={i} className="adm-ul">{x.league}{x.team ? ` · ${x.team}` : ''}{x.commish ? ' (commish)' : ''}</span>) : <span className="adm-none">No league</span>}</div></td>
                 <td className="mono">{day(u.created_at)}</td>
                 <td className="mono">{ago(u.last_sign_in, now)}</td>
               </tr>))}</tbody>
@@ -199,7 +199,7 @@ export default async function SiteAdminPage({ searchParams }: { searchParams: Pr
 type HRow = { ok: 'good' | 'warn' | 'bad' | 'info'; label: string; value: string };
 function health(o: Overview, now: number, deploy: { sha: string; msg: string; env: string } | null): HRow[] {
   const rows: HRow[] = [];
-  rows.push(deploy ? { ok: 'good', label: 'Deploy', value: `${deploy.env || 'live'} · ${deploy.sha}${deploy.msg ? ` · ${deploy.msg.slice(0, 48)}` : ''}` } : { ok: 'info', label: 'Deploy', value: 'Not running on Vercel' });
+  rows.push(deploy ? { ok: 'good', label: 'Deploy', value: `${deploy.env || 'live'} · ${deploy.sha}${deploy.msg ? ` · ${deploy.msg}` : ''}` } : { ok: 'info', label: 'Deploy', value: 'Not running on Vercel' });
   for (const src of ['afltables', 'footywire']) {
     const s = o.health.stats.find((x) => x.source === src);
     const name = src === 'afltables' ? 'AFL Tables sync' : 'Footywire sync';
@@ -245,7 +245,7 @@ function LeagueTable({ rows, now }: { rows: { l: League; flags: Flag[] }[]; now:
   );
 }
 function HealthList({ rows }: { rows: HRow[] }) {
-  return <ul className="adm-health">{rows.map((r) => <li key={r.label}><i className={r.ok} aria-hidden="true" /><span>{r.label}</span><b>{r.value}</b></li>)}</ul>;
+  return <ul className="adm-health">{rows.map((r) => <li key={r.label}><i className={r.ok} aria-hidden="true" /><span>{r.label}</span><b title={r.value}>{r.value}</b></li>)}</ul>;
 }
 function Activity({ rows, now }: { rows: Act[]; now: number }) {
   if (!rows.length) return <p className="muted" style={{ margin: 0 }}>Nothing yet.</p>;
