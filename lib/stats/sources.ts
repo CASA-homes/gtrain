@@ -3,9 +3,12 @@
 //   Footywire (footywire.com): one page per match. Post-match; also lists the official AF score as a cross-check.
 // Neither is live during games. Both are fetched from the server (Vercel), politely: a handful of requests per run.
 import { parse } from 'node-html-parser';
+import { STANDARD_FORMULA, pointsWith } from '@/lib/league-scoring';
 
 /** Fantasy points from raw stats: kick 3, handball 2, mark 3, tackle 4, hitout 1, goal 6, behind 1, free for 1, free against -3. */
-export const fantasyPoints = (s: RawLine) => s.k * 3 + s.hb * 2 + s.m * 3 + s.t * 4 + s.ho + s.g * 6 + s.b + s.ff - s.fa * 3;
+//  Stored lines use the standard formula (they're shared by every league); a league's own formula is applied on read with
+//  pointsWith(rules.scoring.formula, line) from lib/league-scoring.
+export const fantasyPoints = (s: RawLine) => pointsWith(STANDARD_FORMULA, s);
 
 export type RawLine = {
   source: 'afltables' | 'footywire';

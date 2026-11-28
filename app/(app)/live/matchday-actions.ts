@@ -9,14 +9,17 @@ import { RULES, clean, rulesFor, type GameKey, type LineupShape, type MdLineup }
 import { toMd } from '@/lib/matchday-data';
 import { R1_2027 } from '@/lib/mens-round';
 import { cupTiedError } from './cup-actions';
+import { getLeagueRules } from '@/lib/league-rules-server';
 
 type Res = { ok: boolean; error?: string };
 const needMigration = (m: string) => (/game_lineups|comp_entries|relation/.test(m) ? 'Matchday needs supabase/migrations/0020_matchday_comps_msd_values.sql run in Supabase first.' : m);
 
-/** Round 1 2027 lock-outs: a player locks at his club's first bounce. Later rounds lock once the live fixture is wired in. */
-function lockedClubs(round: number, now = Date.now()) {
+/** Round 1 2027 lock-outs. Rolling: a player locks at his club's first bounce. Fixed: everyone locks at the round's
+ *  first bounce. Later rounds lock once the live fixture is wired in. */
+function lockedClubs(round: number, lockout: 'rolling' | 'fixed' = 'rolling', now = Date.now()) {
   if (round !== 1) return new Set<string>();
-  return new Set(R1_2027.filter((g) => Date.parse(g.start) <= now).flatMap((g) => [g.home, g.away]));
+  const started = R1_2027.filter((g) => Date.parse(g.start) <= now);
+  return new Set((lockout === 'fixed' && started.length ? R1_2027 : started).flatMap((g) => [g.home, g.away]));
 }
 
 export async function saveGameLineup(key: GameKey, round: number, lineup: MdLineup): Promise<Res> {
@@ -25,7 +28,8 @@ export async function saveGameLineup(key: GameKey, round: number, lineup: MdLine
   if (!RULES[key] || !Number.isInteger(round)) return { ok: false, error: 'Unknown game.' };
   const supabase = await createClient();
   const { data: ks } = await supabase.from('kc_settings').select('lineup').maybeSingle();
-  const rules = rulesFor(key, (ks as { lineup?: LineupShape } | null)?.lineup ?? null);
+  const lr = await getLeagueRules();
+  const rules = rulesFor(key, (ks as { lineup?: LineupShape } | null)?.lineup ?? null, { team: lr.team, scoring: lr.scoring });
   const league = await getLeague();
 
   if (key === 'shield' || key === 'survivor' || key === 'plate') {
@@ -42,7 +46,7 @@ export async function saveGameLineup(key: GameKey, round: number, lineup: MdLine
   if (!res.ok) return res;
 
   // Locked players can't be moved in or out once their game has started.
-  const locked = lockedClubs(round);
+  const locked = lockedClubs(round, lr.scoring.lockout);
   if (locked.size && key === 'gtrain') {
     const prev = await supabase.from('game_lineups').select('lineup').eq('season', COMP_SEASON).eq('comp', key).eq('round', round).eq('team_id', me.team_id).maybeSingle();
     const before = new Set(Object.values((prev.data?.lineup as MdLineup | undefined)?.slots ?? {}).flat());

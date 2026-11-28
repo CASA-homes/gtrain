@@ -15,6 +15,8 @@ import { CUP_SEASON, STAGE_NAME, trimCup, type CupLineup } from '@/lib/cup';
 import { COMP_BY_KEY, COMP_SEASON, type CompKey } from '@/lib/comps';
 import { ageOn, autoFill, rulesFor, type GameKey, type LineupShape, type MdLineup, type MdPlayer, type Pos } from '@/lib/matchday';
 import type { CupData } from '@/components/live/cup';
+import { getLeagueRules } from '@/lib/league-rules-server';
+import type { MdLeague } from '@/lib/league-scoring';
 
 /** G-Train round on Matchday. Pre-season this is round 1 of 2027 against the test draw. */
 export const MATCHDAY_ROUND = 1;
@@ -34,6 +36,8 @@ export interface MatchdayData {
   games: GameOpt[]; lineups: Record<string, MdLineup | null>;
   /** this league's regular-season lineup (kc_settings.lineup); G-Train is 5/7/1/5 */
   lineupShape: LineupShape | null;
+  /** this league's team and scoring settings (League settings): emergencies, utility, captains, TOG rules */
+  league: MdLeague;
   survivorUsed: number[]; entered: CompKey[];
   /** game ids your club has saved a team for (exactly that round) */
   savedIds: string[];
@@ -84,6 +88,8 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
     supabase.from('kc_settings').select('lineup').maybeSingle(),
   ]);
   const lineupShape = ((ks.data as { lineup?: LineupShape } | null)?.lineup ?? null);
+  const lr = await getLeagueRules();
+  const mdLeague: MdLeague = { team: lr.team, scoring: lr.scoring };
   const ready = !gl.error && !ce.error;
   const saved = new Map<string, MdLineup>();
   for (const r of gl.data ?? []) saved.set(`${r.comp}:${r.round}:${r.team_id}`, r.lineup as MdLineup);
@@ -96,7 +102,7 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
     const own = saved.get(`${key}:${rnd}:${teamId}`);
     const list = listOf(teamId);
     if (teamId !== myTeamId) for (const p of list) others[p.id] = p;
-    return { teamId, name: t?.name ?? `Club ${teamId}`, short: t?.short_code ?? '?', lineup: own ?? autoFill(rulesFor(key, lineupShape), list), saved: !!own };
+    return { teamId, name: t?.name ?? `Club ${teamId}`, short: t?.short_code ?? '?', lineup: own ?? autoFill(rulesFor(key, lineupShape, mdLeague), list), saved: !!own };
   };
 
   const games: GameOpt[] = [];
@@ -157,5 +163,5 @@ export async function buildMatchday(league: League, myTeamId: number, cup: CupDa
   const fixtures = R1_2027.map((g) => ({ home: g.home, away: g.away, start: g.start }));
   const cupTied: Record<number, string> = {};
   for (const p of squad) { const t = cup.ties[p.id]; if (t != null && t !== myTeamId) cupTied[p.id] = team(t)?.name ?? 'another club'; }
-  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, lineupShape, survivorUsed, entered, savedIds, fixtures, locks, cupTied };
+  return { season: COMP_SEASON, round, myTeamId, myName: team(myTeamId)?.name ?? '', ready, squad, pool, others, games, lineups, lineupShape, league: mdLeague, survivorUsed, entered, savedIds, fixtures, locks, cupTied };
 }

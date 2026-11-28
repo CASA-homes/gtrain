@@ -11,6 +11,7 @@ import { DEFAULT_PARS, baseAverage, matchRating, ratingBasis, ratingPos, type Ra
 import { CLUBS } from '@/lib/clubs';
 import { Disc } from './matchday';
 import { rtCol } from './mens';
+import { teamScore, type Scoring } from '@/lib/league-scoring';
 
 const A_COL = '#2563c9', B_COL = '#e0780f';
 const LINE_NAME: Record<string, string> = { DEF: 'Defence', MID: 'Midfield', RUC: 'Ruck', FWD: 'Forwards', UTIL: 'Utility' };
@@ -19,7 +20,7 @@ const GAME_MIN = 165;
 
 type Fx = { home: string; away: string; start: string };
 type State = 'pre' | 'live' | 'final';
-interface Row { p: MdPlayer; slot: string; cap?: 'C' | 'VC'; st: State; score: number | null; proj: number; rating: number | null; when: string }
+interface Row { p: MdPlayer; slot: string; cap?: 'C' | 'VC'; st: State; score: number | null; proj: number; rating: number | null; when: string; tog?: number | null }
 
 function rng(seed: number) { return () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 const normal = (r: () => number) => Math.sqrt(-2 * Math.log(r() || 1e-9)) * Math.cos(2 * Math.PI * r());
@@ -33,12 +34,30 @@ function basisOf(p: MdPlayer, slot: string): RatingBasis {
 /** Every player's state at `now`. Without test scores nothing has been played yet. Bench slots all land in EMG;
  *  with captains on, the captain's score and projection count double. */
 /** A side's live total and projection right now (field players only, captain doubled), for the fixture strip. */
-export function sideTotals(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], rules: Rules): { score: number; proj: number; started: boolean } {
+export function sideTotals(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], rules: Rules, scoring?: Scoring): { score: number; proj: number; started: boolean } {
   const lineKeys = rules.slots.filter((x) => !x.bench).map((x) => x.key);
+  const benchKeys = rules.slots.filter((x) => x.bench).map((x) => x.key);
   const trimmed: MdLineup = { ...l, slots: Object.fromEntries(rules.slots.map((s) => [s.key, (l.slots[s.key] ?? []).slice(0, s.n)])) };
-  const rows = rowsFor(trimmed, look, fx, false, Date.now(), lineKeys, [], rules.captain);
+  const rows = rowsFor(trimmed, look, fx, false, Date.now(), lineKeys, scoring ? benchKeys : [], rules.captain);
   const field = lineKeys.flatMap((k) => rows[k] ?? []);
-  return { score: field.reduce((t, r) => t + (r.score ?? 0), 0), proj: field.reduce((t, r) => t + r.proj, 0), started: field.some((r) => r.st !== 'pre') };
+  const started = field.some((r) => r.st !== 'pre');
+  if (rules.key === 'gtrain' && scoring) return { score: leagueTotal(rows, trimmed, rules, scoring, look, 'score'), proj: leagueTotal(rows, trimmed, rules, scoring, look, 'proj'), started };
+  return { score: field.reduce((t, r) => t + (r.score ?? 0), 0), proj: field.reduce((t, r) => t + r.proj, 0), started };
+}
+
+/** A regular-season total under the league's own scoring settings (League settings): emergencies cover starters who
+ *  miss or play under the TOG threshold, and the VC takes the double when the captain doesn't count. Rows carry the
+ *  captain's doubled numbers, so they're halved back to his own score first. Before a player's game starts he
+ *  counts as playing (0 so far, or his projection), so nobody is covered until the feed says he missed out. */
+function leagueTotal(rows: Record<string, Row[]>, l: MdLineup, rules: Rules, s: Scoring, look: (id: number) => MdPlayer | undefined, which: 'score' | 'proj') {
+  const by = new Map<number, Row>();
+  for (const k of Object.keys(rows)) for (const r of rows[k]) by.set(r.p.id, r);
+  const own = (r: Row, v: number) => (r.cap === 'C' ? v / 2 : v);
+  return teamScore(rules, s, l, (id) => {
+    const r = by.get(id); if (!r) return null;
+    const v = which === 'proj' ? r.proj : r.score ?? 0;
+    return { pts: own(r, v), tog: r.tog ?? null, played: true };
+  }, (id) => look(id)?.pos ?? []).total;
 }
 
 function rowsFor(l: MdLineup, look: (id: number) => MdPlayer | undefined, fx: Fx[], test: boolean, now: number, lineKeys: string[], benchKeys: string[], captain: boolean): Record<string, Row[]> {
@@ -89,7 +108,7 @@ function Card({ r, side, onOpen }: { r: Row; side: 'a' | 'b'; onOpen?: (p: MdPla
   return <div className={`cl-pc lv-pc ${side} ${r.slot === 'UTIL' ? 'util' : ''}`} title={r.p.club ? CLUBS[r.p.club]?.name : undefined}>{side === 'a' ? <>{disc}{who}{chip}{sc}</> : <>{sc}{chip}{who}{disc}</>}</div>;
 }
 
-export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, theme = 'gold', spectator = false }: { game: GameOpt; rules: Rules; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void; theme?: 'gold' | 'green'; /** watching someone else's game: names instead of "you" */ spectator?: boolean }) {
+export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, theme = 'gold', spectator = false, scoring }: { game: GameOpt; rules: Rules; /** G-Train: the league's scoring settings, so totals follow them */ scoring?: Scoring; mine: MdLineup; myName: string; look: (id: number) => MdPlayer | undefined; fixtures: Fx[]; onOpen?: (p: MdPlayer) => void; theme?: 'gold' | 'green'; /** watching someone else's game: names instead of "you" */ spectator?: boolean }) {
   const lineKeys = rules.slots.filter((x) => !x.bench).map((x) => x.key);
   const benchKeys = rules.slots.filter((x) => x.bench).map((x) => x.key);
   const onFieldN = rules.slots.filter((x) => !x.bench).reduce((t, x) => t + x.n, 0);
@@ -109,8 +128,11 @@ export function CupLive({ game, rules, mine, myName, look, fixtures, onOpen, the
   if (!opp || !B) return <section className="rh-card"><span className="rh-dim">No opponent this round.</span></section>;
 
   const field = (x: Record<string, Row[]>) => lineKeys.flatMap((k) => x[k] ?? []);
-  const aTot = sum(field(A), (r) => r.score ?? 0), bTot = sum(field(B), (r) => r.score ?? 0);
-  const aProj = sum(field(A), (r) => r.proj), bProj = sum(field(B), (r) => r.proj);
+  const league = rules.key === 'gtrain' && scoring;
+  const aTot = league ? leagueTotal(A, trim(mine), rules, scoring, look, 'score') : sum(field(A), (r) => r.score ?? 0);
+  const bTot = league ? leagueTotal(B, trim(opp.lineup), rules, scoring, look, 'score') : sum(field(B), (r) => r.score ?? 0);
+  const aProj = league ? leagueTotal(A, trim(mine), rules, scoring, look, 'proj') : sum(field(A), (r) => r.proj);
+  const bProj = league ? leagueTotal(B, trim(opp.lineup), rules, scoring, look, 'proj') : sum(field(B), (r) => r.proj);
   const aLeft = field(A).filter((r) => r.st !== 'final').length, bLeft = field(B).filter((r) => r.st !== 'final').length;
   // uncertainty shrinks as players finish
   const sd = Math.max(8, Math.sqrt(field(A).concat(field(B)).filter((r) => r.st !== 'final').reduce((t, r) => t + (0.24 * r.proj) ** 2, 0)));

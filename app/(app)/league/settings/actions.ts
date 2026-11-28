@@ -4,6 +4,7 @@
 import { revalidatePath } from 'next/cache';
 import { getMe } from '@/lib/data';
 import { createClient, currentLeagueId } from '@/lib/supabase/server';
+import { formulaOpen } from '@/lib/league-rules-server';
 import { DRAFT_ORDERS, FORMULA_KEYS, mergeRules, type LeagueRules, type Pos4 } from '@/lib/league-rules';
 
 export type Res = { ok: boolean; message: string };
@@ -67,6 +68,10 @@ export async function saveScoring(v: LeagueRules['scoring']): Promise<Res> {
   for (const k of FORMULA_KEYS) { const n = int(v.formula?.[k], -20, 20); if (n == null) return { ok: false, message: `${k}: points go from −20 to 20.` }; formula[k] = n; }
   const tog = int(v.tog, 0, 100), ctog = int(v.captain_tog, 0, 100);
   if (tog == null || ctog == null) return { ok: false, message: 'Time-on-ground thresholds go from 0 to 100%.' };
+  // The points formula is locked once the season starts: it can only change in the preseason.
+  const now = await rulesNow();
+  if (FORMULA_KEYS.some((k) => formula[k] !== now.scoring.formula[k]) && !formulaOpen(now))
+    return { ok: false, message: 'The scoring formula can only be changed in the preseason. The rest of the scoring settings saved fine once you put the formula back.' };
   return done(await saveRules({ scoring: { formula, captain: !!v.captain, vc: !!v.vc && !!v.captain, captain_tog: ctog, tog, dual_cover: !!v.dual_cover, loophole: !!v.loophole, lockout: v.lockout === 'fixed' ? 'fixed' : 'rolling' } }), 'Scoring saved.');
 }
 

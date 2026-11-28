@@ -186,14 +186,15 @@ export function TeamStructurePanel({ commish, listSize, lineup, keepers, rules }
 }
 
 // ---- Scoring -----------------------------------------------------------------------------------------------------
-export function ScoringPanel({ commish, rules }: { commish: boolean; rules: LeagueRules['scoring'] }) {
+export function ScoringPanel({ commish, rules, formulaOpen = true }: { commish: boolean; rules: LeagueRules['scoring']; /** preseason only */ formulaOpen?: boolean }) {
   const [s, setS] = useState(rules);
   const up = <K extends keyof LeagueRules['scoring']>(k: K) => (v: LeagueRules['scoring'][K]) => setS({ ...s, [k]: v });
   return (
     <Card title="Scoring" commish={commish}
       rows={[
         ['System', 'Points, AFL Fantasy style'],
-        ['Formula', <span key="f" className="rp-formula">{FORMULA_KEYS.map((k) => <span key={k}>{k} <b>{rules.formula[k] > 0 ? `+${rules.formula[k]}` : rules.formula[k]}</b></span>)}</span>],
+        ['Formula', <span key="f" className="rp-formula" title={formulaOpen ? 'Can change until the season starts' : 'Locked until the preseason'}>{FORMULA_KEYS.map((k) => <span key={k}>{k} <b>{rules.formula[k] > 0 ? `+${rules.formula[k]}` : rules.formula[k]}</b></span>)}</span>],
+        ['Formula changes', formulaOpen ? 'Preseason only: open now, locks at the first bounce of round 1' : 'Locked for the season: opens again in the preseason'],
         ['Captains', rules.captain ? (rules.vc ? 'Captain scores 2×. The vice-captain only scores 2× if the captain doesn’t count' : 'Captain scores 2×, no vice-captain') : 'No captains'],
         ...(rules.captain && rules.vc ? [['Captain rule', `If the captain plays under ${rules.captain_tog}% time on ground, the vice-captain scores double instead and the captain counts as normal`] as [string, string]] : []),
         ['TOG threshold', `${rules.tog}%: a starter under this is replaced by his emergency, only if the emergency scored more`],
@@ -202,7 +203,8 @@ export function ScoringPanel({ commish, rules }: { commish: boolean; rules: Leag
         ['Lockout', rules.lockout === 'rolling' ? 'Rolling: each player locks when his game starts' : 'Fixed: every player locks at the round’s first game'],
       ]}
       form={<>
-        <div className="rp-f"><span>Formula (points per stat)</span><span className="rp-fgrid">{FORMULA_KEYS.map((k) => <label key={k}><em>{k}</em><input type="number" min={-20} max={20} value={s.formula[k]} onChange={(e) => setS({ ...s, formula: { ...s.formula, [k]: Number(e.target.value) } })} /></label>)}</span></div>
+        <div className="rp-f"><span>Formula (points per stat)</span><span className="rp-fgrid">{FORMULA_KEYS.map((k) => <label key={k}><em>{k}</em><input type="number" min={-20} max={20} disabled={!formulaOpen} value={s.formula[k]} onChange={(e) => setS({ ...s, formula: { ...s.formula, [k]: Number(e.target.value) } })} /></label>)}</span>
+          <small>{formulaOpen ? 'Preseason only: locks at the first bounce of round 1.' : 'Locked for the season. The formula can only change in the preseason.'}</small></div>
         <Tog label="Captain (2×)" value={s.captain} set={up('captain')} />
         <Tog label="Vice-captain cover" value={s.vc} set={up('vc')} help="VC scores 2× when the captain doesn’t count" />
         <Num label="Captain TOG rule" value={s.captain_tog} set={up('captain_tog')} min={0} max={100} suffix="%" help="Under this, the VC takes the double" />

@@ -126,10 +126,41 @@ export function rowsFor(n: number): number[] {
   return [Math.ceil(n / 2), Math.floor(n / 2)];
 }
 
-/** Rules for a game, with the league's own regular-season lineup. */
-export function rulesFor(key: GameKey, lineup?: Partial<LineupShape> | null): Rules {
-  if (key !== 'gtrain' || !lineup) return RULES[key];
-  const l: LineupShape = { ...STD_LINEUP, ...lineup };
-  if (POS4.every((p) => l[p] === STD_LINEUP[p])) return RULES.gtrain;
-  return { ...RULES.gtrain, slots: gtrainSlots(l), summary: gtrainSummary(l) };
+/** Rules for a game, with the league's own regular-season lineup and (for the regular season) its team and scoring
+ *  settings: captains on or off, how many emergencies and how they cover, and a utility. G-Train's settings give the
+ *  standard 5/7/1/5 with one emergency per line. */
+export function rulesFor(key: GameKey, lineup?: Partial<LineupShape> | null, league?: { team: TeamRulesLite; scoring: ScoringLite } | null): Rules {
+  if (key !== 'gtrain' || (!lineup && !league)) return RULES[key];
+  const l: LineupShape = { ...STD_LINEUP, ...(lineup ?? {}) };
+  const t = league?.team, sc = league?.scoring;
+  const std = POS4.every((p) => l[p] === STD_LINEUP[p]) && (!t || (t.emergency_mode === 'line' && !t.utility && t.emergencies === 4))
+    && (!sc || (sc.captain && sc.vc && sc.tog === 25 && sc.captain_tog === 25));
+  if (std) return RULES.gtrain;
+  const captain = sc ? sc.captain : true, vc = captain && (sc ? sc.vc : true);
+  return { ...RULES.gtrain, captain, vc, slots: [...field(l), ...benchSlots(t)], summary: leagueSummary(l, t, sc) };
+}
+
+/** The bits of league-rules matchday reads (kept structural so this file has no imports). */
+export interface TeamRulesLite { emergencies: number; emergency_mode: 'line' | 'any'; utility: boolean }
+export interface ScoringLite { captain: boolean; vc: boolean; tog: number; captain_tog: number }
+
+function benchSlots(t?: TeamRulesLite): SlotRule[] {
+  if (!t) return POS4.map((p): SlotRule => ({ key: `E${p}`, label: `${p} emergency`, n: 1, fits: [p], bench: true }));
+  const util = t.utility && t.emergencies > 0 ? 1 : 0;
+  const n = Math.max(0, t.emergencies - util);
+  const out: SlotRule[] = [];
+  if (t.emergency_mode === 'line') {
+    const lines = POS4.slice(0, Math.min(4, n));
+    out.push(...lines.map((p): SlotRule => ({ key: `E${p}`, label: `${p} emergency`, n: 1, fits: [p], bench: true })));
+    if (n > 4) out.push({ key: 'EMG', label: 'Emergencies', n: n - 4, fits: 'any', bench: true });
+  } else if (n > 0) out.push({ key: 'EMG', label: 'Emergencies', n, fits: 'any', bench: true });
+  if (util) out.push({ key: 'UTIL', label: 'Utility', n: 1, fits: 'any', bench: true });
+  return out;
+}
+
+function leagueSummary(l: LineupShape, t?: TeamRulesLite, sc?: ScoringLite) {
+  const cap = !sc || sc.captain ? (!sc || sc.vc ? 'Captain doubles, VC covers.' : 'Captain doubles.') : 'No captains.';
+  const tog = sc?.tog ?? 25;
+  const emg = !t || t.emergency_mode === 'line' ? 'One emergency per line' : `${Math.max(0, (t?.emergencies ?? 0) - (t?.utility ? 1 : 0))} emergencies, any position`;
+  return `${l.DEF} DEF, ${l.MID} MID, ${l.RUC} RUC, ${l.FWD} FWD. ${cap} ${emg}${t?.utility ? ' plus a utility as last-chance cover' : ''}: an emergency only comes on if a starter he covers plays under ${tog}% game time.`;
 }

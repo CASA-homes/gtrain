@@ -50,21 +50,21 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
         : !game ? <section className="rh-card"><span className="rh-dim">You’re not in any games this week.</span></section>
         : (game.key === 'gtrain' || game.key === 'cup') && game.opp ? (() => {
           const p = pair >= 0 ? game.pairs?.[pair] : undefined;
-          const rules = game.key === 'cup' ? RULES.cup : rulesFor('gtrain', md.lineupShape);
+          const rules = game.key === 'cup' ? RULES.cup : rulesFor('gtrain', md.lineupShape, md.league);
           const myLineup = md.lineups[game.id] ?? autoFill(rules, md.squad);
           const theme = game.key === 'cup' ? 'gold' : 'green';
           return (
             <div className="lm-gt">
-              <FixtureStrip game={game} myName={md.myName} myLineup={myLineup} rules={rules} look={look} fixtures={md.fixtures} pair={pair} setPair={setPair} round={game.round} />
-              {p ? <CupLive key={`${game.id}p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme={theme} spectator />
-                : <CupLive key={`${game.id}mine`} game={game} rules={rules} mine={myLineup} myName={md.myName} look={look} fixtures={md.fixtures} theme={theme} />}
+              <FixtureStrip scoring={game.key === 'gtrain' ? md.league.scoring : undefined} game={game} myName={md.myName} myLineup={myLineup} rules={rules} look={look} fixtures={md.fixtures} pair={pair} setPair={setPair} round={game.round} />
+              {p ? <CupLive key={`${game.id}p${pair}`} game={{ ...game, opp: p[1] }} rules={rules} mine={p[0].lineup} myName={p[0].name} look={look} fixtures={md.fixtures} theme={theme} spectator scoring={game.key === 'gtrain' ? md.league.scoring : undefined} />
+                : <CupLive key={`${game.id}mine`} game={game} rules={rules} mine={myLineup} myName={md.myName} look={look} fixtures={md.fixtures} theme={theme} scoring={game.key === 'gtrain' ? md.league.scoring : undefined} />}
             </div>
           );
         })()
         : game.key === 'gtrain' ? <MensRound round={mens} myTeamId={md.myTeamId} compact />
         : (
           <div className="lm-proj">
-            <Matchup game={game} rules={rulesFor(game.key, md.lineupShape)} mine={md.lineups[game.id] ?? autoFill(rulesFor(game.key, md.lineupShape), game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
+            <Matchup game={game} rules={rulesFor(game.key, md.lineupShape, md.league)} mine={md.lineups[game.id] ?? autoFill(rulesFor(game.key, md.lineupShape, md.league), game.key === 'survivor' ? md.pool : md.squad)} myName={md.myName} myTeamId={md.myTeamId} look={look} />
             <span className="rh-dim" style={{ fontSize: 12 }}>Projected from each side’s saved team (or best guess). Live scores fill in here once 2027 games are being played.</span>
           </div>
         )}
@@ -73,16 +73,16 @@ export function LiveMatchups({ mens, md, rounds, sel, history, minis = [] }: { m
 }
 
 /** Every game this round as a tile: both clubs with their score (live) or projection (before bounce). Tap to open. */
-function FixtureStrip({ game, myName, myLineup, rules, look, fixtures, pair, setPair, round }: {
-  game: GameOpt; myName: string; myLineup: MdLineup; rules: Rules; look: (id: number) => MdPlayer | undefined;
+function FixtureStrip({ scoring, game, myName, myLineup, rules, look, fixtures, pair, setPair, round }: {
+  scoring?: import('@/lib/league-scoring').Scoring; game: GameOpt; myName: string; myLineup: MdLineup; rules: Rules; look: (id: number) => MdPlayer | undefined;
   fixtures: { home: string; away: string; start: string }[]; pair: number; setPair: (i: number) => void; round: number;
 }) {
   const tiles = useMemo(() => {
-    const t = (name: string, lineup: MdLineup) => ({ name, ...sideTotals(lineup, look, fixtures, rules) });
+    const t = (name: string, lineup: MdLineup) => ({ name, ...sideTotals(lineup, look, fixtures, rules, scoring) });
     const mine = { a: t(myName, myLineup), b: t(game.opp!.name, game.opp!.lineup), saved: '', i: -1 };
     const rest = (game.pairs ?? []).map(([a, b]: [Side, Side], i: number) => ({ a: t(a.name, a.lineup), b: t(b.name, b.lineup), saved: a.saved && b.saved ? 'Both set' : a.saved || b.saved ? 'One set' : 'Not set', i }));
     return [mine, ...rest];
-  }, [game, myName, myLineup, rules, look, fixtures]);
+  }, [game, myName, myLineup, rules, look, fixtures, scoring]);
   if (tiles.length < 2) return null;
   return (
     <div className="mx-matchups lm-fx" role="tablist" aria-label={`${game.key === 'cup' ? 'Cup' : 'G-Train'} games this round`}>

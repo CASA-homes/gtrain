@@ -15,7 +15,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getPlan, isSiteAdmin, PRO_PER_COACH } from '@/lib/plan';
 import { LeagueBankPanel } from '@/components/league/LeagueBankPanel';
 import { FinesPanel, KeepersDraftPanel, MilestonesPanel, ScoringPanel, TeamStructurePanel } from '@/components/league/settings/RulesPanels';
-import { getLeagueRules } from '@/lib/league-rules-server';
+import { formulaOpen, getLeagueRules } from '@/lib/league-rules-server';
 import '@/components/league/league-bank.css';
 
 export const metadata = { title: 'League settings' };
@@ -91,7 +91,7 @@ export default async function LeagueSettingsPage() {
         <LeagueNameForm name={leagueName} isCommish={!!me?.is_commish} />
         <MilestonesPanel commish={commish} release={dropDay} dates={rules.dates} />
         <TeamStructurePanel commish={commish} listSize={listSize} lineup={lineupShape} keepers={kcKeepers} rules={rules.team} />
-        <ScoringPanel commish={commish} rules={rules.scoring} />
+        <ScoringPanel commish={commish} rules={rules.scoring} formulaOpen={formulaOpen(rules)} />
         <Group title="Season" rows={[
           ['Early bye rounds', 'Opening Round scores used'],
           ['Mid-season byes', 'No scoring adjustments'],

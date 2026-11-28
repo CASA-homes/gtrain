@@ -589,7 +589,7 @@ function Lineups({ games, savedIds, locks, current, onPick, minis = [] }: { game
 export function Matchday({ data, cup, minis = [], liveSrc = null }: { data: MatchdayData; cup: CupData; minis?: MiniLink[]; liveSrc?: LiveSrc | null }) {
   const [gid, setGid] = useState(data.games[0]?.id ?? '');
   const game = data.games.find((g) => g.id === gid) ?? data.games[0];
-  const rules = rulesFor(game.key, data.lineupShape);
+  const rules = rulesFor(game.key, data.lineupShape, data.league);
   const squad = game.key === 'survivor' ? data.pool : data.squad;
   const look = useMemo(() => { const m = new Map<number, MdPlayer>([...Object.values(data.others), ...data.squad, ...data.pool].map((p) => [p.id, p])); return (id: number) => m.get(id); }, [data]);
   const [live, setLive] = useState<Record<string, MdLineup>>({});

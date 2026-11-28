@@ -45,3 +45,4 @@
 /* Settings grid: cards keep their own height so short ones don't leave empty boxes; the top row still lines up */
 .ls-grid { align-items: start; }
 .ls-grid > .plan-card, .ls-grid > .ov-card, .ls-grid > .lb-card { align-self: stretch; }
+.rp-fgrid input:disabled { background: #f1f3ee; color: #8a928b; cursor: not-allowed; }

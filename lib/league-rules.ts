@@ -22,7 +22,7 @@ export interface LeagueRules {
 export const FORMULA_KEYS = ['Kick', 'Handball', 'Mark', 'Tackle', 'Hitout', 'Goal', 'Behind', 'Free for', 'Free against'] as const;
 export const DEFAULT_RULES: LeagueRules = {
   dates: { preseason_open: '2026-11-01', preseason_close: '2027-03-03', draft_day: '2027-03-03', mid_open: '2027-06-01', mid_close: '2027-06-14', fa_day: '2027-06-15' },
-  team: { emergencies: 5, emergency_mode: 'line', utility: true, rookie: true },
+  team: { emergencies: 4, emergency_mode: 'line', utility: false, rookie: true },
   scoring: { formula: { Kick: 3, Handball: 2, Mark: 3, Tackle: 4, Hitout: 1, Goal: 6, Behind: 1, 'Free for': 1, 'Free against': -3 }, captain: true, vc: true, captain_tog: 25, tog: 25, dual_cover: true, loophole: false, lockout: 'rolling' },
   draft: { mid_order: 'reverse_straight', mid_after_round: 9, end_order: 'reverse_straight', pick_years: 2 },
   fines: { captain_loop: 50, zero_on_field_loop: 5, lopsided_trade: 10 },
