@@ -101,7 +101,7 @@ export default async function RankingsPage({ searchParams }: { searchParams: Pro
           </table>
         </div>
         <p className="muted" style={{ margin: 0, fontSize: 13, maxWidth: '75ch' }}>
-          Only kept players aged 23 or under count (a club’s set keepers, or its best 18 projected if it hasn’t set them), plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best eight, so quality beats quantity. A player’s future score is his projected peak (2027 projection plus some growth, scaled by potential) times how many prime years he has left, so youngsters already scoring rate ahead of raw ones.
+          Only kept players aged 23 or under count (a club’s set keepers, or its best 18 projected if it hasn’t set them), plus each team’s best two 2027 picks as incoming prospects (pick 1 ≈ 115, pick 10 ≈ 77). Each team is ranked on its best eight, so quality beats quantity. A player’s future score is his projected peak times how many prime years he has left. Peak is his 2027 projection grown along the age curve to 26 (scaled by potential), blended with what a pick like his usually becomes (pick 1 ≈ 110, pick 10 ≈ 93), which counts most in a kid’s first seasons and fades by about 60 games.
           Avg age and avg potential are across that best eight. The line bars rank each line’s future strength against the league, with the ruck at half weight.
         </p>
       </div>

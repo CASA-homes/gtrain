@@ -41,8 +41,8 @@ export const prospectScore = (overall: number) => Math.round(115 * Math.exp(-0.0
 
 /**
  * Future-build score for one player: his projected peak, weighted by how many prime years he has left.
- *   peak = projected 2027 average, grown part of the way along the age curve to 26. Potential sets how much of
- *          that growth he gets, and only 60% of it counts, so kids already scoring rate ahead of raw ones.
+ *   peak = the better of his trajectory (projected 2027 average grown along the age curve to 26, scaled by potential)
+ *          and a blend with his draft pedigree, which counts heavily in a kid's first seasons and fades by ~60 games.
  *   years left = prime seasons until 31; a 19-year-old has twelve, a 28-year-old three.
  * The scarce-line bonus (forwards, defenders) only counts in full for players good enough to start there.
  */
@@ -64,7 +64,13 @@ function rawFutureScore(p: PlayerRow, potentialStars: number | null, lineBonus =
   const base = projected2027(p) + bonus;
   let cum = 1;
   for (let y = a + 1; y <= 26; y++) cum *= curve(y);
-  const peak = base * (1 + (cum - 1) * ((potentialStars ?? 2.5) / 5) * 0.6);
+  // Trajectory: his scoring now, grown along the age curve to 26 (potential sets how much of that growth he gets).
+  const trajectory = base * (1 + (cum - 1) * ((potentialStars ?? 2.5) / 5));
+  // Pedigree: what a pick like his usually peaks at (pick 1 ≈ 110, pick 10 ≈ 93, pick 20 ≈ 83, late or rookie 70).
+  // It carries real weight for a kid with few games and fades out by about 60 games, when his own scores speak.
+  const pedigree = p.draft_pick ? 70 + 40 * Math.exp(-0.06 * (p.draft_pick - 1)) : 70;
+  const w = Math.max(0, Math.min(0.75, 0.75 - (p.career_games ?? 0) / 80));
+  const peak = Math.max(trajectory, (1 - w) * trajectory + w * pedigree);
   const years = Math.max(0, 31 - a);
   return Math.round(peak * Math.max(0.45, Math.min(1.12, 0.6 + years * 0.045)));
 }
