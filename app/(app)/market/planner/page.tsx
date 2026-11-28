@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { MarketNav } from '@/components/trade/MarketNav';
+import '@/components/trade/home.css';
 import { redirect } from 'next/navigation';
 import { TradePlanner } from '@/components/TradePlanner';
 import { getLeague, getMe } from '@/lib/data';
@@ -49,13 +51,16 @@ export default async function PlannerPage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="wrap" style={{ maxWidth: 1240 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / Trade planner</span>
+      <div className="th-head" style={{ alignItems: 'flex-start' }}>
       <div>
-        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Trade planner</h1>
+        <span className="th-eb">Trademarket</span>
+        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em', margin: 0 }}>Trade planner</h1>
         <p className="muted" style={{ margin: '4px 0 0', maxWidth: '78ch' }}>
           Test a trade before you send it. Only you can see this: nothing is saved or shown to anyone else.
           Each side is judged on what it does to their 2027 best 18 and their young core, weighted by where that team is at.
         </p>
+      </div>
+      <MarketNav active="planner" />
       </div>
       <TradePlanner myTeamId={me.team_id} teams={teams} assets={assets} initialPartner={partner && partner !== me.team_id ? partner : null} initialGet={target && target.teamId !== me.team_id ? target.key : null} />
     </div>

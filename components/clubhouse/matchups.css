@@ -12,8 +12,9 @@
 .cm-vs em { font: 700 15px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; color: #1f6b3a; }
 .cm-vs i, .cm-others i { font-style: normal; color: var(--muted); font-size: 12px; }
 .cm-note { font-size: 11.5px; color: var(--muted); }
-.cm-others { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 14px; }
-.cm-others li { display: grid; grid-template-columns: 40px auto auto auto 40px; gap: 6px; align-items: baseline; font-size: 12.5px; padding: 3px 0; }
+.cm-others { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; }
+.cm-others li { display: grid; grid-template-columns: 32px 1fr 14px 1fr 32px; gap: 6px; align-items: baseline; font-size: 12.5px; padding: 4px 8px; border-radius: 8px; background: #f9faf7; }
+.cm-others li em:first-of-type { text-align: right; } .cm-others li i { text-align: center; }
 .cm-others li span { font: 600 11.5px var(--mono); } .cm-others li span:last-child { text-align: right; }
 .cm-others li em { font-style: normal; font-variant-numeric: tabular-nums; color: #4d554f; }
 .cm-last { display: flex; flex-direction: column; gap: 3px; border-top: 1px solid var(--line, #eef0ec); padding-top: 8px; }

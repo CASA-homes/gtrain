@@ -105,3 +105,16 @@
 .mb-tbl.hl tr.st-d td.c-sh, .mb-tbl.hl tr.st-d td.c-go { background: #fcf7ea; }
 @media (max-width: 1600px) { .mb-tbl .c-sp { display: none; } }
 @media (max-width: 1440px) { .mb-tbl .c-a1 { display: none; } .mb-grp { display: none; } }
+
+/* Free agents board */
+.fa-pill { font: 600 10.5px var(--font); padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.fa-pill.s-open { background: #dbe8fb; color: #2a55a8; } .fa-pill.s-pending { background: #f6ecd2; color: #8a6a2a; } .fa-pill.s-final { background: #eef0ec; color: #4d554f; }
+.mb.fa .mb-tbl .c-tier, .mb.fa .mb-tbl .c-cl { font-size: 12px; color: #5f6660; white-space: nowrap; }
+.mb.fa .mb-tbl th.c-fa-go, .mb.fa .mb-tbl td.c-fa-go { position: sticky; right: 0; z-index: 1; background: #fff; box-shadow: -8px 0 8px -8px rgb(21 26 22 / .18); text-align: right; padding-right: 14px; }
+.mb.fa .mb-tbl thead th.c-fa-go { background: #fafbf8; }
+.mb.fa .mb-tbl tbody tr:hover td.c-fa-go { background: #f7f9f5; }
+@media (max-width: 1440px) { .mb.fa .mb-tbl .c-d5, .mb.fa .mb-tbl .c-tier { display: none; } }
+@media (max-width: 1200px) { .mb.fa .mb-tbl .c-l5 { display: none; } }
+/* Trade desk: Make a trade and List a player side by side */
+.dk-acts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.dk-act { padding: 16px; display: flex; flex-direction: column; gap: 10px; }

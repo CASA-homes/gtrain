@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Countdown } from '@/components/Countdown';
 import { MarketBoard } from '@/components/trade/MarketBoard';
 import { MarketTicker } from '@/components/trade/MarketTicker';
+import { MarketNav } from '@/components/trade/MarketNav';
 import { WithdrawOffer } from '@/components/trade/WithdrawOffer';
 import { clauseKt, isFinalYear, kt, moneyK, playerAge, TIER_LABEL, valueTrend } from '@/lib/contracts';
 import { ago, getMarket, shortName, windowLine } from '@/lib/market';
@@ -67,12 +68,7 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
             <h1>The market</h1>
             <p>{windowLine(d)}</p>
           </div>
-          <div className="th-acts">
-            <Link href="/market/desk" className="th-btn dk">＋ Make a trade</Link>
-            <Link href="/market/new" className="th-btn">List a player</Link>
-            <Link href="/market/desk" className="th-btn">Trade desk</Link>
-            <Link href="/market/planner" className="th-btn">Planner</Link>
-          </div>
+          <MarketNav active="market" />
         </div>
 
         {m.pendingTrades.length > 0 && (

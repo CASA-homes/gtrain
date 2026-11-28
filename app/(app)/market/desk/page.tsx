@@ -4,6 +4,8 @@ import { getLeague, getMe } from '@/lib/data';
 import { C } from '@/lib/ratings';
 import { createClient } from '@/lib/supabase/server';
 import { openDesk, startTrade } from './actions';
+import { MarketNav } from '@/components/trade/MarketNav';
+import '@/components/trade/home.css';
 
 const STATUS: Record<string, [string, string, string]> = {
   open: ['Open', C.green2, C.ink],
@@ -56,28 +58,39 @@ export default async function DeskList({ searchParams }: { searchParams: Promise
 
   return (
     <div className="wrap" style={{ maxWidth: 1180 }}>
-      <span className="mono muted" style={{ fontSize: 12 }}><Link href="/market">Trademarket</Link> / Trade desk</span>
-      <div>
-        <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em' }}>Make a trade</h1>
-        <p className="muted" style={{ margin: '4px 0 0', maxWidth: '72ch' }}>
-          Pick a club, put players, picks or KT on each side, then put it forward. They can accept, counter or decline.
-          Once both clubs accept, the commish approves and everything moves at once. Add a third club from inside the trade.
-        </p>
+      <div className="th-head" style={{ alignItems: 'flex-start' }}>
+        <div>
+          <span className="th-eb">Trademarket</span>
+          <h1 style={{ font: '600 34px var(--font)', letterSpacing: '-.03em', margin: 0 }}>Trade desk</h1>
+          <p className="muted" style={{ margin: '4px 0 0', maxWidth: '68ch' }}>Make a trade with another club, or list one of your players for offers.</p>
+        </div>
+        <MarketNav active="desk" />
       </div>
 
       {error && <div role="alert" className="card" style={{ padding: '10px 14px', background: C.redBg, color: C.redFg, border: 0 }}>{error}</div>}
 
       {me && !me.is_guest && (
-        <form action={startTrade} className="card" style={{ padding: 16, display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'end' }}>
-          <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12, flex: '1 1 260px' }} className="muted">
-            Trade with
-            <select name="with" className="input" required defaultValue="">
-              <option value="" disabled>Choose a club…</option>
-              {league.teams.filter((t) => t.id !== myId).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
-            </select>
-          </label>
-          <button className="btn dark">Start a trade</button>
-        </form>
+        <div className="dk-acts">
+          <form action={startTrade} className="card dk-act" aria-labelledby="dk-trade-h">
+            <h2 id="dk-trade-h" className="h2" style={{ margin: 0 }}>＋ Make a trade</h2>
+            <p className="muted" style={{ margin: 0, fontSize: 13 }}>Pick a club, put players, picks or KT on each side, then put it forward. They can accept, counter or decline. Once both accept, the commish approves and everything moves at once. Add a third club from inside the trade.</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'end', marginTop: 'auto' }}>
+              <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12, flex: '1 1 220px' }} className="muted">
+                Trade with
+                <select name="with" className="input" required defaultValue="">
+                  <option value="" disabled>Choose a club…</option>
+                  {league.teams.filter((t) => t.id !== myId).map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+                </select>
+              </label>
+              <button className="btn dark">Start a trade</button>
+            </div>
+          </form>
+          <div className="card dk-act" aria-labelledby="dk-list-h">
+            <h2 id="dk-list-h" className="h2" style={{ margin: 0 }}>List a player</h2>
+            <p className="muted" style={{ margin: 0, fontSize: 13 }}>Put one of your players on the trade block, for picks at a fixed asking price, or up for a live auction. Other coaches can offer, comment or bid. Nothing moves until you accept and the commish approves.</p>
+            <Link href="/market/new" className="btn dark" style={{ alignSelf: 'flex-start', marginTop: 'auto' }}>List a player</Link>
+          </div>
+        </div>
       )}
 
       {mine.length > 0 && (
