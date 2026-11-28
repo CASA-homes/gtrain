@@ -15,6 +15,8 @@
 .rp-f small { grid-column: 2; font-size: 11.5px; color: var(--muted); margin-top: -2px; }
 .rp-f input[type=number], .rp-f input[type=date], .rp-f input[type=datetime-local], .rp-f select { height: 34px; border: 1px solid #d6dbd2; border-radius: 8px; padding: 0 10px; font: 500 14px var(--font); background: #fff; max-width: 240px; }
 .rp-f input[type=number] { width: 90px; }
+.rp-f input[type=datetime-local], .rp-f input[type=date] { width: 100%; min-width: 0; box-sizing: border-box; }
+.rp-f > * { min-width: 0; }
 .rp-in { display: inline-flex; align-items: center; gap: 6px; } .rp-in em { font-style: normal; color: var(--muted); font-size: 13px; }
 .rp-tog { cursor: pointer; }
 .rp-tog input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -39,3 +41,7 @@
 .rp-tip > button { width: 18px; height: 18px; border-radius: 50%; border: 1px solid #aab3a6; background: #fff; font: italic 700 11px Georgia, serif; color: #4d554f; cursor: pointer; line-height: 1; padding: 0; }
 .rp-pop { position: absolute; z-index: 20; top: calc(100% + 6px); left: 50%; transform: translateX(-50%); width: 260px; padding: 10px 12px; border-radius: 10px; background: var(--ink, #1c2420); color: #fff; font-size: 12.5px; line-height: 1.45; box-shadow: 0 6px 18px rgb(0 0 0 / .2); }
 @media (max-width: 560px) { .rp-dl > div, .rp-f { grid-template-columns: 1fr; gap: 2px; } .rp-f small { grid-column: 1; } .rp-pop { left: 0; transform: none; } }
+
+/* Settings grid: cards keep their own height so short ones don't leave empty boxes; the top row still lines up */
+.ls-grid { align-items: start; }
+.ls-grid > .plan-card, .ls-grid > .ov-card, .ls-grid > .lb-card { align-self: stretch; }

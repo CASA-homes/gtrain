@@ -44,7 +44,7 @@ export default async function LeagueSettingsPage() {
   return (
     <div className="wrap" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <SubHead eyebrow={leagueTitle(leagueName)} title="League settings" sub="10 teams · keeper league · head-to-head points · AFL Fantasy scoring" />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
+      <div className="ls-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 14 }}>
         {plan.ready && (
           <section id="plan" className="card plan-card" style={{ padding: 16 }}>
             <div className="row-between" style={{ gap: 8, flexWrap: 'wrap' }}>

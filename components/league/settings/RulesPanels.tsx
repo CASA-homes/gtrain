@@ -18,8 +18,9 @@ export function InfoTip({ label, children }: { label: string; children: ReactNod
     if (!open) return;
     const off = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
     const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('mousedown', off); document.addEventListener('keydown', esc);
-    return () => { document.removeEventListener('mousedown', off); document.removeEventListener('keydown', esc); };
+    const shut = () => setOpen(false);
+    document.addEventListener('mousedown', off); document.addEventListener('keydown', esc); window.addEventListener('scroll', shut, { passive: true });
+    return () => { document.removeEventListener('mousedown', off); document.removeEventListener('keydown', esc); window.removeEventListener('scroll', shut); };
   }, [open]);
   return (
     <span className="rp-tip" ref={ref}>
