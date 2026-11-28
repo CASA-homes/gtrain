@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/server';
 import { openDesk, startTrade } from './actions';
 import { MarketNav } from '@/components/trade/MarketNav';
 import '@/components/trade/home.css';
+import '@/components/trade/board.css';
 
 const STATUS: Record<string, [string, string, string]> = {
   open: ['Open', C.green2, C.ink],
