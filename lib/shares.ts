@@ -2,12 +2,12 @@
 // Whole KT; fees and tax round up.
 
 export interface ShareRules { supply: number; maxClub: number; feePct: number; taxPct: number; limitPct: number; lockGames: number; open: boolean }
-export const DEFAULT_SHARE_RULES: ShareRules = { supply: 10, maxClub: 3, feePct: 10, taxPct: 10, limitPct: 40, lockGames: 30, open: true };
+export const DEFAULT_SHARE_RULES: ShareRules = { supply: 10, maxClub: 3, feePct: 5, taxPct: 10, limitPct: 40, lockGames: 30, open: true };
 
 export function shareRules(s: Record<string, unknown> | null | undefined): ShareRules {
   const n = (k: string, d: number) => (s && s[k] != null ? Number(s[k]) : d);
   return {
-    supply: n('share_supply', 10), maxClub: n('share_max_club', 3), feePct: n('share_fee_pct', 10), taxPct: n('share_tax_pct', 10),
+    supply: n('share_supply', 10), maxClub: n('share_max_club', 3), feePct: n('share_fee_pct', 5), taxPct: n('share_tax_pct', 10),
     limitPct: n('share_limit_pct', 40), lockGames: n('share_lock_games', 30), open: s?.shares_open == null ? true : !!s.shares_open,
   };
 }
