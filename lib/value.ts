@@ -1,14 +1,17 @@
-// Value engine v4: one market value for contracts, clauses and the Trademarket. Mirrors kc_value_path in the database
-// (migration 0088) step for step, so a player's number is the same wherever it's shown.
+// Value engine v5: one market value for contracts, clauses and the Trademarket. Mirrors kc_value_path in the database
+// (migration 0093) step for step, so a player's number is the same wherever it's shown.
 //   • Average: his last 30 games, across seasons (logged scores where we have them, else his season average for each
-//     game he played). Fewer than 30 games? Topped up with "starting games" at the average his starting price implies.
-//   • Value: $0.65k per point of average from 60 up; below 60 it drops to the $10k floor at 45. From 30, −5% a year
-//     (never below 70%).
-//   • Path: from the start of 2026, game by game, moving at most 5% a game.
+//     game he played).
+//   • Price by rank: where that average sits among every player's current average (the ranking, kc_value_table):
+//     $k = 10 + 25·e^(−(rank−1)/25) + 60·e^(−(rank−1)/200). Below a 60 average it tapers to $10k at 45.
+//   • Fewer than 30 games: the missing games count at his starting price (league draft price, else AFL pick).
+//   • From 30, −5% a year (never below 70%). Never under $10k. Path: from the start of 2026, at most 10% a game.
+
+import rankingDefault from '@/lib/value-table.json';
 
 export type HistRow = [number, number, number]; // [season, games, average]
 export const VALUE_FLOOR = 10;
-export const VALUE_CAP = 0.05;
+export const VALUE_CAP = 0.10;
 export const VALUE_WINDOW = 30;
 export const VALUE_PER_POINT = 0.65;
 const FIRST_LOG_SEASON = 2026;
@@ -25,6 +28,24 @@ export const startPriceFromPick = (pick: number | null | undefined, k?: { draft_
     : pick <= 45 ? k?.draft_r3_k ?? 20 : pick <= 70 ? k?.draft_r4_k ?? 15 : k?.draft_rest_k ?? 10);
 const r2 = (x: number) => Math.round(x * 100) / 100;
 
+/** The ranking: every player's current 30-game average (10+ games), highest first. A default copy ships with the
+ *  site; getRates and getContracts load the live one from the database. */
+let RANKING: number[] = (rankingDefault as { avgs: number[] }).avgs;
+export const setRanking = (avgs: number[] | null | undefined) => { if (avgs?.length) RANKING = avgs.map(Number); };
+/** Rank of an average: 1 + how many current averages sit above it. */
+export const rankOf = (avg: number, tbl = RANKING) => {
+  let lo = 0, hi = tbl.length - 1;
+  while (lo <= hi) { const mid = (lo + hi) >> 1; if (tbl[mid] > avg) lo = mid + 1; else hi = mid - 1; }
+  return lo + 1;
+};
+export const rankPrice = (rank: number) => { const r = Math.max(rank, 1) - 1; return 10 + 25 * Math.exp(-r / 25) + 60 * Math.exp(-r / 200); };
+/** Price for a real average: by rank, tapering to the $10k floor below a 60 average. */
+export const priceForAvg = (avg: number, tbl = RANKING) => {
+  if (!tbl.length) return valueFromAvg(avg);
+  const p = rankPrice(rankOf(avg, tbl));
+  return avg < 60 ? Math.min(p, valueFromAvg(avg)) : p;
+};
+
 export interface ValuePoint { season: number; game: number; v: number; target: number }
 
 /** Every value point from the start of 2026 (one point per game) to now. `logs` holds each season's fantasy scores in
@@ -33,7 +54,7 @@ export function valuePath(hist: HistRow[] | null | undefined, logs: Record<numbe
                           season = 2027, startK = VALUE_FLOOR): ValuePoint[] {
   const h = (hist ?? []).filter((x) => x[1] > 0 && x[0] <= season).sort((a, b) => a[0] - b[0]);
   const agef = ageFactor(ageAt(birth, season));
-  const pad = avgFromValue(Math.max(VALUE_FLOOR, startK || VALUE_FLOOR));
+  const base = Math.max(VALUE_FLOOR, startK || VALUE_FLOOR);
   const games: { y: number; s: number }[] = [];
   let i0 = 0;
   for (const [y, g, a] of h) {
@@ -45,9 +66,9 @@ export function valuePath(hist: HistRow[] | null | undefined, logs: Record<numbe
   const out: ValuePoint[] = [];
   let v = 0;
   for (let i = i0; i <= games.length; i++) {
-    let sum = 0;
-    for (let j = i - VALUE_WINDOW + 1; j <= i; j++) sum += j >= 1 ? games[j - 1].s : pad;
-    const t = valueFromAvg(sum / VALUE_WINDOW) * agef;
+    let sum = 0, g = 0;
+    for (let j = Math.max(1, i - VALUE_WINDOW + 1); j <= i; j++) { sum += games[j - 1].s; g++; }
+    const t = Math.max(VALUE_FLOOR, ((g ? (g / VALUE_WINDOW) * priceForAvg(Math.round((sum / g) * 1000) / 1000) : 0) + ((VALUE_WINDOW - g) / VALUE_WINDOW) * base) * agef);
     v = i === i0 ? t : Math.min(v * (1 + VALUE_CAP), Math.max(v * (1 - VALUE_CAP), t));
     if (i === i0) out.push({ season: i0 < games.length ? games[i0].y : season, game: 0, v: r2(v), target: r2(t) });
     else {
