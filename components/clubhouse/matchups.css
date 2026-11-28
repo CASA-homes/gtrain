@@ -1,24 +1,22 @@
-/* Clubhouse home: Matchups (left) beside Important news (right) on desktop; stacked on phones */
+/* Clubhouse home: Matchups (left) beside Important news (right) on desktop; stacked on phones. Compact: one line each. */
 .ch-top2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
-.ch-top2 > .ch-news { height: 100%; }
-@media (max-width: 900px) { .ch-top2 { grid-template-columns: 1fr; } }
-.cm { padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; }
-.cm-tag { font: 600 10.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.cm-next { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 12px; background: #f4f7f2; text-decoration: none; color: inherit; }
-.cm-next:hover { background: #ecf2ea; }
-.cm-vs { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto minmax(0, 1fr); align-items: baseline; gap: 8px; }
-.cm-vs b { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.cm-vs b:last-child { text-align: right; }
-.cm-vs em { font: 700 15px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; color: #1f6b3a; }
-.cm-vs i, .cm-others i { font-style: normal; color: var(--muted); font-size: 12px; }
-.cm-note { font-size: 11.5px; color: var(--muted); }
-.cm-others { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 10px; }
-.cm-others li { display: grid; grid-template-columns: 32px 1fr 14px 1fr 32px; gap: 6px; align-items: baseline; font-size: 12.5px; padding: 4px 8px; border-radius: 8px; background: #f9faf7; }
-.cm-others li em:first-of-type { text-align: right; } .cm-others li i { text-align: center; }
-.cm-others li span { font: 600 11.5px var(--mono); } .cm-others li span:last-child { text-align: right; }
-.cm-others li em { font-style: normal; font-variant-numeric: tabular-nums; color: #4d554f; }
-.cm-last { display: flex; flex-direction: column; gap: 3px; border-top: 1px solid var(--line, #eef0ec); padding-top: 8px; }
-.cm-res { font-size: 13.5px; font-variant-numeric: tabular-nums; display: flex; align-items: center; gap: 8px; }
-.cm-wl { width: 22px; height: 22px; border-radius: 6px; display: inline-grid; place-items: center; font: 700 12px var(--font); color: #fff; background: #1f7a43; }
-.cm-last.l .cm-wl { background: #c2462a; }
 .ch-top2 > :only-child { grid-column: 1 / -1; }
+.ch-top2 > .ch-news { height: 100%; padding: 9px 12px; gap: 5px; }
+.ch-top2 .ch-alert { padding: 6px 10px; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ch-top2 .ch-news .kc-news > div { padding: 4px 0; }
+@media (max-width: 900px) { .ch-top2 { grid-template-columns: 1fr; } }
+.cm { padding: 9px 12px; display: flex; flex-direction: column; gap: 5px; }
+.cm-tag { font: 600 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.cm-line { display: flex; align-items: baseline; gap: 7px; min-width: 0; font-size: 13px; text-decoration: none; color: inherit; white-space: nowrap; }
+.cm-next { padding: 5px 9px; border-radius: 9px; background: #f4f7f2; }
+.cm-next:hover { background: #ecf2ea; }
+.cm-t { overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.cm-line em { font: 700 13px var(--mono); font-style: normal; font-variant-numeric: tabular-nums; color: #1f6b3a; }
+.cm-line i { font-style: normal; color: var(--muted); font-size: 11.5px; }
+.cm-note { font-size: 10.5px; color: var(--muted); margin-left: auto; }
+.cm-last { padding: 0 9px; align-items: center; }
+.cm-res { font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; }
+.cm-wl { width: 18px; height: 18px; border-radius: 5px; display: inline-grid; place-items: center; font: 700 11px var(--font); color: #fff; background: #1f7a43; flex: none; }
+.cm-last.l .cm-wl { background: #c2462a; }
+.cm-others { margin: 0; padding: 0 9px; display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 11.5px; color: #5f6660; font-variant-numeric: tabular-nums; }
+.cm-others b { font: 600 11px var(--mono); color: #151a16; }

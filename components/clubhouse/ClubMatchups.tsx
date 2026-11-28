@@ -8,7 +8,7 @@ import RESULTS from '@/lib/results-2026.json';
 import './matchups.css';
 
 const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
-const ROUND_NAME: Record<string, string> = { F1: 'Finals week 1', F2: 'Preliminary final', F3: 'Grand final' };
+const ROUND_NAME: Record<string, string> = { F1: 'Finals wk 1', F2: 'Prelim', F3: 'Grand final 2026' };
 const n = (x: number) => Math.round(x).toLocaleString('en-AU');
 
 export function ClubMatchups({ league, teamId, legacy }: { league: League; teamId: number; legacy: boolean }) {
@@ -36,30 +36,23 @@ export function ClubMatchups({ league, teamId, legacy }: { league: League; teamI
       </div>
 
       {opp != null && (
-        <Link href="/live" className="cm-next">
-          <span className="cm-tag">Round {round.round} · {r1}</span>
-          <span className="cm-vs">
-            <b>{club}</b><em>{n(proj.get(teamId) ?? 0)}</em>
-            <i>v</i>
-            <em>{n(proj.get(opp) ?? 0)}</em><b>{name(opp)}</b>
-          </span>
-          <span className="cm-note">Projected scores · {proj.get(teamId)! >= proj.get(opp)! ? `${club.split(' ')[0]} by ${n(proj.get(teamId)! - proj.get(opp)!)}` : `${name(opp).split(' ')[0]} by ${n(proj.get(opp)! - proj.get(teamId)!)}`}</span>
+        <Link href="/live" className="cm-line cm-next">
+          <span className="cm-tag">R{round.round} · {r1}</span>
+          <b className="cm-t">{club}</b><em>{n(proj.get(teamId) ?? 0)}</em><i>v</i><em>{n(proj.get(opp) ?? 0)}</em><b className="cm-t">{name(opp)}</b>
+          <span className="cm-note">proj.</span>
         </Link>
       )}
-
-      {others.length > 0 && (
-        <ul className="cm-others" aria-label={`Other round ${round.round} games`}>
-          {others.map(([a, b]) => (
-            <li key={`${a}-${b}`}><span>{short(a)}</span><em>{n(proj.get(a) ?? 0)}</em><i>v</i><em>{n(proj.get(b) ?? 0)}</em><span>{short(b)}</span></li>
-          ))}
-        </ul>
-      )}
-
       {last && (
-        <div className={`cm-last ${last[2] === 'W' ? 'w' : 'l'}`}>
-          <span className="cm-tag">Last result · {ROUND_NAME[last[0]] ?? `Round ${last[0]}`} 2026</span>
-          <span className="cm-res"><b className="cm-wl">{last[2] === 'W' ? 'W' : 'L'}</b>{n(last[3])} – {n(last[4])} v {oppId ? name(oppId) : last[1]}</span>
+        <div className={`cm-line cm-last ${last[2] === 'W' ? 'w' : 'l'}`}>
+          <span className="cm-tag">Last · {ROUND_NAME[last[0]] ?? `R${last[0]}`}</span>
+          <b className="cm-wl">{last[2] === 'W' ? 'W' : 'L'}</b>
+          <span className="cm-res">{n(last[3])} – {n(last[4])} v {oppId ? name(oppId) : last[1]}</span>
         </div>
+      )}
+      {others.length > 0 && (
+        <p className="cm-others" aria-label={`Other round ${round.round} games`}>
+          {others.map(([a, b]) => <span key={`${a}-${b}`}><b>{short(a)}</b> {n(proj.get(a) ?? 0)}–{n(proj.get(b) ?? 0)} <b>{short(b)}</b></span>)}
+        </p>
       )}
     </section>
   );
