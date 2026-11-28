@@ -16,4 +16,5 @@ export async function setLeaguePlan(form: FormData) {
   });
   if (error) throw new Error(error.message);
   revalidatePath('/admin/plans');
+  revalidatePath('/admin');
 }

@@ -33,7 +33,7 @@ const LINKS = [
   { href: '/live', label: 'Matchday', short: 'Match', icon: 'live' },
 ];
 
-export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], leagueId = 1 }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null; leagues?: MyLeague[]; leagueId?: number }) {
+export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], leagueId = 1, siteAdmin = false }: { myTeamId: number; shortCode: string; guest?: boolean; logo?: string | null; leagues?: MyLeague[]; leagueId?: number; siteAdmin?: boolean }) {
   const path = usePathname();
   const router = useRouter();
   // Desktop: start loading a page the moment the mouse reaches its tab, so the click lands on a page that's already
@@ -61,7 +61,7 @@ export function Nav({ myTeamId, shortCode, guest = false, logo, leagues = [], le
             ? <img src={logo} alt={shortCode} className="nav-me-logo" />
             : <span>{shortCode}</span>}<em>{guest ? 'Guest' : 'My club'}</em>
         </Link>
-        <NavSettings leagues={leagues} current={leagueId} />
+        <NavSettings leagues={leagues} current={leagueId} siteAdmin={siteAdmin} />
         <form action="/auth/signout" method="post" className="nav-out">
           <button type="submit" aria-label="Sign out" title="Sign out"><Icon name="signout" /><span className="nav-label">Sign out</span></button>
         </form>

@@ -62,7 +62,7 @@ export default async function LeagueSettingsPage() {
               <span>{plan.founding ? 'From 2028' : 'Pro'}</span><b>${PRO_PER_COACH} × {plan.coaches} coaches = ${PRO_PER_COACH * plan.coaches} a season</b>
             </div>
             {me?.is_commish && <p className="muted" style={{ margin: 0, fontSize: 12.5 }}>{plan.founding ? 'Payments open before the 2028 draft. We’ll email you a month ahead; nothing changes until then.' : 'Online payments are coming. To go Pro now, email hello@keeperhq.au.'}</p>}
-            {siteAdmin && <Link href="/admin/plans" className="lg-btn" style={{ alignSelf: 'flex-start' }}>Manage every league’s plan</Link>}
+            {siteAdmin && <Link href="/admin?tab=leagues" className="lg-btn" style={{ alignSelf: 'flex-start' }}>Manage every league’s plan</Link>}
           </section>
         )}
         <section className="card ov-card" aria-labelledby="ov-h">

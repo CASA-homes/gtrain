@@ -7,7 +7,7 @@ import { switchLeague } from '@/app/actions/league';
 
 export type MyLeague = { id: number; name: string; is_commish: boolean };
 
-export function NavSettings({ leagues, current }: { leagues: MyLeague[]; current: number }) {
+export function NavSettings({ leagues, current, siteAdmin = false }: { leagues: MyLeague[]; current: number; siteAdmin?: boolean }) {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const [code, setCode] = useState('');
@@ -46,6 +46,7 @@ export function NavSettings({ leagues, current }: { leagues: MyLeague[]; current
             <Link href="/account" className="nset-row" onClick={() => setOpen(false)}><b>Profile</b><span>Email and password</span></Link>
             <Link href="/league" className="nset-row" onClick={() => setOpen(false)}><b>My league</b><span>{here?.name ?? 'League'}{here?.is_commish ? ' · commish' : ''}</span></Link>
             {here?.is_commish && <Link href="/league/settings" className="nset-row" onClick={() => setOpen(false)}><b>League settings</b><span>Invite coaches, rules</span></Link>}
+            {siteAdmin && <Link href="/admin" className="nset-row" onClick={() => setOpen(false)}><b>Site admin</b><span>Every league, users, health</span></Link>}
           </div>
           {leagues.length > 1 && (
             <div className="nset-sec">
