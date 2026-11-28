@@ -1,7 +1,7 @@
 // Value engine v5: one market value for contracts, clauses and the Trademarket. Mirrors kc_value_path in the database
-// (migration 0093) step for step, so a player's number is the same wherever it's shown.
+// (migrations 0093, 0100) step for step, so a player's number is the same wherever it's shown.
 //   • Average: his last 30 games, across seasons (logged scores where we have them, else his season average for each
-//     game he played).
+//     game he played), the newest 10 counting 1.5×.
 //   • Price by rank: where that average sits among every player's current average (the ranking, kc_value_table):
 //     $k = 10 + 25·e^(−(rank−1)/25) + 60·e^(−(rank−1)/200). Below a 60 average it tapers to $10k at 45.
 //   • Fewer than 30 games: the missing games count at his starting price (league draft price, else AFL pick).
@@ -14,6 +14,9 @@ export const VALUE_FLOOR = 10;
 export const VALUE_CAP = 0.10;
 export const VALUE_WINDOW = 30;
 export const VALUE_PER_POINT = 0.65;
+/** Within the last 30 games, the newest 10 count this much more. */
+export const VALUE_RECENT_WEIGHT = 1.5;
+const RECENT_N = 10;
 const FIRST_LOG_SEASON = 2026;
 const KNEE = VALUE_PER_POINT * 60;
 
@@ -66,9 +69,9 @@ export function valuePath(hist: HistRow[] | null | undefined, logs: Record<numbe
   const out: ValuePoint[] = [];
   let v = 0;
   for (let i = i0; i <= games.length; i++) {
-    let sum = 0, g = 0;
-    for (let j = Math.max(1, i - VALUE_WINDOW + 1); j <= i; j++) { sum += games[j - 1].s; g++; }
-    const t = Math.max(VALUE_FLOOR, ((g ? (g / VALUE_WINDOW) * priceForAvg(Math.round((sum / g) * 1000) / 1000) : 0) + ((VALUE_WINDOW - g) / VALUE_WINDOW) * base) * agef);
+    let sum = 0, ws = 0, g = 0;
+    for (let j = Math.max(1, i - VALUE_WINDOW + 1); j <= i; j++) { const w = j > i - RECENT_N ? VALUE_RECENT_WEIGHT : 1; sum += games[j - 1].s * w; ws += w; g++; }
+    const t = Math.max(VALUE_FLOOR, ((g ? (g / VALUE_WINDOW) * priceForAvg(Math.round((sum / ws) * 1000) / 1000) : 0) + ((VALUE_WINDOW - g) / VALUE_WINDOW) * base) * agef);
     v = i === i0 ? t : Math.min(v * (1 + VALUE_CAP), Math.max(v * (1 - VALUE_CAP), t));
     if (i === i0) out.push({ season: i0 < games.length ? games[i0].y : season, game: 0, v: r2(v), target: r2(t) });
     else {
