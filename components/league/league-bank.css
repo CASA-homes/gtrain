@@ -1,0 +1,29 @@
+/* League settings › League bank panel */
+.lb-card { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.lb-big { display: flex; flex-direction: column; gap: 2px; }
+.lb-big b { font: 700 28px var(--font); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.lb-big span { font-size: 12.5px; color: var(--muted); }
+.lb-chart { margin: 0; }
+.lb-chart svg { display: block; width: 100%; height: 72px; }
+.lb-chart figcaption { display: flex; justify-content: space-between; font: 500 10.5px var(--mono); color: var(--muted); margin-top: 2px; }
+.lb-src { margin: 0; display: flex; flex-direction: column; gap: 4px; font-size: 13px; }
+.lb-src div { display: flex; justify-content: space-between; gap: 10px; }
+.lb-src dt { color: var(--muted); } .lb-src dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lb-alloc { border-top: 1px solid var(--line, #e4e7e1); padding-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.lb-alloc[open] { gap: 8px; }
+.lb-alloc > *:not(summary) { margin-top: 8px; }
+.lb-alloc summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; }
+.lb-alloc summary::-webkit-details-marker { display: none; }
+.lb-alloc summary > span:first-child::after { content: ' ▾'; color: var(--muted); font-size: 11px; }
+.lb-alloc[open] summary > span:first-child::after { content: ' ▴'; }
+.lb-pills { display: inline-flex; gap: 6px; }
+.lb-pills em { font-style: normal; font: 600 11px var(--font); padding: 2px 8px; border-radius: 99px; background: #f6ecd2; color: #6d531f; }
+.lb-pills em.free { background: #e7f1ea; color: #1f6b3a; }
+.lb-bar { height: 8px; border-radius: 4px; background: #e7f1ea; overflow: hidden; }
+.lb-bar i { display: block; height: 100%; background: #c9a54a; }
+.lb-alloc ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.lb-alloc li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line, #eef0ec); font-size: 13.5px; }
+.lb-alloc li small { display: block; font-size: 11.5px; color: var(--muted); }
+.lb-alloc li.paid { opacity: .6; }
+.ov-card { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+.ov-links { display: flex; flex-wrap: wrap; gap: 8px; }

@@ -15,6 +15,8 @@ import { InviteCoaches } from '@/components/InviteCoaches';
 import { LeagueCoaches } from '@/components/LeagueCoaches';
 import { createClient } from '@/lib/supabase/server';
 import { getPlan, isSiteAdmin, PRO_PER_COACH } from '@/lib/plan';
+import { LeagueBankPanel } from '@/components/league/LeagueBankPanel';
+import '@/components/league/league-bank.css';
 
 export const metadata = { title: 'League settings' };
 
@@ -60,6 +62,19 @@ export default async function LeagueSettingsPage() {
             {siteAdmin && <Link href="/admin/plans" className="lg-btn" style={{ alignSelf: 'flex-start' }}>Manage every league’s plan</Link>}
           </section>
         )}
+        <section className="card ov-card" aria-labelledby="ov-h">
+          <h2 id="ov-h" className="h2" style={{ fontSize: 18, margin: 0 }}>Overrides</h2>
+          <p className="muted" style={{ margin: 0, fontSize: 13 }}>
+            {me?.is_commish
+              ? 'Fix a player’s score when the feed gets it wrong, pause or lock a round, and override contracts. Every change is logged for the league to see.'
+              : 'Score corrections the commish has made, round by round. Every change is logged here.'}
+          </p>
+          <div className="ov-links">
+            <Link href="/league/scores" className="lg-btn">Scores →</Link>
+            {me?.is_commish && <Link href="/league/scores?tab=contracts" className="lg-btn">Contracts →</Link>}
+          </div>
+        </section>
+        <LeagueBankPanel commish={!!me?.is_commish} />
         {coaches && <LeagueCoaches rows={coaches} clubs={league.teams.map((t) => ({ id: t.id, name: t.name }))} />}
         {joinAdmin && <InviteCoaches admin={joinAdmin} />}
         {me?.is_commish && !profile.legacy && (

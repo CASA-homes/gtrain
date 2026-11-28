@@ -28,7 +28,7 @@ function Side({ label, who, won, lost }: { label: string; who: string[]; won: bo
 type Fine = { id: string; team_id: number; amount: number; reason: string; season: number; paid: boolean; round: number | null; rule_kind: string | null; prize: boolean; created_at: string };
 type Prize = { id: number; season: number; label: string; kt: number; status: 'pledged' | 'paid' | 'cancelled'; team_id: number | null; paid_at: string | null };
 type Bank = { sources: Record<string, number>; collected: number; paid: number; pledged: number; balance: number };
-const SOURCES: [string, string][] = [['levy', 'Transfer levies (clauses, auctions)'], ['deficit', 'Over-cap deficit fees'], ['extension', 'Extension fees'], ['release', 'Release fees'], ['burned', 'Burned clause matches'], ['games', 'Mini game and comp pots (20% cut)']];
+const SOURCES: [string, string][] = [['shares', 'Share trading fees and gains tax'], ['levy', 'Transfer levies (clauses, auctions)'], ['deficit', 'Over-cap deficit fees'], ['extension', 'Extension fees'], ['release', 'Release fees'], ['burned', 'Burned clause matches'], ['games', 'Mini game and comp pots (20% cut)']];
 const TABS = [['bets', 'Bets'], ['fines', 'Fines'], ['bank', 'League bank']] as const;
 
 export default async function LeagueBetsPage({ searchParams }: { searchParams: Promise<{ tab?: string; error?: string }> }) {
@@ -272,7 +272,7 @@ async function BankTab({ commish }: { commish: boolean }) {
         <form action={pledgePrize} className="bf-inline wrap" style={{ marginTop: 8 }}>
           <select name="season" className="input" aria-label="Season" defaultValue={COMP_SEASON + 1}>{[COMP_SEASON, COMP_SEASON + 1].map((s) => <option key={s} value={s}>{s}</option>)}</select>
           <input name="label" className="input" list="prize-names" placeholder="Knockout Cup winner" maxLength={80} required aria-label="Prize" />
-          <datalist id="prize-names">{['Knockout Cup winner', 'Premiership', 'Minor premiers', 'Wooden spoon', 'Rookie Shield winner'].map((x) => <option key={x} value={x} />)}</datalist>
+          <datalist id="prize-names">{['Knockout Cup winner', 'Premiership', 'Minor premiers', 'Wooden spoon', 'Rookie Shield winner', 'To be decided'].map((x) => <option key={x} value={x} />)}</datalist>
           <input name="kt" type="number" min={1} max={Math.max(1, free)} placeholder="KT" className="input bf-num" required aria-label="KT" />
           <button className="btn dark">Pledge prize</button>
         </form>
