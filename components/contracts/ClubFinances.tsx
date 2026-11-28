@@ -166,7 +166,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
           <div><span>Debts</span><b className={dueOut ? 'dn' : ''}>{dueOut ? `−${kt(dueOut)}` : kt(0)}</b><em>{owed.length ? `${owed.length} loan${owed.length > 1 ? 's' : ''} · due season end` : 'Nothing owed'}</em></div>
           <div className="nw"><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + savings + lent − debts</em></div>
         </div>
-        <p className="fn-bank-note row-between"><span>Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</span><span style={{ display: 'flex', gap: 12 }}>{d.me?.is_commish && <Link href="/contracts/admin#rf-h">Commish: reset finances →</Link>}<Link href="/market">Trademarket →</Link></span></p>
+        <p className="fn-bank-note row-between"><span>Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</span><span style={{ display: 'flex', gap: 12 }}>{d.me?.is_commish && <Link href="/contracts/admin#rf-h">Commish: club finances →</Link>}<Link href="/market">Trademarket →</Link></span></p>
       </section>
       )}
       </div>

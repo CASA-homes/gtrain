@@ -118,7 +118,19 @@ export async function setWindow(open: boolean, kind: string, hours: number) {
 export async function grantTokens(teamId: number, amount: number, why: string) {
   return run('kc_grant', { t: teamId, amount: Math.round(amount), why }, () => `${amount > 0 ? 'Gave' : 'Took'} ${kt(Math.abs(amount))}.`);
 }
-/** Commish: cancel a club's open deposits and loan offers and put its bank back to the starting KT. */
+/** Commish: give (positive) or take (negative) KT with a reason; shows on the club's token record. */
+export async function commishAdjust(teamId: number, amount: number, why: string) {
+  return run('kc_commish_adjust', { t: teamId, amount: Math.round(amount), why }, (m) => String(m));
+}
+/** Commish: rewind an open term deposit (KT back, no interest). */
+export async function rewindDeposit(depositId: number) {
+  return run('kc_rewind_deposit', { did: depositId }, (m) => String(m));
+}
+/** Commish: cancel a loan offer, or rewind an active loan (KT back to the lender, no interest). */
+export async function rewindLoan(loanId: number) {
+  return run('kc_rewind_loan', { lid: loanId }, (m) => String(m));
+}
+/** Commish: rewind a club's open deposits, cancel loan offers and put its bank back to the starting KT. */
 export async function resetFinances(teamId: number) {
   return run('kc_reset_finances', { t: teamId }, (m) => String(m));
 }

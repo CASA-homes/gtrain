@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { KcHeader } from '@/components/contracts/KcHeader';
-import { DeadlineControl, FaDeadlineControl, GrantControl, ResetFinancesControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
+import { DeadlineControl, FaDeadlineControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
+import { CommishFinances, type CfClub } from '@/components/contracts/CommishFinances';
 import { createClient } from '@/lib/supabase/server';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
 import { keeperLabel } from '@/lib/keepers';
@@ -13,6 +14,7 @@ export default async function ContractsAdmin() {
   if (!d.me?.is_commish) redirect('/contracts');
   const s = d.settings;
   const supabase = await createClient();
+  const cfClubs = ((await supabase.rpc('kc_commish_finances')).data ?? []) as CfClub[];
   const draftAt = s ? ((await supabase.from('draft_room').select('starts_at').eq('year', s.season).maybeSingle()).data?.starts_at as string | null) ?? null : null;
   return (
     <div className="kc-page">
@@ -56,15 +58,10 @@ export default async function ContractsAdmin() {
               <p className="kc-sub">Give every open free agent a closing time. After it passes anyone can close a player’s offers; you can close any time from the <Link href="/market/free-agents">free agents page</Link>.</p>
               <div style={{ marginTop: 12 }}><FaDeadlineControl /></div>
             </section>
-            <section className="kc-card" aria-labelledby="g-h">
-              <h2 id="g-h">Give or take tokens</h2>
-              <p className="kc-sub">Paper tokens only, for prizes, fines or corrections.</p>
-              <div style={{ marginTop: 12 }}><GrantControl teams={d.teams.map((t) => ({ id: t.id, name: t.name }))} /></div>
-            </section>
-            <section className="kc-card" aria-labelledby="rf-h">
-              <h2 id="rf-h">Reset a club’s finances</h2>
-              <p className="kc-sub">Undo a club’s money moves: open term deposits and loan offers are cancelled with no interest, and the bank goes back to the starting KT. Contracts, picks and the ledger history stay. Not allowed while the club has an active loan or KT held in a free-agent offer.</p>
-              <div style={{ marginTop: 12 }}><ResetFinancesControl startKt={s.start_kt ?? 1000} teams={d.teams.map((t) => ({ id: t.id, name: t.name, bank: d.clubs.get(t.id)?.bank ?? 0 }))} /></div>
+            <section className="kc-card" aria-labelledby="rf-h" id="rf-h-card">
+              <h2 id="rf-h">Club finances (KT)</h2>
+              <p className="kc-sub">Give or take KT, rewind a term deposit or a loan, or reset a club to the starting bank. Every change goes on that club’s token record as a “Commish:” entry.</p>
+              <div style={{ marginTop: 12 }}><CommishFinances clubs={cfClubs} startKt={s.start_kt ?? 1000} /></div>
             </section>
             <section className="kc-card" aria-labelledby="set-h">
               <h2 id="set-h">League numbers</h2>
