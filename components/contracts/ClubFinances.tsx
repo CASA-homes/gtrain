@@ -3,13 +3,15 @@
 //     Other coaches see only this panel.
 //     A "Future seasons" toggle on the cap card shows committed salary against the keeper cap for 5 seasons.
 //  2. Your bank: available KT, shares, savings, offers, loans and net worth, beside the cap card.
-//  3. Finances overview: Stock ownership (default), Transactions, Investments and Loans tabs.
+//  3. Finances overview: Stock ownership (default: your player shares, with Sell), Transactions, Investments and Loans tabs.
 //  4. Assistant coach, cap simulator, money by line, lock-in, draft budget and the token ledger.
 //  The rookie slot itself is set on the Contracts tab (this season only, before drop day).
 import Link from 'next/link';
 import { RunButton } from '@/components/contracts/client';
 import { CapBar, CapBarPlayers, CapSimulator, CollectDeposits, DepositForm, LoanForm, LoanRespond, type SimPlayer } from '@/components/contracts/finance-client';
-import { getContracts, kt, moneyK, playerAge, releaseCost } from '@/lib/contracts';
+import { getContracts, kt, moneyK, playerAge, releaseCost, valueTrend } from '@/lib/contracts';
+import { shareRules } from '@/lib/shares';
+import { StockOwnership, type Holding } from '@/components/trade/StockOwnership';
 import { keeperLabel, keeperSpots } from '@/lib/keepers';
 import { createClient } from '@/lib/supabase/server';
 import './contracts.css';
@@ -111,6 +113,19 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
     }),
     ...deadRows.filter((r) => r.now > 0).map((r) => ({ id: `d${r.pid}`, name: `${name(r.pid)} (released)`, k: r.now, dead: true, note: r.until && r.until > season ? `Dead money until ${r.until}` : `Dead money, ${season} only` })),
   ];
+  // Shares
+  const shRules = shareRules(s as unknown as Record<string, unknown>);
+  const soldBy = new Map<number, number>();
+  for (const h of d.shares) soldBy.set(h.player_id, (soldBy.get(h.player_id) ?? 0) + h.qty);
+  const holdings: Holding[] = d.shares.filter((h) => h.team_id === teamId).map((h) => {
+    const p = d.players.get(h.player_id);
+    const tr = valueTrend(p, 999);
+    const sz = tr.length > 1 ? Math.round(((tr[tr.length - 1] - tr[0]) / tr[0]) * 1000) / 10 : null;
+    return { id: h.player_id, name: name(h.player_id), sub: [p?.positions.join('/'), p?.afl_club].filter(Boolean).join(' · '), qty: h.qty, cost: h.cost_kt,
+      price: d.rates.get(h.player_id) ?? 10, sold: soldBy.get(h.player_id) ?? h.qty, games: p?.career_games ?? 0, season: sz };
+  }).sort((a, b) => b.price * b.qty - a.price * a.qty);
+  const shPaid = holdings.reduce((t, h) => t + h.cost, 0);
+  const shValue = holdings.reduce((t, h) => t + h.price * h.qty, 0);
   const emptySpots = Math.max(0, 33 - club.list.size);
   const draftBudget = Math.max(0, s.season_cap_k - club.salary - emptySpots * s.hold_back_k);
 
@@ -208,12 +223,12 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         <div className="row-between"><h2 id="bk-h">Your bank</h2><span className="kc-sub">1 KT = $1k</span></div>
         <div className="fn-bank-big"><b>{kt(club.bank)}</b><span>available to spend</span></div>
         <div className="fn-bank-grid three">
-          <div><span>Invested</span><b>{kt(0)}</b><em>Shares open soon</em></div>
+          <div><span>Invested</span><b>{kt(shValue)}</b><em>{holdings.length ? `${holdings.reduce((t, h) => t + h.qty, 0)} shares in ${holdings.length} player${holdings.length > 1 ? 's' : ''} · paid ${kt(shPaid)}` : 'No shares yet'}</em></div>
           <div><span>Savings</span><b>{kt(locked)}</b><em>{openDeps.length ? `${openDeps.length} deposit${openDeps.length > 1 ? 's' : ''} · +${kt(depReturn)} due` : 'No deposits'}</em></div>
           <div><span>Held in offers</span><b>{kt(heldInOffers)}</b><em>{d.myOffers.length ? `${d.myOffers.length} free-agent offer${d.myOffers.length > 1 ? 's' : ''}` : 'No offers tabled'}</em></div>
           <div><span>Lent out</span><b className={dueBack ? 'up' : ''}>{kt(dueBack)}</b><em>{lent.length ? 'back with interest' : 'No loans out'}</em></div>
           <div><span>Debts</span><b className={dueOut ? 'dn' : ''}>{dueOut ? `−${kt(dueOut)}` : kt(0)}</b><em>{owed.length ? `${owed.length} loan${owed.length > 1 ? 's' : ''} · due season end` : 'Nothing owed'}</em></div>
-          <div className="nw"><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + savings + lent − debts</em></div>
+          <div className="nw"><span>Net worth</span><b>{kt(netWorth + shValue)}</b><em>bank + savings + shares + lent − debts</em></div>
         </div>
         <p className="fn-bank-note row-between"><span>Clause buys: {buysLeft} of {s.max_buys} left this window · extensions cost {kt(s.ext_fee_kt)}{setupNow ? ' (free until deadline day)' : ''}</span><span style={{ display: 'flex', gap: 12 }}>{d.me?.is_commish && <Link href="/contracts/admin#rf-h">Commish: club finances →</Link>}<Link href="/market">Trademarket →</Link></span></p>
       </section>
@@ -238,17 +253,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         </div>
 
         <div className="fn-pane fn-p4">
-          <div className="fn-split four">
-            <div><span>Portfolio value</span><b>{kt(0)}</b></div>
-            <div><span>You paid</span><b>{kt(0)}</b></div>
-            <div><span>Gain</span><b>{kt(0)}</b></div>
-            <div><span>If you sold all today</span><b>{kt(0)}</b></div>
-          </div>
-          <div className="fn-stock-empty">
-            <b>No shares yet</b>
-            <p>Soon you’ll be able to buy shares in any player with KT: 10 shares per player, up to 5 each. Each share costs his market value, so your shares rise and fall with his form. Sell any time; 10% of the sale goes to the league. Your shares will show here with what you paid, what they’re worth now and your profit.</p>
-            <Link href="/market" className="kc-btn small">Browse the player market</Link>
-          </div>
+          <StockOwnership rows={holdings} rules={shRules} bank={club.bank} mine={mine} />
         </div>
 
         <div className="fn-pane fn-p1">
@@ -264,7 +269,7 @@ export async function ClubFinances({ teamId }: { teamId: number }) {
         </div>
 
         <div className="fn-pane fn-p2">
-          <div className="fn-net"><div><span>Net worth</span><b>{kt(netWorth)}</b><em>bank + deposits + loans out − loans owed</em></div></div>
+          <div className="fn-net"><div><span>Net worth</span><b>{kt(netWorth + shValue)}</b><em>bank + deposits + shares + loans out − loans owed</em></div></div>
           <div className="fn-split">
             <div><span>In the bank</span><b>{kt(club.bank)}</b></div>
             <div><span>Locked in deposits</span><b>{kt(locked)}</b></div>

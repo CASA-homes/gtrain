@@ -181,6 +181,18 @@ export async function setDropDay(iso: string | null): Promise<Result> {
   revalidatePath('/', 'layout');
   return { ok: true, message: when ? 'Drop day set. Rookie slots lock then.' : 'Drop day cleared.' };
 }
+// Player shares
+export async function buyShares(playerId: number, n: number) {
+  return run('kc_share_buy', { pid: playerId, n }, (paid) => `Bought ${n} share${n > 1 ? 's' : ''} for ${kt(paid)}.`);
+}
+export async function sellShares(playerId: number, n: number) {
+  return run('kc_share_sell', { pid: playerId, n }, (got) => `Sold ${n} share${n > 1 ? 's' : ''}. ${kt(got)} back in your bank.`);
+}
+/** Commish: undo a club's shares in a player, refunded at what it paid. */
+export async function rewindShares(teamId: number, playerId: number) {
+  return run('kc_share_rewind', { p_team: teamId, pid: playerId }, (kt0) => `Rewound. ${kt(kt0)} refunded.`);
+}
+
 export async function makeDeposit(amount: number, months: number) {
   return run('kc_deposit', { amount, p_months: months }, () => `${kt(amount)} locked in a term deposit for ${months === 6 ? '6 months' : months === 12 ? '1 year' : '2 years'}.`);
 }

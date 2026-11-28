@@ -1,0 +1,68 @@
+/* Buy / sell shares sheet (ShareSheet) */
+.ss-back { position: fixed; inset: 0; z-index: 80; background: rgb(21 26 22 / .32); display: flex; justify-content: flex-end; }
+.ss-sheet { width: min(520px, 100%); height: 100%; background: #fff; box-shadow: -20px 0 50px rgb(21 26 22 / .18); padding: 26px 28px; box-sizing: border-box;
+  display: flex; flex-direction: column; gap: 16px; overflow-y: auto; animation: ss-in .22s ease-out; font-family: var(--font); color: #151a16; }
+@keyframes ss-in { from { transform: translateX(40px); opacity: 0; } }
+.ss-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.ss-eb { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #636a64; }
+.ss-top h2 { margin: 2px 0 0; font: 700 26px var(--font); letter-spacing: -.01em; }
+.ss-sub { font-size: 13px; color: #5f6660; margin-top: 2px; }
+.ss-x { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #e4e7e1; background: #fff; font-size: 18px; cursor: pointer; flex: none; }
+.ss-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ss-facts > div { background: #f7f9f5; border-radius: 12px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.ss-facts span { font: 500 10px var(--mono); text-transform: uppercase; letter-spacing: .04em; color: #636a64; }
+.ss-facts b { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ss-facts b.up { color: #1f7a43; } .ss-facts b.dn { color: #c2462a; }
+.ss-facts em { font-style: normal; font-size: 11.5px; color: #5f6660; }
+.ss-pips { display: flex !important; flex-direction: row !important; gap: 2px; margin-top: 4px; }
+.ss-pips i { width: 12px; height: 6px; border-radius: 2px; background: #eef0ea; }
+.ss-pips i.o { background: #b9c2bb; } .ss-pips i.m { background: #151a16; } .ss-pips i.n { background: #1f6b3a; }
+.ss-qty { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #e4e7e1; border-radius: 14px; padding: 12px 14px; }
+.ss-qty > div:first-child { display: flex; flex-direction: column; gap: 2px; }
+.ss-qty b { font-size: 15px; } .ss-qty span { font-size: 12px; color: #5f6660; }
+.ss-step { display: flex; align-items: center; gap: 10px; }
+.ss-step button { width: 44px; height: 44px; border-radius: 12px; border: 1px solid #d6dbd2; background: #fff; font-size: 20px; font-weight: 600; cursor: pointer; }
+.ss-step button:disabled { opacity: .35; cursor: default; }
+.ss-step b { font-size: 26px !important; width: 30px; text-align: center; font-variant-numeric: tabular-nums; }
+.ss-sum { margin: 0; display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.ss-sum div { display: flex; justify-content: space-between; gap: 12px; }
+.ss-sum dt, .ss-sum dd { margin: 0; } .ss-sum dd { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ss-sum .mut { color: #5f6660; } .ss-sum .sm { font-size: 12.5px; }
+.ss-sum .tot { font-weight: 700; font-size: 16px; } .ss-sum .tot:first-of-type, .ss-sum div.tot + div.mut { }
+.ss-sum div.tot:not(.up):not(.dn) { border-top: 1px solid #eef0ec; padding-top: 8px; }
+.ss-sum .up { color: #1f7a43; } .ss-sum .dn { color: #c2462a; }
+.ss-scen { background: #f7f9f5; border-radius: 14px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.ss-scen .row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.ss-scen .row b { font-size: 13.5px; } .ss-scen .row span { font-size: 12px; color: #5f6660; }
+.ss-scen .line { display: grid; grid-template-columns: 1fr 80px 80px; font-size: 13px; }
+.ss-scen .line span:nth-child(2), .ss-scen .line b { text-align: right; font-family: var(--mono); }
+.ss-scen .line b.up { color: #1f7a43; } .ss-scen .line b.dn { color: #c2462a; }
+.ss-scen p { margin: 2px 0 0; font-size: 12px; color: #8a4a1d; }
+.ss-warn { margin: 0; background: #fbeee6; color: #8a4a1d; border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+.ss-why { margin: 0; background: #f6ecd2; color: #6d531f; border-radius: 12px; padding: 12px 14px; font-size: 13.5px; }
+.ss-foot { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.ss-foot p { margin: 0; font-size: 11.5px; color: #5f6660; text-align: center; }
+.ss-track { position: relative; height: 54px; border-radius: 27px; background: #eef1ec; display: flex; align-items: center; justify-content: center; overflow: hidden; touch-action: none; user-select: none; }
+.ss-track.sell { background: #f6e9e2; }
+.ss-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 27px; background: rgb(31 107 58 / .14); }
+.ss-track.sell .ss-fill { background: rgb(163 84 42 / .14); }
+.ss-label { position: relative; font-weight: 600; color: #2f5d46; font-size: 14px; pointer-events: none; padding: 0 60px; text-align: center; }
+.ss-track.sell .ss-label { color: #8a3c1d; }
+.ss-knob { position: absolute; left: 5px; top: 5px; width: 44px; height: 44px; border-radius: 50%; border: 0; background: #1f6b3a; color: #fff; font-size: 18px; cursor: grab; touch-action: none; }
+.ss-track.sell .ss-knob { background: #a3542a; }
+.ss-knob:focus-visible { outline: 3px solid #151a16; outline-offset: 2px; }
+.ss-track.off { opacity: .5; } .ss-track.off .ss-knob { cursor: default; }
+.ss-done { margin: auto 0; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+.ss-done p { margin: 0; color: #5f6660; font-size: 14px; }
+.ss-tick { width: 56px; height: 56px; border-radius: 50%; background: #1f6b3a; color: #fff; display: grid; place-items: center; font-size: 26px; }
+.ss-sheet.sell .ss-tick { background: #a3542a; }
+.ss-name { font-size: 22px; }
+
+/* Shares cell on the market board */
+.mb-sh { all: unset; cursor: pointer; font: 600 11.5px var(--font); color: #1f6b3a; padding: 4px 9px; border-radius: 8px; background: #e7f1ea; white-space: nowrap; }
+.mb-sh:hover { background: #d4e8db; } .mb-sh:focus-visible { outline: 2px solid #1f6b3a; outline-offset: 1px; }
+.mb-sh.mine { background: #151a16; color: #fff; }
+.mb-sh-lock { font: 500 11px var(--mono); color: #8a6a2a; white-space: nowrap; }
+.mb-sh-out { font: 500 11px var(--font); color: #9aa19b; white-space: nowrap; }
+.mb-st.s-x { background: #f6ecd2; color: #8a6a2a; }
+@media (max-width: 560px) { .ss-sheet { padding: 20px 18px; } .ss-facts b { font-size: 17px; } }

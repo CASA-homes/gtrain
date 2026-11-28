@@ -87,3 +87,4 @@
   .mb-seg { overflow-x: auto; max-width: 100%; }
 }
 @media (max-width: 560px) { .mb-tbl .c-a0 { display: none; } .mb-who { min-width: 130px; } }
+.mb-tbl .c-sh { width: 96px; text-align: left; }

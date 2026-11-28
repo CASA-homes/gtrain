@@ -12,6 +12,7 @@ import { age, LINES, type Line, type PlayerRow } from '@/lib/ratings';
 export type Tier = 'standard' | 'high' | 'none' | 'protected';
 
 export interface KcSettings { fa_day?: string | null;
+  shares_open?: boolean; share_supply?: number; share_max_club?: number; share_fee_pct?: number; share_tax_pct?: number; share_limit_pct?: number; share_lock_games?: number;
   league_id: number; season: number; shadow: boolean;
   keeper_cap_k: number; season_cap_k: number; tax_line_k: number; tax_kt_per_k: number; start_kt: number;
   max_years: number; long_deal_limit: number;
@@ -98,6 +99,8 @@ export interface ClubCap {
   keeperCapNow: number; keptNow: number;
 }
 
+export interface ShareHolding { team_id: number; player_id: number; qty: number; cost_kt: number }
+
 export interface ContractsData {
   me: Me | null; settings: KcSettings | null; seasonLabel: string;
   teams: Team[]; players: Map<number, PlayerRow>; rates: Map<number, number>;
@@ -109,6 +112,8 @@ export interface ContractsData {
   /** Dead money in later seasons from releases (the first season sits on the contract). */
   deadLater: { team_id: number; player_id: number; season: number; amount_k: number }[];
   ladderRank: Map<number, number>; totalKt: number;
+  /** Every club's player shares, and the players the database prices (only they can be bought). */
+  shares: ShareHolding[]; priced: Set<number>;
   ready: boolean; error: string | null;
 }
 
@@ -179,7 +184,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const tidy = supabase.rpc('kc_deadline_sweep').then(() => supabase.rpc('kc_settle_matches')).then(() => null, () => null);
   const [league, me] = await Promise.all([tidy.then(() => getLeague()), getMe(), loadRanking(), loadStartPrices()]);
   const players = new Map(league.players.map((p) => [p.id, p]));
-  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ] = await Promise.all([
+  const [setQ, conQ, ledQ, aucQ, faQ, cntQ, offQ, trQ, rateQ, clQ, adjQ, deadQ, shQ] = await Promise.all([
     supabase.from('kc_settings').select('*').maybeSingle(),
     supabase.from('kc_contracts').select('*').in('status', ['active', 'pending', 'released']),
     supabase.from('kc_ledger').select('team_id, delta'),
@@ -192,6 +197,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
     supabase.from('kc_claims').select('*').order('created_at', { ascending: false }).limit(60),
     supabase.from('kc_cap_adjust').select('team_id, season, amount_k, reason'),
     supabase.from('kc_dead').select('team_id, player_id, season, amount_k'),
+    supabase.from('kc_shares').select('team_id, player_id, qty, cost_kt'),
   ]);
   const deadLater = (deadQ.data ?? []) as { team_id: number; player_id: number; season: number; amount_k: number }[];
   const settings = (setQ.data as KcSettings | null) ?? null;
@@ -199,7 +205,9 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
   const contracts = ((conQ.data ?? []) as Contract[]).map((c) => ({ ...c, id: Number(c.id) }));
   const active = contracts.filter((c) => c.status === 'active');
   const pending = contracts.filter((c) => c.status === 'pending');
+  const priced = new Set(((rateQ.data ?? []) as { player_id: number }[]).map((r) => r.player_id));
   const rates = withFaRates(new Map(((rateQ.data ?? []) as { player_id: number; rate_k: number }[]).map((r) => [r.player_id, r.rate_k])));
+  const shares = (shQ.data ?? []) as ShareHolding[];
   const banks = new Map<number, number>();
   for (const r of (ledQ.data ?? []) as { team_id: number; delta: number }[]) banks.set(r.team_id, (banks.get(r.team_id) ?? 0) + r.delta);
   const counts = new Map(((cntQ.data ?? []) as { fa_id: number; offers: number }[]).map((r) => [Number(r.fa_id), r.offers]));
@@ -255,7 +263,7 @@ export const getContracts = cache(async (): Promise<ContractsData> => {
     transfers: ((trQ.data ?? []) as Transfer[]),
     claims: ((clQ.data ?? []) as Claim[]).map((c) => ({ ...c, id: Number(c.id), contract_id: Number(c.contract_id) })),
     capAdjust, pendingFa: new Set(freeAgents.filter((f) => f.kind === 'pending').map((f) => f.player_id)), midseason: !!settings?.midseason_at,
-    ladderRank, totalKt,
+    ladderRank, totalKt, shares, priced,
     ready: !!settings?.seeded_at, error,
   };
 });

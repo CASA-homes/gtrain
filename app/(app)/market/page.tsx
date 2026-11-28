@@ -98,7 +98,7 @@ export default async function MarketHome({ searchParams }: { searchParams: Promi
         )}
 
         <div className="th-split">
-          <MarketBoard rows={board.rows} cur={board.cur} meCode={board.meCode} />
+          <MarketBoard rows={board.rows} cur={board.cur} meCode={board.meCode} shares={board.shares} />
           <aside className="th-rail" aria-label="Your desk and recent transactions">
             {/* Your desk */}
             <section className="th-card" aria-labelledby="desk-h">

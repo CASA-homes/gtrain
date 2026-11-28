@@ -902,7 +902,7 @@
 .cf-seg { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: #fff; border: 1px solid var(--khq-line, #e4e7e1); align-self: flex-end; }
 .cf-seg button { border: 0; background: none; min-height: 36px; padding: 0 14px; border-radius: 8px; font: 600 13px var(--font); color: var(--muted); cursor: pointer; }
 .cf-seg button.on { background: #151a16; color: #fff; }
-.cf-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.cf-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .cf-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--khq-line, #eef0ec); font-size: 13.5px; }
 .cf-row small { display: block; font-size: 11.5px; color: var(--muted); }
 .cf-ledger > div { display: grid; grid-template-columns: 60px minmax(0, 1fr) 80px; gap: 10px; padding: 7px 0; border-top: 1px solid var(--khq-line, #eef0ec); font-size: 13px; }
@@ -935,3 +935,13 @@
 .fn-dead-empty { margin: 0; padding: 14px; border-radius: 10px; background: var(--sunk, #f1f3ee); color: var(--muted); font-size: 13px; }
 .fn-bar.segs i.seg.tl .fn-tip { left: 0; transform: none; } .fn-bar.segs i.seg.tl .fn-tip::after { left: 14px; }
 .fn-bar.segs i.seg.tr .fn-tip { left: auto; right: 0; transform: none; } .fn-bar.segs i.seg.tr .fn-tip::after { left: auto; right: 9px; }
+
+/* Finances › Stock ownership table */
+.fn-split em { display: block; font-style: normal; font-size: 11px; margin-top: 2px; } .fn-split em.up, .fn-split b.up { color: #1f7a43; } .fn-split em.dn, .fn-split b.dn { color: #c2462a; }
+.fn-stocks { overflow-x: auto; }
+.fn-stocks table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.fn-stocks th { text-align: left; font: 600 10.5px var(--font); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); padding: 6px 8px; border-bottom: 1px solid var(--line, #e4e7e1); white-space: nowrap; }
+.fn-stocks td { padding: 9px 8px; border-bottom: 1px solid var(--line, #eef0ec); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fn-stocks td a { color: inherit; text-decoration: none; } .fn-stocks td small { display: block; font-size: 11px; color: var(--muted); }
+.fn-stocks td.up { color: #1f7a43; } .fn-stocks td.dn { color: #c2462a; } .fn-stocks td small { color: inherit; opacity: .75; }
+.fn-stocks .mut { color: var(--muted); }

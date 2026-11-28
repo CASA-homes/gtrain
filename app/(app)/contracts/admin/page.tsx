@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { KcHeader } from '@/components/contracts/KcHeader';
 import { DeadlineControl, FaDeadlineControl, RunButton, SettingsForm, WindowControl } from '@/components/contracts/client';
-import { CommishFinances, type CfClub } from '@/components/contracts/CommishFinances';
+import { CommishFinances, type CfClub, type CfShare } from '@/components/contracts/CommishFinances';
 import { createClient } from '@/lib/supabase/server';
 import { getContracts, kt, moneyK } from '@/lib/contracts';
 import { keeperLabel } from '@/lib/keepers';
@@ -15,6 +15,8 @@ export default async function ContractsAdmin() {
   const s = d.settings;
   const supabase = await createClient();
   const cfClubs = ((await supabase.rpc('kc_commish_finances')).data ?? []) as CfClub[];
+  const shRows = ((await supabase.from('kc_shares').select('team_id, player_id, qty, cost_kt, players(name, full_name)')).data ?? []) as unknown as { team_id: number; player_id: number; qty: number; cost_kt: number; players: { name: string; full_name: string | null } | null }[];
+  const cfShares: CfShare[] = shRows.map((r) => ({ team_id: r.team_id, player_id: r.player_id, qty: r.qty, cost_kt: r.cost_kt, name: r.players?.full_name ?? r.players?.name ?? `Player ${r.player_id}` }));
   const draftAt = s ? ((await supabase.from('draft_room').select('starts_at').eq('year', s.season).maybeSingle()).data?.starts_at as string | null) ?? null : null;
   return (
     <div className="kc-page">
@@ -61,7 +63,7 @@ export default async function ContractsAdmin() {
             <section className="kc-card" aria-labelledby="rf-h" id="rf-h-card">
               <h2 id="rf-h">Club finances (KT)</h2>
               <p className="kc-sub">Give or take KT, rewind a term deposit or a loan, or reset a club to the starting bank. Every change goes on that club’s token record as a “Commish:” entry.</p>
-              <div style={{ marginTop: 12 }}><CommishFinances clubs={cfClubs} startKt={s.start_kt ?? 1000} /></div>
+              <div style={{ marginTop: 12 }}><CommishFinances clubs={cfClubs} startKt={s.start_kt ?? 1000} shares={cfShares} /></div>
             </section>
             <section className="kc-card" aria-labelledby="set-h">
               <h2 id="set-h">League numbers</h2>

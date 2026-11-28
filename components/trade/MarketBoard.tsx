@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { ClubDot } from '@/components/bits';
 import type { BoardRow, BoardStatus } from '@/lib/market-board';
+import type { ShareRules } from '@/lib/shares';
+import { ShareSheet, type ShareTarget } from '@/components/trade/ShareSheet';
 
 type Key = 'n' | 'age' | 'a0' | 'a1' | 'v' | 'w' | 'm' | 's' | 'own';
 const POS = ['DEF', 'MID', 'RUC', 'FWD'] as const;
 const AGES = [['all', 'Any age'], ['u22', 'Under 22'], ['22', '22–25'], ['26', '26–29'], ['30', '30+']] as const;
-const SHOW: [string, string][] = [['all', 'All'], ['c', 'Contracted'], ['u', 'Unsigned'], ['f', 'Free agents'], ['p', 'Undrafted'], ['d', 'Draftees']];
+const SHOW: [string, string, string][] = [['all', 'All', 'Every player'], ['buy', 'Buyable', 'Shares open and some left'], ['prot', 'Protected', 'Under the games needed before his shares open'], ['mine', 'My shares', 'Players you own shares in']];
 const ST_LABEL: Record<BoardStatus, string> = { c: '', u: 'Unsigned', f: 'Free agent', p: 'Undrafted', d: 'Draftee' };
 
 const k$ = (x: number | null) => (x == null ? '—' : `$${x.toLocaleString('en-AU')}k`);
@@ -27,7 +29,17 @@ function Chg({ x }: { x: number | null }) {
   return <span className={`mb-chg ${z ? '' : x > 0 ? 'up' : 'dn'}`}>{z ? '0.0' : `${x > 0 ? '▲' : '▼'} ${Math.abs(x).toFixed(1)}`}%</span>;
 }
 
-export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: number; meCode: string | null }) {
+export interface BoardShares { rules: ShareRules; bank: number; heldCost: number; canTrade: boolean }
+
+export function MarketBoard({ rows, cur, meCode, shares }: { rows: BoardRow[]; cur: number; meCode: string | null; shares: BoardShares }) {
+  const R = shares.rules;
+  const prot = (r: BoardRow) => r.cg < R.lockGames;
+  const buyable = (r: BoardRow) => r.db && !prot(r) && r.sold < R.supply;
+  const [sheet, setSheet] = useState<{ mode: 'buy' | 'sell'; t: ShareTarget } | null>(null);
+  const open = (r: BoardRow, mode: 'buy' | 'sell') => setSheet({ mode, t: {
+    id: r.id, name: r.n, sub: `${r.pos.join('/')}${r.age != null ? ` · ${r.age}` : ''}${r.own ? ` · ${r.own}` : ''} · ${r.cg} games`,
+    price: r.v, sold: r.sold, mine: r.mine, myCost: r.myCost, games: r.cg, season: r.s,
+  } });
   const [sort, setSort] = useState<{ k: Key; asc: boolean }>({ k: 'v', asc: false });
   const [pos, setPos] = useState<string>('all');
   const [age, setAge] = useState<string>('all');
@@ -41,7 +53,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
     const s = q.trim().toLowerCase();
     const xs = rows.filter((r) =>
       (pos === 'all' || r.pos.includes(pos)) &&
-      (show === 'all' || r.st === show) &&
+      (show === 'all' || (show === 'buy' ? buyable(r) : show === 'prot' ? prot(r) : r.mine > 0)) &&
       (age === 'all' || (r.age != null && (age === 'u22' ? r.age < 22 : age === '22' ? r.age >= 22 && r.age <= 25 : age === '26' ? r.age >= 26 && r.age <= 29 : r.age >= 30))) &&
       (!s || r.n.toLowerCase().includes(s) || (r.own ?? '').toLowerCase() === s));
     const { k, asc } = sort;
@@ -57,6 +69,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       const c = typeof x === 'string' ? x.localeCompare(y as string) : (x as number) - (y as number);
       return (asc ? c : -c) || b.v - a.v;
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows, pos, age, show, q, sort]);
 
   const pages = Math.max(1, Math.ceil(list.length / per));
@@ -64,9 +77,10 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
   const view = list.slice(pg * per, pg * per + per);
   const reset = () => setPage(0);
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: rows.length };
-    for (const r of rows) c[r.st] = (c[r.st] ?? 0) + 1;
+    const c: Record<string, number> = { all: rows.length, buy: 0, prot: 0, mine: 0 };
+    for (const r of rows) { if (buyable(r)) c.buy++; if (prot(r)) c.prot++; if (r.mine > 0) c.mine++; }
     return c;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rows]);
 
   const H = ({ k, children, cls = '', title }: { k: Key; children: React.ReactNode; cls?: string; title?: string }) => {
@@ -93,8 +107,8 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       </div>
 
       <div className="mb-filters">
-        <div className="mb-seg" role="group" aria-label="Status">
-          {SHOW.map(([k, l]) => <button key={k} type="button" className={show === k ? 'on' : ''} onClick={() => { setShow(k); reset(); }}>{l}<em>{counts[k] ?? 0}</em></button>)}
+        <div className="mb-seg" role="group" aria-label="Shares">
+          {SHOW.filter(([k]) => k !== 'mine' || counts.mine > 0).map(([k, l, tip]) => <button key={k} type="button" title={k === 'prot' ? `Under ${R.lockGames} games: shares open once he's played ${R.lockGames}` : tip} className={show === k ? 'on' : ''} onClick={() => { setShow(k); reset(); }}>{l}<em>{counts[k] ?? 0}</em></button>)}
         </div>
         <div className="mb-seg" role="group" aria-label="Position">
           <button type="button" className={pos === 'all' ? 'on' : ''} onClick={() => { setPos('all'); reset(); }}>All</button>
@@ -110,7 +124,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
       <div className="mb-wrap">
         <table className={`mb-tbl${hl ? ' hl' : ''}`}>
           <thead>
-            <tr className="mb-grp"><th colSpan={3} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /></tr>
+            <tr className="mb-grp"><th colSpan={3} /><th colSpan={3} className="g">Form</th><th colSpan={2} className="g">Value</th><th colSpan={3} className="g">Change</th><th /><th /></tr>
             <tr>
               <th className="c-rk">#</th>
               <H k="n" cls="c-pl">Player</H>
@@ -123,6 +137,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
               <H k="w" cls="r c-w" title="Value move since last round">Week</H>
               <H k="m" cls="r c-m" title="Value move over the last four rounds">Month</H>
               <H k="s" cls="r c-s" title="Value move since the start of the season">Season</H>
+              <th className="c-sh" title={`${R.supply} shares a player, max ${R.maxClub} per club`}>Shares</th>
               <th className="c-go" aria-label="Open" />
             </tr>
           </thead>
@@ -135,7 +150,7 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                   <td className="c-pl">
                     <Link href={`/players/${r.id}`} className="mb-who">
                       <ClubDot code={r.club} size={18} />
-                      <span><b>{r.n}</b><small>{r.pos.join('/')}{r.st !== 'c' ? <em className={`mb-st s-${r.st}`}>{ST_LABEL[r.st]}</em> : r.to ? <> · to {r.to}</> : null}</small></span>
+                      <span><b>{r.n}</b><small>{r.pos.join('/')}{r.st !== 'c' ? <em className={`mb-st s-${r.st}`}>{ST_LABEL[r.st]}</em> : r.to ? <> · to {r.to}</> : null}{prot(r) && <em className="mb-st s-x">Protected</em>}</small></span>
                     </Link>
                   </td>
                   <td className="r c-age tn">{r.age ?? '–'}</td>
@@ -147,14 +162,23 @@ export function MarketBoard({ rows, cur, meCode }: { rows: BoardRow[]; cur: numb
                   <td className="r c-w"><Chg x={r.w} /></td>
                   <td className="r c-m"><Chg x={r.m} /></td>
                   <td className="r c-s"><Chg x={r.s} /></td>
+                  <td className="c-sh">{r.mine > 0 && shares.canTrade
+                    ? <button type="button" className="mb-sh mine" onClick={() => open(r, 'sell')} title={`You own ${r.mine}. Sell or check your return.`}>You {r.mine} · Sell</button>
+                    : prot(r) ? <span className="mb-sh-lock" title={`Protected: ${r.cg} of ${R.lockGames} games`}>🔒 {r.cg}/{R.lockGames}</span>
+                    : !r.db ? <span className="mb-sh-out">—</span>
+                    : r.sold >= R.supply ? <span className="mb-sh-out">Sold out</span>
+                    : shares.canTrade && R.open ? <button type="button" className="mb-sh" onClick={() => open(r, 'buy')}>{R.supply - r.sold} left · Buy</button>
+                    : <span className="mb-sh-out">{R.supply - r.sold} left</span>}</td>
                   <td className="c-go"><Link href={`/players/${r.id}`} aria-label={`Open ${r.n}`}>›</Link></td>
                 </tr>
               );
             })}
-            {!view.length && <tr><td colSpan={12} className="mb-empty">No players match those filters.</td></tr>}
+            {!view.length && <tr><td colSpan={13} className="mb-empty">No players match those filters.</td></tr>}
           </tbody>
         </table>
       </div>
+
+      {sheet && <ShareSheet mode={sheet.mode} t={sheet.t} rules={R} bank={shares.bank} heldCost={shares.heldCost} onClose={() => setSheet(null)} />}
 
       <div className="mb-foot">
         <span className="mb-mut">{list.length ? `${pg * per + 1}–${Math.min(list.length, pg * per + per)} of ${list.length}` : '0 players'}</span>

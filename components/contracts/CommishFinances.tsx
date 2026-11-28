@@ -2,7 +2,7 @@
 // Commish KT console: pick a club, give or take KT, rewind its term deposits and loans, or reset it to the starting
 // bank. Every change is a "Commish:" entry on the club's token record, shown underneath.
 import { useState } from 'react';
-import { commishAdjust, resetFinances, rewindDeposit, rewindLoan } from '@/app/(app)/contracts/actions';
+import { commishAdjust, resetFinances, rewindDeposit, rewindLoan, rewindShares } from '@/app/(app)/contracts/actions';
 import { useRun } from '@/components/contracts/client';
 
 export interface CfClub {
@@ -15,7 +15,9 @@ export interface CfClub {
 const kt = (n: number) => `${n.toLocaleString('en-AU')} KT`;
 const day = (s: string) => new Date(s).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', timeZone: 'Australia/Perth' });
 
-export function CommishFinances({ clubs, startKt }: { clubs: CfClub[]; startKt: number }) {
+export interface CfShare { team_id: number; player_id: number; name: string; qty: number; cost_kt: number }
+
+export function CommishFinances({ clubs, startKt, shares = [] }: { clubs: CfClub[]; startKt: number; shares?: CfShare[] }) {
   const { pending, go, note } = useRun();
   const [id, setId] = useState(clubs[0]?.id ?? 0);
   const [mode, setMode] = useState<'give' | 'take'>('give');
@@ -84,6 +86,16 @@ export function CommishFinances({ clubs, startKt }: { clubs: CfClub[]; startKt: 
               </div>
             );
           }) : <p className="kc-sub">No loans.</p>}
+        </div>
+        <div>
+          <h3>Player shares</h3>
+          {shares.filter((x) => x.team_id === c.id).length ? shares.filter((x) => x.team_id === c.id).map((x) => (
+            <div key={x.player_id} className="cf-row">
+              <span><b>{x.qty} × {x.name}</b><small>Paid {kt(x.cost_kt)} with fees</small></span>
+              <button type="button" className="kc-btn small" disabled={pending}
+                onClick={() => go(() => rewindShares(c.id, x.player_id), `${c.name}'s ${x.qty} share${x.qty > 1 ? 's' : ''} in ${x.name} are cancelled and the ${kt(x.cost_kt)} they paid goes back to their bank. It shows on their record.`, { title: 'Rewind these shares?', cta: 'Rewind shares' })}>Rewind</button>
+            </div>
+          )) : <p className="kc-sub">No shares.</p>}
         </div>
       </div>
 

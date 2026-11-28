@@ -2,6 +2,7 @@
 // week, month and season, scores, contract and clause), built once on the server and sorted/filtered in the browser.
 import { clauseKt, valueTrend } from '@/lib/contracts';
 import type { getMarket } from '@/lib/market';
+import { shareRules } from '@/lib/shares';
 
 /** st: c contracted · u owned but unsigned · f free agent (contracts market) · p undrafted pool · d 2026 draftee */
 export type BoardStatus = 'c' | 'u' | 'f' | 'p' | 'd';
@@ -11,6 +12,8 @@ export interface BoardRow {
   l5: (number | null)[]; a0: number | null; g0: number; a1: number | null;
   sal: number | null; to: number | null; v: number; w: number | null; m: number | null; s: number | null;
   cl: number | null; sp: number[];
+  /** shares: career AFL games, shares owned in the league, mine, and whether the database prices him (only then buyable) */
+  cg: number; sold: number; mine: number; myCost: number; db: boolean;
 }
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
@@ -29,6 +32,12 @@ export function buildBoard(m: Awaited<ReturnType<typeof getMarket>>) {
   const asOf = Date.UTC(season, 2, 1);
 
   const ownedIds = new Set(league.players.filter((p) => p.team_id).map((p) => p.id));
+  const sold = new Map<number, number>();
+  const mine = new Map<number, { qty: number; cost: number }>();
+  for (const h of d.shares) {
+    sold.set(h.player_id, (sold.get(h.player_id) ?? 0) + h.qty);
+    if (h.team_id === m.meId) mine.set(h.player_id, { qty: h.qty, cost: h.cost_kt });
+  }
   const rows: BoardRow[] = [];
   const seen = new Set<number>();
   for (const p of [...league.players, ...league.freeAgents]) {
@@ -58,8 +67,11 @@ export function buildBoard(m: Awaited<ReturnType<typeof getMarket>>) {
       w: chg(last, t[t.length - 2]), m: chg(last, t[Math.max(0, t.length - 5)]), s: t.length > 1 ? chg(last, t[0]) : null,
       cl: c && s ? clauseKt(s, c, v, d.pendingFa.has(p.id)) : null,
       sp: sp.length > 1 ? sp : [],
+      cg: p.career_games ?? 0, sold: sold.get(p.id) ?? 0, mine: mine.get(p.id)?.qty ?? 0, myCost: mine.get(p.id)?.cost ?? 0, db: d.priced.has(p.id),
     });
   }
   rows.sort((a, b) => b.v - a.v);
-  return { rows, cur, season, meCode: m.meId ? teamCode(m.meId) : null };
+  const heldCost = d.shares.filter((h) => h.team_id === m.meId).reduce((t, h) => t + h.cost_kt, 0);
+  const bank = m.meId ? d.banks.get(m.meId) ?? 0 : 0;
+  return { rows, cur, season, meCode: m.meId ? teamCode(m.meId) : null, shares: { rules: shareRules(s as unknown as Record<string, unknown>), bank, heldCost, canTrade: !!m.meId } };
 }
