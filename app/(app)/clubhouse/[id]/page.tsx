@@ -27,6 +27,7 @@ import { StadiumArt } from '@/components/StadiumArt';
 import { PlayerHighlights } from '@/components/PlayerHighlights';
 import { ClubHeadMore } from '@/components/ClubHeadMore';
 import { ContractsStrip } from '@/components/contracts/ContractsStrip';
+import { ClubMatchups } from '@/components/clubhouse/ClubMatchups';
 import { ClubContracts } from '@/components/contracts/ClubContracts';
 import { ClubFinances } from '@/components/contracts/ClubFinances';
 import { ClubPicks } from '@/components/ClubPicks';
@@ -68,7 +69,8 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
   const tab = view === 'contracts' || view === 'finances' || view === 'picks' ? view : 'squad';
   const gq = await (await createClient()).from('club_games').select('season, player_name, games').eq('team_id', a.team.id);
   const gamesReady = !gq.error;
-  const games = clubGames((await isLegacyLeague()) ? a.team.name : '', gq.data ?? []);
+  const legacy = await isLegacyLeague();
+  const games = clubGames(legacy ? a.team.name : '', gq.data ?? []);
 
   const supabase = await createClient();
   const { data: listings } = await supabase
@@ -238,7 +240,10 @@ export default async function Clubhouse({ params, searchParams }: { params: Prom
       </nav>
 
       {tab === 'picks' ? <ClubPicks teamId={a.team.id} /> : tab === 'contracts' ? (plan.isPro ? <ClubContracts teamId={a.team.id} /> : <ProLock feature="Contracts and the salary cap" blurb="Sign players to contracts, manage the cap, pay release clauses and bid on free agents." />) : tab === 'finances' ? (plan.isPro ? <ClubFinances teamId={a.team.id} /> : <ProLock feature="Club finances" blurb="Your KT bank, cap room, term deposits and loans." />) : <>
-      <ContractsStrip teamId={a.team.id} mine={isMine} />
+      <div className="ch-top2">
+        <ClubMatchups league={league} teamId={a.team.id} legacy={legacy} />
+        <ContractsStrip teamId={a.team.id} mine={isMine} />
+      </div>
 
       {(show('highlights') || show('lines')) && <div className="ch-mtop">{show('highlights') && highlights}{show('lines') && <div className="card" style={{ padding: 14 }}>{lineStrength}</div>}</div>}
 
