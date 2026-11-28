@@ -10,7 +10,7 @@ import RESULTS from '@/lib/results-2026.json';
 import './matchups.css';
 
 const norm = (s: string) => s.toLowerCase().replace(/[’'`]/g, "'").replace(/[^a-z0-9']+/g, ' ').trim();
-const ROUND_NAME: Record<string, string> = { F1: 'Final wk 1', F2: 'Prelim', F3: 'Grand final' };
+const ROUND_NAME: Record<string, string> = { F1: 'F1', F2: 'Prelim', F3: 'GF' };
 const n = (x: number) => Math.round(x).toLocaleString('en-AU');
 
 export async function ClubMatchups({ league, teamId, legacy }: { league: League; teamId: number; legacy: boolean }) {
@@ -37,7 +37,7 @@ export async function ClubMatchups({ league, teamId, legacy }: { league: League;
   // Last three results (G-Train's own 2026 results).
   const res = legacy ? (RESULTS as unknown as { teams: Record<string, [string, string, string, number, number][]> }).teams : {};
   const rows = Object.entries(res).find(([t]) => norm(t) === norm(club))?.[1] ?? [];
-  const last3 = rows.slice(-3).reverse().map((r) => ({ r: ROUND_NAME[r[0]] ?? `Rd ${r[0]}`, opp: league.teams.find((t) => norm(t.name) === norm(r[1])) ?? null, oppName: r[1], w: r[2] === 'W', f: r[3], a: r[4] }));
+  const last3 = rows.slice(-3).reverse().map((r) => ({ r: ROUND_NAME[r[0]] ?? `R${r[0]}`, opp: league.teams.find((t) => norm(t.name) === norm(r[1])) ?? null, oppName: r[1], w: r[2] === 'W', f: r[3], a: r[4] }));
 
   return (
     <section className="card cm" aria-labelledby="cm-h">
